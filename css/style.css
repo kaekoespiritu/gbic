@@ -5,7 +5,7 @@
 }
 .logo
 {
-	border-width: 1px;
+
 	border-bottom-style: solid;
 	border-color: rgb(213,213,213);
 }
@@ -25,7 +25,7 @@
 .nav-tabs>li.active>a,.nav-tabs>li.active>a:hover 
 {
   background-color: #10621e;
-  border: 0px;
+  height:90%;
 }
 .nav-tabs.nav-justified>.active>a, .nav-tabs.nav-justified>.active>a:focus, .nav-tabs.nav-justified>.active>a:hover
 {
@@ -42,13 +42,6 @@
     100% {top:0px;}
 }
 .button {
-  transition: 1s;  
-  
-}
-
-.button span{
- transition:1s;
- 
 
 }
 .button:hover{ 
