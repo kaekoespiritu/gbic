@@ -1,7 +1,7 @@
 /* NAVIGATION BAR */
 .menu
 {
-	height: 60px !important;
+	height: 50px !important;
 }
 .logo
 {
@@ -32,6 +32,36 @@
   border: 0px;
   border-color: #10621e;
 }
+/*--------------------------------*/
+
+@keyframes bounce {
+    1%{top:0;}
+    20%  {top:-3px;}
+    50%  {top:0px;}
+    70%  {top:0px;}
+    100% {top:0px;}
+}
+.button {
+  transition: 1s;  
+  
+}
+
+.button span{
+ transition:1s;
+ 
+
+}
+.button:hover{ 
+  transition: 1s; 
+  animation-name: bounce;
+  animation-duration: 1.5s;
+  
+}
+
+
+
+/*--------------------------------*/
+
 .btn_loginSubmit:hover
 {
 background-color:#426D6D !important;

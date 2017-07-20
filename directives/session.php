@@ -1,13 +1,14 @@
 <?php
 // Saving local database configuration
-Include('config.php');
+include('directives/db.php');
 
 session_start();
 
 $usercheck = $_SESSION['user_logged_in'];
 
-$session_sql = mysqli_query($db, "SELECT username FROM admin WHERE username = '$usercheck'");
-$row = mysqli_fetch_array($session_sql, MYSQLI_ASSOC);
+$query = "SELECT username FROM administrator WHERE username = '$usercheck'";
+$session_sql = mysql_query($query);
+$row = mysql_fetch_array($session_sql);
 $login_session = $row['username'];
 
 if(!isset($_SESSION['user_logged_in']))

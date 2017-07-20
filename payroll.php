@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-include('session.php');
+include('directives/session.php');
 ?>
 <html>
 	<head>
@@ -19,7 +19,7 @@ include('session.php');
 	 <div class="container-fluid">
 
 	 	<?php
-			require_once("nav.php");
+			require_once("directives/nav.php");
 		?>
 	 	
 	 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
