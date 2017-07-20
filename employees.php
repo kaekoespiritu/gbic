@@ -10,6 +10,7 @@ include('directives/session.php');
 
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 </head>
 <body>
@@ -101,10 +102,12 @@ include('directives/session.php');
 									</div><br>
 									<div class="row">
 										<div class="col-md-3">
+										
 											<label for="contact">Date of Hire</label>
 										</div>
 										<div class="col-md-9">
-											<input type="text" class="form-control" id="contact" placeholder="Turn this into a calendar date picker!">
+										
+											<input type="text" size="10" style="width:130px" class="form-control" id="dtpkr_addEmployee" placeholder="month-day-year">
 										</div>
 									</div>
 								</div>
@@ -270,7 +273,7 @@ include('directives/session.php');
 											<label for="contact">Date of Hire</label>
 										</div>
 										<div class="col-md-9">
-											<input type="text" class="form-control" id="contact" placeholder="Turn this into a calendar date picker!">
+											<input type="text" class="form-control" style="width:130px" id="dtpkr_editEmployee" placeholder="placeholder of real date">
 										</div>
 									</div>
 								</div>
@@ -455,12 +458,34 @@ include('directives/session.php');
 	</div>
 
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
-	<script rel="javascript" src="js/jquery.min.js"></script>
+
+ <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
+	
 	<script>
 		document.getElementById("employees").setAttribute("class", "active");
+
+    $( "#dtpkr_addEmployee" ).datepicker({
+ 		changeMonth: true,
+      	changeYear: true,
+      	dateFormat: 'mm-dd-yy',
+      	showAnim: 'fadeIn',
+      	defaultDate: new Date()
+    });
+   
+	   $( "#dtpkr_editEmployee" ).datepicker({
+ 		changeMonth: true,
+      	changeYear: true,
+      	dateFormat: 'mm-dd-yy',
+      	showAnim: 'fadeIn'
+    });
+ 
+		
 	</script>
 
 </body>
 </html>
-
+<!--
+      changeMonth: true,
+      changeYear: true
