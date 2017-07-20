@@ -21,7 +21,7 @@ include('directives/session.php');
 				<div class="modal-content">
 					<div class="modal-header">
 						<div class="col-md-7">
-							<h4 class="modal-title text-right">Add employee</h4>
+							<h4 class="modal-title text-right">Add new Employee</h4>
 						</div>
 						<div class="col-md-5">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -60,11 +60,55 @@ include('directives/session.php');
 										<div class="col-md-3">
 											<label for="contact">Contact number</label>
 										</div>
-										<div class="col-md-9">
+										<div class="col-md-5">
 											<input type="text" class="form-control" id="contact">
+										</div>
+										<div class="col-md-1">
+											<label for="contact">Age</label>
+										</div>
+										<div class="col-md-3">
+											<input type="text" class="form-control" id="contact">
+										</div>
+									</div><br>
+									<div class="row">
+										<div class="col-md-3">
+											<label for="contact">Civil Status</label>
+										</div>
+										<div class="col-md-9">
+											<div class="row">
+												<div class="col-md-4">
+												<input type="radio" autocomplete="off">
+												<label>Single</label>
+												</div>
+												<div class="col-md-4">
+												<input type="radio" autocomplete="off">
+												<label>Married</label>
+												</div>
+												<div class="col-md-4">
+												<input type="radio" autocomplete="off">
+												<label>Divorced</label>
+												</div>
+												<div class="col-md-6">
+												<input type="radio" autocomplete="off">
+												<label>Separated</label>
+												</div>
+												<div class="col-md-6">
+												<input type="radio" autocomplete="off">
+												<label>Widowed</label>
+												</div>
+											</div>
+										</div>
+									</div><br>
+									<div class="row">
+										<div class="col-md-3">
+											<label for="contact">Date of Hire</label>
+										</div>
+										<div class="col-md-9">
+											<input type="text" class="form-control" id="contact" placeholder="Turn this into a calendar date picker!">
 										</div>
 									</div>
 								</div>
+
 								<div class="col-md-6">
 									<h4 class="modal-title">Job details</h4><hr>
 									<div class="row">
@@ -73,7 +117,7 @@ include('directives/session.php');
 										</div>
 										<div class="col-md-4">
 											<div class="dropdown">
-												<button class="btn btn-default dropdown-toggle pull-left" type="button" id="position" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+												<button class="btn btn-default dropdown-toggle pull-left" type="button" id="position" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 													Select a position
 													<span class="caret"></span>
 												</button>
@@ -111,17 +155,19 @@ include('directives/session.php');
 											<input type="text" class="form-control" id="allowance">
 										</div>
 									</div>
-								</div>
-
-								<div class="col-md-12">
-									<h4 class="modal-title"><br>Contributions</h4><hr><br>
-
 									<div class="row">
-										<div class="col-md-1">
-											<label for="pagibig">PagIBIG</label>
-										</div>
-										<div class="col-md-2">
-											<input type="text" class="form-control" id="pagibig">
+										<h4 class="modal-title"><br>Contributions</h4><hr><br>
+
+										<div class="row">
+											<div class="col-md-5">
+												<label for="pagibig">Pag-IBIG</label>
+											</div>
+											<div class="col-md-4">
+												<input type="text" class="form-control" id="pagibig">
+											</div><br><br><br>
+											<div class="col-md-8 col-md-offset-2 text-center well">
+											* SSS and PhilHealth contributions are automatically computed based on employee's base pay.
+											</div>
 										</div>
 									</div>
 								</div>
@@ -129,7 +175,7 @@ include('directives/session.php');
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary">Save</button>
+						<button type="button" class="btn btn-primary">Save changes</button>
 					</div>
 				</div>
 			</div>
@@ -180,15 +226,13 @@ include('directives/session.php');
 										<div class="col-md-3">
 											<label for="contact">Contact number</label>
 										</div>
-										<div class="col-md-9">
+										<div class="col-md-5">
 											<input type="text" class="form-control" id="contact">
 										</div>
-									</div><br>
-									<div class="row">
-										<div class="col-md-3">
+										<div class="col-md-1">
 											<label for="contact">Age</label>
 										</div>
-										<div class="col-md-9">
+										<div class="col-md-3">
 											<input type="text" class="form-control" id="contact">
 										</div>
 									</div><br>
@@ -197,22 +241,27 @@ include('directives/session.php');
 											<label for="contact">Civil Status</label>
 										</div>
 										<div class="col-md-9">
-											<div class="btn-group" data-toggle="buttons">
-												<label class="btn btn-primary active">
-												<input type="checkbox" autocomplete="off" checked> Single
-												</label>
-												<label class="btn btn-primary">
-													<input type="checkbox" autocomplete="off"> Married
-												</label>
-												<label class="btn btn-primary">
-													<input type="checkbox" autocomplete="off"> Divorced
-												</label>
-												<label class="btn btn-primary">
-													<input type="checkbox" autocomplete="off"> Separated
-												</label>
-												<label class="btn btn-primary">
-													<input type="checkbox" autocomplete="off"> Widowed
-												</label>
+											<div class="row">
+												<div class="col-md-4">
+												<input type="radio" autocomplete="off">
+												<label>Single</label>
+												</div>
+												<div class="col-md-4">
+												<input type="radio" autocomplete="off">
+												<label>Married</label>
+												</div>
+												<div class="col-md-4">
+												<input type="radio" autocomplete="off">
+												<label>Divorced</label>
+												</div>
+												<div class="col-md-6">
+												<input type="radio" autocomplete="off">
+												<label>Separated</label>
+												</div>
+												<div class="col-md-6">
+												<input type="radio" autocomplete="off">
+												<label>Widowed</label>
+												</div>
 											</div>
 										</div>
 									</div><br>
@@ -221,7 +270,7 @@ include('directives/session.php');
 											<label for="contact">Date of Hire</label>
 										</div>
 										<div class="col-md-9">
-											<input type="text" class="form-control" id="contact">
+											<input type="text" class="form-control" id="contact" placeholder="Turn this into a calendar date picker!">
 										</div>
 									</div>
 								</div>
@@ -234,7 +283,7 @@ include('directives/session.php');
 										</div>
 										<div class="col-md-4">
 											<div class="dropdown">
-												<button class="btn btn-default dropdown-toggle pull-left" type="button" id="position" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+												<button class="btn btn-default dropdown-toggle pull-left" type="button" id="position" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 													Select a position
 													<span class="caret"></span>
 												</button>
@@ -277,10 +326,13 @@ include('directives/session.php');
 
 										<div class="row">
 											<div class="col-md-5">
-												<label for="pagibig">PagIBIG</label>
+												<label for="pagibig">Pag-IBIG</label>
 											</div>
 											<div class="col-md-4">
 												<input type="text" class="form-control" id="pagibig">
+											</div><br><br><br>
+											<div class="col-md-8 col-md-offset-2 text-center well">
+											* SSS and PhilHealth contributions are automatically computed based on employee's base pay.
 											</div>
 										</div>
 									</div>
@@ -312,7 +364,53 @@ include('directives/session.php');
 					</div>
 				</div>
 				<!-- FILTER EMPLOYEE BY POSITION -->
-				<div class="col-md-4 pull-down pull-right">
+				<div class="col-md-4 col-md-pull-1 pull-down text-right">
+				Filter employees by:
+					<div class="btn-group">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Position <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a href="#">Foreman</a></li>
+							<li><a href="#">Leadman</a></li>
+							<li><a href="#">Time Keeper</a></li>
+							<li><a href="#">Operator</a></li>
+							<li><a href="#">Carpenter</a></li>
+							<li><a href="#">Mason</a></li>
+							<li><a href="#">Labor</a></li>
+							<li><a href="#">Welder</a></li>
+							<li><a href="#">Painter</a></li>
+							<li><a href="#">Electrician</a></li>
+							<li><a href="#">Plumber</a></li>
+							<li><a href="#">Office Staff</a></li>
+						</ul>
+					</div>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Site <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+						<li><a href="#">Muralla</a></li>
+						<li><a href="#">Zooey Main</a></li>
+						<li><a href="#">Teressa </a></li>
+						<li><a href="#">Camalig</a></li>
+						<li><a href="#">Marilao</a></li>
+						<li><a href="#">Sta. Maria</a></li>
+						<li><a href="#">Balagtas</a></li>
+						<li><a href="#">La Union</a></li>
+						<li><a href="#">Kaybiga</a></li>
+						<li><a href="#">Max steel</a></li>
+						<li><a href="#">Zooey Lawang Bato</a></li>
+						<li><a href="#">Pedro Gil</a></li>
+						<li><a href="#">Batangas</a></li>
+						<li><a href="#">Tagaytay</a></li>
+						<li><a href="#">Carmona</a></li>
+						<li><a href="#">Paliparan</a></li>
+						<li><a href="#">Laguna</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-2 col-md-pull-1 pull-down pull-left">
 					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">Add new Employee</button>
 				</div>
 			</div>
@@ -334,14 +432,20 @@ include('directives/session.php');
 						<td>Trial Employee entry</td>
 						<td>Position</td>
 						<td>Placeholder</td>
-						<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#editEmployee" id="editEmployee">Edit details</button></td>
+						<td>
+						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editEmployee" id="editEmployee">Edit details</button>
+						<a type="button" class="btn btn-default" href="viewemployee.php">View details</a>
+						</td>
 					</tr>
 					<tr>
 						<td>1</td>
 						<td>Trial Employee entry</td>
 						<td>Position</td>
 						<td>Placeholder</td>
-						<td>ACTION BUTTONS HERE...</td>
+						<td>
+							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editEmployee" id="editEmployee">Edit details</button>
+							<a type="button" class="btn btn-default" href="viewemployee.php">View details</a>
+						</td>
 					</tr>
 				</table>
 			</div>	
