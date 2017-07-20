@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
-include('session.php');
+include('directives/session.php');
+
 ?>
 
 <html>
@@ -20,7 +21,8 @@ include('session.php');
 	 <div class="container-fluid">
 
 <?php
-	require_once("nav.php");
+	require_once("directives/nav.php");
+	//echo $_SERVER['SERVER_NAME'];
 ?>
 	 	<div class="container pull-down">
 	 		<table class="table table-bordered table-responsive" style="color: white; font-family: Quicksand;">
@@ -99,6 +101,6 @@ include('session.php');
 	 <script>
 		document.getElementById("home").setAttribute("class", "active");
 	</script>
-
+	<script src="js/jquery.min.js"></script>
 	</body>
 </html>
