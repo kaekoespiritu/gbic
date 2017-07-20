@@ -1,33 +1,11 @@
 <!DOCTYPE html>
 <?php
-
 // Connecting to database
-Include("config.php");
 session_start();
+include("directives/db.php");
 
-if($_SERVER["REQUEST_METHOD"] == "POST")
-{
-	$adminusername = mysqli_real_escape_string($db, $_POST['username']);
-	$adminpassword = mysqli_real_escape_string($db, $_POST['password']);
-
-	$sql = "SELECT * FROM admin WHERE username = '$adminusername' AND password = '$adminpassword'";
-	$result = mysqli_query($db, $sql);
-	$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-	$count = mysqli_num_rows($result);
-
-	if($count == 1)
-	{
-		$_SESSION['user_logged_in'] = $adminusername;
-		header("location: index.php");
-	}
-	else
-	{
-		$error = "Username or password is invalid.";
-	}
-}
 
 ?>
-
 <html>
 	<head>
 		<title>Payroll</title>
@@ -70,3 +48,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 		</div>
 	</body>
 </html>
+<?php
+if($_SERVER["REQUEST_METHOD"] == "POST")
+{
+	$username = mysql_real_escape_string($_POST['username']);
+	$password = mysql_real_escape_string($_POST['password']);
+
+	$sql = "SELECT * FROM administrator WHERE username = '$username' AND password = '$password'";
+	$result = mysql_query($sql);
+	$row = mysql_fetch_assoc($result);
+	$count = mysql_num_rows($result);
+
+	if($count == 1)
+	{
+		$_SESSION['user_logged_in'] = $username;
+		header("location: index.php");
+	}
+	else
+	{
+		 Print "<script>alert('Username or password is invalid.')</script>";
+	}
+}
+?>

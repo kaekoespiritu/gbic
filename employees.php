@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
-include('session.php');
+include('directives/session.php');
+
 ?>
 <html>
 <head>
@@ -348,7 +349,7 @@ include('session.php');
 
 		<!-- NAVIGATION BAR -->
 		<?php
-			require_once("nav.php");
+			require_once("directives/nav.php");
 		?>
 
 		<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->

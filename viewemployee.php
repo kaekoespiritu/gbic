@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <?php
-include('session.php');
+
+
+include('directives/session.php');
+
 ?>
 <html>
 	<head>
@@ -19,7 +22,9 @@ include('session.php');
 	 <div class="container-fluid">
 
 	 	<?php
-			require_once("nav.php");
+
+			require_once("directives/nav.php");
+
 		?>
 
 		<a class="btn btn-default" role="button" href="employees.php"><span class="	glyphicon glyphicon-chevron-left"></span> Return to employees table</a><br><br>

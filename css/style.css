@@ -1,11 +1,11 @@
 /* NAVIGATION BAR */
 .menu
 {
-	height: 60px !important;
+	height: 50px !important;
 }
 .logo
 {
-	border-width: 1px;
+
 	border-bottom-style: solid;
 	border-color: rgb(213,213,213);
 }
@@ -25,13 +25,36 @@
 .nav-tabs>li.active>a,.nav-tabs>li.active>a:hover 
 {
   background-color: #10621e;
-  border: 0px;
+  height:90%;
 }
 .nav-tabs.nav-justified>.active>a, .nav-tabs.nav-justified>.active>a:focus, .nav-tabs.nav-justified>.active>a:hover
 {
   border: 0px;
   border-color: #10621e;
 }
+/*--------------------------------*/
+
+@keyframes bounce {
+    1%{top:0;}
+    20%  {top:-3px;}
+    50%  {top:0px;}
+    70%  {top:0px;}
+    100% {top:0px;}
+}
+.button {
+
+}
+.button:hover{ 
+  transition: 1s; 
+  animation-name: bounce;
+  animation-duration: 1.5s;
+  
+}
+
+
+
+/*--------------------------------*/
+
 .btn_loginSubmit:hover
 {
 background-color:#426D6D !important;
