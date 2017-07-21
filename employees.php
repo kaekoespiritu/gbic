@@ -16,6 +16,7 @@ include('directives/db.php');
 <body style="font-family: QuicksandMed;">
 	<div class="container-fluid">
 
+<<<<<<< HEAD
 		<!-- ADD EMPLOYEE MODAL -->
 		<div class="modal fade" id="addEmployee" role="dialog">
 			<div class="modal-dialog modal-lg">
@@ -346,6 +347,13 @@ include('directives/db.php');
 			</div>
 		</div>
 
+=======
+		<?php
+		require_once('directives/modals/addEmployee.php');
+		require_once('directives/modals/editEmployee.php');
+		?>
+		
+>>>>>>> caa0fdfd9ece514ecf3e628b9cd6f8701e243517
 		<!-- NAVIGATION BAR -->
 		<?php
 		require_once("directives/nav.php");
@@ -459,6 +467,7 @@ include('directives/db.php');
 		document.getElementById("employees").setAttribute("class", "active");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     $( "#dtpkr_addEmployee" ).datepicker({
  		changeMonth: true,
       	changeYear: true,
@@ -478,6 +487,8 @@ include('directives/db.php');
     });
  
 =======
+=======
+>>>>>>> caa0fdfd9ece514ecf3e628b9cd6f8701e243517
 		$( "#dtpkr_addEmployee" ).datepicker({
 			changeMonth: true,
 			changeYear: true,
@@ -493,6 +504,9 @@ include('directives/db.php');
 			showAnim: 'blind'
 		});
 
+<<<<<<< HEAD
+>>>>>>> caa0fdfd9ece514ecf3e628b9cd6f8701e243517
+=======
 >>>>>>> caa0fdfd9ece514ecf3e628b9cd6f8701e243517
 		
 	</script>
