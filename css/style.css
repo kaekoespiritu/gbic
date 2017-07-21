@@ -64,6 +64,10 @@ h1
 {
   font-size: 4vw !important;
 }
+h2
+{
+  margin: 0px;
+}
 h6
 {
   font-family: Quicksand;
@@ -106,6 +110,10 @@ body
 .pull-down
 {
   margin-top: 2em;
+}
+.pull-up
+{
+  margin-bottom: 2em;
 }
 @font-face {
     font-family: 'Quicksand';
