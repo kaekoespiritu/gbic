@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 include('directives/session.php');
-
+include('directives/db.php');
 ?>
 <html>
 <head>
@@ -35,10 +35,10 @@ include('directives/session.php');
 									<h4 class="modal-title">Personal Information</h4><hr>
 									<div class="row">
 										<div class="col-md-3">
-											<label for="fname">First name</label>
+											<label for="firstname">First name</label>
 										</div>
 										<div class="col-md-9">
-											<input type="text" class="form-control" id="fname">
+											<input type="text" name="txtFirstNameAdd" class="form-control" id="fname">
 										</div>
 									</div><br>
 									<div class="row">
@@ -46,7 +46,7 @@ include('directives/session.php');
 											<label for="lname">Last name</label>
 										</div>
 										<div class="col-md-9">
-											<input type="text" class="form-control" id="lname">
+											<input type="text" name="txtFirstNameAdd" class="form-control" id="lname">
 										</div>
 									</div><br>
 									<div class="row">
@@ -54,7 +54,7 @@ include('directives/session.php');
 											<label for="address">Address</label>
 										</div>
 										<div class="col-md-9">
-											<input type="text" class="form-control" id="address">
+											<input type="text" name="txtFirstNameAdd" class="form-control" id="address">
 										</div>
 									</div><br>
 									<div class="row">
@@ -62,13 +62,13 @@ include('directives/session.php');
 											<label for="contact">Contact number</label>
 										</div>
 										<div class="col-md-5">
-											<input type="text" class="form-control" id="contact">
+											<input type="text" name="txtFirstNameAdd" class="form-control" id="contact">
 										</div>
 										<div class="col-md-1">
 											<label for="contact">Age</label>
 										</div>
 										<div class="col-md-3">
-											<input type="text" class="form-control" id="contact">
+											<input type="text" name="txtFirstNameAdd" class="form-control" id="contact">
 										</div>
 									</div><br>
 									<div class="row">
@@ -107,7 +107,7 @@ include('directives/session.php');
 										</div>
 										<div class="col-md-9">
 										
-											<input type="text" size="10" style="width:130px" class="form-control" id="dtpkr_addEmployee" placeholder="month-day-year">
+											<input type="text" name="txtFirstNameAdd" size="10" style="width:130px" class="form-control" id="dtpkr_addEmployee" placeholder="month-day-year">
 										</div>
 									</div>
 								</div>
@@ -120,23 +120,19 @@ include('directives/session.php');
 										</div>
 										<div class="col-md-4">
 											<div class="dropdown">
-												<button class="btn btn-default dropdown-toggle pull-left" type="button" id="position" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-													Select a position
+												<button class="btn btn-default dropdown-toggle pull-left" type="button" id="position" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">													Select a position
 													<span class="caret"></span>
 												</button>
 												<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-													<li><a href="#">Foreman</a></li>
-													<li><a href="#">Leadman</a></li>
-													<li><a href="#">Time Keeper</a></li>
-													<li><a href="#">Operator</a></li>
-													<li><a href="#">Carpenter</a></li>
-													<li><a href="#">Mason</a></li>
-													<li><a href="#">Labor</a></li>
-													<li><a href="#">Welder</a></li>
-													<li><a href="#">Painter</a></li>
-													<li><a href="#">Electrician</a></li>
-													<li><a href="#">Plumber</a></li>
-													<li><a href="#">Office Staff</a></li>
+														<li value="">-Select position-</li>
+<!-- POSITION -->								<?php
+													$position_query = "SELECT position FROM job_position";
+													$query = mysql_query($position_query);
+													while($row = mysql_fetch_assoc($query))
+													{
+														Print "<li value='".$row['position']."'>".$row['position']."</a></li>";
+													}
+												?>
 												</ul>
 											</div>
 										</div>
@@ -471,7 +467,10 @@ include('directives/session.php');
       	changeYear: true,
       	dateFormat: 'mm-dd-yy',
       	showAnim: 'fadeIn',
-      	defaultDate: new Date()
+      	defaultDate: new Date(),
+      	beforeShow: function(){    
+           $(".ui-datepicker").css('font-size', 10) 
+       }
     });
    
 	   $( "#dtpkr_editEmployee" ).datepicker({
