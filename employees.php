@@ -10,6 +10,7 @@ include('directives/session.php');
 
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 </head>
 <body>
@@ -128,12 +129,34 @@ include('directives/session.php');
 	</div>
 
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
-	<script rel="javascript" src="js/jquery.min.js"></script>
+
+ <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
+	
 	<script>
 		document.getElementById("employees").setAttribute("class", "active");
+
+    $( "#dtpkr_addEmployee" ).datepicker({
+ 		changeMonth: true,
+      	changeYear: true,
+      	dateFormat: 'mm-dd-yy',
+      	showAnim: 'fadeIn',
+      	defaultDate: new Date()
+    });
+   
+	   $( "#dtpkr_editEmployee" ).datepicker({
+ 		changeMonth: true,
+      	changeYear: true,
+      	dateFormat: 'mm-dd-yy',
+      	showAnim: 'fadeIn'
+    });
+ 
+		
 	</script>
 
 </body>
 </html>
-
+<!--
+      changeMonth: true,
+      changeYear: true

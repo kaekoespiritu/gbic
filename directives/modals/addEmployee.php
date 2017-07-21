@@ -86,7 +86,7 @@
 											<label for="contact">Date of Hire</label>
 										</div>
 										<div class="col-md-9">
-											<input type="text" class="form-control" id="contact" placeholder="Turn this into a calendar date picker!">
+											<input type="text" size="10" style="width:130px" class="form-control" id="dtpkr_addEmployee" placeholder="month-day-year">
 										</div>
 									</div>
 								</div>
