@@ -122,3 +122,17 @@ body
     font-weight: normal;
     text-rendering: optimizeLegibility;
 }
+@font-face {
+    font-family: 'QuicksandMed';
+    src: url('../fonts/Quicksand-Medium.ttf');
+    text-rendering: optimizeLegibility;
+}
+@font-face {
+    font-family: 'QuicksandBold';
+    src: url('../fonts/Quicksand-Bold.ttf');
+    text-rendering: optimizeLegibility;
+}
+.checkbox
+{
+  margin-top: 0px !important;
+}

@@ -57,27 +57,14 @@
 									<label for="contact">Civil Status</label>
 								</div>
 								<div class="col-md-9">
-									<div class="row">
-										<div class="col-md-4">
-											<input type="radio" autocomplete="off">
-											<label>Single</label>
-										</div>
-										<div class="col-md-4">
-											<input type="radio" autocomplete="off">
-											<label>Married</label>
-										</div>
-										<div class="col-md-4">
-											<input type="radio" autocomplete="off">
-											<label>Divorced</label>
-										</div>
-										<div class="col-md-6">
-											<input type="radio" autocomplete="off">
-											<label>Separated</label>
-										</div>
-										<div class="col-md-6">
-											<input type="radio" autocomplete="off">
-											<label>Widowed</label>
-										</div>
+									<div class="dropdown">
+										<select class="form-control" aria-labelledby="dropdownMenu1">
+											<option>Single</option>
+											<option>Married</option>
+											<option>Divorced</option>
+											<option>Separated</option>
+											<option>Widowed</option>
+										</select>
 									</div>
 								</div>
 							</div><br>
@@ -99,24 +86,20 @@
 								</div>
 								<div class="col-md-4">
 									<div class="dropdown">
-										<button class="btn btn-default dropdown-toggle pull-left" type="button" id="position" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											Select a position
-											<span class="caret"></span>
-										</button>
-										<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-											<li><a href="#">Foreman</a></li>
-											<li><a href="#">Leadman</a></li>
-											<li><a href="#">Time Keeper</a></li>
-											<li><a href="#">Operator</a></li>
-											<li><a href="#">Carpenter</a></li>
-											<li><a href="#">Mason</a></li>
-											<li><a href="#">Labor</a></li>
-											<li><a href="#">Welder</a></li>
-											<li><a href="#">Painter</a></li>
-											<li><a href="#">Electrician</a></li>
-											<li><a href="#">Plumber</a></li>
-											<li><a href="#">Office Staff</a></li>
-										</ul>
+										<select class="form-control" aria-labelledby="dropdownMenu1">
+											<option value="Foreman">Foreman</option>
+											<option value="Leadman">Leadman</option>
+											<option value="TimeKeeper">Time Keeper</option>
+											<option value="Operator">Operator</option>
+											<option value="Carpenter">Carpenter</option>
+											<option value="Mason">Mason</option>
+											<option value="Labor">Labor</option>
+											<option value="Welder">Welder</option>
+											<option value="Painter">Painter</option>
+											<option value="Electrician">Electrician</option>
+											<option value="Plumber">Plumber</option>
+											<option value="OfficeStaff">Office Staff</option>
+										</select>
 									</div>
 								</div>
 							</div><br>
@@ -138,27 +121,37 @@
 								</div>
 							</div>
 							<div class="row">
-								<h4 class="modal-title"><br>Contributions</h4><hr><br>
+								<h4 class="modal-title"><br>Contributions</h4><hr>
 
 								<div class="row">
-									<div class="col-md-5">
-										<label for="pagibig">Pag-IBIG</label>
+									<div class="col-md-6 checkbox">
+										<input type="checkbox" value="SSS" id="sss">
+										<label style="font-weight: 700" for="sss">SSS</label>
 									</div>
-									<div class="col-md-4">
-										<input type="text" class="form-control" id="pagibig">
-									</div><br><br><br>
-									<div class="col-md-8 col-md-offset-2 text-center well">
-										* SSS and PhilHealth contributions are automatically computed based on employee's base pay.
+									<div class="col-md-6 checkbox">
+										<input type="checkbox" value="PhilHealth" id="philhealth">
+										<label style="font-weight: 700" for="philhealth">PhilHealth</label>
 									</div>
+								</div>
+								<div class="row">
+								<div class="col-md-5">
+									<label for="pagibig">Pag-IBIG</label>
+								</div>
+								<div class="col-md-4">
+									<input type="text" class="form-control" id="pagibig">
+								</div><br><br><br>
+								<div class="col-md-8 col-md-offset-2 text-center well well-sm">
+									* SSS and PhilHealth contributions are automatically computed based on employee's base pay.
 								</div>
 							</div>
 						</div>
 					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary">Save changes</button>
-			</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-primary">Save changes</button>
 		</div>
 	</div>
+</div>
 </div>
