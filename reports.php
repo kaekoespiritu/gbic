@@ -10,7 +10,7 @@ include('directives/session.php');
 		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 		<link rel="stylesheet" href="css/style.css" type="text/css">
 	</head>
-	<body>
+	<body style="font-family: Quicksand;">
 	<!-- 
 	Vertical Navigation Bar
 	HOME | EMPLOYEES | PAYROLL | REPORTS | ADMIN OPTIONS | LOGOUT

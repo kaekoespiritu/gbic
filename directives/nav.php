@@ -34,7 +34,7 @@
 					<a href="adminoptions.php" class="button">
 					<span>	
 						<img src="Images/admin-with-cogwheels.png" class="menu center-block">
-						<h6 class="text-center">ADMIN OPTIONS</h6>
+						<h6 class="text-center">OPTIONS</h6>
 					</span>
 				</a>
 				</li>

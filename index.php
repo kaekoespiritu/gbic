@@ -12,7 +12,7 @@ include('directives/session.php');
 		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 		<link rel="stylesheet" href="css/style.css" type="text/css">
 	</head>
-	<body>
+	<body style="font-family: Quicksand;">
 	<!-- 
 	Vertical Navigation Bar
 	HOME | EMPLOYEES | PAYROLL | REPORTS | ADMIN OPTIONS | LOGOUT
@@ -25,7 +25,7 @@ include('directives/session.php');
 	//echo $_SERVER['SERVER_NAME'];
 ?>
 	 	<div class="container pull-down">
-	 		<table class="table table-bordered table-responsive" style="color: white; font-family: Quicksand;">
+	 		<table class="table table-bordered table-responsive" style="color: white;">
 	 		<tr>
 	 			<td style="background-color:#AA6F38">
 	 					<h4>Today is<br></h4>

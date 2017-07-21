@@ -64,6 +64,10 @@ h1
 {
   font-size: 4vw !important;
 }
+h2
+{
+  margin: 0px;
+}
 h6
 {
   font-family: Quicksand;
@@ -107,10 +111,28 @@ body
 {
   margin-top: 2em;
 }
+.pull-up
+{
+  margin-bottom: 2em;
+}
 @font-face {
     font-family: 'Quicksand';
     src: url('../fonts/Quicksand-Light.ttf');
     font-style: normal;
     font-weight: normal;
     text-rendering: optimizeLegibility;
+}
+@font-face {
+    font-family: 'QuicksandMed';
+    src: url('../fonts/Quicksand-Medium.ttf');
+    text-rendering: optimizeLegibility;
+}
+@font-face {
+    font-family: 'QuicksandBold';
+    src: url('../fonts/Quicksand-Bold.ttf');
+    text-rendering: optimizeLegibility;
+}
+.checkbox
+{
+  margin-top: 0px !important;
 }
