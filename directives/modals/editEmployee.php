@@ -59,6 +59,7 @@
 								<div class="col-md-9">
 									<div class="dropdown">
 										<select class="form-control" aria-labelledby="dropdownMenu1">
+											<option hidden>Select a status</option>
 											<option>Single</option>
 											<option>Married</option>
 											<option>Divorced</option>
@@ -73,7 +74,7 @@
 									<label for="contact">Date of Hire</label>
 								</div>
 								<div class="col-md-9">
-									<input type="text" size="10" style="width:130px" class="form-control" id="dtpkr_editEmployee" placeholder="month-day-year">
+									<input type="text" size="10" style="width:150px" class="form-control" id="dtpkr_editEmployee" placeholder="month-day-year">
 								</div>
 							</div>
 						</div>
@@ -84,9 +85,10 @@
 								<div class="col-md-5">
 									<label for="position" class="text-right">Position</label>
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-5">
 									<div class="dropdown">
 										<select class="form-control" aria-labelledby="dropdownMenu1">
+											<option hidden>Select a position</option>
 											<option value="Foreman">Foreman</option>
 											<option value="Leadman">Leadman</option>
 											<option value="TimeKeeper">Time Keeper</option>
@@ -108,7 +110,7 @@
 								<div class="col-md-5">
 									<label for="rate">Rate per day</label>
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-5">
 									<input type="text" class="form-control" id="rate">
 								</div>
 							</div><br>
@@ -116,7 +118,7 @@
 								<div class="col-md-5">
 									<label for="allowance">Allowance</label>
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-5">
 									<input type="text" class="form-control" id="allowance">
 								</div>
 							</div>
