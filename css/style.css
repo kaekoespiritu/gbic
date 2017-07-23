@@ -32,23 +32,29 @@
   border: 0px;
   border-color: #10621e;
 }
+
+/* DROPDOWN */
+
+.emp:hover .dropdown-menu
+{
+    display: block;
+}
+
 /*--------------------------------*/
 
-@keyframes bounce {
+@keyframes bounce
+{
     1%{top:0;}
     20%  {top:-3px;}
     50%  {top:0px;}
     70%  {top:0px;}
     100% {top:0px;}
 }
-.button {
-
-}
-.button:hover{ 
+.button:hover
+{ 
   transition: 1s; 
   animation-name: bounce;
   animation-duration: 1.5s;
-  
 }
 
 
@@ -86,7 +92,7 @@ body
   text-align: center;
   height:100% !important;
 }
-/* Change cards to have simpler CSS3 effects */
+/* TODO: Change cards to have simpler CSS3 effects */
 .card {
   background: #53A461;
   opacity: 0.9;
@@ -115,6 +121,8 @@ body
 {
   margin-bottom: 2em;
 }
+
+/* CUSTOM FONTS */
 @font-face {
     font-family: 'Quicksand';
     src: url('../fonts/Quicksand-Light.ttf');
@@ -136,3 +144,4 @@ body
 {
   margin-top: 0px !important;
 }
+

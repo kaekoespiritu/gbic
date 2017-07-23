@@ -23,17 +23,24 @@ include('directives/session.php');
 	?>
 
 	<div class="col-md-10 col-md-offset-1">
-		<div class="row text-left pull-down">
-			<ol class="breadcrumb">
+		<div class="row text-center pull-down">
+			<ol class="breadcrumb text-left">
 				<li><a href="employees.php">Employees</a></li>
 				<li class="active">View employee details</li>
 			</ol>
 
-			<h2 class="text-center">Miguel Joselito Dela Cruz</h2>
+			<div class="row">
+			<div class="col-md-6">
+			<h2>Miguel Joselito Dela Cruz</h2>
+			</div>
+			<div class="col-md-6">
+			<a href="#" class="btn btn-primary">View historical payslip</a>
+			</div>
+			</div>
 		</div>
 
 		<div class="row pull-down">
-			<form class="horizontal">
+			<div class="horizontal">
 				<div class="row">
 					<div class="col-md-6">
 						<h4 class="modal-title">Personal Information</h4><hr>
@@ -44,7 +51,7 @@ include('directives/session.php');
 							<div class="col-md-9 text-left">
 								<span>97 Waco St. Greenheights Village, Quezon City</span>
 							</div>
-						</div><br>
+						</div> 
 						<div class="row">
 							<div class="col-md-3">
 								<label>Contact number</label>
@@ -52,7 +59,7 @@ include('directives/session.php');
 							<div class="col-md-3 text-left">
 								<span>09123456789</span>
 							</div>
-						</div><br>
+						</div> 
 						<div class="row">
 							<div class="col-md-3">
 								<label for="contact">Civil Status</label>
@@ -60,7 +67,7 @@ include('directives/session.php');
 							<div class="col-md-3 text-left">
 								<span>Single</span>
 							</div>
-						</div><br>
+						</div> 
 						<div class="row">
 							<div class="col-md-3">
 								<label>Age</label>
@@ -68,7 +75,7 @@ include('directives/session.php');
 							<div class="col-md-3 text-left">
 								<span>29</span>
 							</div>
-							</div><br>
+							</div> 
 						<div class="row">
 							<div class="col-md-3">
 								<label for="contact">Date of Hire</label>
@@ -77,9 +84,32 @@ include('directives/session.php');
 								<span> July 14, 2014 </span>
 							</div>
 						</div>
-						<br>
-						<div class="row pull-down">
-							<a href="#" class="btn btn-primary">View historical payslip</a>
+						<div class="row">
+						<h4 class="modal-title">Loans</h4><hr>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<label for="contact">SSS</label>
+							</div>
+							<div class="col-md-3 text-left">
+								<span>1,500php</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<label for="contact">Pag-IBIG</label>
+							</div>
+							<div class="col-md-3 text-left">
+								<span>2,000php</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<label for="contact">Vale</label>
+							</div>
+							<div class="col-md-3 text-left">
+								<span>250php</span>
+							</div>
 						</div>
 					</div>
 
@@ -92,7 +122,7 @@ include('directives/session.php');
 							<div class="col-md-6">
 								<span>Mason</span>
 							</div>
-						</div><br>
+						</div> 
 
 						<div class="row">
 							<div class="col-md-6">
@@ -101,7 +131,7 @@ include('directives/session.php');
 							<div class="col-md-6">
 								<span>399</span>
 							</div>
-						</div><br>
+						</div> 
 						<div class="row">
 							<div class="col-md-6">
 								<label for="allowance">Allowance</label>
@@ -111,7 +141,7 @@ include('directives/session.php');
 							</div>
 						</div>
 						<div class="row">
-							<h4 class="modal-title"><br>Contributions</h4><hr>
+							<h4 class="modal-title"> Contributions</h4><hr>
 
 							<div class="row">
 								<div class="row">
@@ -121,7 +151,7 @@ include('directives/session.php');
 									<div class="col-md-6">
 										<span>299</span>
 									</div>
-								</div><br>
+								</div> 
 								<div class="row">
 									<div class="col-md-6">
 										<label for="pagibig">PhilHealth *</label>
@@ -129,7 +159,7 @@ include('directives/session.php');
 									<div class="col-md-6">
 										<span>299</span>
 									</div>
-								</div><br>
+								</div> 
 								<div class="row">
 									<div class="col-md-6">
 										<label for="pagibig">Pag-IBIG</label>
@@ -137,15 +167,15 @@ include('directives/session.php');
 									<div class="col-md-6">
 										<span>299</span>
 									</div>
-								</div><br>
-								<div class="col-md-8 col-md-offset-2 text-center well well-sm">
+								</div> 
+								<div class="col-md-8 col-md-offset-2 text-center pull-down well well-sm">
 									* SSS and PhilHealth contributions are automatically computed based on employee's base pay.
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</form>
+			</div>
 		</div>
 
 

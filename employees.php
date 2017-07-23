@@ -85,7 +85,7 @@ include('directives/db.php');
 		</div>
 
 		<!-- EMPLOYEE TABLE -->
-		<div class="row jumbotron">
+		<div class="row pull-down">
 			<div class="col-md-10 col-md-offset-1">
 				<table class="table table-bordered" style="background-color:white;">
 					<tr>
