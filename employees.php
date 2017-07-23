@@ -15,12 +15,10 @@ include('directives/db.php');
 </head>
 <body style="font-family: QuicksandMed;">
 	<div class="container-fluid">
-
 		<?php
 		require_once('directives/modals/addEmployee.php');
 		require_once('directives/modals/editEmployee.php');
 		?>
-		
 		<!-- NAVIGATION BAR -->
 		<?php
 		require_once("directives/nav.php");
@@ -132,7 +130,6 @@ include('directives/db.php');
 	
 	<script>
 		document.getElementById("employees").setAttribute("class", "active");
-
 		$( "#dtpkr_addEmployee" ).datepicker({
 			changeMonth: true,
 			changeYear: true,
