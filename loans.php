@@ -27,7 +27,13 @@ include('directives/db.php');
 		<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
 		<div class="container">
 			<div class="row">
-				<div class="col-md-4 col-md-offset-1 pull-down">
+			<div class="col-md-10 col-md-offset-1 pull-down">
+			<ol class="breadcrumb text-left">
+				<li><a href="employees.php">Employees</a></li>
+				<li class="active">Loans</li>
+			</ol>
+			</div>
+				<div class="col-md-4 col-md-offset-1">
 					<div class="input-group">
 						<input type="text" class="form-control">
 						<span class="input-group-btn">
@@ -36,7 +42,7 @@ include('directives/db.php');
 					</div>
 				</div>
 				<!-- FILTER EMPLOYEE BY POSITION -->
-				<div class="col-md-5 col-md-pull-1 pull-down text-right">
+				<div class="col-md-5 col-md-pull-1 text-right">
 					Filter by:
 					<div class="btn-group">
 						<select class="form-control">
@@ -78,8 +84,8 @@ include('directives/db.php');
 						</select>
 					</div>
 				</div>
-				<div class="col-md-1 col-md-pull-1 pull-down pull-left">
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">Add new Employee</button>
+				<div class="col-md-1 col-md-pull-1 text-right">
+					<button class="btn btn-primary">Save changes</button>
 				</div>
 			</div>
 		</div>
@@ -87,33 +93,31 @@ include('directives/db.php');
 		<!-- EMPLOYEE TABLE -->
 		<div class="row pull-down">
 			<div class="col-md-10 col-md-offset-1">
-				<table class="table table-bordered" style="background-color:white;">
+				<table class="table table-bordered table-condensed" style="background-color:white;">
 					<tr>
-						<td>Employee ID</td>
+						<td>ID</td>
 						<td>Name</td>
 						<td>Position</td>
 						<td>Site</td>
-						<td>Actions</td>
+						<td colspan="3">Loans</td>
 					</tr>
 					<tr>
 						<td>1</td>
 						<td>Trial Employee entry</td>
 						<td>Position</td>
 						<td>Placeholder</td>
-						<td>
-							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editEmployee" id="editEmployee">Edit details</button>
-							<a type="button" class="btn btn-default" href="viewemployee.php">View details</a>
-						</td>
+						<td><input type="checkbox" /> SSS <input type="text" id="sss" name="sss" disabled="disabled"/></td>
+						<td><input type="checkbox" /> Pag-IBIG <input type="text" id="philhealth" name="philhealth" disabled="disabled"/></td>
+						<td><input type="checkbox" /> Vale <input type="text" id="pagibig" name="pagibig" disabled="disabled"/></td>
 					</tr>
 					<tr>
 						<td>1</td>
 						<td>Trial Employee entry</td>
 						<td>Position</td>
 						<td>Placeholder</td>
-						<td>
-							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editEmployee" id="editEmployee">Edit details</button>
-							<a type="button" class="btn btn-default" href="viewemployee.php">View details</a>
-						</td>
+						<td><input type="checkbox" /> SSS <input type="text" id="sss" name="sss" disabled="disabled"/></td>
+						<td><input type="checkbox" /> Pag-IBIG <input type="text" id="philhealth" name="philhealth" disabled="disabled"/></td>
+						<td><input type="checkbox" /> Vale <input type="text" id="pagibig" name="pagibig" disabled="disabled"/></td>
 					</tr>
 				</table>
 			</div>	
@@ -127,31 +131,6 @@ include('directives/db.php');
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
-	
-	<script>
-		document.getElementById("employees").setAttribute("class", "active");
-		$( "#dtpkr_addEmployee" ).datepicker({
-			changeMonth: true,
-			changeYear: true,
-			dateFormat: 'mm-dd-yy',
-			showAnim: 'blind',
-			defaultDate: new Date(),
-			beforeShow: function(){    
-           $(".ui-datepicker").css('font-size', 10) 
-       		}
-		});
-
-		$( "#dtpkr_editEmployee" ).datepicker({
-			changeMonth: true,
-			changeYear: true,
-			dateFormat: 'mm-dd-yy',
-			showAnim: 'blind',
-			beforeShow: function(){    
-           $(".ui-datepicker").css('font-size', 10) 
-       }
-		});
-	</script>
-
 	<script rel="javascript" src="js/dropdown.js"></script>
 
 </body>

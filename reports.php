@@ -28,7 +28,7 @@ include('directives/session.php');
 		<script>
 			document.getElementById("reports").setAttribute("class", "active");
 		</script>
-	 	
+	 	<script rel="javascript" src="js/dropdown.js"></script>
 	 	
 	 </div>
 	</body>

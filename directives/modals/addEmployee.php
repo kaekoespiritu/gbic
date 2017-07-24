@@ -108,6 +108,36 @@
 
 							<div class="row">
 								<div class="col-md-5">
+									<label for="position" class="text-right">Site</label>
+								</div>
+								<div class="col-md-5">
+									<div class="dropdown">
+										<select class="form-control">
+											<option hidden>Select a site</option>
+											<option value="Muralla">Muralla</option>
+											<option value="ZooeyMain">Zooey Main</option>
+											<option value="Teressa">Teressa</option>
+											<option value="Camalig">Camalig</option>
+											<option value="Marilao">Marilao</option>
+											<option value="StaMaria">Sta. Maria</option>
+											<option value="Batangas">Balagtas</option>
+											<option value="LaUnion">La Union</option>
+											<option value="Kaybiga">Kaybiga</option>
+											<option value="MaxSteel">Max steel</option>
+											<option value="ZooeyLawangBato">Zooey Lawang Bato</option>
+											<option value="PedroGil">Pedro Gil</option>
+											<option value="Batangas">Batangas</option>
+											<option value="Tagaytay">Tagaytay</option>
+											<option value="Carmona">Carmona</option>
+											<option value="Paliparan">Paliparan</option>
+											<option value="Laguna">Laguna</option>
+										</select>
+									</div>
+								</div>
+							</div><br> 
+
+							<div class="row">
+								<div class="col-md-5">
 									<label for="rate">Rate per day</label>
 								</div>
 								<div class="col-md-5">
@@ -136,24 +166,26 @@
 									</div>
 								</div>
 								<div class="row">
-								<div class="col-md-5">
-									<label for="pagibig">Pag-IBIG</label>
-								</div>
-								<div class="col-md-4">
-									<input type="text" class="form-control" id="pagibig">
-								</div><br><br><br>
-								<div class="col-md-8 col-md-offset-2 text-center well well-sm">
-									* SSS and PhilHealth contributions are automatically computed based on employee's base pay.
+									<div class="col-md-5">
+										<label for="pagibig">Pag-IBIG</label>
+									</div>
+									<div class="col-md-4">
+										<input type="text" class="form-control" id="pagibig">
+									</div>
+									<div class="row">
+									<div class="col-md-10 col-md-offset-1 pull-down text-center well well-sm">
+										* SSS and PhilHealth contributions are automatically computed based on employee's base pay.
+									</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</form>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-primary">Save changes</button>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
 		</div>
 	</div>
-</div>
 </div>
