@@ -10,7 +10,7 @@
 				</div>
 			</div>
 			<div class="modal-body">
-				<form class="horizontal">
+				<form class="horizontal" method="POST" action="add_employee.php">
 					<div class="row">
 						<div class="col-md-6">
 							<h4 class="modal-title">Personal Information</h4><hr>
@@ -19,7 +19,7 @@
 									<label for="fname">First name</label>
 								</div>
 								<div class="col-md-9">
-									<input type="text" class="form-control" id="fname">
+									<input name="txt_addFirstName" onkeypress="validateletter(event)" type="text" class="form-control" id="fname" required>
 								</div>
 							</div><br>
 							<div class="row">
@@ -27,7 +27,7 @@
 									<label for="lname">Last name</label>
 								</div>
 								<div class="col-md-9">
-									<input type="text" class="form-control" id="lname">
+									<input name="txt_addLastName" onkeypress="validateletter(event)" type="text" class="form-control" id="lname" required>
 								</div>
 							</div><br>
 							<div class="row">
@@ -35,7 +35,7 @@
 									<label for="address">Address</label>
 								</div>
 								<div class="col-md-9">
-									<input type="text" class="form-control" id="address">
+									<input name="txt_addAddress" onkeypress="validateletter(event)" type="text" class="form-control" id="address" required>
 								</div>
 							</div><br>
 							<div class="row">
@@ -43,13 +43,13 @@
 									<label for="contact">Contact number</label>
 								</div>
 								<div class="col-md-5">
-									<input type="text" class="form-control" id="contact">
+									<input name="txt_addContactNum" onkeypress="validatenumber(event)" type="text" class="form-control" id="contact" required>
 								</div>
 								<div class="col-md-1">
-									<label for="contact">Age</label>
+									<label for="contact">Date of Birth</label>
 								</div>
 								<div class="col-md-3">
-									<input type="text" class="form-control" id="contact">
+									<input name="txt_addDOB" type="text" class="form-control" id="dtpkr_addDOB" required>
 								</div>
 							</div><br>
 							<div class="row">
@@ -58,7 +58,7 @@
 								</div>
 								<div class="col-md-9">
 									<div class="dropdown">
-										<select class="form-control" aria-labelledby="dropdownMenu1">
+										<select name="txt_addCivilStatus" class="form-control" aria-labelledby="dropdownMenu1">
 											<option hidden>Select a status</option>
 											<option value="Single">Single</option>
 											<option value="Married">Married</option>
@@ -74,7 +74,7 @@
 									<label for="contact">Date of Hire</label>
 								</div>
 								<div class="col-md-9">
-									<input type="text" size="10" style="width:150px" class="form-control" id="dtpkr_addEmployee" placeholder="month-day-year">
+									<input name="txt_addDateHired" type="text" size="10" style="width:150px" class="form-control" id="dtpkr_addEmployee" placeholder="month-day-year" required>
 								</div>
 							</div>
 						</div>
@@ -87,20 +87,16 @@
 								</div>
 								<div class="col-md-5">
 									<div class="dropdown">
-										<select class="form-control" aria-labelledby="dropdownMenu1">
+										<select name="dd_addPosition" class="form-control" aria-labelledby="dropdownMenu1" required>
 											<option hidden>Select a position</option>
-											<option value="Foreman">Foreman</option>
-											<option value="Leadman">Leadman</option>
-											<option value="TimeKeeper">Time Keeper</option>
-											<option value="Operator">Operator</option>
-											<option value="Carpenter">Carpenter</option>
-											<option value="Mason">Mason</option>
-											<option value="Labor">Labor</option>
-											<option value="Welder">Welder</option>
-											<option value="Painter">Painter</option>
-											<option value="Electrician">Electrician</option>
-											<option value="Plumber">Plumber</option>
-											<option value="OfficeStaff">Office Staff</option>
+										<?php
+										$query = "SELECT position FROM job_position";
+										$job_query = mysql_query($query);
+										while($row = mysql_fetch_assoc($job_query))
+										{
+											Print '<option value="'.$row["position"].'">'.$row["position"].'</option>';
+										}
+										?>
 										</select>
 									</div>
 								</div>
@@ -112,25 +108,16 @@
 								</div>
 								<div class="col-md-5">
 									<div class="dropdown">
-										<select class="form-control">
+										<select class="form-control" name="dd_site" required>
 											<option hidden>Select a site</option>
-											<option value="Muralla">Muralla</option>
-											<option value="ZooeyMain">Zooey Main</option>
-											<option value="Teressa">Teressa</option>
-											<option value="Camalig">Camalig</option>
-											<option value="Marilao">Marilao</option>
-											<option value="StaMaria">Sta. Maria</option>
-											<option value="Batangas">Balagtas</option>
-											<option value="LaUnion">La Union</option>
-											<option value="Kaybiga">Kaybiga</option>
-											<option value="MaxSteel">Max steel</option>
-											<option value="ZooeyLawangBato">Zooey Lawang Bato</option>
-											<option value="PedroGil">Pedro Gil</option>
-											<option value="Batangas">Batangas</option>
-											<option value="Tagaytay">Tagaytay</option>
-											<option value="Carmona">Carmona</option>
-											<option value="Paliparan">Paliparan</option>
-											<option value="Laguna">Laguna</option>
+										<?php
+											$site_query = "SELECT location FROM site";
+											$location_query = mysql_query($site_query);
+											while($row = mysql_fetch_assoc($location_query))
+											{
+												Print '<option value="'.$row["location"].'">'.$row["location"].'</option>';
+											}
+										?>
 										</select>
 									</div>
 								</div>
@@ -141,7 +128,7 @@
 									<label for="rate">Rate per day</label>
 								</div>
 								<div class="col-md-5">
-									<input type="text" class="form-control" id="rate">
+									<input name="txt_addRatePerDay"  type="text" class="form-control" id="rate" required>
 								</div>
 							</div><br>
 							<div class="row">
@@ -149,7 +136,7 @@
 									<label for="allowance">Allowance</label>
 								</div>
 								<div class="col-md-5">
-									<input type="text" class="form-control" id="allowance">
+									<input name="txt_addAllowance" onkeypress="validatenumber(event)" type="text" class="form-control" id="allowance">
 								</div>
 							</div>
 							<div class="row">
@@ -157,35 +144,75 @@
 
 								<div class="row">
 									<div class="col-md-6 checkbox">
-										<input type="checkbox" value="SSS" id="sss">
+										<input id="sss" name="chkbox_addSSS" type="checkbox" onclick="sssbox()" value="SSS" >
 										<label style="font-weight: 700" for="sss">SSS</label>
+										<div id="txt_sssAppear" style="display:none;">
+											<input name="txt_sss" type="text" class="form-control" id="txt_sss">
+										</div>
 									</div>
+									
 									<div class="col-md-6 checkbox">
-										<input type="checkbox" value="PhilHealth" id="philhealth">
+										<input name="chkbox_addPhilHealth" type="checkbox" onclick="philhealthbox()" value="PhilHealth" id="philhealth">
+										
 										<label style="font-weight: 700" for="philhealth">PhilHealth</label>
+										<div id="txt_philhealthAppear" style="display:none;">
+											<input name="txt_philhealth" type="text" class="form-control" id="txt_philhealth">
+										</div>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-md-5">
-										<label for="pagibig">Pag-IBIG</label>
-									</div>
-									<div class="col-md-4">
-										<input type="text" class="form-control" id="pagibig">
-									</div>
-									<div class="row">
-									<div class="col-md-10 col-md-offset-1 pull-down text-center well well-sm">
-										* SSS and PhilHealth contributions are automatically computed based on employee's base pay.
-									</div>
-									</div>
+
+								<div class="col-md-5">
+									<label for="pagibig">Pag-IBIG</label>
+								</div>
+								<div class="col-md-4">
+									<input name="txt_addPagibig" onkeypress="validatenumber(event)" type="text" class="form-control" id="pagibig">
+								</div><br><br><br>
+								<div class="col-md-10 col-md-offset-1 pull-down text-center well well-sm">
+									* SSS and PhilHealth contributions are automatically computed based on employee's 
 								</div>
 							</div>
 						</div>
 					</div>
-				</form>
+
+				</div>	
+				<div class="modal-footer">
+					<input type="submit" name="add_submit" id="add_submit" class="btn btn-primary" value="Add Employee">
+				</div>			
+			</form>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary">Save changes</button>
-			</div>
+			
 		</div>
 	</div>
 </div>
+
+
+<script type="javascript">
+     function validatenumber(evt) {
+  		var theEvent = evt || window.event;
+ 		var key = theEvent.keyCode || theEvent.which;
+ 		key = String.fromCharCode( key );
+  		var regex = /[0-9]|\./;
+  		if( !regex.test(key) ) {
+   			 theEvent.returnValue = false;
+   		if(theEvent.preventDefault) 
+   			theEvent.preventDefault();
+ 		}
+	}
+	function validateletter(evt) {
+  		var theEvent = evt || window.event;
+ 		var key = theEvent.keyCode || theEvent.which;
+ 		key = String.fromCharCode( key );
+  		var regex = /^[a-zA-Z ]*$/;
+  		if( !regex.test(key) ) {
+   			 theEvent.returnValue = false;
+   		if(theEvent.preventDefault) 
+   			theEvent.preventDefault();
+  		}
+	}
+
+</script>
+
+
+
+
