@@ -28,6 +28,7 @@ include('directives/db.php');
 		<script>
 			document.getElementById("adminOptions").setAttribute("class", "active");
 		</script>
+		<script rel="javascript" src="js/dropdown.js"></script>
 	 </div>
 	</body>
 </html>

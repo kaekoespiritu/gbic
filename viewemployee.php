@@ -126,6 +126,16 @@ include('directives/session.php');
 
 						<div class="row">
 							<div class="col-md-6">
+								<label for="position" class="text-right">Site</label>
+							</div>
+							<div class="col-md-6">
+								<span>Muralla</span>
+							</div>
+						</div> 
+
+
+						<div class="row">
+							<div class="col-md-6">
 								<label for="rate">Rate per day</label>
 							</div>
 							<div class="col-md-6">
@@ -188,6 +198,8 @@ include('directives/session.php');
 	<script>
 		document.getElementById("employees").setAttribute("class", "active");
 	</script>
+	<script rel="javascript" src="js/dropdown.js"></script>
+	
 </div>
 </body>
 </html>

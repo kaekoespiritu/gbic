@@ -140,6 +140,16 @@ include('directives/db.php');
            $(".ui-datepicker").css('font-size', 10) 
        		}
 		});
+		$( "#dtpkr_addDOB").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: 'mm-dd-yy',
+			showAnim: 'blind',
+			defaultDate: new Date(),
+			beforeShow: function(){    
+           $(".ui-datepicker").css('font-size', 10) 
+       		}
+		});
 
 		$( "#dtpkr_editEmployee" ).datepicker({
 			changeMonth: true,
@@ -247,7 +257,7 @@ include('directives/db.php');
 				else if(monthly >= 15250 && monthly <= 15749.9)
 				sssContribution = 563.20;
 				//15750 ~ higher = 581.30
-				else if($monthly >= 15750)
+				else if(monthly >= 15750)
 				sssContribution = 581.30;
 				document.getElementById('txt_sss').value = sssContribution;
         		document.getElementById('txt_sssAppear').style.display = 'block';
@@ -264,7 +274,7 @@ include('directives/db.php');
 	            var monthlySalary = ratePerDay * 24;
 	            var philhealthContribution = 0;
 
-    			if(monthlySalary <= 8999.9)
+    			if(monthlySalary >= 1 && monthlySalary <= 8999.9)
 				philhealthContribution = 200;
 				//9000 ~ 9999.9 = 225
 				else if(monthlySalary >= 9000 && monthlySalary <= 9999.9)
@@ -313,7 +323,7 @@ include('directives/db.php');
 				philhealthContribution = 575;
 				//24000 ~ 24999.9 = 600
 				else if(monthlySalary >= 24000 && monthlySalary <= 24999.9)
-				$hilhealthContribution = 600;
+				philhealthContribution = 600;
 				//25000 ~ 25999.9 = 625
 				else if(monthlySalary >= 25000 && monthlySalary <= 25999.9)
 				philhealthContribution = 625;
@@ -356,6 +366,8 @@ include('directives/db.php');
     		}
 		}
 	</script>
+
+	<script rel="javascript" src="js/dropdown.js"></script>
 
 </body>
 </html>

@@ -101,6 +101,7 @@ include('directives/session.php');
 	 <script>
 		document.getElementById("home").setAttribute("class", "active");
 	</script>
-	<script src="js/jquery.min.js"></script>
+	<script rel="javascript" src="js/jquery.min.js"></script>
+	<script rel="javascript" src="js/dropdown.js"></script>
 	</body>
 </html>

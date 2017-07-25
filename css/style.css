@@ -22,22 +22,22 @@
   background-color: #10621e;
   border-color: transparent;
 }
-.nav-tabs>li.active>a,.nav-tabs>li.active>a:hover 
+.nav-tabs>li.active>a,.nav-tabs>li.emp>a,.nav-tabs>li.active>a:hover,.nav-tabs>li.dropdown>a:hover 
 {
   background-color: #10621e;
   height:90%;
 }
-.nav-tabs.nav-justified>.active>a, .nav-tabs.nav-justified>.active>a:focus, .nav-tabs.nav-justified>.active>a:hover
+.nav-tabs.nav-justified>.active>a, .nav-tabs.nav-justified>.active>a:focus, .nav-tabs.nav-justified>.active>a:hover,
+.nav-tabs.nav-justified>.dropdown>a:hover
 {
   border: 0px;
   border-color: #10621e;
 }
 
-/* DROPDOWN */
-
-.emp:hover .dropdown-menu
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover
 {
-    display: block;
+  background-color:transparent;
+  border-color: transparent;
 }
 
 /*--------------------------------*/
@@ -144,4 +144,8 @@ body
 {
   margin-top: 0px !important;
 }
-
+hr
+{
+  margin-top: 5px;
+  margin-bottom:10px;
+}

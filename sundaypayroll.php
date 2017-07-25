@@ -26,7 +26,7 @@ include('directives/session.php');
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2 pull-down text-center">
 			<h2>You are now entering payroll for a</h2><br>
-			<h1>REGULAR WORK DAY</h1><br>
+			<h1>SUNDAY</h1><br>
 			<h2>
 				Only authorized personnel may access the payroll.<br>
 				Please enter the system password to continue.</h2>

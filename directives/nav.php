@@ -1,28 +1,29 @@
 <div class="row">
-	<ul class="nav nav-tabs nav-justified dropdown">
+	<ul class="nav nav-tabs nav-justified">
 		<li id="home">
 			<a href="index.php" class="button">
 				<img src="Images/house.png" class="menu center-block">
 				<h6 class="text-center">HOME</h6>
 			</a>
 		</li>
-		<li id="employees" class="emp">
-			<a href="employees.php" class="button" data-toggle="dropdown">
+		<li id="employees" class="dropdown">
+			<a href="employees.php" class="button">
 				<img src="Images/engineer.png" class="menu center-block">
 				<h6 class="text-center">EMPLOYEES</h6>
-			</a>
-			<div class="dropdown-menu">
-				<a href="#">Loans</a>
+				<div class="dropdown-menu">
+				<a href="loans.php" class="col-md-12">Loans</a>
 			</div>
+			</a>
+			
 		</li>
-		<li id="payroll">
+		<li id="payroll" class="dropdown">
 			<a href="payroll.php" class="button">
 				<img src="Images/cash-pay.png" class="menu center-block">
 				<h6 class="text-center">PAYROLL</h6>
-				<!--<ul class="dropdown-menu" aria-labelledby="payrolldropdown">
-					<li><a href="#">Sunday attendance</a></li>
-					<li><a href="#">Holiday attendance</a></li>
-				</ul>-->
+				<div class="dropdown-menu">
+				<a href="holidaypayroll.php" class="col-md-12">Holiday attendance</a>
+				<a href="sundaypayroll.php" class="col-md-12">Sunday attendance</a>
+				</div>
 			</a>
 		</li>
 		<li id="reports">
