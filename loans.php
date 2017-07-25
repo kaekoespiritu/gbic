@@ -85,7 +85,7 @@ include('directives/db.php');
 					</div>
 				</div>
 				<div class="col-md-1 col-md-pull-1 text-right">
-					<button class="btn btn-primary">Save changes</button>
+					<button class="btn btn-primary" onclick="saveChanges()">Save changes</button>
 				</div>
 			</div>
 		</div>
@@ -132,7 +132,12 @@ include('directives/db.php');
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script rel="javascript" src="js/dropdown.js"></script>
-
+	<script>
+	function saveChanges(){
+		confirm("Note: After saving these changes, the loans you've entered will no longer be editable. Are you sure you want to save changes?");
+	}
+	
+	</script>
 </body>
 </html>
 <!--

@@ -70,10 +70,10 @@ include('directives/session.php');
 						</div> 
 						<div class="row">
 							<div class="col-md-3">
-								<label>Age</label>
+								<label>Date of Birth</label>
 							</div>
 							<div class="col-md-3 text-left">
-								<span>29</span>
+								<span>Aug. 12, 1898</span>
 							</div>
 							</div> 
 						<div class="row">

@@ -21,6 +21,9 @@ include('directives/db.php');
 	 	<?php
 			require_once("directives/nav.php");
 		?>
+
+		Change password
+		
 	 	
 	 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 		<script rel="javascript" src="js/jquery.min.js"></script>
