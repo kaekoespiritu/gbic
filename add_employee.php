@@ -260,7 +260,7 @@
 			$pagibig = 0;
 		}
 		if(($sss_bool&& $philhealth_bool)&&(isset($_POST['txt_addPagibig'])))//checks if the employee has all the documents needed
-
+		{
 			$complete_doc = 1;
 		}
 		else

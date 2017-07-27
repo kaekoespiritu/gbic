@@ -17,8 +17,16 @@ include('directives/db.php');
 	<div class="container-fluid">
 		<?php
 		require_once('directives/modals/addEmployee.php');
-		require_once('directives/modals/editEmployee.php');
+		//require_once('directives/modals/editEmployee.php');
 		?>
+		<div class="modal fade" id="editEmployee" role="dialog">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div id="fetch-modal">
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- NAVIGATION BAR -->
 		<?php
 		require_once("directives/nav.php");
@@ -95,24 +103,24 @@ include('directives/db.php');
 						<td>Site</td>
 						<td>Actions</td>
 					</tr>
-					<tr>
-						<td>1</td>
-						<td>Trial Employee entry</td>
-						<td>Position</td>
-						<td>Placeholder</td>
-						<td>
-							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editEmployee" id="editEmployee">Edit details</button>
-							<a type="button" class="btn btn-default" href="viewemployee.php">View details</a>
-						</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>Trial Employee entry</td>
-						<td>Position</td>
-						<td>Placeholder</td>
-						<td>
-							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editEmployee" id="editEmployee">Edit details</button>
-							<a type="button" class="btn btn-default" href="viewemployee.php">View details</a>
+					<?php
+					$emp_query = "SELECT * FROM employee";
+					$emp_display = mysql_query($emp_query);
+					while($emp_row = mysql_fetch_assoc($emp_display))
+					{
+						Print "	<tr>
+									<td>".$emp_row['empid']."</td>
+									<td>".$emp_row['firstname']." ".$emp_row['lastname']."</td>
+									<td>".$emp_row['position']."</td>
+									<td>".$emp_row['site']."</td>
+									<td>
+										<button type='button' class='btn btn-default' data-toggle='modal' data-target='#editEmployee' onclick='Edit(".$emp_row['empid'].")'id='editEmployee'>Edit details</button>
+										<a type='button' class='btn btn-default' onclick='View(".$emp_row['empid'].")' href='viewemployee.php'>View details</a>
+									</td>
+								</tr>";
+					}
+					?>
+							
 						</td>
 					</tr>
 				</table>
@@ -368,6 +376,32 @@ include('directives/db.php');
 	</script>
 
 	<script rel="javascript" src="js/dropdown.js"></script>
+	<script>
+	function Edit(id) {
+	  	if (id=="") {
+    		document.getElementById("fetch-modal").innerHTML="";
+    		return;
+  		} 
+		if (window.XMLHttpRequest) {
+		    // code for IE7+, Firefox, Chrome, Opera, Safari
+		    xmlhttp=new XMLHttpRequest();
+		} 
+		else { // code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange	=	function() {
+		    if (this.readyState==4 && this.status==200) {
+		      document.getElementById("fetch-modal").innerHTML=this.responseText;
+		  	}
+		
+		  xmlhttp.open("GET","editemp.php?empid="+id,true);
+		  xmlhttp.send();
+		}
+	}
+	function View(id) {
+		
+	}
+	</script>
 
 </body>
 </html>
