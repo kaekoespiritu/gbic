@@ -17,7 +17,7 @@ include('directives/db.php');
 	<div class="container-fluid">
 		<?php
 		require_once('directives/modals/addEmployee.php');
-		//require_once('directives/modals/editEmployee.php');
+
 		?>
 		<div class="modal fade" id="editEmployee" role="dialog">
 			<div class="modal-dialog modal-lg">
@@ -66,6 +66,7 @@ include('directives/db.php');
 					<div class="btn-group">
 						<select class="form-control">
 							<option hidden>Site</option>
+
 							<option value="Muralla">Muralla</option>
 							<option value="ZooeyMain">Zooey Main</option>
 							<option value="Teressa">Teressa</option>
@@ -114,13 +115,14 @@ include('directives/db.php');
 									<td>".$emp_row['position']."</td>
 									<td>".$emp_row['site']."</td>
 									<td>
-										<button type='button' class='btn btn-default' data-toggle='modal' data-target='#editEmployee' onclick='Edit(".$emp_row['empid'].")'id='editEmployee'>Edit details</button>
-										<a type='button' class='btn btn-default' onclick='View(".$emp_row['empid'].")' href='viewemployee.php'>View details</a>
+										<button type='button' class='btn btn-default' onclick='Edit(\"".$emp_row["empid"]."\")' id='editEmployee'>Edit details</button>
+										<a type='button' class='btn btn-default' onclick='View(\"".$emp_row["empid"]."\")' >View details</a>
 									</td>
 								</tr>";
 					}
 					?>
 							
+
 						</td>
 					</tr>
 				</table>
@@ -137,37 +139,6 @@ include('directives/db.php');
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	
 	<script>
-		document.getElementById("employees").setAttribute("class", "active");
-		$( "#dtpkr_addEmployee" ).datepicker({
-			changeMonth: true,
-			changeYear: true,
-			dateFormat: 'mm-dd-yy',
-			showAnim: 'blind',
-			defaultDate: new Date(),
-			beforeShow: function(){    
-           $(".ui-datepicker").css('font-size', 10) 
-       		}
-		});
-		$( "#dtpkr_addDOB").datepicker({
-			changeMonth: true,
-			changeYear: true,
-			dateFormat: 'mm-dd-yy',
-			showAnim: 'blind',
-			defaultDate: new Date(),
-			beforeShow: function(){    
-           $(".ui-datepicker").css('font-size', 10) 
-       		}
-		});
-
-		$( "#dtpkr_editEmployee" ).datepicker({
-			changeMonth: true,
-			changeYear: true,
-			dateFormat: 'mm-dd-yy',
-			showAnim: 'blind',
-			beforeShow: function(){    
-           $(".ui-datepicker").css('font-size', 10) 
-       }
-		});
 		function sssbox() {
     		if (document.getElementById('sss').checked) 
     		{
@@ -373,30 +344,35 @@ include('directives/db.php');
         		document.getElementById('txt_philhealthAppear').style.display = 'none';
     		}
 		}
+		document.getElementById("employees").setAttribute("class", "active");
+
+		$( "#dtpkr_addEmployee" ).datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: 'mm-dd-yy',
+			showAnim: 'blind',
+			defaultDate: new Date(),
+			beforeShow: function(){    
+           $(".ui-datepicker").css('font-size', 10) 
+       		}
+		});
+		$( "#dtpkr_addDOB").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: 'mm-dd-yy',
+			showAnim: 'blind',
+			defaultDate: new Date(),
+			beforeShow: function(){    
+           $(".ui-datepicker").css('font-size', 10) 
+       		}
+		});
 	</script>
 
 	<script rel="javascript" src="js/dropdown.js"></script>
 	<script>
 	function Edit(id) {
-	  	if (id=="") {
-    		document.getElementById("fetch-modal").innerHTML="";
-    		return;
-  		} 
-		if (window.XMLHttpRequest) {
-		    // code for IE7+, Firefox, Chrome, Opera, Safari
-		    xmlhttp=new XMLHttpRequest();
-		} 
-		else { // code for IE6, IE5
-			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		xmlhttp.onreadystatechange	=	function() {
-		    if (this.readyState==4 && this.status==200) {
-		      document.getElementById("fetch-modal").innerHTML=this.responseText;
-		  	}
-		
-		  xmlhttp.open("GET","editemp.php?empid="+id,true);
-		  xmlhttp.send();
-		}
+	
+	  	window.location.assign("editEmployee.php?empid="+id);
 	}
 	function View(id) {
 		

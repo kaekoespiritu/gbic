@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 include('directives/session.php');
-
+include('directives/db.php');
 ?>
 
 <html>
@@ -37,7 +37,12 @@ include('directives/session.php');
 			 			</h3>
 			 	</td>
 	 			<td style="background-color: #236068">
-		 				<h1 class="text-center">100</h1>
+	 			<?php
+	 			$emp_query = "SELECT * FROM employee";
+	 			$employee_query = mysql_query($emp_query);
+	 			$employees = mysql_num_rows($employee_query);
+	 			?>
+		 				<h1 class="text-center"><?php Print "$employees"?></h1>
 		 				<h4 class="text-center">Total Employees</h4>
 		 			</div>
 		 		</td>
@@ -47,54 +52,59 @@ include('directives/session.php');
 	 	</div>
 
 	 	<!-- SITES | Spread it out more evenly -->
-			 		<div class="col-md-2 col-md-offset-1 card card-1">
-			 		<h4>SITE 1</h4><br><br>
-			 		SOME WORDS KARAMBA
-			 		</div>
-			 		<div class="col-md-2 card card-1">
-			 		<h4>SITE 2</h4><br><br>
-			 		SOME WORDS KARAMBA
-			 		</div>
-			 		<div class="col-md-2  card card-1">
-			 		<h4>SITE 3</h4><br><br>
-			 		SOME WORDS KARAMBA
-			 		</div>
-			 		<div class="col-md-2  card card-1">
-			 		<h4>SITE 4</h4><br><br>
-			 		SOME WORDS KARAMBA
-			 		</div>
-			 		<div class="col-md-2 col-md-offset-1 card card-1">
-			 		<h4>SITE 5</h4><br><br>
-			 		SOME WORDS KARAMBA
-			 		</div>
-			 		<div class="col-md-2  card card-1">
-			 		<h4>SITE 6</h4><br><br>
-			 		SOME WORDS KARAMBA
-			 		</div>
-			 		<div class="col-md-2  card card-1">
-			 		<h4>SITE 7</h4><br><br>
-			 		SOME WORDS KARAMBA
-			 		</div>
-			 		<div class="col-md-2 card card-1">
-			 		<h4>SITE 8</h4><br><br>
-			 		SOME WORDS KARAMBA
-			 		</div>
-			 		<div class="col-md-2 col-md-offset-1 card card-1">
-			 		<h4>SITE 9</h4><br><br>
-			 		SOME WORDS KARAMBA
-			 		</div>
-			 		<div class="col-md-2 card card-1">
-			 		<h4>SITE 10</h4><br><br>
-			 		SOME WORDS KARAMBA
-			 		</div>
-			 		<div class="col-md-2 card card-1">
-			 		<h4>SITE 11</h4><br><br>
-			 		SOME WORDS KARAMBA
-			 		</div>
-			 		<div class="col-md-2 card card-1">
-			 		<h4>SITE 12</h4><br><br>
-			 		SOME WORDS KARAMBA
-			 		</div>
+	 	<?php
+	 		$query = "SELECT location FROM site";
+	 		$site_query = mysql_query($query);
+	 		
+	 		$cycles = 0;
+	 		while($row = mysql_fetch_assoc($site_query))
+	 		{
+
+	 			if($cycles == 0 || $cycles == 4)
+	 			{
+	 				$emp_location = $row['location'];
+	 				$employee_find = "SELECT * FROM employee WHERE site = '$emp_location'";
+	 				$employee_find_query = mysql_query($employee_find);
+	 				$employee_num = 0;
+	 				if($employee_find_query)
+	 				{
+	 					$employee_num = mysql_num_rows($employee_find_query);
+	 				}
+	 				Print "<div class='col-md-2 col-md-offset-1 card card-1'>
+			 			<h4>".$row['location']."</h4><br><br>	
+			 			No. of employee deployed : ".$employee_num."
+			 		</div>";
+			 		//Print "<script>alert('".$cycles."')</script>";
+			 		if($cycles == 4)
+			 		{
+			 			$cycles = 1;
+			 		}
+			 		else
+			 		{
+			 			++$cycles;
+			 		}
+			 	}
+			 	else
+			 	{
+			 		$emp_location = $row['location'];
+	 				$employee_find = "SELECT * FROM employee WHERE site = '$emp_location'";
+	 				$employee_find_query = mysql_query($employee_find);
+	 				$employee_num = 0;
+	 				if($employee_find_query)
+	 				{
+	 					$employee_num = mysql_num_rows($employee_find_query);
+	 				}
+					Print "<div class='col-md-2 card card-1'>
+			 			<h4>".$row['location']."</h4><br><br>
+			 			No. of employee deployed : ".$employee_num."	
+			 		</div>";
+			 		++$cycles;
+			 		//Print "<script>alert('".$cycles."')</script>";
+			 	}
+
+	 		}
+	 	?>
+			 		
 
 	 </div>
 

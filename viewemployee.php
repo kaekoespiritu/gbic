@@ -25,7 +25,7 @@ include('directives/session.php');
 	<div class="col-md-10 col-md-offset-1">
 		<div class="row text-center pull-down">
 			<ol class="breadcrumb text-left">
-				<li><a href="employees.php">Employees</a></li>
+				<li><a href="employees.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a></li>
 				<li class="active">View employee details</li>
 			</ol>
 
@@ -70,10 +70,10 @@ include('directives/session.php');
 						</div> 
 						<div class="row">
 							<div class="col-md-3">
-								<label>Age</label>
+								<label>Date of Birth</label>
 							</div>
 							<div class="col-md-3 text-left">
-								<span>29</span>
+								<span>Aug. 12, 1898</span>
 							</div>
 							</div> 
 						<div class="row">

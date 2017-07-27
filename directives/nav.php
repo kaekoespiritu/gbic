@@ -17,7 +17,7 @@
 			
 		</li>
 		<li id="payroll" class="dropdown">
-			<a href="payroll.php" class="button">
+			<a href="regularpayroll.php" class="button">
 				<img src="Images/cash-pay.png" class="menu center-block">
 				<h6 class="text-center">PAYROLL</h6>
 				<div class="dropdown-menu">
@@ -35,7 +35,7 @@
 			</a>
 		</li>
 		<li id="adminOptions">
-			<a href="adminoptions.php" class="button">
+			<a href="options.php" class="button">
 				<span>	
 					<img src="Images/admin-with-cogwheels.png" class="menu center-block">
 					<h6 class="text-center">OPTIONS</h6>

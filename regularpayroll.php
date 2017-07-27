@@ -26,14 +26,14 @@ include('directives/session.php');
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2 pull-down text-center">
 			<h2>You are now entering payroll for a</h2><br>
-			<h1>HOLIDAY</h1><br>
+			<h1>REGULAR WORK DAY</h1><br>
 			<h2>
 				Only authorized personnel may access the payroll.<br>
 				Please enter the system password to continue.</h2>
 				</div>
 				<div class="col-md-4 col-md-offset-4 pull-down">
 				<input type="password" class="form-control" id="payrollpass" placeholder="Password">
-				<a class="btn btn-primary pull-down" href="holidaypay.php">Submit</a>
+				<a class="btn btn-primary pull-down" href="payroll.php">Submit</a>
 				</div>
 			</div>
 		</div>

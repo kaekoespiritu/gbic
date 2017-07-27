@@ -146,7 +146,7 @@
 									<div class="col-md-6 checkbox">
 										<input id="sss" name="chkbox_addSSS" type="checkbox" onclick="sssbox()" value="SSS" >
 										<label style="font-weight: 700" for="sss">SSS</label>
-										<div id="txt_sssAppear" style="display:none;">
+										<div id="txt_sssAppear" style="display:none;" class="col-md-8 col-md-offset-2">
 											<input name="txt_sss" type="text" class="form-control" id="txt_sss">
 										</div>
 									</div>
@@ -155,7 +155,7 @@
 										<input name="chkbox_addPhilHealth" type="checkbox" onclick="philhealthbox()" value="PhilHealth" id="philhealth">
 										
 										<label style="font-weight: 700" for="philhealth">PhilHealth</label>
-										<div id="txt_philhealthAppear" style="display:none;">
+										<div id="txt_philhealthAppear" style="display:none;" class="col-md-8 col-md-offset-2">
 											<input name="txt_philhealth" type="text" class="form-control" id="txt_philhealth">
 										</div>
 									</div>
@@ -167,7 +167,7 @@
 								</div>
 								<div class="col-md-4">
 									<input name="txt_addPagibig" onkeypress="validatenumber(event)" type="text" class="form-control" id="pagibig">
-								</div><br><br><br>
+								</div>
 								<div class="col-md-10 col-md-offset-1 pull-down text-center well well-sm">
 									* SSS and PhilHealth contributions are automatically computed based on employee's 
 								</div>
@@ -188,6 +188,7 @@
 
 
 <script type="javascript">
+
      function validatenumber(evt) {
   		var theEvent = evt || window.event;
  		var key = theEvent.keyCode || theEvent.which;
