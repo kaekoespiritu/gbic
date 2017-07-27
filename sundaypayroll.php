@@ -33,7 +33,7 @@ include('directives/session.php');
 				</div>
 				<div class="col-md-4 col-md-offset-4 pull-down">
 				<input type="password" class="form-control" id="payrollpass" placeholder="Password">
-				<button class="btn btn-primary pull-down">Submit</button>
+				<a class="btn btn-primary pull-down" href="sundaypay.php">Submit</a>
 				</div>
 			</div>
 		</div>

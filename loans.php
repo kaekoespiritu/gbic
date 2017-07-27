@@ -15,10 +15,6 @@ include('directives/db.php');
 </head>
 <body style="font-family: QuicksandMed;">
 	<div class="container-fluid">
-		<?php
-		require_once('directives/modals/addEmployee.php');
-		require_once('directives/modals/editEmployee.php');
-		?>
 		<!-- NAVIGATION BAR -->
 		<?php
 		require_once("directives/nav.php");
@@ -29,7 +25,7 @@ include('directives/db.php');
 			<div class="row">
 			<div class="col-md-10 col-md-offset-1 pull-down">
 			<ol class="breadcrumb text-left">
-				<li><a href="employees.php">Employees</a></li>
+				<li><a href="employees.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a></li>
 				<li class="active">Loans</li>
 			</ol>
 			</div>
@@ -136,7 +132,7 @@ include('directives/db.php');
 	function saveChanges(){
 		confirm("Note: After saving these changes, the loans you've entered will no longer be editable. Are you sure you want to save changes?");
 	}
-	
+	document.getElementById("employees").setAttribute("class", "active");
 	</script>
 </body>
 </html>
