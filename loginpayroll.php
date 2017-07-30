@@ -23,12 +23,9 @@ include('directives/session.php');
 	?>
 
 	<div class="jumbotron pull-down">
-	<div class="row">
+	<div class="row pull-down">
 		<div class="col-md-8 col-md-offset-2 pull-down text-center">
-			<h2>You are now entering payroll for a</h2><br>
-			<h1>REGULAR WORK DAY</h1><br>
-			<h2>
-				Only authorized personnel may access the payroll.<br>
+				<h2>Only authorized personnel may access the payroll.<br>
 				Please enter the system password to continue.</h2>
 				</div>
 				<div class="col-md-4 col-md-offset-4 pull-down">

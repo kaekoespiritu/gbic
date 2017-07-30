@@ -47,11 +47,12 @@ include('directives/db.php');
 		 			</div>
 		 		</td>
 	 			<td style="background-color: #AA4038"><h3>Today's<br>Payroll Status:<br><i>Incomplete!</i></h3></td>
+	 			<td style="background-color: grey;"><h3>Employees<br>w/o documents: <br>100</h3></td>
 	 		</tr>
 	 		</table>
 	 	</div>
 
-	 	<!-- SITES | Spread it out more evenly -->
+	 	<!-- SITES -->
 	 	<?php
 	 		$query = "SELECT location FROM site";
 	 		$site_query = mysql_query($query);
@@ -71,8 +72,8 @@ include('directives/db.php');
 	 					$employee_num = mysql_num_rows($employee_find_query);
 	 				}
 	 				Print "<div class='col-md-2 col-md-offset-1 card card-1'>
-			 			<h4>".$row['location']."</h4><br><br>	
-			 			No. of employee deployed : ".$employee_num."
+			 			<h4>".$row['location']."</h4>	
+			 			Employees deployed: ".$employee_num."
 			 		</div>";
 			 		//Print "<script>alert('".$cycles."')</script>";
 			 		if($cycles == 4)
@@ -95,8 +96,8 @@ include('directives/db.php');
 	 					$employee_num = mysql_num_rows($employee_find_query);
 	 				}
 					Print "<div class='col-md-2 card card-1'>
-			 			<h4>".$row['location']."</h4><br><br>
-			 			No. of employee deployed : ".$employee_num."	
+			 			<h4>".$row['location']."</h4>
+			 			Employees deployed: ".$employee_num."	
 			 		</div>";
 			 		++$cycles;
 			 		//Print "<script>alert('".$cycles."')</script>";
@@ -109,7 +110,7 @@ include('directives/db.php');
 	 </div>
 
 	 <script>
-		document.getElementById("home").setAttribute("class", "active");
+		document.getElementByClass("home").setAttribute("class", "onfocus");
 	</script>
 	<script rel="javascript" src="js/jquery.min.js"></script>
 	<script rel="javascript" src="js/dropdown.js"></script>

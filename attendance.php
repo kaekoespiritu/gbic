@@ -94,7 +94,7 @@ include('directives/db.php');
 <script rel="javascript" src="js/jquery.min.js"></script>
 <script rel="javascript" src="js/bootstrap.min.js"></script>
 <script>
-	document.getElementById("payroll").setAttribute("class", "active");
+	document.getElementById("attendance").setAttribute("class", "active");
 </script>
 <script rel="javascript" src="js/dropdown.js"></script>
 <script rel="javascript" src="js/timepicker/jquery.timepicker.js"></script>

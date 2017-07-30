@@ -115,8 +115,7 @@ include('directives/db.php');
 									<td>".$emp_row['position']."</td>
 									<td>".$emp_row['site']."</td>
 									<td>
-										<button type='button' class='btn btn-default' onclick='Edit(\"".$emp_row["empid"]."\")' id='editEmployee'>Edit details</button>
-										<a type='button' class='btn btn-default' onclick='View(\"".$emp_row["empid"]."\")' >View details</a>
+										<button type='button' class='btn btn-default' onclick='Edit(\"".$emp_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
 									</td>
 								</tr>";
 					}
