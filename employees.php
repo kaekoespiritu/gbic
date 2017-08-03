@@ -343,7 +343,7 @@ include('directives/db.php');
         		document.getElementById('txt_philhealthAppear').style.display = 'none';
     		}
 		}
-		document.getElementById("employees").setAttribute("class", "active");
+		document.getElementById("employees").setAttribute("style", "background-color: #10621e;");
 
 		$( "#dtpkr_addEmployee" ).datepicker({
 			changeMonth: true,

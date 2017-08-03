@@ -10,7 +10,7 @@ include('directives/session.php');
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
-<body style="font-family: QuicksandBold;">
+<body style="font-family: Quicksand;">
 	<!-- 
 	Vertical Navigation Bar
 	HOME | EMPLOYEES | PAYROLL | REPORTS | ADMIN OPTIONS | LOGOUT
@@ -24,8 +24,8 @@ include('directives/session.php');
 
 	<div class="row">
 		<form>
-			<div class="col-md-4 col-md-offset-1">
-			<label for="holiday"><h3>What kind of holiday?</h3></label>
+			<div class="col-md-4 col-md-offset-1 pull-down">
+			<label for="holiday"><h2>What kind of holiday?</h2></label>
 				<div class="form-group">
 					<label class="radio-inline">
 						<input type="radio" name="holidayregular" id="regular" value="regular"> Regular
@@ -35,15 +35,15 @@ include('directives/session.php');
 					</label>
 				</div>
 			</div>
-			<div class="col-md-5">
+			<div class="col-md-5 pull-down">
 				<div class="form-group">
-					<label for="holidayname"><h3>Name of the Holiday</h3></label>
+					<label for="holidayname"><h2>Name of the Holiday</h2></label>
 					<input type="text" class="form-control" id="holidayname" placeholder="Ex. Independence Day">
 				</div>
 			</div>
 		</form>
 	</div>
-</div><hr>
+</div>
 <div class="col-md-4 col-md-offset-1 pull-down">
 	<div class="input-group">
 		<input type="text" class="form-control">
@@ -97,43 +97,46 @@ include('directives/session.php');
 	</div>
 </div>
 <div class="col-md-1 col-md-pull-1 text-right pull-down">
-	<a class="btn btn-primary" href="payroll.php">Save changes</a>
+	<a class="btn btn-primary" href="#">Print attendance sheet</a>
 </div>
 </div>
 
 <div class="row pull-down">
-	<div class="col-md-10 col-md-offset-1">
-		<table class="table table-bordered table-condensed" style="background-color:white;">
-			<tr>
-				<td>ID</td>
-				<td>Name</td>
-				<td>Position</td>
-				<td>Site</td>
-				<td>Holiday Attendance</td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>Trial Employee entry</td>
-				<td>Position</td>
-				<td>Placeholder</td>
-				<td><input type="checkbox"></td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>Trial Employee entry</td>
-				<td>Position</td>
-				<td>Placeholder</td>
-				<td><input type="checkbox"></td>
-			</tr>
-		</table>
-	</div>	
-</div>
+			<div class="col-md-10 col-md-offset-1">
+				<table class="table table-bordered table-condensed" style="background-color:white;">
+					<tr>
+						<td>ID</td>
+						<td>Name</td>
+						<td>Position</td>
+						<td>Site</td>
+						<td>Attendance</td>
+						<td>Actions</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>Trial Employee entry</td>
+						<td>Position</td>
+						<td>Placeholder</td>
+						<td>Present</td>
+						<td><a class="btn btn-default" href="#">View record</a> <a class="btn btn-default" href="#">Enter attendance</a></td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>Trial Employee entry</td>
+						<td>Position</td>
+						<td>Placeholder</td>
+						<td>Present</td>
+						<td><a class="btn btn-default" href="#">View record</a> <a class="btn btn-default" href="#">Enter attendance</a></td>
+					</tr>
+				</table>
+			</div>	
+		</div>
 
 <!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 <script rel="javascript" src="js/jquery.min.js"></script>
 <script rel="javascript" src="js/bootstrap.min.js"></script>
 <script>
-	document.getElementById("attendance").setAttribute("class", "active");
+	document.getElementById("attendance").setAttribute("style", "background-color: #10621e;");
 </script>
 <script rel="javascript" src="js/dropdown.js"></script>
 

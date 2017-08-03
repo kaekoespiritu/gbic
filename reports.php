@@ -26,7 +26,7 @@ include('directives/session.php');
 		<script rel="javascript" src="js/jquery.min.js"></script>
 		<script rel="javascript" src="js/bootstrap.min.js"></script>
 		<script>
-			document.getElementById("reports").setAttribute("class", "active");
+			document.getElementById("reports").setAttribute("style", "background-color: #10621e;");
 		</script>
 	 	<script rel="javascript" src="js/dropdown.js"></script>
 	 	

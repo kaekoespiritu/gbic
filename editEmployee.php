@@ -255,7 +255,7 @@ include('directives/db.php');
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 
 	<script>
-		document.getElementById("employees").setAttribute("class", "active");
+		document.getElementById("employees").setAttribute("style", "background-color: #10621e;");
 
 		$("#dtpkr_datehired").datepicker({
 			changeMonth: true,
