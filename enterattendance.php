@@ -64,10 +64,17 @@ include('directives/db.php');
 				<button class="btn btn-primary">Afternoon Shift (8AM-5PM)</button>
 				<button class="btn btn-primary">Night Shift (8AM-5PM)</button>
 				<button class="btn btn-danger">Absent</button>
-				<h4>Time in: <input type="text" class="timein" name="timein">
+				<div class="col-md-6 text-right">
+				<h4>Time in: <input type="text" class="timein" name="timein"><br><br>
 					Time out: <input type="text" class="timeout" name="timeout">
 					<br><br>
 					Remarks: <input type="text"></h4>
+					</div>
+					<div class="col-md-6 text-left">
+					<h4>Working hours: <input type="text" placeholder="--" disabled><br><br>
+					Overtime: <input type="text" placeholder="--" disabled><br><br>
+					Undertime: <input type="text" placeholder="--" disabled></h4>
+					</div>
 				</form>
 			</div>
 
