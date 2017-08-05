@@ -42,14 +42,17 @@ include('directives/session.php');
 			<br>
 			<table class="table table-bordered table-condensed" style="background-color:white;">
 				<tr>
-					<td colspan="2">Monday</td>
-					<td colspan="2">Tuesday</td>
 					<td colspan="2">Wednesday</td>
 					<td colspan="2">Thursday</td>
 					<td colspan="2">Friday</td>
 					<td colspan="2">Saturday</td>
+					<td colspan="2">Sunday</td>
+					<td colspan="2">Monday</td>
+					<td colspan="2">Tuesday</td>
 				</tr>
 				<tr>
+					<td>Time In: <div class="well well-sm">8:00AM</div></td>
+					<td>Time Out: <div class="well well-sm">5:00PM</div></td>
 					<td>Time In: <div class="well well-sm">8:00AM</div></td>
 					<td>Time Out: <div class="well well-sm">5:00PM</div></td>
 					<td>Time In: <div class="well well-sm">8:00AM</div></td>

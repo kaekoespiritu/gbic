@@ -46,8 +46,7 @@ include('directives/db.php');
 		 				<h4 class="text-center">Total Employees</h4>
 		 			</div>
 		 		</td>
-	 			<td style="background-color: #AA4038"><h3>Today's<br>Payroll Status:<br><i>Incomplete!</i></h3></td>
-	 			<td style="background-color: grey;"><h3>Employees<br>w/o documents: <br>100</h3></td>
+	 			<td style="background-color: #AA4038"><h3>Today's<br>Attendance Status:<br><i>Incomplete!</i></h3></td>
 	 		</tr>
 	 		</table>
 	 	</div>
