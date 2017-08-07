@@ -28,6 +28,7 @@ include('directives/db.php');
 			<!-- BREAD CRUMBS -->
 			<div class="col-md-10 col-md-offset-1 pull-down">
 				<ol class="breadcrumb text-left">
+				<!-- TODO: If Sunday/Holiday attendance is selected, change link and name -->
 					<li><a href="attendance.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a></li>
 					<li class="active">Employee attendance at [SITE NAME]</li>
 					<a data-toggle="modal" data-target="#siteAttendance" class="btn btn-primary" style="float:right;">View site attendance record</a>

@@ -97,7 +97,7 @@ include('directives/session.php');
 	</div>
 </div>
 <div class="col-md-1 col-md-pull-1 text-right pull-down">
-	<a class="btn btn-primary" href="#">Print attendance sheet</a>
+	<a class="btn btn-primary" href="enterattendance.php">Start input of attendance</a>
 </div>
 </div>
 
@@ -109,7 +109,6 @@ include('directives/session.php');
 						<td>Name</td>
 						<td>Position</td>
 						<td>Site</td>
-						<td>Attendance</td>
 						<td>Actions</td>
 					</tr>
 					<tr>
@@ -117,16 +116,14 @@ include('directives/session.php');
 						<td>Trial Employee entry</td>
 						<td>Position</td>
 						<td>Placeholder</td>
-						<td>Present</td>
-						<td><a class="btn btn-default" href="#">View record</a> <a class="btn btn-default" href="#">Enter attendance</a></td>
+						<td><label><input type="checkbox"> Present</label></td>
 					</tr>
 					<tr>
 						<td>1</td>
 						<td>Trial Employee entry</td>
 						<td>Position</td>
 						<td>Placeholder</td>
-						<td>Present</td>
-						<td><a class="btn btn-default" href="#">View record</a> <a class="btn btn-default" href="#">Enter attendance</a></td>
+						<td><label><input type="checkbox"> Present</label></td>
 					</tr>
 				</table>
 			</div>	
