@@ -16,7 +16,7 @@
 		</a>
 		<div class="flipdown-menu">
 			<a href="loans.php">Loans</a>
-			<a href="#">Applications</a>
+			<a href="applications.php">Absence Applications</a>
 		</div>
 	</div>
 	</div>
