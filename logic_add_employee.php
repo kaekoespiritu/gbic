@@ -1,7 +1,8 @@
 	
 <?php
-	if(isset($_POST["add_submit"]))
-	{
+
+	include('directives/session.php');
+	include('directives/db.php');
 		$firstName = mysql_real_escape_string($_POST['txt_addFirstName']);
 		$lastName = mysql_real_escape_string($_POST['txt_addLastName']);
 		$address = mysql_real_escape_string($_POST['txt_addAddress']);
@@ -16,49 +17,59 @@
 		$sss = mysql_real_escape_string($_POST['chkbox_addSSS']);
 		$philhealth = mysql_real_escape_string($_POST['chkbox_addPhilHealth']);
 		$pagibig = mysql_real_escape_string($_POST['txt_addPagibig']);
+		//debug
 
 		$yearHired = substr($dateHired, -4); //get the year 
-		Print "<script>alert(". $yearHired .")</script>";
-		$random_number = intval( $yearHired."-".rand(1,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9) ); // random(ish) 7 digit 
-		Print "<script>alert(". $random_number .")</script>";
+	
+		$random_number = $yearHired."-".rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9); // random(ish) 7 digit 
+		
 		$empidChecker = "SELECT empid FROM employee WHERE empid = '$random_number'";
 		$queryChecker = mysql_query($empidChecker);
-
+//empid
 		$success = false;
 		do
 		{
-
+			
 			if($queryChecker)
 			{
+				
 				$exist = mysql_num_rows($queryChecker);
 				do
 				{	
-					if($exist)
+					
+					if($exist > 0)
 					{
-						$success == true;
-						$empid = $random_number;
+					
+						$random_number = $yearHired."-".rand(1,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9);
+						$empidChecker = "SELECT empid FROM employee WHERE empid = '$random_number'";
+						$queryChecker = mysql_query($empidChecker);
+						$exist = mysql_num_rows($queryChecker);
 					}
 					else
 					{
-						$random_number = intval( $yearHired."-".rand(1,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9));
-						$queryChecker = mysql_query($empidChecker);
-						$exist = mysql_num_rows($queryChecker);
+					
+						$success = true;
+						$empid = $random_number;
+						
 					}
 				}while($success == false);
 			}
 			else
 			{
-				$random_number = intval( $yearHired."-".rand(1,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9));
-				$queryChecker = mysql_query($empidChecker);
+				$success = true;
+				$empid = $random_number;
+
 			}
 		}while($success == false);
-		
 
-		$monthlySalary = $sss * 24;//6days working days * 4 weeks
+
+		$monthlySalary = $ratePerDay * 24;//6days working days * 4 weeks
 		//SSS contribution computation
+
 		$sssContribution = 0;
 		if(isset($_POST['chkbox_addSSS']))
 		{
+	
 			$sss_bool = true;//checker for the complete documented employee
 			//1,000 ~ 1,249.9 = 36.30
 			if($monthlySalary >= 1000 && $monthlySalary <= 1249.9)
@@ -157,6 +168,7 @@
 		$philhealthContribution = 0;
 		if(isset($_POST['chkbox_addPhilHealth']))
 		{
+	
 			$philhealth_bool=true;//checker for the complete documented employee
 			//below ~ 8999.9 = 200
 			if($monthlySalary >= 1 && $monthlySalary <= 8999.9)
@@ -243,7 +255,11 @@
 			else if($monthlySalary >= 35000)
 			$philhealthContribution = 875;
 		}
-		if(($bool_sss && $bool_philhealth)&&(isset($_POST['txt_addPagibig'])))//checks if the employee has all the documents needed
+		if($pagibig == null)
+		{
+			$pagibig = 0;
+		}
+		if(($sss_bool&& $philhealth_bool)&&(isset($_POST['txt_addPagibig'])))//checks if the employee has all the documents needed
 		{
 			$complete_doc = 1;
 		}
@@ -251,43 +267,47 @@
 		{
 			$complete_doc = 0;
 		}
-		
-		$employment_status = 1;//1 for active employee and 0 for resigned or inactive
-		$add_query = "INSERT INTO employee(	empid, 
-											firstname,
-											lastnam,
-											address,
-											contactnum,
-											dob,
-											civilstatus,
-											datehired,
-											position,
-											rate,
-											allowance,
-											site,
-											sss,
-											philhealth,
-											pagibig,
-											employment_status,
-											complete_doc)VALUES('$empid',
-																'$firstname',
-																'$lastname',
-																'$address',
-																'$contactNum',
-																'$dob',
-																'$civilStatus',
-																'$dateHired',
-																'$position',
-																'$ratePerDat',
-																'$allowance',
-																'$site',
-																'$sss',
-																'$philhealth',
-																'$pagibig',
-																'$employment_status',
-																'$complete_doc')";
-		$addemployee_query = mysql_query($add_query);//adds values to employee table
 
-		Print "<script>window.location.assign('../../employees.php')</script>";
-	}
+		$employment_status = 1;//1 for active employee and 0 for resigned or inactive
+
+
+		mysql_query("INSERT INTO 	employee(	empid, 
+												firstname,
+												lastname,
+												address,
+												contactnum,
+												dob,
+												civilstatus,
+												datehired,
+												position,
+												rate,
+												allowance,
+												site,
+												sss,
+												philhealth,
+												pagibig,
+												employment_status,
+												complete_doc) VALUES('$empid',
+																	'$firstName',
+																	'$lastName',
+																	'$address',
+																	'$contactNum',
+																	'$dob',
+																	'$civilStatus',
+																	'$dateHired',
+																	'$position',
+																	'$ratePerDay',
+																	'$allowance',
+																	'$site',
+																	'$sssContribution',
+																	'$philhealthContribution',
+																	'$pagibig',
+																	'$employment_status',
+																	'$complete_doc')");//adds values to employee table
+
+	
+		Print "<script>alert('You have successfully Added an employee.')</script>";
+		Print "<script>window.location.assign('employees.php')</script>";
+
+
 ?>

@@ -59,7 +59,6 @@
 								<div class="col-md-9">
 									<div class="dropdown">
 										<select name="txt_addCivilStatus" class="form-control" aria-labelledby="dropdownMenu1">
-											<option hidden>Select a status</option>
 											<option value="Single">Single</option>
 											<option value="Married">Married</option>
 											<option value="Divorced">Divorced</option>

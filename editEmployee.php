@@ -39,12 +39,16 @@ include('directives/db.php');
 	HOME | EMPLOYEES | PAYROLL | REPORTS | ADMIN OPTIONS | LOGOUT
 	After effects: Will minimize width after mouseover
 -->
+
 <div class="container-fluid">
 
 	<?php
 	require_once("directives/nav.php");
 	?>
 
+<?php
+Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
+?>
 	<div class="col-md-10 col-md-offset-1">
 		<div class="row"><br>
 			<div class="row text-center">
@@ -63,7 +67,7 @@ include('directives/db.php');
 							<label for="fname">First name</label>
 						</div>
 						<div class="col-md-9">
-							<input type="text" class="form-control" id="fname" value="<?php Print "$firstname"?>" disabled>
+							<input type="text" class="form-control" id="fname" name = "firstname" value="<?php Print "$firstname"?>" disabled>
 						</div>
 					</div><br>
 					<div class="row">
@@ -71,7 +75,7 @@ include('directives/db.php');
 							<label for="lname">Last name</label>
 						</div>
 						<div class="col-md-9">
-							<input type="text" class="form-control" id="lname" value="<?php Print "$lastname"?>" disabled>
+							<input type="text" class="form-control" id="lname" name = "lastname" value="<?php Print "$lastname"?>" disabled>
 						</div>
 					</div><br>
 					<div class="row">
@@ -79,7 +83,7 @@ include('directives/db.php');
 							<label for="address">Address</label>
 						</div>
 						<div class="col-md-9">
-							<input type="text" class="form-control" placeholder="<?php Print "$address"?>" id="address">
+							<input type="text" class="form-control" name = "address" placeholder="<?php Print "$address"?>" id="address">
 						</div>
 					</div><br>
 					<div class="row">
@@ -87,13 +91,13 @@ include('directives/db.php');
 							<label for="contact">Contact number</label>
 						</div>
 						<div class="col-md-5">
-							<input type="text" class="form-control" placeholder="<?php Print "$contactnum"?>" id="contact">
+							<input type="text" class="form-control" name = "contactnum" placeholder="<?php Print "$contactnum"?>" id="contact">
 						</div>
 						<div class="col-md-1">
 							<label for="contact">DOB</label>
 						</div>
 						<div class="col-md-3">
-							<input type="text" class="form-control" placeholder="<?php Print "$dob"?>" id="dtpkr_dob">
+							<input type="text" class="form-control" name = "dob" placeholder="<?php Print "$dob"?>" id="dtpkr_dob">
 						</div>
 					</div><br>
 					<div class="row">
@@ -102,7 +106,7 @@ include('directives/db.php');
 						</div>
 						<div class="col-md-9">
 							<div class="dropdown">
-								<select class="form-control" aria-labelledby="dropdownMenu1">
+								<select class="form-control" name = "civilstatus" aria-labelledby="dropdownMenu1">
 									<option hidden>Select a status</option>
 									<?php
 										$status_query = "SELECT status FROM civil_status";
@@ -128,10 +132,13 @@ include('directives/db.php');
 							<label for="contact">Date of Hire</label>
 						</div>
 						<div class="col-md-9">
-							<input type="text" size="10" style="width:150px" class="form-control" placeholder="<?php Print "$datehired"?>" id="dtpkr_datehired" >
+							<input type="text" size="10" style="width:150px" name = "datehired" class="form-control" placeholder="<?php Print "$datehired"?>" id="dtpkr_datehired" >
 						</div>
 						<div class="col-md-12 pull-down">
-							<button type="button" class="btn btn-primary pull-down">Save changes</button>
+							
+							<input type='submit' class='btn btn-primary pull-down' value='Save Changes'>
+							
+
 						</div>
 					</div>
 				</div>
@@ -144,7 +151,7 @@ include('directives/db.php');
 						</div>
 						<div class="col-md-5">
 							<div class="dropdown">
-								<select class="form-control" aria-labelledby="dropdownMenu1">
+								<select class="form-control" name="position" aria-labelledby="dropdownMenu1">
 									<option hidden>Select a position</option>
 									<?php
 										$query = "SELECT position FROM job_position";
@@ -173,7 +180,7 @@ include('directives/db.php');
 						</div>
 						<div class="col-md-5">
 							<div class="dropdown">
-								<select class="form-control">
+								<select name="site" class="form-control">
 									<option hidden>Select a site</option>
 									<?php
 										$site_query = "SELECT location FROM site";
@@ -200,7 +207,7 @@ include('directives/db.php');
 							<label for="rate">Rate per day</label>
 						</div>
 						<div class="col-md-5">
-							<input type="text" class="form-control" placeholder="<?php Print "$rate"?>" id="rate" onkeyup="changedRate()">
+							<input type="text" class="form-control" name="rate" placeholder="<?php Print "$rate"?>" id="rate" onkeyup="changedRate()">
 						</div>
 					</div><br>
 					<div class="row">
@@ -208,7 +215,7 @@ include('directives/db.php');
 							<label for="allowance">Allowance</label>
 						</div>
 						<div class="col-md-5">
-							<input type="text" placeholder="<?php Print "$allowance"?>" class="form-control" id="allowance">
+							<input type="text" name="allowance" placeholder="<?php Print "$allowance"?>" class="form-control" id="allowance">
 						</div>
 					</div>
 					<div class="row">
@@ -219,7 +226,7 @@ include('directives/db.php');
 									<label style="font-weight: 700" for="sss">SSS</label>
 								</div>
 								<div class="col-md-4">
-									<input type="text" class="form-control" placeholder="<?php Print "$sss"?>" id="sss">
+									<input type="text" class="form-control" name="sss" placeholder="<?php Print "$sss"?>" id="sss">
 								</div>
 						</div><br>
 						<div class="row">
@@ -227,7 +234,7 @@ include('directives/db.php');
 									<label style="font-weight: 700" for="philhealth" class="text-left">PhilHealth</label>
 								</div>
 								<div class="col-md-4">
-									<input type="text" class="form-control" placeholder="<?php Print "$philhealth"?>" id="philhealth">
+									<input type="text" class="form-control" name="philhealth" placeholder="<?php Print "$philhealth"?>" id="philhealth">
 								</div>
 						</div><br>
 						<div class="row">
@@ -235,7 +242,7 @@ include('directives/db.php');
 								<label for="pagibig">Pag-IBIG</label>
 							</div>
 							<div class="col-md-4">
-								<input type="text" class="form-control" placeholder="<?php Print "$pagibig"?>" id="pagibig">
+								<input type="text" class="form-control" name="pagibig" placeholder="<?php Print "$pagibig"?>" id="pagibig">
 							</div>
 							<div class="col-md-10 col-md-offset-1 pull-down text-center well well-sm">
 								* SSS & PhilHealth contributions are automatically computed.
@@ -246,7 +253,7 @@ include('directives/db.php');
 			</div>
 		</form>
 	</div>
-
+</form>
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -462,7 +469,12 @@ include('directives/db.php');
         		document.getElementById('philhealth').value = philhealthContribution;
         	
 		}
-			
+		
+	function Editemp(id) {
+	  	window.location.assign("logic_edit_employee.php?empid="+id);	
+	}
+
+	
 	</script>
 		<script rel="javascript" src="js/dropdown.js"></script>
 
