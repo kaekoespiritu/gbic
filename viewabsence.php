@@ -24,6 +24,10 @@ include('directives/session.php');
 
 	<div class="row pull-down">
 		<div class="col-md-10 col-md-offset-1">
+		<ol class="breadcrumb text-left">
+					<li><a href="applications.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Absence Applications</a></li>
+					<li class="active">Check details</li>
+				</ol>
 			<h2 class="text-left">Miguelito Joselito Dela Cruz</h2>
 			<hr>
 			<div class="row">
@@ -42,59 +46,37 @@ include('directives/session.php');
 			<br>
 			<table class="table table-bordered table-condensed" style="background-color:white;">
 				<tr>
-					<td colspan="2">Wednesday</td>
-					<td colspan="2">Thursday</td>
-					<td colspan="2">Friday</td>
-					<td colspan="2">Saturday</td>
-					<td colspan="2">Sunday</td>
-					<td colspan="2">Monday</td>
-					<td colspan="2">Tuesday</td>
+					<td>Wednesday, Aug. 2</td>
+					<td>Thursday, Aug. 3</td>
+					<td>Friday, Aug. 4</td>
 				</tr>
 				<tr>
-					<td>Time In: <div class="well well-sm">8:00AM</div></td>
-					<td>Time Out: <div class="well well-sm">5:00PM</div></td>
-					<td>Time In: <div class="well well-sm">8:00AM</div></td>
-					<td>Time Out: <div class="well well-sm">5:00PM</div></td>
-					<td>Time In: <div class="well well-sm">8:00AM</div></td>
-					<td>Time Out: <div class="well well-sm">5:00PM</div></td>
-					<td>Time In: <div class="well well-sm">8:00AM</div></td>
-					<td>Time Out: <div class="well well-sm">5:00PM</div></td>
-					<td>Time In: <div class="well well-sm">8:00AM</div></td>
-					<td>Time Out: <div class="well well-sm">5:00PM</div></td>
-					<td>Time In: <div class="well well-sm">8:00AM</div></td>
-					<td>Time Out: <div class="well well-sm">5:00PM</div></td>
-					<td>Time In: <div class="well well-sm">8:00AM</div></td>
-					<td>Time Out: <div class="well well-sm">5:00PM</div></td>
+					<td>ABSENT</td>
+					<td>ABSENT</td>
+					<td>ABSENT</td>
 				</tr>
 			</table>
 			<div class="panel">
-				<h3>Total hours rendered: 54</h3>
+				<div class="well well-sm"><h3>Total days absent: 3</h3></div>
 				<div class="row">
-					<div class="col-md-8 col-md-offset-2">
+					<div class="col-md-10 col-md-offset-1">
 						<form>
 							<div class="row">
-								<h3>Deductions</h3>
-								<table class="col-md-8 col-md-offset-2">
-									<tr>
-										<td>SSS</td>
-										<td><input type="text"></td>
-										<td><input type="checkbox"> Vale</td>
-										<td><input type="text"></td>
-									</tr>
-									<tr>
-										<td>PagIBIG</td>
-										<td><input type="text"></td>
-										<td>Taxes</td>
-										<td><input type="text"></td>
-									</tr>
-									<tr>
-										<td>Tools</td>
-										<td><input type="text"></td>
-									</tr>
-								</table>
+							<div class="col-md-4 text-left">
+								<h3>Reason for absence</h3>
+								<textarea class="form-control" rows="2"></textarea>
+								<br><br>
+								</div>
+								<div class="col-md-6">
+								<h3>Actions</h3>
+								<a class="btn btn-success">Approve absence</a> 
+								<a class="btn btn-danger" disabled="disabled">Employee went AWOL</a>
+								</div>
+								<div class="col-md-2 pull-down">
+								<a class="btn btn-primary pull-down">Save changes</a>
+								</div>
 							</div>
 						</form>
-						<button class="btn btn-primary pull-down">Next</button>
 					</div>
 				</div>
 			</div>
@@ -107,7 +89,7 @@ include('directives/session.php');
 <script rel="javascript" src="js/jquery.min.js"></script>
 <script rel="javascript" src="js/bootstrap.min.js"></script>
 <script>
-	document.getElementById("payroll").setAttribute("style", "background-color: #10621e;");
+	document.getElementById("employees").setAttribute("style", "background-color: #10621e;");
 </script>
 <script rel="javascript" src="js/dropdown.js"></script>
 

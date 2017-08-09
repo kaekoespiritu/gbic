@@ -1,55 +1,69 @@
 <div class="row">
-	<ul class="nav nav-tabs nav-justified">
-		<li id="home">
-			<a href="index.php" class="button">
-				<img src="Images/house.png" class="menu center-block">
-				<h6 class="text-center">HOME</h6>
-			</a>
-		</li>
-		<li id="employees" class="dropdown">
-			<a href="employees.php" class="button">
-				<img src="Images/engineer.png" class="menu center-block">
-				<h6 class="text-center">EMPLOYEES</h6>
-				<div class="dropdown-menu">
-				<a href="loans.php" class="col-md-12">Loans</a>
-			</div>
-			</a>
-			
-		</li>
-		<li id="payroll" class="dropdown">
-			<a href="regularpayroll.php" class="button">
-				<img src="Images/cash-pay.png" class="menu center-block">
-				<h6 class="text-center">PAYROLL</h6>
-				<div class="dropdown-menu">
-				<a href="holidaypayroll.php" class="col-md-12">Holiday attendance</a>
-				<a href="sundaypayroll.php" class="col-md-12">Sunday attendance</a>
-				</div>
-			</a>
-		</li>
-		<li id="reports">
-			<a href="reports.php" class="button">
-				<span>
-					<img src="Images/tax.png" class="menu center-block">
-					<h6 class="text-center">REPORTS</h6>
-				</span>
-			</a>
-		</li>
-		<li id="adminOptions">
-			<a href="options.php" class="button">
-				<span>	
-					<img src="Images/admin-with-cogwheels.png" class="menu center-block">
-					<h6 class="text-center">OPTIONS</h6>
-				</span>
-			</a>
-		</li>
-		<li>
-			<a href="logout.php" class="button">
-				<span>
-					<img src="Images/power-button-symbol.png" class="menu center-block">
-					<h6 class="text-center">LOGOUT</h6>
-				</span>
-			</a>
-		</li>
-	</ul>
+<div class="menubar navibar">
+	<!-- HOME BUTTON -->
+	<div id="home" class="col-md-1 navibutton">
+	<a href="index.php">
+		<img src="Images/house.png" class="center-block">
+		<h6 class="text-center">HOME</h6>
+	</a>
+	</div>
+	<!-- EMPLOYEES BUTTON -->
+	<div id="employees" class="col-md-1 navibutton">
+	<div class="flipdown">
+		<a href="employees.php" class="flipbtn">
+			<img src="Images/engineer.png" class="center-block">
+			<h6 class="text-center">EMPLOYEES <span class="caret"></span></h6>
+		</a>
+		<div class="flipdown-menu">
+			<a href="loans.php">Loans</a>
+			<a href="applications.php">Absence Applications</a>
+		</div>
+	</div>
+	</div>
+	<!-- ATTENDANCE BUTTON -->
+	<div id="attendance" class="col-md-1 navibutton">
+	<div class="flipdown">
+		<a href="attendance.php" class="flipbtn">
+			<img src="Images/attendance.png" class="center-block">
+			<h6 class="text-center">ATTENDANCE<span class="caret" style="position:absolute; right:-1px; bottom:19px"></span></h6>
+		</a>
+		<div class="flipdown-menu">
+			<a href="sundaypay.php">Sunday attendance</a>
+			<a href="holidaypay.php">Holiday attendance</a>
+		</div>
+	</div>
+	</div>
+	<!-- PAYROLL BUTTON -->
+	<div id="payroll" class="col-md-1 navibutton">
+	<a href="payroll.php" class="payroll">
+		<img src="Images/cash-pay.png" class="center-block">
+		<h6 class="text-center">PAYROLL</h6>
+	</a>
+	</div>
+	<!-- REPORTS BUTTON -->
+	<div id="reports" class="col-md-1 navibutton">
+	<a href="reports.php" class="reports">
+		<img src="Images/tax.png" class="center-block">
+		<h6 class="text-center">REPORTS</h6>
+	</a>
+	</div>
+	<!-- OPTIONS BUTTON-->
+	<div id="adminOptions" class="col-md-1 navibutton">
+	<a href="options.php" class="adminOptions">
+		<span>	
+			<img src="Images/admin-with-cogwheels.png" class="center-block">
+			<h6 class="text-center">OPTIONS</h6>
+		</span>
+	</a>
+	</div>
+	<!-- LOGOUT BUTTON -->
+	<div class="col-md-1 navibutton">
+	<a href="logout.php" class="">
+		<span>
+			<img src="Images/power-button-symbol.png" class="center-block">
+			<h6 class="text-center">LOGOUT</h6>
+		</span>
+	</a>
+	</div>
 </div>
-
+</div>

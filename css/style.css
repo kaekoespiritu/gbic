@@ -1,64 +1,122 @@
 /* NAVIGATION BAR */
-.menu
-{
-	height: 30px !important;
-}
-.logo
-{
-
-	border-bottom-style: solid;
-	border-color: rgb(213,213,213);
-}
-.nav
+.menubar
 {
   background-color: #2b823A;
+  height: 100px;
 }
-.nav a
+.center-block
 {
-  color: black;
-}
-.nav li a:hover
-{
-  background-color: #10621e;
-  border-color: transparent;
-}
-.nav-tabs>li.active>a,.nav-tabs>li.emp>a,.nav-tabs>li.active>a:hover,.nav-tabs>li.dropdown>a:hover 
-{
-  background-color: #10621e;
-  height:90%;
-}
-.nav-tabs.nav-justified>.active>a, .nav-tabs.nav-justified>.active>a:focus, .nav-tabs.nav-justified>.active>a:hover,
-.nav-tabs.nav-justified>.dropdown>a:hover
-{
-  border: 0px;
-  border-color: #10621e;
+  height: 40px !important;
+  width: 40px !important;
 }
 
-.nav .open>a, .nav .open>a:focus, .nav .open>a:hover
-{
-  background-color:transparent;
-  border-color: transparent;
+/* THIS CENTERS THE NAVBAR ELEMENTS */
+@media (min-width: 768) {
+.navibar .col-md-1,
+  .navibar .col-sm-1,
+  .navibar .col-lg-1 {
+    width: 14.285714285714285714285714285714%;
+    *width: 14.285714285714285714285714285714%;
+    padding-top: 15px;
+  }
 }
+
+@media (min-width: 992px) {
+.navibar .col-md-1,
+  .navibar .col-sm-1,
+  .navibar .col-lg-1 {
+    width: 14.285714285714285714285714285714%;
+    *width: 14.285714285714285714285714285714%;
+    padding-top: 15px;
+  }
+}
+
+@media (min-width: 1200px) {
+.navibar .col-md-1,
+  .navibar .col-sm-1,
+  .navibar .col-lg-1 {
+    width: 14.285714285714285714285714285714%;
+    *width: 14.285714285714285714285714285714%;
+    padding-top: 15px;
+  }
+}
+
+/* DROPDOWN MENU */
+.flipdown
+{
+  overflow: hidden;
+}
+
+.flipdown .flipbtn
+{
+    font-size: 16px;    
+    border: none;
+    outline: none;
+    color: black;
+    background-color: inherit;
+}
+
+.navibutton:hover
+{
+  background-color: #10621e;
+}
+
+.navibutton a:hover
+{
+  text-decoration: none;
+  color: white;
+}
+
+/* DROPDOWN CONTENTS */
+.flipdown-menu
+{
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    left:0px;
+    min-width: 183px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 100;
+}
+
+.flipdown-menu a
+{
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    font-family: QuickSandMed !important;
+}
+
+.flipdown-menu a:hover
+{
+      background-color: #10621e;
+      color:white;
+}
+
+.flipdown:hover .flipdown-menu
+{
+  display:block;
+}
+
 
 /*--------------------------------*/
-
 @keyframes bounce
 {
-    1%{top:0;}
-    20%  {top:-3px;}
-    50%  {top:0px;}
-    70%  {top:0px;}
-    100% {top:0px;}
+    1%{bottom:0;}
+    20%  {bottom:-3px;}
+    50%  {bottom:0px;}
+    70%  {bottom:0px;}
+    100% {bottom:0px;}
 }
-.button:hover
+.navibutton:hover
 { 
   transition: 1s; 
   animation-name: bounce;
-  animation-duration: 1.5s;
+  animation-duration: 1s;
 }
-
-
-
 /*--------------------------------*/
 
 .btn_loginSubmit:hover
@@ -94,11 +152,13 @@ body
 }
 /* TODO: Change cards to have simpler CSS3 effects */
 .card {
-  background: #53A461;
+  background: #2b823A;
   opacity: 0.9;
   border-radius: 2px;
   margin-right: 5em;
   margin-bottom: 1em;
+  font-family: QuickSandMed;
+  color:white;
 }
 .card-1 {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -140,6 +200,8 @@ body
     src: url('../fonts/Quicksand-Bold.ttf');
     text-rendering: optimizeLegibility;
 }
+
+/* OTHERS */
 .checkbox
 {
   margin-top: 0px !important;
@@ -148,4 +210,16 @@ hr
 {
   margin-top: 5px;
   margin-bottom:10px;
+}
+.header1
+{
+  position:absolute;
+  float:left;
+  bottom-padding:100px;
+}
+.header2
+{
+  position:absolute;
+  float:right;
+  bottom-padding:100px;
 }

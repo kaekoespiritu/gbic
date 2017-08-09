@@ -29,7 +29,7 @@ include('directives/db.php');
 		<script rel="javascript" src="js/jquery.min.js"></script>
 		<script rel="javascript" src="js/bootstrap.min.js"></script>
 		<script>
-			document.getElementById("adminOptions").setAttribute("class", "active");
+			document.getElementById("adminOptions").setAttribute("style", "background-color: #10621e;");
 		</script>
 		<script rel="javascript" src="js/dropdown.js"></script>
 	 </div>

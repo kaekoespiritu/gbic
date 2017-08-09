@@ -55,6 +55,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 				<ol class="breadcrumb text-left">
 					<li><a href="employees.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a></li>
 					<li class="active">Edit employee details</li>
+					<h4 style="float:right;">Employee ID: 2017-39284756</h4>
 				</ol>
 			</div>
 		</div>
@@ -261,7 +262,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 
 	<script>
-		document.getElementById("employees").setAttribute("class", "active");
+		document.getElementById("employees").setAttribute("style", "background-color: #10621e;");
 
 		$("#dtpkr_datehired").datepicker({
 			changeMonth: true,

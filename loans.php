@@ -21,7 +21,6 @@ include('directives/db.php');
 		?>
 
 		<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
-		<div class="container">
 			<div class="row">
 			<div class="col-md-10 col-md-offset-1 pull-down">
 			<ol class="breadcrumb text-left">
@@ -84,7 +83,6 @@ include('directives/db.php');
 					<button class="btn btn-primary" onclick="saveChanges()">Save changes</button>
 				</div>
 			</div>
-		</div>
 
 		<!-- EMPLOYEE TABLE -->
 		<div class="row pull-down">
@@ -132,7 +130,7 @@ include('directives/db.php');
 	function saveChanges(){
 		confirm("Note: After saving these changes, the loans you've entered will no longer be editable. Are you sure you want to save changes?");
 	}
-	document.getElementById("employees").setAttribute("class", "active");
+	document.getElementById("employees").setAttribute("style", "background-color: #10621e;");
 	</script>
 </body>
 </html>
