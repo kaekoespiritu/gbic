@@ -10,7 +10,7 @@
 	<!-- EMPLOYEES BUTTON -->
 	<div id="employees" class="col-md-1 navibutton">
 	<div class="flipdown">
-		<a href="employees.php" class="flipbtn">
+		<a href="employees.php?site=null&position=null" class="flipbtn">
 			<img src="Images/engineer.png" class="center-block">
 			<h6 class="text-center">EMPLOYEES <span class="caret"></span></h6>
 		</a>
@@ -67,3 +67,4 @@
 	</div>
 </div>
 </div>
+

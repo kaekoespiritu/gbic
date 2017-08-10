@@ -47,47 +47,53 @@ include('directives/db.php');
 				<div class="col-md-5 col-md-pull-1 pull-down text-right">
 					Filter by:
 					<div class="btn-group">
-						<select class="form-control">
+						<select class="form-control" id="position" onchange="position()">
 							<option hidden>Position</option>
-							<option value="Foreman">Foreman</option>
-							<option value="Leadman">Leadman</option>
-							<option value="TimeKeeper">Time Keeper</option>
-							<option value="Operator">Operator</option>
-							<option value="Carpenter">Carpenter</option>
-							<option value="Mason">Mason</option>
-							<option value="Labor">Labor</option>
-							<option value="Welder">Welder</option>
-							<option value="Painter">Painter</option>
-							<option value="Electrician">Electrician</option>
-							<option value="Plumber">Plumber</option>
-							<option value="OfficeStaff">Office Staff</option>
+							<?php
+								$position = "SELECT position FROM job_position";
+								$position_query = mysql_query($position);
+
+								while($row_position = mysql_fetch_assoc($position_query))
+								{
+									$positionReplaced = str_replace('/+/', ' ', $_GET['position']);
+									$position = mysql_real_escape_string($row_position['position']);
+									if($position == $positionReplaced)
+									{
+										Print '<option value="'. $position .'" selected="selected">'. $position .'</option>';
+									}
+									else
+									{
+									Print '<option value="'. $position .'">'. $position .'</option>';
+									}
+								}
+							?>
 						</select>
 					</div>
 					<div class="btn-group">
-						<select class="form-control">
+						<select class="form-control" id="site" onchange="site()">
 							<option hidden>Site</option>
+							<?php
+								$site = "SELECT location FROM site";
+								$site_query = mysql_query($site);
 
-							<option value="Muralla">Muralla</option>
-							<option value="ZooeyMain">Zooey Main</option>
-							<option value="Teressa">Teressa</option>
-							<option value="Camalig">Camalig</option>
-							<option value="Marilao">Marilao</option>
-							<option value="StaMaria">Sta. Maria</option>
-							<option value="Batangas">Balagtas</option>
-							<option value="LaUnion">La Union</option>
-							<option value="Kaybiga">Kaybiga</option>
-							<option value="MaxSteel">Max steel</option>
-							<option value="ZooeyLawangBato">Zooey Lawang Bato</option>
-							<option value="PedroGil">Pedro Gil</option>
-							<option value="Batangas">Batangas</option>
-							<option value="Tagaytay">Tagaytay</option>
-							<option value="Carmona">Carmona</option>
-							<option value="Paliparan">Paliparan</option>
-							<option value="Laguna">Laguna</option>
+								while($row_site = mysql_fetch_assoc($site_query))
+								{
+									$siteReplaced = str_replace('/+/', ' ', $_GET['site']);
+									if($row_site['location'] == $siteReplaced)
+									{
+										Print '<option value="'. $row_site['location'] .'" selected="selected">'. $row_site['location'] .'</option>';
+									}
+									else
+									{
+										Print '<option value="'. $row_site['location'] .'">'. $row_site['location'] .'</option>';
+									}
+								}
+							?>
 						</select>
 					</div>
 				</div>
 				<div class="col-md-1 col-md-pull-1 pull-down pull-left">
+					<button type="button" class="btn btn-danger" onclick="clearFilter()">Clear Filters</button>
 					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">Add new Employee</button>
 				</div>
 			</div>
@@ -104,26 +110,123 @@ include('directives/db.php');
 						<td>Site</td>
 						<td>Actions</td>
 					</tr>
-					<?php
-					$emp_query = "SELECT * FROM employee";
-					$emp_display = mysql_query($emp_query);
-					while($emp_row = mysql_fetch_assoc($emp_display))
-					{
-						Print "	<tr>
-									<td>".$emp_row['empid']."</td>
-									<td>".$emp_row['firstname']." ".$emp_row['lastname']."</td>
-									<td>".$emp_row['position']."</td>
-									<td>".$emp_row['site']."</td>
-									<td>
-										<button type='button' class='btn btn-default' onclick='Edit(\"".$emp_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
-									</td>
-								</tr>";
-					}
-					?>
-							
 
-						</td>
-					</tr>
+					<div id="change_table">
+						<?php
+						$emp_query = "SELECT * FROM employee ORDER BY site";
+						$emp_display = mysql_query($emp_query);
+//--------site		
+						
+						if($_GET['site'] != "null")
+						{
+							
+							$site = $_GET['site'];
+							$siteReplaced = str_replace('/+/', ' ', $site);
+							if($_GET['position'] != "null")
+							{
+								
+								$position = $_GET['position'];
+								$positionReplaced = str_replace('/+/', ' ', $position);
+								$pos_query = "SELECT * FROM employee WHERE position = '$positionReplaced' AND site = '$siteReplaced'";
+								$position_query = mysql_query($pos_query);
+								while($PosEmp_row = mysql_fetch_assoc($position_query))
+								{
+								Print "	<tr>
+											<td>".$PosEmp_row['empid']."</td>
+											<td>".$PosEmp_row['firstname']." ".$PosEmp_row['lastname']."</td>
+											<td>".$PosEmp_row['position']."</td>
+											<td>".$PosEmp_row['site']."</td>
+											<td>
+												<button type='button' class='btn btn-default' onclick='Edit(\"".$PosEmp_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
+											</td>
+										</tr>";
+								}
+							}
+							else
+							{
+								
+								$query = "SELECT * FROM employee WHERE site = '$siteReplaced'";
+								$site_query = mysql_query($query);
+								while($site_row = mysql_fetch_assoc($site_query))
+								{
+								Print "	<tr>
+											<td>".$site_row['empid']."</td>
+											<td>".$site_row['firstname']." ".$site_row['lastname']."</td>
+											<td>".$site_row['position']."</td>
+											<td>".$site_row['site']."</td>
+											<td>
+												<button type='button' class='btn btn-default' onclick='Edit(\"".$site_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
+											</td>
+										</tr>";
+								}
+							}
+							
+						} 
+						
+//--------position						
+						else if($_GET['position'] != "null")
+						{
+					
+							$position = $_GET['position'];
+							$positionReplaced = str_replace('/+/', ' ', $position);
+							if($_GET['site'] != "null")
+							{
+							
+								$site = $_GET['site'];
+								$siteReplaced = str_replace('/+/', ' ', $site);
+								$pos_query = "SELECT * FROM employee WHERE position = '$positionReplaced' AND site = '$siteReplaced'";
+								$position_query = mysql_query($pos_query);
+								while($PosEmp_row = mysql_fetch_assoc($position_query))
+								{
+								Print "	<tr>
+											<td>".$PosEmp_row['empid']."</td>
+											<td>".$PosEmp_row['firstname']." ".$PosEmp_row['lastname']."</td>
+											<td>".$PosEmp_row['position']."</td>
+											<td>".$PosEmp_row['site']."</td>
+											<td>
+												<button type='button' class='btn btn-default' onclick='Edit(\"".$PosEmp_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
+											</td>
+										</tr>";
+								}
+							}
+
+							else
+							{
+								$query = "SELECT * FROM employee WHERE position = '$positionReplaced'";
+								$position_query = mysql_query($query);
+								while($position_row = mysql_fetch_assoc($position_query))
+								{
+								Print "	<tr>
+											<td>".$position_row['empid']."</td>
+											<td>".$position_row['firstname']." ".$position_row['lastname']."</td>
+											<td>".$position_row['position']."</td>
+											<td>".$position_row['site']."</td>
+											<td>
+												<button type='button' class='btn btn-default' onclick='Edit(\"".$position_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
+											</td>
+										</tr>";
+								}
+							}
+						}
+//-------default
+						else
+						{
+						
+							while($emp_row = mysql_fetch_assoc($emp_display))
+							{
+								Print "	<tr>
+											<td>".$emp_row['empid']."</td>
+											<td>".$emp_row ['firstname']." ".$emp_row['lastname']."</td>
+											<td>".$emp_row['position']."</td>
+											<td>".$emp_row['site']."</td>
+											<td>
+												<button type='button' class='btn btn-default' onclick='Edit(\"".$emp_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
+											</td>
+										</tr>";
+							}
+						}
+						?>
+					</div>
 				</table>
 			</div>	
 		</div>
@@ -365,6 +468,50 @@ include('directives/db.php');
            $(".ui-datepicker").css('font-size', 10) 
        		}
 		});
+
+
+		function site() {
+			if(document.URL.match(/site=([0-9]+)/))
+			{
+				var arr = document.URL.match(/site=([0-9]+)/)
+				var siteUrl = arr[1];
+				if(siteUrl)
+				{
+					localStorage.setItem("counter", 0);
+				}
+				else if(localStorage.getItem('counter') > 2)
+				{
+					localStorage.clear();
+				}
+			}
+			var site = document.getElementById("site").value;
+			var siteReplaced = site.replace(/\s/g , "+");
+			localStorage.setItem("glob_site", siteReplaced);
+			window.location.assign("employees.php?site="+siteReplaced+"&position="+localStorage.getItem('glob_position'));
+		}
+		function position() {
+			if(document.URL.match(/position=([0-9]+)/))
+			{
+				var arr = document.URL.match(/position=([0-9]+)/)
+				var positionUrl = arr[1];
+				if(positionUrl)
+				{
+					localStorage.setItem("counter", 0);
+				}
+				else if(localStorage.getItem('counter') > 2)
+				{
+					localStorage.clear();
+				}
+			}
+			var position = document.getElementById("position").value;
+			var positionReplaced = position.replace(/\s/g , "+");
+			localStorage.setItem("glob_position", positionReplaced);
+			window.location.assign("employees.php?site="+localStorage.getItem("glob_site")+"&position="+positionReplaced);
+		}
+		function clearFilter() {
+			localStorage.clear();
+			window.location.assign("employees.php?site=null&position=null");
+		}
 	</script>
 
 	<script rel="javascript" src="js/dropdown.js"></script>
