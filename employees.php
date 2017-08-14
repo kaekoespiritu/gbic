@@ -115,7 +115,7 @@ include('directives/db.php');
 						$emp_query = "SELECT * FROM employee ORDER BY site";
 						$emp_display = mysql_query($emp_query);
 //--------Search
-						if(isset($_POST['search_submit']))
+						if(isset($_POST['txt_search']))
 						{
 							$find = mysql_real_escape_string($_POST['txt_search']);
 							$search = "SELECT empid, firstname, lastname, position, site FROM employee WHERE 
@@ -268,7 +268,7 @@ include('directives/db.php');
 	<script>
 		function enter(e) {
 		    if (e.keyCode == 13) {
-		        document.form['search_form'].submit();
+		        document.getElementById('search_form').submit();
 		    }
 		}
 		function sssbox() {
