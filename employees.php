@@ -37,10 +37,9 @@ include('directives/db.php');
 			<div class="row">
 				<div class="col-md-4 col-md-offset-1 pull-down">
 					<div class="input-group">
-						<input type="text" class="form-control">
-						<span class="input-group-btn">
-							<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-						</span>
+						<form method="post" action="" id="search_form">
+							<input type="text" placeholder="Search" id="search_box" name="txt_search" onkeypress="enter(enter)" class="form-control">
+						</form>
 					</div>
 				</div>
 				<!-- FILTER EMPLOYEE BY POSITION -->
@@ -115,9 +114,35 @@ include('directives/db.php');
 						<?php
 						$emp_query = "SELECT * FROM employee ORDER BY site";
 						$emp_display = mysql_query($emp_query);
+//--------Search
+						if(isset($_POST['search_submit']))
+						{
+							$find = mysql_real_escape_string($_POST['txt_search']);
+							$search = "SELECT empid, firstname, lastname, position, site FROM employee WHERE 
+											empid LIKE '%$find%' OR 
+											firstname LIKE '%$find%' OR 
+											lastname LIKE '%$find%' OR
+											position LIKE '%$find%' OR
+											site LIKE '%$find%'";
+							$searchQuery = mysql_query($search);
+							
+								while($search_row = mysql_fetch_assoc($searchQuery))
+								{
+								Print "	<tr>
+											<td>".$search_row['empid']."</td>
+											<td>".$search_row['firstname']." ".$search_row['lastname']."</td>
+											<td>".$search_row['position']."</td>
+											<td>".$search_row['site']."</td>
+											<td>
+												<button type='button' class='btn btn-default' onclick='Edit(\"".$search_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
+											</td>
+										</tr>";
+								}
+							
+						}
 //--------site		
 						
-						if($_GET['site'] != "null")
+						else if($_GET['site'] != "null")
 						{
 							
 							$site = $_GET['site'];
@@ -241,6 +266,11 @@ include('directives/db.php');
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	
 	<script>
+		function enter(e) {
+		    if (e.keyCode == 13) {
+		        document.form['search_form'].submit();
+		    }
+		}
 		function sssbox() {
     		if (document.getElementById('sss').checked) 
     		{
@@ -512,6 +542,21 @@ include('directives/db.php');
 			localStorage.clear();
 			window.location.assign("employees.php?site=null&position=null");
 		}
+		function search(key) {
+			var search = this.value;
+			if(localStorage.getItem("search")==null)
+			{
+				localStorage.setItem("search", search);
+			}	
+			else
+			{
+				var find = localStorage.getItem("search");
+				var findSearch = find + search;
+				localStorage.setItem("search", findSearch);
+			}
+			window.location.assign("employees.php?site=null&position=null&search="+localStorage.getItem("search"));
+
+		}
 	</script>
 
 	<script rel="javascript" src="js/dropdown.js"></script>
@@ -520,9 +565,7 @@ include('directives/db.php');
 	
 	  	window.location.assign("editEmployee.php?empid="+id);
 	}
-	function View(id) {
-		
-	}
+
 	</script>
 
 </body>

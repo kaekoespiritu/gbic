@@ -53,7 +53,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 		<div class="row"><br>
 			<div class="row text-center">
 				<ol class="breadcrumb text-left">
-					<li><a href="employees.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a></li>
+					<li><a href="employees.php?site=null&position=null" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a></li>
 					<li class="active">Edit employee details</li>
 					<h4 style="float:right;">Employee ID: 2017-39284756</h4>
 				</ol>
