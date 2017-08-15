@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
 include('directives/db.php');
+include('directives/session.php');
 ?>
 <html>
 <head>
@@ -33,24 +34,14 @@ include('directives/db.php');
 					<div class="btn-group">
 						<select class="form-control">
 							<option hidden>Site</option>
-
-							<option value="Muralla">Muralla</option>
-							<option value="ZooeyMain">Zooey Main</option>
-							<option value="Teressa">Teressa</option>
-							<option value="Camalig">Camalig</option>
-							<option value="Marilao">Marilao</option>
-							<option value="StaMaria">Sta. Maria</option>
-							<option value="Batangas">Balagtas</option>
-							<option value="LaUnion">La Union</option>
-							<option value="Kaybiga">Kaybiga</option>
-							<option value="MaxSteel">Max steel</option>
-							<option value="ZooeyLawangBato">Zooey Lawang Bato</option>
-							<option value="PedroGil">Pedro Gil</option>
-							<option value="Batangas">Batangas</option>
-							<option value="Tagaytay">Tagaytay</option>
-							<option value="Carmona">Carmona</option>
-							<option value="Paliparan">Paliparan</option>
-							<option value="Laguna">Laguna</option>
+							<?php
+								$site = "SELECT location FROM site";
+								$site_query = mysql_query($site);
+								while($row_site = mysql_fetch_assoc($site_query))
+								{
+									Print '<option value="'. $row_site['location'] .'">'. $row_site['location'] .'</option>';
+								}
+							?>
 						</select>
 					</div>
 					<button class="btn btn-success">Print site attendance</button>
@@ -60,37 +51,45 @@ include('directives/db.php');
 
 			<!-- TODO: Sites to have max characters of 12 -->
 			<div class="row">
-			<h3>Sites</h3>
-			<div class="col-md-8 col-md-offset-2">
-			<a href="enterattendance.php" class="btn btn-primary btn-lg">Muralla<br><br>Employees: ##</a>
-			<a href="enterattendance.php" class="btn btn-primary btn-lg">Zooey Main<br><br>Employees: ##</a>
-			<a href="enterattendance.php" class="btn btn-primary btn-lg">Teressa<br><br>Employees: ##</a>
-			<a href="enterattendance.php" class="btn btn-primary btn-lg">Camalig<br><br>Employees: ##</a>
-			<a href="enterattendance.php" class="btn btn-primary btn-lg">Marilao<br><br>Employees: ##</a>
-			</div>
-			<div class="col-md-8 col-md-offset-2" style="margin-top:3px">
-			<a href="enterattendance.php" class="btn btn-primary btn-lg">Sta. Maria<br><br>Employees: ##</a>
-			<a href="enterattendance.php" class="btn btn-primary btn-lg">Balagtas<br><br>Employees: ##</a>
-			<a href="enterattendance.php" class="btn btn-primary btn-lg">La Union<br><br>Employees: ##</a>
-			<a href="enterattendance.php" class="btn btn-primary btn-lg">Kaybiga<br><br>Employees: ##</a>
-			<a href="enterattendance.php" class="btn btn-primary btn-lg">Max steel<br><br>Employees: ##</a>
-			</div>
-			<div class="col-md-8 col-md-offset-2" style="margin-top:3px">
-			<a href="enterattendance.php" class="btn btn-primary btn-lg">Lawang Bato<br><br>Employees: ##</a>
-			<a href="enterattendance.php" class="btn btn-primary btn-lg">Pedro Gil<br><br>Employees: ##</a>
-			<a href="enterattendance.php" class="btn btn-primary btn-lg">Batangas<br><br>Employees: ##</a>
-			<a href="enterattendance.php" class="btn btn-primary btn-lg">Tagaytay<br><br>Employees: ##</a>
-			<a href="enterattendance.php" class="btn btn-primary btn-lg">Carmona<br><br>Employees: ##</a>
-			</div>
-			<div class="col-md-8 col-md-offset-2" style="margin-top:3px">
-			<a href="enterattendance.php" class="btn btn-primary btn-lg">Paliparan<br><br>Employees: ##</a>
-			<a href="enterattendance.php" class="btn btn-primary btn-lg">Laguna<br><br>Employees: ##</a>
-			</div>
+				<h3>Sites</h3>
+				<?php
+					$counter = 0;
+
+					Print "<script>alert('yeah1')</script>";
+					$site_box = "SELECT location FROM site";
+					$site_box_query = mysql_query($site_box);
+					while($row = mysql_fetch_assoc($site_box_query))
+					{
+						
+						if($counter == 0)
+						{
+							Print '<div class="col-md-8 col-md-offset-2">';
+						}
+						
+						$site_num = $row['location'];
+						$num_employee = "SELECT * FROM employee WHERE site = '$site_num'";
+						$employee_query = mysql_query($num_employee);
+						$employee_num = 0;
+
+						if($employee_query)
+						{
+							$employee_num = mysql_num_rows($employee_query);
+						}
+
+						Print '<a href="enterattendance.php" class="btn btn-primary btn-lg" style="margin:2px">'. $row['location'] .'<br><br>Employees: '. $employee_num .'</a>';
+						$counter++;
+						if($counter == 5)
+						{
+							Print '</div>';	
+							$counter = 0;
+						}
+						
+					}
+				?>
+			
 			</div>
 
-			</div>
 
-</div>
 
 
 <!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->

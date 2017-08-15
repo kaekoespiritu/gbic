@@ -24,7 +24,7 @@ include('directives/db.php');
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1 pull-down">
 				<ol class="breadcrumb text-left">
-					<li><a href="employees.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a></li>
+					<li><a href="employees.php?site=null&position=null" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a></li>
 					<li class="active">Absence Applications</li>
 				</ol>
 			</div>
