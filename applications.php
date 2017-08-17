@@ -28,7 +28,7 @@ include('directives/db.php');
 					<li class="active">Absence Applications</li>
 				</ol>
 			</div>
-			<div class="col-md-3 col-md-offset-1">
+			<div class="col-md-4 col-md-offset-1">
 				<div class="input-group">
 					<input type="text" class="form-control">
 					<span class="input-group-btn">
@@ -37,7 +37,7 @@ include('directives/db.php');
 				</div>
 			</div>
 			<!-- FILTER EMPLOYEE BY POSITION -->
-			<div class="col-md-5 text-right">
+			<div class="col-md-6 text-right">
 				Filter by:
 				<div class="btn-group">
 					<select class="form-control">
@@ -85,9 +85,6 @@ include('directives/db.php');
 						<option value="Absence Approved">Absence Approved</option>
 					</select>
 				</div>
-			</div>
-			<div class="col-md-1 text-right">
-				<button class="btn btn-primary" onclick="saveChanges()">Save changes</button>
 			</div>
 		</div>
 

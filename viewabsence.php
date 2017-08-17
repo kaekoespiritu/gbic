@@ -46,14 +46,22 @@ include('directives/session.php');
 			<br>
 			<table class="table table-bordered table-condensed" style="background-color:white;">
 				<tr>
-					<td>Wednesday, Aug. 2</td>
-					<td>Thursday, Aug. 3</td>
-					<td>Friday, Aug. 4</td>
+					<td>Monday, Date</td>
+					<td>Tuesday, Date</td>
+					<td>Wednesday, Date</td>
+					<td>Thursday, Date</td>
+					<td>Friday, Date</td>
+					<td>Saturday, Date</td>
+					<td>Sunday, Date</td>
 				</tr>
 				<tr>
-					<td>ABSENT</td>
-					<td>ABSENT</td>
-					<td>ABSENT</td>
+					<td class="danger">ABSENT</td>
+					<td class="danger">ABSENT</td>
+					<td class="danger">ABSENT</td>
+					<td class="success">PRESENT</td>
+					<td class="success">PRESENT</td>
+					<td class="success">PRESENT</td>
+					<td class="info">DAY OFF</td>
 				</tr>
 			</table>
 			<div class="panel">
