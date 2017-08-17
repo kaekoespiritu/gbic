@@ -147,7 +147,7 @@
         // add placeholder to choice button
         this.$choice = $(sprintf([
                 '<button type="button" class="ms-choice">',
-                '<p>%s <span class="caret"></span></p>',
+                '<span>%s</span>',
                 '<div></div>',
                 '</button>'
             ].join(''),

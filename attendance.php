@@ -141,7 +141,7 @@ include('directives/session.php');
 					});
 
 					$("select").multipleSelect({
-						placeholder: "Select a site for attendance",
+						placeholder: "Select site for attendance&#9662;",
 						selectAll: false,
 						width: 200,
 						multiple: true,
