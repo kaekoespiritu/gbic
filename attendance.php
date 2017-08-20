@@ -28,9 +28,9 @@ include('directives/session.php');
 	<div class="row pull-down">
 		<h2>Daily attendance log<br><br></h2>
 		<div class="col-md-5 col-md-offset-1">
-			<button class="btn btn-success">Print attendance sheet for all sites</button>
+			<button class="btn btn-primary">Print attendance sheet for all sites</button>
 		</div>
-		<div class="col-md-4 col-md-pull-2">
+		<div class="col-md-4 col-md-pull-2" style="top:5px;">
 			<select multiple="multiple" class="text-left">
 				<?php
 				$site = "SELECT location FROM site";
@@ -42,7 +42,7 @@ include('directives/session.php');
 				?>
 			</select>
 		</div>
-		<button class="btn btn-success col-md-2 col-md-pull-3">Print site attendance sheet</button>
+		<button class="btn btn-primary col-md-2 col-md-pull-3">Print site attendance sheet</button>
 	</div>
 </div>
 

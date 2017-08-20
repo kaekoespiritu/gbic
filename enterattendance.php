@@ -61,9 +61,9 @@ include('directives/db.php');
 		<hr>
 			<h4 class="pull-down">Attendace form</h4>
 			<form>
-				<button class="btn btn-primary">Morning Shift (8AM-5PM)</button>
-				<button class="btn btn-primary">Afternoon Shift (8AM-5PM)</button>
-				<button class="btn btn-primary">Night Shift (8AM-5PM)</button>
+				<button class="btn btn-success">Morning Shift (8AM-5PM)</button>
+				<button class="btn btn-success">Afternoon Shift (8AM-5PM)</button>
+				<button class="btn btn-success">Night Shift (8AM-5PM)</button>
 				<button class="btn btn-danger">Absent</button>
 				<div class="col-md-6 text-right">
 				<h4>Time in: <input type="text" class="timein" name="timein"><br><br>
