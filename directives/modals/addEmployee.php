@@ -10,7 +10,7 @@
 				</div>
 			</div>
 			<div class="modal-body">
-				<form class="horizontal" method="POST" action="add_employee.php">
+				<form class="horizontal" method="POST" action="logic_add_employee.php">
 					<div class="row">
 						<div class="col-md-6">
 							<h4 class="modal-title">Personal Information</h4><hr>
