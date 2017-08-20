@@ -42,13 +42,13 @@
 								<div class="col-md-3">
 									<label for="contact">Contact number</label>
 								</div>
-								<div class="col-md-5">
+								<div class="col-md-4">
 									<input name="txt_addContactNum" onkeypress="validatenumber(event)" type="text" class="form-control" id="contact" required>
 								</div>
 								<div class="col-md-1">
 									<label for="contact">Date of Birth</label>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-4">
 									<input name="txt_addDOB" type="text" class="form-control" id="dtpkr_addDOB" required>
 								</div>
 							</div><br>
