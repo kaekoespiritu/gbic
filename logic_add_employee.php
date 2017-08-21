@@ -1,6 +1,6 @@
 	
 <?php
-
+error_reporting(0);
 	include('directives/session.php');
 	include('directives/db.php');
 		$firstName = mysql_real_escape_string($_POST['txt_addFirstName']);
