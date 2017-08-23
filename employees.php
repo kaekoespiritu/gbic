@@ -2,6 +2,13 @@
 <?php
 include('directives/session.php');
 include('directives/db.php');
+
+if(isset($_GET['site']) && isset($_GET['position']))
+{}
+else
+{
+	header("location:employees.php?site=null&position=null");
+}
 ?>
 <html>
 <head>
@@ -129,7 +136,7 @@ include('directives/db.php');
 							firstname LIKE '%$find%' OR 
 							lastname LIKE '%$find%' OR
 							position LIKE '%$find%' OR
-							site LIKE '%$find%'";
+							site LIKE '%$find%' ORDER BY position";
 							$searchQuery = mysql_query($search);
 							
 							while($search_row = mysql_fetch_assoc($searchQuery))
@@ -158,7 +165,7 @@ include('directives/db.php');
 
 							$position = $_GET['position'];
 							$positionReplaced = str_replace('/+/', ' ', $position);
-							$pos_query = "SELECT * FROM employee WHERE position = '$positionReplaced' AND site = '$siteReplaced'";
+							$pos_query = "SELECT * FROM employee WHERE position = '$positionReplaced' AND site = '$siteReplaced' ORDER BY position";
 							$position_query = mysql_query($pos_query);
 							while($PosEmp_row = mysql_fetch_assoc($position_query))
 							{
@@ -176,7 +183,7 @@ include('directives/db.php');
 					else
 					{
 
-						$query = "SELECT * FROM employee WHERE site = '$siteReplaced'";
+						$query = "SELECT * FROM employee WHERE site = '$siteReplaced' ORDER BY position";
 						$site_query = mysql_query($query);
 						while($site_row = mysql_fetch_assoc($site_query))
 						{
@@ -205,7 +212,7 @@ include('directives/db.php');
 
 					$site = $_GET['site'];
 					$siteReplaced = str_replace('/+/', ' ', $site);
-					$pos_query = "SELECT * FROM employee WHERE position = '$positionReplaced' AND site = '$siteReplaced'";
+					$pos_query = "SELECT * FROM employee WHERE position = '$positionReplaced' AND site = '$siteReplaced' ORDER BY site";
 					$position_query = mysql_query($pos_query);
 					while($PosEmp_row = mysql_fetch_assoc($position_query))
 					{
@@ -223,7 +230,7 @@ include('directives/db.php');
 
 			else
 			{
-				$query = "SELECT * FROM employee WHERE position = '$positionReplaced'";
+				$query = "SELECT * FROM employee WHERE position = '$positionReplaced' ORDER BY site";
 				$position_query = mysql_query($query);
 				while($position_row = mysql_fetch_assoc($position_query))
 				{

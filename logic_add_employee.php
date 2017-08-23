@@ -1,6 +1,6 @@
 	
 <?php
-
+error_reporting(0);
 	include('directives/session.php');
 	include('directives/db.php');
 		$firstName = mysql_real_escape_string($_POST['txt_addFirstName']);
@@ -259,7 +259,7 @@
 		{
 			$pagibig = 0;
 		}
-		if(($sss_bool&& $philhealth_bool)&&(isset($_POST['txt_addPagibig'])))//checks if the employee has all the documents needed
+		if(($sss_bool && $philhealth_bool) && (isset($_POST['txt_addPagibig'])))//checks if the employee has all the documents needed
 		{
 			$complete_doc = 1;
 		}
@@ -307,7 +307,7 @@
 
 	
 		Print "<script>alert('You have successfully Added an employee.')</script>";
-		Print "<script>window.location.assign('employees.php')</script>";
+		Print "<script>window.location.assign('employees.php?site=null&position=null')</script>";
 
 
 ?>
