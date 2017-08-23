@@ -11,6 +11,7 @@ include('directives/db.php');
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="js/timepicker/jquery.timepicker.min.css">
 
 </head>
 <body style="font-family: Quicksand">
@@ -66,15 +67,15 @@ include('directives/db.php');
 				<button class="btn btn-success">Night Shift (8AM-5PM)</button>
 				<button class="btn btn-danger">Absent</button>
 				<div class="col-md-6 text-right">
-				<h4>Time in: <input type="text" class="timein" name="timein"><br><br>
-					Time out: <input type="text" class="timeout" name="timeout">
+				<h4>Time in: <input type="text" id="timeIn" class="timein timepicker" name="timein"><br><br>
+					Time out: <input type="text" id="timeOut" class="timeout timepicker" name="timeout">
 					<br><br>
 					Remarks: <input type="text"></h4>
 					</div>
 					<div class="col-md-6 text-left">
-					<h4>Working hours: <input type="text" placeholder="--" disabled><br><br>
-					Overtime: <input type="text" placeholder="--" disabled><br><br>
-					Undertime: <input type="text" placeholder="--" disabled></h4>
+					<h4>Working hours: <input type="text" id="workHours" placeholder="--" disabled><br><br>
+					Overtime: <input type="text" id="overTime" placeholder="--" disabled><br><br>
+					Undertime: <input type="text" id="underTime" placeholder="--" disabled></h4>
 					</div>
 				</form>
 			</div>
@@ -88,27 +89,63 @@ include('directives/db.php');
 
 		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="js/timepicker/jquery.timepicker.min.js"></script>
 		<script rel="javascript" src="js/bootstrap.min.js"></script>
 		<script rel="javascript" src="js/dropdown.js"></script>
 		<script>
 			document.getElementById("attendance").setAttribute("style", "background-color: #10621e;");
+
 			$(document).ready(function(){
 				$('input.timein').timepicker({
-					timeFormat: 'h:m p',
+					timeFormat: 'hh:mm p',
 					dynamic: false,
 					scrollbar: false,
-					dropdown: true
+					dropdown: false
 				});
 				$('input.timeout').timepicker({
-					timeFormat: 'h:m p',
+					timeFormat: 'hh:mm p',
 					dynamic: false,
 					scrollbar: false,
-					dropdown: true
-				});
+					dropdown: false
+					
+				});	
+/*					$("#timeIn").keypress(function(){
+							var timein = $('#timeIn').val();
+							if($('#timeOut').val()  && $('#timeIn').val())
+							{
+								var timeout = $('#timeOut').val(); 
+								alert(timein);
+								alert(timeout);
+							}
+					});		
+					$("#timeOut").keypress(function(){
+							var timeout = $('#timeOut').val();
+							if($('#timeOut').val() && $('#timeIn').val())
+							{
+								var timein = $('#timeIn').val(); 
+								alert(timein);
+								alert(timeout);
+							}
+					});		*/
+
+					if($("#timeIn").val() && $("timeOut").val()){
+						var timein = $('#timeIn').val();
+						var timeout = $('#timeOut').val();
+						alert("Time in: "+timein + " | Time out: " + timeout);
+					}
+			
 			});
 		</script>
 	</body>
 	</html>
-<!--
-      changeMonth: true,
-      changeYear: true
+
+
+
+
+
+
+
+
+
+
+
