@@ -48,17 +48,54 @@ include('directives/db.php');
 						<td>Undertime</td>
 						<td colspan="2">Actions</td>
 					</tr>
-					<tr>
-						<td>Miguelito Joselito Dela Cruz</td>
-						<td>Mason</td>
-						<td><input type="text" id="timeIn" class="timein timepicker form-control input-sm" name="timein"></td> <!-- Time In -->
-						<td><input type="text" id="timeOut" class="timeout timepicker form-control input-sm" name="timeout"></td> <!-- Time Out-->
-						<td><input type="text" id="workHours" placeholder="--" class="form-control input-sm" disabled></td> <!-- Working Hours -->
-						<td><input type="text" id="overTime" placeholder="--" class="form-control input-sm" disabled></td> <!-- Overtime -->
-						<td><input type="text" id="underTime" placeholder="--" class="form-control input-sm" disabled></td> <!-- Undertime -->
-						<td><a class="btn btn-sm btn-primary">Remarks</a></td>
-						<td><a class="btn btn-sm btn-danger">Absent</a></td>
-					</tr>
+					
+					<?php
+					$site = $_GET['site'];
+					$employees = "SELECT * FROM employee WHERE site = '$site'";
+					$employees_query = mysql_query($employees);
+					if($employees_query)
+					{
+						while($row_employee = mysql_fetch_assoc($employees_query))
+						{
+							Print "	<tr>
+										<td>
+											". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
+										</td>
+										<td>
+											". $row_employee['position'] ."
+										</td>
+									<!-- Time In -->
+										<td>
+											<input type='text' class='timein timepicker form-control input-sm' onchange='timein(\"". $row_employee['empid'] ."\")' name='timein[]'>
+										</td> 
+									<!-- Time Out-->
+										<td>
+											<input type='text' class='timeout timepicker form-control input-sm' onchange='timeout(\"". $row_employee['empid'] ."\")' name='timeout[]'>
+										</td> 
+									<!-- Working Hours -->
+										<td>
+											<input type='text' placeholder='--'' class='form-control input-sm' name='workinghrs[]' disabled>
+										</td> 
+									<!-- Overtime -->
+										<td>
+											<input type='text' placeholder='--' class='form-control input-sm' name='othrs[]' disabled>
+										</td> 
+									<!-- Undertime -->
+										<td>
+											<input type='text' id='underTime' placeholder='--' class='form-control input-sm' name='undertime[]' disabled>
+										</td> 
+										<td>
+											<a class='btn btn-sm btn-primary' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks</a>
+										</td>
+										<td>
+											<a class='btn btn-sm btn-danger' onclick='absent(\"". $row_employee['empid'] ."\")'>Absent</a>
+										</td>
+									</tr>";
+						}
+					}
+					?>
+					
+					
 				</table>
 			</div>
 		</div>
@@ -72,6 +109,13 @@ include('directives/db.php');
 			<script rel="javascript" src="js/bootstrap.min.js"></script>
 			<script>
 				document.getElementById("attendance").setAttribute("style", "background-color: #10621e;");
+
+				function remarks(id){
+
+				}
+				function absent(id){
+
+				}
 
 				$(document).ready(function(){
 					localStorage.clear();	
@@ -88,8 +132,6 @@ include('directives/db.php');
 						scrollbar: false,
 						dropdown: false
 					});	
-
-					
 
 					$('#timeIn').change(function()
 					{
