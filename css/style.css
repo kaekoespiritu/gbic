@@ -237,6 +237,9 @@ hr
   border-radius: 5px;
   margin: 2px;
   padding: 5px;
+  height: 72px;
+  width: 143px;
+  float: left;
 }
 #checkboxes {
   display: none;
@@ -263,4 +266,12 @@ hr
 .selectBox select {
   width: 100%;
   font-weight: bold;
+}
+.autofit
+{
+  font-size:auto !important;
+}
+.smalltext
+{
+  white-space: nowrap;
 }

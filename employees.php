@@ -114,7 +114,7 @@ else
 		<!-- EMPLOYEE TABLE -->
 		<div class="row pull-down">
 			<div class="col-md-10 col-md-offset-1">
-				<table class="table table-bordered" style="background-color:white;">
+				<table class="table table-bordered table-condensed" style="background-color:white;">
 					<tr>
 						<td>Employee ID</td>
 						<td>Name</td>
@@ -253,10 +253,10 @@ else
 		while($emp_row = mysql_fetch_assoc($emp_display))
 		{
 			Print "	<tr>
-			<td>".$emp_row['empid']."</td>
-			<td>".$emp_row ['firstname']." ".$emp_row['lastname']."</td>
-			<td>".$emp_row['position']."</td>
-			<td>".$emp_row['site']."</td>
+			<td style='vertical-align: inherit'>".$emp_row['empid']."</td>
+			<td style='vertical-align: inherit'>".$emp_row ['firstname']." ".$emp_row['lastname']."</td>
+			<td style='vertical-align: inherit'>".$emp_row['position']."</td>
+			<td style='vertical-align: inherit'>".$emp_row['site']."</td>
 			<td>
 				<button type='button' class='btn btn-default' onclick='Edit(\"".$emp_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
 			</td>

@@ -29,115 +29,201 @@ include('directives/db.php');
 			<!-- BREAD CRUMBS -->
 			<div class="col-md-10 col-md-offset-1 pull-down">
 				<ol class="breadcrumb text-left">
-				<!-- TODO: If Sunday/Holiday attendance is selected, change link and name -->
+					<!-- TODO: If Sunday/Holiday attendance is selected, change link and name -->
 					<li><a href="attendance.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a></li>
-					<li class="active">Employee attendance at [SITE NAME]</li>
-					<a data-toggle="modal" data-target="#siteAttendance" class="btn btn-primary" style="float:right;">View site attendance record</a>
+					<li class="active">Employee attendance sheet for [SITE NAME]</li>
 				</ol>
 			</div>
-			<!-- EMPLOYEE INFORMATION -->
-			<div class="col-md-10 col-md-offset-1">
-				<div class="row">
-					<h2 class="text-center">Miguelito Joselito Dela Cruz</h2>
-				</div>
-				<hr>
-				<div class="row">
-					<div class="col-md-6 text-left" style="word-break: keep-all">
-						<h4><b style="font-family: QuickSandMed">Employee ID:</b> 2014-1352845</h4>
-						<h4><b style="font-family: QuickSandMed">Date of hire:</b> July 14, 2014 </h4>
-					</div>
-					<div class="col-md-6 text-left">
-						<h4><b style="font-family: QuickSandMed">Address:</b> 97 Waco St. Greenheights Village, Quezon City</h4>
-						<h4><b style="font-family: QuickSandMed">Contact Number:</b> 09123456789</h4>
-					</div>
-				</div>
-			</div>
-
-		</div>
-
-
-
-		<!-- ATTENDANCE FORM -->
-		<div class="col-md-10 col-md-offset-1 pull-down">
-		<hr>
-			<h4 class="pull-down">Attendace form</h4>
-			<form>
-				<button class="btn btn-success">Morning Shift (8AM-5PM)</button>
-				<button class="btn btn-success">Afternoon Shift (8AM-5PM)</button>
-				<button class="btn btn-success">Night Shift (8AM-5PM)</button>
-				<button class="btn btn-danger">Absent</button>
-				<div class="col-md-6 text-right">
-				<h4>Time in: <input type="text" id="timeIn" class="timein timepicker" name="timein"><br><br>
-					Time out: <input type="text" id="timeOut" class="timeout timepicker" name="timeout">
-					<br><br>
-					Remarks: <input type="text"></h4>
-					</div>
-					<div class="col-md-6 text-left">
-					<h4>Working hours: <input type="text" id="workHours" placeholder="--" disabled><br><br>
-					Overtime: <input type="text" id="overTime" placeholder="--" disabled><br><br>
-					Undertime: <input type="text" id="underTime" placeholder="--" disabled></h4>
-					</div>
-				</form>
-			</div>
-
-			<div class="col-md-10 col-md-offset-1 pull-down">
-				<button class="btn btn-primary">Next employee</button>
-			</div>
-		</div>
-
-		<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
-
-		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		<script src="js/timepicker/jquery.timepicker.min.js"></script>
-		<script rel="javascript" src="js/bootstrap.min.js"></script>
-		<script rel="javascript" src="js/dropdown.js"></script>
-		<script>
-			document.getElementById("attendance").setAttribute("style", "background-color: #10621e;");
-
-			$(document).ready(function(){
-				$('input.timein').timepicker({
-					timeFormat: 'hh:mm p',
-					dynamic: false,
-					scrollbar: false,
-					dropdown: false
-				});
-				$('input.timeout').timepicker({
-					timeFormat: 'hh:mm p',
-					dynamic: false,
-					scrollbar: false,
-					dropdown: false
-					
-				});	
-/*					$("#timeIn").keypress(function(){
-							var timein = $('#timeIn').val();
-							if($('#timeOut').val()  && $('#timeIn').val())
-							{
-								var timeout = $('#timeOut').val(); 
-								alert(timein);
-								alert(timeout);
-							}
-					});		
-					$("#timeOut").keypress(function(){
-							var timeout = $('#timeOut').val();
-							if($('#timeOut').val() && $('#timeIn').val())
-							{
-								var timein = $('#timeIn').val(); 
-								alert(timein);
-								alert(timeout);
-							}
-					});		*/
-
-					if($("#timeIn").val() && $("timeOut").val()){
-						var timein = $('#timeIn').val();
-						var timeout = $('#timeOut').val();
-						alert("Time in: "+timein + " | Time out: " + timeout);
-					}
 			
-			});
-		</script>
-	</body>
-	</html>
+			<!-- Attendance table -->
+			<div class="col-md-10 col-md-offset-1 pull-down">
+				<table class="table table-condensed table-bordered" style="background-color:white;">
+					<tr>
+						<td>Name</td>
+						<td>Position</td>
+						<td>Time In</td>
+						<td>Time Out</td>
+						<td>Working Hours</td>
+						<td>Overtime</td>
+						<td>Undertime</td>
+						<td colspan="2">Actions</td>
+					</tr>
+					<tr>
+						<td>Miguelito Joselito Dela Cruz</td>
+						<td>Mason</td>
+						<td><input type="text" id="timeIn" class="timein timepicker form-control input-sm" name="timein"></td> <!-- Time In -->
+						<td><input type="text" id="timeOut" class="timeout timepicker form-control input-sm" name="timeout"></td> <!-- Time Out-->
+						<td><input type="text" id="workHours" placeholder="--" class="form-control input-sm" disabled></td> <!-- Working Hours -->
+						<td><input type="text" id="overTime" placeholder="--" class="form-control input-sm" disabled></td> <!-- Overtime -->
+						<td><input type="text" id="underTime" placeholder="--" class="form-control input-sm" disabled></td> <!-- Undertime -->
+						<td><a class="btn btn-sm btn-primary">Remarks</a></td>
+						<td><a class="btn btn-sm btn-danger">Absent</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+			<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
+
+			<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+			<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+			<script src="js/timepicker/jquery.timepicker.min.js"></script>
+			<script rel="javascript" src="js/bootstrap.min.js"></script>
+			<script>
+				document.getElementById("attendance").setAttribute("style", "background-color: #10621e;");
+
+				$(document).ready(function(){
+					localStorage.clear();	
+					$('input.timein').timepicker({
+						timeFormat: 'hh:mm p',
+						dynamic: false,
+						scrollbar: false,
+						dropdown: false
+					});
+
+					$('input.timeout').timepicker({
+						timeFormat: 'hh:mm p',
+						dynamic: false,
+						scrollbar: false,
+						dropdown: false
+					});	
+
+					
+
+					$('#timeIn').change(function()
+					{
+							var timein = $(this).val(); // Get String value
+							var hour = timein.split(":"); // Split hour + min + AM/PM
+							var min = hour[1].split(" "); // Split min + AM/PM
+							var diff; // Determine if AM/PM
+
+							if(min[1] == "PM" && hour != 12)
+							{
+								diff = 12; // Add 12hrs if PM
+								var timeinhour = parseInt(hour[0],10) + diff;
+								localStorage.setItem("timeInHour", parseInt(hour[0],10)+diff);
+							}
+							else
+							{
+								localStorage.setItem("timeInHour", parseInt(hour[0]));
+							}
+							
+							// Change strings to integers
+							var timeinmin = parseInt(min[0],10);
+							localStorage.setItem("timeInMin", parseInt(min[0]));
+
+							// Computation for Working Hours, Undertime and Overtime
+							if(localStorage.getItem("timeOutHour") && localStorage.getItem("timeOutMin"))
+							{
+								var workinghours = localStorage.getItem("timeOutHour") - localStorage.getItem("timeInHour");
+								var workingmins = localStorage.getItem("timeOutMin") - localStorage.getItem("timeInMin");
+								
+								// WORKING HOURS
+								if(workingmins == 0)
+								{
+									$("#workHours").attr("value", workinghours + " hours");
+								}
+								else
+								{
+									$("#workHours").attr("value", workinghours + " hours, " + workingmins + " mins");	
+								}
+
+								// OVERTIME if Working Hours exceed 8
+								if(workinghours > 8 && workingmins == 0)
+								{
+									$("#overTime").attr("value", workinghours - 8 + " hours");
+								}
+								else
+								{
+									$("#overTime").attr("value", "0 hours");
+								}
+
+								// UNDERTIME if Working Hours don't reach 8
+								alert(boom);
+								if(workinghours < 8)
+								{
+									$("#underTime").attr("value", (workinghours - 8)*-1 + " hour");
+									alert(yea);
+								}
+								else
+								{
+									$("#underTime").attr("value","0 hour");
+									alert(no);
+								}
+							}
+						});
+
+					// TIME OUT INPUT FIELD
+					$('#timeOut').change(function()
+					{
+						var timeout = $('#timeOut').val();
+						var hour = timeout.split(":");
+						var min = hour[1].split(" ");
+						var diff;
+
+						if(min[1] == "PM" && hour[0] != 12)
+						{
+							diff = 12;
+							var timeouthour = parseInt(hour[0],10) + diff;
+							localStorage.setItem("timeOutHour", parseInt(hour[0],10)+diff);
+						}
+						else
+						{
+							localStorage.setItem("timeOutHour", parseInt(hour[0]));
+						}
+
+							// Change strings to integers
+							var timeoutmin = parseInt(min[0],10);
+							localStorage.setItem("timeOutMin", parseInt(min[0]));
+							
+							// Computation for Working Hours, Undertime and Overtime
+							if(localStorage.getItem("timeInHour") && localStorage.getItem("timeInMin"))
+							{
+								var workinghours = localStorage.getItem("timeOutHour") - localStorage.getItem("timeInHour");
+								var workingmins = localStorage.getItem("timeOutMin") - localStorage.getItem("timeInMin");
+
+								// WORKING HOURS
+								if(workingmins == 0)
+								{
+									$("#workHours").attr("value", workinghours + " hours");
+								}
+								else
+								{
+									$("#workHours").attr("value", workinghours + " hours, " + workingmins + " mins");	
+								}
+
+								// OVERTIME if Working Hours exceed 8
+								if(workinghours > 8 && workingmins == 0)
+								{
+									$("#overTime").attr("value", workinghours - 8 + " hours");
+								}
+								else
+								{
+									$("#overTime").attr("value", "0 hours");
+								}
+
+								// UNDERTIME if Working Hours don't reach 8
+								if(workinghours < 8)
+								{
+									$("#underTime").attr("value", (workinghours - 8)*-1 + " hour");
+									alert(yea);
+								}
+								else
+								{
+									$("#underTime").attr("value","0 hour");
+									alert(no);
+								}
+
+								// RESET OVERTIME & UNDERTIME on CHANGE
+								
+							}
+						});
+
+				});
+			</script>
+		</body>
+		</html>
 
 
 
