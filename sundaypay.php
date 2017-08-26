@@ -115,7 +115,6 @@ include('directives/session.php');
 	<script>
 		document.getElementById("attendance").setAttribute("style", "background-color: #10621e;");
 	</script>
-	<script rel="javascript" src="js/dropdown.js"></script>
 
 
 </div>

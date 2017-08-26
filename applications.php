@@ -25,7 +25,7 @@ include('directives/db.php');
 			<div class="col-md-10 col-md-offset-1 pull-down">
 				<ol class="breadcrumb text-left">
 					<li><a href="employees.php?site=null&position=null" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a></li>
-					<li class="active">Absence Applications</li>
+					<li class="active">Absence Notifications</li>
 				</ol>
 			</div>
 			<div class="col-md-4 col-md-offset-1">
@@ -98,7 +98,6 @@ include('directives/db.php');
 						<td>Position</td>
 						<td>Site</td>
 						<td>Days absent</td>
-						<td>Status</td>
 						<td>Actions</td>
 					</tr>
 					<tr>
@@ -107,7 +106,6 @@ include('directives/db.php');
 						<td>Position</td>
 						<td>Placeholder</td>
 						<td>3</td>
-						<td>Pending Approval</td>
 						<td><a class="btn btn-default" href="viewabsence.php">Check details</a></td>
 					</tr>
 					<tr>
@@ -116,7 +114,6 @@ include('directives/db.php');
 						<td>Position</td>
 						<td>Placeholder</td>
 						<td>2</td>
-						<td>Approved absence</td>
 						<td><a class="btn btn-default" disabled="disabled" href="viewabsence.php">Check details</a></td>
 					</tr>
 				</table>
@@ -131,7 +128,6 @@ include('directives/db.php');
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
-	<script rel="javascript" src="js/dropdown.js"></script>
 	<script>
 		function saveChanges(){
 			confirm("Note: After saving these changes, the loans you've entered will no longer be editable. Are you sure you want to save changes?");

@@ -119,6 +119,5 @@ else
 	document.getElementById("home").setAttribute("style", "background-color: #10621e;");
 </script>
 <script rel="javascript" src="js/jquery.min.js"></script>
-<script rel="javascript" src="js/dropdown.js"></script>
 </body>
 </html>

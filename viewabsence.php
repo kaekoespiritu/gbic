@@ -25,7 +25,7 @@ include('directives/session.php');
 	<div class="row pull-down">
 		<div class="col-md-10 col-md-offset-1">
 		<ol class="breadcrumb text-left">
-					<li><a href="applications.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Absence Applications</a></li>
+					<li><a href="applications.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Absence Notifications</a></li>
 					<li class="active">Check details</li>
 				</ol>
 			<h2 class="text-left">Miguelito Joselito Dela Cruz</h2>
@@ -64,30 +64,7 @@ include('directives/session.php');
 					<td class="info">DAY OFF</td>
 				</tr>
 			</table>
-			<div class="panel">
 				<div class="well well-sm"><h3>Total days absent: 3</h3></div>
-				<div class="row">
-					<div class="col-md-10 col-md-offset-1">
-						<form>
-							<div class="row">
-							<div class="col-md-4 text-left">
-								<h3>Reason for absence</h3>
-								<textarea class="form-control" rows="2"></textarea>
-								<br><br>
-								</div>
-								<div class="col-md-6">
-								<h3>Actions</h3>
-								<a class="btn btn-success">Approve absence</a> 
-								<a class="btn btn-danger" disabled="disabled">Employee went AWOL</a>
-								</div>
-								<div class="col-md-2 pull-down">
-								<a class="btn btn-primary pull-down">Save changes</a>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
 
 		</div>	
 	</div>
@@ -99,7 +76,6 @@ include('directives/session.php');
 <script>
 	document.getElementById("employees").setAttribute("style", "background-color: #10621e;");
 </script>
-<script rel="javascript" src="js/dropdown.js"></script>
 
 
 </div>

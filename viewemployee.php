@@ -198,7 +198,6 @@ include('directives/session.php');
 	<script>
 		document.getElementById("employees").setAttribute("class", "active");
 	</script>
-	<script rel="javascript" src="js/dropdown.js"></script>
 	
 </div>
 </body>

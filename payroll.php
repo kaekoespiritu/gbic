@@ -29,7 +29,7 @@ include('directives/session.php');
 			<div class="row">
 				<div class="col-md-8 text-left" style="word-break: keep-all">
 					<h4><b style="font-family: QuickSandMed">Employee ID:</b> 2014-1352845</h4>
-					<h4><b style="font-family: QuickSandMed">Date of hire:</b> July 14, 2014 </h4>
+					<h4><b style="font-family: QuickSandMed">Position:</b> Mason </h4>
 					<h4><b style="font-family: QuickSandMed">Address:</b> 97 Waco St. Greenheights Village, Quezon City</h4>
 					<h4><b style="font-family: QuickSandMed">Contact Number:</b> 09123456789</h4>
 				</div>
@@ -109,7 +109,6 @@ include('directives/session.php');
 <script>
 	document.getElementById("payroll").setAttribute("style", "background-color: #10621e;");
 </script>
-<script rel="javascript" src="js/dropdown.js"></script>
 
 
 </div>

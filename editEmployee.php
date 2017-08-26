@@ -477,7 +477,6 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 
 	
 	</script>
-		<script rel="javascript" src="js/dropdown.js"></script>
 
 
 	</div>
