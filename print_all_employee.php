@@ -26,9 +26,9 @@ $counter = 0;
 while($site = mysql_fetch_assoc($site_query))//1st loop for sites
 {
 	$location = $site['location'];
-
-	$activeSheet = $sheet -> createSheet($counter);
 	$counter++;
+	$activeSheet = $sheet -> createSheet($counter);
+	
 
 	$activeSheet->setCellValue('A1', $location);
 	$activeSheet->setCellValue('A2', 'ATTENDACE - '.$date);
