@@ -31,7 +31,11 @@ include('directives/db.php');
 				<ol class="breadcrumb text-left">
 					<!-- TODO: If Sunday/Holiday attendance is selected, change link and name -->
 					<li><a href="attendance.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a></li>
-					<li class="active">Employee attendance sheet for [SITE NAME]</li>
+					<?php
+					$site_name = $_GET['site'];
+					Print '<li class="active">Employee attendance sheet for '. $site_name .'</li>';
+					?>
+					
 				</ol>
 			</div>
 			
@@ -57,223 +61,239 @@ include('directives/db.php');
 					{
 						while($row_employee = mysql_fetch_assoc($employees_query))
 						{
-							Print "	<tr>
-										<td>
-											". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
-										</td>
-										<td>
-											". $row_employee['position'] ."
-										</td>
-									<!-- Time In -->
-										<td>
-											<input type='text' class='timein timepicker form-control input-sm' onchange='timein(\"". $row_employee['empid'] ."\")' name='timein[]'>
-										</td> 
-									<!-- Time Out-->
-										<td>
-											<input type='text' class='timeout timepicker form-control input-sm' onchange='timeout(\"". $row_employee['empid'] ."\")' name='timeout[]'>
-										</td> 
-									<!-- Working Hours -->
-										<td>
-											<input type='text' placeholder='--'' class='form-control input-sm' name='workinghrs[]' disabled>
-										</td> 
-									<!-- Overtime -->
-										<td>
-											<input type='text' placeholder='--' class='form-control input-sm' name='othrs[]' disabled>
-										</td> 
-									<!-- Undertime -->
-										<td>
-											<input type='text' id='underTime' placeholder='--' class='form-control input-sm' name='undertime[]' disabled>
-										</td> 
-										<td>
-											<a class='btn btn-sm btn-primary' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks</a>
-										</td>
-										<td>
-											<a class='btn btn-sm btn-danger' onclick='absent(\"". $row_employee['empid'] ."\")'>Absent</a>
-										</td>
-									</tr>";
+							Print "	
+							<tr id=\"". $row_employee['empid'] ."\">
+								<td>
+									". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
+								</td>
+								<td>
+									". $row_employee['position'] ."
+								</td>
+								<!-- Time In -->
+								<td>
+									<input type='text' class='timein timepicker form-control input-sm' name='timein[]'>
+								</td> 
+								<!-- Time Out-->
+								<td>
+									<input type='text' class='timeout timepicker form-control input-sm' name='timeout[]'>
+								</td> 
+								<!-- Working Hours -->
+								<td>
+									<input type='text' placeholder='--'' class='form-control input-sm workinghours' name='workinghrs[]' disabled>
+								</td> 
+								<!-- Overtime -->
+								<td>
+									<input type='text' placeholder='--' class='form-control input-sm overtime' name='othrs[]' disabled>
+								</td> 
+								<!-- Undertime -->
+								<td>
+									<input type='text' placeholder='--' class='form-control input-sm undertime' name='undertime[]' disabled>
+								</td> 
+								<td>
+									<a class='btn btn-sm btn-primary' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks</a>
+								</td>
+								<td>
+									<a class='btn btn-sm btn-danger' onclick='absent(\"". $row_employee['empid'] ."\")'>Absent</a>
+								</td>
+							</tr>
+							";
 						}
 					}
 					?>
-					
-					
+
+
 				</table>
 			</div>
 		</div>
 	</div>
 
-			<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
+	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 
-			<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-			<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-			<script src="js/timepicker/jquery.timepicker.min.js"></script>
-			<script rel="javascript" src="js/bootstrap.min.js"></script>
-			<script>
-				document.getElementById("attendance").setAttribute("style", "background-color: #10621e;");
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="js/timepicker/jquery.timepicker.min.js"></script>
+	<script rel="javascript" src="js/bootstrap.min.js"></script>
+	<script>
+		document.getElementById("attendance").setAttribute("style", "background-color: #10621e;");
 
-				function remarks(id){
+		$(document).ready(function(){
+			console.log("jQuery comes in!");
+			$('input.timein').timepicker({
+				timeFormat: 'hh:mm p',
+				dynamic: false,
+				scrollbar: false,
+				dropdown: false
+			});
+			$('input.timein').change(function(){
+				var id = $(this).parent().parent().attr('id');
+				console.log(id);
+				timeIn(id);
+			});
+			$('input.timeout').timepicker({
+				timeFormat: 'hh:mm p',
+				dynamic: false,
+				scrollbar: false,
+				dropdown: false
+			});
+			$('input.timeout').change(function(){
+				var id = $(this).parent().parent().attr('id');
+				console.log(id);
+				timeOut(id);
+			});
+		});
 
-				}
-				function absent(id){
+		function remarks(id){
 
-				}
+		}
+		function absent(id){
 
-				$(document).ready(function(){
-					localStorage.clear();	
-					$('input.timein').timepicker({
-						timeFormat: 'hh:mm p',
-						dynamic: false,
-						scrollbar: false,
-						dropdown: false
-					});
+		}
 
-					$('input.timeout').timepicker({
-						timeFormat: 'hh:mm p',
-						dynamic: false,
-						scrollbar: false,
-						dropdown: false
-					});	
+		function getHour(time)
+		{
+			console.log("getHour: " + time);
+			if(time)
+			{
+			var hour = time.split(":"); // Split hour + min + AM/PM
+			var min = hour[1].split(" "); // Split min + AM/PM
+			var diff; // Determine if AM/PM
 
-					$('#timeIn').change(function()
-					{
-							var timein = $(this).val(); // Get String value
-							var hour = timein.split(":"); // Split hour + min + AM/PM
-							var min = hour[1].split(" "); // Split min + AM/PM
-							var diff; // Determine if AM/PM
+			if(min[1] == "PM" && hour != 12)
+			{
+				diff = 12; // Add 12hrs if PM
+				var hr = parseInt(hour[0],10) + diff;
+				return hr;
+			}
+			else
+			{
+				var hr = parseInt(hour[0]);
+				return hr;
+			}
+		}	
+		else
+		{
+			return 0;
+		}		
+	}
 
-							if(min[1] == "PM" && hour != 12)
-							{
-								diff = 12; // Add 12hrs if PM
-								var timeinhour = parseInt(hour[0],10) + diff;
-								localStorage.setItem("timeInHour", parseInt(hour[0],10)+diff);
-							}
-							else
-							{
-								localStorage.setItem("timeInHour", parseInt(hour[0]));
-							}
-							
-							// Change strings to integers
-							var timeinmin = parseInt(min[0],10);
-							localStorage.setItem("timeInMin", parseInt(min[0]));
+	function getMin(time)
+	{
+		console.log("getMin: " + time);
+		if(time)
+		{
+			var hour = time.split(":"); // Split hour + min + AM/PM
+			var min = hour[1].split(" "); // Split min + AM/PM
 
-							// Computation for Working Hours, Undertime and Overtime
-							if(localStorage.getItem("timeOutHour") && localStorage.getItem("timeOutMin"))
-							{
-								var workinghours = localStorage.getItem("timeOutHour") - localStorage.getItem("timeInHour");
-								var workingmins = localStorage.getItem("timeOutMin") - localStorage.getItem("timeInMin");
-								
-								// WORKING HOURS
-								if(workingmins == 0)
-								{
-									$("#workHours").attr("value", workinghours + " hours");
-								}
-								else
-								{
-									$("#workHours").attr("value", workinghours + " hours, " + workingmins + " mins");	
-								}
+			var mins = parseInt(min[0],10);
+			return mins;
+		}
+		else
+		{
+			return 0;
+		}
+	}
 
-								// OVERTIME if Working Hours exceed 8
-								if(workinghours > 8 && workingmins == 0)
-								{
-									$("#overTime").attr("value", workinghours - 8 + " hours");
-								}
-								else
-								{
-									$("#overTime").attr("value", "0 hours");
-								}
+	function computeTime(row, timeinhour,timeinmin,timeouthour,timeoutmin)
+	{
+		console.log("Time in: " + timeinhour + ":" + timeinmin + " Time out: " + timeouthour + ":" + timeoutmin);
+		if(timeinhour && timeouthour)
+		{
+			var workinghours = timeouthour - timeinhour;
+			var workingmins;
+			if(timeinmin > timeoutmin)
+			{
+				workingmins = timeinmin - timeoutmin;
+			}
+			if(timeoutmin > timeinmin)
+			{
+				workingmins = timeoutmin - timeinmin;
+			}
+			if(timeinmin === timeoutmin)
+			{
+				workingmins = 0;
+			}
 
-								// UNDERTIME if Working Hours don't reach 8
-								alert(boom);
-								if(workinghours < 8)
-								{
-									$("#underTime").attr("value", (workinghours - 8)*-1 + " hour");
-									alert(yea);
-								}
-								else
-								{
-									$("#underTime").attr("value","0 hour");
-									alert(no);
-								}
-							}
-						});
+			// WORKING HOURS
+			if(workingmins == 0)
+			{
+				row.querySelector('.workinghours').value = workinghours + " hours";
+			}
+			else
+			{
+				row.querySelector('.workinghours').value = workinghours + " hours, " + workingmins + " mins";	
+			}
 
-					// TIME OUT INPUT FIELD
-					$('#timeOut').change(function()
-					{
-						var timeout = $('#timeOut').val();
-						var hour = timeout.split(":");
-						var min = hour[1].split(" ");
-						var diff;
+			// OVERTIME if Working Hours exceed 8
+			if(workinghours > 8 && workingmins == 0)
+			{
+				row.querySelector('.overtime').value = workinghours - 8 + " hours";
+			}
+			else if (workinghours > 8)
+			{
+				row.querySelector('.overtime').value = workinghours - 8 + " hours, " + workingmins + " mins";
+			}
 
-						if(min[1] == "PM" && hour[0] != 12)
-						{
-							diff = 12;
-							var timeouthour = parseInt(hour[0],10) + diff;
-							localStorage.setItem("timeOutHour", parseInt(hour[0],10)+diff);
-						}
-						else
-						{
-							localStorage.setItem("timeOutHour", parseInt(hour[0]));
-						}
+			// UNDERTIME if Working Hours don't reach 8
+			if(workinghours < 8 && workingmins == 0)
+			{
+				row.querySelector('.undertime').value = (workinghours - 8)*-1 + " hours";
+			}
+			else if(workinghours < 8)
+			{
+				row.querySelector('.undertime').value = (workinghours - 8)*-1 + " hours, " + workingmins + " mins";
+			}
+		}
+}
 
-							// Change strings to integers
-							var timeoutmin = parseInt(min[0],10);
-							localStorage.setItem("timeOutMin", parseInt(min[0]));
-							
-							// Computation for Working Hours, Undertime and Overtime
-							if(localStorage.getItem("timeInHour") && localStorage.getItem("timeInMin"))
-							{
-								var workinghours = localStorage.getItem("timeOutHour") - localStorage.getItem("timeInHour");
-								var workingmins = localStorage.getItem("timeOutMin") - localStorage.getItem("timeInMin");
+function timeIn(id)
+{
+	console.log("timeIn: " + id);
+		var mainRow = document.getElementById(id); // Get row to be computed
+		var timein = mainRow.querySelector('.timein').value; // Get time in value
 
-								// WORKING HOURS
-								if(workingmins == 0)
-								{
-									$("#workHours").attr("value", workinghours + " hours");
-								}
-								else
-								{
-									$("#workHours").attr("value", workinghours + " hours, " + workingmins + " mins");	
-								}
+		// Function call to get time
+		var timeinhour = getHour(timein);
+		var timeinmin = getMin(timein);
 
-								// OVERTIME if Working Hours exceed 8
-								if(workinghours > 8 && workingmins == 0)
-								{
-									$("#overTime").attr("value", workinghours - 8 + " hours");
-								}
-								else
-								{
-									$("#overTime").attr("value", "0 hours");
-								}
+		console.log("Time in: " + timeinhour + ":" + timeinmin);
 
-								// UNDERTIME if Working Hours don't reach 8
-								if(workinghours < 8)
-								{
-									$("#underTime").attr("value", (workinghours - 8)*-1 + " hour");
-									alert(yea);
-								}
-								else
-								{
-									$("#underTime").attr("value","0 hour");
-									alert(no);
-								}
+		var timeout = mainRow.querySelector('.timeout').value; // Get time out value
 
-								// RESET OVERTIME & UNDERTIME on CHANGE
-								
-							}
-						});
+		// Function call to get time
+		var timeouthour = getHour(timeout);
+		var timeoutmin = getMin(timeout);
 
-				});
-			</script>
-		</body>
-		</html>
+		console.log("Time out: " + timeouthour + ":" + timeoutmin);
+		
+		// Function call to compute for working hours, undertime and overtime
+		computeTime(mainRow, timeinhour,timeinmin,timeouthour,timeoutmin);
 
+	}
 
+	function timeOut(id)
+	{
+		console.log("timeOut: " + id);
+		var mainRow = document.getElementById(id); // Get row to be computed
+		var timein = mainRow.querySelector('.timein').value; // Get time in value
 
+		// Function call to get time
+		var timeinhour = getHour(timein);
+		var timeinmin = getMin(timein);
 
+		console.log("Time in: " + timeinhour + ":" + timeinmin);
 
+		var timeout = mainRow.querySelector('.timeout').value; // Get time out value
 
+		// Function call to get time
+		var timeouthour = getHour(timeout);
+		var timeoutmin = getMin(timeout);
 
+		console.log("Time out: " + timeouthour + ":" + timeoutmin);
+		
+		// Function call to compute for working hours, undertime and overtime
+		computeTime(mainRow, timeinhour,timeinmin,timeouthour,timeoutmin);
 
-
-
-
+	}	
+</script>
+</body>
+</html>

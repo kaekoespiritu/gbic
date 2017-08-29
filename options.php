@@ -93,6 +93,9 @@ include('directives/db.php');
 					</div>
 				</div>
 			</div>
+			<div class="panel-body">
+					<a href="" class="btn btn-primary">Save changes</a>
+				</div>
 		</div>
 		</div>
 
