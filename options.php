@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+include('directives/session.php');
 include('directives/db.php');
 ?>
 <html>
