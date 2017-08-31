@@ -95,7 +95,7 @@ include('directives/db.php');
 									<input type='text' placeholder='--' class='form-control input-sm nightdiff' name='nightdiff[]' disabled>
 								</td>
 								<!-- Remarks Input --> 
-									<input type='hidden' name='remarks[]'>
+									<input type='hidden' name='remarks[]' class='hiddenRemarks'>
 								<!-- Remarks Button --> 
 								<td>
 									<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks</a>
@@ -121,11 +121,11 @@ include('directives/db.php');
 							<h4 class="modal-title" id="dito">Remarks for...</h4>
 						</div>
 						<div class="modal-body">
-							<textarea class="form-control" rows="3"></textarea>
+							<input class="form-control" id="remark">
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save changes</button>
+							<button type="button" class="btn btn-primary" id="saveRemarks">Save changes</button>
 						</div>
 					</div><!-- /.modal-content -->
 				</div><!-- /.modal-dialog -->
@@ -176,8 +176,26 @@ include('directives/db.php');
 			var mainRow = document.getElementById(id);
 			var empName = mainRow.querySelector('.empName').innerHTML.trim();
 			var modal = document.getElementById('dito').innerHTML = "Remarks for " + empName;
+			document.getElementById('saveRemarks').setAttribute('onclick', 'saveRemarks('+ id +')'); // change value of onclick to have saveRemarks(id)??
 			console.log(modal);
 			
+		}
+
+		// Transfer content to hidden input field
+		function saveRemarks(id)
+		{
+			var remarks = document.getElementById('remark').value;
+
+			alert("From Text field on modal: " + remarks);
+
+			var hiddenRemarks = document.getElementById(id).querySelector('.hiddenRemarks');
+
+			alert(id);
+
+			hiddenRemarks.setAttribute('value', remarks);
+
+			alert("From Hidden field on table: " + hiddenRemarks.value);
+
 		}
 
 		function absent(id)
