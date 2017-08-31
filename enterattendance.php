@@ -90,10 +90,10 @@ include('directives/db.php');
 									<input type='text' placeholder='--' class='form-control input-sm undertime' name='undertime[]' disabled>
 								</td> 
 								<td>
-									<a class='btn btn-sm btn-primary' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks</a>
+									<a class='btn btn-sm btn-primary remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks</a>
 								</td>
 								<td>
-									<a class='btn btn-sm btn-danger' onclick='absent(\"". $row_employee['empid'] ."\")'>Absent</a>
+									<a class='btn btn-sm btn-danger absent' onclick='absent(\"". $row_employee['empid'] ."\")'>Absent</a>
 								</td>
 							</tr>
 							";
@@ -142,10 +142,17 @@ include('directives/db.php');
 			});
 		});
 
-		function remarks(id){
-
+		function remarks(id)
+		{
+			// show modal here to input for remarks
 		}
-		function absent(id){
+
+		function absent(id)
+		{
+			
+			var mainRow = document.getElementById(id); // Get row to be computed
+
+			// change color of row to shade of red
 
 		}
 
@@ -242,12 +249,14 @@ include('directives/db.php');
 			{
 				row.querySelector('.undertime').value = (workinghours - 8)*-1 + " hours, " + workingmins + " mins";
 			}
+
+			// change color of row to shade of green
+			
 		}
 }
 
 function timeIn(id)
 {
-	console.log("timeIn: " + id);
 		var mainRow = document.getElementById(id); // Get row to be computed
 		var timein = mainRow.querySelector('.timein').value; // Get time in value
 
@@ -255,16 +264,12 @@ function timeIn(id)
 		var timeinhour = getHour(timein);
 		var timeinmin = getMin(timein);
 
-		console.log("Time in: " + timeinhour + ":" + timeinmin);
-
 		var timeout = mainRow.querySelector('.timeout').value; // Get time out value
 
 		// Function call to get time
 		var timeouthour = getHour(timeout);
 		var timeoutmin = getMin(timeout);
 
-		console.log("Time out: " + timeouthour + ":" + timeoutmin);
-		
 		// Function call to compute for working hours, undertime and overtime
 		computeTime(mainRow, timeinhour,timeinmin,timeouthour,timeoutmin);
 
@@ -272,7 +277,6 @@ function timeIn(id)
 
 	function timeOut(id)
 	{
-		console.log("timeOut: " + id);
 		var mainRow = document.getElementById(id); // Get row to be computed
 		var timein = mainRow.querySelector('.timein').value; // Get time in value
 
@@ -280,15 +284,11 @@ function timeIn(id)
 		var timeinhour = getHour(timein);
 		var timeinmin = getMin(timein);
 
-		console.log("Time in: " + timeinhour + ":" + timeinmin);
-
 		var timeout = mainRow.querySelector('.timeout').value; // Get time out value
 
 		// Function call to get time
 		var timeouthour = getHour(timeout);
 		var timeoutmin = getMin(timeout);
-
-		console.log("Time out: " + timeouthour + ":" + timeoutmin);
 		
 		// Function call to compute for working hours, undertime and overtime
 		computeTime(mainRow, timeinhour,timeinmin,timeouthour,timeoutmin);
