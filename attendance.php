@@ -28,22 +28,28 @@ include('directives/session.php');
 	<div class="row pull-down">
 		<h2>Daily attendance log<br><br></h2>
 		<div class="col-md-5 col-md-offset-1">
-			<button class="btn btn-success" onclick="printAll()">Print attendance sheet for all sites</button>
+			<button class="btn btn-success" onclick="printAll()">
+				Print attendance sheet for all sites
+			</button>
 		</div>
-		<div class="col-md-4 col-md-pull-2">
-			<select multiple="multiple" class="text-left">
-				<?php
-				$site = "SELECT location FROM site";
-				$site_query = mysql_query($site);
-				while($row_site = mysql_fetch_assoc($site_query))
-				{
-					Print '<option name="selectedSite[]" value="'. $row_site['location'] .'"> '. $row_site['location'] .'</option>';
-				}
-				?>
-			</select>
-		</div>
-		<button class="btn btn-success col-md-2 col-md-pull-3"
-		>Print site attendance sheet</button>
+
+	<!-- DROPDOWN checkbox for selected site -->
+		<form method = "post" action = "print_selected_site.php">
+			<div class="col-md-4 col-md-pull-2">
+				<select multiple="multiple" class="text-left">
+					<?php
+					$site = "SELECT location FROM site";
+					$site_query = mysql_query($site);
+					while($row_site = mysql_fetch_assoc($site_query))
+					{
+						Print '<option name="selectedSite[]" value="'. $row_site['location'] .'"> '. $row_site['location'] .'</option>';
+					}
+					?>
+				</select>
+			</div>
+			<input type="submit" value = "Print site attendance sheet" name="checkbox_submit" class="btn btn-success col-md-2 col-md-pull-3">
+		</form>
+
 	</div>
 </div>
 

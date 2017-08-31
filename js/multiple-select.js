@@ -210,7 +210,7 @@
                 $ul.append([
                     '<li class="ms-select-all">',
                     '<label>',
-                    sprintf('<input type="checkbox" %s /> ', this.selectAllName),
+                    sprintf('<input type="checkbox" name="selectedSite[]" %s /> ', this.selectAllName),
                     this.options.selectAllDelimiter[0],
                     this.options.selectAllText,
                     this.options.selectAllDelimiter[1],
@@ -265,11 +265,11 @@
                 $el = $([
                     sprintf('<li class="%s %s" %s %s>', multiple, classes, title, style),
                     sprintf('<label class="%s">', disabled ? 'disabled' : ''),
-                    sprintf('<input type="%s" %s%s%s%s>',
+                    sprintf('<input type="%s" name="selectedSite[]" %s%s%s%s>',
                         type, this.selectItemName,
-                        selected ? ' checked="checked"' : '',
-                        disabled ? ' disabled="disabled"' : '',
-                        sprintf(' data-group="%s"', group)),
+                        selected ? ' checked="checked" name="selectedSite[]" ' : '',
+                        disabled ? ' disabled="disabled" name="selectedSite[]" ' : '',
+                        sprintf(' data-group="%s" name="selectedSite[]"', group)),
                     sprintf('<span>%s</span>', text),
                     '</label>',
                     '</li>'
@@ -288,8 +288,8 @@
                     '<li class="group">',
                     sprintf('<label class="optgroup %s" data-group="%s">', disabled ? 'disabled' : '', group),
                     this.options.hideOptgroupCheckboxes || this.options.single ? '' :
-                        sprintf('<input type="checkbox" %s %s>',
-                        this.selectGroupName, disabled ? 'disabled="disabled"' : ''),
+                        sprintf('<input type="checkbox" name="selectedSite[]" %s %s>',
+                        this.selectGroupName, disabled ? 'disabled="disabled" name="selectedSite[]"' : ''),
                     label,
                     '</label>',
                     '</li>'
