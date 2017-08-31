@@ -170,13 +170,21 @@ include('directives/db.php');
 		});
 
 		function remarks(id)
-		{
-			
+		{	
 			// show modal here to input for remarks
 			var mainRow = document.getElementById(id);
+			if(mainRow.querySelector('.hiddenRemarks').value != null)
+			{
+				var input = mainRow.querySelector('.hiddenRemarks').value;
+				document.getElementById('remark').value = input;
+			}
+			else
+			{
+				document.getElementById('remark').value = "";
+			}
 			var empName = mainRow.querySelector('.empName').innerHTML.trim();
 			var modal = document.getElementById('dito').innerHTML = "Remarks for " + empName;
-			document.getElementById('saveRemarks').setAttribute('onclick', 'saveRemarks('+ id +')'); // change value of onclick to have saveRemarks(id)??
+			document.getElementById('saveRemarks').setAttribute('onclick', "saveRemarks(\""+ id +"\")"); // change value of onclick to have saveRemarks(id)??
 			console.log(modal);
 			
 		}
@@ -185,17 +193,7 @@ include('directives/db.php');
 		function saveRemarks(id)
 		{
 			var remarks = document.getElementById('remark').value;
-
-			alert("From Text field on modal: " + remarks);
-
-			var hiddenRemarks = document.getElementById(id).querySelector('.hiddenRemarks');
-
-			alert(id);
-
-			hiddenRemarks.setAttribute('value', remarks);
-
-			alert("From Hidden field on table: " + hiddenRemarks.value);
-
+			var hiddenRemarks = document.getElementById(id).querySelector('.hiddenRemarks').setAttribute('value', remarks);
 		}
 
 		function absent(id)
