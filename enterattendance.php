@@ -50,6 +50,7 @@ include('directives/db.php');
 						<td>Working Hours</td>
 						<td>Overtime</td>
 						<td>Undertime</td>
+						<td>Night Differential</td>
 						<td colspan="2">Actions</td>
 					</tr>
 					
@@ -63,7 +64,7 @@ include('directives/db.php');
 						{
 							Print "	
 							<tr id=\"". $row_employee['empid'] ."\">
-								<td>
+								<td class='empName'>
 									". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
 								</td>
 								<td>
@@ -88,9 +89,16 @@ include('directives/db.php');
 								<!-- Undertime -->
 								<td>
 									<input type='text' placeholder='--' class='form-control input-sm undertime' name='undertime[]' disabled>
-								</td> 
+								</td>
+								<!-- Night Differential --> 
 								<td>
-									<a class='btn btn-sm btn-primary remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks</a>
+									<input type='text' placeholder='--' class='form-control input-sm nightdiff' name='nightdiff[]' disabled>
+								</td>
+								<!-- Remarks Input --> 
+									<input type='hidden' name='remarks[]'>
+								<!-- Remarks Button --> 
+								<td>
+									<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks</a>
 								</td>
 								<td>
 									<a class='btn btn-sm btn-danger absent' onclick='absent(\"". $row_employee['empid'] ."\")'>Absent</a>
@@ -104,6 +112,25 @@ include('directives/db.php');
 
 				</table>
 			</div>
+
+			<div class="modal fade" tabindex="-1" id="remarks" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="dito">Remarks for...</h4>
+						</div>
+						<div class="modal-body">
+							<textarea class="form-control" rows="3"></textarea>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Save changes</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+
 		</div>
 	</div>
 
@@ -114,7 +141,7 @@ include('directives/db.php');
 	<script src="js/timepicker/jquery.timepicker.min.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script>
-		document.getElementById("attendance").setAttribute("style", "background-color: #10621e;");
+	document.getElementById("attendance").setAttribute("style", "background-color: #10621e;");
 
 		$(document).ready(function(){
 			console.log("jQuery comes in!");
@@ -144,7 +171,13 @@ include('directives/db.php');
 
 		function remarks(id)
 		{
+			
 			// show modal here to input for remarks
+			var mainRow = document.getElementById(id);
+			var empName = mainRow.querySelector('.empName').innerHTML.trim();
+			var modal = document.getElementById('dito').innerHTML = "Remarks for " + empName;
+			console.log(modal);
+			
 		}
 
 		function absent(id)
@@ -153,7 +186,14 @@ include('directives/db.php');
 			var mainRow = document.getElementById(id); // Get row to be computed
 
 			// change color of row to shade of red
+			mainRow.classList.add('danger');
 
+			// add text ABSENT to time in and time out
+			mainRow.querySelector('.timein').placeholder = "ABSENT";
+			mainRow.querySelector('.timeout').placeholder = "ABSENT";
+			mainRow.querySelector('.workinghours').value = "--";
+			mainRow.querySelector('.overtime').value = "--";
+			mainRow.querySelector('.undertime').value = "--";
 		}
 
 		function getHour(time)
@@ -165,7 +205,12 @@ include('directives/db.php');
 			var min = hour[1].split(" "); // Split min + AM/PM
 			var diff; // Determine if AM/PM
 
-			if(min[1] == "PM" && hour != 12)
+			if(min[1] == "AM" && parseInt(hour[0],10) == 12)
+			{
+				hr = 0;
+				return hr;
+			}
+			if(min[1] == "PM" && parseInt(hour[0],10) != 12)
 			{
 				diff = 12; // Add 12hrs if PM
 				var hr = parseInt(hour[0],10) + diff;
@@ -176,6 +221,7 @@ include('directives/db.php');
 				var hr = parseInt(hour[0]);
 				return hr;
 			}
+
 		}	
 		else
 		{
@@ -203,60 +249,183 @@ include('directives/db.php');
 	function computeTime(row, timeinhour,timeinmin,timeouthour,timeoutmin)
 	{
 		console.log("Time in: " + timeinhour + ":" + timeinmin + " Time out: " + timeouthour + ":" + timeoutmin);
-		if(timeinhour && timeouthour)
-		{
-			var workinghours = timeouthour - timeinhour;
-			var workingmins;
-			if(timeinmin > timeoutmin)
-			{
-				workingmins = timeinmin - timeoutmin;
-			}
-			if(timeoutmin > timeinmin)
-			{
-				workingmins = timeoutmin - timeinmin;
-			}
-			if(timeinmin === timeoutmin)
-			{
-				workingmins = 0;
-			}
 
-			// WORKING HOURS
-			if(workingmins == 0)
+		// Verifies that time in and time out input fields have value
+		if(timeinhour>=0 && timeouthour)
+		{	
+
+			var workinghours;
+			var workingmins;
+
+			// If time is 12AM
+			if(timeinhour == 0)
 			{
-				row.querySelector('.workinghours').value = workinghours + " hours";
+				workinghours = timeouthour;
 			}
 			else
 			{
-				row.querySelector('.workinghours').value = workinghours + " hours, " + workingmins + " mins";	
+				workinghours = timeouthour - timeinhour;
 			}
 
-			// OVERTIME if Working Hours exceed 8
-			if(workinghours > 8 && workingmins == 0)
+			// MORNING SHIFT
+			if(workinghours > 1)
 			{
-				row.querySelector('.overtime').value = workinghours - 8 + " hours";
+				// Computing minutes
+				if(timeinmin > timeoutmin)
+				{
+					workingmins = timeinmin - timeoutmin;
+				}
+				if(timeoutmin > timeinmin)
+				{
+					workingmins = timeoutmin - timeinmin;
+				}
+				if(timeinmin === timeoutmin)
+				{
+					workingmins = 0;
+				}
+				
+				// Computing lunchbreak
+				if(timeinhour <= 11 && timeouthour >= 12)
+				{
+					workinghours = workinghours - 1;
+				}
+				
+				// WORKING HOURS
+				if(workinghours <= 5)
+				{
+					row.querySelector('.workinghours').value = workinghours + " hrs/HALFDAY";
+				}
+				else if(workingmins == 0)
+				{
+					row.querySelector('.workinghours').value = workinghours + " hours";
+				}
+				else
+				{
+					row.querySelector('.workinghours').value = workinghours + " hours, " + workingmins + " mins";	
+				}
+
+				// OVERTIME if Working Hours exceed 8
+				if(workinghours > 8 && workingmins == 0)
+				{
+					row.querySelector('.overtime').value = workinghours - 8 + " hours";
+				}
+				else if (workinghours > 8)
+				{
+					row.querySelector('.overtime').value = workinghours - 8 + " hours, " + workingmins + " mins";
+				}
+
+				// UNDERTIME if Working Hours don't reach 8
+				if(workinghours < 8 && workingmins == 0)
+				{
+					row.querySelector('.undertime').value = (workinghours - 8)*-1 + " hours";
+				}
+				else if(workinghours < 8)
+				{
+					row.querySelector('.undertime').value = (workinghours - 8)*-1 + " hours, " + workingmins + " mins";
+				}
+
+				// If absent was initially placed, changed to success
+				if(row.classList.contains('danger'))
+				{
+					row.classList.remove('danger');
+					row.classList.add('success');
+				}
+				else
+				{
+					row.classList.add('success');
+				}
+
 			}
-			else if (workinghours > 8)
+			// NIGHT SHIFT (timeout-timein is negative)
+			else
 			{
-				row.querySelector('.overtime').value = workinghours - 8 + " hours, " + workingmins + " mins";
+				// Night differential starts at 10pm - 6am
+				console.log("Time in: " + timeinhour + ":" + timeinmin + " Time out: " + timeouthour + ":" + timeoutmin);
+				console.log("Working hours: " + workinghours + " Working mins: " + workingmins);
+
+				// TIME IN: 22-12 = 10
+				// TIME OUT: 6 + 12 = 18
+				// RESULT 8
+
+				timeinhour -= 12;
+				timeouthour += 12;
+
+				workinghours = timeouthour - timeinhour;
+
+				// Computing minutes
+				if(timeinmin > timeoutmin)
+				{
+					workingmins = timeinmin - timeoutmin;
+				}
+				if(timeoutmin > timeinmin)
+				{
+					workingmins = timeoutmin - timeinmin;
+				}
+				if(timeinmin === timeoutmin)
+				{
+					workingmins = 0;
+				}
+				
+				// Computing lunchbreak for nightshift
+				if(timeinhour <= 2 && timeouthour >= 3)
+				{
+					workinghours = workinghours - 1;
+				}
+
+				// NIGHT DIFF if Working Hours is in between 10pm - 6am
+				if(timeinhour <= 10 && timeouthour >= 6)
+				{
+					row.querySelector('.nightdiff').value = workinghours;
+				}
+				
+				// WORKING HOURS
+				if(workingmins == 0)
+				{
+					row.querySelector('.workinghours').value = workinghours + " hours";
+				}
+				else
+				{
+					row.querySelector('.workinghours').value = workinghours + " hours, " + workingmins + " mins";	
+				}
+
+				// OVERTIME if Working Hours exceed 8
+				if(workinghours > 8 && workingmins == 0)
+				{
+					row.querySelector('.overtime').value = workinghours - 8 + " hours";
+				}
+				else if (workinghours > 8)
+				{
+					row.querySelector('.overtime').value = workinghours - 8 + " hours, " + workingmins + " mins";
+				}
+
+				// UNDERTIME if Working Hours don't reach 8
+				if(workinghours < 8 && workingmins == 0)
+				{
+					row.querySelector('.undertime').value = workinghours - 8*-1 + " hours";
+				}
+				else if(workinghours < 8)
+				{
+					row.querySelector('.undertime').value = workinghours - 8*-1 + " hours, " + workingmins + " mins";
+				}
+
+				// If absent was initially placed, changed to success
+				if(row.classList.contains('danger'))
+				{
+					row.classList.remove('danger');
+					row.classList.add('success');
+				}
+				else
+				{
+					row.classList.add('success');
+				}
+				
 			}
 
-			// UNDERTIME if Working Hours don't reach 8
-			if(workinghours < 8 && workingmins == 0)
-			{
-				row.querySelector('.undertime').value = (workinghours - 8)*-1 + " hours";
-			}
-			else if(workinghours < 8)
-			{
-				row.querySelector('.undertime').value = (workinghours - 8)*-1 + " hours, " + workingmins + " mins";
-			}
-
-			// change color of row to shade of green
-			
 		}
-}
+	}	
 
-function timeIn(id)
-{
+	function timeIn(id)
+	{
 		var mainRow = document.getElementById(id); // Get row to be computed
 		var timein = mainRow.querySelector('.timein').value; // Get time in value
 
