@@ -63,6 +63,9 @@ include('directives/db.php');
 						while($row_employee = mysql_fetch_assoc($employees_query))
 						{
 							Print "	
+
+							<!-- <form method='post' action='logic_enterattendance.php?empid=".$row_employee['empid']."'> -->
+
 							<tr id=\"". $row_employee['empid'] ."\">
 								<td class='empName'>
 									". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
@@ -104,6 +107,7 @@ include('directives/db.php');
 									<a class='btn btn-sm btn-danger absent' onclick='absent(\"". $row_employee['empid'] ."\")'>Absent</a>
 								</td>
 							</tr>
+							<!-- </form> -->
 							";
 						}
 					}

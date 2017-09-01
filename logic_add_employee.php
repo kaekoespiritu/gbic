@@ -306,7 +306,7 @@ error_reporting(0);
 																	'$complete_doc')");//adds values to employee table
 
 	
-		Print "<script>alert('You have successfully Added an employee.')</script>";
+		Print "<script>alert('You have successfully added an employee.')</script>";
 		Print "<script>window.location.assign('employees.php?site=null&position=null')</script>";
 
 
