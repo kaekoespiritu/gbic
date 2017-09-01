@@ -23,6 +23,7 @@ include('directives/db.php');
 	$sss = $employee_info['sss'];
 	$philhealth = $employee_info['philhealth'];
 	$pagibig = $employee_info['pagibig'];
+	$empid = $employee_info['empid'];
 	
 ?>
 <html>
@@ -55,7 +56,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 				<ol class="breadcrumb text-left">
 					<li><a href='employees.php?site=<?php Print "$site"?>&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a></li>
 					<li class="active">Edit employee details</li>
-					<h4 style="float:right;">Employee ID: 2017-39284756</h4>
+					<h4 style="float:right;">Employee ID: <?php Print "$empid"?></h4>
 				</ol>
 			</div>
 		</div>

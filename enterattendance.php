@@ -35,7 +35,7 @@ include('directives/db.php');
 					$site_name = $_GET['site'];
 					Print '<li class="active">Employee attendance sheet for '. $site_name .'</li>';
 					?>
-					
+					<button class="btn btn-success pull-right">Save Changes</button>
 				</ol>
 			</div>
 			
@@ -124,8 +124,8 @@ include('directives/db.php');
 							<input class="form-control" id="remark">
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary" id="saveRemarks">Save changes</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							<button type="button" class="btn btn-primary" data-dismiss="modal" id="saveRemarks">Save changes</button>
 						</div>
 					</div><!-- /.modal-content -->
 				</div><!-- /.modal-dialog -->
@@ -184,7 +184,7 @@ include('directives/db.php');
 			}
 			var empName = mainRow.querySelector('.empName').innerHTML.trim();
 			var modal = document.getElementById('dito').innerHTML = "Remarks for " + empName;
-			document.getElementById('saveRemarks').setAttribute('onclick', "saveRemarks(\""+ id +"\")"); // change value of onclick to have saveRemarks(id)??
+			document.getElementById('saveRemarks').setAttribute('onclick', "saveRemarks(\""+ id +"\")");
 			console.log(modal);
 			
 		}
@@ -194,6 +194,7 @@ include('directives/db.php');
 		{
 			var remarks = document.getElementById('remark').value;
 			var hiddenRemarks = document.getElementById(id).querySelector('.hiddenRemarks').setAttribute('value', remarks);
+
 		}
 
 		function absent(id)
