@@ -271,8 +271,9 @@ include('directives/db.php');
 	{
 		console.log("Time in: " + timeinhour + ":" + timeinmin + " Time out: " + timeouthour + ":" + timeoutmin);
 
+
 		// Verifies that time in and time out input fields have value
-		if(timeinhour>=0 && timeouthour)
+		if(timeinhour && timeouthour)
 		{	
 
 			var workinghours;
@@ -291,7 +292,7 @@ include('directives/db.php');
 			// MORNING SHIFT
 			if(workinghours > 1)
 			{
-				// Computing minutes
+			// Computing minutes
 				if(timeinmin > timeoutmin)
 				{
 					workingmins = timeinmin - timeoutmin;
@@ -305,14 +306,14 @@ include('directives/db.php');
 					workingmins = 0;
 				}
 				
-				// Computing lunchbreak
+			// Computing lunchbreak
 				if(timeinhour <= 11 && timeouthour >= 12)
 				{
 					workinghours = workinghours - 1;
 				}
 				
-				// WORKING HOURS
-				if(workinghours <= 5)
+			// WORKING HOURS
+				if(workinghours <= 5)//HALF DAY
 				{
 					row.querySelector('.workinghours').value = workinghours + " hrs/HALFDAY";
 				}
@@ -325,24 +326,32 @@ include('directives/db.php');
 					row.querySelector('.workinghours').value = workinghours + " hours, " + workingmins + " mins";	
 				}
 
-				// OVERTIME if Working Hours exceed 8
+			// OVERTIME if Working Hours exceed 8
 				if(workinghours > 8 && workingmins == 0)
 				{
-					row.querySelector('.overtime').value = workinghours - 8 + " hours";
+					row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hours";
 				}
 				else if (workinghours > 8)
 				{
-					row.querySelector('.overtime').value = workinghours - 8 + " hours, " + workingmins + " mins";
+					row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
+				}
+				else
+				{
+					row.querySelector('.overtime').value = "";
 				}
 
-				// UNDERTIME if Working Hours don't reach 8
+			// UNDERTIME if Working Hours don't reach 8
 				if(workinghours < 8 && workingmins == 0)
 				{
-					row.querySelector('.undertime').value = (workinghours - 8)*-1 + " hours";
+					row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hours";
 				}
 				else if(workinghours < 8)
 				{
-					row.querySelector('.undertime').value = (workinghours - 8)*-1 + " hours, " + workingmins + " mins";
+					row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
+				}
+				else
+				{
+					row.querySelector('.undertime').value = "";
 				}
 
 				// If absent was initially placed, changed to success
@@ -357,23 +366,31 @@ include('directives/db.php');
 				}
 
 			}
-			// NIGHT SHIFT (timeout-timein is negative)
+
+		// NIGHT SHIFT (timeout-timein is negative)
 			else
 			{
-				// Night differential starts at 10pm - 6am
+			// Night differential starts at 10pm - 6am
 				console.log("Time in: " + timeinhour + ":" + timeinmin + " Time out: " + timeouthour + ":" + timeoutmin);
 				console.log("Working hours: " + workinghours + " Working mins: " + workingmins);
 
 				// TIME IN: 22-12 = 10
 				// TIME OUT: 6 + 12 = 18
 				// RESULT 8
-
+				//alert("before: "+timeinhour);
 				timeinhour -= 12;
+				//alert("after: "+timeinhour);
+				//alert("before: "+timeouthour);
 				timeouthour += 12;
-
+				//alert("after: "+timeouthour);
+				//alert("nightshift");
 				workinghours = timeouthour - timeinhour;
-
-				// Computing minutes
+				if(workinghours < 1)
+				{
+					workinghours *= -1;
+				}
+				//alert("timein: "+timeinhour + " timeout: " + timeouthour);
+			// Computing minutes
 				if(timeinmin > timeoutmin)
 				{
 					workingmins = timeinmin - timeoutmin;
@@ -387,19 +404,13 @@ include('directives/db.php');
 					workingmins = 0;
 				}
 				
-				// Computing lunchbreak for nightshift
+			// Computing lunchbreak for nightshift
 				if(timeinhour <= 2 && timeouthour >= 3)
 				{
 					workinghours = workinghours - 1;
 				}
 
-				// NIGHT DIFF if Working Hours is in between 10pm - 6am
-				if(timeinhour <= 10 && timeouthour >= 6)
-				{
-					row.querySelector('.nightdiff').value = workinghours;
-				}
-				
-				// WORKING HOURS
+			// WORKING HOURS
 				if(workingmins == 0)
 				{
 					row.querySelector('.workinghours').value = workinghours + " hours";
@@ -409,27 +420,34 @@ include('directives/db.php');
 					row.querySelector('.workinghours').value = workinghours + " hours, " + workingmins + " mins";	
 				}
 
-				// OVERTIME if Working Hours exceed 8
+			// OVERTIME if Working Hours exceed 8
 				if(workinghours > 8 && workingmins == 0)
 				{
-					row.querySelector('.overtime').value = workinghours - 8 + " hours";
+					row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hours";
 				}
 				else if (workinghours > 8)
 				{
-					row.querySelector('.overtime').value = workinghours - 8 + " hours, " + workingmins + " mins";
+					row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
+				}
+				else
+				{
+					row.querySelector('.overtime').value = "";
 				}
 
-				// UNDERTIME if Working Hours don't reach 8
+			// UNDERTIME if Working Hours don't reach 8
 				if(workinghours < 8 && workingmins == 0)
 				{
-					row.querySelector('.undertime').value = workinghours - 8*-1 + " hours";
+					row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hours";
 				}
 				else if(workinghours < 8)
 				{
-					row.querySelector('.undertime').value = workinghours - 8*-1 + " hours, " + workingmins + " mins";
+					row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
 				}
-
-				// If absent was initially placed, changed to success
+				else
+				{
+					row.querySelector('.undertime').value = "";
+				}
+			// If absent was initially placed, changed to success
 				if(row.classList.contains('danger'))
 				{
 					row.classList.remove('danger');
@@ -439,9 +457,74 @@ include('directives/db.php');
 				{
 					row.classList.add('success');
 				}
+			// NIGHT DIFF if Working Hours is in between 10pm - 6am
+			// 10 is 10pm and 18 is 6pm
+			//alert("timein: "+timeinhour+"timeout: "+ timeouthour);
+				if(((timeinhour <= 10 && timeouthour >= 18) || (timeinhour >= 10 || timeouthour <= 18)) 
+						&& ((timeinhour <= 10 && timeouthour <= 18)|| (timeinhour >= 10 || timeouthour >= 18)))
+				{
+					//alert("timein: "+timeinhour+"timeout: "+ timeouthour);
+					var nightdiff;
+				//posibility: attendance within NightDiff
+					if(timeinhour >= 10 && timeouthour <= 18)
+					{
+						nightdiff = timeinhour - timeouthour;
+						//alert("possibility : 2");
+					}
+				//posibility: NightDiff is within attendance
+					else if(timeinhour < 10 && timeouthour > 18)
+					{
+						var NDin = timeinhour - 10;
+						var NDout = timeouthour - 18;
+						var workhrs = timeinhour - timeouthour;
+
+						nightdiff = ((Math.abs(NDin) + Math.abs(NDout)) - Math.abs(workhrs));
+						//alert("possibility : 4");
+					}
+				//posibility: attendance exceeds NightDiff
+					else if(timeinhour < 18 && timeouthour > 18)
+					{
+						nightdiff = timeinhour - 18;
+						//alert("possibility : 3");
+					}
+				//posibility: attendance > NightDiff
+					else if(timeinhour <= 10 && timeouthour > 10)
+					{
+						nightdiff = timeouthour - 10; 
+						//alert("possibility : 1");
+					}
+					else
+					{
+						nightdiff = "";
+					}
+					if(Number.isInteger(nightdiff))
+					{
+					   	nightdiff = Math.abs(nightdiff);		
+					}
+					row.querySelector('.nightdiff').value = nightdiff;
+				}
+				
+				
 				
 			}
 
+		}
+		else
+		{
+			row.querySelector('.workinghours').value = "";
+			row.querySelector('.overtime').value = "";
+			row.querySelector('.undertime').value = "";
+			row.querySelector('.nightdiff').value = "";
+			if(row.classList.contains('danger'))
+			{
+				row.classList.remove('danger');
+				row.classList.add('');
+			}
+			else if(row.classList.contains('success'))
+			{
+				row.classList.remove('success');
+				row.classList.add('');
+			}
 		}
 	}	
 
