@@ -49,7 +49,7 @@
 									<label for="contact">Date of Birth</label>
 								</div>
 								<div class="col-md-4">
-									<input name="txt_addDOB" type="text" class="form-control" id="dtpkr_addDOB" required>
+									<input name="txt_addDOB" type="text" placeholder="mm-dd-yyyy" class="form-control" id="dtpkr_addDOB" required>
 								</div>
 							</div><br>
 							<div class="row">
@@ -73,7 +73,7 @@
 									<label for="contact">Date of Hire</label>
 								</div>
 								<div class="col-md-9">
-									<input name="txt_addDateHired" type="text" size="10" style="width:150px" class="form-control" id="dtpkr_addEmployee" placeholder="month-day-year" required>
+									<input name="txt_addDateHired" type="text" size="10" style="width:150px" class="form-control" id="dtpkr_addEmployee" placeholder="mm-dd-yyyy" required>
 								</div>
 							</div>
 						</div>
@@ -168,7 +168,7 @@
 									<input name="txt_addPagibig" onkeypress="validatenumber(event)" type="text" class="form-control" id="pagibig">
 								</div>
 								<div class="col-md-10 col-md-offset-1 pull-down text-center well well-sm">
-									* SSS and PhilHealth contributions are automatically computed based on employee's 
+									* SSS and PhilHealth contributions are automatically computed based on employee's monthly salary.
 								</div>
 							</div>
 						</div>

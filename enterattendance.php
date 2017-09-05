@@ -33,7 +33,7 @@ include('directives/db.php');
 					<li><a href="attendance.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a></li>
 					<?php
 					$site_name = $_GET['site'];
-					Print '<li class="active">Employee attendance sheet for '. $site_name .'</li>';
+					Print '<li class="active">Employee attendance sheet for '. $site_name .' on DATE HERE</li>';
 					?>
 					<button class="btn btn-success pull-right">Save Changes</button>
 				</ol>
@@ -117,6 +117,7 @@ include('directives/db.php');
 				</table>
 			</div>
 
+			<!-- DUMMY MODAL FOR REMARKS -->
 			<div class="modal fade" tabindex="-1" id="remarks" role="dialog">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">

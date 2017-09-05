@@ -10,6 +10,7 @@ include('directives/session.php');
 
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<link rel="stylesheet" href="css/jquery-ui.css">
 	<link href="css/multiple-select.css" rel="stylesheet"/>
 </head>
 <body style="font-family: Quicksand;">
@@ -26,14 +27,22 @@ include('directives/session.php');
 
 	<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
 	<div class="row pull-down">
-		<h2>Daily attendance log<br><br></h2>
+		<div class="col-md-4 col-md-offset-3">
+			<h2>Daily attendance log for</h2>
+		</div>
+		<div class="col-md-2">
+			<form>
+				<input name="txt_attendance" type="text" size="10" class="form-control" id="dtpkr_attendance" placeholder="mm-dd-yyyy" required>
+			</form>
+		</div>
+		<br><br><br>
 		<div class="col-md-5 col-md-offset-1">
 			<button class="btn btn-success" onclick="printAll()">
 				Print attendance sheet for all sites
 			</button>
 		</div>
 
-	<!-- DROPDOWN checkbox for selected site -->
+		<!-- DROPDOWN checkbox for selected site -->
 		<form method = "post" action = "print_selected_site.php">
 			<div class="col-md-4 col-md-pull-2">
 				<select multiple="multiple" class="text-left">
@@ -47,70 +56,70 @@ include('directives/session.php');
 					?>
 				</select>
 			</div>
+
 			<input type="submit" value = "Print site attendance sheet" name="checkbox_submit" class="btn btn-success col-md-2 col-md-pull-3">
 		</form>
-
 	</div>
-</div>
 
-<!-- TODO: Sites to have max characters of 12 -->
-<div class="container">
-	<h3>Sites</h3>
 
-	<div class="col-md-9 col-md-offset-2">
-		<?php
-		
-		$counter = 0;
+	<div class="container">
+		<h3>Sites</h3>
 
-		$site_box = "SELECT location FROM site";
-		$site_box_query = mysql_query($site_box);
-		while($row = mysql_fetch_assoc($site_box_query))
-		{
+		<div class="col-md-9 col-md-offset-2">
+			<?php
 
-			if($counter == 0)
+			$counter = 0;
+
+			$site_box = "SELECT location FROM site";
+			$site_box_query = mysql_query($site_box);
+			while($row = mysql_fetch_assoc($site_box_query))
 			{
-				Print '<div class="row">';
-			}
 
-			$site_num = $row['location'];
-			$num_employee = "SELECT * FROM employee WHERE site = '$site_num'";
-			$employee_query = mysql_query($num_employee);
-			$employee_num = 0;
+				if($counter == 0)
+				{
+					Print '<div class="row">';
+				}
 
-			if($employee_query)
-			{
-				$employee_num = mysql_num_rows($employee_query);
-			}
-			/* If location is long, font-size to smaller */
-			if(strlen($row['location'])>=16)
-			{
-				Print '<a href="enterattendance.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;"><div class="sitebox">
-				<span class="smalltext">'. $row['location'] .'</span><br><br><span>Employees: '. $employee_num .'</span>
-			</div></a>';
+				$site_num = $row['location'];
+				$num_employee = "SELECT * FROM employee WHERE site = '$site_num'";
+				$employee_query = mysql_query($num_employee);
+				$employee_num = 0;
+
+				if($employee_query)
+				{
+					$employee_num = mysql_num_rows($employee_query);
+				}
+				/* If location is long, font-size to smaller */
+				if(strlen($row['location'])>=16)
+				{
+					Print '<a href="enterattendance.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;"><div class="sitebox">
+					<span class="smalltext">'. $row['location'] .'</span><br><br><span>Employees: '. $employee_num .'</span>
+				</div></a>';
 			}
 			else
 			{
 				Print '	<a href="enterattendance.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
-							<div class="sitebox">
-								<span class="autofit">'. $row['location'] .'<br><br>Employees: '. $employee_num .'</span>
-							</div>
-						</a>';
-	}
-	$counter++;
-	if($counter == 5)
-	{
-		Print '</div>';	
-		$counter = 0;
-	}
+				<div class="sitebox">
+					<span class="autofit">'. $row['location'] .'<br><br>Employees: '. $employee_num .'</span>
+				</div>
+			</a>';
+		}
+		$counter++;
+		if($counter == 5)
+		{
+			Print '</div>';	
+			$counter = 0;
+		}
 
-}
-?>
+	}
+	?>
 </div>
 </div>
 
 
 <!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 <script rel="javascript" src="js/jquery.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
 <script rel="javascript" src="js/bootstrap.min.js"></script>
 <script>
 	document.getElementById("attendance").setAttribute("style", "background-color: #10621e;");
@@ -118,29 +127,32 @@ include('directives/session.php');
 <script rel="javascript" src="js/timepicker/jquery.timepicker.js"></script>
 <script src="js/multiple-select.js"></script>
 <script>
-	$(document).ready(function(){
-		$('input.timein').timepicker({
-			timeFormat: 'hh:mm p',
-			dynamic: false,
-			scrollbar: false,
-			dropdown: false
-		});
-		$('input.timeout').timepicker({
-			timeFormat: 'hh:mm p',
-			dynamic: false,
-			scrollbar: false,
-			dropdown: false
-		});
-	});
 
-	$("select").multipleSelect({
-		placeholder: "Select site for attendance&#9662;",
-		selectAll: false,
-		width: 200,
-		multiple: true,
-		multipleWidth: 200
-	});
+	$(function(){
+		$("select").multipleSelect({
+			placeholder: "Select site for attendance&#9662;",
+			selectAll: false,
+			width: 200,
+			multiple: true,
+			multipleWidth: 200
+		});
 
+		var currentDate = new Date();
+
+		/* DATE PICKER CONFIGURATIONS*/
+		$( "#dtpkr_attendance" ).datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: 'MM dd, yy',
+			showAnim: 'blind',
+			beforeShow: function(){    
+				$(".ui-datepicker").css('font-size', 10) 
+			}
+		});
+
+		$("#dtpkr_attendance").datepicker("setDate", currentDate);
+
+	});
 	function fittext()
 	{
 		// Declare fixed div size
