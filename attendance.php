@@ -27,38 +27,40 @@ include('directives/session.php');
 
 	<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
 	<div class="row pull-down">
-		<div class="col-md-4 col-md-offset-3">
-			<h2>Daily attendance log for</h2>
-		</div>
-		<div class="col-md-2">
-			<form>
-				<input name="txt_attendance" type="text" size="10" class="form-control" id="dtpkr_attendance" placeholder="mm-dd-yyyy" required>
-			</form>
-		</div>
-		<br><br><br>
-		<div class="col-md-5 col-md-offset-1">
-			<button class="btn btn-success" onclick="printAll()">
-				Print attendance sheet for all sites
-			</button>
-		</div>
-
-		<!-- DROPDOWN checkbox for selected site -->
-		<form method = "post" action = "print_selected_site.php">
-			<div class="col-md-4 col-md-pull-2">
-				<select multiple="multiple" class="text-left">
-					<?php
-					$site = "SELECT location FROM site";
-					$site_query = mysql_query($site);
-					while($row_site = mysql_fetch_assoc($site_query))
-					{
-						Print '<option name="selectedSite[]" value="'. $row_site['location'] .'"> '. $row_site['location'] .'</option>';
-					}
-					?>
-				</select>
+		<div class="row">
+			<div class="col-md-4 col-md-offset-2" style="border-right: 1px solid black;">
+				<h2>Daily attendance log</h2>
+				<div class="col-md-6 col-md-offset-3 pull-down">
+					<form>
+						<input name="txt_attendance" type="text" size="10" class="form-control" id="dtpkr_attendance" placeholder="mm-dd-yyyy" required>
+					</form>
+				</div>
 			</div>
-
-			<input type="submit" value = "Print site attendance sheet" name="checkbox_submit" class="btn btn-success col-md-2 col-md-pull-3">
-		</form>
+			<div class="col-md-4">
+				<button class="btn btn-success col-md-pull-4" onclick="printAll()">
+					Print attendance sheet for all sites
+				</button>
+				<h4>--- OR ---</h4>
+				<!-- DROPDOWN checkbox for selected site -->
+				<form method = "post" action = "print_selected_site.php">
+					<div class="col-md-6">
+						<select multiple="multiple" class="text-left">
+							<?php
+							$site = "SELECT location FROM site";
+							$site_query = mysql_query($site);
+							while($row_site = mysql_fetch_assoc($site_query))
+							{
+								Print '<option name="selectedSite[]" value="'. $row_site['location'] .'"> '. $row_site['location'] .'</option>';
+							}
+							?>
+						</select>
+					</div>
+					<div class="col-md-5">
+						<input type="submit" value = "Print site" name="checkbox_submit" class="btn btn-success">
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 
 
@@ -146,13 +148,14 @@ include('directives/session.php');
 			dateFormat: 'MM dd, yy',
 			showAnim: 'blind',
 			beforeShow: function(){    
-				$(".ui-datepicker").css('font-size', 10) 
+				$(".ui-datepicker").css('font-size', 15) 
 			}
 		});
 
 		$("#dtpkr_attendance").datepicker("setDate", currentDate);
 
 	});
+
 	function fittext()
 	{
 		// Declare fixed div size
