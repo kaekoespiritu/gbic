@@ -228,7 +228,7 @@ include('directives/db.php');
 
 			if(min[1] == "AM" && parseInt(hour[0],10) == 12)
 			{
-				hr = 0;
+				hr = 24;
 				return hr;
 			}
 			if(min[1] == "PM" && parseInt(hour[0],10) != 12)
@@ -275,7 +275,7 @@ include('directives/db.php');
 		// Verifies that time in and time out input fields have value
 		if(timeinhour && timeouthour)
 		{	
-
+			//alert("timein: "+timeinhour+"timeout: "+ timeouthour);
 			var workinghours;
 			var workingmins;
 
@@ -287,12 +287,14 @@ include('directives/db.php');
 			else
 			{
 				workinghours = timeouthour - timeinhour;
+				//alert(workinghours);
 			}
 
 			// MORNING SHIFT
-			if(workinghours > 1)
+			if(workinghours >= 1)
 			{
 			// Computing minutes
+				//alert("dayshift");
 				if(timeinmin > timeoutmin)
 				{
 					workingmins = timeinmin - timeoutmin;
@@ -305,13 +307,13 @@ include('directives/db.php');
 				{
 					workingmins = 0;
 				}
-				
+			
 			// Computing lunchbreak
 				if(timeinhour <= 11 && timeouthour >= 12)
 				{
 					workinghours = workinghours - 1;
 				}
-				
+				//alert(workinghours);
 			// WORKING HOURS
 				if(workinghours <= 5)//HALF DAY
 				{
@@ -354,6 +356,108 @@ include('directives/db.php');
 					row.querySelector('.undertime').value = "";
 				}
 
+				// NIGHT DIFF if Working Hours is in between 10pm - 6am
+			// 10 is 10pm and 18 is 6pm
+			//alert("timein: "+timeinhour+"timeout: "+ timeouthour);
+				//timeinhour -= 12;
+				//timeouthour += 12;
+				var nightdiff = "";
+				//nightdiff MORNING
+				if(((timeinhour <= 0 && timeouthour >= 6) || (timeinhour >= 0 || timeouthour <= 6)) 
+						&& ((timeinhour <= 0 && timeouthour <= 6)|| (timeinhour >= 0 || timeouthour >= 6)))
+				{
+					//alert("timein: "+timeinhour+"timeout: "+ timeouthour);
+					//alert("yeah");
+				//posibility: attendance within NightDiff
+				//------------------------- MORNING --------------------------------------
+					if(timeinhour >= 0 && timeouthour <= 6)
+					{
+						nightdiff = timeinhour - timeouthour;
+						//alert("possibility : 1");
+					}
+				//posibility: NightDiff is within attendance
+					else if(timeinhour < 0 && timeouthour > 6)
+					{
+						var NDin = timeinhour;
+						var NDout = timeouthour - 6;
+						var workhrs = timeinhour - timeouthour;
+
+						nightdiff = ((Math.abs(NDin) + Math.abs(NDout)) - Math.abs(workhrs));
+						//alert("possibility : 2");
+					}
+				//posibility: attendance exceeds NightDiff
+					else if(timeinhour < 6 && timeouthour > 6)
+					{
+						nightdiff = timeinhour - 6;
+						//alert("possibility : 3");
+					}
+				//posibility: attendance > NightDiff
+					else if(timeinhour <= 0 && timeouthour > 0)
+					{
+						//alert("timeinhour: "+timeinhour +" timeouthour: "+timeouthour);
+						nightdiff = timeouthour; 
+						//alert("possibility : 4");
+					}
+				//------------------------- NIGHT --------------------------------------
+					else if(timeinhour >= 22 && timeouthour <= 6)
+					{
+						nightdiff = timeinhour - timeouthour;
+						//alert("possibility : 5");
+					}
+				//posibility: NightDiff is within attendance
+					else if(((timeouthour <= 24) && (timeouthour > 22)) && timeinhour < 22  )
+					{
+						// var NDin = timeinhour - 6;
+						// var NDout = timeouthour - 22;
+						// var workhrs = Math.abs(timeinhour) - Math.abs(timeouthour);
+						// alert("1-"+NDin);
+						// alert("2-"+NDout);
+						// alert("3-"+Math.abs(workhrs));
+						// workhrs = Math.abs(workhrs);
+
+						// nightdiff = (Math.abs(NDin) - Math.abs(NDout)) - Math.abs(workhrs);
+						// alert("4-"+nightdiff);
+
+						var NDout 
+						if(timeouthour == 24)
+						{
+							NDout = 2;
+						}
+						else
+						{
+							NDout = timeouthour - 24;
+						}
+						nightdiff = Math.abs(NDout);
+						//alert("possibility : 6");
+					}
+				//posibility: attendance > NightDiff
+					// else if(timeinhour <= 18 && timeouthour > 18)
+					// {
+					// 	nightdiff = timeouthour - 18; 
+					// 	alert("possibility : 8");
+					// }
+					else
+					{
+						//alert("possibility : 9");
+						nightdiff = "";
+					}
+					if(Number.isInteger(nightdiff))
+					{
+					   	nightdiff = Math.abs(nightdiff);		
+					}
+					
+				}
+				
+				if(nightdiff != "")
+				{
+					//alert("yeah1");
+					row.querySelector('.nightdiff').value = nightdiff;
+				}
+				else
+				{
+					//alert("yeah");
+					row.querySelector('.nightdiff').value = "";
+				}
 				// If absent was initially placed, changed to success
 				if(row.classList.contains('danger'))
 				{
@@ -389,6 +493,7 @@ include('directives/db.php');
 				{
 					workinghours *= -1;
 				}
+				//alert(workinghours);
 				//alert("timein: "+timeinhour + " timeout: " + timeouthour);
 			// Computing minutes
 				if(timeinmin > timeoutmin)
@@ -411,7 +516,11 @@ include('directives/db.php');
 				}
 
 			// WORKING HOURS
-				if(workingmins == 0)
+				if(workinghours <= 5)//HALF DAY
+				{
+					row.querySelector('.workinghours').value = workinghours + " hrs/HALFDAY";
+				}
+				else if(workingmins == 0)
 				{
 					row.querySelector('.workinghours').value = workinghours + " hours";
 				}
@@ -419,7 +528,6 @@ include('directives/db.php');
 				{
 					row.querySelector('.workinghours').value = workinghours + " hours, " + workingmins + " mins";	
 				}
-
 			// OVERTIME if Working Hours exceed 8
 				if(workinghours > 8 && workingmins == 0)
 				{
@@ -460,11 +568,12 @@ include('directives/db.php');
 			// NIGHT DIFF if Working Hours is in between 10pm - 6am
 			// 10 is 10pm and 18 is 6pm
 			//alert("timein: "+timeinhour+"timeout: "+ timeouthour);
+			var nightdiff = "";
 				if(((timeinhour <= 10 && timeouthour >= 18) || (timeinhour >= 10 || timeouthour <= 18)) 
 						&& ((timeinhour <= 10 && timeouthour <= 18)|| (timeinhour >= 10 || timeouthour >= 18)))
 				{
 					//alert("timein: "+timeinhour+"timeout: "+ timeouthour);
-					var nightdiff;
+					
 				//posibility: attendance within NightDiff
 					if(timeinhour >= 10 && timeouthour <= 18)
 					{
@@ -501,7 +610,16 @@ include('directives/db.php');
 					{
 					   	nightdiff = Math.abs(nightdiff);		
 					}
+				}
+				if(nightdiff != "")
+				{
+					
 					row.querySelector('.nightdiff').value = nightdiff;
+				}
+				else
+				{
+					
+					row.querySelector('.nightdiff').value = "";
 				}
 				
 				
