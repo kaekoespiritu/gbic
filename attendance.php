@@ -2,6 +2,7 @@
 <?php
 include('directives/db.php');
 include('directives/session.php');
+  
 ?>
 <html>
 <head>
@@ -32,7 +33,18 @@ include('directives/session.php');
 				<h2>Daily attendance log</h2>
 				<div class="col-md-6 col-md-offset-3 pull-down">
 					<form>
-						<input name="txt_attendance" type="text" size="10" class="form-control" id="dtpkr_attendance" placeholder="mm-dd-yyyy" required>
+					
+						<input name="txt_attendance" type="text" size="10" class="form-control" value = <?
+					if(isset($_SESSION['date']))
+					{
+						$date = $_SESSION['date'];
+						Print "'". $date ."'";
+					}
+					else
+					{
+						Print '""';
+					}
+					?> id="dtpkr_attendance" placeholder="mm-dd-yyyy" required>
 					</form>
 				</div>
 			</div>
@@ -139,14 +151,15 @@ include('directives/session.php');
 			multipleWidth: 200
 		});
 
-		var currentDate = new Date();
-
+		//var currentDate = new Date();
+		var currentDate = "<?php Print $_SESSION['date'];?>";
 		/* DATE PICKER CONFIGURATIONS*/
 		$( "#dtpkr_attendance" ).datepicker({
 			changeMonth: true,
 			changeYear: true,
 			dateFormat: 'MM dd, yy',
 			showAnim: 'blind',
+			maxDate: new Date(),
 			beforeShow: function(){    
 				$(".ui-datepicker").css('font-size', 15) 
 			}
@@ -154,6 +167,19 @@ include('directives/session.php');
 
 		$("#dtpkr_attendance").datepicker("setDate", currentDate);
 
+	
+		$("#dtpkr_attendance").change(function(){
+			var date = $(this).val();
+			window.location.href = "date_attendance.php?date="+date;
+		//Ajax
+			// $.get("ajax/attendance_date.php", 	{
+			// 									date: date // date to be passed on attendance_date.php
+			// 								}, 
+			// 								function(data)	{
+   // 												//alert("data sent and received: "+date);
+			// 								});
+		});
+		
 	});
 
 	function fittext()

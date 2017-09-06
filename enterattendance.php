@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <?php
-include('directives/session.php');
-include('directives/db.php');
+	include('directives/session.php');
+	include('directives/db.php');
+date_default_timezone_set('Asia/Manila');
+	if(isset($_SESSION['date']))
+	{
+		$date = $_SESSION['date'];
+	}
+	else
+	{
+		$date = strftime("%B %d, %Y");
+	}
 ?>
 <html>
 <head>
@@ -33,40 +42,39 @@ include('directives/db.php');
 					<li><a href="attendance.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a></li>
 					<?php
 					$site_name = $_GET['site'];
-					Print '<li class="active">Employee attendance sheet for '. $site_name .' on DATE HERE</li>';
+					Print '<li class="active">Employee attendance sheet for '. $site_name .' on '. $date .'</li>';
 					?>
-					<button class="btn btn-success pull-right">Save Changes</button>
+					<button class="btn btn-success pull-right" onclick="save()">Save Changes</button>
 				</ol>
 			</div>
 			
 			<!-- Attendance table -->
-			<div class="col-md-10 col-md-offset-1 pull-down">
-				<table class="table table-condensed table-bordered" style="background-color:white;">
-					<tr>
-						<td>Name</td>
-						<td>Position</td>
-						<td>Time In</td>
-						<td>Time Out</td>
-						<td>Working Hours</td>
-						<td>Overtime</td>
-						<td>Undertime</td>
-						<td>Night Differential</td>
-						<td colspan="2">Actions</td>
-					</tr>
-					
-					<?php
-					$site = $_GET['site'];
-					$employees = "SELECT * FROM employee WHERE site = '$site'";
-					$employees_query = mysql_query($employees);
-					if($employees_query)
+			<form id="form" method="post" action="logic_attendance.php?site=<?php Print $site_name;?>">
+		<div class="col-md-10 col-md-offset-1 pull-down">
+			<table class="table table-condensed table-bordered" style="background-color:white;">
+				<tr>
+					<td>Name</td>
+					<td>Position</td>
+					<td>Time In</td>
+					<td>Time Out</td>
+					<td>Working Hours</td>
+					<td>Overtime</td>
+					<td>Undertime</td>
+					<td>Night Differential</td>
+					<td colspan="2">Actions</td>
+				</tr>
+				
+				<?php
+				$site = $_GET['site'];
+				$employees = "SELECT * FROM employee WHERE site = '$site' ORDER BY lastname";
+				$employees_query = mysql_query($employees);
+				if($employees_query)
+				{
+					while($row_employee = mysql_fetch_assoc($employees_query))
 					{
-						while($row_employee = mysql_fetch_assoc($employees_query))
-						{
-							Print "	
-
-							<!-- <form method='post' action='logic_enterattendance.php?empid=".$row_employee['empid']."'> -->
-
+						Print 	"	
 							<tr id=\"". $row_employee['empid'] ."\">
+								<input type='hidden' name='empid[]' value=". $row_employee['empid'] .">
 								<td class='empName'>
 									". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
 								</td>
@@ -75,30 +83,30 @@ include('directives/db.php');
 								</td>
 								<!-- Time In -->
 								<td>
-									<input type='text' class='timein timepicker form-control input-sm' name='timein[]'>
+									<input type='text' class='timein timepicker form-control input-sm' value='' name='timein[]'>
 								</td> 
 								<!-- Time Out-->
 								<td>
-									<input type='text' class='timeout timepicker form-control input-sm' name='timeout[]'>
+									<input type='text' class='timeout timepicker form-control input-sm' value='' name='timeout[]'>
 								</td> 
 								<!-- Working Hours -->
 								<td>
-									<input type='text' placeholder='--'' class='form-control input-sm workinghours' name='workinghrs[]' disabled>
+									<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' name='workinghrs[]' disabled>
 								</td> 
 								<!-- Overtime -->
 								<td>
-									<input type='text' placeholder='--' class='form-control input-sm overtime' name='othrs[]' disabled>
+									<input type='text' placeholder='--' class='form-control input-sm overtime' value='' name='othrs[]' disabled>
 								</td> 
 								<!-- Undertime -->
 								<td>
-									<input type='text' placeholder='--' class='form-control input-sm undertime' name='undertime[]' disabled>
+									<input type='text' placeholder='--' class='form-control input-sm undertime' value='' name='undertime[]' disabled>
 								</td>
 								<!-- Night Differential --> 
 								<td>
-									<input type='text' placeholder='--' class='form-control input-sm nightdiff' name='nightdiff[]' disabled>
+									<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' name='nightdiff[]' disabled>
 								</td>
 								<!-- Remarks Input --> 
-									<input type='hidden' name='remarks[]' class='hiddenRemarks'>
+									<input type='hidden' name='remarks[]' value='' class='hiddenRemarks'>
 								<!-- Remarks Button --> 
 								<td>
 									<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks</a>
@@ -107,16 +115,15 @@ include('directives/db.php');
 									<a class='btn btn-sm btn-danger absent' onclick='absent(\"". $row_employee['empid'] ."\")'>Absent</a>
 								</td>
 							</tr>
-							<!-- </form> -->
-							";
-						}
+								";
 					}
-					?>
+				}
+				?>
 
 
-				</table>
-			</div>
-
+			</table>
+		</div>
+			</form>
 			<!-- DUMMY MODAL FOR REMARKS -->
 			<div class="modal fade" tabindex="-1" id="remarks" role="dialog">
 				<div class="modal-dialog" role="document">
@@ -146,6 +153,7 @@ include('directives/db.php');
 	<script src="js/timepicker/jquery.timepicker.min.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script>
+
 	document.getElementById("attendance").setAttribute("style", "background-color: #10621e;");
 
 		$(document).ready(function(){
@@ -174,8 +182,16 @@ include('directives/db.php');
 			});
 		});
 
-		function remarks(id)
-		{	
+		//Submit the form
+		function save() {
+			var a = confirm("Are you sure you want to save this attendance? All of the blank will be absent.")
+			if(a)
+			{
+				document.getElementById('form').submit();
+			}
+		}
+
+		function remarks(id) {	
 			// show modal here to input for remarks
 			var mainRow = document.getElementById(id);
 			if(mainRow.querySelector('.hiddenRemarks').value != null)
@@ -195,15 +211,13 @@ include('directives/db.php');
 		}
 
 		// Transfer content to hidden input field
-		function saveRemarks(id)
-		{
+		function saveRemarks(id) {
 			var remarks = document.getElementById('remark').value;
 			var hiddenRemarks = document.getElementById(id).querySelector('.hiddenRemarks').setAttribute('value', remarks);
 
 		}
 
-		function absent(id)
-		{
+		function absent(id) {
 			
 			var mainRow = document.getElementById(id); // Get row to be computed
 
@@ -213,13 +227,12 @@ include('directives/db.php');
 			// add text ABSENT to time in and time out
 			mainRow.querySelector('.timein').placeholder = "ABSENT";
 			mainRow.querySelector('.timeout').placeholder = "ABSENT";
-			mainRow.querySelector('.workinghours').value = "--";
-			mainRow.querySelector('.overtime').value = "--";
-			mainRow.querySelector('.undertime').value = "--";
+			mainRow.querySelector('.workinghours').value = "";
+			mainRow.querySelector('.overtime').value = "";
+			mainRow.querySelector('.undertime').value = "";
 		}
 
-		function getHour(time)
-		{
+		function getHour(time) {
 			console.log("getHour: " + time);
 			if(time)
 			{
@@ -251,8 +264,7 @@ include('directives/db.php');
 		}		
 	}
 
-	function getMin(time)
-	{
+	function getMin(time) {
 		console.log("getMin: " + time);
 		if(time)
 		{
@@ -268,8 +280,7 @@ include('directives/db.php');
 		}
 	}
 
-	function computeTime(row, timeinhour,timeinmin,timeouthour,timeoutmin)
-	{
+	function computeTime(row, timeinhour,timeinmin,timeouthour,timeoutmin) {
 		console.log("Time in: " + timeinhour + ":" + timeinmin + " Time out: " + timeouthour + ":" + timeoutmin);
 
 
@@ -647,8 +658,7 @@ include('directives/db.php');
 		}
 	}	
 
-	function timeIn(id)
-	{
+	function timeIn(id) {
 		var mainRow = document.getElementById(id); // Get row to be computed
 		var timein = mainRow.querySelector('.timein').value; // Get time in value
 
@@ -667,8 +677,7 @@ include('directives/db.php');
 
 	}
 
-	function timeOut(id)
-	{
+	function timeOut(id) {
 		var mainRow = document.getElementById(id); // Get row to be computed
 		var timein = mainRow.querySelector('.timein').value; // Get time in value
 
