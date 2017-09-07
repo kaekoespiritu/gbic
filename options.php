@@ -6,7 +6,7 @@ include('directives/db.php');
 <html>
 <head>
 	<title>Payroll</title>
-	<!-- Company Name: Green Built Industrial Corporation -->
+	<!-- Company id: Green Built Industrial Corporation -->
 
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
@@ -43,22 +43,22 @@ include('directives/db.php');
 						<td>Sunday</td>
 					</tr>
 					<tr>
-						<td><input type="text" placeholder="---" disabled></td>
-						<td>CLOSE</td>
-						<td>OPEN</td>
-						<td><input type="text" placeholder="---" disabled></td>
-						<td><input type="text" placeholder="---" disabled></td>
-						<td><input type="text" placeholder="---" disabled></td>
-						<td><input type="text" placeholder="---" disabled></td>
+						<td><input type="text" placeholder="---" disabled id="Monday"></td>
+						<td><input type="text" placeholder="---" disabled id="Tuesday"></td>
+						<td><input type="text" placeholder="---" disabled id="Wednesday"></td>
+						<td><input type="text" placeholder="---" disabled id="Thursday"></td>
+						<td><input type="text" placeholder="---" disabled id="Friday"></td>
+						<td><input type="text" placeholder="---" disabled id="Saturday"></td>
+						<td><input type="text" placeholder="---" disabled id="Sunday"></td>
 					</tr>
 					<tr>
-						<td><input type="checkbox"></td>
-						<td><input type="checkbox" checked></td>
-						<td><input type="checkbox" checked></td>
-						<td><input type="checkbox"></td>
-						<td><input type="checkbox"></td>
-						<td><input type="checkbox"></td>
-						<td><input type="checkbox"></td>
+						<td><input type="checkbox" id="MondayBOX" onclick="triggerInput('Monday')"></td>
+						<td><input type="checkbox" id="TuesdayBOX" onclick="triggerInput('Tuesday')"></td>
+						<td><input type="checkbox" id="WednesdayBOX" onclick="triggerInput('Wednesday')"></td>
+						<td><input type="checkbox" id="ThursdayBOX" onclick="triggerInput('Thursday')"></td>
+						<td><input type="checkbox" id="FridayBOX" onclick="triggerInput('Friday')"></td>
+						<td><input type="checkbox" id="SaturdayBOX" onclick="triggerInput('Saturday')"></td>
+						<td><input type="checkbox" id="SundayBOX" onclick="triggerInput('Sunday')"></td>
 					</tr>
 				</table>
 				<div class="panel-body">
@@ -138,6 +138,50 @@ include('directives/db.php');
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script>
 		document.getElementById("adminOptions").setAttribute("style", "background-color: #10621e;");
+
+		function triggerInput(dayOfWeek)
+		{
+			if(document.getElementById(dayOfWeek+"BOX").checked==true)
+			{
+				// Getting input field
+				var cellCHECK = document.getElementById(dayOfWeek);
+				
+				// Creating a select dropdown
+				var selectList = document.createElement("select");
+				selectList.setAttribute("id", dayOfWeek);
+				
+				// Replacing input field with select dropdown
+				cellCHECK.parentNode.replaceChild(selectList, cellCHECK);
+				alert(cellCHECK.parentNode);
+
+				// Creating a list of options
+				var options = ["Open", "Close"];
+
+				// Adding the options to the select
+				for (var i = 0; i < options.length; i++)
+				{
+				    var option = document.createElement("option");
+				    option.setAttribute("value", options[i]);
+				    option.text = options[i];
+				    selectList.appendChild(option);
+				}
+			}
+
+			if(document.getElementById(dayOfWeek+"BOX").checked==false)
+			{
+				// Getting select dropdown
+				var cellUNCHECK = document.getElementById(dayOfWeek);
+				cellUNCHECK.setAttribute("id", dayOfWeek);
+
+				// Recreating input field
+				var input = document.createElement("input");
+				input.setAttribute('type', 'text');
+				input.setAttribute('placeholder', '---');
+
+				// Reverting changes
+				cellUNCHECK.parentNode.replaceChild(input, cellUNCHECK);
+			}
+		}
 	</script>
 </div>
 </body>

@@ -100,9 +100,9 @@ include('directives/db.php');
 						<td>Trial Employee entry</td>
 						<td>Position</td>
 						<td>Placeholder</td>
-						<td><input type="checkbox" /> SSS <input type="text" id="sss" name="sss" disabled="disabled"/></td>
-						<td><input type="checkbox" /> Pag-IBIG <input type="text" id="philhealth" name="philhealth" disabled="disabled"/></td>
-						<td><input type="checkbox" /> Vale <input type="text" id="pagibig" name="pagibig" disabled="disabled"/></td>
+						<td><input type="checkbox" onchange="triggerSSS()"/> SSS <input type="text" id="sss" name="sss" disabled="disabled"/></td>
+						<td><input type="checkbox" onchange="triggerPagIBIG()"/> Pag-IBIG <input type="text" id="philhealth" name="philhealth" disabled="disabled"/></td>
+						<td><input type="checkbox" onchange="triggerVale()"/> Vale <input type="text" id="pagibig" name="pagibig" disabled="disabled"/></td>
 					</tr>
 					<tr>
 						<td>1</td>
@@ -126,10 +126,30 @@ include('directives/db.php');
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script>
-	function saveChanges(){
+	// Prompt to save changes
+	function saveChanges()
+	{
 		confirm("Note: After saving these changes, the loans you've entered will no longer be editable. Are you sure you want to save changes?");
 	}
+
+	// Setting active color of menu to Employees
 	document.getElementById("employees").setAttribute("style", "background-color: #10621e;");
+
+	// Triggering input fields onchange of checkbox
+	function triggerSSS()
+	{
+
+	}
+
+	function triggerPagIBIG()
+	{
+
+	}
+
+	function triggerVale()
+	{
+
+	}
 	</script>
 </body>
 </html>
