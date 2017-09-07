@@ -68,13 +68,243 @@ date_default_timezone_set('Asia/Manila');
 				$site = $_GET['site'];
 				$employees = "SELECT * FROM employee WHERE site = '$site' ORDER BY lastname";
 				$employees_query = mysql_query($employees);
-				if($employees_query)
+
+				$dateChecker = "SELECT date FROM attendance WHERE date = '$date'";
+				$dateCheckerQuery = mysql_query($dateChecker);
+
+				if($dateCheckerQuery)//Checks if there is already an attendance made for that specific date
 				{
+					$dateRows = mysql_num_rows($dateCheckerQuery);
+				}	
+				
+				// theres already an data on that specific day on the database
+				$counter = 0;
+				if(!empty($dateRows))
+				{
+					if($dateRows >= 1)
+					{	
+						while($row_employee = mysql_fetch_assoc($employees_query))
+						{
+							$empidChecker = $row_employee['empid'];
+							$empCheck = "SELECT * FROM attendance WHERE date = '$date' AND empid = '$empidChecker' ";
+							$empCheckQuery = mysql_query($empCheck);
+							$empRow = mysql_fetch_assoc($empCheckQuery);
+						// Attendance Check
+							if($empRow['attendance'] == 0)//No input
+							{
+								Print 	"<tr id=\"". $row_employee['empid'] ."\">
+											<!-- Employee ID -->
+												<td class='empName'>
+													". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
+												</td>
+											<!-- Position -->
+												<td>
+													". $row_employee['position'] ."
+												</td>
+											<!-- Time In -->
+												<td>
+													<input type='text' value='". $empRow['timein'] ."' class='timein timepicker form-control input-sm' name='timein[".$counter."]'>
+												</td>
+											<!-- Time Out-->
+												<td>
+													<input type='text' class='timeout timepicker form-control input-sm' value='' name='timeout[".$counter."]'>
+												</td>
+											<!-- Working Hours -->
+												<td>
+													<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' disabled>
+													<input type='hidden' class='workinghoursH'  name='workinghrs[".$counter."]' >
+												</td>
+											<!-- Overtime -->
+												<td>
+													<input type='text' placeholder='--' class='form-control input-sm overtime' value=''  disabled>
+													<input type='hidden' class='overtimeH' name='othrs[".$counter."]' >
+												</td>
+											<!-- Undertime -->
+												<td>
+													<input type='text' placeholder='--' class='form-control input-sm undertime' value='' disabled>
+													<input type='hidden' class='undertimeH' name='undertime[".$counter."]' >
+												</td>
+											<!-- Night Differential --> 
+												<td>
+													<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' disabled>
+													<input type='hidden' class='nightdiffH' name='nightdiff[".$counter."]' >
+												</td>
+											<!-- Attendance Status -->
+												<input type='hidden' name='attendance[".$counter."]' value='' class='attendance'>";
+
+
+							}
+							else if($empRow['attendance'] == 1)//Absent
+							{
+								Print 	"<tr id=\"". $row_employee['empid'] ."\" class='danger'>
+											<!-- Employee ID -->
+												<td class='empName'>
+													". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
+												</td>
+											<!-- Position -->
+												<td>
+													". $row_employee['position'] ."
+												</td>
+											<!-- Time In -->
+												<td>
+													<input type='text' placeholder='ABSENT' class='timein timepicker form-control input-sm' value='' name='timein[".$counter."]'>
+												</td> 
+											<!-- Time Out-->
+												<td>
+													<input type='text' class='timeout timepicker form-control input-sm' placeholder='ABSENT' value='' name='timeout[".$counter."]'>
+												</td>
+											<!-- Working Hours -->
+												<td>
+													<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' disabled>
+													<input type='hidden' class='workinghoursH'  name='workinghrs[".$counter."]' >
+												</td>
+											<!-- Overtime -->
+												<td>
+													<input type='text' placeholder='--' class='form-control input-sm overtime' value=''  disabled>
+													<input type='hidden' class='overtimeH' name='othrs[".$counter."]' >
+												</td>
+											<!-- Undertime -->
+												<td>
+													<input type='text' placeholder='--' class='form-control input-sm undertime' value='' disabled>
+													<input type='hidden' class='undertimeH' name='undertime[".$counter."]' >
+												</td>
+											<!-- Night Differential --> 
+												<td>
+													<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' disabled>
+													<input type='hidden' class='nightdiffH' name='nightdiff[".$counter."]' >
+												</td>
+											<!-- Attendance Status -->
+												<input type='hidden' name='attendance[".$counter."]' value='ABSENT' class='attendance'>";
+							}
+							else if($empRow['attendance'] == 2)//Present
+							{
+								Print 	"<tr id=\"". $row_employee['empid'] ."\" class='success'>
+											<!-- Employee ID -->
+												<td class='empName'>
+													". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
+												</td>
+											<!-- Position -->
+												<td>
+													". $row_employee['position'] ."
+												</td>
+											<!-- Time In -->
+												<td>
+													<input type='text' class='timein timepicker form-control input-sm' value='". $empRow['timein'] ."' name='timein[".$counter."]'>
+												</td>
+											<!-- Time Out-->
+												<td>
+													<input type='text' class='timeout timepicker form-control input-sm' value='". $empRow['timeout'] ."' name='timeout[".$counter."]'>
+												</td>";
+							// Working hours
+								if($empRow['workhours'] <= 5)
+								{
+									Print "<!-- Working Hours -->
+										<td>
+											<input type='text' placeholder='--'' value='". $empRow['workhours'] ." hrs/HALFDAY' class='form-control input-sm workinghours' disabled>
+											<input type='hidden' class='workinghoursH' value='". $empRow['workhours'] ." hrs/HALFDAY' name='workinghrs[".$counter."]' >
+										</td>";
+								}
+								else
+								{
+									Print "<!-- Working Hours -->
+										<td>
+											<input type='text' placeholder='--'' value='". $empRow['workhours'] ." hours' class='form-control input-sm workinghours' disabled>
+											<input type='hidden' class='workinghoursH' value='". $empRow['workhours'] ." hours' name='workinghrs[".$counter."]' >
+										</td>";
+								}
+							// Overtime
+								if($empRow['overtime'] != 0)
+								{
+									Print "<!-- Overtime -->
+										<td>
+											<input type='text' placeholder='--' class='form-control input-sm overtime' value='". $empRow['overtime'] ." hours'  disabled>
+											<input type='hidden' class='overtimeH' value='". $empRow['overtime'] ." hours' name='othrs[".$counter."]' >
+										</td>";
+								}
+								else
+								{
+									Print "<!-- Overtime -->
+									<td>
+										<input type='text' placeholder='--' class='form-control input-sm overtime' value=''  disabled>
+										<input type='hidden' class='overtimeH' name='othrs[".$counter."]' >
+									</td>";
+								}
+							// Undertime
+								if($empRow['undertime'] != 0)
+								{
+									Print "<!-- Undertime -->
+										<td>
+											<input type='text' placeholder='--' value='". $empRow['undertime'] ." hours' class='form-control input-sm undertime'  disabled>
+											<input type='hidden' class='undertimeH' value='". $empRow['undertime'] ." hours' name='undertime[".$counter."]'>
+										</td>";
+								}
+								else
+								{
+									Print "<!-- Undertime -->
+										<td>
+											<input type='text' placeholder='--' class='form-control input-sm undertime' value='' disabled>
+											<input type='hidden' class='undertimeH' name='undertime[".$counter."]' >
+										</td>";
+								}
+							// NightDiff
+								if($empRow['nightdiff'] != 0)
+								{
+									Print "<!-- Night Differential --> 
+										<td>
+											<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='". $empRow['nightdiff'] ." hours' disabled>
+											<input type='hidden' class='nightdiffH' value='". $empRow['nightdiff'] ." hours' name='nightdiff[".$counter."]' >
+										</td>";
+								}
+								else
+								{
+									Print "<!-- Night Differential --> 
+										<td>
+											<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' disabled>
+											<input type='hidden' class='nightdiffH' name='nightdiff[".$counter."]' >
+										</td>";
+								}
+							// Attendance Status
+								Print "<!-- Attendance Status -->
+									<input type='hidden' name='attendance[".$counter."]' value='PRESENT' class='attendance'>";
+							}
+							Print 	
+								"<input type='hidden' name='empid[".$counter."]' value=". $row_employee['empid'] .">";	
+						
+						// REMARKS	
+							if(isset($empRow['remarks']))
+							{
+								Print "<!-- Remarks Input --> 
+									<input type='hidden' value='". $empRow['remarks'] ."' name='remarks[".$counter."]' class='hiddenRemarks'>";
+							}
+							else
+							{
+								Print "<!-- Remarks Input --> 
+									<input type='hidden' name='remarks[".$counter."]' class='hiddenRemarks'>";
+							}
+
+								Print "<!-- Remarks Button --> 
+								<td>
+									<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks</a>
+								</td>
+								<td>
+									<a class='btn btn-sm btn-danger absent' onclick='absent(\"". $row_employee['empid'] ."\")'>Absent</a>
+								</td>
+							</tr>
+								";
+								$counter++;
+						}
+					}
+				}
+				// if there is no data on the specific day on the database
+				else if($employees_query)
+				{
+					
 					while($row_employee = mysql_fetch_assoc($employees_query))
 					{
+
 						Print 	"	
 							<tr id=\"". $row_employee['empid'] ."\">
-								<input type='hidden' name='empid[]' value=". $row_employee['empid'] .">
+								<input type='hidden' name='empid[".$counter."]' value=". $row_employee['empid'] .">
 								<td class='empName'>
 									". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
 								</td>
@@ -83,30 +313,37 @@ date_default_timezone_set('Asia/Manila');
 								</td>
 								<!-- Time In -->
 								<td>
-									<input type='text' class='timein timepicker form-control input-sm' value='' name='timein[]'>
+									<input type='text' class='timein timepicker form-control input-sm' value='' name='timein[".$counter."]'>
 								</td> 
 								<!-- Time Out-->
 								<td>
-									<input type='text' class='timeout timepicker form-control input-sm' value='' name='timeout[]'>
+									<input type='text' class='timeout timepicker form-control input-sm' value='' name='timeout[".$counter."]'>
 								</td> 
 								<!-- Working Hours -->
 								<td>
-									<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' name='workinghrs[]' disabled>
+									<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' disabled>
+									<input type='hidden' class='workinghoursH'  name='workinghrs[".$counter."]' >
 								</td> 
 								<!-- Overtime -->
 								<td>
-									<input type='text' placeholder='--' class='form-control input-sm overtime' value='' name='othrs[]' disabled>
+									<input type='text' placeholder='--' class='form-control input-sm overtime' value=''  disabled>
+									<input type='hidden' class='overtimeH' name='othrs[".$counter."]' >
 								</td> 
 								<!-- Undertime -->
 								<td>
-									<input type='text' placeholder='--' class='form-control input-sm undertime' value='' name='undertime[]' disabled>
+									<input type='text' placeholder='--' class='form-control input-sm undertime' value='' disabled>
+									<input type='hidden' class='undertimeH' name='undertime[".$counter."]' >
 								</td>
 								<!-- Night Differential --> 
 								<td>
-									<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' name='nightdiff[]' disabled>
+									<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' disabled>
+									<input type='hidden' class='nightdiffH' name='nightdiff[".$counter."]' >
 								</td>
 								<!-- Remarks Input --> 
-									<input type='hidden' name='remarks[]' value='' class='hiddenRemarks'>
+									<input type='hidden' name='remarks[".$counter."]' class='hiddenRemarks'>
+
+								<!-- Attendance Status -->
+									<input type='hidden' name='attendance[".$counter."]' class='attendance'>
 								<!-- Remarks Button --> 
 								<td>
 									<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks</a>
@@ -116,6 +353,7 @@ date_default_timezone_set('Asia/Manila');
 								</td>
 							</tr>
 								";
+								$counter++;
 					}
 				}
 				?>
@@ -223,13 +461,20 @@ date_default_timezone_set('Asia/Manila');
 
 			// change color of row to shade of red
 			mainRow.classList.add('danger');
-
+			// set attendance status to ABSENT
+			mainRow.querySelector('.attendance').value = "ABSENT";
 			// add text ABSENT to time in and time out
 			mainRow.querySelector('.timein').placeholder = "ABSENT";
 			mainRow.querySelector('.timeout').placeholder = "ABSENT";
+			mainRow.querySelector('.timein').value = "";
+			mainRow.querySelector('.timeout').value = "";
 			mainRow.querySelector('.workinghours').value = "";
 			mainRow.querySelector('.overtime').value = "";
 			mainRow.querySelector('.undertime').value = "";
+			//for hidden rows
+			mainRow.querySelector('.workinghoursH').value = "";
+			mainRow.querySelector('.overtimeH').value = "";
+			mainRow.querySelector('.undertimeH').value = "";
 		}
 
 		function getHour(time) {
@@ -283,7 +528,7 @@ date_default_timezone_set('Asia/Manila');
 	function computeTime(row, timeinhour,timeinmin,timeouthour,timeoutmin) {
 		console.log("Time in: " + timeinhour + ":" + timeinmin + " Time out: " + timeouthour + ":" + timeoutmin);
 
-
+		row.querySelector('.attendance').value = "";
 		// Verifies that time in and time out input fields have value
 		if(timeinhour && timeouthour)
 		{	
@@ -326,46 +571,57 @@ date_default_timezone_set('Asia/Manila');
 					workinghours = workinghours - 1;
 				}
 				//alert(workinghours);
+				//set the attendance status to PRESENT
+				row.querySelector('.attendance').value = "PRESENT";
 			// WORKING HOURS
 				if(workinghours <= 5)//HALF DAY
 				{
 					row.querySelector('.workinghours').value = workinghours + " hrs/HALFDAY";
+					row.querySelector('.workinghoursH').value = workinghours + " hrs/HALFDAY";
 				}
 				else if(workingmins == 0)
 				{
 					row.querySelector('.workinghours').value = workinghours + " hours";
+					row.querySelector('.workinghoursH').value = workinghours + " hours";
 				}
 				else
 				{
 					row.querySelector('.workinghours').value = workinghours + " hours, " + workingmins + " mins";	
+					row.querySelector('.workinghoursH').value = workinghours + " hours, " + workingmins + " mins";
 				}
 
 			// OVERTIME if Working Hours exceed 8
 				if(workinghours > 8 && workingmins == 0)
 				{
 					row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hours";
+					row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hours";
 				}
 				else if (workinghours > 8)
 				{
 					row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
+					row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
 				}
 				else
 				{
 					row.querySelector('.overtime').value = "";
+					row.querySelector('.overtimeH').value = "";
 				}
 
 			// UNDERTIME if Working Hours don't reach 8
 				if(workinghours < 8 && workingmins == 0)
 				{
 					row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hours";
+					row.querySelector('.undertimeH').value = Math.abs(workinghours - 8) + " hours";
 				}
 				else if(workinghours < 8)
 				{
 					row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
+					row.querySelector('.undertimeH').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
 				}
 				else
 				{
 					row.querySelector('.undertime').value = "";
+					row.querySelector('.undertimeH').value = "";
 				}
 
 				// NIGHT DIFF if Working Hours is in between 10pm - 6am
@@ -463,12 +719,14 @@ date_default_timezone_set('Asia/Manila');
 				if(nightdiff != "")
 				{
 					//alert("yeah1");
-					row.querySelector('.nightdiff').value = nightdiff;
+					row.querySelector('.nightdiff').value = nightdiff + " hours";
+					row.querySelector('.nightdiffH').value = nightdiff + " hours";
 				}
 				else
 				{
 					//alert("yeah");
 					row.querySelector('.nightdiff').value = "";
+					row.querySelector('.nightdiffH').value = "";
 				}
 				// If absent was initially placed, changed to success
 				if(row.classList.contains('danger'))
@@ -489,7 +747,8 @@ date_default_timezone_set('Asia/Manila');
 			// Night differential starts at 10pm - 6am
 				console.log("Time in: " + timeinhour + ":" + timeinmin + " Time out: " + timeouthour + ":" + timeoutmin);
 				console.log("Working hours: " + workinghours + " Working mins: " + workingmins);
-
+				// sets the attendance status to PRESENT
+				row.querySelector('.attendance').value = "PRESENT";
 				// TIME IN: 22-12 = 10
 				// TIME OUT: 6 + 12 = 18
 				// RESULT 8
@@ -531,41 +790,50 @@ date_default_timezone_set('Asia/Manila');
 				if(workinghours <= 5)//HALF DAY
 				{
 					row.querySelector('.workinghours').value = workinghours + " hrs/HALFDAY";
+					row.querySelector('.workinghoursH').value = workinghours + " hrs/HALFDAY";
 				}
 				else if(workingmins == 0)
 				{
 					row.querySelector('.workinghours').value = workinghours + " hours";
+					row.querySelector('.workinghoursH').value = workinghours + " hours";
 				}
 				else
 				{
 					row.querySelector('.workinghours').value = workinghours + " hours, " + workingmins + " mins";	
+					row.querySelector('.workinghoursH').value = workinghours + " hours, " + workingmins + " mins";	
 				}
 			// OVERTIME if Working Hours exceed 8
 				if(workinghours > 8 && workingmins == 0)
 				{
 					row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hours";
+					row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hours";
 				}
 				else if (workinghours > 8)
 				{
 					row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
+					row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
 				}
 				else
 				{
 					row.querySelector('.overtime').value = "";
+					row.querySelector('.overtimeH').value = "";
 				}
 
 			// UNDERTIME if Working Hours don't reach 8
 				if(workinghours < 8 && workingmins == 0)
 				{
 					row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hours";
+					row.querySelector('.undertimeH').value = Math.abs(workinghours - 8) + " hours";
 				}
 				else if(workinghours < 8)
 				{
 					row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
+					row.querySelector('.undertimeH').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
 				}
 				else
 				{
 					row.querySelector('.undertime').value = "";
+					row.querySelector('.undertimeH').value = "";
 				}
 			// If absent was initially placed, changed to success
 				if(row.classList.contains('danger'))
@@ -626,12 +894,14 @@ date_default_timezone_set('Asia/Manila');
 				if(nightdiff != "")
 				{
 					
-					row.querySelector('.nightdiff').value = nightdiff;
+					row.querySelector('.nightdiff').value = nightdiff + " hours";
+					row.querySelector('.nightdiffH').value = nightdiff + " hours";
 				}
 				else
 				{
 					
 					row.querySelector('.nightdiff').value = "";
+					row.querySelector('.nightdiffH').value = "";
 				}
 				
 				
@@ -641,10 +911,20 @@ date_default_timezone_set('Asia/Manila');
 		}
 		else
 		{
+
 			row.querySelector('.workinghours').value = "";
 			row.querySelector('.overtime').value = "";
 			row.querySelector('.undertime').value = "";
 			row.querySelector('.nightdiff').value = "";
+			row.querySelector('.timein').placeholder = "";
+			row.querySelector('.timeout').placeholder = "";
+			//for hidden rows
+			row.querySelector('.workinghoursH').value = "";
+			row.querySelector('.overtimeH').value = "";
+			row.querySelector('.undertimeH').value = "";
+			row.querySelector('.nightdiffH').value = "";
+			row.querySelector('.attendance').value = "";
+
 			if(row.classList.contains('danger'))
 			{
 				row.classList.remove('danger');
