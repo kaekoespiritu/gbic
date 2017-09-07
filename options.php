@@ -152,7 +152,6 @@ include('directives/db.php');
 				
 				// Replacing input field with select dropdown
 				cellCHECK.parentNode.replaceChild(selectList, cellCHECK);
-				alert(cellCHECK.parentNode);
 
 				// Creating a list of options
 				var options = ["Open", "Close"];
@@ -165,18 +164,26 @@ include('directives/db.php');
 				    option.text = options[i];
 				    selectList.appendChild(option);
 				}
+
+				// Checking if 2 checkboxes are active
+				alert(document.querySelectorAll(':checked').length/2);
+				if(document.querySelectorAll(':checked').length/2 == 2)
+				{
+					alert(document.querySelectorAll(':unchecked'));
+				}
+
 			}
 
 			if(document.getElementById(dayOfWeek+"BOX").checked==false)
 			{
 				// Getting select dropdown
 				var cellUNCHECK = document.getElementById(dayOfWeek);
-				cellUNCHECK.setAttribute("id", dayOfWeek);
 
 				// Recreating input field
 				var input = document.createElement("input");
 				input.setAttribute('type', 'text');
 				input.setAttribute('placeholder', '---');
+				input.setAttribute('id', dayOfWeek);
 
 				// Reverting changes
 				cellUNCHECK.parentNode.replaceChild(input, cellUNCHECK);

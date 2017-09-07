@@ -38,7 +38,6 @@
 			<!-- BREAD CRUMBS -->
 			<div class="col-md-10 col-md-offset-1 pull-down">
 				<ol class="breadcrumb text-left">
-					<!-- TODO: If Sunday/Holiday attendance is selected, change link and name -->
 					<li><a href="attendance.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a></li>
 					<?php
 					$site_name = $_GET['site'];
@@ -46,11 +45,83 @@
 					?>
 					<button class="btn btn-success pull-right" onclick="save()">Save Changes</button>
 				</ol>
+
 			</div>
+
+			<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3 col-md-offset-1">
+					<form method="post" action="" id="search_form">
+						<div class="form-group">
+							<input type="text" placeholder="Search" id="search_box" name="txt_search" onkeypress="enter(enter)" class="form-control">
+						</div>
+					</form>
+				</div>
+				<!-- FILTER EMPLOYEE BY POSITION -->
+				<div class="col-md-6 text-right">
+					Filter by:
+					<!-- POSITION DROPDOWN -->
+					<div class="btn-group">
+						<select class="form-control" id="position" onchange="position()">
+							<option hidden>Position</option>
+							<?php
+							$position = "SELECT position FROM job_position";
+							$position_query = mysql_query($position);
+
+							while($row_position = mysql_fetch_assoc($position_query))
+							{
+								$positionReplaced = str_replace('/+/', ' ', $_GET['position']);
+								$position = mysql_real_escape_string($row_position['position']);
+								if($position == $positionReplaced)
+								{
+									Print '<option value="'. $position .'" selected="selected">'. $position .'</option>';
+								}
+								else
+								{
+									Print '<option value="'. $position .'">'. $position .'</option>';
+								}
+							}
+							?>
+						</select>
+					</div>
+					<!-- END OF POSITION DROPDOWN -->
+					<!-- SITES DROPDOWN -->
+					<div class="btn-group">
+						<select class="form-control" id="site" onchange="site()">
+							<option hidden>Site</option>
+							<?php
+							$site = "SELECT location FROM site";
+							$site_query = mysql_query($site);
+
+							while($row_site = mysql_fetch_assoc($site_query))
+							{
+								$siteReplaced = str_replace('/+/', ' ', $_GET['site']);
+								if($row_site['location'] == $siteReplaced)
+								{
+									Print '<option value="'. $row_site['location'] .'" selected="selected">'. $row_site['location'] .'</option>';
+								}
+								else
+								{
+									Print '<option value="'. $row_site['location'] .'">'. $row_site['location'] .'</option>';
+								}
+							}
+							?>
+						</select>
+					</div>
+					<!-- END OF SITES DROPDOWN -->
+				</div>
+				<!-- ACTION BUTTONS FOR FILTERS -->
+				<div class="col-md-1">
+					<button type="button" class="btn btn-danger">Clear Filters</button>
+				</div>
+				<!-- END OF ACTION BUTTONS FOR FILTERS-->
+			</div>
+		</div>
 			
 			<!-- Attendance table -->
 			<form id="form" method="post" action="logic_attendance.php?site=<?php Print $site_name;?>">
-		<div class="col-md-10 col-md-offset-1 pull-down">
+		<div class="col-md-10 col-md-offset-1">
 			<table class="table table-condensed table-bordered" style="background-color:white;">
 				<tr>
 					<td>Name</td>
@@ -284,7 +355,7 @@
 
 								Print "<!-- Remarks Button --> 
 								<td>
-									<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks</a>
+									<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks<span class='badge'></span></a>
 								</td>
 								<td>
 									<a class='btn btn-sm btn-danger absent' onclick='absent(\"". $row_employee['empid'] ."\")'>Absent</a>
@@ -346,7 +417,7 @@
 									<input type='hidden' name='attendance[".$counter."]' class='attendance'>
 								<!-- Remarks Button --> 
 								<td>
-									<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks</a>
+									<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks<span class='badge'></span></a>
 								</td>
 								<td>
 									<a class='btn btn-sm btn-danger absent' onclick='absent(\"". $row_employee['empid'] ."\")'>Absent</a>
@@ -422,7 +493,7 @@
 
 		//Submit the form
 		function save() {
-			var a = confirm("Are you sure you want to save this attendance? All of the blank will be absent.")
+			var a = confirm("Are you sure you want to save this attendance? All of the blank fields will remain empty.")
 			if(a)
 			{
 				document.getElementById('form').submit();
@@ -436,10 +507,12 @@
 			{
 				var input = mainRow.querySelector('.hiddenRemarks').value;
 				document.getElementById('remark').value = input;
+				mainRow.querySelector('.badge').setAttribute('class','glyphicon glyphicon-ok');
 			}
 			else
 			{
 				document.getElementById('remark').value = "";
+				mainRow.querySelector('.badge').setAttribute('class','glyphicon glyphicon-ok');
 			}
 			var empName = mainRow.querySelector('.empName').innerHTML.trim();
 			var modal = document.getElementById('dito').innerHTML = "Remarks for " + empName;
@@ -450,8 +523,9 @@
 
 		// Transfer content to hidden input field
 		function saveRemarks(id) {
-			var remarks = document.getElementById('remark').value;
-			var hiddenRemarks = document.getElementById(id).querySelector('.hiddenRemarks').setAttribute('value', remarks);
+			var mainRow = document.getElementById(id);
+			var remarks; = document.getElementById('remark').value;
+			var hiddenRemarks = mainRow.querySelector('.hiddenRemarks').setAttribute('value', remarks);
 
 		}
 
