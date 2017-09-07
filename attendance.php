@@ -2,7 +2,7 @@
 <?php
 include('directives/db.php');
 include('directives/session.php');
-  
+  date_default_timezone_set('Asia/Hong_Kong');
 ?>
 <html>
 <head>

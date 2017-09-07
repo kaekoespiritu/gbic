@@ -1,7 +1,7 @@
 <?php
 include('directives/db.php');
 include('directives/session.php');
-
+date_default_timezone_set('Asia/Hong_Kong');
 $location = $_GET['site'];
 
 if(isset($_SESSION['date']))
