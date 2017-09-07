@@ -42,6 +42,7 @@ include('directives/session.php');
 					}
 					else
 					{
+						$date = strftime("%B %d, %Y");
 						Print '""';
 					}
 					?> id="dtpkr_attendance" placeholder="mm-dd-yyyy" required>
@@ -152,7 +153,7 @@ include('directives/session.php');
 		});
 
 		//var currentDate = new Date();
-		var currentDate = "<?php Print $_SESSION['date'];?>";
+		var currentDate = "<?php Print "$date"; ?>";
 		/* DATE PICKER CONFIGURATIONS*/
 		$( "#dtpkr_attendance" ).datepicker({
 			changeMonth: true,
