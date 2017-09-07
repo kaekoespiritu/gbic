@@ -2,6 +2,12 @@
 <?php
 include('directives/session.php');
 include('directives/db.php');
+if(isset($_GET['site']) && isset($_GET['position']))
+{}
+else
+{
+	header("location:loans.php?site=null&position=null");
+}
 ?>
 <html>
 <head>

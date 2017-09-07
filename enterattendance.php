@@ -2,7 +2,7 @@
 <?php
 	include('directives/session.php');
 	include('directives/db.php');
-date_default_timezone_set('Asia/Manila');
+	date_default_timezone_set('Asia/Manila');
 	if(isset($_SESSION['date']))
 	{
 		$date = $_SESSION['date'];
