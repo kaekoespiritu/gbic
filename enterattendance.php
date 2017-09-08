@@ -342,22 +342,26 @@
 								"<input type='hidden' name='empid[".$counter."]' value=". $row_employee['empid'] .">";	
 						
 						// REMARKS	
-							if(isset($empRow['remarks']))
+							if($empRow['remarks']!== "")
 							{
 								Print "<!-- Remarks Input --> 
 									<input type='hidden' value='". $empRow['remarks'] ."' name='remarks[".$counter."]' class='hiddenRemarks'>";
+								Print "<!-- Remarks Button --> 
+								<td>
+									<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks <span class='icon glyphicon glyphicon-edit'></span></a>
+								</td>";
 							}
 							else
 							{
 								Print "<!-- Remarks Input --> 
 									<input type='hidden' name='remarks[".$counter."]' class='hiddenRemarks'>";
-							}
-
 								Print "<!-- Remarks Button --> 
 								<td>
-									<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks<span class='badge'></span></a>
-								</td>
-								<td>
+									<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks <span class='icon'></span></a>
+								</td>";
+							}
+								Print 
+								"<td>
 									<a class='btn btn-sm btn-danger absent' onclick='absent(\"". $row_employee['empid'] ."\")'>Absent</a>
 								</td>
 							</tr>
@@ -417,7 +421,7 @@
 									<input type='hidden' name='attendance[".$counter."]' class='attendance'>
 								<!-- Remarks Button --> 
 								<td>
-									<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks<span class='badge'></span></a>
+									<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks <span class='icon'></span></a>
 								</td>
 								<td>
 									<a class='btn btn-sm btn-danger absent' onclick='absent(\"". $row_employee['empid'] ."\")'>Absent</a>
@@ -507,12 +511,10 @@
 			{
 				var input = mainRow.querySelector('.hiddenRemarks').value;
 				document.getElementById('remark').value = input;
-				mainRow.querySelector('.badge').setAttribute('class','glyphicon glyphicon-ok');
 			}
 			else
 			{
 				document.getElementById('remark').value = "";
-				mainRow.querySelector('.badge').setAttribute('class','glyphicon glyphicon-ok');
 			}
 			var empName = mainRow.querySelector('.empName').innerHTML.trim();
 			var modal = document.getElementById('dito').innerHTML = "Remarks for " + empName;
@@ -524,8 +526,20 @@
 		// Transfer content to hidden input field
 		function saveRemarks(id) {
 			var mainRow = document.getElementById(id);
-			var remarks; = document.getElementById('remark').value;
+			var remarks = document.getElementById('remark').value;
 			var hiddenRemarks = mainRow.querySelector('.hiddenRemarks').setAttribute('value', remarks);
+
+			if(remarks!="")
+			{
+				alert("Time to add a badge here!");
+				alert(remarks);
+				mainRow.querySelector('.icon').setAttribute('class', 'glyphicon glyphicon-edit');
+			}
+			else
+			{
+				alert("Nothing to do!");
+				mainRow.querySelector('.icon').removeAttribute('class','glyphicon glyphicon-edit');
+			}
 
 		}
 
