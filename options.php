@@ -43,22 +43,22 @@ include('directives/db.php');
 						<td>Sunday</td>
 					</tr>
 					<tr>
-						<td><input type="text" placeholder="---" disabled id="Monday"></td>
-						<td><input type="text" placeholder="---" disabled id="Tuesday"></td>
-						<td><input type="text" placeholder="---" disabled id="Wednesday"></td>
-						<td><input type="text" placeholder="---" disabled id="Thursday"></td>
-						<td><input type="text" placeholder="---" disabled id="Friday"></td>
-						<td><input type="text" placeholder="---" disabled id="Saturday"></td>
-						<td><input type="text" placeholder="---" disabled id="Sunday"></td>
+						<td><input type="text" class="form-control" placeholder="---" disabled id="Monday"></td>
+						<td><input type="text" class="form-control" placeholder="---" disabled id="Tuesday"></td>
+						<td><input type="text" class="form-control" placeholder="---" disabled id="Wednesday"></td>
+						<td><input type="text" class="form-control" placeholder="---" disabled id="Thursday"></td>
+						<td><input type="text" class="form-control" placeholder="---" disabled id="Friday"></td>
+						<td><input type="text" class="form-control" placeholder="---" disabled id="Saturday"></td>
+						<td><input type="text" class="form-control" placeholder="---" disabled id="Sunday"></td>
 					</tr>
 					<tr>
-						<td><input type="checkbox" id="MondayBOX" onclick="triggerInput('Monday')"></td>
-						<td><input type="checkbox" id="TuesdayBOX" onclick="triggerInput('Tuesday')"></td>
-						<td><input type="checkbox" id="WednesdayBOX" onclick="triggerInput('Wednesday')"></td>
-						<td><input type="checkbox" id="ThursdayBOX" onclick="triggerInput('Thursday')"></td>
-						<td><input type="checkbox" id="FridayBOX" onclick="triggerInput('Friday')"></td>
-						<td><input type="checkbox" id="SaturdayBOX" onclick="triggerInput('Saturday')"></td>
-						<td><input type="checkbox" id="SundayBOX" onclick="triggerInput('Sunday')"></td>
+						<td><input type="checkbox" name="checkboxes[]" id="MondayBOX" onclick="triggerInput('Monday')"></td>
+						<td><input type="checkbox" name="checkboxes[]" id="TuesdayBOX" onclick="triggerInput('Tuesday')"></td>
+						<td><input type="checkbox" name="checkboxes[]" id="WednesdayBOX" onclick="triggerInput('Wednesday')"></td>
+						<td><input type="checkbox" name="checkboxes[]" id="ThursdayBOX" onclick="triggerInput('Thursday')"></td>
+						<td><input type="checkbox" name="checkboxes[]" id="FridayBOX" onclick="triggerInput('Friday')"></td>
+						<td><input type="checkbox" name="checkboxes[]" id="SaturdayBOX" onclick="triggerInput('Saturday')"></td>
+						<td><input type="checkbox" name="checkboxes[]" id="SundayBOX" onclick="triggerInput('Sunday')"></td>
 					</tr>
 				</table>
 				<div class="panel-body">
@@ -166,11 +166,36 @@ include('directives/db.php');
 				}
 
 				// Checking if 2 checkboxes are active
-				alert(document.querySelectorAll(':checked').length/2);
 				if(document.querySelectorAll(':checked').length/2 == 2)
 				{
-					alert(document.querySelectorAll(':unchecked'));
+					var checkboxes = document.getElementsByTagName("INPUT");
+  					var numOfChecks = checkboxes.length - 1;
+  					var type;
+ 
+				  for(var i = 0; i <= numOfChecks; i++){
+				    type = checkboxes[i].getAttribute("type");
+				    if(type=="checkbox" && checkboxes[i].checked == false)
+				      checkboxes[i].disabled=true;
+				  }
 				}
+
+				if(document.querySelectorAll(':checked').length/2 == 1)
+				{
+
+					var checkboxes = document.getElementsByTagName("INPUT");
+  					var numOfChecks = checkboxes.length - 1;
+  					var type;
+ 					
+ 					console.log("entered here" + numOfChecks);
+
+				  for(var i = 0; i <= numOfChecks; i++){
+				    type = checkboxes[i].getAttribute("type");
+				    if(type=="checkbox")
+				      checkboxes[i].disabled=false;
+				  }
+				}
+
+				
 
 			}
 
@@ -184,6 +209,8 @@ include('directives/db.php');
 				input.setAttribute('type', 'text');
 				input.setAttribute('placeholder', '---');
 				input.setAttribute('id', dayOfWeek);
+				input.setAttribute('class','form-control');
+				input.setAttribute('disabled', 'disabled');
 
 				// Reverting changes
 				cellUNCHECK.parentNode.replaceChild(input, cellUNCHECK);
