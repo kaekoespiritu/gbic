@@ -150,9 +150,9 @@ else
 									<button type='button' class='btn btn-default' onclick='Edit(\"".$search_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
 								</td>
 							</tr>";
-						}
+							}
 
-					}
+						}
 //--------site		
 
 					else if($_GET['site'] != "null")
@@ -170,100 +170,99 @@ else
 							while($PosEmp_row = mysql_fetch_assoc($position_query))
 							{
 								Print "	<tr>
-								<td>".$PosEmp_row['empid']."</td>
-								<td>".$PosEmp_row['firstname']." ".$PosEmp_row['lastname']."</td>
-								<td>".$PosEmp_row['position']."</td>
-								<td>".$PosEmp_row['site']."</td>
-								<td>
-									<button type='button' class='btn btn-default' onclick='Edit(\"".$PosEmp_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
-								</td>
-							</tr>";
+											<td>".$PosEmp_row['empid']."</td>
+											<td>".$PosEmp_row['firstname']." ".$PosEmp_row['lastname']."</td>
+											<td>".$PosEmp_row['position']."</td>
+											<td>".$PosEmp_row['site']."</td>
+											<td>
+												<button type='button' class='btn btn-default' onclick='Edit(\"".$PosEmp_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
+											</td>
+										</tr>";
+							}
 						}
-					}
-					else
-					{
-
-						$query = "SELECT * FROM employee WHERE site = '$siteReplaced' ORDER BY position";
-						$site_query = mysql_query($query);
-						while($site_row = mysql_fetch_assoc($site_query))
+						else
 						{
-							Print "	<tr>
-							<td>".$site_row['empid']."</td>
-							<td>".$site_row['firstname']." ".$site_row['lastname']."</td>
-							<td>".$site_row['position']."</td>
-							<td>".$site_row['site']."</td>
-							<td>
-								<button type='button' class='btn btn-default' onclick='Edit(\"".$site_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
-							</td>
-						</tr>";
-					}
-				}
 
-			} 
+							$query = "SELECT * FROM employee WHERE site = '$siteReplaced' ORDER BY position";
+							$site_query = mysql_query($query);
+							while($site_row = mysql_fetch_assoc($site_query))
+							{
+								Print "	<tr>
+											<td>".$site_row['empid']."</td>
+											<td>".$site_row['firstname']." ".$site_row['lastname']."</td>
+											<td>".$site_row['position']."</td>
+											<td>".$site_row['site']."</td>
+											<td>
+												<button type='button' class='btn btn-default' onclick='Edit(\"".$site_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
+											</td>
+										</tr>";
+							}
+						}
+
+					} 
 
 //--------position						
-			else if($_GET['position'] != "null")
-			{
-
-				$position = $_GET['position'];
-				$positionReplaced = str_replace('/+/', ' ', $position);
-				if($_GET['site'] != "null")
-				{
-
-					$site = $_GET['site'];
-					$siteReplaced = str_replace('/+/', ' ', $site);
-					$pos_query = "SELECT * FROM employee WHERE position = '$positionReplaced' AND site = '$siteReplaced' ORDER BY site";
-					$position_query = mysql_query($pos_query);
-					while($PosEmp_row = mysql_fetch_assoc($position_query))
+					else if($_GET['position'] != "null")
 					{
-						Print "	<tr>
-						<td>".$PosEmp_row['empid']."</td>
-						<td>".$PosEmp_row['firstname']." ".$PosEmp_row['lastname']."</td>
-						<td>".$PosEmp_row['position']."</td>
-						<td>".$PosEmp_row['site']."</td>
-						<td>
-							<button type='button' class='btn btn-default' onclick='Edit(\"".$PosEmp_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
-						</td>
-					</tr>";
-				}
-			}
 
-			else
-			{
-				$query = "SELECT * FROM employee WHERE position = '$positionReplaced' ORDER BY site";
-				$position_query = mysql_query($query);
-				while($position_row = mysql_fetch_assoc($position_query))
-				{
-					Print "	<tr>
-					<td>".$position_row['empid']."</td>
-					<td>".$position_row['firstname']." ".$position_row['lastname']."</td>
-					<td>".$position_row['position']."</td>
-					<td>".$position_row['site']."</td>
-					<td>
-						<button type='button' class='btn btn-default' onclick='Edit(\"".$position_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
-					</td>
-				</tr>";
-			}
-		}
-	}
+						$position = $_GET['position'];
+						$positionReplaced = str_replace('/+/', ' ', $position);
+						if($_GET['site'] != "null")
+						{
+
+							$site = $_GET['site'];
+							$siteReplaced = str_replace('/+/', ' ', $site);
+							$pos_query = "SELECT * FROM employee WHERE position = '$positionReplaced' AND site = '$siteReplaced' ORDER BY site";
+							$position_query = mysql_query($pos_query);
+							while($PosEmp_row = mysql_fetch_assoc($position_query))
+							{
+								Print "	<tr>
+											<td>".$PosEmp_row['empid']."</td>
+											<td>".$PosEmp_row['firstname']." ".$PosEmp_row['lastname']."</td>
+											<td>".$PosEmp_row['position']."</td>
+											<td>".$PosEmp_row['site']."</td>
+											<td>
+												<button type='button' class='btn btn-default' onclick='Edit(\"".$PosEmp_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
+											</td>
+										</tr>";
+							}
+						}
+
+						else
+						{
+							$query = "SELECT * FROM employee WHERE position = '$positionReplaced' ORDER BY site";
+							$position_query = mysql_query($query);
+							while($position_row = mysql_fetch_assoc($position_query))
+							{
+								Print "	<tr>
+											<td>".$position_row['empid']."</td>
+											<td>".$position_row['firstname']." ".$position_row['lastname']."</td>
+											<td>".$position_row['position']."</td>
+											<td>".$position_row['site']."</td>
+											<td>
+												<button type='button' class='btn btn-default' onclick='Edit(\"".$position_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
+											</td>
+										</tr>";
+							}
+						}
+					}
 //-------default
-	else
-	{
-
-		while($emp_row = mysql_fetch_assoc($emp_display))
-		{
-			Print "	<tr>
-			<td style='vertical-align: inherit'>".$emp_row['empid']."</td>
-			<td style='vertical-align: inherit'>".$emp_row ['firstname']." ".$emp_row['lastname']."</td>
-			<td style='vertical-align: inherit'>".$emp_row['position']."</td>
-			<td style='vertical-align: inherit'>".$emp_row['site']."</td>
-			<td>
-				<button type='button' class='btn btn-default' onclick='Edit(\"".$emp_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
-			</td>
-		</tr>";
-	}
-}
-?>
+					else
+					{
+						while($emp_row = mysql_fetch_assoc($emp_display))
+						{
+							Print "	<tr>
+										<td style='vertical-align: inherit'>".$emp_row['empid']."</td>
+										<td style='vertical-align: inherit'>".$emp_row ['firstname']." ".$emp_row['lastname']."</td>
+										<td style='vertical-align: inherit'>".$emp_row['position']."</td>
+										<td style='vertical-align: inherit'>".$emp_row['site']."</td>
+										<td>
+											<button type='button' class='btn btn-default' onclick='Edit(\"".$emp_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
+										</td>
+									</tr>";
+						}
+					}
+				?>
 </div>
 </table>
 </div>	
