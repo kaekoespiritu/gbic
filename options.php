@@ -141,11 +141,13 @@ include('directives/db.php');
 
 		function triggerInput(dayOfWeek)
 		{
+
 			if(document.getElementById(dayOfWeek+"BOX").checked==true)
 			{
+				var day = dayOfWeek+"BOX";
 				// Getting input field
-				var cellCHECK = document.getElementById(dayOfWeek);
-				
+				var cellCHECK = document.getElementById(day);
+				console.log(cellCHECK);
 				// Creating a select dropdown
 				var selectList = document.createElement("select");
 				selectList.setAttribute("id", dayOfWeek);
@@ -165,40 +167,38 @@ include('directives/db.php');
 				    selectList.appendChild(option);
 				}
 
+				console.log("Number of checks: " + document.querySelectorAll(':checked').length);
 				// Checking if 2 checkboxes are active
-				if(document.querySelectorAll(':checked').length/2 == 2)
+				if(document.querySelectorAll(':checked').length == 2)
 				{
 					var checkboxes = document.getElementsByTagName("INPUT");
-  					var numOfChecks = checkboxes.length - 1;
-  					var type;
  
-				  for(var i = 0; i <= numOfChecks; i++){
-				    type = checkboxes[i].getAttribute("type");
-				    if(type=="checkbox" && checkboxes[i].checked == false)
-				      checkboxes[i].disabled=true;
+				  for(var i = 0; i <= checkboxes; i++)
+				  {
+				    if(checkboxes[i].type=="checkbox" && checkboxes[i].checked == false)
+				    checkboxes[i].disabled=true;
 				  }
 				}
-
-				if(document.querySelectorAll(':checked').length/2 == 1)
+				else if(document.querySelectorAll(':checked').length/2 == 1)
 				{
 
 					var checkboxes = document.getElementsByTagName("INPUT");
-  					var numOfChecks = checkboxes.length - 1;
-  					var type;
- 					
- 					console.log("entered here" + numOfChecks);
 
-				  for(var i = 0; i <= numOfChecks; i++){
-				    type = checkboxes[i].getAttribute("type");
-				    if(type=="checkbox")
-				      checkboxes[i].disabled=false;
-				  }
+					for(var i = 0; i <= checkboxes; i++)
+					{
+					    
+					    if(checkboxes[i].type=="checkbox" && checkboxes[i].hasAttribute("disabled")==true)
+					    {
+					    	checkboxes[i].disabled=false;	
+					    	checkboxes[i].checked=false;
+					    }
+					    
+					  	console.log("lalala  "+checkboxes[i]);
+					  }
 				}
-
-				
-
 			}
 
+			// Revert dropdown to input
 			if(document.getElementById(dayOfWeek+"BOX").checked==false)
 			{
 				// Getting select dropdown

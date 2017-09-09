@@ -23,14 +23,10 @@
 	<!-- ATTENDANCE BUTTON -->
 	<div id="attendance" class="col-md-1 navibutton">
 	<div class="flipdown">
-		<a href="attendance.php" class="flipbtn">
+		<a href="attendance.php">
 			<img src="Images/attendance.png" class="center-block">
-			<h6 class="text-center">ATTENDANCE<span class="caret" style="position:absolute; right:3px; bottom:19px"></span></h6>
+			<h6 class="text-center">ATTENDANCE</h6>
 		</a>
-		<div class="flipdown-menu">
-			<a href="sundaypay.php">Sunday attendance</a>
-			<a href="holidaypay.php">Holiday attendance</a>
-		</div>
 	</div>
 	</div>
 	<!-- PAYROLL BUTTON -->

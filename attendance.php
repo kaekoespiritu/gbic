@@ -39,14 +39,15 @@ include('directives/session.php');
 	<div class="row pull-down">
 		<div class="row">
 			<div class="col-md-4 col-md-offset-2" style="border-right: 1px solid black;">
-				<h2><?php 
+				<h2 id='holidayTitle'><?php 
 						if($day == "Sunday")
 							Print "Sunday attendance log";
 						else
 							Print "Daily attendance log";
 					?>
 				</h2>
-				<div class="col-md-6 col-md-offset-3 pull-down">
+				<br>
+				<div class="col-md-6 col-md-offset-3">
 					<form>
 					
 						<input name="txt_attendance" type="text" size="10" class="form-control" value = <?
@@ -61,6 +62,13 @@ include('directives/session.php');
 						Print '""';
 					}
 					?> id="dtpkr_attendance" placeholder="mm-dd-yyyy" required>
+					<br>
+					<div id="dynamicForm">
+					<button id="holiday" class="btn btn-primary" onclick="Holiday(this)">Holiday?</button>
+					<input type="hidden" id="holidayName">
+					<input type="hidden" id="holidayType">
+					</div>
+
 					</form>
 				</div>
 			</div>
@@ -224,7 +232,105 @@ include('directives/session.php');
 		window.location.assign("print_all_employee.php");
 	}
 
+	function Holiday(element)
+	{
+		/** CREATING THE FORM **/
+		// Instantiating fields
+		var nameOfHoliday = document.createElement("input");
+			nameOfHoliday.setAttribute("type", "text");
+			nameOfHoliday.setAttribute("class", "form-control");
+			nameOfHoliday.setAttribute("placeholder", "Enter holiday name");
+			nameOfHoliday.setAttribute("onkeypress", "txtHoliday(event)");
+			nameOfHoliday.setAttribute("id", "nameOfHoliday");
+
+		var cancelButton = document.createElement("button");
+			cancelButton.setAttribute("class", "btn btn-danger btn-sm pull-down");
+			cancelButton.setAttribute("id", "cancel");
+			cancelButton.innerHTML = "Cancel";
+
+		// Replacing button with input field
+		element.parentNode.replaceChild(nameOfHoliday, document.getElementById('holiday'));
+
+		// Adding cancel button
+		document.getElementById('dynamicForm').appendChild(cancelButton);
+
+
+		/** FUNCTIONS **/
+		
+
+	}
+	
+	function txtHoliday(e)
+	{
+		// Adding labels for radio buttons
+		var regularLabel = document.createElement("label");
+		regularLabel.setAttribute("class", "radio-inline");
+		regularLabel.setAttribute("for", "regular");
+		regularLabel.innerHTML = "<input type='radio' id='regular' name='holidays' onclick='titleHoliday(this)'> Regular";
+		
+		var specialLabel = document.createElement("label");
+		specialLabel.setAttribute("class", "radio-inline");
+		specialLabel.setAttribute("for", "special");
+		specialLabel.innerHTML = "<input type='radio' id='special' name='holidays' onclick='titleHoliday(this)'> Special";
+
+		// Transferring saved value to hidden input
+		var name = document.getElementById('holidayName');
+
+		// Checking if user pressed ENTER
+		if(e.keyCode === 13 || e.which === 13)
+		{
+			e.preventDefault();
+			name.setAttribute("value",document.getElementById('nameOfHoliday').value);
+
+			// Instantiaing fields
+			var form = document.getElementById('dynamicForm');
+			var inputField = document.getElementById('nameOfHoliday');
+			var cancel = document.getElementById('cancel');
+			var cancelButton = document.createElement("button");
+				cancelButton.setAttribute("class", "btn btn-danger btn-sm pull-down");
+				cancelButton.setAttribute("id", "cancel");
+				cancelButton.innerHTML = "Cancel";
+
+			// Removing previous form
+			form.removeChild(inputField);
+			form.removeChild(cancel);
+
+			// Adding labels
+			form.appendChild(regularLabel);
+			form.appendChild(specialLabel);
+
+			document.getElementById('dynamicForm').appendChild(cancelButton);
+		}
+	}
+
+	function titleHoliday(e)
+	{
+		var specialHoliday = document.getElementById('special');
+		var regularHoliday = document.getElementById('regular');
+		var holidayTitle = document.getElementById('holidayTitle');
+		var name = document.getElementById('holidayName').value;
+		var type = document.getElementById('holidayType');
+
+		/* FUNCTIONS */
+		if(regular.checked == true || special.checked == true)
+		{
+			holidayTitle.innerHTML = name + " attendance log";
+			
+			if(regular.checked == true)
+			{
+				type.setAttribute("value", "regular");
+			}
+			else
+			{
+				type.setAttribute("value", "special");
+			}
+		}
+		
+	}
+
 	fittext();
+
+
 </script>
 </body>
 </html>
