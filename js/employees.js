@@ -300,3 +300,5 @@ else
 window.location.assign("employees.php?site=null&position=null&search="+localStorage.getItem("search"));
 
 }
+
+

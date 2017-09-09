@@ -3,6 +3,15 @@
 include('directives/db.php');
 include('directives/session.php');
   date_default_timezone_set('Asia/Hong_Kong');
+  if(isset($_SESSION['date']))
+	{
+		$date = $_SESSION['date'];
+	}
+	else
+	{
+		$date = strftime("%B %d, %Y");
+	}
+	$day = date('l', strtotime($date));
 ?>
 <html>
 <head>
@@ -30,7 +39,13 @@ include('directives/session.php');
 	<div class="row pull-down">
 		<div class="row">
 			<div class="col-md-4 col-md-offset-2" style="border-right: 1px solid black;">
-				<h2>Daily attendance log</h2>
+				<h2><?php 
+						if($day == "Sunday")
+							Print "Sunday attendance log";
+						else
+							Print "Daily attendance log";
+					?>
+				</h2>
 				<div class="col-md-6 col-md-offset-3 pull-down">
 					<form>
 					
