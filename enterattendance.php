@@ -16,6 +16,16 @@
 	{
 		header("location:enterattendance.php?site=".$site_name."&position=null");
 	}
+	if(isset($_SESSION['holidayDate']))
+	{
+		if($_SESSION['holidayDate'] == $date)
+		{
+			$holidayType = $_SESSION['holidayType']; 
+			$holidayName = $_SESSION['holidayName'];
+			Print "<script>alert('".$holidayType."')</script>";
+			Print "<script>alert('".$holidayName."')</script>";
+		}
+	}
 
 	$day = date('l', strtotime($date));
 
@@ -153,5 +163,31 @@
 	<script src="js/timepicker/jquery.timepicker.min.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script src="js/enterAttendance.js"></script>
+	<script>
+	// Clear Filter
+	function clearFilter() {
+		window.location.assign("enterattendance.php?site=<?php Print $site_name ?>&position=null");
+	}
+		// Position Filter 
+	function position() {
+		if(document.URL.match(/position=([0-9]+)/))
+		{
+			var arr = document.URL.match(/position=([0-9]+)/)
+			var positionUrl = arr[1];
+			if(positionUrl)
+			{
+				localStorage.setItem("counter", 0);
+			}
+			else if(localStorage.getItem('counter') > 2)
+			{
+				localStorage.clear();
+			}
+		}
+		var position = document.getElementById("position").value;
+		var positionReplaced = position.replace(/\s/g , "+");
+		localStorage.setItem("glob_position", positionReplaced);
+		window.location.assign("enterattendance.php?site=<?php Print $site_name ?>&position="+positionReplaced);
+	}
+	</script>
 </body>
 </html>

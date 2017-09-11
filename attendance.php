@@ -12,6 +12,17 @@ include('directives/session.php');
 		$date = strftime("%B %d, %Y");
 	}
 	$day = date('l', strtotime($date));
+	$holiday = "SELECT * FROM holiday WHERE date = '$date'";
+	$holidayQuery = mysql_query($holiday);
+	if($holidayQuery)
+	{
+		$holidayNum = mysql_num_rows($holidayQuery);
+	}
+	//Print "<script>alert('Name: ". $_SESSION['holidayName'] ."/ Type: ". $_SESSION['holidayType'] ."')</script>";
+	// if(isset($_SESSION['holidayName']) && isset($_SESSION['holidayType']))
+	// {
+	// 	Print "<script>alert('Name: ". $_SESSION['holidayName'] ."/ Type: ". $_SESSION['holidayType'] ."')</script>";
+	// }
 ?>
 <html>
 <head>
@@ -39,18 +50,99 @@ include('directives/session.php');
 	<div class="row pull-down">
 		<div class="row">
 			<div class="col-md-4 col-md-offset-2" style="border-right: 1px solid black;">
-				<h2 id='holidayTitle'><?php 
-						if($day == "Sunday")
+				<h2 id='holidayTitle'>
+					<?php 
+						if($holidayNum != 0)
+						{
+								//Print "<script>alert('dsad')</script>";
+								$holidayRow = mysql_fetch_assoc($holidayQuery);
+								$_SESSION['holidayName'] = $holidayRow['holiday'];
+								$_SESSION['holidayDate'] = $holidayRow['date'];
+								$_SESSION['holidayType'] = $holidayRow['type'];
+								$holidayName = $holidayRow['holiday'];
+								$holidayType = $holidayRow['type'];
+								Print  $holidayName . " attendance log";
+						}
+						else if(isset($_POST['holidaySubmit']))
+						{
+							//Print "<script>alert('lalalal')</script>";
+							$holidayName = $_POST['holidayName'];
+							$holidayType = $_POST['holidayType'];
+							//Print "<script>alert('". $holidayType ."')</script>";
+							//Print "<script>alert('". $holidayName ."')</script>";
+							if(isset($_SESSION['holidayName']) && isset($_SESSION['holidayType']))
+							{
+								//Print "<script>alert('1')</script>";
+								if($_SESSION['holidayName'] !== $holidayName)
+								{
+									//Print "<script>alert('2')</script>";
+									$_SESSION['holidayName'] = $holidayName;
+								}
+								else
+								{
+									//Print "<script>alert('3')</script>";
+									$holidayName = $_SESSION['holidayName'];
+								}
+								if($_SESSION['holidayType'] !== $holidayType)
+								{
+									//Print "<script>alert('4')</script>";
+									$_SESSION['holidayType'] = $holidayType;
+								}
+								else
+								{
+									//Print "<script>alert('5')</script>";
+									$holidayType = $_SESSION['holidayType'];
+								}
+							}
+							else
+							{	
+								//Print "<script>alert('6')</script>";
+								$_SESSION['holidayName'] = $holidayName;
+								$_SESSION['holidayType'] = $holidayType;
+								$_SESSION['holidayDate'] = $date;
+ 								//Print "<script>alert('session ". $_SESSION['holidayName'] ."')</script>";
+								//Print "<script>alert('session ". $_SESSION['holidayType'] ."')</script>";
+								
+
+							}
+							
+
+							Print  $holidayName . " attendance log";
+						}
+						else if(isset($_SESSION['holidayName']) && isset($_SESSION['holidayType']))
+						{
+
+							if($_SESSION['holidayDate'] == $date)
+							{
+
+								$holidayName = $_SESSION['holidayName'];
+								Print  $holidayName . " attendance log";
+							}
+							else if($day == "Sunday")
+							{
+								Print "Sunday attendance log";
+							}
+							else
+							{
+								Print "Daily attendance log";
+							}
+							
+						}
+						else if($day == "Sunday")
+						{
 							Print "Sunday attendance log";
+						}
 						else
+						{
 							Print "Daily attendance log";
+						}
 					?>
 				</h2>
 				<br>
 				<div class="col-md-6 col-md-offset-3">
 					<form>
 					
-						<input name="txt_attendance" type="text" size="10" class="form-control" value = <?
+						<input name="txt_attendance" type="text" size="10" class="form-control" value = <?php
 					if(isset($_SESSION['date']))
 					{
 						$date = $_SESSION['date'];
@@ -64,11 +156,95 @@ include('directives/session.php');
 					?> id="dtpkr_attendance" placeholder="mm-dd-yyyy" required>
 					<br>
 					<div id="dynamicForm">
-					<button id="holiday" class="btn btn-primary" onclick="Holiday(this)">Holiday?</button>
-					<input type="hidden" id="holidayName">
-					<input type="hidden" id="holidayType">
-					</div>
+					<?php 
+						if(isset($_SESSION['holidayName']) && isset($_SESSION['holidayType']))
+						{
+							if($_SESSION['holidayDate'] == $date)
+							{
+								if($_SESSION['holidayType'] == "regular")
+								{
+									Print "<h4>Regular Holiday</h4>";
+								}
+								else
+								{
+									Print "<h4>Special Holiday</h4>";
+								}//dito
+								Print "	<button type='button' class='btn btn-danger btn-sm pull-down' onclick='cancelHoliday()' id='cancel'>
+										Cancel
+									</button>";	
+							}
+							//Print "<script>alert('lololo')</script>";
+							// else if($_SESSION['holidayType'] == "regular")
+							// {
+							// 	//Print "<script>alert('Regular')</script>";
+							// 	Print "<h4>Regular Holiday</h4>";	
+							// 	Print "	<button type='button' class='btn btn-danger btn-sm pull-down' onclick='cancelHoliday()' id='cancel'>
+							// 			Cancel
+							// 		</button>";	
+							// }
+							// else if ($_SESSION['holidayType'] == "special")
+							// {
+							// 	//Print "<script>alert('Special')</script>";
+							// 	Print "<h4>Special Holiday</h4>";
+							// 	Print "	<button type='button' class='btn btn-danger btn-sm pull-down' onclick='cancelHoliday()' id='cancel'>
+							// 			Cancel
+							// 		</button>";	
 
+							// }
+							else
+							{
+								Print "<button id='holiday' class='btn btn-primary' onclick='Holiday(this)'>Holiday?</button>";
+							}
+							
+						}
+						else
+						{
+							Print "<button id='holiday' class='btn btn-primary' onclick='Holiday(this)'>Holiday?</button>";
+						}
+					?>	
+					</div>
+					
+					</form>
+					<form method = "post" id="holidayForm" action = "">
+						<?php
+							if(isset($_SESSION['holidayDate']))
+							{
+								if($_SESSION['holidayDate'] == $date)
+								{
+									if(isset($_SESSION['holidayName']))
+									{	
+										//Print "<script>alert('beng')</script>";
+										Print "<input type='hidden' id='holidayName' value='".$_SESSION['holidayName']."'name='holidayName'>";
+									}
+									else
+									{
+										Print "<input type='hidden' id='holidayName' name='holidayName'>";
+									}
+									if(isset($_SESSION['holidayType']))
+									{
+										//Print "<script>alert('boom')</script>";
+										Print "<input type='hidden' id='holidayType' value='".$_SESSION['holidayType']."'name='holidayType'>";
+									}
+									else
+									{
+										Print "<input type='hidden' id='holidayType' name='holidayType'>";
+									}
+								}
+								else if(isset($_SESSION['holidayType']) && isset($_SESSION['holidayName']))
+								{
+									Print "<input type='hidden' id='holidayName' value='".$_SESSION['holidayName']."' name='holidayName'>";
+									Print "<input type='hidden' id='holidayType' value='".$_SESSION['holidayType']."' name='holidayType'>";
+								}
+							}
+							else
+							{
+								Print "<input type='hidden' id='holidayName' name='holidayName'>";
+								Print "<input type='hidden' id='holidayType' name='holidayType'>";
+							}
+
+		
+						?>
+						<input type='hidden' name='holidaySubmit'>
 					</form>
 				</div>
 			</div>
@@ -153,7 +329,8 @@ include('directives/session.php');
 	?>
 </div>
 </div>
-
+<div id="forPHP">
+</div>
 
 <!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 <script rel="javascript" src="js/jquery.min.js"></script>
@@ -203,6 +380,9 @@ include('directives/session.php');
    // 												//alert("data sent and received: "+date);
 			// 								});
 		});
+		$( "#cancel").on("click",function(){
+			window.location.href = "attendance_unset.php";
+		});
 		
 	});
 
@@ -231,7 +411,27 @@ include('directives/session.php');
 	{
 		window.location.assign("print_all_employee.php");
 	}
-
+	function cancelHoliday()
+	{
+		//alert('pasok');
+		document.getElementById('dynamicForm').innerHTML = "<button id='holiday' class='btn btn-primary' onclick='Holiday(this)'>Holiday?</button>";
+		document.getElementById('holidayType').value = "";
+		document.getElementById('holidayName').value = "";
+		var sunday = "<?php Print $day ?>";
+		if(sunday == "Sunday")
+		{
+			
+			document.getElementById('holidayTitle').innerHTML = "Sunday attendance log";
+		}
+		else
+		{
+			
+			document.getElementById('holidayTitle').innerHTML = "Daily attendance log";
+		}
+			// document.getElementById('forPHP').innerHTML = 	"<?php 	//unset($_SESSION['holidayType']);
+			// 														unset($_SESSION['holidayName']);
+			// 												?>";
+	}
 	function Holiday(element)
 	{
 		/** CREATING THE FORM **/
@@ -246,6 +446,7 @@ include('directives/session.php');
 		var cancelButton = document.createElement("button");
 			cancelButton.setAttribute("class", "btn btn-danger btn-sm pull-down");
 			cancelButton.setAttribute("id", "cancel");
+			cancelButton.setAttribute("onclick", "cancelHoliday()");
 			cancelButton.innerHTML = "Cancel";
 
 		// Replacing button with input field
@@ -289,6 +490,7 @@ include('directives/session.php');
 			var cancelButton = document.createElement("button");
 				cancelButton.setAttribute("class", "btn btn-danger btn-sm pull-down");
 				cancelButton.setAttribute("id", "cancel");
+				cancelButton.setAttribute("onclick", "cancelHoliday()");
 				cancelButton.innerHTML = "Cancel";
 
 			// Removing previous form
@@ -312,25 +514,44 @@ include('directives/session.php');
 		var type = document.getElementById('holidayType');
 
 		/* FUNCTIONS */
-		if(regular.checked == true || special.checked == true)
+		if(regularHoliday.checked == true || specialHoliday.checked == true)
 		{
 			holidayTitle.innerHTML = name + " attendance log";
-			
-			if(regular.checked == true)
+			//alert('yow1');
+			if(regularHoliday.checked == true)
 			{
+				//document.getElementById('regular').checked = false;
+				//alert('yow');
+				
 				type.setAttribute("value", "regular");
+				document.getElementById('holidayForm').submit();
+				//special.checked = false;
 			}
-			else
+			else if(specialHoliday.checked == true)
 			{
+				//document.getElementById('special').checked = false;
+				//alert('yeah');
+				
 				type.setAttribute("value", "special");
+				document.getElementById('holidayForm').submit();
+				// special.checked = false;
 			}
+			// if(bool == false)
+			// {
+			// 	
+			// 	//
+			// }
+			// else
+			// {
+			// 	
+			// 	d//ocument.getElementById('holidayForm').submit();
+			// }
 		}
-		
 	}
 
 	fittext();
-
-
 </script>
+
+	
 </body>
 </html>

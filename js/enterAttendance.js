@@ -27,30 +27,7 @@ document.getElementById("attendance").setAttribute("style", "background-color: #
 	});
 
 	
-	// Clear Filter
-	function clearFilter() {
-		window.location.assign("enterattendance.php?site=<?php Print $site_name ?>&position=null");
-	}
-	// Position Filter 
-	function position() {
-		if(document.URL.match(/position=([0-9]+)/))
-		{
-			var arr = document.URL.match(/position=([0-9]+)/)
-			var positionUrl = arr[1];
-			if(positionUrl)
-			{
-				localStorage.setItem("counter", 0);
-			}
-			else if(localStorage.getItem('counter') > 2)
-			{
-				localStorage.clear();
-			}
-		}
-		var position = document.getElementById("position").value;
-		var positionReplaced = position.replace(/\s/g , "+");
-		localStorage.setItem("glob_position", positionReplaced);
-		window.location.assign("enterattendance.php?site=<?php Print $site_name ?>&position="+positionReplaced);
-	}
+
 
 
 	//Submit the form

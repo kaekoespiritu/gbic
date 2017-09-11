@@ -16,6 +16,39 @@ else
 $day = date('l', strtotime($date));// This gets the day of the week
 $sunday = 1;//Pre-sets the value of Sunday to the database
 
+// Holiday
+if(isset($_SESSION['holidayDate']))
+{
+	if($_SESSION['holidayDate'] == $date)
+	{
+		$holidayName = $_SESSION['holidayName'];
+		$holidayType = $_SESSION['holidayType'];
+		$holidayDate = $_SESSION['holidayDate'];
+		Print "<script>alert('".$holidayType."')</script>";
+		
+		$holidayChecker = "SELECT * FROM holiday WHERE date = '$holidayDate'";
+		$holidayCheckerQuery = mysql_query($holidayChecker);
+		if($holidayCheckerQuery)
+		{
+			$holidayCheckernum = mysql_num_rows($holidayCheckerQuery);
+			if($holidayCheckernum < 1)
+			{
+				$holiday = "INSERT INTO holiday(holiday, date, type) VALUES('$holidayName','$holidayDate','$holidayType')";
+				$holidayQuery = mysql_query($holiday);
+			}
+		}
+	}
+	else
+	{
+		$holidayDate = 0;
+	} 
+}
+else
+{
+	$holidayDate = 0;
+}
+
+
 $site = "SELECT * FROM employee WHERE site = '$location'";
 
 $siteQuery = mysql_query($site);
@@ -137,7 +170,7 @@ if(!empty($dateRows))// Updating attendance
 			$position = $employeeArr['position'];
 			
 			
-			$AttQuery = updateQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery);
+			$AttQuery = updateQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 			
 		}
 		else if($_POST['attendance'][$counter] == "ABSENT")// ABSENT
@@ -158,7 +191,7 @@ if(!empty($dateRows))// Updating attendance
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
 			//require "directives/attendance/attendance_query.php";
-			$AttQuery = updateQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery);
+			$AttQuery = updateQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 		
 
 		}
@@ -180,7 +213,7 @@ if(!empty($dateRows))// Updating attendance
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
 			//require "directives/attendance/attendance_query.php";
-			$AttQuery = updateQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery);
+			$AttQuery = updateQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 									  	
 		}
 
@@ -286,7 +319,7 @@ else// NEW attendance
 			$position = $employeeArr['position'];
 			
 			
-			$AttQuery = newQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery);
+			$AttQuery = newQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 			
 			
 			
@@ -307,7 +340,7 @@ else// NEW attendance
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
 			//require "directives/attendance/attendance_query.php";
-			$AttQuery = newQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery);
+			$AttQuery = newQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 			
 		}
 		else if(empty($_POST['attendance'][$counter]))
@@ -326,7 +359,7 @@ else// NEW attendance
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
 			//require "directives/attendance/attendance_query.php";
-			$AttQuery = newQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery);
+			$AttQuery = newQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 		
 		}
 	}
