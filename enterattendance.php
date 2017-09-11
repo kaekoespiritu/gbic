@@ -22,8 +22,8 @@
 		{
 			$holidayType = $_SESSION['holidayType']; 
 			$holidayName = $_SESSION['holidayName'];
-			Print "<script>alert('".$holidayType."')</script>";
-			Print "<script>alert('".$holidayName."')</script>";
+			//Print "<script>alert('".$holidayType."')</script>";
+			//Print "<script>alert('".$holidayName."')</script>";
 		}
 	}
 

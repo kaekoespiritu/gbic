@@ -24,7 +24,7 @@ if(isset($_SESSION['holidayDate']))
 		$holidayName = $_SESSION['holidayName'];
 		$holidayType = $_SESSION['holidayType'];
 		$holidayDate = $_SESSION['holidayDate'];
-		Print "<script>alert('".$holidayType."')</script>";
+		//Print "<script>alert('".$holidayType."')</script>";
 		
 		$holidayChecker = "SELECT * FROM holiday WHERE date = '$holidayDate'";
 		$holidayCheckerQuery = mysql_query($holidayChecker);
@@ -217,7 +217,7 @@ if(!empty($dateRows))// Updating attendance
 									  	
 		}
 
-		Print "<script>alert('". $AttQuery ."')</script>";
+		//Print "<script>alert('". $AttQuery ."')</script>";
 		mysql_query($AttQuery);//query
 	}
 }
@@ -235,7 +235,8 @@ else// NEW attendance
 												attendance,
 												date,
 												site,
-												sunday) VALUES";//ADD HOLIDAY HERE
+												sunday,
+												holiday) VALUES";//ADD HOLIDAY HERE
 	$AttQuery = "";
 	for($counter = 0; $counter < $empNum; $counter++)
 	{
@@ -363,9 +364,9 @@ else// NEW attendance
 		
 		}
 	}
-	Print "<script>alert('".$AttQuery."')</script>";
+	//Print "<script>alert('".$AttQuery."')</script>";
 	$FinalQuery = $initialQuery . $AttQuery;
-	Print "<script>alert('".$FinalQuery."')</script>";
+	//Print "<script>alert('".$FinalQuery."')</script>";
 	$queryAttendance = mysql_query($FinalQuery);
 }
 

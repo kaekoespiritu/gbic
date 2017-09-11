@@ -39,7 +39,9 @@
 		}
 		else
 		{
-			$AttQuery = "UPDATE attendance SET 	empid='".$empid."',
+			if($attendance == 2)
+			{
+				$AttQuery = "UPDATE attendance SET 	empid='".$empid."',
 											  	position= '".$position."',
 											  	timein= '".$timein."',
 											  	timeout='".$timeout."',
@@ -53,6 +55,24 @@
 											  	site='".$location."',
 											  	sunday='0',
 											  	holiday='".$holidayDate."' WHERE date = '$date' AND empid = '$empid'";
+			}
+			else
+			{
+				$AttQuery = "UPDATE attendance SET 	empid='".$empid."',
+												  	position= '".$position."',
+												  	timein= '".$timein."',
+												  	timeout='".$timeout."',
+												  	workhours='".$workinghrs."',
+												  	overtime='".$OtHrs."',
+												  	undertime='".$undertime."',
+												 	nightdiff='".$nightdiff."',
+												  	remarks='".$remarks."',
+												  	attendance='".$attendance."',
+												  	date='".$date."',
+												  	site='".$location."',
+												  	sunday='0',
+												  	holiday='0' WHERE date = '$date' AND empid = '$empid'";
+			}
 		}
 		Print "<script>alert('".$AttQuery."')</script>";
 		return $AttQuery;
@@ -92,24 +112,44 @@
 					  '".$date."',
 					  '".$location."',
 					  '0',
-					  '".$holidayDate."')";
+					  '0')";
 		}
 		else
 		{
-			$AttQuery .= "('".$empid."',
-					  '".$position."',
-					  '".$timein."',
-					  '".$timeout."',
-					  '".$workinghrs."',
-					  '".$OtHrs."',
-					  '".$undertime."',
-					  '".$nightdiff."',
-					  '".$remarks."',
-					  '".$attendance."',
-					  '".$date."',
-					  '".$location."',
-					  '0',
-					  '".$holidayDate."')";
+			if($attendance == 2)
+			{
+				$AttQuery .= "('".$empid."',
+						  '".$position."',
+						  '".$timein."',
+						  '".$timeout."',
+						  '".$workinghrs."',
+						  '".$OtHrs."',
+						  '".$undertime."',
+						  '".$nightdiff."',
+						  '".$remarks."',
+						  '".$attendance."',
+						  '".$date."',
+						  '".$location."',
+						  '0',
+						  '".$holidayDate."')";
+			}
+			else
+			{
+				$AttQuery .= "('".$empid."',
+						  '".$position."',
+						  '".$timein."',
+						  '".$timeout."',
+						  '".$workinghrs."',
+						  '".$OtHrs."',
+						  '".$undertime."',
+						  '".$nightdiff."',
+						  '".$remarks."',
+						  '".$attendance."',
+						  '".$date."',
+						  '".$location."',
+						  '0',
+						  '0')";
+			}
 		}
 		Print "<script>alert('".$AttQuery."')</script>";
 
