@@ -32,17 +32,19 @@ else
 			<ol class="breadcrumb text-left">
 				<li><a href="employees.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a></li>
 				<li class="active">Loan Applications</li>
+				<button class="btn btn-success pull-right" onclick="saveChanges()">Save changes</button>
 			</ol>
 			</div>
-				<div class="col-md-4 col-md-offset-1">
+				<div class="col-md-3 col-md-offset-1">
 					<div class="">
 						<form method="post" action="" id="search_form">
 							<input type="text" class="form-control" name="search" placeholder="Search" onkeypress="enter(enter)"">
 						</form>
 					</div>
+
 				</div>
 				<!-- FILTER EMPLOYEE BY POSITION -->
-				<div class="col-md-5 col-md-pull-1 text-right">
+				<div class="col-md-7 text-right">
 					Filter by:
 					<div class="btn-group">
 						<select class="form-control" id="position" onchange="position()">
@@ -89,20 +91,18 @@ else
 							?>
 						</select>
 					</div>
-				</div>
-				<div class="col-md-1 col-md-pull-1 text-right">
 					<button type="button" class="btn btn-danger" onclick="clearFilter()">Clear Filters</button>
-					<button class="btn btn-primary" onclick="saveChanges()">Save changes</button>
 				</div>
 			</div>
-
+			<br>
 		<!-- EMPLOYEE TABLE -->
-		<div class="row pull-down">
+		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
+			<form class="form-inline">
 				<table class="table table-bordered table-condensed" style="background-color:white;">
 					<tr>
-						<td>ID</td>
-						<td>Name</td>
+						<td style='width:130px !important;'>ID</td>
+						<td style='width:200px !important;'>Name</td>
 						<td>Position</td>
 						<td>Site</td>
 						<td colspan="3">Loans</td>
@@ -154,29 +154,33 @@ else
 						while($row = mysql_fetch_assoc($empQuery))
 						{
 							Print "	<tr>
-										<td>". $row['empid'] ."</td>
-										<td>". $row['lastname'] .", ". $row['firstname'] ."</td>
-										<td>". $row['position'] ."</td>
-										<td>". $row['site'] ."</td>
-										<td>
-											<input type='checkbox' onchange='triggerSSS()'/> 
-												SSS 
-											<input type='text' id='sss' name='sss[]' disabled='disabled'/>
+										<td style='vertical-align: inherit'>". $row['empid'] ."</td>
+										<td style='vertical-align: inherit'>". $row['lastname'] .", ". $row['firstname'] ."</td>
+										<td style='vertical-align: inherit'>". $row['position'] ."</td>
+										<td style='vertical-align: inherit'>". $row['site'] ."</td>
+										<td style='vertical-align: inherit'>
+											<div class='form-group'>
+											<label for='sss'>SSS</label>
+											<input type='text' id='sss' name='sss[]' class='form-control input-sm'/>
+											</div>
 										</td>
 										<td>
-											<input type='checkbox' onchange='triggerPagIBIG()'/> 
-												Pag-IBIG 
-											<input type='text' id='philhealth' name='philhealth[]' disabled='disabled'/>
+											<div class='form-group'>
+											<label for='pagibig'>Pag-IBIG</label>
+											<input type='text' id='pagibig' name='pagibig[]' class='form-control input-sm'/>
+											</div>
 										</td>
 										<td>
-											<input type='checkbox' onchange='triggerVale()'/> 
-												Vale 
-											<input type='text' id='pagibig' name='pagibig[]' disabled='disabled'/>
+											<div class='form-group'>
+											<label for='vale'>Vale</label>
+											<input type='text' id='vale' name='vale[]' class='form-control input-sm'/>
+											</div>
 										</td>
 									</tr>";
 						}
 					?>
 				</table>
+				</form>
 			</div>	
 		</div>
 

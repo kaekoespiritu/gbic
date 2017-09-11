@@ -31,7 +31,7 @@
 	<link rel="stylesheet" href="js/timepicker/jquery.timepicker.min.css">
 
 </head>
-<body style="font-family: Quicksand">
+<body style="font-family: QuicksandMed">
 	<div class="container-fluid">
 		<!-- NAVIGATION BAR -->
 		<?php
@@ -57,8 +57,6 @@
 			</div>
 
 			<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
-		<div class="container">
-			<div class="row">
 				<div class="col-md-3 col-md-offset-1">
 					<form method="post" action="" id="search_form">
 						<div class="form-group">
@@ -67,7 +65,7 @@
 					</form>
 				</div>
 				<!-- FILTER EMPLOYEE BY POSITION -->
-				<div class="col-md-6 text-right">
+				<div class="col-md-5 pull-right">
 					Filter by:
 					<!-- POSITION DROPDOWN -->
 					<div class="btn-group">
@@ -95,22 +93,17 @@
 					</div>
 					<!-- END OF POSITION DROPDOWN -->
 					
-					
+					<button type="button" class="btn btn-danger" onclick="clearFilter()">Clear Filter</button>
 				</div>
 				<!-- ACTION BUTTONS FOR FILTERS -->
-				<div class="col-md-1">
-					<button type="button" class="btn btn-danger" onclick="clearFilter()">Clear Filters</button>
-				</div>
 				<!-- END OF ACTION BUTTONS FOR FILTERS-->
-			</div>
-		</div>
 			
 			<!-- Attendance table -->
 			<form id="form" method="post" action="logic_attendance.php?site=<?php Print $site_name;?>">
 		<div class="col-md-10 col-md-offset-1">
 			<table class="table table-condensed table-bordered" style="background-color:white;">
 				<tr>
-					<td>Name</td>
+					<td style='width:200px !important;'>Name</td>
 					<td>Position</td>
 					<td>Time In</td>
 					<td>Time Out</td>

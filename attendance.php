@@ -76,7 +76,7 @@ include('directives/session.php');
 				<button class="btn btn-success col-md-pull-4" onclick="printAll()">
 					Print attendance sheet for all sites
 				</button>
-				<h4>--- OR ---</h4>
+				<h4><br>--- OR ---<br><br></h4>
 				<!-- DROPDOWN checkbox for selected site -->
 				<form method = "post" action = "print_selected_site.php">
 					<div class="col-md-6">

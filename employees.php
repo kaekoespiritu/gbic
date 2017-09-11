@@ -40,8 +40,7 @@ else
 		?>
 
 		<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
-		<div class="container">
-			<div class="row">
+		<div class="row">
 				<div class="col-md-3 col-md-offset-1 pull-down">
 					<form method="post" action="" id="search_form">
 						<div class="form-group">
@@ -50,7 +49,7 @@ else
 					</form>
 				</div>
 				<!-- FILTER EMPLOYEE BY POSITION -->
-				<div class="col-md-5 col-md-pull-1 pull-down text-right">
+				<div class="col-md-7 pull-down text-right">
 					Filter by:
 					<!-- POSITION DROPDOWN -->
 					<div class="btn-group">
@@ -101,26 +100,23 @@ else
 						</select>
 					</div>
 					<!-- END OF SITES DROPDOWN -->
-				</div>
-				<!-- ACTION BUTTONS FOR FILTERS -->
-				<div class="col-md-3 pull-down col-md-pull-1">
 					<button type="button" class="btn btn-danger" onclick="clearFilter()">Clear Filters</button>
 					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">Add new Employee</button>
 				</div>
+				<!-- ACTION BUTTONS FOR FILTERS -->
 				<!-- END OF ACTION BUTTONS FOR FILTERS-->
-			</div>
-		</div>
+				</div>
 
 		<!-- EMPLOYEE TABLE -->
-		<div class="row pull-down">
+		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
 				<table class="table table-bordered table-condensed" style="background-color:white;">
 					<tr>
-						<td>Employee ID</td>
-						<td>Name</td>
-						<td>Position</td>
-						<td>Site</td>
-						<td>Actions</td>
+						<th class='fixedWidth text-center'>Employee ID</th>
+						<th class='text-center'>Name</th>
+						<th class='text-center'>Position</th>
+						<th class='text-center'>Site</th>
+						<th class='text-center'>Actions</th>
 					</tr>
 
 					<div id="change_table">
@@ -142,11 +138,11 @@ else
 							while($search_row = mysql_fetch_assoc($searchQuery))
 							{
 								Print "	<tr>
-								<td>".$search_row['empid']."</td>
-								<td>".$search_row['firstname']." ".$search_row['lastname']."</td>
-								<td>".$search_row['position']."</td>
-								<td>".$search_row['site']."</td>
-								<td>
+								<td style='vertical-align: inherit'>".$search_row['empid']."</td>
+								<td style='vertical-align: inherit'>".$search_row['firstname']." ".$search_row['lastname']."</td>
+								<td style='vertical-align: inherit'>".$search_row['position']."</td>
+								<td style='vertical-align: inherit'>".$search_row['site']."</td>
+								<td style='vertical-align: inherit'>
 									<button type='button' class='btn btn-default' onclick='Edit(\"".$search_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
 								</td>
 							</tr>";
@@ -170,11 +166,11 @@ else
 							while($PosEmp_row = mysql_fetch_assoc($position_query))
 							{
 								Print "	<tr>
-											<td>".$PosEmp_row['empid']."</td>
-											<td>".$PosEmp_row['firstname']." ".$PosEmp_row['lastname']."</td>
-											<td>".$PosEmp_row['position']."</td>
-											<td>".$PosEmp_row['site']."</td>
-											<td>
+											<td style='vertical-align: inherit'>".$PosEmp_row['empid']."</td>
+											<td style='vertical-align: inherit'>".$PosEmp_row['firstname']." ".$PosEmp_row['lastname']."</td>
+											<td style='vertical-align: inherit'>".$PosEmp_row['position']."</td>
+											<td style='vertical-align: inherit'>".$PosEmp_row['site']."</td>
+											<td style='vertical-align: inherit'>
 												<button type='button' class='btn btn-default' onclick='Edit(\"".$PosEmp_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
 											</td>
 										</tr>";
@@ -188,11 +184,11 @@ else
 							while($site_row = mysql_fetch_assoc($site_query))
 							{
 								Print "	<tr>
-											<td>".$site_row['empid']."</td>
-											<td>".$site_row['firstname']." ".$site_row['lastname']."</td>
-											<td>".$site_row['position']."</td>
-											<td>".$site_row['site']."</td>
-											<td>
+											<td style='vertical-align: inherit'>".$site_row['empid']."</td>
+											<td style='vertical-align: inherit'>".$site_row['firstname']." ".$site_row['lastname']."</td>
+											<td style='vertical-align: inherit'>".$site_row['position']."</td>
+											<td style='vertical-align: inherit'>".$site_row['site']."</td>
+											<td style='vertical-align: inherit'>
 												<button type='button' class='btn btn-default' onclick='Edit(\"".$site_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
 											</td>
 										</tr>";
@@ -217,11 +213,11 @@ else
 							while($PosEmp_row = mysql_fetch_assoc($position_query))
 							{
 								Print "	<tr>
-											<td>".$PosEmp_row['empid']."</td>
-											<td>".$PosEmp_row['firstname']." ".$PosEmp_row['lastname']."</td>
-											<td>".$PosEmp_row['position']."</td>
-											<td>".$PosEmp_row['site']."</td>
-											<td>
+											<td style='vertical-align: inherit'>".$PosEmp_row['empid']."</td>
+											<td style='vertical-align: inherit'>".$PosEmp_row['firstname']." ".$PosEmp_row['lastname']."</td>
+											<td style='vertical-align: inherit'>".$PosEmp_row['position']."</td>
+											<td style='vertical-align: inherit'>".$PosEmp_row['site']."</td>
+											<td style='vertical-align: inherit'>
 												<button type='button' class='btn btn-default' onclick='Edit(\"".$PosEmp_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
 											</td>
 										</tr>";
@@ -235,11 +231,11 @@ else
 							while($position_row = mysql_fetch_assoc($position_query))
 							{
 								Print "	<tr>
-											<td>".$position_row['empid']."</td>
-											<td>".$position_row['firstname']." ".$position_row['lastname']."</td>
-											<td>".$position_row['position']."</td>
-											<td>".$position_row['site']."</td>
-											<td>
+											<td style='vertical-align: inherit'>".$position_row['empid']."</td>
+											<td style='vertical-align: inherit'>".$position_row['firstname']." ".$position_row['lastname']."</td>
+											<td style='vertical-align: inherit'>".$position_row['position']."</td>
+											<td style='vertical-align: inherit'>".$position_row['site']."</td>
+											<td style='vertical-align: inherit'>
 												<button type='button' class='btn btn-default' onclick='Edit(\"".$position_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
 											</td>
 										</tr>";

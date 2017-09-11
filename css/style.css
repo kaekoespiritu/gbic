@@ -275,3 +275,7 @@ hr
 {
   white-space: nowrap;
 }
+.fixedWidth
+{
+  width: 120px !important;
+}

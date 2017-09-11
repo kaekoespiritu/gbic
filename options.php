@@ -144,10 +144,9 @@ include('directives/db.php');
 
 			if(document.getElementById(dayOfWeek+"BOX").checked==true)
 			{
-				var day = dayOfWeek+"BOX";
 				// Getting input field
-				var cellCHECK = document.getElementById(day);
-				console.log(cellCHECK);
+				var cellCHECK = document.getElementById(dayOfWeek);
+
 				// Creating a select dropdown
 				var selectList = document.createElement("select");
 				selectList.setAttribute("id", dayOfWeek);
@@ -167,33 +166,35 @@ include('directives/db.php');
 				    selectList.appendChild(option);
 				}
 
-				console.log("Number of checks: " + document.querySelectorAll(':checked').length);
+				console.log("Number of checks: " + document.querySelectorAll('input:checked').length);
+
+				var checkbox = document.getElementsByName('checkboxes[]');
+				var checkboxes = document.querySelectorAll('input[type=checkbox]').length;
+
+				console.log(checkbox[1].value);
 				// Checking if 2 checkboxes are active
-				if(document.querySelectorAll(':checked').length == 2)
+				if(document.querySelectorAll('input:checked').length === 2)
 				{
-					var checkboxes = document.getElementsByTagName("INPUT");
- 
 				  for(var i = 0; i <= checkboxes; i++)
 				  {
-				    if(checkboxes[i].type=="checkbox" && checkboxes[i].checked == false)
-				    checkboxes[i].disabled=true;
+				    if(checkbox[i].value != "on")
+				    checkbox[i].disabled=true;
+					console.log(checkbox[i].value);
 				  }
 				}
-				else if(document.querySelectorAll(':checked').length/2 == 1)
-				{
 
-					var checkboxes = document.getElementsByTagName("INPUT");
+				if(document.querySelectorAll('input:checked').length/2 == 1)
+				{
 
 					for(var i = 0; i <= checkboxes; i++)
 					{
 					    
-					    if(checkboxes[i].type=="checkbox" && checkboxes[i].hasAttribute("disabled")==true)
+					    if(checkbox[i].hasAttribute("disabled")==true)
 					    {
-					    	checkboxes[i].disabled=false;	
-					    	checkboxes[i].checked=false;
+					    	checkbox[i].disabled=false;	
+					    	checkbox[i].checked=false;
 					    }
 					    
-					  	console.log("lalala  "+checkboxes[i]);
 					  }
 				}
 			}
