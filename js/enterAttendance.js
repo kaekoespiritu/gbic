@@ -68,7 +68,7 @@ document.getElementById("attendance").setAttribute("style", "background-color: #
 		var mainRow = document.getElementById(id);
 		var remarks = document.getElementById('remark').value.trim();
 		var hiddenRemarks = mainRow.querySelector('.hiddenRemarks').setAttribute('value', remarks);
-		console.log(remarks);
+
 		if(remarks !== null && remarks !== "")
 		{
 			
