@@ -2,12 +2,11 @@
 <?php
 include('directives/session.php');
 include('directives/db.php');
-if(isset($_GET['site']) && isset($_GET['position']))
-{}
-else
+if(!isset($_GET['site']) && !isset($_GET['position']))
 {
 	header("location:loans.php?site=null&position=null");
 }
+
 $date = strftime("%B %d, %Y");
 ?>
 <html>
@@ -99,7 +98,9 @@ $date = strftime("%B %d, %Y");
 		<!-- EMPLOYEE TABLE -->
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
-			<form class="form-inline" id="loansForm" method="post" action="logic_loans.php">
+			<?php 
+				Print "<form class=form-inline' id='loansForm' method='post' action='logic_loans.php?site=".$_GET['site']."&position=".$_GET['position']."'>";
+			?>
 				<table class="table table-bordered table-condensed" style="background-color:white;">
 					<tr>
 						<td style='width:130px !important;'>ID</td>
@@ -171,9 +172,13 @@ $date = strftime("%B %d, %Y");
 							
 							if($dateNum != 0)
 							{
-								$getSSS = "SELECT DISTINCT sss FROM loans WHERE empid = '$empid' AND sss IS NOT NULL ORDER BY date DESC LIMIT 2";
-								$getPAGIBIG = "SELECT DISTINCT pagibig FROM loans WHERE empid = '$empid' AND pagibig IS NOT NULL ORDER BY date DESC LIMIT 2";
-								$getVALE = "SELECT DISTINCT vale FROM loans WHERE empid = '$empid' AND vale IS NOT NULL ORDER BY date DESC LIMIT 2";
+								// $getSSS = "SELECT DISTINCT sss FROM loans WHERE empid = '$empid' AND sss IS NOT NULL ORDER BY date DESC LIMIT 2";
+								// $getPAGIBIG = "SELECT DISTINCT pagibig FROM loans WHERE empid = '$empid' AND pagibig IS NOT NULL ORDER BY date DESC LIMIT 2";
+								// $getVALE = "SELECT DISTINCT vale FROM loans WHERE empid = '$empid' AND vale IS NOT NULL ORDER BY date DESC LIMIT 2";
+
+								$getSSS = "SELECT sss FROM loans WHERE empid = '$empid' AND sss IS NOT NULL ORDER BY date DESC LIMIT 2";
+								$getPAGIBIG = "SELECT pagibig FROM loans WHERE empid = '$empid' AND pagibig IS NOT NULL ORDER BY date DESC LIMIT 2";
+								$getVALE = "SELECT vale FROM loans WHERE empid = '$empid' AND vale IS NOT NULL ORDER BY date DESC LIMIT 2";
 
 								$sssQuery = mysql_query($getSSS);
 								$pagibigQuery = mysql_query($getPAGIBIG);
@@ -254,19 +259,19 @@ $date = strftime("%B %d, %Y");
 										<td style='vertical-align: inherit'>
 											<div class='form-group'>
 												<label for='sss'>SSS</label>
-												<input type='text' id='sss' name='sss[]' value='". $sss ."' onkeypress='numValidate(event)' class='form-control input-sm'/>
+												<input type='text' id='sss' name='sss[]' placeholder='". $sss ."' onkeypress='numValidate(event)' class='form-control input-sm'/>
 											</div>
 										</td>
 										<td>
 											<div class='form-group'>
 												<label for='pagibig'>Pag-IBIG</label>
-												<input type='text' id='pagibig' name='pagibig[]' value='". $pagibig ."' onkeypress='numValidate(event)' class='form-control input-sm'/>
+												<input type='text' id='pagibig' name='pagibig[]' placeholder='". $pagibig ."' onkeypress='numValidate(event)' class='form-control input-sm'/>
 											</div>
 										</td>
 										<td>
 											<div class='form-group'>
 												<label for='vale'>Vale</label>
-												<input type='text' id='vale' name='vale[]' value='". $vale ."' onkeypress='numValidate(event)' class='form-control input-sm'/>
+												<input type='text' id='vale' name='vale[]' placeholder='". $vale ."' onkeypress='numValidate(event)' class='form-control input-sm'/>
 											</div>
 										</td>
 									</tr>";
@@ -337,11 +342,11 @@ $date = strftime("%B %d, %Y");
 	// Prompt to save changes
 	function saveChanges()
 	{
-		var a = confirm("Note: After saving these changes, the loans you've entered will no longer be editable. Are you sure you want to save changes?");
-		if(a == true)
-		{
+		// var a = confirm("Note: After saving these changes, the loans you've entered will no longer be editable. Are you sure you want to save changes?");
+		// if(a == true)
+		// {
 			document.getElementById('loansForm').submit();
-		}
+		// }
 
 	}
 	// SITE FILTER 
