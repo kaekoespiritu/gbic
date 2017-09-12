@@ -237,7 +237,7 @@ function attendance ()
 					"<input type='hidden' name='empid[".$counter."]' value=". $row_employee['empid'] .">";	
 			
 			// REMARKS	
-				if(!empty($empRow['remarks']))
+				if($empRow['remarks']!=="")
 				{
 					Print "<!-- Remarks Input --> 
 						<input type='hidden' value='". $empRow['remarks'] ."' name='remarks[".$counter."]' class='hiddenRemarks'>";
