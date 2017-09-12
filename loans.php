@@ -176,9 +176,9 @@ $date = strftime("%B %d, %Y");
 								// $getPAGIBIG = "SELECT DISTINCT pagibig FROM loans WHERE empid = '$empid' AND pagibig IS NOT NULL ORDER BY date DESC LIMIT 2";
 								// $getVALE = "SELECT DISTINCT vale FROM loans WHERE empid = '$empid' AND vale IS NOT NULL ORDER BY date DESC LIMIT 2";
 
-								$getSSS = "SELECT sss FROM loans WHERE empid = '$empid' AND sss IS NOT NULL ORDER BY date DESC LIMIT 2";
-								$getPAGIBIG = "SELECT pagibig FROM loans WHERE empid = '$empid' AND pagibig IS NOT NULL ORDER BY date DESC LIMIT 2";
-								$getVALE = "SELECT vale FROM loans WHERE empid = '$empid' AND vale IS NOT NULL ORDER BY date DESC LIMIT 2";
+								$getSSS = "SELECT sss FROM loans WHERE empid = '$empid' AND sss IS NOT NULL ORDER BY date DESC";
+								$getPAGIBIG = "SELECT pagibig FROM loans WHERE empid = '$empid' AND pagibig IS NOT NULL ORDER BY date DESC";
+								$getVALE = "SELECT vale FROM loans WHERE empid = '$empid' AND vale IS NOT NULL ORDER BY date DESC";
 
 								$sssQuery = mysql_query($getSSS);
 								$pagibigQuery = mysql_query($getPAGIBIG);
