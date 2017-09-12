@@ -71,9 +71,12 @@ document.getElementById("attendance").setAttribute("style", "background-color: #
 
 		if(remarks !== null && remarks !== "")
 		{
+			
+			mainRow.querySelector('.icon').classList.add('glyphicon', 'glyphicon-edit');
+			
 			//alert("Time to add a badge here!");
 			//alert(remarks);
-			mainRow.querySelector('.icon').classList.add('glyphicon', 'glyphicon-edit');
+				
 		}
 		else
 		{

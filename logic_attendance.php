@@ -2,6 +2,7 @@
 include('directives/db.php');
 include('directives/session.php');
 require "directives/attendance/attendance_query.php";
+error_reporting(0);// fetch no error
 date_default_timezone_set('Asia/Hong_Kong');
 $location = $_GET['site'];
 
