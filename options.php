@@ -52,13 +52,13 @@ include('directives/db.php');
 						<td><input type="text" class="form-control" placeholder="---" disabled id="Sunday"></td>
 					</tr>
 					<tr>
-						<td><input type="checkbox" name="checkboxes[]" id="MondayBOX" onclick="triggerInput('Monday')"></td>
-						<td><input type="checkbox" name="checkboxes[]" id="TuesdayBOX" onclick="triggerInput('Tuesday')"></td>
-						<td><input type="checkbox" name="checkboxes[]" id="WednesdayBOX" onclick="triggerInput('Wednesday')"></td>
-						<td><input type="checkbox" name="checkboxes[]" id="ThursdayBOX" onclick="triggerInput('Thursday')"></td>
-						<td><input type="checkbox" name="checkboxes[]" id="FridayBOX" onclick="triggerInput('Friday')"></td>
-						<td><input type="checkbox" name="checkboxes[]" id="SaturdayBOX" onclick="triggerInput('Saturday')"></td>
-						<td><input type="checkbox" name="checkboxes[]" id="SundayBOX" onclick="triggerInput('Sunday')"></td>
+						<td><input type="checkBOX" name="checkboxes[]" id="MondayBOX" onchange="triggerInput('Monday')"></td>
+						<td><input type="checkBOX" name="checkboxes[]" id="TuesdayBOX" onchange="triggerInput('Tuesday')"></td>
+						<td><input type="checkBOX" name="checkboxes[]" id="WednesdayBOX" onchange="triggerInput('Wednesday')"></td>
+						<td><input type="checkBOX" name="checkboxes[]" id="ThursdayBOX" onchange="triggerInput('Thursday')"></td>
+						<td><input type="checkBOX" name="checkboxes[]" id="FridayBOX" onchange="triggerInput('Friday')"></td>
+						<td><input type="checkBOX" name="checkboxes[]" id="SaturdayBOX" onchange="triggerInput('Saturday')"></td>
+						<td><input type="checkBOX" name="checkboxes[]" id="SundayBOX" onchange="triggerInput('Sunday')"></td>
 					</tr>
 				</table>
 				<div class="panel-body">
@@ -166,37 +166,6 @@ include('directives/db.php');
 				    selectList.appendChild(option);
 				}
 
-				console.log("Number of checks: " + document.querySelectorAll('input:checked').length);
-
-				var checkbox = document.getElementsByName('checkboxes[]');
-				var checkboxes = document.querySelectorAll('input[type=checkbox]').length;
-
-				console.log(checkbox[1].value);
-				// Checking if 2 checkboxes are active
-				if(document.querySelectorAll('input:checked').length === 2)
-				{
-				  for(var i = 0; i <= checkboxes; i++)
-				  {
-				    if(checkbox[i].value != "on")
-				    checkbox[i].disabled=true;
-					console.log(checkbox[i].value);
-				  }
-				}
-
-				if(document.querySelectorAll('input:checked').length/2 == 1)
-				{
-
-					for(var i = 0; i <= checkboxes; i++)
-					{
-					    
-					    if(checkbox[i].hasAttribute("disabled")==true)
-					    {
-					    	checkbox[i].disabled=false;	
-					    	checkbox[i].checked=false;
-					    }
-					    
-					  }
-				}
 			}
 
 			// Revert dropdown to input
@@ -216,6 +185,38 @@ include('directives/db.php');
 				// Reverting changes
 				cellUNCHECK.parentNode.replaceChild(input, cellUNCHECK);
 			}
+
+			console.log("Number of checkboxes: " + document.querySelectorAll('input[type=checkbox]').length);
+
+				var checkbox = document.querySelectorAll('input[type=checkbox]'), i;
+				var checkboxes = document.querySelectorAll('input[type=checkbox]').length;
+
+				// Checking if 2 checkboxes are active
+				if(document.querySelectorAll('input:checked').length === 2)
+				{
+					 for(i = 0; i <= checkboxes; i++)
+					 {
+					 	console.log("Looping through: " + checkbox[i] + " to get: " + checkbox[i].checked);
+					 	console.log("Has disabled: " + checkbox[i].checked);
+					 	if(checkbox[i].checked===false)
+					 	{
+					 		checkbox[i].setAttribute('disabled', 'disabled');	
+					 	}
+					    
+					 }
+				}
+
+				if(document.querySelectorAll('input:checked').length === 1)
+				{
+
+					for(var i = 0; i <= checkboxes; i++)
+					{
+					    if(checkbox[i].checked===false)
+					    {
+					    	checkbox[i].removeAttribute('disabled');
+					    }   
+					}
+				}
 		}
 	</script>
 </div>
