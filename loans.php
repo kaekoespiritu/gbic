@@ -171,32 +171,72 @@ $date = strftime("%B %d, %Y");
 							
 							if($dateNum != 0)
 							{
+								$getSSS = "SELECT DISTINCT sss FROM loans WHERE empid = '$empid' AND sss IS NOT NULL ORDER BY date DESC LIMIT 2";
+								$getPAGIBIG = "SELECT DISTINCT pagibig FROM loans WHERE empid = '$empid' AND pagibig IS NOT NULL ORDER BY date DESC LIMIT 2";
+								$getVALE = "SELECT DISTINCT vale FROM loans WHERE empid = '$empid' AND vale IS NOT NULL ORDER BY date DESC LIMIT 2";
 
-								$dateArr = mysql_fetch_assoc($dateQuery);
-								if($dateArr['sss'] == 0)
+								$sssQuery = mysql_query($getSSS);
+								$pagibigQuery = mysql_query($getPAGIBIG);
+								$valeQuery = mysql_query($getVALE);
+
+								if($sssQuery)
+								{
+									while($sssLatest = mysql_fetch_assoc($sssQuery))
+									{
+										if($sssLatest['sss'] != NULL)
+										{
+											$sss = $sssLatest['sss'];
+											break 1;
+										}
+										else
+										{
+											$sss = "";
+										}
+									}
+								}
+								else
 								{
 									$sss = "";
 								}
-								else
+								if($pagibigQuery)
 								{
-									$sss = $dateArr['sss'];
+									while($pagibigLatest = mysql_fetch_assoc($pagibigQuery))
+									{
+										if($pagibigLatest['pagibig'] != NULL)
+										{
+											$pagibig = $pagibigLatest['pagibig'];
+											break 1;
+										}
+										else
+										{
+											$pagibig = "";
+										}
+									}
 								}
-								if($dateArr['pagibig'] == 0)
+								else
 								{
 									$pagibig = "";
 								}
-								else
+								if($valeQuery)
 								{
-									$pagibig = $dateArr['pagibig'];
+									while($valeLatest = mysql_fetch_assoc($valeQuery))
+									{
+										if($valeLatest['vale'] != NULL)
+										{
+											$vale = $valeLatest['vale'];
+											break 1;
+										}
+										else
+										{
+											$vale = "";
+										}
+									}
 								}
-								if($dateArr['vale'] == 0)
+								else
 								{
 									$vale = "";
 								}
-								else
-								{
-									$vale = $dateArr['vale'];
-								}
+								
 								Print "	<tr>
 										<input type='hidden' name='empid[]' value='". $empid ."'>
 										<td style='vertical-align: inherit'>

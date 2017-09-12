@@ -29,11 +29,11 @@ for($counter = 0; $counter <= $empNum; $counter++)
 	if(isset($_POST['empid'][$counter])) // This if there is an existing loan for that specific day to update the info
 	{
 		$empid = $_POST['empid'][$counter];
-
-		$dateChecker = "SELECT * FROM attendance WHERE date = '$date' AND empid = '$empid'";
+// mali to dapat kukunin nya yung latest info ng sss, pagibig, at vale sa database
+		$dateChecker = "SELECT * FROM loans WHERE date = '$date' AND empid = '$empid'";
 		$dateQuery = mysql_query($dateChecker);
 		$dateNum = mysql_num_rows($dateQuery);
-		Print "<script>alert('". $dateNum ."')</script>";
+		//Print "<script>alert('empid: ". $empid ." /  No: ". $dateNum ."')</script>";
 		if($dateNum != 0)
 		{
 			$dateArray = mysql_fetch_assoc($dateQuery);
@@ -78,9 +78,14 @@ for($counter = 0; $counter <= $empNum; $counter++)
 					$vale = null;
 				}
 			}
+			else
+			{
+				$vale = null;
+			}
+			Print "<script>alert('sss: ". $sss ." / pagibig: ". $pagibig ." vale: ". $vale ."')</script>";
 			if($sss != null || $pagibig != null || $vale != null)
 			{
-				Print "<script>alert('update')</script>";
+				//Print "<script>alert('update')</script>";
 			$update = "UPDATE loans SET sss = '$sss', 
 										pagibig = '$pagibig', 
 										vale = '$vale' WHERE empid = '$empid' AND date = '$date'";
@@ -89,10 +94,20 @@ for($counter = 0; $counter <= $empNum; $counter++)
 		}
 		else // This is if there is no information on the specific date
 		{
+			$dateChecker = "SELECT * FROM loans WHERE empid = '$empid' ORDER BY date DESC LIMIT 1";
+			$dateQuery = mysql_query($dateChecker);
 			
+			$dateArray = mysql_fetch_assoc($dateQuery);
 			if(!empty($_POST['sss'][$counter]))
 			{
-				$sss = $_POST['sss'][$counter];
+				if($dateArray['sss'] != $_POST['sss'][$counter])//Check if there are changes done in the sss
+				{
+					$sss = $_POST['sss'][$counter];
+				}
+				else
+				{
+					$sss = null;
+				}
 			}
 			else
 			{
@@ -100,7 +115,14 @@ for($counter = 0; $counter <= $empNum; $counter++)
 			}
 			if(!empty($_POST['pagibig'][$counter]))
 			{
-				$pagibig = $_POST['pagibig'][$counter];
+				if($dateArray['pagibig'] != $_POST['pagibig'][$counter])//Check if there are changes done in the pagibig
+				{
+					$pagibig = $_POST['pagibig'][$counter];
+				}
+				else
+				{
+					$pagibig = null;
+				}
 			}
 			else
 			{
@@ -108,7 +130,14 @@ for($counter = 0; $counter <= $empNum; $counter++)
 			}
 			if(!empty($_POST['vale'][$counter]))
 			{
-				$vale = $_POST['vale'][$counter];
+				if($dateArray['vale'] != $_POST['vale'][$counter])//Check if there are changes done in the vale
+				{
+					$vale = $_POST['vale'][$counter];
+				}
+				else
+				{
+					$vale = null;
+				}
 			}
 			else
 			{
