@@ -43,13 +43,13 @@ include('directives/db.php');
 						<td>Sunday</td>
 					</tr>
 					<tr>
-						<td><input type="text" class="form-control" placeholder="---" disabled id="Monday"></td>
-						<td><input type="text" class="form-control" placeholder="---" disabled id="Tuesday"></td>
-						<td><input type="text" class="form-control" placeholder="---" disabled id="Wednesday"></td>
-						<td><input type="text" class="form-control" placeholder="---" disabled id="Thursday"></td>
-						<td><input type="text" class="form-control" placeholder="---" disabled id="Friday"></td>
-						<td><input type="text" class="form-control" placeholder="---" disabled id="Saturday"></td>
-						<td><input type="text" class="form-control" placeholder="---" disabled id="Sunday"></td>
+						<td id="Monday"></td>
+						<td id="Tuesday"></td>
+						<td id="Wednesday"></td>
+						<td id="Thursday"></td>
+						<td id="Friday"></td>
+						<td id="Saturday"></td>
+						<td id="Sunday"></td>
 					</tr>
 					<tr>
 						<td><input type="checkBOX" name="checkboxes[]" id="MondayBOX" onchange="triggerInput('Monday')"></td>
@@ -151,6 +151,7 @@ include('directives/db.php');
 				var selectList = document.createElement("select");
 				selectList.setAttribute("id", dayOfWeek);
 				
+				console.log(cellCHECK.parentNode);
 				// Replacing input field with select dropdown
 				cellCHECK.parentNode.replaceChild(selectList, cellCHECK);
 
@@ -174,16 +175,9 @@ include('directives/db.php');
 				// Getting select dropdown
 				var cellUNCHECK = document.getElementById(dayOfWeek);
 
-				// Recreating input field
-				var input = document.createElement("input");
-				input.setAttribute('type', 'text');
-				input.setAttribute('placeholder', '---');
-				input.setAttribute('id', dayOfWeek);
-				input.setAttribute('class','form-control');
-				input.setAttribute('disabled', 'disabled');
-
+				console.log(cellCHECK.parentNode);
 				// Reverting changes
-				cellUNCHECK.parentNode.replaceChild(input, cellUNCHECK);
+				cellUNCHECK.parentNode.removeChild(cellUNCHECK);
 			}
 
 			console.log("Number of checkboxes: " + document.querySelectorAll('input[type=checkbox]').length);
