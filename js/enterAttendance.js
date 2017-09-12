@@ -66,14 +66,17 @@ document.getElementById("attendance").setAttribute("style", "background-color: #
 	// Transfer content to hidden input field
 	function saveRemarks(id) {
 		var mainRow = document.getElementById(id);
-		var remarks = document.getElementById('remark').value;
+		var remarks = document.getElementById('remark').value.trim();
 		var hiddenRemarks = mainRow.querySelector('.hiddenRemarks').setAttribute('value', remarks);
-
-		if(remarks !== null)
+		console.log(remarks);
+		if(remarks !== null && remarks !== "")
 		{
+			
+			mainRow.querySelector('.icon').classList.add('glyphicon', 'glyphicon-edit');
+			
 			//alert("Time to add a badge here!");
 			//alert(remarks);
-			mainRow.querySelector('.icon').classList.add('glyphicon', 'glyphicon-edit');
+				
 		}
 		else
 		{

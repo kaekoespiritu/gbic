@@ -8,6 +8,7 @@ else
 {
 	header("location:loans.php?site=null&position=null");
 }
+$date = strftime("%B %d, %Y");
 ?>
 <html>
 <head>
@@ -98,7 +99,7 @@ else
 		<!-- EMPLOYEE TABLE -->
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
-			<form class="form-inline">
+			<form class="form-inline" id="loansForm" method="post" action="logic_loans.php">
 				<table class="table table-bordered table-condensed" style="background-color:white;">
 					<tr>
 						<td style='width:130px !important;'>ID</td>
@@ -108,7 +109,7 @@ else
 						<td colspan="3">Loans</td>
 					</tr>
 					<?php
-						if(isset($_POST['search']))
+						if(isset($_POST['search'])) // Search output
 						{
 							$find = $_POST['search'];
 							$employee = "SELECT * FROM employee WHERE 
@@ -118,7 +119,7 @@ else
 											position LIKE '%$find%' OR
 											site LIKE '%$find%' ORDER BY site, empid DESC";
 						}
-						else if($_GET['position'] != "null")
+						else if($_GET['position'] != "null") // Position Filter Output
 						{
 							$position = $_GET['position'];
 							if($_GET['site'] != "null")
@@ -131,7 +132,7 @@ else
 								$employee = "SELECT * FROM employee WHERE position = '$position' ORDER BY site, empid DESC";
 							}
 						}
-						else if($_GET['site'] != "null")
+						else if($_GET['site'] != "null") // Site Filter Output
 						{
 							$site = $_GET['site'];
 							if($_GET['position'] != "null")
@@ -144,39 +145,129 @@ else
 								$employee = "SELECT * FROM employee WHERE site = '$site' ORDER BY site, empid DESC";
 							}
 						}
-						else
+						else // Default output
 						{
 							$employee = "SELECT * FROM employee ORDER BY site, empid DESC";
 						}
 						
+						
+						
+
 						$empQuery = mysql_query($employee);
 
 						while($row = mysql_fetch_assoc($empQuery))
 						{
-							Print "	<tr>
-										<td style='vertical-align: inherit'>". $row['empid'] ."</td>
-										<td style='vertical-align: inherit'>". $row['lastname'] .", ". $row['firstname'] ."</td>
-										<td style='vertical-align: inherit'>". $row['position'] ."</td>
-										<td style='vertical-align: inherit'>". $row['site'] ."</td>
+							$empid = $row['empid'];
+							$dateChecker = "SELECT * FROM loans WHERE empid = '$empid' ORDER BY date DESC LIMIT 1";
+							$dateQuery = mysql_query($dateChecker);
+							if($dateQuery)
+							{
+								$dateNum = mysql_num_rows($dateQuery);
+							}
+							else
+							{
+								$dateNum = 0;
+							}
+							
+							if($dateNum != 0)
+							{
+
+								$dateArr = mysql_fetch_assoc($dateQuery);
+								if($dateArr['sss'] == 0)
+								{
+									$sss = "";
+								}
+								else
+								{
+									$sss = $dateArr['sss'];
+								}
+								if($dateArr['pagibig'] == 0)
+								{
+									$pagibig = "";
+								}
+								else
+								{
+									$pagibig = $dateArr['pagibig'];
+								}
+								if($dateArr['vale'] == 0)
+								{
+									$vale = "";
+								}
+								else
+								{
+									$vale = $dateArr['vale'];
+								}
+								Print "	<tr>
+										<input type='hidden' name='empid[]' value='". $empid ."'>
+										<td style='vertical-align: inherit'>
+											". $row['empid'] ."
+										</td>
+										<td style='vertical-align: inherit'>
+											". $row['lastname'] .", ". $row['firstname'] ."
+										</td>
+										<td style='vertical-align: inherit'>
+											". $row['position'] ."
+										</td>
+										<td style='vertical-align: inherit'>
+											". $row['site'] ."
+										</td>
 										<td style='vertical-align: inherit'>
 											<div class='form-group'>
-											<label for='sss'>SSS</label>
-											<input type='text' id='sss' name='sss[]' class='form-control input-sm'/>
+												<label for='sss'>SSS</label>
+												<input type='text' id='sss' name='sss[]' value='". $sss ."' onkeypress='numValidate(event)' class='form-control input-sm'/>
 											</div>
 										</td>
 										<td>
 											<div class='form-group'>
-											<label for='pagibig'>Pag-IBIG</label>
-											<input type='text' id='pagibig' name='pagibig[]' class='form-control input-sm'/>
+												<label for='pagibig'>Pag-IBIG</label>
+												<input type='text' id='pagibig' name='pagibig[]' value='". $pagibig ."' onkeypress='numValidate(event)' class='form-control input-sm'/>
 											</div>
 										</td>
 										<td>
 											<div class='form-group'>
-											<label for='vale'>Vale</label>
-											<input type='text' id='vale' name='vale[]' class='form-control input-sm'/>
+												<label for='vale'>Vale</label>
+												<input type='text' id='vale' name='vale[]' value='". $vale ."' onkeypress='numValidate(event)' class='form-control input-sm'/>
 											</div>
 										</td>
 									</tr>";
+							}
+							else
+							{
+								Print "	<tr>
+										<input type='hidden' name='empid[]' value='". $empid ."'>
+										<td style='vertical-align: inherit'>
+											". $row['empid'] ."
+										</td>
+										<td style='vertical-align: inherit'>
+											". $row['lastname'] .", ". $row['firstname'] ."
+										</td>
+										<td style='vertical-align: inherit'>
+											". $row['position'] ."
+										</td>
+										<td style='vertical-align: inherit'>
+											". $row['site'] ."
+										</td>
+										<td style='vertical-align: inherit'>
+											<div class='form-group'>
+												<label for='sss'>SSS</label>
+												<input type='text' id='sss' name='sss[]' onkeypress='numValidate(event)' class='form-control input-sm'/>
+											</div>
+										</td>
+										<td>
+											<div class='form-group'>
+												<label for='pagibig'>Pag-IBIG</label>
+												<input type='text' id='pagibig' name='pagibig[]' onkeypress='numValidate(event)' class='form-control input-sm'/>
+											</div>
+										</td>
+										<td>
+											<div class='form-group'>
+												<label for='vale'>Vale</label>
+												<input type='text' id='vale' name='vale[]' onkeypress='numValidate(event)' class='form-control input-sm'/>
+											</div>
+										</td>
+									</tr>";
+							}
+							
 						}
 					?>
 				</table>
@@ -193,10 +284,25 @@ else
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script>
+	function numValidate(evt) {
+	  var theEvent = evt || window.event;
+	  var key = theEvent.keyCode || theEvent.which;
+	  key = String.fromCharCode( key );
+	  var regex = /[0-9]|\./;
+	  if( !regex.test(key) ) {
+	    theEvent.returnValue = false;
+	    if(theEvent.preventDefault) theEvent.preventDefault();
+	  }
+	}
 	// Prompt to save changes
 	function saveChanges()
 	{
-		confirm("Note: After saving these changes, the loans you've entered will no longer be editable. Are you sure you want to save changes?");
+		var a = confirm("Note: After saving these changes, the loans you've entered will no longer be editable. Are you sure you want to save changes?");
+		if(a == true)
+		{
+			document.getElementById('loansForm').submit();
+		}
+
 	}
 	// SITE FILTER 
 	function site() {
