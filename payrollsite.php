@@ -61,17 +61,23 @@ include('directives/session.php');
 				/* If location is long, font-size to smaller */
 				if(strlen($row['location'])>=16)
 				{
-					Print '<a href="payrollposition.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;"><div class="sitebox">
-					<span class="smalltext">'. $row['location'] .'</span><br><br><span>Employees: '. $employee_num .'</span>
-				</div></a>';
+					Print '	<a href="payrollposition.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
+								<div class="sitebox">
+									<span class="smalltext">'
+										. $row['location'] .'</span><br><br><span>Employees: '. $employee_num .
+									'</span>
+								</div>
+							</a>';
 			}
 			else
 			{
 				Print '	<a href="payrollposition.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
-				<div class="sitebox">
-					<span class="autofit">'. $row['location'] .'<br><br>Employees: '. $employee_num .'</span>
-				</div>
-			</a>';
+							<div class="sitebox">
+								<span class="autofit">'
+									. $row['location'] .'<br><br>Employees: '. $employee_num .
+								'</span>
+							</div>
+						</a>';
 		}
 		$counter++;
 		if($counter == 5)
