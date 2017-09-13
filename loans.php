@@ -242,7 +242,7 @@ $date = strftime("%B %d, %Y");
 									$vale = "";
 								}
 								
-								Print "	<tr>
+								Print "	<tr class='warning'>
 										<input type='hidden' name='empid[]' value='". $empid ."'>
 										<td style='vertical-align: inherit'>
 											". $row['empid'] ."
@@ -259,19 +259,19 @@ $date = strftime("%B %d, %Y");
 										<td style='vertical-align: inherit'>
 											<div class='form-group'>
 												<label for='sss'>SSS</label>
-												<input type='text' id='sss' name='sss[]' placeholder='". $sss ."' onkeypress='numValidate(event)' class='form-control input-sm'/>
+												<input type='text' id='sss' name='sss[]' placeholder='". $sss ."' onkeypress='numValidate(event)' onblur='colorChange(this)' class='form-control input-sm hasInput'/>
 											</div>
 										</td>
 										<td>
 											<div class='form-group'>
 												<label for='pagibig'>Pag-IBIG</label>
-												<input type='text' id='pagibig' name='pagibig[]' placeholder='". $pagibig ."' onkeypress='numValidate(event)' class='form-control input-sm'/>
+												<input type='text' id='pagibig' name='pagibig[]' placeholder='". $pagibig ."' onkeypress='numValidate(event)' onblur='colorChange(this)' class='form-control input-sm hasInput'/>
 											</div>
 										</td>
 										<td>
 											<div class='form-group'>
 												<label for='vale'>Vale</label>
-												<input type='text' id='vale' name='vale[]' placeholder='". $vale ."' onkeypress='numValidate(event)' class='form-control input-sm'/>
+												<input type='text' id='vale' name='vale[]' placeholder='". $vale ."' onkeypress='numValidate(event)' onblur='colorChange(this) class='form-control input-sm hasInput'/>
 											</div>
 										</td>
 									</tr>";
@@ -295,19 +295,19 @@ $date = strftime("%B %d, %Y");
 										<td style='vertical-align: inherit'>
 											<div class='form-group'>
 												<label for='sss'>SSS</label>
-												<input type='text' id='sss' name='sss[]' onkeypress='numValidate(event)' class='form-control input-sm'/>
+												<input type='text' id='sss' name='sss[]' onkeypress='numValidate(event)' onblur='colorChange(this)' class='form-control input-sm'/>
 											</div>
 										</td>
 										<td>
 											<div class='form-group'>
 												<label for='pagibig'>Pag-IBIG</label>
-												<input type='text' id='pagibig' name='pagibig[]' onkeypress='numValidate(event)' class='form-control input-sm'/>
+												<input type='text' id='pagibig' name='pagibig[]' onkeypress='numValidate(event)' onblur='colorChange(this)'class='form-control input-sm'/>
 											</div>
 										</td>
 										<td>
 											<div class='form-group'>
 												<label for='vale'>Vale</label>
-												<input type='text' id='vale' name='vale[]' onkeypress='numValidate(event)' class='form-control input-sm'/>
+												<input type='text' id='vale' name='vale[]' onkeypress='numValidate(event)' onblur='colorChange(this)' class='form-control input-sm'/>
 											</div>
 										</td>
 									</tr>";
@@ -338,6 +338,35 @@ $date = strftime("%B %d, %Y");
 	    theEvent.returnValue = false;
 	    if(theEvent.preventDefault) theEvent.preventDefault();
 	  }
+	}
+	function colorChange(element)
+	{
+		var row = element.parentNode.parentNode.parentNode;
+		
+		// If there is input show color change
+		if(element.value.length!==0)
+		{
+			if(row.hasAttribute("class"))
+			{
+				row.removeAttribute("class");
+				row.setAttribute("class","success");	
+			}
+			else
+			{
+				row.setAttribute("class","success");	
+			}
+		}
+		else // Else, remove color change
+		{
+			if(element.classList.contains("hasInput")==true)
+			{
+				row.setAttribute("class","warning");
+			}
+			else
+			{
+				row.removeAttribute("class");
+			}
+		}
 	}
 	// Prompt to save changes
 	function saveChanges()
