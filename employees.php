@@ -132,7 +132,7 @@ else
 							firstname LIKE '%$find%' OR 
 							lastname LIKE '%$find%' OR
 							position LIKE '%$find%' OR
-							site LIKE '%$find%' ORDER BY position";
+							site LIKE '%$find%' AND employment_status = '1' ORDER BY position";
 							$searchQuery = mysql_query($search);
 							
 							while($search_row = mysql_fetch_assoc($searchQuery))
@@ -161,7 +161,7 @@ else
 
 							$position = $_GET['position'];
 							$positionReplaced = str_replace('/+/', ' ', $position);
-							$pos_query = "SELECT * FROM employee WHERE position = '$positionReplaced' AND site = '$siteReplaced' ORDER BY position";
+							$pos_query = "SELECT * FROM employee WHERE position = '$positionReplaced' AND site = '$siteReplaced' AND employment_status = '1' ORDER BY position";
 							$position_query = mysql_query($pos_query);
 							while($PosEmp_row = mysql_fetch_assoc($position_query))
 							{
@@ -179,7 +179,7 @@ else
 						else
 						{
 
-							$query = "SELECT * FROM employee WHERE site = '$siteReplaced' ORDER BY position";
+							$query = "SELECT * FROM employee WHERE site = '$siteReplaced' AND employment_status = '1' ORDER BY position";
 							$site_query = mysql_query($query);
 							while($site_row = mysql_fetch_assoc($site_query))
 							{
@@ -208,7 +208,7 @@ else
 
 							$site = $_GET['site'];
 							$siteReplaced = str_replace('/+/', ' ', $site);
-							$pos_query = "SELECT * FROM employee WHERE position = '$positionReplaced' AND site = '$siteReplaced' ORDER BY site";
+							$pos_query = "SELECT * FROM employee WHERE position = '$positionReplaced' AND site = '$siteReplaced' AND employment_status = '1' ORDER BY site";
 							$position_query = mysql_query($pos_query);
 							while($PosEmp_row = mysql_fetch_assoc($position_query))
 							{
@@ -226,7 +226,7 @@ else
 
 						else
 						{
-							$query = "SELECT * FROM employee WHERE position = '$positionReplaced' ORDER BY site";
+							$query = "SELECT * FROM employee WHERE position = '$positionReplaced' AND employment_status = '1' ORDER BY site";
 							$position_query = mysql_query($query);
 							while($position_row = mysql_fetch_assoc($position_query))
 							{

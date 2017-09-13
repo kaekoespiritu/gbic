@@ -63,7 +63,7 @@ for($counter = 0; $counter < $num_site; $counter++)//1st loop for sites
 		$activeSheet->getRowDimension(2)->setRowHeight(25);
 		$activeSheet->getRowDimension(3)->setRowHeight(25);
 		
-		$employee = "SELECT * FROM employee WHERE site = '$selected' ORDER BY lastname";
+		$employee = "SELECT * FROM employee WHERE site = '$selected' AND employment_status = '1' ORDER BY lastname";
 		$employee_query = mysql_query($employee);
 		if(!$employee_query)
 		{

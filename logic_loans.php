@@ -12,7 +12,7 @@ if(isset($_SESSION['date']))
 		$date = strftime("%B %d, %Y");// Gets the current date
 	}
 
-$employee = "SELECT * FROM employee ORDER BY site, empid DESC";
+$employee = "SELECT * FROM employee WHERE employment_status = '1' ORDER BY site, empid DESC";
 $employeeQuery = mysql_query($employee);
 
 $initialQuery = "INSERT INTO loans(	empid, 

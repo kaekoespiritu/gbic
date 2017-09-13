@@ -337,7 +337,7 @@ else// NEW attendance
 			$nightdiff = "";
 			$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
 			$attendance = 1;// 0 - no input / 1 - Absent / 2 - Present
-			$employee = "SELECT * FROM employee WHERE empid = '$empid'";
+			$employee = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1' ";
 			$employeeQuery = mysql_query($employee);
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
@@ -356,7 +356,7 @@ else// NEW attendance
 			$nightdiff = "";
 			$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
 			$attendance = 0;// 0 - no input / 1 - Absent / 2 - Present
-			$employee = "SELECT * FROM employee WHERE empid = '$empid'";
+			$employee = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1' ";
 			$employeeQuery = mysql_query($employee);
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];

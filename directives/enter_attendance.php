@@ -19,18 +19,18 @@ function attendance ()
 	if($_GET['position'] != "null")
 	{
 		$position = $_GET['position'];
-		$employees = "SELECT * FROM employee WHERE site = '$site' AND position = '$position' ORDER BY lastname";
+		$employees = "SELECT * FROM employee WHERE site = '$site' AND position = '$position' AND employment_status = '1' ORDER BY lastname";
 	}
 	else if(isset($_POST['txt_search']))
 	{
 		$search = $_POST['txt_search'];
 		$employees = "SELECT * FROM employee WHERE 	site = '$site' AND firstname LIKE '%$search%' OR 
 													lastname LIKE '%$search%' OR
-													position LIKE '%$search%' ORDER BY lastname";
+													position LIKE '%$search%' AND employment_status = '1' ORDER BY lastname";
 	}
 	else
 	{
-		$employees = "SELECT * FROM employee WHERE site = '$site'  ORDER BY lastname";
+		$employees = "SELECT * FROM employee WHERE site = '$site' AND employment_status = '1' ORDER BY lastname";
 	}
 	$employees_query = mysql_query($employees);
 

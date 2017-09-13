@@ -118,7 +118,7 @@ $date = strftime("%B %d, %Y");
 											firstname LIKE '%$find%' OR 
 											lastname LIKE '%$find%' OR
 											position LIKE '%$find%' OR
-											site LIKE '%$find%' ORDER BY site, empid DESC";
+											site LIKE '%$find%' AND employment_status = '1' ORDER BY site, empid DESC";
 						}
 						else if($_GET['position'] != "null") // Position Filter Output
 						{
@@ -126,11 +126,11 @@ $date = strftime("%B %d, %Y");
 							if($_GET['site'] != "null")
 							{
 								$site = $_GET['site'];
-								$employee = "SELECT * FROM employee WHERE site = '$site' AND position = '$position' ORDER BY site, empid DESC";
+								$employee = "SELECT * FROM employee WHERE site = '$site' AND position = '$position' AND employment_status = '1' ORDER BY site, empid DESC";
 							}
 							else
 							{
-								$employee = "SELECT * FROM employee WHERE position = '$position' ORDER BY site, empid DESC";
+								$employee = "SELECT * FROM employee WHERE position = '$position' AND employment_status = '1' ORDER BY site, empid DESC";
 							}
 						}
 						else if($_GET['site'] != "null") // Site Filter Output
@@ -139,16 +139,16 @@ $date = strftime("%B %d, %Y");
 							if($_GET['position'] != "null")
 							{
 								$position = $_GET['position'];
-								$employee = "SELECT * FROM employee WHERE site = '$site' AND position = '$position' ORDER BY site, empid DESC";
+								$employee = "SELECT * FROM employee WHERE site = '$site' AND position = '$position' AND employment_status = '1' ORDER BY site, empid DESC";
 							}
 							else
 							{
-								$employee = "SELECT * FROM employee WHERE site = '$site' ORDER BY site, empid DESC";
+								$employee = "SELECT * FROM employee WHERE site = '$site' AND employment_status = '1' ORDER BY site, empid DESC";
 							}
 						}
 						else // Default output
 						{
-							$employee = "SELECT * FROM employee ORDER BY site, empid DESC";
+							$employee = "SELECT * FROM employee AND employment_status = '1' ORDER BY site, empid DESC";
 						}
 						
 						

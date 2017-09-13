@@ -70,7 +70,7 @@ while($row = mysql_fetch_assoc($site_query))
 	if($cycles == 0 || $cycles == 4)
 	{
 		$emp_location = $row['location'];
-		$employee_find = "SELECT * FROM employee WHERE site = '$emp_location'";
+		$employee_find = "SELECT * FROM employee WHERE site = '$emp_location' AND employment_status = '1' ";
 		$employee_find_query = mysql_query($employee_find);
 		$employee_num = 0;
 		if($employee_find_query)
@@ -94,7 +94,7 @@ while($row = mysql_fetch_assoc($site_query))
 else
 {
 	$emp_location = $row['location'];
-	$employee_find = "SELECT * FROM employee WHERE site = '$emp_location'";
+	$employee_find = "SELECT * FROM employee WHERE site = '$emp_location' AND employment_status = '1' ";
 	$employee_find_query = mysql_query($employee_find);
 	$employee_num = 0;
 	if($employee_find_query)

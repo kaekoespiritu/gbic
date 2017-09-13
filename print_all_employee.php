@@ -52,7 +52,7 @@ while($site = mysql_fetch_assoc($site_query))//1st loop for sites
 	$activeSheet->getRowDimension(3)->setRowHeight(25);
 	
 	
-	$employee = "SELECT * FROM employee WHERE site = '$location' ORDER BY lastname";
+	$employee = "SELECT * FROM employee WHERE site = '$location' AND employment_status = '1' ORDER BY lastname";
 	$employee_query = mysql_query($employee);
 	if(!$employee_query)
 	{

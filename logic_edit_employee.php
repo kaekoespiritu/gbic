@@ -64,7 +64,7 @@
 	}
 	//header('location: editEmployee.php?empid='.$empid);
 //employee document checker
-	$checker = "SELECT sss, philhealth, pagibig FROM employee WHERE empid = '$empid'";
+	$checker = "SELECT sss, philhealth, pagibig FROM employee WHERE empid = '$empid' AND employment_status = '1' ";
 	$checker_query = mysql_query($checker);
 	$row = mysql_fetch_assoc($checker_query);
 	
