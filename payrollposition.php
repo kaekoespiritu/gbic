@@ -32,7 +32,7 @@ include('directives/session.php');
 	</div>
 	</div>
 
-	<div class="row pull-down">
+	<div class="row">
 	<h2>Payroll for this week</h2>
 	<h3>Today is <?php 
 					date_default_timezone_set('Asia/Hong_Kong');

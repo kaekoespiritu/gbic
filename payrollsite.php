@@ -23,6 +23,15 @@ include('directives/session.php');
 	?>
 
 	<div class="row pull-down">
+	<div class="col-md-10 col-md-offset-1">
+		<ol class="breadcrumb text-left">
+			<li><a href="loginpayroll.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Logout of Payroll</a></li>
+			<li class="active">Site</li>
+		</ol>
+	</div>
+	</div>
+
+	<div class="row">
 	<h2>Payroll for this week</h2>
 	<h3>Today is <?php 
 					date_default_timezone_set('Asia/Hong_Kong');
