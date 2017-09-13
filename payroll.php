@@ -23,6 +23,13 @@ include('directives/session.php');
 	?>
 
 	<div class="row pull-down">
+	<div class="col-md-10 col-md-offset-1">
+			<ol class="breadcrumb text-left">
+				<li><a href="payrollposition.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Position</a></li>
+				<li class="active">Employees</li>
+				<button class="btn btn-success pull-right" onclick="saveChanges()">Save changes</button>
+			</ol>
+			</div>
 		<div class="col-md-10 col-md-offset-1">
 			<h2 class="text-left">Miguelito Joselito Dela Cruz</h2>
 			<hr>

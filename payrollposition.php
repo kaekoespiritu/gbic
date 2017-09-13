@@ -24,12 +24,22 @@ include('directives/session.php');
 	?>
 
 	<div class="row pull-down">
+	<div class="col-md-10 col-md-offset-1">
+		<ol class="breadcrumb text-left">
+			<li><a href="payrollsite.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a></li>
+			<li class="active">Position</li>
+		</ol>
+	</div>
+	</div>
+
+	<div class="row pull-down">
 	<h2>Payroll for this week</h2>
 	<h3>Today is <?php 
 					date_default_timezone_set('Asia/Hong_Kong');
 					$date = date('l, F d, Y', time());
 					echo $date; ?></h3>
 	<h4>Open: Tuesday | Close: Wednesday</h4>
+	<h4>At site [site]</h4>
 	</div>
 
 	<div class="container">
