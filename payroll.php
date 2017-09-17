@@ -75,37 +75,63 @@ include('directives/session.php');
 				</tr>
 			</table>
 			<div class="panel">
-				<h3>Total hours rendered: 54</h3>
+				<table class="table table-bordered table-responsive">
+					<tr>
+						<td>
+							<h4>Total hours rendered: 54</h4>
+						</td>
+						<td>
+							<h4>Total overtime: 0</h4>
+						</td>
+						<td>
+							<h4>Total night differential: 0</h4>
+						</td>
+					</tr>
+				</table>
 				<div class="row">
-					<div class="col-md-8 col-md-offset-2">
-						<form>
-							<div class="row">
-								<h3>Deductions</h3>
-								<table class="col-md-8 col-md-offset-2">
-									<tr>
-										<td>SSS</td>
-										<td><input type="text"></td>
-										<td><input type="checkbox"> Vale</td>
-										<td><input type="text"></td>
-									</tr>
-									<tr>
-										<td>PagIBIG</td>
-										<td><input type="text"></td>
-										<td>Tax</td>
-										<td><input type="text"></td>
-									</tr>
-									<tr>
-										<td>Tools</td>
-										<td><input type="text"></td>
-									</tr>
-								</table>
-							</div>
-						</form>
-						<button class="btn btn-primary pull-down">Next</button>
-					</div>
+					<form>
+						<div class="col-md-3 col-md-offset-2">
+							<h3 class="text-left">Loans</h3>
+							<table>
+								<tr>
+									<td>SSS</td>
+									<td><input type="text" for="sss" class="form-control"></td>
+								</tr>
+								<tr>
+									<td>Pag-IBIG</td>
+									<td><input type="text" for="pagibig" class="form-control"></td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-md-3">
+							<h3 class="text-left">Deductions</h3>
+							<table>
+								<tr>
+									<td>Tax</td>
+									<td><input type="text" for="tax" class="form-control"></td>
+								</tr>
+								<tr>
+									<td>Tools</td>
+									<td><input type="text" for="tools" class="form-control"></td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-md-3">
+							<h3 class="text-left">Vale</h3>
+							<table>
+								<tr>
+									<td colspan="2">SAMPLE TEXT HERE...</td>
+								</tr>
+								<tr>
+									<td><button class="btn btn-success">Add new vale</button></td>
+									<td><button class="btn btn-danger">Deduct old vale</button></td>
+								</tr>
+							</table>
+						</div>
+					</form>
 				</div>
+				<button class="btn btn-primary pull-down">Next</button>
 			</div>
-
 		</div>	
 	</div>
 </div>
