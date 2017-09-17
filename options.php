@@ -45,42 +45,49 @@ include('directives/db.php');
 					<tr>
 						<td>
 							<select id="Monday" class="form-control" disabled>
+								<option value="" disabled selected>--</option>
 								<option value="open">Open</option>
 								<option value="close">Close</option>
 							</select>
 						</td>
 						<td>
 							<select id="Tuesday" class="form-control" disabled>
+								<option value="" disabled selected>--</option>
 								<option value="open">Open</option>
 								<option value="close">Close</option>
 							</select>
 						</td>
 						<td>
 							<select id="Wednesday" class="form-control" disabled>
+								<option value="" disabled selected>--</option>
 								<option value="open">Open</option>
 								<option value="close">Close</option>
 							</select>
 						</td>
 						<td>
 							<select id="Thursday" class="form-control" disabled>
+								<option value="" disabled selected>--</option>
 								<option value="open">Open</option>
 								<option value="close">Close</option>
 							</select>
 						</td>
 						<td>
 							<select id="Friday" class="form-control"  disabled>
+								<option value="" disabled selected>--</option>
 								<option value="open">Open</option>
 								<option value="close">Close</option>
 							</select>
 						</td>
 						<td>
 							<select id="Saturday" class="form-control" disabled>
+								<option value="" disabled selected>--</option>
 								<option value="open">Open</option>
 								<option value="close">Close</option>
 							</select>
 						</td>
 						<td>
 							<select id="Sunday" class="form-control" disabled>
+								<option value="" disabled selected>--</option>
 								<option value="open">Open</option>
 								<option value="close">Close</option>
 							</select>
@@ -176,19 +183,23 @@ include('directives/db.php');
 
 		function save()
 		{
-			confirm("Are you sure you want to save this new open/close payroll schedule?");
+			confirm("Are you sure you want to save this new open/close payroll schedule?");K
 		}
 
 		function triggerInput(dayOfWeek)
 		{
 			var checkbox = document.getElementsByName('checkboxes'), i;
 			var checkboxlength = document.querySelectorAll('input[type=checkbox]').length;
+			var changeDefault = document.getElementById(dayOfWeek);
 
 			// Enable dropdown when checkbox is selected
 			if(document.getElementById(dayOfWeek+"BOX").checked==true)
 			{
 				var cellCHECK = document.getElementById(dayOfWeek);
 				cellCHECK.removeAttribute('disabled');
+				
+				cellCHECK.options[0].removeAttribute('selected');
+				cellCHECK.options[1].setAttribute('selected','');
 			}
 
 			// Disabled dropdown when checkbox is deselected
@@ -196,14 +207,23 @@ include('directives/db.php');
 			{
 				var cellUNCHECK = document.getElementById(dayOfWeek);
 				cellUNCHECK.setAttribute('disabled', '');
+
+				if(changeDefault.options[2].hasAttribute('selected'))
+				{
+					changeDefault.options[2].removeAttribute('selected');	
+					changeDefault.options[0].setAttribute('selected','');
+				}
+				else if(changeDefault.options[1].hasAttribute('selected'))
+				{
+					changeDefault.options[1].removeAttribute('selected');
+					changeDefault.options[0].setAttribute('selected','');
+				}
 			}
 
 			// Checking if 2 checkboxes are active
 			if(document.querySelectorAll('input[type=checkbox]:checked').length === 2)
 			{
-				// Set default select option to close
-				var changeDefault = document.getElementById(dayOfWeek);
-				changeDefault.options[1].setAttribute('selected','selected');
+				changeDefault.options[2].setAttribute('selected','');
 
 				 for(i = 0; i <= checkboxlength; i++)
 				 {
@@ -217,7 +237,7 @@ include('directives/db.php');
 
 			// Checking if only 1 checkbox is active
 			if(document.querySelectorAll('input[type=checkbox]:checked').length === 1)
-			{
+			{		
 				for(var i = 0; i <= checkboxlength; i++)
 				{
 					console.log(checkbox[i]);
