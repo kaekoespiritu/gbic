@@ -3,7 +3,7 @@
 include('directives/db.php');
 include('directives/session.php');
   date_default_timezone_set('Asia/Hong_Kong');
-  $site = "Zooey";//Change this to dynamic by getting data from PayrollSite.php
+  $site = $_GET['site'];//Change this to dynamic by getting data from PayrollSite.php
 ?>
 <html>
 <head>
@@ -26,7 +26,7 @@ include('directives/session.php');
 	<div class="row pull-down">
 	<div class="col-md-10 col-md-offset-1">
 		<ol class="breadcrumb text-left">
-			<li><a href="payrollsite.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a></li>
+			<li><a href="payroll_site.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a></li>
 			<li class="active">Position</li>
 		</ol>
 	</div>
@@ -69,38 +69,40 @@ include('directives/session.php');
 				{
 					$employee_num = mysql_num_rows($employee_query);
 				}
-				/* If location is long, font-size to smaller */
-				if(strlen($row['position'])>=16)
+				if($employee_num != 0)
 				{
-					Print '	<a href="payroll.php?site='. $row['position'] .'" style="color: white !important; text-decoration: none !important;">
-								<div class="sitebox">
-									<span class="smalltext">'
-										. $row['position'] .'</span><br><br><span>Employees: '. $employee_num .
-									'</span>
-								</div>
-							</a>';
+					/* If location is long, font-size to smaller */
+					if(strlen($row['position'])>=16)
+					{
+						Print '	<a href="payroll.php?site='. $row['position'] .'" style="color: white !important; text-decoration: none !important;">
+									<div class="sitebox">
+										<span class="smalltext">'
+											. $row['position'] .'</span><br><br><span>Employees: '. $employee_num .
+										'</span>
+									</div>
+								</a>';
+					}
+					else
+					{
+						Print '	<a href="payroll.php?site='. $row['position'] .'" style="color: white !important; text-decoration: none !important;">
+									<div class="sitebox">
+										<span class="autofit">'
+											. $row['position'] .'<br><br>Employees: '. $employee_num .
+										'</span>
+									</div>
+								</a>';
+					}
+					$counter++;
+					if($counter == 5)
+					{
+						Print '</div>';	
+						$counter = 0;
+					}
+				}
 			}
-			else
-			{
-				Print '	<a href="payroll.php?site='. $row['position'] .'" style="color: white !important; text-decoration: none !important;">
-							<div class="sitebox">
-								<span class="autofit">'
-									. $row['position'] .'<br><br>Employees: '. $employee_num .
-								'</span>
-							</div>
-						</a>';
-		}
-		$counter++;
-		if($counter == 5)
-		{
-			Print '</div>';	
-			$counter = 0;
-		}
-
-	}
-	?>
-</div>
-</div>
+			?>
+		</div>
+	</div>
 </body>
 <!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 <script rel="javascript" src="js/jquery.min.js"></script>

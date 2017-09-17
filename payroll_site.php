@@ -25,7 +25,7 @@ include('directives/session.php');
 	<div class="row pull-down">
 	<div class="col-md-10 col-md-offset-1">
 		<ol class="breadcrumb text-left">
-			<li><a href="loginpayroll.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Logout of Payroll</a></li>
+			<li><a href="payroll_login.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Logout of Payroll</a></li>
 			<li class="active">Site</li>
 		</ol>
 	</div>
@@ -67,38 +67,41 @@ include('directives/session.php');
 				{
 					$employee_num = mysql_num_rows($employee_query);
 				}
-				/* If location is long, font-size to smaller */
-				if(strlen($row['location'])>=16)
-				{
-					Print '	<a href="payrollposition.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
-								<div class="sitebox">
-									<span class="smalltext">'
-										. $row['location'] .'</span><br><br><span>Employees: '. $employee_num .
-									'</span>
-								</div>
-							</a>';
-			}
-			else
-			{
-				Print '	<a href="payrollposition.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
-							<div class="sitebox">
-								<span class="autofit">'
-									. $row['location'] .'<br><br>Employees: '. $employee_num .
-								'</span>
-							</div>
-						</a>';
-		}
-		$counter++;
-		if($counter == 5)
-		{
-			Print '</div>';	
-			$counter = 0;
-		}
 
-	}
-	?>
-</div>
-</div>
+				if($employee_num != 0)
+				{
+					/* If location is long, font-size to smaller */
+					if(strlen($row['location'])>=16)
+					{
+						Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
+									<div class="sitebox">
+										<span class="smalltext">'
+											. $row['location'] .'</span><br><br><span>Employees: '. $employee_num .
+										'</span>
+									</div>
+								</a>';
+					}
+					else
+					{
+						Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
+									<div class="sitebox">
+										<span class="autofit">'
+											. $row['location'] .'<br><br>Employees: '. $employee_num .
+										'</span>
+									</div>
+								</a>';
+					}
+					$counter++;
+					if($counter == 5)
+					{
+						Print '</div>';	
+						$counter = 0;
+					}
+				}
+			}
+			?>
+		</div>
+	</div>
 </body>
 <!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 <script rel="javascript" src="js/jquery.min.js"></script>

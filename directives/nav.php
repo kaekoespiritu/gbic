@@ -31,7 +31,7 @@
 	</div>
 	<!-- PAYROLL BUTTON -->
 	<div id="payroll" class="col-md-1 navibutton">
-	<a href="loginpayroll.php" class="payroll">
+	<a href="payroll_login.php" class="payroll">
 		<img src="Images/cash-pay.png" class="center-block">
 		<h6 class="text-center">PAYROLL</h6>
 	</a>

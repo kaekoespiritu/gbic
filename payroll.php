@@ -25,7 +25,7 @@ include('directives/session.php');
 	<div class="row pull-down">
 	<div class="col-md-10 col-md-offset-1">
 			<ol class="breadcrumb text-left">
-				<li><a href="payrollposition.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Position</a></li>
+				<li><a href="payroll_position.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Position</a></li>
 				<li class="active">Employees at SITENAME</li>
 				<button class="btn btn-success pull-right" onclick="saveChanges()">Save changes</button>
 			</ol>
@@ -91,7 +91,7 @@ include('directives/session.php');
 									<tr>
 										<td>PagIBIG</td>
 										<td><input type="text"></td>
-										<td>Taxes</td>
+										<td>Tax</td>
 										<td><input type="text"></td>
 									</tr>
 									<tr>
