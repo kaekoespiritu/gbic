@@ -288,11 +288,32 @@ include('directives/session.php');
 			$site_box_query = mysql_query($site_box);
 			while($row = mysql_fetch_assoc($site_box_query))
 			{
-
+				$attendanceStatus = null;
+				$site = $row['location'];
 				if($counter == 0)
 				{
 					Print '<div class="row">';
 				}
+				//Check if overall attendance for a certain site is done
+				$attendanceChecker = "SELECT * FROM attendance WHERE date = '$date' AND site = '$site'";
+				$attendanceQuery = mysql_query($attendanceChecker);
+				if($attendanceQuery)
+				{
+					$attNum = mysql_num_rows($attendanceQuery);
+					$checker = 0;
+					while($attRow = mysql_fetch_assoc($attendanceQuery))
+					{
+						if($attRow['attendance'] != 0)//0 is for no input
+						{
+							$checker++;//counter
+						}
+					}
+					if($checker == $attNum)//check if number of attendance and the counter are the same
+					{
+						$attendanceStatus = 1;//Trigger for completing the attendance for the site
+					}
+				}
+				
 
 				$site_num = $row['location'];
 				$num_employee = "SELECT * FROM employee WHERE site = '$site_num'";
@@ -306,27 +327,38 @@ include('directives/session.php');
 				/* If location is long, font-size to smaller */
 				if(strlen($row['location'])>=16)
 				{
-					Print '<a href="enterattendance.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;"><div class="sitebox">
-					<span class="smalltext">'. $row['location'] .'</span><br><br><span>Employees: '. $employee_num .'</span>
-				</div></a>';
-			}
-			else
-			{
-				Print '	<a href="enterattendance.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
-				<div class="sitebox">
-					<span class="autofit">'. $row['location'] .'<br><br>Employees: '. $employee_num .'</span>
-				</div>
-			</a>';
-		}
-		$counter++;
-		if($counter == 5)
-		{
-			Print '</div>';	
-			$counter = 0;
-		}
+					Print '	<a href="enterattendance.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
+								<div class="sitebox">
+									<span class="smalltext">'
+										. $row['location'] .
+									'</span>
+									<br><br>
+									<span>Employees: '. $employee_num .'</span>
+								</div>
+								<input type="hidden" id="'. $row['location'] .'" value="'. $attendanceStatus .'">
+							</a>';
+				}
+				else
+				{
+					Print '	<a href="enterattendance.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
+								<div class="sitebox">
+									<span class="autofit">'
+										. $row['location'] .
+									'<br><br>Employees: '. $employee_num .'
+									</span>
+								</div>
+								<input type="hidden" id="'. $row['location'] .'" value="'. $attendanceStatus .'">
+							</a>';
+				}
+				$counter++;
+				if($counter == 5)
+				{
+					Print '</div>';	
+					$counter = 0;
+				}
 
-	}
-	?>
+			}
+			?>
 </div>
 </div>
 <div id="forPHP">
