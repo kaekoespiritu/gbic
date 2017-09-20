@@ -112,6 +112,13 @@
 							{
 								$document .= "PhilHealth";
 							}
+							$document = trim($document);
+							$commaChecker = substr($document, -1); 
+							Print "<script>alert('".$commaChecker."')</script>"; 
+							if($commaChecker == ",") // Removes the comma if there is no following value
+							{
+								$document = substr($document, 0, -1);
+							}
 							
 							
 						}
