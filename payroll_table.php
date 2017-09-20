@@ -114,7 +114,7 @@
 							}
 							$document = trim($document);
 							$commaChecker = substr($document, -1); 
-							Print "<script>alert('".$commaChecker."')</script>"; 
+							
 							if($commaChecker == ",") // Removes the comma if there is no following value
 							{
 								$document = substr($document, 0, -1);
@@ -226,7 +226,7 @@
 						}
 						$loan = trim($loan);
 						$commaChecker = substr($loan, -1); 
-						Print "<script>alert('".$commaChecker."')</script>"; 
+						
 						if($commaChecker == ",") // Removes the comma if there is no following value
 						{
 							$loan = substr($loan, 0, -1);
