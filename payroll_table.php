@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <?php
-	include('directives/session.php');
-	include('directives/db.php');
-	if(!isset($_GET['site']) && !isset($_GET['position']))
-	{
-		header("location:payroll_login.php");
-	}
-	
-	$site = $_GET['site'];
-	$position = $_GET['position'];
-	$date = strftime("%B %d, %Y");
+include('directives/session.php');
+include('directives/db.php');
+if(!isset($_GET['site']) && !isset($_GET['position']))
+{
+	header("location:payroll_login.php");
+}
 
-
-
+$site = $_GET['site'];
+$position = $_GET['position'];
+$date = strftime("%B %d, %Y");
 
 ?>
 <html>
@@ -38,39 +35,65 @@
 			<div class="col-md-10 col-md-offset-1 pull-down">
 				<ol class="breadcrumb text-left">
 					<li><a href="payroll_position.php?site=<?php Print $site?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a></li>
-					<?php
-						Print "<li class='active'>Payroll for ". $position ." at ". $site ." </li>";
-					?>					
-					<button class="btn btn-success pull-right" onclick="save()">Save Changes</button>
+
+					<li class='active'>Payroll table</li>
+
+					<h4 class="pull-right">
+						<?php
+						Print $position . "s at " . $site
+						?>
+					</h4>
 				</ol>
 
 			</div>
 
 			<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
-				<div class="col-md-3 col-md-offset-1">
-					<form method="post" action="" id="search_form">
-						<div class="form-group">
-							<input type="text" placeholder="Search" id="search_box" name="txt_search" onkeypress="enter(enter)" class="form-control">
-						</div>
-					</form>
+			<div class="col-md-3 col-md-offset-1">
+				<form method="post" action="" id="search_form">
+					<div class="form-group">
+						<input type="text" placeholder="Search" id="search_box" name="txt_search" onkeypress="enter(enter)" class="form-control">
+					</div>
+				</form>
+			</div>
+			<!-- Date -->
+			<div class="col-md-4">
+				<h3 style="margin-top:0px"><?php 
+				date_default_timezone_set('Asia/Hong_Kong');
+				$date = date('F d, Y', time());
+				echo $date;
+				?></h3>
+			</div>
+			<div class="col-md-3 pull-left">
+				Filter by:
+				<!-- Documents status DROPDOWN -->
+				<div class="btn-group">
+					<select class="form-control" id="documents">
+						<option hidden>Documents</option>
+						<option value="complete">Complete</option>
+						<option value="incomplete">Incomplete</option>
+					</select>
 				</div>
+				<!-- Payroll status DRODOWN -->
+				<div class="btn-group">
+					<select class="form-control" id="documents">
+						<option hidden>Payroll status</option>
+						<option value="complete">Complete</option>
+						<option value="incomplete">Incomplete</option>
+					</select>
 				</div>
-				<!-- ACTION BUTTONS FOR FILTERS -->
-				<!-- END OF ACTION BUTTONS FOR FILTERS-->
-			
-			<!-- Attendance table -->
-		<div class="col-md-10 col-md-offset-1">
-			<table class="table table-condensed table-bordered" style="background-color:white;">
-				<tr>
-					<td>Employee ID</td>
-					<td style='width:200px !important;'>Name</td>
-					<td>Payroll status</td>
-					<td>Has documents</td>
-					<td>Has loans</td>
-					<td>Has absences</td>
-					<td colspan="2">Actions</td>
-				</tr>
-				<?php
+			</div>
+			<!-- Payroll table -->
+			<div class="col-md-10 col-md-offset-1">
+				<table class="table table-condensed table-bordered" style="background-color:white;">
+					<tr>
+						<td>Employee ID</td>
+						<td style='width:200px !important;'>Name</td>
+						<td>Payroll status</td>
+						<td>Incomplete documents</td>
+						<td>Loans</td>
+						<td>Action</td>
+					</tr>
+					<?php
 					$employee = "SELECT * FROM employee WHERE employment_status = 1 AND site = '$site'AND position = '$position'";
 					//$employee = "SELECT * FROM employee WHERE employment_status = 1 ";
 					$employeeQuery = mysql_query($employee);
@@ -87,7 +110,7 @@
 						else
 						{
 							$bool = false;
-							$document = "";
+							$document = "Incomplete - ";
 							if($row['sss'] == 0)//Checks if SSS is not complete yet
 							{
 								$document .= "SSS";
@@ -114,7 +137,6 @@
 							}
 							$document = trim($document);
 							$commaChecker = substr($document, -1); 
-							Print "<script>alert('".$commaChecker."')</script>"; 
 							if($commaChecker == ",") // Removes the comma if there is no following value
 							{
 								$document = substr($document, 0, -1);
@@ -226,7 +248,6 @@
 						}
 						$loan = trim($loan);
 						$commaChecker = substr($loan, -1); 
-						Print "<script>alert('".$commaChecker."')</script>"; 
 						if($commaChecker == ",") // Removes the comma if there is no following value
 						{
 							$loan = substr($loan, 0, -1);
@@ -234,40 +255,19 @@
 						//$loans = "SELECT * FROM loans WHERE empid = '$empid'";
 						//$loansQuery = mysql_query($loans);
 
-						Print "	<tr>
-									<td>".$empid."</td>
-									<td>".$row['lastname'].", ".$row['firstname']."</td>
-									<td>Incomplete</td>
-									<td>". $document ."</td>
-									<td>". $loan ."</td>
-									<td>None</td>
-									<td><a class='btn btn-primary' href='payroll.php'>Update</a></td>
-									<td><a class='btn btn-primary' href='payroll.php'>View</a></td>
-								</tr>";
+						Print "	<tr id=".$empid.">
+						<td>".$empid."</td>
+						<td>".$row['lastname'].", ".$row['firstname']."</td>
+						<td class='payrollStatus'>Incomplete</td>
+						<td>". $document ."</td>
+						<td>". $loan ."</td>
+						<td><a class='btn btn-primary' href='payroll.php'>View Payroll</a></td>
+						</tr>";
 					}
-				?>
-				
-			</table>
-		</div>
-			<!-- DUMMY MODAL FOR REMARKS -->
-			<div class="modal fade" tabindex="-1" id="remarks" role="dialog">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title" id="dito">Remarks for...</h4>
-						</div>
-						<div class="modal-body">
-							<input class="form-control" id="remark">
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-							<button type="button" class="btn btn-primary" data-dismiss="modal" id="saveRemarks">Save changes</button>
-						</div>
-					</div><!-- /.modal-content -->
-				</div><!-- /.modal-dialog -->
-			</div><!-- /.modal -->
+					?>
 
+				</table>
+			</div>
 		</div>
 	</div>
 
@@ -278,6 +278,23 @@
 	<script src="js/timepicker/jquery.timepicker.min.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script>
+		document.getElementById("payroll").setAttribute("style", "background-color: #10621e;");
+
+		window.onload =	function completePayroll(){
+			var status = document.getElementsByClassName('payrollStatus');
+			for(var i = 0; i < status.length; i++){
+				if(status[i].innerText == 'Complete'){// Changing color of row to green when status is complete
+					status[i].parentNode.setAttribute('class','success');
+				}
+				else if(status[i].innerText == 'Incomplete'){// Change button label if incomplete
+					status[i].nextElementSibling.nextElementSibling.nextElementSibling.innerHTML = '<a class="btn btn-primary" href="payroll.php">Start Payroll</a>';
+				}
+			}
+
+
+		}
+
+
 	</script>
 </body>
 </html>
