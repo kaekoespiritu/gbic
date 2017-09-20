@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <?php
+if(isset($_GET['site']))
+{}
+else
+{
+	header("location:payroll_login.php");
+}
+
 include('directives/db.php');
 include('directives/session.php');
   date_default_timezone_set('Asia/Hong_Kong');
@@ -74,7 +81,7 @@ include('directives/session.php');
 					/* If location is long, font-size to smaller */
 					if(strlen($row['position'])>=16)
 					{
-						Print '	<a href="payroll.php?site='. $row['position'] .'" style="color: white !important; text-decoration: none !important;">
+						Print '	<a href="payroll.php?position='. $row['position'] .'&site='. $site .'" style="color: white !important; text-decoration: none !important;">
 									<div class="sitebox">
 										<span class="smalltext">'
 											. $row['position'] .'</span><br><br><span>Employees: '. $employee_num .
@@ -84,7 +91,7 @@ include('directives/session.php');
 					}
 					else
 					{
-						Print '	<a href="payroll.php?site='. $row['position'] .'" style="color: white !important; text-decoration: none !important;">
+						Print '	<a href="payroll.php?position='. $row['position'] .'&site='. $site .'" style="color: white !important; text-decoration: none !important;">
 									<div class="sitebox">
 										<span class="autofit">'
 											. $row['position'] .'<br><br>Employees: '. $employee_num .

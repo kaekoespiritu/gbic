@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <?php
 include('directives/session.php');
+if(isset($_GET['site']) && isset($_GET['position']))
+{}
+else
+{
+	header("location:payroll_login.php");
+}
+$site = $_GET['site'];
+$position = $_GET['position'];
 ?>
 <html>
 <head>
@@ -31,7 +39,7 @@ include('directives/session.php');
 	<div class="row pull-down">
 	<div class="col-md-10 col-md-offset-1">
 		<ol class="breadcrumb text-left">
-			<li><a href="payroll_position.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Position</a></li>
+			<li><a href="payroll_position.php?site=<?php Print $site ?>&position=<?php Print $position ?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Position</a></li>
 			<li class="active">Employees at SITENAME</li>
 			<button class="btn btn-primary pull-right">Next employee <spen class="glyphicon glyphicon-arrow-right"></spen></button>
 			<button class="btn btn-success pull-right" style="margin-right:5px" onclick="saveChanges()">Save and compute <span class="glyphicon glyphicon-floppy-saved"></span></button>
