@@ -74,7 +74,7 @@ include('directives/session.php');
 					/* If location is long, font-size to smaller */
 					if(strlen($row['position'])>=16)
 					{
-						Print '	<a href="payroll.php?site='. $row['position'] .'" style="color: white !important; text-decoration: none !important;">
+						Print '	<a href="payroll_table.php?site='. $row['position'] .'" style="color: white !important; text-decoration: none !important;">
 									<div class="sitebox">
 										<span class="smalltext">'
 											. $row['position'] .'</span><br><br><span>Employees: '. $employee_num .
@@ -84,7 +84,7 @@ include('directives/session.php');
 					}
 					else
 					{
-						Print '	<a href="payroll.php?site='. $row['position'] .'" style="color: white !important; text-decoration: none !important;">
+						Print '	<a href="payroll_table.php?site='. $row['position'] .'" style="color: white !important; text-decoration: none !important;">
 									<div class="sitebox">
 										<span class="autofit">'
 											. $row['position'] .'<br><br>Employees: '. $employee_num .

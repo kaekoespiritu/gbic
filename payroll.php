@@ -31,9 +31,8 @@ include('directives/session.php');
 	<div class="row pull-down">
 	<div class="col-md-10 col-md-offset-1">
 		<ol class="breadcrumb text-left">
-			<li><a href="payroll_position.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Position</a></li>
-			<li class="active">Employees at SITENAME</li>
-			<button class="btn btn-primary pull-right">Next employee <spen class="glyphicon glyphicon-arrow-right"></spen></button>
+			<li><a href="payroll_table.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Table of Employees</a></li>
+			<li class="active">[NAME OF EMPLOYEE] at [SITE NAME]</li>
 			<button class="btn btn-success pull-right" style="margin-right:5px" onclick="saveChanges()">Save and compute <span class="glyphicon glyphicon-floppy-saved"></span></button>
 		</ol>
 	</div>
