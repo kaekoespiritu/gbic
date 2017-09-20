@@ -288,7 +288,7 @@ include('directives/session.php');
 			$site_box_query = mysql_query($site_box);
 			while($row = mysql_fetch_assoc($site_box_query))
 			{
-				$attendanceStatus = null;
+				$attendanceStatus = 0;
 				$site = $row['location'];
 				if($counter == 0)
 				{
@@ -299,24 +299,34 @@ include('directives/session.php');
 				$attendanceQuery = mysql_query($attendanceChecker);
 				if($attendanceQuery)
 				{
+					//Print "<script>alert('yeah')</script>";
 					$attNum = mysql_num_rows($attendanceQuery);
-					$checker = 0;
-					while($attRow = mysql_fetch_assoc($attendanceQuery))
+					if($attNum == 0)
 					{
-						if($attRow['attendance'] != 0)//0 is for no input
-						{
-							$checker++;//counter
-						}
+						$attendanceStatus = 0;
 					}
-					if($checker == $attNum)//check if number of attendance and the counter are the same
+					else
 					{
-						$attendanceStatus = 1;//Trigger for completing the attendance for the site
+						$checker = null;
+						//Print "<script>alert('". $checker ."')</script>";
+						while($attRow = mysql_fetch_assoc($attendanceQuery))
+						{
+							if($attRow['attendance'] != 0)//0 is for no input
+							{
+								$checker++;//counter
+							}
+						}
+						if($checker == $attNum)//check if number of attendance and the counter are the same
+						{
+							//Print "<script>alert('".$checker." = ". $attNum ."')</script>";
+							$attendanceStatus = 1;//Trigger for completing the attendance for the site
+						}
 					}
 				}
 				
 
 				$site_num = $row['location'];
-				$num_employee = "SELECT * FROM employee WHERE site = '$site_num'";
+				$num_employee = "SELECT * FROM employee WHERE site = '$site_num' AND employment_status = '1'";
 				$employee_query = mysql_query($num_employee);
 				$employee_num = 0;
 

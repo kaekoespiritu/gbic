@@ -59,7 +59,7 @@ include('directives/session.php');
 				}
 
 				$site_num = $row['location'];
-				$num_employee = "SELECT * FROM employee WHERE site = '$site_num'";
+				$num_employee = "SELECT * FROM employee WHERE site = '$site_num' employment_status = '1'";
 				$employee_query = mysql_query($num_employee);
 				$employee_num = 0;
 

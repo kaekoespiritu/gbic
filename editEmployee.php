@@ -5,7 +5,7 @@ include('directives/db.php');
 
 	$empid = $_GET['empid'];
 
-	$query = "SELECT * FROM employee WHERE empid = '$empid'";
+	$query = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1'";
 	$employee_query = mysql_query($query);
 	$employee_info = mysql_fetch_assoc($employee_query);
 

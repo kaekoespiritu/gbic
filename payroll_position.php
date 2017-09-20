@@ -67,7 +67,7 @@ include('directives/session.php');
 				}
 
 				$position_num = $row['position'];
-				$num_employee = "SELECT * FROM employee WHERE position = '$position_num' AND site = '$site'";
+				$num_employee = "SELECT * FROM employee WHERE position = '$position_num' AND site = '$site' AND employment_status = '1'";
 				$employee_query = mysql_query($num_employee);
 				$employee_num = 0;
 

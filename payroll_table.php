@@ -71,7 +71,7 @@
 					<td colspan="2">Actions</td>
 				</tr>
 				<?php
-					$employee = "SELECT * FROM employee WHERE employment_status = 1 AND site = '$site'AND position = '$position'";
+					$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'AND position = '$position'";
 					//$employee = "SELECT * FROM employee WHERE employment_status = 1 ";
 					$employeeQuery = mysql_query($employee);
 

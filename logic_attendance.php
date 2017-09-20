@@ -2,10 +2,10 @@
 include('directives/db.php');
 include('directives/session.php');
 require "directives/attendance/attendance_query.php";
-error_reporting(0);// fetch no error
+//error_reporting(0);// fetch no error
 date_default_timezone_set('Asia/Hong_Kong');
 $location = $_GET['site'];
-
+//Print "<script>alert('absent')</script>";
 if(isset($_SESSION['date']))
 {
 	$date = $_SESSION['date'];// This gets the chosen date by the admin
@@ -91,6 +91,7 @@ if(!empty($dateRows))// Updating attendance
 	$AttQuery = "";
 	for($counter = 0; $counter < $empNum; $counter++)
 	{
+		//Print "<script>alert('4')</script>";
 		if($AttQuery != "")
 		{
 			$AttQuery .= ",";
@@ -165,7 +166,7 @@ if(!empty($dateRows))// Updating attendance
 			}
 
 			$attendance = 2;// 0 - no input / 1 - Absent / 2 - Present
-			$employee = "SELECT * FROM employee WHERE empid = '$empid'";
+			$employee = "SELECT * FROM employee WHERE empid = '$empid' ";
 			$employeeQuery = mysql_query($employee);
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
@@ -191,6 +192,7 @@ if(!empty($dateRows))// Updating attendance
 			$employeeQuery = mysql_query($employee);
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
+			//Print "<script>alert('".$attendance."')</script>";
 			//require "directives/attendance/attendance_query.php";
 			$AttQuery = updateQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 		
@@ -323,11 +325,12 @@ else// NEW attendance
 			
 			$AttQuery = newQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 			
-			
+			//Print "<script>alert('yeah3')</script>";
 			
 		}
 		else if($_POST['attendance'][$counter] == "ABSENT")// ABSENT
 		{
+			//Print "<script>alert('absent')</script>";
 			$empid = $_POST['empid'][$counter];
 			$timein = "";
 			$timeout = "";
@@ -343,10 +346,12 @@ else// NEW attendance
 			$position = $employeeArr['position'];
 			//require "directives/attendance/attendance_query.php";
 			$AttQuery = newQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
+			//Print "<script>alert('".$AttQuery."')</script>";
 			
 		}
 		else if(empty($_POST['attendance'][$counter]))
 		{
+			//Print "<script>alert('yeah1')</script>";
 			$empid = $_POST['empid'][$counter];
 			$timein = "";
 			$timeout = "";
@@ -364,6 +369,7 @@ else// NEW attendance
 			$AttQuery = newQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 		
 		}
+		//Print "<script>alert('yeah')</script>";
 	}
 	//Print "<script>alert('".$AttQuery."')</script>";
 	$FinalQuery = $initialQuery . $AttQuery;
