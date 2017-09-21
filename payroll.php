@@ -56,7 +56,7 @@ $position = $_GET['position'];
 					<h4><b style="font-family: QuickSandMed">Contact Number:</b> 09123456789</h4>
 				</div>
 				<div class="col-md-4 text-right">
-					<h4>Has PhilHealth documents</h4>
+					<h4><span class="glyphicon glyphicon-check"></span> PhilHealth documents</h4>
 					<h4>Has PagIBIG documents</h4>
 					<h4>Has SSS documents</h4>
 				</div>
