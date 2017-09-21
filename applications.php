@@ -2,6 +2,10 @@
 <?php
 include('directives/session.php');
 include('directives/db.php');
+if(!isset($_GET['site']) && !isset($_GET['site']) && !isset($_GET['site']))
+{
+	header("Location: applications.php?site=null&position=null&status=null");
+}
 ?>
 <html>
 <head>
@@ -42,40 +46,46 @@ include('directives/db.php');
 				<div class="btn-group">
 					<select class="form-control">
 						<option hidden>Position</option>
-						<option value="Foreman">Foreman</option>
-						<option value="Leadman">Leadman</option>
-						<option value="TimeKeeper">Time Keeper</option>
-						<option value="Operator">Operator</option>
-						<option value="Carpenter">Carpenter</option>
-						<option value="Mason">Mason</option>
-						<option value="Labor">Labor</option>
-						<option value="Welder">Welder</option>
-						<option value="Painter">Painter</option>
-						<option value="Electrician">Electrician</option>
-						<option value="Plumber">Plumber</option>
-						<option value="OfficeStaff">Office Staff</option>
+						<?php
+							$position = "SELECT position FROM job_position";
+							$position_query = mysql_query($position);
+
+							while($row_position = mysql_fetch_assoc($position_query))
+							{
+								$positionReplaced = str_replace('/+/', ' ', $_GET['position']);
+								$position = mysql_real_escape_string($row_position['position']);
+								if($position == $positionReplaced)
+								{
+									Print '<option value="'. $position .'" selected="selected">'. $position .'</option>';
+								}
+								else
+								{
+									Print '<option value="'. $position .'">'. $position .'</option>';
+								}
+							}
+						?>
 					</select>
 				</div>
 				<div class="btn-group">
 					<select class="form-control">
 						<option hidden>Site</option>
-						<option value="Muralla">Muralla</option>
-						<option value="ZooeyMain">Zooey Main</option>
-						<option value="Teressa">Teressa</option>
-						<option value="Camalig">Camalig</option>
-						<option value="Marilao">Marilao</option>
-						<option value="StaMaria">Sta. Maria</option>
-						<option value="Batangas">Balagtas</option>
-						<option value="LaUnion">La Union</option>
-						<option value="Kaybiga">Kaybiga</option>
-						<option value="MaxSteel">Max steel</option>
-						<option value="ZooeyLawangBato">Zooey Lawang Bato</option>
-						<option value="PedroGil">Pedro Gil</option>
-						<option value="Batangas">Batangas</option>
-						<option value="Tagaytay">Tagaytay</option>
-						<option value="Carmona">Carmona</option>
-						<option value="Paliparan">Paliparan</option>
-						<option value="Laguna">Laguna</option>
+						<?php
+							$site = "SELECT location FROM site";
+							$site_query = mysql_query($site);
+
+							while($row_site = mysql_fetch_assoc($site_query))
+							{
+								$siteReplaced = str_replace('/+/', ' ', $_GET['site']);
+								if($row_site['location'] == $siteReplaced)
+								{
+									Print '<option value="'. $row_site['location'] .'" selected="selected">'. $row_site['location'] .'</option>';
+								}
+								else
+								{
+									Print '<option value="'. $row_site['location'] .'">'. $row_site['location'] .'</option>';
+								}
+							}
+							?>
 					</select>
 				</div>
 				<div class="btn-group">
@@ -98,24 +108,50 @@ include('directives/db.php');
 						<td>Position</td>
 						<td>Site</td>
 						<td>Days absent</td>
+						<td>Status</td>
 						<td>Actions</td>
 					</tr>
-					<tr>
-						<td>1</td>
-						<td>Trial Employee entry</td>
-						<td>Position</td>
-						<td>Placeholder</td>
-						<td>3</td>
-						<td><a class="btn btn-default" href="viewabsence.php">Check details</a></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>Trial Employee entry</td>
-						<td>Position</td>
-						<td>Placeholder</td>
-						<td>2</td>
-						<td><a class="btn btn-default" disabled="disabled" href="viewabsence.php">Check details</a></td>
-					</tr>
+					<?php
+						$awol = "SELECT * FROM awol_employees";
+						$awolQuery = mysql_query($awol);
+
+						while($row = mysql_fetch_assoc($awolQuery))
+						{
+							$empid = $row['empid'];
+							$employee = "SELECT * FROM employee WHERE empid = '$empid'";
+							$employeeQuery = mysql_query($employee);
+							$empInfo = mysql_fetch_assoc($employeeQuery);
+							Print "
+										<tr>
+											
+											<td>
+												".$empid."
+											</td>
+											<td>"
+												.$empInfo['lastname'].", ".$empInfo['firstname'].
+										   "</td>
+											<td>"
+												.$empInfo['position'].
+										   "</td>
+											<td>"
+												.$empInfo['site'].
+										   "</td>
+											<td>
+												7
+											</td>
+											<td>"
+												.$row['status'].
+										   "</td>
+											<td>
+												<button class='btn btn-default' onclick='next(\"".$empid."\")'>
+													Check details
+												</button>
+												<input type='hidden' name='empid' value='".$empid."'>
+											</td>
+										</tr>
+									";
+						}
+					?>
 				</table>
 			</div>	
 		</div>
@@ -133,6 +169,10 @@ include('directives/db.php');
 			confirm("Note: After saving these changes, the loans you've entered will no longer be editable. Are you sure you want to save changes?");
 		}
 		document.getElementById("employees").setAttribute("style", "background-color: #10621e;");
+		function next(id){
+			//alert(id);
+			window.location.assign("applications_next.php?id="+id);
+		}
 	</script>
 </body>
 </html>

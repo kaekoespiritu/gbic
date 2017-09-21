@@ -177,16 +177,63 @@ if(!empty($dateRows))// Updating attendance
 		}
 		else if($_POST['attendance'][$counter] == "ABSENT")// ABSENT
 		{
-			
-			//Print "<script>alert('absent')</script>";
 			$empid = $_POST['empid'][$counter];
+			//Make Algorithm that will check if this employee is AWOL
+			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY date ASC LIMIT 7";
+			$AwolQuery = mysql_query($Awol);
+			$AwolCounter = 0;
+			$start = null;
+			$end = null;
+			$counter = 0;
+			while($AwolChecker = mysql_fetch_assoc($AwolQuery))
+			{
+				$counter++;
+				if($counter == 1)
+				{
+					$start = $AwolChecker['date'];// Gets the first date
+					//Print "<script>alert('".$start."')</script>";
+				}
+				else if($counter == 7)
+				{
+					$end = $AwolChecker['date'];// Gets the last date of the query
+					//Print "<script>alert('".$end."')</script>";
+				}
+				
+				//Print "<script>alert('".$counter."')</script>";
+				
+				if($AwolChecker['attendance'] == 1)
+				{
+					$AwolCounter++;
+				}
+			}
+			if($AwolCounter == 7)
+			{
+				$AwolPending = "INSERT awol_employees(empid, start_date, end_date, status) 
+												VALUES(	'$empid',
+														'$start',
+														'$end',
+														'Pending')";
+				mysql_query($AwolPending);
+				$emp = "SELECT * FROM employee WHERE empid = '$empid'";
+				$empQuery = mysql_query($emp);
+				$empArr = mysql_fetch_assoc($empQuery);
+				Print "<script>alert('[".$empArr['lastname'].", ".$empArr['lastname']."] has already accumulated 7 Absences and is now pending for AWOL. Go to Employees tab > Absence Notification')</script>";
+			}
+
+
+			//Print "<script>alert('absent')</script>";
+			
 			$timein = "";
 			$timeout = "";
 			$workinghrs = "";
 			$OtHrs = "";
 			$undertime = "";
 			$nightdiff = "";
-			$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+			$remarks = "";
+			if(isset($_POST['remarks'][$counter]))
+			{
+				$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+			}
 			$attendance = 1;// 0 - no input / 1 - Absent / 2 - Present
 			$employee = "SELECT * FROM employee WHERE empid = '$empid'";
 			$employeeQuery = mysql_query($employee);
@@ -209,7 +256,11 @@ if(!empty($dateRows))// Updating attendance
 			$OtHrs = "";
 			$undertime = "";
 			$nightdiff = "";
-			$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+			$remarks = "";
+			if(isset($_POST['remarks'][$counter]))
+			{
+				$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+			}
 			$attendance = 0;// 0 - no input / 1 - Absent / 2 - Present
 			$employee = "SELECT * FROM employee WHERE empid = '$empid'";
 			$employeeQuery = mysql_query($employee);
@@ -330,15 +381,57 @@ else// NEW attendance
 		}
 		else if($_POST['attendance'][$counter] == "ABSENT")// ABSENT
 		{
-			//Print "<script>alert('absent')</script>";
+			//Make algorithm that will check if this employee is AWOL
 			$empid = $_POST['empid'][$counter];
+			//Make Algorithm that will check if this employee is AWOL
+			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY date ASC LIMIT 6";
+			$AwolQuery = mysql_query($Awol);
+			$AwolCounter = 0;
+			$start = $date;
+			$end = null;
+			$counter = 0;
+			while($AwolChecker = mysql_fetch_assoc($AwolQuery))
+			{
+				$counter++;
+				if($counter == 6)
+				{
+					$end = $AwolChecker['date'];// Gets the last date of the query
+					//Print "<script>alert('".$end."')</script>";
+				}
+				//Print "<script>alert('".$counter."')</script>";
+				
+				if($AwolChecker['attendance'] == 1)
+				{
+					$AwolCounter++;
+				}
+			}
+			if($AwolCounter == 6)
+			{
+				$AwolPending = "INSERT awol_employees(empid, start_date, end_date, status) 
+												VALUES(	'$empid',
+														'$start',
+														'$end',
+														'Pending')";
+				mysql_query($AwolPending);
+				mysql_query($AwolPending);
+				$emp = "SELECT * FROM employee WHERE empid = '$empid'";
+				$empQuery = mysql_query($emp);
+				$empArr = mysql_fetch_assoc($empQuery);
+				Print "<script>alert('[".$empArr['lastname'].", ".$empArr['lastname']."] has already accumulated 7 Absences and is now pending for AWOL. Go to Employees tab > Absence Notification')</script>";
+			}
+
+			//Print "<script>alert('absent')</script>";
 			$timein = "";
 			$timeout = "";
 			$workinghrs = "";
 			$OtHrs = "";
 			$undertime = "";
 			$nightdiff = "";
-			$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+			$remarks = "";
+			if(isset($_POST['remarks'][$counter]))
+			{
+				$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+			}
 			$attendance = 1;// 0 - no input / 1 - Absent / 2 - Present
 			$employee = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1' ";
 			$employeeQuery = mysql_query($employee);
@@ -359,7 +452,11 @@ else// NEW attendance
 			$OtHrs = "";
 			$undertime = "";
 			$nightdiff = "";
-			$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+			$remarks = "";
+			if(isset($_POST['remarks'][$counter]))
+			{
+				$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+			}
 			$attendance = 0;// 0 - no input / 1 - Absent / 2 - Present
 			$employee = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1' ";
 			$employeeQuery = mysql_query($employee);

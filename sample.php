@@ -1,20 +1,14 @@
-<form method="post">
 <?php
-for ($i=1; $i <5 ; $i++) 
-{ 
-    echo'<input type="checkbox" value="'.$i.'" name="checkbox[]"/>';
-} 
-?>
-<input type="submit" name="submit" class="form-control" value="Submit">  
-</form>
 
-<?php 
-if (isset($_POST['submit'])) {
-
-for($b = 0; $b<= 5; $b++){
-    if(isset($_POST['checkbox'][$b]))
-        $book .= ' '.$_POST['checkbox'][$b];
-}
-Print $book;
+$start_date = 'September 16, 2017';
+$end_date = 'September 22, 2017';
+if ($end_date >= $start_date)
+{
+  for ($day = 0; $day < 7; $day++)
+  {
+    echo "<br />" . date("F j, Y", strtotime("$start_date +$day day"));
+    $yea = strtotime($start_date + $day);
+    echo $yea;
+  }
 }
 ?>

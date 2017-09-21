@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <?php
 include('directives/session.php');
+if(isset($_SESSION['empid']))
+{
+	$empid = $_SESSION['empid'];
+}
 ?>
 <html>
 <head>
