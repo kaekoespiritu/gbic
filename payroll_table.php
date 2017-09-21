@@ -291,7 +291,7 @@ $date = strftime("%B %d, %Y");
 					status[i].parentNode.setAttribute('class','success');
 				}
 				else if(status[i].innerText == 'Incomplete'){// Change button label if incomplete
-					status[i].nextElementSibling.nextElementSibling.nextElementSibling.innerHTML = '<a class="btn btn-primary" href="payroll.php?site=<?php Print $site?>&position=<?php Print $site?>&empid=<?php Print $empid?>">Start Payroll</a>';
+					status[i].nextElementSibling.nextElementSibling.nextElementSibling.innerHTML = '<a class="btn btn-primary" href="payroll.php?site=<?php Print $site?>&position=<?php Print $position?>&empid=<?php Print $empid?>">Start Payroll</a>';
 				}
 			}
 
