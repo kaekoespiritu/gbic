@@ -260,13 +260,13 @@ $date = strftime("%B %d, %Y");
 						//$loansQuery = mysql_query($loans);
 
 						Print "	<tr id=".$empid.">
-						<td>".$empid."</td>
-						<td>".$row['lastname'].", ".$row['firstname']."</td>
-						<td class='payrollStatus'>Incomplete</td>
-						<td>". $document ."</td>
-						<td>". $loan ."</td>
-						<td><a class='btn btn-primary' href='payroll.php'>View Payroll</a></td>
-						</tr>";
+									<td>".$empid."</td>
+									<td>".$row['lastname'].", ".$row['firstname']."</td>
+									<td class='payrollStatus'>Incomplete</td>
+									<td>". $document ."</td>
+									<td>". $loan ."</td>
+									<td><a class='btn btn-primary' href='payroll.php?site=". $site ."&position=". $position ."&empid=".$empid."'>View Payroll</a></td>
+								</tr>";
 					}
 					?>
 
@@ -291,7 +291,7 @@ $date = strftime("%B %d, %Y");
 					status[i].parentNode.setAttribute('class','success');
 				}
 				else if(status[i].innerText == 'Incomplete'){// Change button label if incomplete
-					status[i].nextElementSibling.nextElementSibling.nextElementSibling.innerHTML = '<a class="btn btn-primary" href="payroll.php">Start Payroll</a>';
+					status[i].nextElementSibling.nextElementSibling.nextElementSibling.innerHTML = '<a class="btn btn-primary" href="payroll.php?site=<?php Print $site?>&position=<?php Print $position?>&empid=<?php Print $empid?>">Start Payroll</a>';
 				}
 			}
 

@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <?php
 include('directives/session.php');
-if(isset($_GET['site']) && isset($_GET['position']))
-{}
-else
+if(!isset($_GET['site']) && !isset($_GET['position']) && !isset($_GET['empid']))
 {
 	header("location:payroll_login.php");
 }
+date_default_timezone_set('Asia/Hong_Kong');
+$date = date('F d, Y', time());
 $site = $_GET['site'];
 $position = $_GET['position'];
+$empid = $_GET['empid'];
+if(isset($_POST['submit']))
+{
+	Print "<script>alert('yeah')</script>";
+}
 ?>
 <html>
 <head>
@@ -40,20 +45,47 @@ $position = $_GET['position'];
 	<div class="col-md-10 col-md-offset-1">
 		<ol class="breadcrumb text-left">
 
-			<li><a href="payroll_table.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Table of Employees</a></li>
-			<li class="active">[NAME OF EMPLOYEE] at [SITE NAME]</li>
+			<li>
+				<a href="payroll_table.php?site=<?php Print $site?>&position=<?php Print $position?>" class="btn btn-primary">
+					<span class="glyphicon glyphicon-arrow-left"></span> 
+						Table of Employees
+				</a>
+			</li>
+			<?php
+				$employee = "SELECT * FROM employee WHERE empid = '$empid'";
+				$employeeQuery = mysql_query($employee);
+				$empArr = mysql_fetch_assoc($employeeQuery);
+				Print "<li class='active'>". $empArr['site'] ."</li>";
+			?>
+			
 
 			<button class="btn btn-success pull-right" style="margin-right:5px" onclick="saveChanges()">Save and compute <span class="glyphicon glyphicon-floppy-saved"></span></button>
 		</ol>
 	</div>
 		<div class="col-md-10 col-md-offset-1">
-			<h2 class="text-left">Miguelito Joselito Dela Cruz</h2>
+			<h2 class="text-left"><?php Print $empArr['lastname'].", ".$empArr['firstname'] ?></h2>
 			<div class="row">
 				<div class="col-md-8 text-left" style="word-break: keep-all">
-					<h4><b style="font-family: QuickSandMed">Employee ID:</b> 2014-1352845</h4>
-					<h4><b style="font-family: QuickSandMed">Position:</b> Mason </h4>
-					<h4><b style="font-family: QuickSandMed">Address:</b> 97 Waco St. Greenheights Village, Quezon City</h4>
-					<h4><b style="font-family: QuickSandMed">Contact Number:</b> 09123456789</h4>
+					<h4>
+						<b style="font-family: QuickSandMed">
+							Employee ID:
+						</b> <?php Print $empid?>
+					</h4>
+					<h4>
+						<b style="font-family: QuickSandMed">
+							Position:
+						</b> <?php Print $empArr['position']?> 
+					</h4>
+					<h4>
+						<b style="font-family: QuickSandMed">
+							Address:
+						</b> <?php Print $empArr['address']?> 
+					</h4>
+					<h4>
+						<b style="font-family: QuickSandMed">
+							Contact Number:
+						</b> <?php Print $empArr['contactnum']?> 
+					</h4>
 				</div>
 				<div class="col-md-4 text-right">
 					<h4><span class="glyphicon glyphicon-check"></span> PhilHealth documents</h4>
