@@ -6,7 +6,7 @@
 		//Print "<script>alert('".$attendance."')</script>";
 		if((!empty($timein) && !empty($timeout)) && $day == "Sunday")
 		{
-			Print "<script>alert('1')</script>";
+			//Print "<script>alert('1')</script>";
 			$AttQuery = "UPDATE attendance SET 	empid='".$empid."',
 											  	position= '".$position."',
 											  	timein= '".$timein."',
@@ -80,7 +80,7 @@
 												  	holiday='0' WHERE date = '$date' AND empid = '$empid'";
 			}
 		}
-		Print "<script>alert('".$AttQuery."')</script>";
+		//Print "<script>alert('".$AttQuery."')</script>";
 		return $AttQuery;
 	}
 
@@ -157,7 +157,7 @@
 						  '0')";
 			}
 		}
-		Print "<script>alert('".$AttQuery."')</script>";
+		//Print "<script>alert('".$AttQuery."')</script>";
 
 		return $AttQuery;
 	}
