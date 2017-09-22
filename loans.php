@@ -148,12 +148,11 @@ $date = strftime("%B %d, %Y");
 						}
 						else // Default output
 						{
-							$employee = "SELECT * FROM employee AND employment_status = '1' ORDER BY site, empid DESC";
+							//Print "<script>alert('yeah')</script>";
+							$employee = "SELECT * FROM employee WHERE employment_status = '1' ORDER BY site, empid DESC";
 						}
 						
 						
-						
-
 						$empQuery = mysql_query($employee);
 
 						while($row = mysql_fetch_assoc($empQuery))

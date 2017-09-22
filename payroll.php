@@ -9,6 +9,8 @@ else
 }
 $site = $_GET['site'];
 $position = $_GET['position'];
+$empid = $_GET['empid'];
+$date = strftime("%B %d, %Y");
 ?>
 <html>
 <head>
@@ -47,23 +49,82 @@ $position = $_GET['position'];
 		</ol>
 	</div>
 		<div class="col-md-10 col-md-offset-1">
-			<h2 class="text-left">Miguelito Joselito Dela Cruz</h2>
-			<div class="row">
-				<div class="col-md-8 text-left" style="word-break: keep-all">
-					<h4><b style="font-family: QuickSandMed">Employee ID:</b> 2014-1352845</h4>
-					<h4><b style="font-family: QuickSandMed">Position:</b> Mason </h4>
-					<h4><b style="font-family: QuickSandMed">Address:</b> 97 Waco St. Greenheights Village, Quezon City</h4>
-					<h4><b style="font-family: QuickSandMed">Contact Number:</b> 09123456789</h4>
-				</div>
-				<div class="col-md-4 text-right">
-					<h4><span class="glyphicon glyphicon-ok"></span> PhilHealth documents</h4>
-					<h4><span class="glyphicon glyphicon-remove"></span> Pag-IBIG documents</h4>
-					<h4><span class="glyphicon glyphicon-ok"></span> SSS documents</h4>
-				</div>
-			</div>
+			<?php
+			$employee = "SELECT * FROM employee WHERE empid = '$empid'";
+			$employeeQuery = mysql_query($employee);
+			$empArr = mysql_fetch_assoc($employeeQuery);
+			Print "
+			<h2 class='text-left'>". $empArr['lastname'] .", ". $empArr['firstname'] ."</h2>
+			<div class='row'>
+				<div class='col-md-8 text-left' style='word-break: keep-all'>
+					
+						<h4>
+							<b style='font-family: QuickSandMed'>
+								Employee ID:
+							</b>". $empArr['empid'] ."
+						</h4>
+						<h4>
+							<b style='font-family: QuickSandMed'>
+								Position:
+							</b>". $empArr['position'] ."
+						</h4>
+						<h4>
+							<b style='font-family: QuickSandMed'>
+								Address:
+							</b>". $empArr['address'] ."
+						</h4>
+						<h4>
+							<b style='font-family: QuickSandMed'>
+								Contact Number:
+							</b>". $empArr['contactnum'] ."
+						</h4>
+				</div>";
+				Print "
+				<div class='col-md-4 text-right'>";
+				if($empArr['philhealth'] != 0)//Phil Health Display
+				{
+					Print "<h4><span class='glyphicon glyphicon-ok'></span> PhilHealth documents</h4>";
+				}
+				else
+				{
+					Print "<h4><span class='glyphicon glyphicon-remove'></span> PhilHealth documents</h4>";
+				}
+				if($empArr['pagibig'] != 0)//Pagibig Display
+				{
+					Print "<h4><span class='glyphicon glyphicon-ok'></span> Pag-IBIG documents</h4>";
+				}
+				else
+				{
+					Print "<h4><span class='glyphicon glyphicon-remove'></span> Pag-IBIG documents</h4>";
+				}
+				if($empArr['sss'] != 0)//SSS Display
+				{
+					Print "<h4><span class='glyphicon glyphicon-ok'></span> SSS documents</h4>";
+				}
+				else
+				{
+					Print "<h4><span class='glyphicon glyphicon-remove'></span> SSS documents</h4>";
+				}
+				Print "</div>
+				</div>";
+			?>
 		</div>
 		<div class="col-md-10 col-md-offset-1">
 			<table class="table table-bordered table-condensed" style="background-color:white;">
+				<?php
+					$start_date = 'September 16, 2017';
+					$end_date = 'September 22, 2017';
+					if ($end_date >= $start_date)
+					{
+					  for ($day = 0; $day < 7; $day++)
+					  {
+					    echo "<br />" . date("F j, Y", strtotime("$start_date +$day day"));
+					    $yea = strtotime($start_date + $day);
+					    echo $yea;
+					  }
+					}
+
+				?>
 				<tr>
 					<td colspan="2">Wednesday</td>
 					<td colspan="2">Thursday</td>
