@@ -112,7 +112,117 @@ $date = strftime("%B %d, %Y");
 		<div class="col-md-10 col-md-offset-1">
 			<table class="table table-bordered table-condensed" style="background-color:white;">
 				<?php
-					$start_date = 'September 16, 2017';
+					$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY date ASC LIMIT 7";
+					$payrollQuery = mysql_query($payrollDate);
+					//Boolean for the conditions not to repeat just incase the employee does't attend sundays
+					$monBool = true;
+					$tueBool = true;
+					$wedBool = true;
+					$thuBool = true;
+					$friBool = true;
+					$satBool = true;
+					$sunBool = true;
+					//for absent dates
+					$monAbsent = false;
+					$tueAbsent = false;
+					$wedAbsent = false;
+					$thuAbsent = false;
+					$friAbsent = false;
+					$satAbsent = false;
+					$sunAbsent = "No Sunday";
+					while($dateRow = mysql_fetch_assoc($payrollQuery))
+					{
+						$day = date('l', strtotime($dateRow['date']));
+						if($day == "Sunday" && $sunBool)
+						{
+							if($dateRow['attendance'] == 2)//Present
+							{
+								$sunTimeIn = $dateRow['timein'];
+								$sunTimeOut = $dateRow['timeout'];
+								$sunAbsent = "No Sunday";
+							}
+							$sunBool = false;
+						}
+						else if($day == "Monday" && $monBool)
+						{
+							if($dateRow['attendance'] == 2)//Present
+							{
+								$monTimeIn = $dateRow['timein'];
+								$monTimeOut = $dateRow['timeout'];
+							}
+							else if($dateRow['attendance'] == 1)//Absent
+							{
+								$monAbsent = true;
+							}
+							$monBool = false;
+						}
+						else if($day == "Tuesday" && $tueBool)//Tuesday
+						{
+							if($dateRow['attendance'] == 2)//Present
+							{
+								$tueTimeIn = $dateRow['timein'];
+								$tueTimeOut = $dateRow['timeout'];
+							}
+							else if($dateRow['attendance'] == 1)//Absent
+							{
+								$tueAbsent = true;
+							}
+							$tueBool = false;
+						}
+						else if($day == "Wednesday" && $wedBool)//Wednesday
+						{
+							if($dateRow['attendance'] == 2)//Present
+							{
+								$wedTimeIn = $dateRow['timein'];
+								$wedTimeOut = $dateRow['timeout'];
+							}
+							else if($dateRow['attendance'] == 1)//Absent
+							{
+								$wedAbsent = true;
+							}
+							$wedBool = false;
+						}
+						else if($day == "Thursday" && $thuBool)//Thursday
+						{
+							if($dateRow['attendance'] == 2)//Present
+							{
+								$thuTimeIn = $dateRow['timein'];
+								$thuTimeOut = $dateRow['timeout'];
+							}
+							else if($dateRow['attendance'] == 1)//Absent
+							{
+								$thuAbsent = true;
+							}
+							$thuBool = false;
+						}
+						else if($day == "Friday" && $friBool)//Friday
+						{	
+							if($dateRow['attendance'] == 2)//Present
+							{
+								$friTimeIn = $dateRow['timein'];
+								$friTimeOut = $dateRow['timeout'];
+							}
+							else if($dateRow['attendance'] == 1)//Absent
+							{
+								$friAbsent = true;
+							}
+							$friBool = false;
+						}
+						else if($day == "Saturday" && $satBool)//Saturday
+						{
+							if($dateRow['attendance'] == 2)//Present
+							{
+								$satTimeIn = $dateRow['timein'];
+								$satTimeOut = $dateRow['timeout'];
+							}
+							else if($dateRow['attendance'] == 1)//Absent
+							{
+								$satAbsent = true;
+							}
+							$satBool = false;
+						}					
+					}
+					$start_date = $date;
 					$end_date = 'September 22, 2017';
 					if ($end_date >= $start_date)
 					{
@@ -135,20 +245,72 @@ $date = strftime("%B %d, %Y");
 					<td colspan="2">Tuesday</td>
 				</tr>
 				<tr>
-					<td>Time In:  8:00AM </td>
-					<td>Time Out:  5:00PM </td>
-					<td>Time In:  8:00AM </td>
-					<td>Time Out:  5:00PM </td>
-					<td>Time In:  8:00AM </td>
-					<td>Time Out:  5:00PM </td>
-					<td>Time In:  8:00AM </td>
-					<td>Time Out:  5:00PM </td>
-					<td>Time In:  8:00AM </td>
-					<td>Time Out:  5:00PM </td>
-					<td>Time In:  8:00AM </td>
-					<td>Time Out:  5:00PM </td>
-					<td>Time In:  8:00AM </td>
-					<td>Time Out:  5:00PM </td>
+					<?php
+						if(!$wedAbsent)
+						{
+							Print 	"	<td>Time In: ". $wedTimeIn ."</td>
+										<td>Time Out: ". $wedTimeOut ."</td>";
+						}
+						else
+						{
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+						}
+						if(!$thuAbsent)
+						{
+							Print 	"	<td>Time In: ". $thuTimeIn ."</td>
+										<td>Time Out: ". $thuTimeOut ."</td>";
+						}
+						else
+						{
+							
+						}
+						if(!$friAbsent != "absent")
+						{
+							Print 	"	<td>Time In: ". $friTimeIn ."</td>
+										<td>Time Out: ". $friTimeOut ."</td>";
+						}
+						else
+						{
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+						}
+						if(!$satAbsent)
+						{
+							Print 	"	<td>Time In: ". $satTimeIn ."</td>
+										<td>Time Out: ". $satTimeOut ."</td>";
+						}
+						else
+						{
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+						}
+						if($sunAbsent != "No Sunday")
+						{
+							Print 	"	<td>Time In: ". $sunTimeIn ."</td>
+										<td>Time Out: ". $sunTimeOut ."</td>";
+						}
+						else
+						{
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+						}
+						if(!$monAbsent)
+						{
+							Print 	"	<td>Time In: ". $monTimeIn ."</td>
+										<td>Time Out: ". $monTimeOut ."</td>";
+						}
+						else
+						{
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+						}
+						if(!$tueAbsent)
+						{
+							Print 	"	<td>Time In: ". $tueTimeIn ."</td>
+										<td>Time Out: ". $tueTimeOut ."</td>";
+						}
+						else
+						{
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+						}
+							
+					?>
 				</tr>
 			</table>
 		</div>

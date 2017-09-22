@@ -87,7 +87,7 @@ else
 
 if(!empty($dateRows))// Updating attendance
 {
-  	
+  	//Print "<script>alert('yow')</script>";
 	$AttQuery = "";
 	for($counter = 0; $counter < $empNum; $counter++)
 	{
@@ -184,16 +184,16 @@ if(!empty($dateRows))// Updating attendance
 			$AwolCounter = 0;
 			$start = null;
 			$end = null;
-			$counter = 0;
+			$absentCounter = 0;
 			while($AwolChecker = mysql_fetch_assoc($AwolQuery))
 			{
-				$counter++;
-				if($counter == 1)
+				$absentCounter++;
+				if($absentCounter == 1)
 				{
 					$start = $AwolChecker['date'];// Gets the first date
 					//Print "<script>alert('".$start."')</script>";
 				}
-				else if($counter == 7)
+				else if($absentCounter == 7)
 				{
 					$end = $AwolChecker['date'];// Gets the last date of the query
 					//Print "<script>alert('".$end."')</script>";
@@ -247,8 +247,9 @@ if(!empty($dateRows))// Updating attendance
 		}
 		else if(empty($_POST['attendance'][$counter]))
 		{
+
 			
-			//Print "<script>alert('no input')</script>";
+			Print "<script>alert('no input')</script>";
 			$empid = $_POST['empid'][$counter];
 			$timein = "";
 			$timeout = "";
@@ -277,6 +278,7 @@ if(!empty($dateRows))// Updating attendance
 }
 else// NEW attendance
 {
+	Print "<script>alert('yow')</script>";
 	$initialQuery = "INSERT INTO attendance(	empid, 
 												position,
 												timein,
@@ -389,11 +391,11 @@ else// NEW attendance
 			$AwolCounter = 0;
 			$start = $date;
 			$end = null;
-			$counter = 0;
+			$absentCounter = 0;
 			while($AwolChecker = mysql_fetch_assoc($AwolQuery))
 			{
-				$counter++;
-				if($counter == 6)
+				$absentCounter++;
+				if($absentCounter == 6)
 				{
 					$end = $AwolChecker['date'];// Gets the last date of the query
 					//Print "<script>alert('".$end."')</script>";
