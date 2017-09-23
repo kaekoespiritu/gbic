@@ -17,6 +17,7 @@ error_reporting(0);
 		$sss = mysql_real_escape_string($_POST['chkbox_addSSS']);
 		$philhealth = mysql_real_escape_string($_POST['chkbox_addPhilHealth']);
 		$pagibig = mysql_real_escape_string($_POST['txt_addPagibig']);
+		$salary = mysql_real_escape_string($_POST['txt_addMonthlySalary']);
 		//debug
 
 		$yearHired = substr($dateHired, -4); //get the year 
@@ -93,7 +94,7 @@ error_reporting(0);
 			else if($monthlySalary >= 3750 && $monthlySalary <= 4249.9)
 			$sssContribution = 145.30;
 			//4250 ~ 4749.9 = 163.50
-			else if($monthlySalary >= 4250 && $monthlySalary <= 4749.9 )
+			else if($monthlySalary >= 4250 && $monthlySalary <= 4749.9)
 			$sssContribution = 163.50;
 			//4750 ~ 5249.9 = 181.70
 			else if($monthlySalary >= 4750 && $monthlySalary <= 5249.9)
@@ -114,7 +115,7 @@ error_reporting(0);
 			else if($monthlySalary >= 7250 && $monthlySalary <= 7749.9 )
 			$sssContribution = 272.50;
 			//7750 ~ 8249.9 = 290.70
-			else if($monthlySalary >= 7750 && $monthlySalary <=  8249.9 )
+			else if($monthlySalary >= 7750 && $monthlySalary <= 8249.9)
 			$sssContribution = 290.70;
 			//8250 ~ 8749.9 = 308.80
 			else if($monthlySalary >= 8250 && $monthlySalary <= 8749.9)
@@ -129,7 +130,7 @@ error_reporting(0);
 			else if($monthlySalary >= 9750 && $monthlySalary <= 10249.9)
 			$sssContribution = 363.30;
 			//10250 ~ 10749.9 = 381.50
-			else if($monthlySalary >= 10250 && $monthlySalary <=  10749.9)
+			else if($monthlySalary >= 10250 && $monthlySalary <= 10749.9)
 			$sssContribution = 381.50;
 			//10750 ~ 11249.9 = 399.70
 			else if($monthlySalary >= 10750 && $monthlySalary <= 11249.9)
@@ -150,13 +151,13 @@ error_reporting(0);
 			else if($monthlySalary >= 13250 && $monthlySalary <= 13749.9)
 			$sssContribution = 490.50;
 			//13750 ~ 14249.9 = 508.70
-			else if($monthlySalary >= 13750 && $monthlySalary <= 14249.9 )
+			else if($monthlySalary >= 13750 && $monthlySalary <= 14249.9)
 			$sssContribution = 508.70;
 			//14250 ~ 14749.9 = 526.80
 			else if($monthlySalary >= 14250 && $monthlySalary <= 14749.9)
 			$sssContribution = 526.80;
 			//14750 ~ 15249.9 = 545.0
-			else if($monthlySalary >= 14750 && $monthlySalary <= 15249.9 )
+			else if($monthlySalary >= 14750 && $monthlySalary <= 15249.9)
 			$sssContribution = 545.00;
 			//15250 ~ 15749.9 = 563.20
 			else if($monthlySalary >= 15250 && $monthlySalary <= 15749.9)
@@ -225,7 +226,7 @@ error_reporting(0);
 			else if($monthlySalary >= 25000 && $monthlySalary <= 25999.9)
 			$philhealthContribution = 625.00;
 			//26000 ~ 26999.9 = 650
-			else if($monthlySalary >= 26000 && $monthlySalary <= 26999.9 )
+			else if($monthlySalary >= 26000 && $monthlySalary <= 26999.9)
 			$philhealthContribution = 650.00;
 			//27000 ~ 27999.9 = 675
 			else if($monthlySalary >= 27000 && $monthlySalary <= 27999.9)
@@ -280,6 +281,7 @@ error_reporting(0);
 												civilstatus,
 												datehired,
 												position,
+												salary,
 												rate,
 												allowance,
 												site,
@@ -296,6 +298,7 @@ error_reporting(0);
 																	'$civilStatus',
 																	'$dateHired',
 																	'$position',
+																	'$salary',
 																	'$ratePerDay',
 																	'$allowance',
 																	'$site',

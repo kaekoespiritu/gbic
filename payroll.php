@@ -42,7 +42,7 @@ $date = strftime("%B %d, %Y");
 	<div class="col-md-10 col-md-offset-1">
 		<ol class="breadcrumb text-left">
 
-			<li><a href="payroll_table.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Table of Employees</a></li>
+			<li><a href="payroll_table.php?position=<?php Print $position?>&site=<?php Print $site?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Table of Employees</a></li>
 			<li class="active"><?php Print $site." ".$date ?></li>
 
 			<button class="btn btn-success pull-right" style="margin-right:5px" onclick="saveChanges()">Save and compute <span class="glyphicon glyphicon-floppy-saved"></span></button>
@@ -53,6 +53,23 @@ $date = strftime("%B %d, %Y");
 			$employee = "SELECT * FROM employee WHERE empid = '$empid'";
 			$employeeQuery = mysql_query($employee);
 			$empArr = mysql_fetch_assoc($employeeQuery);
+			//For deduction section
+			$deductionSSS = $empArr['sss'];
+			$deductionPagibig = $empArr['pagibig'];
+			$deductionPhilhealth = $empArr['philhealth'];
+			//Change to no value string if the employee has no document
+			if($deductionSSS == 0)
+			{
+				$deductionSSS = "";
+			}
+			if($deductionPagibig == 0)
+			{
+				$deductionPagibig = "";
+			}
+			if($deductionPhilhealth == 0)
+			{
+				$deductionPhilhealth = "";
+			}
 			Print "
 			<h2 class='text-left'>". $empArr['lastname'] .", ". $empArr['firstname'] ."</h2>
 			<div class='row'>
@@ -112,7 +129,7 @@ $date = strftime("%B %d, %Y");
 		<div class="col-md-10 col-md-offset-1">
 			<table class="table-bordered table-condensed" style="background-color:white;">
 				<?php
-					$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY date ASC LIMIT 7";
+					$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY date DESC LIMIT 7";
 					$payrollQuery = mysql_query($payrollDate);
 					//Boolean for the conditions not to repeat just incase the employee does't attend sundays
 					$monBool = true;
@@ -135,6 +152,7 @@ $date = strftime("%B %d, %Y");
 					$totalOT = 0;// for total Overtime
 					while($dateRow = mysql_fetch_assoc($payrollQuery))
 					{
+						//Print "<script>alert('".$dateRow['date']."')</script>";
 						$day = date('l', strtotime($dateRow['date']));
 						if($day == "Sunday" && $sunBool)
 						{
@@ -280,7 +298,7 @@ $date = strftime("%B %d, %Y");
 						}
 						else
 						{
-							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' style='width:150px' class='danger'> Absent </td>";
 						}
 						if(!$thuAbsent)
 						{
@@ -289,7 +307,7 @@ $date = strftime("%B %d, %Y");
 						}
 						else
 						{
-							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' style='width:150px' class='danger'> Absent </td>";
 						}
 						if(!$friAbsent)
 						{
@@ -298,7 +316,7 @@ $date = strftime("%B %d, %Y");
 						}
 						else
 						{
-							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' style='width:150px' class='danger'> Absent </td>";
 						}
 						if(!$satAbsent)
 						{
@@ -307,7 +325,7 @@ $date = strftime("%B %d, %Y");
 						}
 						else
 						{
-							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' style='width:150px' class='danger'> Absent </td>";
 						}
 						if(!$sunAbsent)
 						{
@@ -316,7 +334,7 @@ $date = strftime("%B %d, %Y");
 						}
 						else
 						{
-							Print 	"	<td colspan='2' class='danger'> Day off </td>";
+							Print 	"	<td colspan='2' style='width:150px' class='danger'> Day off </td>";
 						}
 						if(!$monAbsent)
 						{
@@ -325,7 +343,7 @@ $date = strftime("%B %d, %Y");
 						}
 						else
 						{
-							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' style='width:150px' class='danger'> Absent </td>";
 						}
 						if(!$tueAbsent)
 						{
@@ -334,7 +352,7 @@ $date = strftime("%B %d, %Y");
 						}
 						else
 						{
-							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' style='width:150px' class='danger'> Absent </td>";
 						}
 							
 					?>
@@ -367,60 +385,86 @@ $date = strftime("%B %d, %Y");
 
 				if($sssQuery)
 				{
-					while($sssLatest = mysql_fetch_assoc($sssQuery))
+					$sssLatest = mysql_fetch_assoc($sssQuery);
+					if(!empty($sssLatest))
 					{
-						if($sssLatest['sss'] != NULL)
+						while($sssLatest = mysql_fetch_assoc($sssQuery))
 						{
-							$sss = $sssLatest['sss'];
-							break 1;
-						}
-						else
-						{
-							$sss = "";
+							if($sssLatest['sss'] != NULL)
+							{
+								$sss = $sssLatest['sss'];
+								break 1;
+							}
+							else
+							{
+								$sss = "N/A";
+							}
 						}
 					}
+					else
+					{
+						$sss = "N/A";
+					}
+					
 				}
 				else
 				{
-					$sss = "";
+					
+					$sss = "N/A";
 				}
 				if($pagibigQuery)
 				{
-					while($pagibigLatest = mysql_fetch_assoc($pagibigQuery))
+					$pagibigLatest = mysql_fetch_assoc($pagibigQuery);
+					if(!empty($pagibigLatest))
 					{
-						if($pagibigLatest['pagibig'] != NULL)
+						while($pagibigLatest = mysql_fetch_assoc($pagibigQuery))
 						{
-							$pagibig = $pagibigLatest['pagibig'];
-							break 1;
+							if($pagibigLatest['pagibig'] != NULL)
+							{
+								$pagibig = $pagibigLatest['pagibig'];
+								break 1;
+							}
+							else
+							{
+								$pagibig = "N/A";
+							}
 						}
-						else
-						{
-							$pagibig = "";
-						}
+					}
+					else
+					{
+						$pagibig = "N/A";
 					}
 				}
 				else
 				{
-					$pagibig = "";
+					$pagibig = "N/A";
 				}
 				if($valeQuery)
 				{
-					while($valeLatest = mysql_fetch_assoc($valeQuery))
+					$valeLatest = mysql_fetch_assoc($valeQuery);
+					if(!empty($valeLatest))
 					{
-						if($valeLatest['vale'] != NULL)
+						while($valeLatest = mysql_fetch_assoc($valeQuery))
 						{
-							$vale = $valeLatest['vale'];
-							break 1;
+							if($valeLatest['vale'] != NULL)
+							{
+								$vale = $valeLatest['vale'];
+								break 1;
+							}
+							else
+							{
+								$vale = "N/A";
+							}
 						}
-						else
-						{
-							$vale = "";
-						}
+					}
+					else
+					{
+						$vale = "N/A";
 					}
 				}
 				else
 				{
-					$vale = "";
+					$vale = "N/A";
 				}
 				?>
 				<div class="row">
@@ -430,24 +474,53 @@ $date = strftime("%B %d, %Y");
 							<div class="form-group">
 								<label class="control-label col-md-3" for="sss" >SSS</label>
 								<div class="col-md-9">
-									<input type="text" id="sss" class="form-control input-sm" placeholder="<?php Print $sss?>PHP" onkeypress="validatenumber(event)">
+									<?php
+									if($sss != "N/A")
+									{
+										Print "<input type='text' id='sss' class='form-control input-sm' placeholder='".$sss." PHP' onkeypress='validatenumber(event)'>";
+									}
+									else
+									{
+										Print "<input type='text' id='sss' class='form-control input-sm' placeholder='N/A' onkeypress='validatenumber(event)' readonly>";
+									}
+									?>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="control-label col-md-3" for="pagibig">Pag-IBIG</label>
 								<div class="col-md-9">
-									<input type="text" id="pagibig" class="form-control input-sm" placeholder="<?php Print $pagibig?>PHP" onkeypress="validatenumber(event)">
+									<?php
+									if($pagibig != "N/A")
+									{
+										Print "<input type='text' id='pagibig' class='form-control input-sm' placeholder='".$pagibig." PHP' onkeypress='validatenumber(event)'>";
+									}
+									else
+									{
+										Print "<input type='text' id='pagibig' class='form-control input-sm' placeholder='N/A' onkeypress='validatenumber(event)' readonly>";
+									}
+									?>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-1">
 							<h4 class="text-left">Vale</h4>
 								<h5 class="text-left" style="white-space: nowrap;">
-									<?php Print $vale?> PHP
+									<?php 
+										if($vale != "N/A")
+										Print $vale."PHP";
+										else
+										Print $vale;	
+									?>
 								</h5>
 								<div class="row">
-									<button type="button" class="btn btn-success btn-sm col-md-12" data-toggle="modal" data-target="#addVale"><span class="glyphicon glyphicon-plus"></span> Add new</button>
-									<button type="button" class="btn btn-danger btn-sm col-md-12" data-toggle="modal" data-target="#deductVale"><span class="glyphicon glyphicon-minus"></span> Deduct</button>
+									<button type='button' class='btn btn-success btn-sm col-md-12' data-toggle='modal' data-target='#addVale'><span class='glyphicon glyphicon-plus'></span> Add new</button>
+									<?php
+									if($vale != "N/A")
+									{
+									Print "
+									<button type='button' class='btn btn-danger btn-sm col-md-12' data-toggle='modal' data-target='#deductVale'><span class='glyphicon glyphicon-minus'></span> Deduct</button>";
+									}
+									?>
 								</div>
 						</div>
 						<div class="col-md-3">
@@ -459,15 +532,17 @@ $date = strftime("%B %d, %Y");
 								</div>
 								<label class="control-label col-md-5" for="sssContribution">SSS</label>
 								<div class="col-md-7">
-									<input type="text" id="sssContribution" class="form-control input-sm" onkeypress="validatenumber(event)">
+									
+									<input type="text" id="sssContribution" placeholder="No document" class="form-control input-sm" value="<?php Print $deductionSSS?>" onkeypress="validatenumber(event)" readonly>
+									
 								</div>
 								<label class="control-label col-md-5" for="pagibigContribution" style="white-space: nowrap;">Pag-IBIG</label>
 								<div class="col-md-7">
-									<input type="text" id="pagibigContribution" class="form-control input-sm" disabled placeholder="No document">
+									<input type="text" id="pagibigContribution" class="form-control input-sm" value="<?php Print $deductionPagibig?>" placeholder="No document" readonly>
 								</div>
 								<label class="control-label col-md-5" for="philhealth">PhilHealth</label>
 								<div class="col-md-7">
-									<input type="text" id="philhealth" class="form-control input-sm" onkeypress="validatenumber(event)">
+									<input type="text" id="philhealth" placeholder="No document" class="form-control input-sm" value="<?php Print $deductionPhilhealth?>" onkeypress="validatenumber(event)" readonly>
 								</div>
 							</div>
 						</div>

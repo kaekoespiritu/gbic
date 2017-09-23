@@ -35,7 +35,7 @@ if (document.getElementById('sss').checked)
 	else if(monthly >= 3750 && monthly <= 4249.9)
 	sssContribution = 145.30;
 	//4250 ~ 4749.9 = 163.50
-	else if(monthly >= 4250 && monthly <= 4749.9 )
+	else if(monthly >= 4250 && monthly <= 4749.9)
 	sssContribution = 163.50;
 	//4750 ~ 5249.9 = 181.70
 	else if(monthly >= 4750 && monthly <= 5249.9)
@@ -107,7 +107,7 @@ if (document.getElementById('sss').checked)
 	else if(monthly >= 15750)
 	sssContribution = 581.30;
 	
-	sssContribution = sssContribution.toFixed(2)
+	sssContribution = sssContribution.toFixed(2);
 	document.getElementById('txt_sss').value = sssContribution;
 	document.getElementById('txt_sssAppear').style.display = 'block';
 } 
@@ -179,7 +179,7 @@ if (document.getElementById('philhealth').checked)
 	else if(monthlySalary >= 25000 && monthlySalary <= 25999.9)
 	philhealthContribution = 625.00;
 	//26000 ~ 26999.9 = 650
-	else if(monthlySalary >= 26000 && monthlySalary <= 26999.9 )
+	else if(monthlySalary >= 26000 && monthlySalary <= 26999.9)
 	philhealthContribution = 650.00;
 	//27000 ~ 27999.9 = 675
 	else if(monthlySalary >= 27000 && monthlySalary <= 27999.9)
