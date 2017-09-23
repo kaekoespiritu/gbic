@@ -206,7 +206,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 
 					<div class="row">
 						<div class="col-md-5">
-							<label for="rate">Rate per day</label>
+							<label for="rate">Monthly salary</label>
 						</div>
 						<div class="col-md-5">
 							<input type="text" class="form-control" name="rate" placeholder="<?php Print "$rate"?>" id="rate" onkeyup="changedRate()">

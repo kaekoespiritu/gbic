@@ -110,7 +110,7 @@ $date = strftime("%B %d, %Y");
 			?>
 		</div>
 		<div class="col-md-10 col-md-offset-1">
-			<table class="table table-bordered table-condensed" style="background-color:white;">
+			<table class="table-bordered table-condensed" style="background-color:white;">
 				<?php
 					$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY date ASC LIMIT 7";
 					$payrollQuery = mysql_query($payrollDate);
@@ -275,8 +275,8 @@ $date = strftime("%B %d, %Y");
 					<?php
 						if(!$wedAbsent)
 						{
-							Print 	"	<td>Time In: ". trim($wedTimeIn) ."</td>
-										<td>Time Out: ". trim($wedTimeOut) ."</td>";
+							Print 	"	<td style='width:75px; padding-top: 20px; padding-bottom: 20px'>Time In: ". trim($wedTimeIn) ."</td>
+										<td style='width:75px'>Time Out: ". trim($wedTimeOut) ."</td>";
 						}
 						else
 						{
@@ -284,17 +284,17 @@ $date = strftime("%B %d, %Y");
 						}
 						if(!$thuAbsent)
 						{
-							Print 	"	<td>Time In: ". trim($thuTimeIn) ."</td>
-										<td>Time Out: ". trim($thuTimeOut) ."</td>";
+							Print 	"	<td style='width:75px'>Time In: ". trim($thuTimeIn) ."</td>
+										<td style='width:75px'>Time Out: ". trim($thuTimeOut) ."</td>";
 						}
 						else
 						{
-							
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
 						}
 						if(!$friAbsent)
 						{
-							Print 	"	<td>Time In: ". trim($friTimeIn) ."</td>
-										<td>Time Out: ". trim($friTimeOut) ."</td>";
+							Print 	"	<td style='width:75px'>Time In: ". trim($friTimeIn) ."</td>
+										<td style='width:75px'>Time Out: ". trim($friTimeOut) ."</td>";
 						}
 						else
 						{
@@ -302,8 +302,8 @@ $date = strftime("%B %d, %Y");
 						}
 						if(!$satAbsent)
 						{
-							Print 	"	<td>Time In: ". trim($satTimeIn) ."</td>
-										<td>Time Out: ". trim($satTimeOut) ."</td>";
+							Print 	"	<td style='width:75px'>Time In: ". trim($satTimeIn) ."</td>
+										<td style='width:75px'>Time Out: ". trim($satTimeOut) ."</td>";
 						}
 						else
 						{
@@ -311,17 +311,17 @@ $date = strftime("%B %d, %Y");
 						}
 						if(!$sunAbsent)
 						{
-							Print 	"	<td>Time In: ". trim($sunTimeIn) ."</td>
-										<td>Time Out: ". trim($sunTimeOut) ."</td>";
+							Print 	"	<td style='width:75px'>Time In: ". trim($sunTimeIn) ."</td>
+										<td style='width:75px'>Time Out: ". trim($sunTimeOut) ."</td>";
 						}
 						else
 						{
-							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' class='danger'> Day off </td>";
 						}
 						if(!$monAbsent)
 						{
-							Print 	"	<td>Time In: ". trim($monTimeIn) ."</td>
-										<td>Time Out: ". trim($monTimeOut) ."</td>";
+							Print 	"	<td style='width:75px'>Time In: ". trim($monTimeIn) ."</td>
+										<td style='width:75px'>Time Out: ". trim($monTimeOut) ."</td>";
 						}
 						else
 						{
@@ -329,8 +329,8 @@ $date = strftime("%B %d, %Y");
 						}
 						if(!$tueAbsent)
 						{
-							Print 	"	<td>Time In: ". trim($tueTimeIn) ."</td>
-										<td>Time Out: ". trim($tueTimeOut) ."</td>";
+							Print 	"	<td style='width:75px'>Time In: ". trim($tueTimeIn) ."</td>
+										<td style='width:75px'>Time Out: ". trim($tueTimeOut) ."</td>";
 						}
 						else
 						{

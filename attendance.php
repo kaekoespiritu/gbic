@@ -342,10 +342,11 @@ include('directives/session.php');
 									<span class="smalltext">'
 										. $row['location'] .
 									'</span>
-									<br><br>
+									<br>
+									<span class="checkmark" name="site" value="'.$attendanceStatus.'"></span>
+									<br>
 									<span>Employees: '. $employee_num .'</span>
 								</div>
-								<input type="hidden" id="'. $row['location'] .'" value="'. $attendanceStatus .'">
 							</a>';
 				}
 				else
@@ -354,10 +355,11 @@ include('directives/session.php');
 								<div class="sitebox">
 									<span class="autofit">'
 										. $row['location'] .
-									'<br><br>Employees: '. $employee_num .'
+									'<br>
+									<span class="checkmark" name="site" value="'.$attendanceStatus.'"></span>
+									<br>Employees: '. $employee_num .'
 									</span>
 								</div>
-								<input type="hidden" id="'. $row['location'] .'" value="'. $attendanceStatus .'">
 							</a>';
 				}
 				$counter++;
@@ -427,6 +429,25 @@ include('directives/session.php');
 		});
 		
 	});
+
+	window.onload = function checkAttendance(){
+			var sites = document.getElementsByName('site');
+
+			for(var i = 0; i < sites.length; i++)
+			{
+				if(sites[i].getAttribute('value')==1)
+				{
+					// add checkmark to box
+					console.log("First off... " + sites[i]);
+					sites[i].setAttribute("class", "checkmark glyphicon glyphicon-ok");
+					
+				}
+				else
+				{
+					// do nothing
+				}
+			}
+	}
 
 	function fittext()
 	{

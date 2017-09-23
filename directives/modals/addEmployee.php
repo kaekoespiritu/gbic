@@ -124,7 +124,7 @@
 
 							<div class="row">
 								<div class="col-md-5">
-									<label for="rate">Rate per day</label>
+									<label for="rate">Monthly salary</label>
 								</div>
 								<div class="col-md-5">
 									<input name="txt_addRatePerDay"  type="text" class="form-control" id="rate" required>
