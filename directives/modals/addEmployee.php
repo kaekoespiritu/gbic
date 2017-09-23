@@ -163,7 +163,7 @@
 										<input id="sss" name="chkbox_addSSS" type="checkbox" onclick="sssbox()" value="SSS" >
 										<label style="font-weight: 700" for="sss">SSS</label>
 										<div id="txt_sssAppear" style="display:none;" class="col-md-8 col-md-offset-2">
-											<input name="txt_sss" type="text" class="form-control" id="txt_sss">
+											<input name="txt_sss" type="text" class="form-control" id="txt_sss" readonly>
 										</div>
 									</div>
 									
@@ -172,7 +172,7 @@
 										
 										<label style="font-weight: 700" for="philhealth">PhilHealth</label>
 										<div id="txt_philhealthAppear" style="display:none;" class="col-md-8 col-md-offset-2">
-											<input name="txt_philhealth" type="text" class="form-control" id="txt_philhealth">
+											<input name="txt_philhealth" type="text" class="form-control" id="txt_philhealth" readonly>
 										</div>
 									</div>
 								</div>
@@ -182,7 +182,7 @@
 									<label for="pagibig">Pag-IBIG</label>
 								</div>
 								<div class="col-md-4">
-									<input name="txt_addPagibig" onkeypress="validatenumber(event)" type="text" class="form-control" id="pagibig">
+									<input name="txt_addPagibig" type="text" class="form-control" onblur="pagibigDecimal(event)" id="pagibig">
 								</div>
 
 								<div class="col-md-10 col-md-offset-1 pull-down text-center well well-sm">
