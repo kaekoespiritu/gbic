@@ -102,7 +102,6 @@ else
 
 if(!empty($dateRows))// Updating attendance
 {
-  	//Print "<script>alert('yow')</script>";
 	$AttQuery = "";
 	for($counter = 0; $counter < $empNum; $counter++)
 	{
@@ -293,7 +292,6 @@ if(!empty($dateRows))// Updating attendance
 }
 else// NEW attendance
 {
-	Print "<script>alert('yow')</script>";
 	$initialQuery = "INSERT INTO attendance(	empid, 
 												position,
 												timein,

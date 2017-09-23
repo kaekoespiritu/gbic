@@ -51,10 +51,8 @@ for($counter = 0; $counter <= $empNum; $counter++)
 			}
 			else
 			{
-				//Print "<script>alert('yow1')</script>";
 				if($_POST['sss'][$counter] == "0")
 				{
-					//Print "<script>alert('yow2')</script>";
 					$sss = 0;
 				}
 				else

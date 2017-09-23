@@ -1,17 +1,52 @@
-	/* SEARCHING DATABASE VIA ENTER KEYPRESS */
-	function enter(e) {
-		if (e.keyCode == 13) {
-		document.getElementById('search_form').submit();
-		}
+/* SEARCHING DATABASE VIA ENTER KEYPRESS */
+function enter(e) {
+	if (e.keyCode == 13) {
+	document.getElementById('search_form').submit();
 	}
+}
+
+function monthlySalary(salary){
+	var salary = document.getElementById('monthlysalary').value;
+	var dailyRate = document.getElementById('rate');
+	dailyRate.setAttribute('value',(salary/25).toFixed(2));
+}
+
+function salaryDecimal(){
+	var salary = document.getElementById('monthlysalary');
+	var value = document.getElementById('monthlysalary').value;
+	var decimal = parseInt(value).toFixed(2);
+	salary.value=decimal;
+}
+
+function allowanceDecimal(){
+	var allowance = document.getElementById('allowance');
+	var value = document.getElementById('allowance').value;
+	var decimal = parseInt(value).toFixed(2);
+	allowance.value=decimal;
+}
+
+function pagibigDecimal(evt){
+	var pagibig = document.getElementById('pagibig');
+	var value = document.getElementById('pagibig').value;
+	var decimal = parseInt(value).toFixed(2);
+	pagibig.value=decimal;	
+
+	// REGEX
+	var theEvent = evt || window.event;
+	var key = theEvent.keyCode || theEvent.which;
+	key = String.fromCharCode( key );
+	var regex = /[0-9]|\./;
+	if( !regex.test(key) ) {
+		 theEvent.returnValue = false;
+	if(theEvent.preventDefault) 
+		theEvent.preventDefault();
+}
 
 /* AUTOMATED COMPUTATION FOR SSS BASED ON MONTHLY SALARY */
 function sssbox() {
 if (document.getElementById('sss').checked) 
 {
-	var ratePerDay = document.getElementById('rate').value;
-	var monthly = ratePerDay * 25;
-	console.log(monthly);
+	var monthly = document.getElementById('monthlysalary').value;
 	var sssContribution = 0;
 
 	if(monthly >= 1000 && monthly <= 1249.9)

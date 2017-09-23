@@ -580,11 +580,10 @@ include('directives/session.php');
 		if(regularHoliday.checked == true || specialHoliday.checked == true)
 		{
 			holidayTitle.innerHTML = name + " attendance log";
-			//alert('yow1');
+
 			if(regularHoliday.checked == true)
 			{
 				//document.getElementById('regular').checked = false;
-				//alert('yow');
 				
 				type.setAttribute("value", "regular");
 				document.getElementById('holidayForm').submit();

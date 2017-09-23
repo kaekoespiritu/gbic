@@ -14,6 +14,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<h4 class="modal-title">Personal Information</h4><hr>
+
 							<div class="row">
 								<div class="col-md-3">
 									<label for="fname">First name</label>
@@ -22,6 +23,7 @@
 									<input name="txt_addFirstName" onkeypress="validateletter(event)" type="text" class="form-control" id="fname" required>
 								</div>
 							</div><br>
+
 							<div class="row">
 								<div class="col-md-3">
 									<label for="lname">Last name</label>
@@ -30,6 +32,7 @@
 									<input name="txt_addLastName" onkeypress="validateletter(event)" type="text" class="form-control" id="lname" required>
 								</div>
 							</div><br>
+
 							<div class="row">
 								<div class="col-md-3">
 									<label for="address">Address</label>
@@ -38,6 +41,7 @@
 									<input name="txt_addAddress" onkeypress="validateletter(event)" type="text" class="form-control" id="address" required>
 								</div>
 							</div><br>
+
 							<div class="row">
 								<div class="col-md-3">
 									<label for="contact">Contact number</label>
@@ -45,6 +49,7 @@
 								<div class="col-md-4">
 									<input name="txt_addContactNum" onkeypress="validatenumber(event)" type="text" class="form-control" id="contact" required>
 								</div>
+
 								<div class="col-md-1">
 									<label for="contact">Date of Birth</label>
 								</div>
@@ -52,6 +57,7 @@
 									<input name="txt_addDOB" type="text" placeholder="mm-dd-yyyy" class="form-control" id="dtpkr_addDOB" required>
 								</div>
 							</div><br>
+
 							<div class="row">
 								<div class="col-md-3">
 									<label for="contact">Civil Status</label>
@@ -68,6 +74,7 @@
 									</div>
 								</div>
 							</div><br>
+
 							<div class="row">
 								<div class="col-md-3">
 									<label for="contact">Date of Hire</label>
@@ -124,29 +131,39 @@
 
 							<div class="row">
 								<div class="col-md-5">
-									<label for="rate">Monthly salary</label>
+									<label for="rate">Monthly Salary</label>
 								</div>
 								<div class="col-md-5">
-									<input name="txt_addRatePerDay"  type="text" class="form-control" id="rate" required>
+									<input name="txt_addMonthlySalary"  type="text" class="form-control" id="monthlysalary" onkeyup="monthlySalary()" onblur="salaryDecimal()" required>
 								</div>
 							</div><br>
+
+							<div class="row">
+								<div class="col-md-5">
+									<label for="rate">Rate Per Day</label>
+								</div>
+								<div class="col-md-5">
+									<input name="txt_addRatePerDay"  type="text" class="form-control" id="rate" readonly>
+								</div>
+							</div><br>
+
 							<div class="row">
 								<div class="col-md-5">
 									<label for="allowance">Allowance</label>
 								</div>
 								<div class="col-md-5">
-									<input name="txt_addAllowance" onkeypress="validatenumber(event)" type="text" class="form-control" id="allowance">
+									<input name="txt_addAllowance" onkeypress="validatenumber(event)" type="text" class="form-control" onblur="allowanceDecimal()" id="allowance">
 								</div>
 							</div>
+
 							<div class="row">
 								<h4 class="modal-title"><br>Contributions</h4><hr>
-
 								<div class="row">
 									<div class="col-md-6 checkbox">
 										<input id="sss" name="chkbox_addSSS" type="checkbox" onclick="sssbox()" value="SSS" >
 										<label style="font-weight: 700" for="sss">SSS</label>
 										<div id="txt_sssAppear" style="display:none;" class="col-md-8 col-md-offset-2">
-											<input name="txt_sss" type="text" class="form-control" id="txt_sss">
+											<input name="txt_sss" type="text" class="form-control" id="txt_sss" readonly>
 										</div>
 									</div>
 									
@@ -155,18 +172,19 @@
 										
 										<label style="font-weight: 700" for="philhealth">PhilHealth</label>
 										<div id="txt_philhealthAppear" style="display:none;" class="col-md-8 col-md-offset-2">
-											<input name="txt_philhealth" type="text" class="form-control" id="txt_philhealth">
+											<input name="txt_philhealth" type="text" class="form-control" id="txt_philhealth" readonly>
 										</div>
 									</div>
 								</div>
-								<div class="row">
 
+								<div class="row">
 								<div class="col-md-5">
 									<label for="pagibig">Pag-IBIG</label>
 								</div>
 								<div class="col-md-4">
-									<input name="txt_addPagibig" onkeypress="validatenumber(event)" type="text" class="form-control" id="pagibig">
+									<input name="txt_addPagibig" type="text" class="form-control" onblur="pagibigDecimal(event)" id="pagibig">
 								</div>
+
 								<div class="col-md-10 col-md-offset-1 pull-down text-center well well-sm">
 									* SSS and PhilHealth contributions are automatically computed based on employee's monthly salary.
 								</div>
