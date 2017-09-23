@@ -3,12 +3,11 @@
 include('directives/session.php');
 include('directives/db.php');
 
-if(isset($_GET['site']) && isset($_GET['position']))
-{}
-else
+if(!isset($_GET['site']) && !isset($_GET['position']))
 {
 	header("location:employees.php?site=null&position=null");
 }
+
 ?>
 <html>
 <head>

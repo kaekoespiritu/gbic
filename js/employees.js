@@ -1,16 +1,17 @@
 	/* SEARCHING DATABASE VIA ENTER KEYPRESS */
 	function enter(e) {
-	if (e.keyCode == 13) {
-	document.getElementById('search_form').submit();
-}
-}
+		if (e.keyCode == 13) {
+		document.getElementById('search_form').submit();
+		}
+	}
 
 /* AUTOMATED COMPUTATION FOR SSS BASED ON MONTHLY SALARY */
 function sssbox() {
 if (document.getElementById('sss').checked) 
 {
 	var ratePerDay = document.getElementById('rate').value;
-	var monthly = ratePerDay * 24;
+	var monthly = ratePerDay * 25;
+	console.log(monthly);
 	var sssContribution = 0;
 
 	if(monthly >= 1000 && monthly <= 1249.9)
@@ -26,7 +27,7 @@ if (document.getElementById('sss').checked)
 	sssContribution = 90.80;
 	//2750 ~ 3249.9 = 109.0
 	else if(monthly >= 2750 && monthly <= 3249.9)
-	sssContribution = 109.0;
+	sssContribution = 109.00;
 	//3250 ~ 3749.9 = 127.20
 	else if(monthly >= 3250 && monthly <= 3749.9)
 	sssContribution = 127.20;
@@ -44,7 +45,7 @@ if (document.getElementById('sss').checked)
 	sssContribution = 199.80;
 	//5750 ~ 6249.9 = 218.0
 	else if(monthly >= 5750 && monthly <= 6249.9)
-	sssContribution = 218.0;
+	sssContribution = 218.00;
 	//6250 ~ 6749.9 = 236.20
 	else if(monthly >= 6250 && monthly <= 6749.9)
 	sssContribution = 236.20;
@@ -62,7 +63,7 @@ if (document.getElementById('sss').checked)
 	sssContribution = 308.80;
 	//8750 ~ 9249.9 = 327.0
 	else if(monthly >= 8750 && monthly <= 9249.9 )
-	sssContribution = 327.0;
+	sssContribution = 327.00;
 	//9250 ~ 9749.9 = 345.20
 	else if(monthly >= 9250 && monthly <= 9749.9)
 	sssContribution = 345.20;
@@ -80,7 +81,7 @@ if (document.getElementById('sss').checked)
 	sssContribution = 417.80;
 	//11750 ~ 12249.9 = 436.0
 	else if(monthly >= 11750 && monthly <= 12249.9)
-	sssContribution = 436.0;
+	sssContribution = 436.00;
 	//12250 ~ 12749.9 = 454.20
 	else if(monthly >= 12250 && monthly <= 12749.9)
 	sssContribution = 454.20;
@@ -98,13 +99,15 @@ if (document.getElementById('sss').checked)
 	sssContribution = 526.80;
 	//14750 ~ 15249.9 = 545.0
 	else if(monthly >= 14750 && monthly <= 15249.9 )
-	sssContribution = 545.0;
+	sssContribution = 545.00;
 	//15250 ~ 15749.9 = 563.20
 	else if(monthly >= 15250 && monthly <= 15749.9)
 	sssContribution = 563.20;
 	//15750 ~ higher = 581.30
 	else if(monthly >= 15750)
 	sssContribution = 581.30;
+	
+	sssContribution = sssContribution.toFixed(2)
 	document.getElementById('txt_sss').value = sssContribution;
 	document.getElementById('txt_sssAppear').style.display = 'block';
 } 
@@ -119,92 +122,94 @@ function philhealthbox() {
 if (document.getElementById('philhealth').checked) 
 {
 	var ratePerDay = document.getElementById('rate').value;
-	var monthlySalary = ratePerDay * 24;
+	var monthlySalary = ratePerDay * 25;
 	var philhealthContribution = 0;
 
 	if(monthlySalary >= 1 && monthlySalary <= 8999.9)
-	philhealthContribution = 200;
+	philhealthContribution = 200.00;
 	//9000 ~ 9999.9 = 225
 	else if(monthlySalary >= 9000 && monthlySalary <= 9999.9)
-	philhealthContribution = 225;
+	philhealthContribution = 225.00;
 	//10000 ~ 10999.9 = 250
 	else if(monthlySalary >= 10000 && monthlySalary <= 10999.9)
-	philhealthContribution = 250;
+	philhealthContribution = 250.00;
 	//11000 ~ 11999.9 = 275
 	else if(monthlySalary >= 11000 && monthlySalary <= 11999.9)
-	philhealthContribution = 222755;
+	philhealthContribution = 275.00;
 	//12000 ~ 12999.9 = 300
 	else if(monthlySalary >= 12000 && monthlySalary <= 12999.9)
-	philhealthContribution = 300;
+	philhealthContribution = 300.00;
 	//13000 ~ 13999.9 = 325
 	else if(monthlySalary >= 13000 && monthlySalary <= 13999.9)
-	philhealthContribution = 325;
+	philhealthContribution = 325.00;
 	//14000 ~ 14999.9 = 350
 	else if(monthlySalary >= 14000 && monthlySalary <= 14999.9)
-	philhealthContribution = 350;
+	philhealthContribution = 350.00;
 	//15000 ~ 15999.9 = 375
 	else if(monthlySalary >= 15000 && monthlySalary <= 15999.9)
-	philhealthContribution = 375;
+	philhealthContribution = 375.00;
 	//16000 ~ 16999.9 = 400
 	else if(monthlySalary >= 16000 && monthlySalary <= 16999.9)
-	philhealthContribution = 400;
+	philhealthContribution = 400.00;
 	//17000 ~ 17999.9 = 425
 	else if(monthlySalary >= 17000 && monthlySalary <= 17999.9)
-	philhealthContribution = 425;
+	philhealthContribution = 425.00;
 	//18000 ~ 18999.9 = 450
 	else if(monthlySalary >= 18000 && monthlySalary <= 18999.9)
-	philhealthContribution = 450;
+	philhealthContribution = 450.00;
 	//19000 ~ 19999.9 = 475
 	else if(monthlySalary >= 19000 && monthlySalary <= 19999.9)
-	philhealthContribution = 475;
+	philhealthContribution = 475.00;
 	//20000 ~ 20999.9 = 500
 	else if(monthlySalary >= 20000 && monthlySalary <= 20999.9)
-	philhealthContribution = 500;
+	philhealthContribution = 500.00;
 	//21000 ~ 21999.9 = 525
 	else if(monthlySalary >= 21000 && monthlySalary <= 21999.9)
-	philhealthContribution = 525;
+	philhealthContribution = 525.00;
 	//22000 ~ 22999.9 = 550
 	else if(monthlySalary >= 22000 && monthlySalary <= 22999.9)
-	philhealthContribution = 550;
+	philhealthContribution = 550.00;
 	//23000 ~ 23999.9 = 575
 	else if(monthlySalary >= 23000 && monthlySalary <= 23999.9)
-	philhealthContribution = 575;
+	philhealthContribution = 575.00;
 	//24000 ~ 24999.9 = 600
 	else if(monthlySalary >= 24000 && monthlySalary <= 24999.9)
-	philhealthContribution = 600;
+	philhealthContribution = 600.00;
 	//25000 ~ 25999.9 = 625
 	else if(monthlySalary >= 25000 && monthlySalary <= 25999.9)
-	philhealthContribution = 625;
+	philhealthContribution = 625.00;
 	//26000 ~ 26999.9 = 650
 	else if(monthlySalary >= 26000 && monthlySalary <= 26999.9 )
-	philhealthContribution = 650;
+	philhealthContribution = 650.00;
 	//27000 ~ 27999.9 = 675
 	else if(monthlySalary >= 27000 && monthlySalary <= 27999.9)
-	philhealthContribution = 675;
+	philhealthContribution = 675.00;
 	//28000 ~ 28999.9 = 700
 	else if(monthlySalary >= 28000 && monthlySalary <= 28999.9)
-	philhealthContribution = 700;
+	philhealthContribution = 700.00;
 	//29000 ~ 29999.9 = 725
 	else if(monthlySalary >= 29000 && monthlySalary <= 29999.9)
-	philhealthContribution = 725;
+	philhealthContribution = 725.00;
 	//30000 ~ 30999.9 = 750
 	else if(monthlySalary >= 30000 && monthlySalary <= 30999.9)
-	philhealthContribution = 750;
+	philhealthContribution = 750.00;
 	//31000 ~ 31999.9 = 775
 	else if(monthlySalary >= 31000 && monthlySalary <= 31999.9)
-	philhealthContribution = 775;
+	philhealthContribution = 775.00;
 	//32000 ~ 32999.9 = 800
 	else if(monthlySalary >= 32000 && monthlySalary <= 32999.9)
-	philhealthContribution = 800;
+	philhealthContribution = 800.00;
 	//33000 ~ 339999.9 = 825
 	else if(monthlySalary >= 33000 && monthlySalary <= 339999.9)
-	philhealthContribution = 825;
+	philhealthContribution = 825.00;
 	//34000 ~ 349999.9 = 850
 	else if(monthlySalary >= 34000 && monthlySalary <= 349999.9)
-	philhealthContribution = 850;
+	philhealthContribution = 850.00
 	//35000 ~ higher = 875
 	else if(monthlySalary >= 35000)
-	philhealthContribution = 875;
+	philhealthContribution = 875.00;
+
+	philhealthContribution = philhealthContribution.toFixed(2);
 	document.getElementById('txt_philhealth').value = philhealthContribution;
 	document.getElementById('txt_philhealthAppear').style.display = 'block';
 } 

@@ -285,8 +285,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 		});
 		function changedRate() {
 			var ratePerDay = document.getElementById('rate').value;
-			var monthly = ratePerDay * 24;	
-	
+			var monthly = ratePerDay * 25;	
 			var sssContribution = 0;
 			var philhealthContribution = 0;
 		//---- SSS Contribution
@@ -384,89 +383,91 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 				sssContribution = 581.30;
 //Philhealth Contribution
 				if(monthly >= 1 && monthly <= 8999.9)
-				philhealthContribution = 200;
+				philhealthContribution = 200.00;
 				//9000 ~ 9999.9 = 225
 				else if(monthly >= 9000 && monthly <= 9999.9)
-				philhealthContribution = 225;
+				philhealthContribution = 225.00;
 				//10000 ~ 10999.9 = 250
 				else if(monthly >= 10000 && monthly <= 10999.9)
-				philhealthContribution = 250;
+				philhealthContribution = 250.00;
 				//11000 ~ 11999.9 = 275
 				else if(monthly >= 11000 && monthly <= 11999.9)
-				philhealthContribution = 222755;
+				philhealthContribution = 275.00;
 				//12000 ~ 12999.9 = 300
 				else if(monthly >= 12000 && monthly <= 12999.9)
-				philhealthContribution = 300;
+				philhealthContribution = 300.00;
 				//13000 ~ 13999.9 = 325
 				else if(monthly >= 13000 && monthly <= 13999.9)
-				philhealthContribution = 325;
+				philhealthContribution = 325.00;
 				//14000 ~ 14999.9 = 350
 				else if(monthly >= 14000 && monthly <= 14999.9)
-				philhealthContribution = 350;
+				philhealthContribution = 350.00;
 				//15000 ~ 15999.9 = 375
 				else if(monthly >= 15000 && monthly <= 15999.9)
-				philhealthContribution = 375;
+				philhealthContribution = 375.00;
 				//16000 ~ 16999.9 = 400
 				else if(monthly >= 16000 && monthly <= 16999.9)
-				philhealthContribution = 400;
+				philhealthContribution = 400.00;
 				//17000 ~ 17999.9 = 425
 				else if(monthly >= 17000 && monthly <= 17999.9)
-				philhealthContribution = 425;
+				philhealthContribution = 425.00;
 				//18000 ~ 18999.9 = 450
 				else if(monthly >= 18000 && monthly <= 18999.9)
-				philhealthContribution = 450;
+				philhealthContribution = 450.00;
 				//19000 ~ 19999.9 = 475
 				else if(monthly >= 19000 && monthly <= 19999.9)
-				philhealthContribution = 475;
+				philhealthContribution = 475.00;
 				//20000 ~ 20999.9 = 500
 				else if(monthly >= 20000 && monthly <= 20999.9)
-				philhealthContribution = 500;
+				philhealthContribution = 500.00;
 				//21000 ~ 21999.9 = 525
 				else if(monthly >= 21000 && monthly <= 21999.9)
-				philhealthContribution = 525;
+				philhealthContribution = 525.00;
 				//22000 ~ 22999.9 = 550
 				else if(monthly >= 22000 && monthly <= 22999.9)
-				philhealthContribution = 550;
+				philhealthContribution = 550.00;
 				//23000 ~ 23999.9 = 575
 				else if(monthly >= 23000 && monthly <= 23999.9)
-				philhealthContribution = 575;
+				philhealthContribution = 575.00;
 				//24000 ~ 24999.9 = 600
 				else if(monthly >= 24000 && monthly <= 24999.9)
-				philhealthContribution = 600;
+				philhealthContribution = 600.00;
 				//25000 ~ 25999.9 = 625
 				else if(monthly >= 25000 && monthly <= 25999.9)
-				philhealthContribution = 625;
+				philhealthContribution = 625.00;
 				//26000 ~ 26999.9 = 650
 				else if(monthly >= 26000 && monthly <= 26999.9 )
-				philhealthContribution = 650;
+				philhealthContribution = 650.00;
 				//27000 ~ 27999.9 = 675
 				else if(monthly >= 27000 && monthly <= 27999.9)
-				philhealthContribution = 675;
+				philhealthContribution = 675.00;
 				//28000 ~ 28999.9 = 700
 				else if(monthly >= 28000 && monthly <= 28999.9)
-				philhealthContribution = 700;
+				philhealthContribution = 700.00;
 				//29000 ~ 29999.9 = 725
 				else if(monthly >= 29000 && monthly <= 29999.9)
-				philhealthContribution = 725;
+				philhealthContribution = 725.00;
 				//30000 ~ 30999.9 = 750
 				else if(monthly >= 30000 && monthly <= 30999.9)
-				philhealthContribution = 750;
+				philhealthContribution = 750.00;
 				//31000 ~ 31999.9 = 775
 				else if(monthly >= 31000 && monthly <= 31999.9)
-				philhealthContribution = 775;
+				philhealthContribution = 775.00;
 				//32000 ~ 32999.9 = 800
 				else if(monthly >= 32000 && monthly <= 32999.9)
-				philhealthContribution = 800;
+				philhealthContribution = 800.00;
 				//33000 ~ 339999.9 = 825
 				else if(monthly >= 33000 && monthly <= 339999.9)
-				philhealthContribution = 825;
+				philhealthContribution = 825.00;
 				//34000 ~ 349999.9 = 850
 				else if(monthly >= 34000 && monthly <= 349999.9)
-				philhealthContribution = 850;
+				philhealthContribution = 850.00;
 				//35000 ~ higher = 875
 				else if(monthly >= 35000)
-				philhealthContribution = 875;				
+				philhealthContribution = 875.00;				
 
+				philhealthContribution = philhealthContribution.toFixed(2);
+				sssContribution = sssContribution.toFixed(2);
 				document.getElementById('sss').value = sssContribution;
         		document.getElementById('philhealth').value = philhealthContribution;
         	
