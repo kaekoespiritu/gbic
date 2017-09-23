@@ -1,17 +1,35 @@
-	/* SEARCHING DATABASE VIA ENTER KEYPRESS */
-	function enter(e) {
-		if (e.keyCode == 13) {
-		document.getElementById('search_form').submit();
-		}
+/* SEARCHING DATABASE VIA ENTER KEYPRESS */
+function enter(e) {
+	if (e.keyCode == 13) {
+	document.getElementById('search_form').submit();
 	}
+}
+
+function monthlySalary(salary){
+	var salary = document.getElementById('monthlysalary').value;
+	var dailyRate = document.getElementById('rate');
+	dailyRate.setAttribute('value',(salary/25).toFixed(2));
+}
+
+function salaryDecimal(){
+	var salary = document.getElementById('monthlysalary');
+	var value = document.getElementById('monthlysalary').value;
+	var decimal = parseInt(value).toFixed(2);
+	salary.value=decimal;
+}
+
+function allowanceDecimal(){
+	var allowance = document.getElementById('allowance');
+	var value = document.getElementById('allowance').value;
+	var decimal = parseInt(value).toFixed(2);
+	allowance.value=decimal;
+}
 
 /* AUTOMATED COMPUTATION FOR SSS BASED ON MONTHLY SALARY */
 function sssbox() {
 if (document.getElementById('sss').checked) 
 {
-	var ratePerDay = document.getElementById('rate').value;
-	var monthly = ratePerDay * 25;
-	console.log(monthly);
+	var monthly = document.getElementById('monthlysalary').value;
 	var sssContribution = 0;
 
 	if(monthly >= 1000 && monthly <= 1249.9)
@@ -107,7 +125,7 @@ if (document.getElementById('sss').checked)
 	else if(monthly >= 15750)
 	sssContribution = 581.30;
 	
-	sssContribution = sssContribution.toFixed(2)
+	sssContribution = sssContribution.toFixed(2);
 	document.getElementById('txt_sss').value = sssContribution;
 	document.getElementById('txt_sssAppear').style.display = 'block';
 } 
