@@ -17,6 +17,21 @@ else
 $day = date('l', strtotime($date));// This gets the day of the week
 $sunday = 1;//Pre-sets the value of Sunday to the database
 
+
+function first($array) { 
+if (!is_array($array)) return $array; 
+if (!count($array)) return null; 
+reset($array); 
+return $array[key($array)]; 
+} 
+
+function last($array) { 
+if (!is_array($array)) return $array; 
+if (!count($array)) return null; 
+end($array); 
+return $array[key($array)]; 
+} 
+
 // Holiday
 if(isset($_SESSION['holidayDate']))
 {
@@ -188,7 +203,7 @@ if(!empty($dateRows))// Updating attendance
 			while($AwolChecker = mysql_fetch_assoc($AwolQuery))
 			{
 				$absentCounter++;
-				if($absentCounter == 1)
+				if($absentCounter == 1)//1 is the numeric representation of ABSENT
 				{
 					$start = $AwolChecker['date'];// Gets the first date
 					//Print "<script>alert('".$start."')</script>";

@@ -43,7 +43,7 @@ $date = strftime("%B %d, %Y");
 		<ol class="breadcrumb text-left">
 
 			<li><a href="payroll_table.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Table of Employees</a></li>
-			<li class="active">[NAME OF EMPLOYEE] at [SITE NAME]</li>
+			<li class="active"><?php Print $site." ".$date ?></li>
 
 			<button class="btn btn-success pull-right" style="margin-right:5px" onclick="saveChanges()">Save and compute <span class="glyphicon glyphicon-floppy-saved"></span></button>
 		</ol>
@@ -129,7 +129,10 @@ $date = strftime("%B %d, %Y");
 					$thuAbsent = false;
 					$friAbsent = false;
 					$satAbsent = false;
-					$sunAbsent = "No Sunday";
+					$sunAbsent = false;
+					$totalHours = 0;//for total work hours
+					$totalNightDiff = 0;//for Total night diff
+					$totalOT = 0;// for total Overtime
 					while($dateRow = mysql_fetch_assoc($payrollQuery))
 					{
 						$day = date('l', strtotime($dateRow['date']));
@@ -137,9 +140,15 @@ $date = strftime("%B %d, %Y");
 						{
 							if($dateRow['attendance'] == 2)//Present
 							{
+								$totalHours += $dateRow['workhours'];//Get the total workhours
+								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
+								$totalOT += $dateRow['overtime'];//Get the total Overtime
 								$sunTimeIn = $dateRow['timein'];
 								$sunTimeOut = $dateRow['timeout'];
-								$sunAbsent = "No Sunday";
+							}
+							else
+							{
+								$sunAbsent = true;
 							}
 							$sunBool = false;
 						}
@@ -147,6 +156,9 @@ $date = strftime("%B %d, %Y");
 						{
 							if($dateRow['attendance'] == 2)//Present
 							{
+								$totalHours += $dateRow['workhours'];//Get the total workhours
+								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
+								$totalOT += $dateRow['overtime'];//Get the total Overtime
 								$monTimeIn = $dateRow['timein'];
 								$monTimeOut = $dateRow['timeout'];
 							}
@@ -160,6 +172,9 @@ $date = strftime("%B %d, %Y");
 						{
 							if($dateRow['attendance'] == 2)//Present
 							{
+								$totalHours += $dateRow['workhours'];//Get the total workhours
+								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
+								$totalOT += $dateRow['overtime'];//Get the total Overtime
 								$tueTimeIn = $dateRow['timein'];
 								$tueTimeOut = $dateRow['timeout'];
 							}
@@ -173,6 +188,9 @@ $date = strftime("%B %d, %Y");
 						{
 							if($dateRow['attendance'] == 2)//Present
 							{
+								$totalHours += $dateRow['workhours'];//Get the total workhours
+								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
+								$totalOT += $dateRow['overtime'];//Get the total Overtime
 								$wedTimeIn = $dateRow['timein'];
 								$wedTimeOut = $dateRow['timeout'];
 							}
@@ -186,6 +204,9 @@ $date = strftime("%B %d, %Y");
 						{
 							if($dateRow['attendance'] == 2)//Present
 							{
+								$totalHours += $dateRow['workhours'];//Get the total workhours
+								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
+								$totalOT += $dateRow['overtime'];//Get the total Overtime
 								$thuTimeIn = $dateRow['timein'];
 								$thuTimeOut = $dateRow['timeout'];
 							}
@@ -199,6 +220,9 @@ $date = strftime("%B %d, %Y");
 						{	
 							if($dateRow['attendance'] == 2)//Present
 							{
+								$totalHours += $dateRow['workhours'];//Get the total workhours
+								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
+								$totalOT += $dateRow['overtime'];//Get the total Overtime
 								$friTimeIn = $dateRow['timein'];
 								$friTimeOut = $dateRow['timeout'];
 							}
@@ -212,6 +236,9 @@ $date = strftime("%B %d, %Y");
 						{
 							if($dateRow['attendance'] == 2)//Present
 							{
+								$totalHours += $dateRow['workhours'];//Get the total workhours
+								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
+								$totalOT += $dateRow['overtime'];//Get the total Overtime
 								$satTimeIn = $dateRow['timein'];
 								$satTimeOut = $dateRow['timeout'];
 							}
@@ -222,17 +249,17 @@ $date = strftime("%B %d, %Y");
 							$satBool = false;
 						}					
 					}
-					$start_date = $date;
-					$end_date = 'September 22, 2017';
-					if ($end_date >= $start_date)
-					{
-					  for ($day = 0; $day < 7; $day++)
-					  {
-					    echo "<br />" . date("F j, Y", strtotime("$start_date +$day day"));
-					    $yea = strtotime($start_date + $day);
-					    echo $yea;
-					  }
-					}
+					// $start_date = $date;
+					// $end_date = 'September 22, 2017';
+					// if ($end_date >= $start_date)
+					// {
+					//   for ($day = 0; $day < 7; $day++)
+					//   {
+					//     echo "<br />" . date("F j, Y", strtotime("$start_date +$day day"));
+					//     $yea = strtotime($start_date + $day);
+					//     echo $yea;
+					//   }
+					// }
 
 				?>
 				<tr>
@@ -248,8 +275,8 @@ $date = strftime("%B %d, %Y");
 					<?php
 						if(!$wedAbsent)
 						{
-							Print 	"	<td>Time In: ". $wedTimeIn ."</td>
-										<td>Time Out: ". $wedTimeOut ."</td>";
+							Print 	"	<td>Time In: ". trim($wedTimeIn) ."</td>
+										<td>Time Out: ". trim($wedTimeOut) ."</td>";
 						}
 						else
 						{
@@ -257,17 +284,17 @@ $date = strftime("%B %d, %Y");
 						}
 						if(!$thuAbsent)
 						{
-							Print 	"	<td>Time In: ". $thuTimeIn ."</td>
-										<td>Time Out: ". $thuTimeOut ."</td>";
+							Print 	"	<td>Time In: ". trim($thuTimeIn) ."</td>
+										<td>Time Out: ". trim($thuTimeOut) ."</td>";
 						}
 						else
 						{
 							
 						}
-						if(!$friAbsent != "absent")
+						if(!$friAbsent)
 						{
-							Print 	"	<td>Time In: ". $friTimeIn ."</td>
-										<td>Time Out: ". $friTimeOut ."</td>";
+							Print 	"	<td>Time In: ". trim($friTimeIn) ."</td>
+										<td>Time Out: ". trim($friTimeOut) ."</td>";
 						}
 						else
 						{
@@ -275,17 +302,17 @@ $date = strftime("%B %d, %Y");
 						}
 						if(!$satAbsent)
 						{
-							Print 	"	<td>Time In: ". $satTimeIn ."</td>
-										<td>Time Out: ". $satTimeOut ."</td>";
+							Print 	"	<td>Time In: ". trim($satTimeIn) ."</td>
+										<td>Time Out: ". trim($satTimeOut) ."</td>";
 						}
 						else
 						{
 							Print 	"	<td colspan='2' class='danger'> Absent </td>";
 						}
-						if($sunAbsent != "No Sunday")
+						if(!$sunAbsent)
 						{
-							Print 	"	<td>Time In: ". $sunTimeIn ."</td>
-										<td>Time Out: ". $sunTimeOut ."</td>";
+							Print 	"	<td>Time In: ". trim($sunTimeIn) ."</td>
+										<td>Time Out: ". trim($sunTimeOut) ."</td>";
 						}
 						else
 						{
@@ -293,8 +320,8 @@ $date = strftime("%B %d, %Y");
 						}
 						if(!$monAbsent)
 						{
-							Print 	"	<td>Time In: ". $monTimeIn ."</td>
-										<td>Time Out: ". $monTimeOut ."</td>";
+							Print 	"	<td>Time In: ". trim($monTimeIn) ."</td>
+										<td>Time Out: ". trim($monTimeOut) ."</td>";
 						}
 						else
 						{
@@ -302,8 +329,8 @@ $date = strftime("%B %d, %Y");
 						}
 						if(!$tueAbsent)
 						{
-							Print 	"	<td>Time In: ". $tueTimeIn ."</td>
-										<td>Time Out: ". $tueTimeOut ."</td>";
+							Print 	"	<td>Time In: ". trim($tueTimeIn) ."</td>
+										<td>Time Out: ". trim($tueTimeOut) ."</td>";
 						}
 						else
 						{
@@ -319,16 +346,83 @@ $date = strftime("%B %d, %Y");
 				<table class="table table-bordered table-responsive">
 					<tr>
 						<td style="background-color: peachpuff">
-							<h4>Total hours rendered: 54</h4>
+							<h4>Total hours rendered: <?php Print $totalHours ?></h4>
 						</td>
 						<td style="background-color: lemonchiffon">
-							<h4>Total overtime: 0</h4>
+							<h4>Total overtime: <?php Print $totalOT ?></h4>
 						</td>
 						<td style="background-color: powderblue">
-							<h4>Total night differential: 0</h4>
+							<h4>Total night differential: <?php Print $totalNightDiff ?></h4>
 						</td>
 					</tr>
 				</table>
+				<?php
+				$getSSS = "SELECT sss FROM loans WHERE empid = '$empid' AND sss IS NOT NULL ORDER BY date DESC";
+				$getPAGIBIG = "SELECT pagibig FROM loans WHERE empid = '$empid' AND pagibig IS NOT NULL ORDER BY date DESC";
+				$getVALE = "SELECT vale FROM loans WHERE empid = '$empid' AND vale IS NOT NULL ORDER BY date DESC";
+
+				$sssQuery = mysql_query($getSSS);
+				$pagibigQuery = mysql_query($getPAGIBIG);
+				$valeQuery = mysql_query($getVALE);
+
+				if($sssQuery)
+				{
+					while($sssLatest = mysql_fetch_assoc($sssQuery))
+					{
+						if($sssLatest['sss'] != NULL)
+						{
+							$sss = $sssLatest['sss'];
+							break 1;
+						}
+						else
+						{
+							$sss = "";
+						}
+					}
+				}
+				else
+				{
+					$sss = "";
+				}
+				if($pagibigQuery)
+				{
+					while($pagibigLatest = mysql_fetch_assoc($pagibigQuery))
+					{
+						if($pagibigLatest['pagibig'] != NULL)
+						{
+							$pagibig = $pagibigLatest['pagibig'];
+							break 1;
+						}
+						else
+						{
+							$pagibig = "";
+						}
+					}
+				}
+				else
+				{
+					$pagibig = "";
+				}
+				if($valeQuery)
+				{
+					while($valeLatest = mysql_fetch_assoc($valeQuery))
+					{
+						if($valeLatest['vale'] != NULL)
+						{
+							$vale = $valeLatest['vale'];
+							break 1;
+						}
+						else
+						{
+							$vale = "";
+						}
+					}
+				}
+				else
+				{
+					$vale = "";
+				}
+				?>
 				<div class="row">
 					<form class="horizontal">
 						<div class="col-md-2 col-md-offset-1">
@@ -336,19 +430,21 @@ $date = strftime("%B %d, %Y");
 							<div class="form-group">
 								<label class="control-label col-md-3" for="sss" >SSS</label>
 								<div class="col-md-9">
-									<input type="text" id="sss" class="form-control input-sm" placeholder="500PHP" onkeypress="validatenumber(event)">
+									<input type="text" id="sss" class="form-control input-sm" placeholder="<?php Print $sss?>PHP" onkeypress="validatenumber(event)">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="control-label col-md-3" for="pagibig">Pag-IBIG</label>
 								<div class="col-md-9">
-									<input type="text" id="pagibig" class="form-control input-sm" placeholder="250PHP" onkeypress="validatenumber(event)">
+									<input type="text" id="pagibig" class="form-control input-sm" placeholder="<?php Print $pagibig?>PHP" onkeypress="validatenumber(event)">
 								</div>
 							</div>
 						</div>
 						<div class="col-md-1">
 							<h4 class="text-left">Vale</h4>
-								<h5 class="text-left" style="white-space: nowrap;">1,000 PHP</h5>
+								<h5 class="text-left" style="white-space: nowrap;">
+									<?php Print $vale?> PHP
+								</h5>
 								<div class="row">
 									<button type="button" class="btn btn-success btn-sm col-md-12" data-toggle="modal" data-target="#addVale"><span class="glyphicon glyphicon-plus"></span> Add new</button>
 									<button type="button" class="btn btn-danger btn-sm col-md-12" data-toggle="modal" data-target="#deductVale"><span class="glyphicon glyphicon-minus"></span> Deduct</button>
