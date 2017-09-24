@@ -29,11 +29,13 @@ if(isset($_SESSION['empid']))
 	<div class="row pull-down">
 		<div class="col-md-10 col-md-offset-1">
 		<ol class="breadcrumb text-left">
-					<li><a href="applications.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Absence Notifications</a></li>
-					<li class="active">Check details</li>
-				</ol>
+			<li><a href="applications.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Absence Notifications</a></li>
+			<li class="active">Check details for [EMPLOYEE NAME]</li>
+			<button class="btn btn-danger pull-right">Terminate employee</button>
+		</ol>
 			<h2 class="text-left">Miguelito Joselito Dela Cruz</h2>
 			<hr>
+
 			<div class="row">
 				<div class="col-md-8 text-left" style="word-break: keep-all">
 					<h4><b style="font-family: QuickSandMed">Employee ID:</b> 2014-1352845</h4>
@@ -41,34 +43,16 @@ if(isset($_SESSION['empid']))
 					<h4><b style="font-family: QuickSandMed">Address:</b> 97 Waco St. Greenheights Village, Quezon City</h4>
 					<h4><b style="font-family: QuickSandMed">Contact Number:</b> 09123456789</h4>
 				</div>
-				<div class="col-md-4 text-right">
-					<h4>Has PhilHealth documents</h4>
-					<h4>Has PagIBIG documents</h4>
-					<h4>Has SSS documents</h4>
+				<div class="col-md-4 pull-right text-right">
+					<h4>Unpaid loans:<br><br>
+					SSS: AMOUNT<br>
+					Pag-IBIG: AMOUNT<br>
+					Vale: AMOUNT</h4>
 				</div>
 			</div>
 			<br>
-			<table class="table table-bordered table-condensed" style="background-color:white;">
-				<tr>
-					<td>Monday, Date</td>
-					<td>Tuesday, Date</td>
-					<td>Wednesday, Date</td>
-					<td>Thursday, Date</td>
-					<td>Friday, Date</td>
-					<td>Saturday, Date</td>
-					<td>Sunday, Date</td>
-				</tr>
-				<tr>
-					<td class="danger">ABSENT</td>
-					<td class="danger">ABSENT</td>
-					<td class="danger">ABSENT</td>
-					<td class="success">PRESENT</td>
-					<td class="success">PRESENT</td>
-					<td class="success">PRESENT</td>
-					<td class="info">DAY OFF</td>
-				</tr>
-			</table>
-				<div class="well well-sm"><h3>Total days absent: 3</h3></div>
+
+			<div class="well well-sm"><h3>Total days absent: 3</h3></div>
 
 		</div>	
 	</div>

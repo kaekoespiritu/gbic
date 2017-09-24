@@ -43,7 +43,7 @@ $date = strftime("%B %d, %Y");
 		<ol class="breadcrumb text-left">
 
 			<li><a href="payroll_table.php?position=<?php Print $position?>&site=<?php Print $site?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Table of Employees</a></li>
-			<li class="active"><?php Print $site." ".$date ?></li>
+			<li class="active"><?php Print "Payroll for site " .$site." on ".$date ?></li>
 
 			<button class="btn btn-success pull-right" style="margin-right:5px" onclick="saveChanges()">Save and compute <span class="glyphicon glyphicon-floppy-saved"></span></button>
 		</ol>
@@ -150,6 +150,7 @@ $date = strftime("%B %d, %Y");
 					$totalHours = 0;//for total work hours
 					$totalNightDiff = 0;//for Total night diff
 					$totalOT = 0;// for total Overtime
+					$totalUT = 0; // for total undertime
 					while($dateRow = mysql_fetch_assoc($payrollQuery))
 					{
 						//Print "<script>alert('".$dateRow['date']."')</script>";
@@ -161,8 +162,10 @@ $date = strftime("%B %d, %Y");
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += $dateRow['overtime'];//Get the total Overtime
+								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$sunTimeIn = $dateRow['timein'];
 								$sunTimeOut = $dateRow['timeout'];
+								$sunDate = $dateRow['date'];
 							}
 							else
 							{
@@ -177,8 +180,10 @@ $date = strftime("%B %d, %Y");
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += $dateRow['overtime'];//Get the total Overtime
+								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$monTimeIn = $dateRow['timein'];
 								$monTimeOut = $dateRow['timeout'];
+								$monDate = $dateRow['date'];
 							}
 							else if($dateRow['attendance'] == 1)//Absent
 							{
@@ -193,8 +198,10 @@ $date = strftime("%B %d, %Y");
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += $dateRow['overtime'];//Get the total Overtime
+								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$tueTimeIn = $dateRow['timein'];
 								$tueTimeOut = $dateRow['timeout'];
+								$tueDate = $dateRow['date'];
 							}
 							else if($dateRow['attendance'] == 1)//Absent
 							{
@@ -209,8 +216,10 @@ $date = strftime("%B %d, %Y");
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += $dateRow['overtime'];//Get the total Overtime
+								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$wedTimeIn = $dateRow['timein'];
 								$wedTimeOut = $dateRow['timeout'];
+								$wedDate = $dateRow['date'];
 							}
 							else if($dateRow['attendance'] == 1)//Absent
 							{
@@ -225,8 +234,10 @@ $date = strftime("%B %d, %Y");
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += $dateRow['overtime'];//Get the total Overtime
+								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$thuTimeIn = $dateRow['timein'];
 								$thuTimeOut = $dateRow['timeout'];
+								$thuDate = $dateRow['date'];
 							}
 							else if($dateRow['attendance'] == 1)//Absent
 							{
@@ -241,8 +252,10 @@ $date = strftime("%B %d, %Y");
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += $dateRow['overtime'];//Get the total Overtime
+								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$friTimeIn = $dateRow['timein'];
 								$friTimeOut = $dateRow['timeout'];
+								$friDate = $dateRow['date'];
 							}
 							else if($dateRow['attendance'] == 1)//Absent
 							{
@@ -257,8 +270,10 @@ $date = strftime("%B %d, %Y");
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += $dateRow['overtime'];//Get the total Overtime
+								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$satTimeIn = $dateRow['timein'];
 								$satTimeOut = $dateRow['timeout'];
+								$satDate = $dateRow['date'];
 							}
 							else if($dateRow['attendance'] == 1)//Absent
 							{
@@ -280,6 +295,15 @@ $date = strftime("%B %d, %Y");
 					// }
 
 				?>
+				<tr>
+					<td colspan="2"><?php Print $wedDate ?></td>
+					<td colspan="2"><?php Print $thuDate ?></td>
+					<td colspan="2"><?php Print $friDate ?></td>
+					<td colspan="2"><?php Print $satDate ?></td>
+					<td colspan="2"><?php Print $sunDate ?></td>
+					<td colspan="2"><?php Print $monDate ?></td>
+					<td colspan="2"><?php Print $tueDate ?></td>
+				</tr>
 				<tr>
 					<td colspan="2">Wednesday</td>
 					<td colspan="2">Thursday</td>
@@ -372,6 +396,9 @@ $date = strftime("%B %d, %Y");
 						<td style="background-color: powderblue">
 							<h4>Total night differential: <?php Print $totalNightDiff ?></h4>
 						</td>
+						<td style="background-color: darkgrey">
+							<h4>Total undertime: <?php Print $totalUT ?></h4>
+						</td>
 					</tr>
 				</table>
 				<?php
@@ -385,81 +412,60 @@ $date = strftime("%B %d, %Y");
 
 				if($sssQuery)
 				{
-					$sssLatest = mysql_fetch_assoc($sssQuery);
-					if(!empty($sssLatest))
-					{
-						while($sssLatest = mysql_fetch_assoc($sssQuery))
+					while($sssLatests = mysql_fetch_assoc($sssQuery))
+					{	
+						if($sssLatests['sss'] != NULL)
 						{
-							if($sssLatest['sss'] != NULL)
-							{
-								$sss = $sssLatest['sss'];
-								break 1;
-							}
-							else
-							{
-								$sss = "N/A";
-							}
+							$sss = $sssLatests['sss'];
+							break 1;
+						}
+						else
+						{
+							$sss = "N/A";
 						}
 					}
-					else
-					{
-						$sss = "N/A";
-					}
-					
 				}
 				else
 				{
 					
 					$sss = "N/A";
 				}
+
+				
+
 				if($pagibigQuery)
 				{
-					$pagibigLatest = mysql_fetch_assoc($pagibigQuery);
-					if(!empty($pagibigLatest))
+					while($pagibigLatest = mysql_fetch_assoc($pagibigQuery))
 					{
-						while($pagibigLatest = mysql_fetch_assoc($pagibigQuery))
+						if($pagibigLatest['pagibig'] != NULL)
 						{
-							if($pagibigLatest['pagibig'] != NULL)
-							{
-								$pagibig = $pagibigLatest['pagibig'];
-								break 1;
-							}
-							else
-							{
-								$pagibig = "N/A";
-							}
+							$pagibig = $pagibigLatest['pagibig'];
+							break 1;
 						}
-					}
-					else
-					{
-						$pagibig = "N/A";
+						else
+						{
+							$pagibig = "N/A";
+						}
 					}
 				}
 				else
 				{
 					$pagibig = "N/A";
 				}
+
 				if($valeQuery)
 				{
-					$valeLatest = mysql_fetch_assoc($valeQuery);
-					if(!empty($valeLatest))
+					while($valeLatest = mysql_fetch_assoc($valeQuery))
 					{
-						while($valeLatest = mysql_fetch_assoc($valeQuery))
+						if($valeLatest['vale'] != NULL)
 						{
-							if($valeLatest['vale'] != NULL)
-							{
-								$vale = $valeLatest['vale'];
-								break 1;
-							}
-							else
-							{
-								$vale = "N/A";
-							}
+							$vale = $valeLatest['vale'];
+							break 1;
 						}
-					}
-					else
-					{
-						$vale = "N/A";
+						else
+						{
+							$vale = "N/A";
+						}
 					}
 				}
 				else
@@ -585,7 +591,6 @@ $date = strftime("%B %d, %Y");
 				        <h4 class="modal-title" id="myModalLabel">Add new vale</h4>
 				      </div>
 				      <div class="modal-body">
-				      	Previous amount: 1,000 PHP
 				      	<div class="row">
 				      		<div class="col-md-8 col-md-offset-2">
 				        		<input type="text" class="form-control" placeholder="Add as new vale" onkeypress="validatenumber(event)">
@@ -608,7 +613,6 @@ $date = strftime("%B %d, %Y");
 				        <h4 class="modal-title" id="myModalLabel">Deduct old vale</h4>
 				      </div>
 				      <div class="modal-body">
-				      	Previous amount: 1,000 PHP
 				      	<div class="row">
 				      		<div class="col-md-8 col-md-offset-2">
 				        		<input type="text" class="form-control col-md-4" placeholder="Deduct from old vale" onkeypress="validatenumber(event)">
