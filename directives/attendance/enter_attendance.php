@@ -164,28 +164,91 @@ function attendance ()
 				// Working hours
 					if($empRow['workhours'] <= 5)
 					{
-						Print "<!-- Working Hours -->
+						$workhours = $empRow['workhours'];
+						$hasMins = strpos($workhours, ".");
+						$work = explode(".", $workhours);
+						if($hasMins == true)
+						{
+							//Separates the string
+							$wHrs = $work[0];
+							$wMin = $work[1];
+							//Print "<script>alert('workinghrs')</script>";
+							Print "<!-- Working Hours -->
 							<td>
-								<input type='text' placeholder='--'' value='". $empRow['workhours'] ." hrs/HALFDAY' class='form-control input-sm workinghours' disabled>
-								<input type='hidden' class='workinghoursH' value='". $empRow['workhours'] ." hrs/HALFDAY' name='workinghrs[".$counter."]' >
+								<input type='text' placeholder='--'' value='". $wHrs ." hrs, ".$wMin." mins/HALFDAY' class='form-control input-sm workinghours' disabled>
+								<input type='hidden' class='workinghoursH' value='". $wHrs ." hrs, ".$wMin." mins/HALFDAY' name='workinghrs[".$counter."]' >
 							</td>";
+						}
+						else
+						{
+							$wHrs = $work[0];
+							//Print "<script>alert('workinghrs1')</script>";
+							Print "<!-- Working Hours -->
+							<td>
+								<input type='text' placeholder='--'' value='". $wHrs ." hrs/HALFDAY' class='form-control input-sm workinghours' disabled>
+								<input type='hidden' class='workinghoursH' value='". $wHrs ." hrs/HALFDAY' name='workinghrs[".$counter."]' >
+							</td>";
+						}
+						
 					}
 					else
 					{
-						Print "<!-- Working Hours -->
+						$workhours = $empRow['workhours'];
+						$hasMins = strpos($workhours, ".");
+						$work = explode(".", $workhours);//Separates the string
+						//Print "<script>alert('".$hasMins."')</script>";
+						if($hasMins == true) //if it has minutes
+						{
+							
+							$wHrs = $work[0];
+							$wMin = $work[1];
+							//Print "<script>alert('workinghrs12')</script>";
+							Print "<!-- Working Hours -->
 							<td>
-								<input type='text' placeholder='--'' value='". $empRow['workhours'] ." hours' class='form-control input-sm workinghours' disabled>
-								<input type='hidden' class='workinghoursH' value='". $empRow['workhours'] ." hours' name='workinghrs[".$counter."]' >
+								<input type='text' placeholder='--'' value='". $wHrs ." hrs, ".$wMin." mins/HALFDAY' class='form-control input-sm workinghours' disabled>
+								<input type='hidden' class='workinghoursH' value='". $wHrs ." hrs, ".$wMin." mins/HALFDAY' name='workinghrs[".$counter."]' >
 							</td>";
+						}
+						else// just hours
+						{
+							//Print "<script>alert('workinghrs1')</script>";
+							$wHrs = $work[0];
+							Print "<!-- Working Hours -->
+							<td>
+								<input type='text' placeholder='--'' value='". $wHrs ." hrs' class='form-control input-sm workinghours' disabled>
+								<input type='hidden' class='workinghoursH' value='". $wHrs ." hrs' name='workinghrs[".$counter."]' >
+							</td>";
+						}
+						
 					}
 				// Overtime
 					if($empRow['overtime'] != 0)
 					{
-						Print "<!-- Overtime -->
+						$overtime = $empRow['overtime'];
+						$hasMins = strpos($overtime, ".");
+						$work = explode(".", $overtime);//Separates the string
+						if($hasMins == true)
+						{
+							$othrs = $work[0];
+							$otmin = $work[1];
+
+							Print "<!-- Overtime -->
 							<td>
-								<input type='text' placeholder='--' class='form-control input-sm overtime' value='". $empRow['overtime'] ." hours'  disabled>
-								<input type='hidden' class='overtimeH' value='". $empRow['overtime'] ." hours' name='othrs[".$counter."]' >
+								<input type='text' placeholder='--' class='form-control input-sm overtime' value='". $othrs ." hrs, ".$otmin." mins'  disabled>
+								<input type='hidden' class='overtimeH' value='". $othrs ." hrs, ".$otmin." mins' name='othrs[".$counter."]' >
 							</td>";
+						}
+						else
+						{
+							$othrs = $work[0];
+							//Print "<script>alert('YEAH')</script>";
+							Print "<!-- Overtime -->
+							<td>
+								<input type='text' placeholder='--' class='form-control input-sm overtime' value='". $othrs ." hrs'  disabled>
+								<input type='hidden' class='overtimeH' value='". $othrs ." hrs' name='othrs[".$counter."]' >
+							</td>";
+						}
+						
 					}
 					else
 					{
@@ -198,11 +261,30 @@ function attendance ()
 				// Undertime
 					if($empRow['undertime'] != 0)
 					{
-						Print "<!-- Undertime -->
+						$undertime = $empRow['undertime'];
+						$hasMins = strpos($undertime, ".");
+						$work = explode(".", $undertime);//Separates the string
+						if($hasMins == true)
+						{
+							$uHrs = $work[0];
+							$uMin = $work[1];
+
+							Print "<!-- Undertime -->
 							<td>
-								<input type='text' placeholder='--' value='". $empRow['undertime'] ." hours' class='form-control input-sm undertime'  disabled>
-								<input type='hidden' class='undertimeH' value='". $empRow['undertime'] ." hours' name='undertime[".$counter."]'>
+								<input type='text' placeholder='--' value='". $uHrs ." hrs, ".$uMin." mins' class='form-control input-sm undertime'  disabled>
+								<input type='hidden' class='undertimeH' value='". $uHrs ." hrs, ".$uMin." mins' name='undertime[".$counter."]'>
 							</td>";
+						}
+						else
+						{
+							$uHrs = $work[0];
+							Print "<!-- Undertime -->
+							<td>
+								<input type='text' placeholder='--' value='". $uHrs ." hrs' class='form-control input-sm undertime'  disabled>
+								<input type='hidden' class='undertimeH' value='". $uHrs ." hrs' name='undertime[".$counter."]'>
+							</td>";
+						}
+						
 					}
 					else
 					{
@@ -215,10 +297,12 @@ function attendance ()
 				// NightDiff
 					if($empRow['nightdiff'] != 0)
 					{
+						$work = explode(".", $empRow['nightdiff']);//Separates the string
+						$nHrs = $work[0];
 						Print "<!-- Night Differential --> 
 							<td>
-								<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='". $empRow['nightdiff'] ." hours' disabled>
-								<input type='hidden' class='nightdiffH' value='". $empRow['nightdiff'] ." hours' name='nightdiff[".$counter."]' >
+								<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='". $nHrs ." hrs' disabled>
+								<input type='hidden' class='nightdiffH' value='". $nHrs ." hrs' name='nightdiff[".$counter."]' >
 							</td>";
 					}
 					else

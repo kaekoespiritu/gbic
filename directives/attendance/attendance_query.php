@@ -3,6 +3,7 @@
 
 	function updateQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate)
 	{
+		//Print "<script>alert('workinghrs ". $workinghrs ."')</script>";
 		//Print "<script>alert('".$attendance."')</script>";
 		if((!empty($timein) && !empty($timeout)) && $day == "Sunday")
 		{

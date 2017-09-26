@@ -125,9 +125,24 @@ if(!empty($dateRows))// Updating attendance
 			if(!empty($_POST['workinghrs'][$counter]))
 			{
 				$workinghrs = mysql_real_escape_string($_POST['workinghrs'][$counter]);
-				$workinghrs = $workinghrs[0].$workinghrs[1];
-				$workinghrs = str_replace(' ', '', $workinghrs);
-				 //Print "<script>alert('workinghrs ". $workinghrs ."')</script>";
+				$hasMins = strpos($workinghrs, ",");//Search the string if it has comma
+				if($hasMins == false)
+				{
+					$workinghrs = $workinghrs[0].$workinghrs[1];//Gets the first 2 characters
+					$workinghrs = str_replace(' ', '', $workinghrs);//removes all the spaces
+				}
+				else
+				{
+					$work = explode(",", $workinghrs);//Separates the string
+					$hrs = $work[0];//gets the Hours
+					$mins = $work[1];//Gets the minutes
+					
+					$workinghrs = $hrs[0].$hrs[1].".".$mins[1].$mins[2];
+					
+					$workinghrs = str_replace(' ', '', $workinghrs);//removes all the spaces
+					Print "<script>alert('workinghrs ". $workinghrs ."')</script>";
+				}
+				 //Print "<script>alert('workinghrs ".$workinghrs."')</script>";
 			}
 			else 
 			{
@@ -137,8 +152,32 @@ if(!empty($dateRows))// Updating attendance
 			if(!empty($_POST['othrs'][$counter]))
 			{
 				$OtHrs = $_POST['othrs'][$counter];
-				$OtHrs = $OtHrs[0].$OtHrs[1];
-				$OtHrs = str_replace(' ', '', $OtHrs);
+				$OtHrs = mysql_real_escape_string($_POST['othrs'][$counter]);
+				$hasMins = strpos($OtHrs, ",");//Search the string if it has comma
+				$justMins = strpos($OtHrs, "mins");
+				//Print "<script>alert('yeah')</script>";
+				if($justMins == true && $hasMins == false)
+				{
+					Print "<script>alert('yeah')</script>";
+					$OtHrs = "0.".$OtHrs[0].$OtHrs[1];//Gets the first 2 characters
+					$OtHrs = str_replace(' ', '', $OtHrs);//removes all the spaces
+				}
+				else if($hasMins == false)
+				{
+					$OtHrs = $OtHrs[0].$OtHrs[1];//Gets the first 2 characters
+					$OtHrs = str_replace(' ', '', $OtHrs);//removes all the spaces
+				}
+				else
+				{
+					//dito
+					Print "<script>alert('yepa')</script>";
+					$work = explode(",", $OtHrs);//Separates the string
+					$hrs = $work[0];//gets the Hours
+					$mins = $work[1];//Gets the minutes
+					
+					$OtHrs = $hrs[0].$hrs[1].".".$mins[1].$mins[2];
+					$OtHrs = str_replace(' ', '', $OtHrs);//removes all the spaces
+				}
 				
 			}
 			else 
@@ -148,12 +187,29 @@ if(!empty($dateRows))// Updating attendance
 			if(!empty($_POST['undertime'][$counter]))
 			{
 				$undertime = mysql_real_escape_string($_POST['undertime'][$counter]);
-				//$undertime_length = (strlen($undertime) - 1) - strlen($undertime);
-				//Print "<script>alert('undertime_length ". $undertime_length ."')</script>";
-				//$undertime = substr($undertime, 2, 0);
-				$undertime = $undertime[0].$undertime[1];
-				 //Print "<script>alert('undertime ". $undertime ."')</script>";
-				$undertime = str_replace(' ', '', $undertime);
+				$hasMins = strpos($undertime, ",");//Search the string if it has comma
+				$justMins = strpos($undertime, "mins");
+				//Print "<script>alert('yeah')</script>";
+				if($justMins == true && $hasMins == false)
+				{
+					Print "<script>alert('yeah')</script>";
+					$undertime = "0.".$undertime[0].$undertime[1];//Gets the first 2 characters
+					$undertime = str_replace(' ', '', $undertime);//removes all the spaces
+				}
+				else if($hasMins == false)
+				{
+					$undertime = $undertime[0].$undertime[1];//Gets the first 2 characters
+					$undertime = str_replace(' ', '', $undertime);//removes all the spaces
+				}
+				else
+				{
+					$work = explode(",", $undertime);//Separates the string
+					$hrs = $work[0];//gets the Hours
+					$mins = $work[1];//Gets the minutes
+					
+					$undertime = $hrs[0].$hrs[1].".".$mins[1].$mins[2];
+					$undertime = str_replace(' ', '', $undertime);//removes all the spaces
+				}
 			}
 			else 
 			{
@@ -185,7 +241,7 @@ if(!empty($dateRows))// Updating attendance
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
 			
-			
+			//Print "<script>alert('workinghrs ". $workinghrs ."')</script>";
 			$AttQuery = updateQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 			
 		}
@@ -328,9 +384,23 @@ else// NEW attendance
 			if(!empty($_POST['workinghrs'][$counter]))
 			{
 				$workinghrs = mysql_real_escape_string($_POST['workinghrs'][$counter]);
-				$workinghrs = $workinghrs[0].$workinghrs[1];
-				$workinghrs = str_replace(' ', '', $workinghrs);
-				 //Print "<script>alert('workinghrs ". $workinghrs ."')</script>";
+				$hasMins = strpos($workinghrs, ",");//Search the string if it has comma
+				if($hasMins == false)
+				{
+					$workinghrs = $workinghrs[0].$workinghrs[1];//Gets the first 2 characters
+					$workinghrs = str_replace(' ', '', $workinghrs);//removes all the spaces
+				}
+				else
+				{
+					$work = explode(",", $workinghrs);//Separates the string
+					$hrs = $work[0];//gets the Hours
+					$mins = $work[1];//Gets the minutes
+					
+					$workinghrs = $hrs[0].$hrs[1].".".$mins[1].$mins[2];
+					//Print "<script>alert('workinghrs ". $mins[1].$mins[2] ."')</script>";
+					$workinghrs = str_replace(' ', '', $workinghrs);//removes all the spaces
+				}
+				 //
 			}
 			else 
 			{
@@ -340,9 +410,27 @@ else// NEW attendance
 			if(!empty($_POST['othrs'][$counter]))
 			{
 				$OtHrs = $_POST['othrs'][$counter];
-				$OtHrs = $OtHrs[0].$OtHrs[1];
-				$OtHrs = str_replace(' ', '', $OtHrs);
-				
+				$hasMins = strpos($OtHrs, ",");//Search the string if it has comma
+				$justMins = strpos($OtHrs, "mins");
+				if($justMins == true && $hasMins == false)
+				{
+					$OtHrs = "0.".$OtHrs[0].$OtHrs[1];//Gets the first 2 characters
+					$OtHrs = str_replace(' ', '', $OtHrs);//removes all the spaces
+				}
+				else if($hasMins == false)
+				{
+					$OtHrs = $OtHrs[0].$OtHrs[1];//Gets the first 2 characters
+					$OtHrs = str_replace(' ', '', $OtHrs);//removes all the spaces
+				}
+				else
+				{
+					$work = explode(",", $OtHrs);//Separates the string
+					$hrs = $work[0];//gets the Hours
+					$mins = $work[1];//Gets the minutes
+					
+					$OtHrs = $hrs[0].$hrs[1].".".$mins[1].$mins[2];
+					$OtHrs = str_replace(' ', '', $OtHrs);//removes all the spaces
+				}
 			}
 			else 
 			{
@@ -351,12 +439,29 @@ else// NEW attendance
 			if(!empty($_POST['undertime'][$counter]))
 			{
 				$undertime = mysql_real_escape_string($_POST['undertime'][$counter]);
-				//$undertime_length = (strlen($undertime) - 1) - strlen($undertime);
-				//Print "<script>alert('undertime_length ". $undertime_length ."')</script>";
-				//$undertime = substr($undertime, 2, 0);
-				$undertime = $undertime[0].$undertime[1];
-				 //Print "<script>alert('undertime ". $undertime ."')</script>";
-				$undertime = str_replace(' ', '', $undertime);
+				$hasMins = strpos($undertime, ",");//Search the string if it has comma
+				$justMins = strpos($undertime, "mins");
+				//Print "<script>alert('yeah')</script>";
+				if($justMins == true && $hasMins == false)
+				{
+					Print "<script>alert('yeah')</script>";
+					$undertime = "0.".$undertime[0].$undertime[1];//Gets the first 2 characters
+					$undertime = str_replace(' ', '', $undertime);//removes all the spaces
+				}
+				else if($hasMins == false)
+				{
+					$undertime = $undertime[0].$undertime[1];//Gets the first 2 characters
+					$undertime = str_replace(' ', '', $undertime);//removes all the spaces
+				}
+				else
+				{
+					$work = explode(",", $undertime);//Separates the string
+					$hrs = $work[0];//gets the Hours
+					$mins = $work[1];//Gets the minutes
+					
+					$undertime = $hrs[0].$hrs[1].".".$mins[1].$mins[2];
+					$undertime = str_replace(' ', '', $undertime);//removes all the spaces
+				}
 			}
 			else 
 			{

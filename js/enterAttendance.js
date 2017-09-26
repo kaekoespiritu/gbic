@@ -167,6 +167,8 @@ function computeTime(row, timeinhour,timeinmin,timeouthour,timeoutmin) {
 		var workinghours;
 		var workingmins;
 
+
+
 		// If time is 12AM
 		if(timeinhour == 0)
 		{
@@ -201,6 +203,13 @@ function computeTime(row, timeinhour,timeinmin,timeouthour,timeoutmin) {
 			{
 				workinghours = workinghours - 1;
 			}
+
+		//Decrement workinghours if minutes is more than time out mins
+			if(timeinmin > timeoutmin)
+			{
+				workinghours = workinghours - 1;
+			}
+
 			//alert(workinghours);
 			//set the attendance status to PRESENT
 			row.querySelector('.attendance').value = "PRESENT";
@@ -212,25 +221,30 @@ function computeTime(row, timeinhour,timeinmin,timeouthour,timeoutmin) {
 			}
 			else if(workingmins == 0)
 			{
-				row.querySelector('.workinghours').value = workinghours + " hours";
-				row.querySelector('.workinghoursH').value = workinghours + " hours";
+				row.querySelector('.workinghours').value = workinghours + " hrs";
+				row.querySelector('.workinghoursH').value = workinghours + " hrs";
 			}
 			else
 			{
-				row.querySelector('.workinghours').value = workinghours + " hours, " + workingmins + " mins";	
-				row.querySelector('.workinghoursH').value = workinghours + " hours, " + workingmins + " mins";
+				row.querySelector('.workinghours').value = workinghours + " hrs, " + workingmins + " mins";	
+				row.querySelector('.workinghoursH').value = workinghours + " hrs, " + workingmins + " mins";
 			}
 
 		// OVERTIME if Working Hours exceed 8
 			if(workinghours > 8 && workingmins == 0)
 			{
-				row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hours";
-				row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hours";
+				row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs";
+				row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs";
+			}
+			else if(workinghours == 8 && workingmins != 0)
+			{//dito
+				row.querySelector('.overtime').value = workingmins + " mins";
+				row.querySelector('.overtimeH').value = workingmins + " mins";
 			}
 			else if (workinghours > 8)
 			{
-				row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
-				row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
+				row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
+				row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
 			}
 			else
 			{
@@ -241,13 +255,23 @@ function computeTime(row, timeinhour,timeinmin,timeouthour,timeoutmin) {
 		// UNDERTIME if Working Hours don't reach 8
 			if(workinghours < 8 && workingmins == 0)
 			{
-				row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hours";
-				row.querySelector('.undertimeH').value = Math.abs(workinghours - 8) + " hours";
+				row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hrs";
+				row.querySelector('.undertimeH').value = Math.abs(workinghours - 8) + " hrs";
 			}
 			else if(workinghours < 8)
 			{
-				row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
-				row.querySelector('.undertimeH').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
+				undertime = Math.abs(workinghours - 8);
+				if(workinghours == 7)
+				{
+					row.querySelector('.undertime').value = workingmins + " mins";
+					row.querySelector('.undertimeH').value = workingmins + " mins";
+				}
+				else
+				{
+					row.querySelector('.undertime').value = undertime + " hrs, " + workingmins + " mins";
+					row.querySelector('.undertimeH').value = undertime + " hrs, " + workingmins + " mins";
+				}
+				
 			}
 			else
 			{
@@ -350,8 +374,8 @@ function computeTime(row, timeinhour,timeinmin,timeouthour,timeoutmin) {
 			if(nightdiff != "")
 			{
 				//alert("yeah1");
-				row.querySelector('.nightdiff').value = nightdiff + " hours";
-				row.querySelector('.nightdiffH').value = nightdiff + " hours";
+				row.querySelector('.nightdiff').value = nightdiff + " hrs";
+				row.querySelector('.nightdiffH').value = nightdiff + " hrs";
 			}
 			else
 			{
@@ -417,6 +441,12 @@ function computeTime(row, timeinhour,timeinmin,timeouthour,timeoutmin) {
 				workinghours = workinghours - 1;
 			}
 
+			//Decrement workinghours if minutes is more than time out mins
+			if(timeinmin > timeoutmin)
+			{
+				workinghours = workinghours - 1;
+			}
+
 		// WORKING HOURS
 			if(workinghours <= 5)//HALF DAY
 			{
@@ -425,24 +455,24 @@ function computeTime(row, timeinhour,timeinmin,timeouthour,timeoutmin) {
 			}
 			else if(workingmins == 0)
 			{
-				row.querySelector('.workinghours').value = workinghours + " hours";
-				row.querySelector('.workinghoursH').value = workinghours + " hours";
+				row.querySelector('.workinghours').value = workinghours + " hrs";
+				row.querySelector('.workinghoursH').value = workinghours + " hrs";
 			}
 			else
 			{
-				row.querySelector('.workinghours').value = workinghours + " hours, " + workingmins + " mins";	
-				row.querySelector('.workinghoursH').value = workinghours + " hours, " + workingmins + " mins";	
+				row.querySelector('.workinghours').value = workinghours + " hrs, " + workingmins + " mins";	
+				row.querySelector('.workinghoursH').value = workinghours + " hrs, " + workingmins + " mins";	
 			}
 		// OVERTIME if Working Hours exceed 8
 			if(workinghours > 8 && workingmins == 0)
 			{
-				row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hours";
-				row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hours";
+				row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs";
+				row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs";
 			}
 			else if (workinghours > 8)
 			{
-				row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
-				row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
+				row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
+				row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
 			}
 			else
 			{
@@ -453,13 +483,13 @@ function computeTime(row, timeinhour,timeinmin,timeouthour,timeoutmin) {
 		// UNDERTIME if Working Hours don't reach 8
 			if(workinghours < 8 && workingmins == 0)
 			{
-				row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hours";
-				row.querySelector('.undertimeH').value = Math.abs(workinghours - 8) + " hours";
+				row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hrs";
+				row.querySelector('.undertimeH').value = Math.abs(workinghours - 8) + " hrs";
 			}
 			else if(workinghours < 8)
 			{
-				row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
-				row.querySelector('.undertimeH').value = Math.abs(workinghours - 8) + " hours, " + workingmins + " mins";
+				row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
+				row.querySelector('.undertimeH').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
 			}
 			else
 			{
@@ -525,8 +555,8 @@ function computeTime(row, timeinhour,timeinmin,timeouthour,timeoutmin) {
 			if(nightdiff != "")
 			{
 				
-				row.querySelector('.nightdiff').value = nightdiff + " hours";
-				row.querySelector('.nightdiffH').value = nightdiff + " hours";
+				row.querySelector('.nightdiff').value = nightdiff + " hrs";
+				row.querySelector('.nightdiffH').value = nightdiff + " hrs";
 			}
 			else
 			{
