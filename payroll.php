@@ -157,15 +157,17 @@ $date = strftime("%B %d, %Y");
 						$day = date('l', strtotime($dateRow['date']));
 						if($day == "Sunday" && $sunBool)
 						{
+							$sunDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
-								$totalOT += $dateRow['overtime'];//Get the total Overtime
+								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
+								Print "<script>alert('".$totalOT."')</script>";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$sunTimeIn = $dateRow['timein'];
 								$sunTimeOut = $dateRow['timeout'];
-								$sunDate = $dateRow['date'];
+								
 							}
 							else
 							{
@@ -175,15 +177,17 @@ $date = strftime("%B %d, %Y");
 						}
 						else if($day == "Monday" && $monBool)
 						{
+							$monDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
-								$totalOT += $dateRow['overtime'];//Get the total Overtime
+								$totalOT = floatval($dateRow['overtime']);//Get the total Overtime
+								Print "<script>alert('".$totalOT."')</script>";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$monTimeIn = $dateRow['timein'];
 								$monTimeOut = $dateRow['timeout'];
-								$monDate = $dateRow['date'];
+								
 							}
 							else if($dateRow['attendance'] == 1)//Absent
 							{
@@ -193,15 +197,17 @@ $date = strftime("%B %d, %Y");
 						}
 						else if($day == "Tuesday" && $tueBool)//Tuesday
 						{
+							$tueDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
-								$totalOT += $dateRow['overtime'];//Get the total Overtime
+								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
+								Print "<script>alert('".$totalOT."')</script>";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$tueTimeIn = $dateRow['timein'];
 								$tueTimeOut = $dateRow['timeout'];
-								$tueDate = $dateRow['date'];
+								
 							}
 							else if($dateRow['attendance'] == 1)//Absent
 							{
@@ -211,15 +217,17 @@ $date = strftime("%B %d, %Y");
 						}
 						else if($day == "Wednesday" && $wedBool)//Wednesday
 						{
+							$wedDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
-								$totalOT += $dateRow['overtime'];//Get the total Overtime
+								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
+								Print "<script>alert('".$totalOT."')</script>";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$wedTimeIn = $dateRow['timein'];
 								$wedTimeOut = $dateRow['timeout'];
-								$wedDate = $dateRow['date'];
+								
 							}
 							else if($dateRow['attendance'] == 1)//Absent
 							{
@@ -229,15 +237,17 @@ $date = strftime("%B %d, %Y");
 						}
 						else if($day == "Thursday" && $thuBool)//Thursday
 						{
+							$thuDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
-								$totalOT += $dateRow['overtime'];//Get the total Overtime
+								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
+								Print "<script>alert('".$totalOT."')</script>";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$thuTimeIn = $dateRow['timein'];
 								$thuTimeOut = $dateRow['timeout'];
-								$thuDate = $dateRow['date'];
+								
 							}
 							else if($dateRow['attendance'] == 1)//Absent
 							{
@@ -247,15 +257,17 @@ $date = strftime("%B %d, %Y");
 						}
 						else if($day == "Friday" && $friBool)//Friday
 						{	
+							$friDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
-								$totalOT += $dateRow['overtime'];//Get the total Overtime
+								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
+								Print "<script>alert('".$totalOT."')</script>";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$friTimeIn = $dateRow['timein'];
 								$friTimeOut = $dateRow['timeout'];
-								$friDate = $dateRow['date'];
+								
 							}
 							else if($dateRow['attendance'] == 1)//Absent
 							{
@@ -265,22 +277,26 @@ $date = strftime("%B %d, %Y");
 						}
 						else if($day == "Saturday" && $satBool)//Saturday
 						{
+							$satDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
-								$totalOT += $dateRow['overtime'];//Get the total Overtime
+								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
+								Print "<script>alert('".$totalOT."')</script>";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$satTimeIn = $dateRow['timein'];
 								$satTimeOut = $dateRow['timeout'];
-								$satDate = $dateRow['date'];
+								
 							}
 							else if($dateRow['attendance'] == 1)//Absent
 							{
 								$satAbsent = true;
 							}
 							$satBool = false;
-						}					
+						}	
+						
+
 					}
 					// $start_date = $date;
 					// $end_date = 'September 22, 2017';
@@ -401,78 +417,6 @@ $date = strftime("%B %d, %Y");
 						</td>
 					</tr>
 				</table>
-				<?php
-				$getSSS = "SELECT sss FROM loans WHERE empid = '$empid' AND sss IS NOT NULL ORDER BY date DESC";
-				$getPAGIBIG = "SELECT pagibig FROM loans WHERE empid = '$empid' AND pagibig IS NOT NULL ORDER BY date DESC";
-				$getVALE = "SELECT vale FROM loans WHERE empid = '$empid' AND vale IS NOT NULL ORDER BY date DESC";
-
-				$sssQuery = mysql_query($getSSS);
-				$pagibigQuery = mysql_query($getPAGIBIG);
-				$valeQuery = mysql_query($getVALE);
-
-				if($sssQuery)
-				{
-					while($sssLatests = mysql_fetch_assoc($sssQuery))
-					{	
-						if($sssLatests['sss'] != NULL)
-						{
-							$sss = $sssLatests['sss'];
-							break 1;
-						}
-						else
-						{
-							$sss = "N/A";
-						}
-					}
-				}
-				else
-				{
-					
-					$sss = "N/A";
-				}
-
-				
-
-				if($pagibigQuery)
-				{
-					while($pagibigLatest = mysql_fetch_assoc($pagibigQuery))
-					{
-						if($pagibigLatest['pagibig'] != NULL)
-						{
-							$pagibig = $pagibigLatest['pagibig'];
-							break 1;
-						}
-						else
-						{
-							$pagibig = "N/A";
-						}
-					}
-				}
-				else
-				{
-					$pagibig = "N/A";
-				}
-
-				if($valeQuery)
-				{
-					while($valeLatest = mysql_fetch_assoc($valeQuery))
-					{
-						if($valeLatest['vale'] != NULL)
-						{
-							$vale = $valeLatest['vale'];
-							break 1;
-						}
-						else
-						{
-							$vale = "N/A";
-						}
-					}
-				}
-				else
-				{
-					$vale = "N/A";
-				}
-				?>
 				<div class="row">
 					<form class="horizontal">
 						<div class="col-md-2 col-md-offset-1">
@@ -481,6 +425,80 @@ $date = strftime("%B %d, %Y");
 								<label class="control-label col-md-3" for="sss" >SSS</label>
 								<div class="col-md-9">
 									<?php
+									$getSSS = "SELECT sss FROM loans WHERE empid = '$empid' AND sss IS NOT NULL ORDER BY date DESC";
+									$getPAGIBIG = "SELECT pagibig FROM loans WHERE empid = '$empid' AND pagibig IS NOT NULL ORDER BY date DESC";
+									$getVALE = "SELECT vale FROM loans WHERE empid = '$empid' AND vale IS NOT NULL ORDER BY date DESC";
+									//Query
+									$sssQuery = mysql_query($getSSS);
+									$pagibigQuery = mysql_query($getPAGIBIG);
+									$valeQuery = mysql_query($getVALE);
+
+									//Get the number of Rows
+									$sssNum = mysql_num_rows($sssQuery);
+									$pagibigNum = mysql_num_rows($pagibigQuery);
+									$valeNum = mysql_num_rows($valeQuery);
+									if($sssNum > 0)
+									{//Print "<script>alert('yea')</script>";
+										while($sssLatests = mysql_fetch_assoc($sssQuery))
+										{	
+											
+											if($sssLatests['sss'] != NULL)
+											{
+												$sss = $sssLatests['sss'];
+												break 1;
+											}
+											else
+											{
+												$sss = "N/A";
+											}
+										}
+									}
+									else
+									{
+										$sss = "N/A";
+									}
+
+									
+
+									if($pagibigNum > 0)
+									{
+										while($pagibigLatest = mysql_fetch_assoc($pagibigQuery))
+										{
+											if($pagibigLatest['pagibig'] != NULL)
+											{
+												$pagibig = $pagibigLatest['pagibig'];
+												break 1;
+											}
+											else
+											{
+												$pagibig = "N/A";
+											}
+										}
+									}
+									else
+									{
+										$pagibig = "N/A";
+									}
+
+									if($valeNum > 0)
+									{
+										while($valeLatest = mysql_fetch_assoc($valeQuery))
+										{
+											if($valeLatest['vale'] != NULL)
+											{
+												$vale = $valeLatest['vale'];
+												break 1;
+											}
+											else
+											{
+												$vale = "N/A";
+											}
+										}
+									}
+									else
+									{
+										$vale = "N/A";
+									}
 									if($sss != "N/A")
 									{
 										Print "<input type='text' id='sss' class='form-control input-sm' placeholder='".$sss." PHP' onkeypress='validatenumber(event)'>";

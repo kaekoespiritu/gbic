@@ -66,19 +66,37 @@ $date = strftime("%B %d, %Y");
 			<div class="col-md-3 pull-left">
 				Filter by:
 				<!-- Documents status DROPDOWN -->
-				<div class="btn-group">
-					<select class="form-control" id="documents">
-						<option hidden>Documents</option>
-						<option value="complete">Complete</option>
-						<option value="incomplete">Incomplete</option>
+				<div class="btn-group">Documents
+					<select class="form-control" id="documents" onchange="documents()">
+						<option hidden>--</option>
+						<?php 
+							if(isset($_GET['document']))
+							{
+								if($_GET['document'] == "complete")
+									Print '	<option value="complete" selected="selected">Complete</option>
+											<option value="incomplete" >Incomplete</option>';
+								else
+									Print '	<option value="complete">Complete</option>
+											<option value="incomplete" selected="selected">Incomplete</option>';
+							}
+						?>
 					</select>
 				</div>
 				<!-- Payroll status DRODOWN -->
-				<div class="btn-group">
-					<select class="form-control" id="documents">
-						<option hidden>Payroll status</option>
-						<option value="complete">Complete</option>
-						<option value="incomplete">Incomplete</option>
+				<div class="btn-group">Payroll Status
+					<select class="form-control" id="status" onchange="status()">
+						<option hidden>--</option>
+						<?php 
+							if(isset($_GET['status']))
+							{
+								if($_GET['status'] == "complete")
+									Print '	<option value="complete" selected="selected">Complete</option>
+											<option value="incomplete" >Incomplete</option>';
+								else
+									Print '	<option value="complete">Complete</option>
+											<option value="incomplete" selected="selected">Incomplete</option>';
+							}
+						?>
 					</select>
 				</div>
 
@@ -95,6 +113,13 @@ $date = strftime("%B %d, %Y");
 						<td>Action</td>
 					</tr>
 					<?php
+					if(isset($_GET['document']))
+					{
+						if($_GET['document'])
+						{
+
+						}
+					}
 					$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'AND position = '$position'";
 
 					//$employee = "SELECT * FROM employee WHERE employment_status = 1 ";
@@ -283,6 +308,54 @@ $date = strftime("%B %d, %Y");
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script>
 		document.getElementById("payroll").setAttribute("style", "background-color: #10621e;");
+		// SEARCHING DATABASE VIA ENTER KEYPRESS 
+		function enter(e) {
+			if (e.keyCode == 13) {
+			document.getElementById('search_form').submit();
+			}
+		}
+		// SITE FILTER 
+		function status() {
+		if(document.URL.match(/status=([0-9]+)/))
+		{
+			var arr = document.URL.match(/status=([0-9]+)/)
+			var siteUrl = arr[1];
+			if(siteUrl)
+			{
+			localStorage.setItem("counter", 0);
+			}
+			else if(localStorage.getItem('counter') > 2)
+			{
+				localStorage.clear();
+			}
+		}
+		var status = document.getElementById("status").value;
+		var statusReplaced = status.replace(/\s/g , "+");
+		localStorage.setItem("glob_status", statusReplaced);
+		window.location.assign("payroll_table.php?position=<?Print $position ?>&site=<?Print $site ?>&status="+statusReplaced+"&document="+localStorage.getItem('glob_document'));
+		}
+
+		// POSITION FILTER 
+		function documents() {
+		if(document.URL.match(/documents=([0-9]+)/))
+		{
+			var arr = document.URL.match(/documents=([0-9]+)/)
+			var documentUrl = arr[1];
+			if(documentUrl)
+			{
+			localStorage.setItem("counter", 0);
+			}
+			else if(localStorage.getItem('counter') > 2)
+			{
+				localStorage.clear();
+			}
+		}
+		var documents = document.getElementById("documents").value;
+		var documentReplaced = documents.replace(/\s/g , "+");
+		localStorage.setItem("glob_document", documentReplaced);
+		window.location.assign("payroll_table.php?position=<?Print $position ?>&site=<?Print $site ?>&status="+localStorage.getItem("glob_status")+"&document="+documentReplaced);
+		}
+
 
 		window.onload =	function completePayroll(){
 			var status = document.getElementsByClassName('payrollStatus');
