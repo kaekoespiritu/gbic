@@ -10,7 +10,9 @@ else
 $site = $_GET['site'];
 $position = $_GET['position'];
 $empid = $_GET['empid'];
-$date = strftime("%B %d, %Y");
+//Sample date for debugging purposes
+//$date = strftime("%B %d, %Y");
+$date = "September 26, 2017";
 ?>
 <html>
 <head>
@@ -53,10 +55,14 @@ $date = strftime("%B %d, %Y");
 			$employee = "SELECT * FROM employee WHERE empid = '$empid'";
 			$employeeQuery = mysql_query($employee);
 			$empArr = mysql_fetch_assoc($employeeQuery);
-			//For deduction section
-			$deductionSSS = $empArr['sss'];
-			$deductionPagibig = $empArr['pagibig'];
-			$deductionPhilhealth = $empArr['philhealth'];
+			//For deduction section 4 for 4 weeks in a month
+			$deductionSSS = $empArr['sss']/4;
+			$deductionPagibig = $empArr['pagibig']/4;
+			$deductionPhilhealth = $empArr['philhealth']/4;
+			//2 decimal places
+			$deductionSSS =  number_format($deductionSSS, 2, '.', ',');
+			$deductionPagibig = number_format($deductionPagibig, 2, '.', ',');
+			$deductionPhilhealth = number_format($deductionPhilhealth, 2, '.', ',');
 			//Change to no value string if the employee has no document
 			if($deductionSSS == 0)
 			{
@@ -129,7 +135,9 @@ $date = strftime("%B %d, %Y");
 		<div class="col-md-10 col-md-offset-1">
 			<table class="table-bordered table-condensed" style="background-color:white;">
 				<?php
-					$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY date DESC LIMIT 7";
+				//Sample query for debugging purposes
+					//$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY date DESC LIMIT 7";
+				$payrollDate = "SELECT * FROM attendance WHERE empid = '2017-0000011' ORDER BY date DESC LIMIT 1,7";
 					$payrollQuery = mysql_query($payrollDate);
 					//Boolean for the conditions not to repeat just incase the employee does't attend sundays
 					$monBool = true;
@@ -163,7 +171,7 @@ $date = strftime("%B %d, %Y");
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
-								Print "<script>alert('".$totalOT."')</script>";
+								//Print "<script>alert('".$totalOT."')</script>";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$sunTimeIn = $dateRow['timein'];
 								$sunTimeOut = $dateRow['timeout'];
@@ -183,7 +191,7 @@ $date = strftime("%B %d, %Y");
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT = floatval($dateRow['overtime']);//Get the total Overtime
-								Print "<script>alert('".$totalOT."')</script>";
+								//Print "<script>alert('".$totalOT."')</script>";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$monTimeIn = $dateRow['timein'];
 								$monTimeOut = $dateRow['timeout'];
@@ -203,7 +211,7 @@ $date = strftime("%B %d, %Y");
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
-								Print "<script>alert('".$totalOT."')</script>";
+								//Print "<script>alert('".$totalOT."')</script>";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$tueTimeIn = $dateRow['timein'];
 								$tueTimeOut = $dateRow['timeout'];
@@ -223,7 +231,7 @@ $date = strftime("%B %d, %Y");
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
-								Print "<script>alert('".$totalOT."')</script>";
+								//Print "<script>alert('".$totalOT."')</script>";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$wedTimeIn = $dateRow['timein'];
 								$wedTimeOut = $dateRow['timeout'];
@@ -243,7 +251,7 @@ $date = strftime("%B %d, %Y");
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
-								Print "<script>alert('".$totalOT."')</script>";
+								//Print "<script>alert('".$totalOT."')</script>";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$thuTimeIn = $dateRow['timein'];
 								$thuTimeOut = $dateRow['timeout'];
@@ -263,7 +271,7 @@ $date = strftime("%B %d, %Y");
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
-								Print "<script>alert('".$totalOT."')</script>";
+								//Print "<script>alert('".$totalOT."')</script>";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$friTimeIn = $dateRow['timein'];
 								$friTimeOut = $dateRow['timeout'];
@@ -283,7 +291,7 @@ $date = strftime("%B %d, %Y");
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
-								Print "<script>alert('".$totalOT."')</script>";
+								//Print "<script>alert('".$totalOT."')</script>";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$satTimeIn = $dateRow['timein'];
 								$satTimeOut = $dateRow['timeout'];
@@ -547,6 +555,9 @@ $date = strftime("%B %d, %Y");
 									?>
 								</div>
 						</div>
+						<?php
+
+						?>
 						<div class="col-md-3">
 							<h4 class="text-left">Deductions</h4>
 							<div class="form-group">

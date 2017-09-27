@@ -40,7 +40,7 @@ $date = strftime("%B %d, %Y");
 
 					<h4 class="pull-right">
 						<?php
-						Print $position . "s at " . $site
+						Print $position . "s at " . $site;
 						?>
 					</h4>
 				</ol>
@@ -51,7 +51,9 @@ $date = strftime("%B %d, %Y");
 			<div class="col-md-3 col-md-offset-1">
 				<form method="post" action="" id="search_form">
 					<div class="form-group">
-						<input type="text" placeholder="Search" id="search_box" name="txt_search" onkeypress="enter(enter)" class="form-control">
+						<form method="post" action="" id="search_form">
+							<input type="text" placeholder="Search" id="search_box" name="txt_search" onkeypress="enter(enter)" class="form-control">
+						</form>
 					</div>
 				</form>
 			</div>
@@ -73,11 +75,16 @@ $date = strftime("%B %d, %Y");
 							if(isset($_GET['document']))
 							{
 								if($_GET['document'] == "complete")
-									Print '	<option value="complete" selected="selected">Complete</option>
+									Print '	<option value="complete" selected>Complete</option>
 											<option value="incomplete" >Incomplete</option>';
 								else
 									Print '	<option value="complete">Complete</option>
-											<option value="incomplete" selected="selected">Incomplete</option>';
+											<option value="incomplete" selected>Incomplete</option>';
+							}
+							else
+							{
+								Print '	<option value="complete">Complete</option>
+										<option value="incomplete">Incomplete</option>';
 							}
 						?>
 					</select>
@@ -90,11 +97,16 @@ $date = strftime("%B %d, %Y");
 							if(isset($_GET['status']))
 							{
 								if($_GET['status'] == "complete")
-									Print '	<option value="complete" selected="selected">Complete</option>
+									Print '	<option value="complete" selected>Complete</option>
 											<option value="incomplete" >Incomplete</option>';
 								else
 									Print '	<option value="complete">Complete</option>
-											<option value="incomplete" selected="selected">Incomplete</option>';
+											<option value="incomplete" selected>Incomplete</option>';
+							}
+							else
+							{
+								Print '	<option value="complete">Complete</option>
+										<option value="incomplete">Incomplete</option>';
 							}
 						?>
 					</select>
@@ -113,14 +125,37 @@ $date = strftime("%B %d, %Y");
 						<td>Action</td>
 					</tr>
 					<?php
-					if(isset($_GET['document']))
+					if(isset($_POST['txt_search']))
 					{
-						if($_GET['document'])
-						{
+						Print "<script>alert('lo')</script>";
+						$find = $_POST['txt_search'];
+						$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site' AND position = '$position' AND (empid LIKE '%$find%' OR
+							firstname LIKE '%$find%' OR
+							lastname LIKE '%$find%') ORDER BY position";
 
-						}
 					}
-					$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'AND position = '$position'";
+					// Document Filter
+					else if(isset($_GET['document']))
+					{
+						if($_GET['document'] == "complete")
+						{
+							$documentFilter = 1;
+						}
+						else
+						{
+							$documentFilter = 0;
+						}
+						//Print "<script>alert('".$documentFilter."')</script>";
+						$statusFilter = $_GET['document'];
+						$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'AND position = '$position' AND complete_doc = '$documentFilter'";
+					}
+					// Status Filter
+					//Default
+					else 
+					{
+						$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'AND position = '$position'";
+					}
+					
 
 					//$employee = "SELECT * FROM employee WHERE employment_status = 1 ";
 					$employeeQuery = mysql_query($employee);
@@ -314,61 +349,65 @@ $date = strftime("%B %d, %Y");
 			document.getElementById('search_form').submit();
 			}
 		}
-		// SITE FILTER 
+		// STATUS FILTER 
 		function status() {
-		if(document.URL.match(/status=([0-9]+)/))
-		{
-			var arr = document.URL.match(/status=([0-9]+)/)
-			var siteUrl = arr[1];
-			if(siteUrl)
+			if(document.URL.match(/documents=([0-9]+)/))
 			{
-			localStorage.setItem("counter", 0);
+				var arr = document.URL.match(/status=([0-9]+)/)
+				var siteUrl = arr[1];
+				if(siteUrl)
+				{
+				localStorage.setItem("counter", 0);
+				}
+				else if(localStorage.getItem('counter') > 2)
+				{
+					localStorage.clear();
+				}
 			}
-			else if(localStorage.getItem('counter') > 2)
-			{
-				localStorage.clear();
-			}
-		}
-		var status = document.getElementById("status").value;
-		var statusReplaced = status.replace(/\s/g , "+");
-		localStorage.setItem("glob_status", statusReplaced);
-		window.location.assign("payroll_table.php?position=<?Print $position ?>&site=<?Print $site ?>&status="+statusReplaced+"&document="+localStorage.getItem('glob_document'));
+			var status = document.getElementById("status").value;
+			var statusReplaced = status.replace(/\s/g , "+");
+			localStorage.setItem("glob_status", statusReplaced);
+			window.location.assign("payroll_table.php?position=<?Print $position ?>&site=<?Print $site ?>&status="+statusReplaced+"&document="+localStorage.getItem('glob_document'));
 		}
 
-		// POSITION FILTER 
+		// DOCUMENTS FILTER 
 		function documents() {
-		if(document.URL.match(/documents=([0-9]+)/))
-		{
-			var arr = document.URL.match(/documents=([0-9]+)/)
-			var documentUrl = arr[1];
-			if(documentUrl)
+			alert('yeah');
+			if(document.URL.match(/documents=([0-9]+)/))
 			{
-			localStorage.setItem("counter", 0);
+				var arr = document.URL.match(/documents=([0-9]+)/)
+				var documentUrl = arr[1];
+				if(documentUrl)
+				{
+					localStorage.setItem("counter", 0);
+				}
+				else if(localStorage.getItem('counter') > 2)
+				{
+					localStorage.clear();
+				}
 			}
-			else if(localStorage.getItem('counter') > 2)
-			{
-				localStorage.clear();
-			}
-		}
-		var documents = document.getElementById("documents").value;
-		var documentReplaced = documents.replace(/\s/g , "+");
-		localStorage.setItem("glob_document", documentReplaced);
-		window.location.assign("payroll_table.php?position=<?Print $position ?>&site=<?Print $site ?>&status="+localStorage.getItem("glob_status")+"&document="+documentReplaced);
+			var documents = document.getElementById("documents").value;
+			var documentReplaced = documents.replace(/\s/g , "+");
+			localStorage.setItem("glob_document", documentReplaced);
+			window.location.assign("payroll_table.php?position=<?Print $position ?>&site=<?Print $site ?>&status="+localStorage.getItem("glob_status")+"&document="+documentReplaced);
 		}
 
 
 		window.onload =	function completePayroll(){
-			var status = document.getElementsByClassName('payrollStatus');
-			for(var i = 0; i < status.length; i++){
-				if(status[i].innerText == 'Complete'){// Changing color of row to green when status is complete
-					status[i].parentNode.setAttribute('class','success');
-				}
-				else if(status[i].innerText == 'Incomplete'){// Change button label if incomplete
-					status[i].nextElementSibling.nextElementSibling.nextElementSibling.innerHTML = '<a class="btn btn-primary" href="payroll.php?site=<?php Print $site?>&position=<?php Print $position?>&empid=<?php Print $empid?>">Start Payroll</a>';
+			var checker = document.querySelector('.payrollStatus');
+			if(checker != null)
+			{
+				var status = document.getElementsByClassName('payrollStatus');
+				//alert('lala');
+				for(var i = 0; i < status.length; i++){
+					if(status[i].innerText == 'Complete'){// Changing color of row to green when status is complete
+						status[i].parentNode.setAttribute('class','success');
+					}
+					else if(status[i].innerText == 'Incomplete'){// Change button label if incomplete
+						status[i].nextElementSibling.nextElementSibling.nextElementSibling.innerHTML = '<a class="btn btn-primary" href="payroll.php?site=<?php Print $site?>&position=<?php Print $position?>&empid=<?php Print $empid?>">Start Payroll</a>';
+					}
 				}
 			}
-
-
 		}
 
 

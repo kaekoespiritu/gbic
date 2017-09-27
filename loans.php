@@ -258,19 +258,19 @@ $date = strftime("%B %d, %Y");
 										<td style='vertical-align: inherit'>
 											<div class='form-group'>
 												<label for='sss'>SSS</label>
-												<input type='text' id='sss' name='sss[]' placeholder='". $sss ."' onkeypress='numValidate(event)' onblur='colorChange(this)' class='form-control input-sm hasInput'/>
+												<input type='text' id='sss' name='sss[]' placeholder='". $sss ."' onkeypress='numValidate(event)' onblur='colorChange(this)' class='form-control input-sm hasInput' />
 											</div>
 										</td>
 										<td>
 											<div class='form-group'>
 												<label for='pagibig'>Pag-IBIG</label>
-												<input type='text' id='pagibig' name='pagibig[]' placeholder='". $pagibig ."' onkeypress='numValidate(event)' onblur='colorChange(this)' class='form-control input-sm hasInput'/>
+												<input type='text' id='pagibig' name='pagibig[]' placeholder='". $pagibig ."' onkeypress='numValidate(event)' onblur='colorChange(this)' class='form-control input-sm hasInput' />
 											</div>
 										</td>
 										<td>
 											<div class='form-group'>
 												<label for='vale'>Vale</label>
-												<input type='text' id='vale' name='vale[]' placeholder='". $vale ."' onkeypress='numValidate(event)' onblur='colorChange(this) class='form-control input-sm hasInput'/>
+												<input type='text' id='vale' name='vale[]' placeholder='". $vale ."' onkeypress='numValidate(event)' onblur='colorChange(this) class='form-control input-sm hasInput' />
 											</div>
 										</td>
 									</tr>";

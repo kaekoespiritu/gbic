@@ -32,80 +32,84 @@ include('directives/db.php');
 				</div>
 			</a>
 			<div id="collapseChangePayroll" class="panel-collapse collapse">
-				<table class="table">
-					<tr>
-						<td>Monday</td>
-						<td>Tuesday</td>
-						<td>Wednesday</td>
-						<td>Thursday</td>
-						<td>Friday</td>
-						<td>Saturday</td>
-						<td>Sunday</td>
-					</tr>
-					<tr>
-						<td>
-							<select id="Monday" class="form-control" disabled>
-								<option value="" disabled selected>--</option>
-								<option value="open">Open</option>
-								<option value="close">Close</option>
-							</select>
-						</td>
-						<td>
-							<select id="Tuesday" class="form-control" disabled>
-								<option value="" disabled selected>--</option>
-								<option value="open">Open</option>
-								<option value="close">Close</option>
-							</select>
-						</td>
-						<td>
-							<select id="Wednesday" class="form-control" disabled>
-								<option value="" disabled selected>--</option>
-								<option value="open">Open</option>
-								<option value="close">Close</option>
-							</select>
-						</td>
-						<td>
-							<select id="Thursday" class="form-control" disabled>
-								<option value="" disabled selected>--</option>
-								<option value="open">Open</option>
-								<option value="close">Close</option>
-							</select>
-						</td>
-						<td>
-							<select id="Friday" class="form-control"  disabled>
-								<option value="" disabled selected>--</option>
-								<option value="open">Open</option>
-								<option value="close">Close</option>
-							</select>
-						</td>
-						<td>
-							<select id="Saturday" class="form-control" disabled>
-								<option value="" disabled selected>--</option>
-								<option value="open">Open</option>
-								<option value="close">Close</option>
-							</select>
-						</td>
-						<td>
-							<select id="Sunday" class="form-control" disabled>
-								<option value="" disabled selected>--</option>
-								<option value="open">Open</option>
-								<option value="close">Close</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td><input type="checkBOX" name="checkboxes" id="MondayBOX" onchange="triggerInput('Monday')"></td>
-						<td><input type="checkBOX" name="checkboxes" id="TuesdayBOX" onchange="triggerInput('Tuesday')"></td>
-						<td><input type="checkBOX" name="checkboxes" id="WednesdayBOX" onchange="triggerInput('Wednesday')"></td>
-						<td><input type="checkBOX" name="checkboxes" id="ThursdayBOX" onchange="triggerInput('Thursday')"></td>
-						<td><input type="checkBOX" name="checkboxes" id="FridayBOX" onchange="triggerInput('Friday')"></td>
-						<td><input type="checkBOX" name="checkboxes" id="SaturdayBOX" onchange="triggerInput('Saturday')"></td>
-						<td><input type="checkBOX" name="checkboxes" id="SundayBOX" onchange="triggerInput('Sunday')"></td>
-					</tr>
-				</table>
-				<div class="panel-body">
-					<a href="" class="btn btn-primary" onclick="save()">Save changes</a>
-				</div>
+				<form method="post" action="logic_options_payroll.php">
+					<table class="table">
+						<tr>
+							<td>Monday</td>
+							<td>Tuesday</td>
+							<td>Wednesday</td>
+							<td>Thursday</td>
+							<td>Friday</td>
+							<td>Saturday</td>
+							<td>Sunday</td>
+						</tr>
+						<tr>
+							<td>
+								<select id="Monday" class="form-control" disabled>
+									<option value="" disabled selected>--</option>
+									<option value="open">Open</option>
+									<option value="close">Close</option>
+								</select>
+							</td>
+							<td>
+								<select id="Tuesday" class="form-control" disabled>
+									<option value="" disabled selected>--</option>
+									<option value="open">Open</option>
+									<option value="close">Close</option>
+								</select>
+							</td>
+							<td>
+								<select id="Wednesday" class="form-control" disabled>
+									<option value="" disabled selected>--</option>
+									<option value="open">Open</option>
+									<option value="close">Close</option>
+								</select>
+							</td>
+							<td>
+								<select id="Thursday" class="form-control" disabled>
+									<option value="" disabled selected>--</option>
+									<option value="open">Open</option>
+									<option value="close">Close</option>
+								</select>
+							</td>
+							<td>
+								<select id="Friday" class="form-control"  disabled>
+									<option value="" disabled selected>--</option>
+									<option value="open">Open</option>
+									<option value="close">Close</option>
+								</select>
+							</td>
+							<td>
+								<select id="Saturday" class="form-control" disabled>
+									<option value="" disabled selected>--</option>
+									<option value="open">Open</option>
+									<option value="close">Close</option>
+								</select>
+							</td>
+							<td>
+								<select id="Sunday" class="form-control" disabled>
+									<option value="" disabled selected>--</option>
+									<option value="open">Open</option>
+									<option value="close">Close</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td><input type="checkBOX" name="checkboxes" id="MondayBOX" onchange="triggerInput('Monday')"></td>
+							<td><input type="checkBOX" name="checkboxes" id="TuesdayBOX" onchange="triggerInput('Tuesday')"></td>
+							<td><input type="checkBOX" name="checkboxes" id="WednesdayBOX" onchange="triggerInput('Wednesday')"></td>
+							<td><input type="checkBOX" name="checkboxes" id="ThursdayBOX" onchange="triggerInput('Thursday')"></td>
+							<td><input type="checkBOX" name="checkboxes" id="FridayBOX" onchange="triggerInput('Friday')"></td>
+							<td><input type="checkBOX" name="checkboxes" id="SaturdayBOX" onchange="triggerInput('Saturday')"></td>
+							<td><input type="checkBOX" name="checkboxes" id="SundayBOX" onchange="triggerInput('Sunday')"></td>
+						</tr>
+					</table>
+					<input type="hidden" id="openPayroll" name="openPayroll">
+					<input type="hidden" id="closePayroll" name="openPayroll">
+					<div class="panel-body">
+						<a href="" class="btn btn-primary" onclick="save()">Save changes</a>
+					</div>
+				</form>
 			</div>
 		</div>
 

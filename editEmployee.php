@@ -17,6 +17,7 @@ include('directives/db.php');
 	$datehired = $employee_info['datehired'];
 	$civilstatus = $employee_info['civilstatus'];
 	$position = $employee_info['position'];
+	$salary = $employee_info['salary'];
 	$rate = $employee_info['rate'];
 	$allowance = $employee_info['allowance'];
 	$site = $employee_info['site'];
@@ -209,7 +210,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 							<label for="rate">Monthly Salary</label>
 						</div>
 						<div class="col-md-5">
-							<input name="txt_addMonthlySalary"  type="text" class="form-control" id="monthlysalary" onkeyup="monthlySalary()" onblur="salaryDecimal()" required>
+							<input name="salary"  type="text" class="form-control" id="monthlysalary" onkeyup="monthlySalary()" placeholder="<?php Print "$salary"?>" onblur="salaryDecimal()">
 						</div>
 					</div><br>
 
@@ -218,7 +219,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 							<label for="rate">Rate Per Day</label>
 						</div>
 						<div class="col-md-5">
-							<input name="txt_addRatePerDay"  type="text" class="form-control" id="rate" readonly>
+							<input name="rate"  type="text" placeholder="<?php Print "$rate"?>" class="form-control" id="rate" readonly>
 						</div>
 					</div><br>
 

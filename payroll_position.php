@@ -45,7 +45,7 @@ include('directives/session.php');
 					$date = date('l, F d, Y', time());
 					echo $date; ?></h3>
 	<h4>Open: Tuesday | Close: Wednesday</h4>
-	<h4>At site [site]</h4>
+	<h4>At site <?Print $site?></h4>
 	</div>
 
 	<div class="container">

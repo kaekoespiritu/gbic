@@ -37,6 +37,11 @@
 		$site = mysql_real_escape_string($_POST['site']);
 		mysql_query("UPDATE employee SET site = '$site' WHERE empid = '$empid'");	
 	}
+	if($_POST['salary'] != null)
+	{
+		$salary = mysql_real_escape_string($_POST['salary']);
+		mysql_query("UPDATE employee SET salary = '$salary' WHERE empid = '$empid'");	
+	}
 	if($_POST['rate'] != null)
 	{
 		$rate = mysql_real_escape_string($_POST['rate']);
@@ -70,8 +75,13 @@
 	
 	if($row['sss'] == 0 && $row['philhealth'] == 0 && $row['pagibig'] == 0)
 	{	
-		$not_complete = "UPDATE employee SET complete_doc = 0";
+		$not_complete = "UPDATE employee SET complete_doc = '0'";
 		mysql_query($not_complete);
+	}
+	else
+	{
+		$complete = "UPDATE employee SET complete_doc = '1'";
+		mysql_query($complete);
 	}
 	Print "<script>window.location.assign('editEmployee.php?empid=".$empid."')</script>";
 ?>
