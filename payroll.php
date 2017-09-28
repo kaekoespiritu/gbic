@@ -68,13 +68,25 @@ $date = "September 26, 2017";
 			{
 				$deductionSSS = "";
 			}
+			else
+			{
+				$deductionSSS = $deductionSSS." PHP";
+			}
 			if($deductionPagibig == 0)
 			{
 				$deductionPagibig = "";
 			}
+			else
+			{
+				$deductionPagibig = $deductionPagibig." PHP";
+			}
 			if($deductionPhilhealth == 0)
 			{
 				$deductionPhilhealth = "";
+			}
+			else
+			{
+				$deductionPhilhealth = $deductionPhilhealth." PHP";
 			}
 			Print "
 			<h2 class='text-left'>". $empArr['lastname'] .", ". $empArr['firstname'] ."</h2>
@@ -466,8 +478,6 @@ $date = "September 26, 2017";
 										$sss = "N/A";
 									}
 
-									
-
 									if($pagibigNum > 0)
 									{
 										while($pagibigLatest = mysql_fetch_assoc($pagibigQuery))
@@ -509,7 +519,7 @@ $date = "September 26, 2017";
 									}
 									if($sss != "N/A")
 									{
-										Print "<input type='text' id='sss' class='form-control input-sm' placeholder='".$sss." PHP' onkeypress='validatenumber(event)'>";
+										Print "<input type='text' id='sss' class='form-control input-sm' placeholder='".number_format($sss, 2, '.', ',')." PHP' onkeypress='validatenumber(event)'>";
 									}
 									else
 									{
@@ -524,7 +534,7 @@ $date = "September 26, 2017";
 									<?php
 									if($pagibig != "N/A")
 									{
-										Print "<input type='text' id='pagibig' class='form-control input-sm' placeholder='".$pagibig." PHP' onkeypress='validatenumber(event)'>";
+										Print "<input type='text' id='pagibig' class='form-control input-sm' placeholder='".number_format($pagibig, 2, '.', ',')." PHP' onkeypress='validatenumber(event)'>";
 									}
 									else
 									{
@@ -539,7 +549,7 @@ $date = "September 26, 2017";
 								<h5 class="text-left" style="white-space: nowrap;">
 									<?php 
 										if($vale != "N/A")
-										Print $vale."PHP";
+										Print number_format($vale, 2, '.', ',')."PHP";
 										else
 										Print $vale;	
 									?>
@@ -555,9 +565,6 @@ $date = "September 26, 2017";
 									?>
 								</div>
 						</div>
-						<?php
-
-						?>
 						<div class="col-md-3">
 							<h4 class="text-left">Deductions</h4>
 							<div class="form-group">
