@@ -299,7 +299,6 @@ include('directives/session.php');
 				$attendanceQuery = mysql_query($attendanceChecker);
 				if($attendanceQuery)
 				{
-					//Print "<script>alert('yeah')</script>";
 					$attNum = mysql_num_rows($attendanceQuery);
 					if($attNum == 0)
 					{
@@ -308,7 +307,6 @@ include('directives/session.php');
 					else
 					{
 						$checker = null;
-						//Print "<script>alert('". $checker ."')</script>";
 						while($attRow = mysql_fetch_assoc($attendanceQuery))
 						{
 							if($attRow['attendance'] != 0)//0 is for no input
@@ -318,7 +316,6 @@ include('directives/session.php');
 						}
 						if($checker == $attNum)//check if number of attendance and the counter are the same
 						{
-							//Print "<script>alert('".$checker." = ". $attNum ."')</script>";
 							$attendanceStatus = 1;//Trigger for completing the attendance for the site
 						}
 					}
