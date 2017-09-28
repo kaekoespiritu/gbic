@@ -29,27 +29,27 @@ $date = "September 26, 2017";
 	</style>
 </head>
 <body style="font-family: Quicksand;">
-	<!-- 
-	Vertical Navigation Bar
-	HOME | EMPLOYEES | PAYROLL | REPORTS | ADMIN OPTIONS | LOGOUT
-	After effects: Will minimize width after mouseover
--->
-<div class="container-fluid">
 
+	<div class="container-fluid">
+
+	<!-- Navigation bar -->
 	<?php
 	require_once("directives/nav.php");
 	?>
 
-	<div class="row pull-down">
-	<div class="col-md-10 col-md-offset-1">
-		<ol class="breadcrumb text-left">
 
-			<li><a href="payroll_table.php?position=<?php Print $position?>&site=<?php Print $site?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Table of Employees</a></li>
-			<li class="active"><?php Print "Payroll for site " .$site." on ".$date ?></li>
+	<div class="row pull-down">
+		<div class="col-md-10 col-md-offset-1">
+			<ol class="breadcrumb text-left" style="margin-bottom: 0px">
+
+				<li><a href="payroll_table.php?position=<?php Print $position?>&site=<?php Print $site?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Table of Employees</a></li>
+				<li class="active"><?php Print "Payroll for site " .$site." on ".$date ?></li>
 
 			<button class="btn btn-success pull-right" style="margin-right:5px" onclick="saveChanges()">Save and compute <span class="glyphicon glyphicon-floppy-saved"></span></button>
-		</ol>
-	</div>
+			</ol>
+		</div>
+
+
 		<div class="col-md-10 col-md-offset-1">
 			<?php
 			$employee = "SELECT * FROM employee WHERE empid = '$empid'";
@@ -144,12 +144,14 @@ $date = "September 26, 2017";
 				</div>";
 			?>
 		</div>
+
+
 		<div class="col-md-10 col-md-offset-1">
 			<table class="table-bordered table-condensed" style="background-color:white;">
 				<?php
 				//Sample query for debugging purposes
 					//$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY date DESC LIMIT 7";
-				$payrollDate = "SELECT * FROM attendance WHERE empid = '2017-0000011' ORDER BY date DESC LIMIT 1,7";
+				$payrollDate = "SELECT * FROM attendance WHERE empid = '2017-0000011' ORDER BY date DESC LIMIT 2,8";
 					$payrollQuery = mysql_query($payrollDate);
 					//Boolean for the conditions not to repeat just incase the employee does't attend sundays
 					$monBool = true;
@@ -417,8 +419,25 @@ $date = "September 26, 2017";
 							
 					?>
 				</tr>
+				<tr>
+					<!--
+
+					Add labels here indicating the following:
+					OVERTIME / UNDERTIME / NIGHT DIFFERENTIAL / HOLIDAY
+					
+					-->
+					<td colspan="2">FIRST</td>
+					<td colspan="2">FIRST</td>
+					<td colspan="2">FIRST</td>
+					<td colspan="2">FIRST</td>
+					<td colspan="2">FIRST</td>
+					<td colspan="2">FIRST</td>
+					<td colspan="2">FIRST</td>
+				</tr>
 			</table>
 		</div>
+
+
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel">
 				<table class="table table-bordered table-responsive">
@@ -437,6 +456,8 @@ $date = "September 26, 2017";
 						</td>
 					</tr>
 				</table>
+
+
 				<div class="row">
 					<form class="horizontal">
 						<div class="col-md-2 col-md-offset-1">
@@ -458,7 +479,7 @@ $date = "September 26, 2017";
 									$pagibigNum = mysql_num_rows($pagibigQuery);
 									$valeNum = mysql_num_rows($valeQuery);
 									if($sssNum > 0)
-									{//Print "<script>alert('yea')</script>";
+									{
 										while($sssLatests = mysql_fetch_assoc($sssQuery))
 										{	
 											
@@ -544,16 +565,25 @@ $date = "September 26, 2017";
 								</div>
 							</div>
 						</div>
+
+
 						<div class="col-md-1">
 							<h4 class="text-left">Vale</h4>
-								<h5 class="text-left" style="white-space: nowrap;">
-									<?php 
+								<h5 class="text-right" style="white-space: nowrap;">
+									<span class="vale pull-right">
+										<?php 
 										if($vale != "N/A")
-										Print number_format($vale, 2, '.', ',')."PHP";
-										else
-										Print $vale;	
-									?>
+
+								        Print number_format($vale, 2, '.', ',');
+								        else
+								        Print $vale;	
+										?>
+									</span>
+									<br>
+									<span id="dynamicCompute"></span>
 								</h5>
+								<input type="hidden" class="added">
+								<input type="hidden" class="deducted">
 								<div class="row">
 									<button type='button' class='btn btn-success btn-sm col-md-12' data-toggle='modal' data-target='#addVale'><span class='glyphicon glyphicon-plus'></span> Add new</button>
 									<?php
@@ -565,8 +595,13 @@ $date = "September 26, 2017";
 									?>
 								</div>
 						</div>
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> b8632d1920904de27f4dd51f0d52e1526fc9b4e1
 						<div class="col-md-3">
-							<h4 class="text-left">Deductions</h4>
+							<h4 class="text-left">Contributions</h4>
 							<div class="form-group">
 								<label class="control-label col-md-5" for="tax">Tax</label>
 								<div class="col-md-7">
@@ -588,6 +623,8 @@ $date = "September 26, 2017";
 								</div>
 							</div>
 						</div>
+
+
 						<div class="col-md-5">
 							<h4 class="text-left">Tools</h4>
 							<a class="btn btn-sm btn-primary col-md-1" onclick="addRow()"><span class="glyphicon glyphicon-plus"></span></a>
@@ -603,6 +640,8 @@ $date = "September 26, 2017";
 									</div>
 								</div>
 							</div>
+
+
 							<!-- TEMPLATE -->
 							<div class="form-group" id="template" style="display:none">
 								<label class="control-label col-md-2" for="tools">Name</label>
@@ -615,9 +654,14 @@ $date = "September 26, 2017";
 								</div>
 							</div>
 						</div>
+
 					</form>
 				</div>
+				
+
 				<br>
+
+
 				<!-- MODALS -->
 				<div class="modal fade" id="addVale">
 				  <div class="modal-dialog modal-sm" role="document">
@@ -629,13 +673,13 @@ $date = "September 26, 2017";
 				      <div class="modal-body">
 				      	<div class="row">
 				      		<div class="col-md-8 col-md-offset-2">
-				        		<input type="text" class="form-control" placeholder="Add as new vale" onkeypress="validatenumber(event)">
+				        		<input type="text" id="newAddVale" class="form-control" placeholder="Add as new vale" onkeypress="validatenumber(event)">
 				    		</div>
 				    	</div>
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary">Add</button>
+				        <button type="button" class="btn btn-primary" onclick="addvale()" data-dismiss="modal">Add</button>
 				      </div>
 				    </div>
 				  </div>
@@ -651,13 +695,13 @@ $date = "September 26, 2017";
 				      <div class="modal-body">
 				      	<div class="row">
 				      		<div class="col-md-8 col-md-offset-2">
-				        		<input type="text" class="form-control col-md-4" placeholder="Deduct from old vale" onkeypress="validatenumber(event)">
+				        		<input type="text" id="newDeductVale" class="form-control col-md-4" placeholder="Deduct from old vale" onkeypress="validatenumber(event)">
 				        	</div>
 				        </div>
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary">Deduct</button>
+				        <button type="button" class="btn btn-primary" onclick="deductvale()" data-dismiss="modal">Deduct</button>
 				      </div>
 				    </div>
 				  </div>
@@ -716,7 +760,6 @@ function validateletter(evt) {
 	}
 }
 
-
 function validateprice(evt) {
 	var theEvent = evt || window.event;
 	var key = theEvent.keyCode || theEvent.which;
@@ -727,6 +770,152 @@ function validateprice(evt) {
 	if(theEvent.preventDefault) 
 		theEvent.preventDefault();
 	}
+}
+function addCommas(nStr)
+{
+	nStr += '';
+	x = nStr.split('.');
+	x1 = x[0];
+	x2 = x.length > 1 ? '.' + x[1] : '';
+	var rgx = /(\d+)(\d{3})/;
+	while (rgx.test(x1)) {
+		x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	}
+	return x1 + x2;
+}
+
+// Adding new vale and displaying an addition format
+function addvale() {
+
+	// Exception when Vale is N/A
+
+
+	// Get current amount in vale
+	var original = document.querySelector(".vale");
+	var oldVale = original.innerHTML;
+	var division = oldVale.split(',');
+	var len = division.length;
+	var builder="";
+
+	for(var a=0; a<len; a++)
+	{
+		
+		builder += division[a];
+		
+	}
+	
+	builder = parseFloat(builder).toFixed(2);
+
+	// Get vale from modal and format to currency
+	var modalValue = document.querySelector("#newAddVale").value;
+	var addVale = parseFloat(modalValue).toFixed(2); 
+
+	// Append innerHTML addition format
+	var computation = document.querySelector('#dynamicCompute');
+	computation.innerHTML = "<span style='right:5px;position:relative;'>+</span>" + addCommas(addVale);
+
+	// Add border to show computation
+	var result = document.createElement("div");
+	result.setAttribute("class","result pull-right");
+	result.style.borderTop = "thin solid black";
+
+	if(oldVale.trim()!=="N/A")
+	{
+		var compute = parseFloat(builder) + parseFloat(addVale);
+	}
+	else
+	{
+		var compute = parseFloat(addVale);
+	}
+
+	// Add computed value
+	result.innerHTML = addCommas(compute.toFixed(2));
+
+	computation.appendChild(result);
+
+	// Save to hidden input for database access
+	if(document.querySelector('.deducted').value)
+	{
+		var saveToAdd = document.querySelector(".added");
+		saveToAdd.value = modalValue;
+		var removePrevious = document.querySelector('.deducted');
+		removePrevious.value = "";
+		document.querySelector("#newDeductVale").value = "";
+	}
+	else
+	{
+		var saveToAdd = document.querySelector(".added");
+		saveToAdd.value = modalValue;
+	}
+	
+}
+
+// Subtracting new vale and displaying an subtraction format
+function deductvale() {
+
+	// Get current amount in vale
+	var original = document.querySelector(".vale");
+	var oldVale = original.innerHTML;
+	var division = oldVale.split(',');
+	var len = division.length;
+	var builder="";
+
+	for(var a=0; a<len; a++)
+	{
+		
+		builder += division[a];
+		
+	}
+	
+	builder = parseFloat(builder).toFixed(2);
+
+	// Get vale from modal and format to currency
+	var modalValue = document.querySelector("#newDeductVale").value;
+	var addVale = parseFloat(modalValue).toFixed(2); 
+
+
+	// Add border to show computation
+	var result = document.createElement("div");
+	result.setAttribute("class","result pull-right");
+	result.style.borderTop = "thin solid black";
+
+	var compute = parseFloat(builder) - parseFloat(addVale);
+	
+	if(compute<1)
+	{
+		alert("You entered an invalid amount for vale.");
+	}
+	else
+	{
+		// Append innerHTML addition format
+		var computation = document.querySelector('#dynamicCompute');
+		computation.innerHTML = "<span style='right:5px;position:relative;'>-</span>"+addCommas(addVale);
+
+		// Add computed value
+		result.innerHTML = addCommas(compute.toFixed(2));
+
+		computation.appendChild(result);
+
+		// Save to hidden input for database access
+		if(document.querySelector('.added').value)
+		{
+			var saveToAdd = document.querySelector(".deducted");
+			saveToAdd.value = modalValue;
+			var removePrevious = document.querySelector('.added');
+			removePrevious.value = "";
+			document.querySelector("#newAddVale").value = "";
+		}
+		else
+		{
+			var saveToAdd = document.querySelector(".deducted");
+			saveToAdd.value = modalValue;
+		}
+	}
+	
+	
+
+	
+	
 }
 
 </script>

@@ -31,6 +31,8 @@ $date = strftime("%B %d, %Y");
 		?>
 
 		<div class="row" style="z-index: 101">
+
+
 			<!-- BREAD CRUMBS -->
 			<div class="col-md-10 col-md-offset-1 pull-down">
 				<ol class="breadcrumb text-left">
@@ -44,10 +46,10 @@ $date = strftime("%B %d, %Y");
 						?>
 					</h4>
 				</ol>
-
 			</div>
 
-			<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
+
+			<!-- Search bar -->
 			<div class="col-md-3 col-md-offset-1">
 				<form method="post" action="" id="search_form">
 					<div class="form-group">
@@ -57,16 +59,23 @@ $date = strftime("%B %d, %Y");
 					</div>
 				</form>
 			</div>
+
+
 			<!-- Date -->
-			<div class="col-md-4">
+			<div class="col-md-3">
 				<h3 style="margin-top:0px"><?php 
 				date_default_timezone_set('Asia/Hong_Kong');
 				$date = date('F d, Y', time());
 				echo $date;
 				?></h3>
 			</div>
-			<div class="col-md-3 pull-left">
+
+
+			<!-- Filters -->
+			<div class="col-md-4 pull-left">
 				Filter by:
+
+
 				<!-- Documents status DROPDOWN -->
 				<div class="btn-group">Documents
 					<select class="form-control" id="documents" onchange="documents()">
@@ -89,6 +98,8 @@ $date = strftime("%B %d, %Y");
 						?>
 					</select>
 				</div>
+
+
 				<!-- Payroll status DRODOWN -->
 				<div class="btn-group">Payroll Status
 					<select class="form-control" id="status" onchange="status()">
@@ -112,9 +123,13 @@ $date = strftime("%B %d, %Y");
 					</select>
 				</div>
 
+				<!-- Clear Filters button -->
+				<button type="button" class="btn btn-danger" onclick="clearFilter()">Clear Filters</button>
 			</div>
+
+
 			<!-- Payroll table -->
-			<div class="col-md-10 col-md-offset-1">
+			<div class="col-md-10 col-md-offset-1 pull-down">
 				<table class="table table-condensed table-bordered" style="background-color:white;">
 					<tr>
 						<td>Employee ID</td>
@@ -372,7 +387,6 @@ $date = strftime("%B %d, %Y");
 
 		// DOCUMENTS FILTER 
 		function documents() {
-			alert('yeah');
 			if(document.URL.match(/documents=([0-9]+)/))
 			{
 				var arr = document.URL.match(/documents=([0-9]+)/)
@@ -398,7 +412,7 @@ $date = strftime("%B %d, %Y");
 			if(checker != null)
 			{
 				var status = document.getElementsByClassName('payrollStatus');
-				//alert('lala');
+
 				for(var i = 0; i < status.length; i++){
 					if(status[i].innerText == 'Complete'){// Changing color of row to green when status is complete
 						status[i].parentNode.setAttribute('class','success');
@@ -410,7 +424,11 @@ $date = strftime("%B %d, %Y");
 			}
 		}
 
-
+		// Clearing filters
+		function clearFilter() {
+			localStorage.clear();
+			window.location.assign("payroll_table.php?documents=null&status=null");
+		}
 	</script>
 </body>
 </html>
