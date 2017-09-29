@@ -13,6 +13,19 @@ $empid = $_GET['empid'];
 //Sample date for debugging purposes
 //$date = strftime("%B %d, %Y");
 $date = "September 26, 2017";
+
+//Holiday Checker
+$holiday = "SELECT * FROM holiday WHERE date = '$date'";
+$holidayQuery = mysql_query($holiday);
+$holidayExist = mysql_num_rows($holidayQuery);
+$holidayName = "";
+if($holidayExist > 0)
+{
+	$holidayRow = mysql_fetch_assoc($holidayQuery);
+	$holidayName = $holiday['holiday'];//Gets holiday name
+
+}
+//Sunday Checker
 ?>
 <html>
 <head>
@@ -68,13 +81,25 @@ $date = "September 26, 2017";
 			{
 				$deductionSSS = "";
 			}
+			else
+			{
+				$deductionSSS = $deductionSSS." PHP";
+			}
 			if($deductionPagibig == 0)
 			{
 				$deductionPagibig = "";
 			}
+			else
+			{
+				$deductionPagibig = $deductionPagibig." PHP";
+			}
 			if($deductionPhilhealth == 0)
 			{
 				$deductionPhilhealth = "";
+			}
+			else
+			{
+				$deductionPhilhealth = $deductionPhilhealth." PHP";
 			}
 			Print "
 			<h2 class='text-left'>". $empArr['lastname'] .", ". $empArr['firstname'] ."</h2>
@@ -161,8 +186,53 @@ $date = "September 26, 2017";
 					$totalNightDiff = 0;//for Total night diff
 					$totalOT = 0;// for total Overtime
 					$totalUT = 0; // for total undertime
+					//for badge of Overtime(OT) and  Night diff(ND)
+					$OtMon = false;
+					$OtTue = false;
+					$OtWed = false;
+					$OtThu = false;
+					$OtFri = false;
+					$OtSat = false;
+					$OtSun = false;
+
+					$NdMon = false;
+					$NdTue = false;
+					$NdWed = false;
+					$NdThu = false;
+					$NdFri = false;
+					$NdSat = false;
+					$NdSun = false;
+
+					$holidayCounter = 0;//count the days of holiday
 					while($dateRow = mysql_fetch_assoc($payrollQuery))
 					{
+						$holDateChecker = $dateRow['date'];
+						//Holiday Checker
+						$holiday = "SELECT * FROM holiday WHERE date = '$holDateChecker'";
+						$holidayQuery = mysql_query($holiday);
+						$holidayExist = mysql_num_rows($holidayQuery);
+
+						if($holidayExist > 0)//if holiday exist
+						{
+
+							$holidayCounter++;
+							$holidayRow = mysql_fetch_assoc($holidayQuery);
+							$holidayName = $holidayRow['holiday'];//Gets holiday name
+							$holidayType = $holidayRow['type'];
+							$holidayDate = $holidayRow['date'];
+							$holidayDay = date('l', strtotime($holidayRow['date']));;
+							//Print "<script>alert('".$holidayName."')</script>";
+							if($holidayCounter > 1)//if holiday lasted for more than 1day
+							{
+
+								$holidayName .= "+".$holidayRow['holiday'];
+								$holidayType .= "+".$holidayRow['type'];
+								$holidayDate .= "+".$holidayRow['date'];
+								$holidayDay .= "+".$holidayRow['date'];
+							}
+						}
+						
+
 						//Print "<script>alert('".$dateRow['date']."')</script>";
 						$day = date('l', strtotime($dateRow['date']));
 						if($day == "Sunday" && $sunBool)
@@ -177,6 +247,11 @@ $date = "September 26, 2017";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$sunTimeIn = $dateRow['timein'];
 								$sunTimeOut = $dateRow['timeout'];
+								//For badge of Night diff and Overtime
+								if($dateRow['nightdiff'] != 0)
+									$NdSun = true;
+								if($dateRow['overtime'] != 0)
+									$OtSun = true;
 								
 							}
 							else
@@ -197,7 +272,11 @@ $date = "September 26, 2017";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$monTimeIn = $dateRow['timein'];
 								$monTimeOut = $dateRow['timeout'];
-								
+								//For badge of Night diff and Overtime
+								if($dateRow['nightdiff'] != 0)
+									$NdMon = true;
+								if($dateRow['overtime'] != 0)
+									$OtMon = true;
 							}
 							else if($dateRow['attendance'] == 1)//Absent
 							{
@@ -218,6 +297,16 @@ $date = "September 26, 2017";
 								$tueTimeIn = $dateRow['timein'];
 								$tueTimeOut = $dateRow['timeout'];
 								
+								//For badge of Night diff and Overtime
+								if($dateRow['nightdiff'] != 0){
+									$NdTue = true;
+									Print "<script>alert('".$dateRow['nightdiff']."')</script>";
+								}
+								if($dateRow['overtime'] != 0){
+									$OtTue = true;
+									Print "<script>alert('".$OtTue."')</script>";
+								}
+								
 							}
 							else if($dateRow['attendance'] == 1)//Absent
 							{
@@ -237,6 +326,11 @@ $date = "September 26, 2017";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$wedTimeIn = $dateRow['timein'];
 								$wedTimeOut = $dateRow['timeout'];
+								//For badge of Night diff and Overtime
+								if(!empty($dateRow['nightdiff']))
+									$NdWed = true;
+								if(!empty($dateRow['overtime']))
+									$OtWed = true;
 								
 							}
 							else if($dateRow['attendance'] == 1)//Absent
@@ -257,6 +351,11 @@ $date = "September 26, 2017";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$thuTimeIn = $dateRow['timein'];
 								$thuTimeOut = $dateRow['timeout'];
+								//For badge of Night diff and Overtime
+								if($dateRow['nightdiff'] != 0)
+									$NdThu = true;
+								if($dateRow['overtime'] != 0)
+									$OtThu = true;
 								
 							}
 							else if($dateRow['attendance'] == 1)//Absent
@@ -277,6 +376,11 @@ $date = "September 26, 2017";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$friTimeIn = $dateRow['timein'];
 								$friTimeOut = $dateRow['timeout'];
+								//For badge of Night diff and Overtime
+								if($dateRow['nightdiff'] != 0)
+									$NdFri = true;
+								if($dateRow['overtime'] != 0)
+									$OtFri = true;
 								
 							}
 							else if($dateRow['attendance'] == 1)//Absent
@@ -297,6 +401,12 @@ $date = "September 26, 2017";
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$satTimeIn = $dateRow['timein'];
 								$satTimeOut = $dateRow['timeout'];
+								//For badge of Night diff and Overtime
+
+								if($dateRow['nightdiff'] != 0)
+									$NdSat = true;
+								if($dateRow['overtime'] != 0)
+									$OtSat = true;
 								
 							}
 							else if($dateRow['attendance'] == 1)//Absent
@@ -307,6 +417,65 @@ $date = "September 26, 2017";
 						}	
 						
 
+					}
+					$holMon = false; 
+					$holTue = false; 
+					$holWed = false; 
+					$holThu = false; 
+					$holFri = false; 
+					$holSat = false;
+					$holSun = false;
+					if($holidayCounter > 1)//Output as Hidden Name, Type, Date of holiday 
+					{
+						$holNameArr = explode("+", $holidayName);
+						$holTypeArr = explode("+", $holidayType);
+						$holDateArr = explode("+", $holidayDate);
+						$holDayArr = explode("+", $holidayDay);
+
+						
+						for($a = 0; $a <= $holidayCounter; $a++)
+						{
+							Print "<input type='hidden' name='holidayName[]' value='".$holNameArr[$a]."'>";
+							Print "<input type='hidden' name='holidayType[]' value='".$holTypeArr[$a]."'>";
+							Print "<input type='hidden' name='holidayDate[]' value='".$holDateArr[$a]."'>";
+
+							if($holDayArr[$a] == "Monday")
+								$holMon = true; 
+							else if($holDayArr[$a] == "Tuesday")
+								$holTue = true; 
+							else if($holDayArr[$a] == "Wednesday")
+								$holWed = true; 
+							else if($holDayArr[$a] == "Thursday")
+								$holThu = true; 
+							else if($holDayArr[$a] == "Friday")
+								$holFri = true; 
+							else if($holDayArr[$a] == "Saturday")
+								$holSat = true; 
+							else if($holDayArr[$a] == "Sunday")
+								$holSun = true; 
+						}
+					}
+					else if($holidayCounter == 1)//if holiday only lasted 1 day
+					{	
+						
+						if($holidayDay == "Monday")
+								$holMon = true; 
+						else if($holidayDay == "Tuesday")
+							$holTue = true; 
+						else if($holidayDay == "Wednesday")
+							$holWed = true; 
+						else if($holidayDay == "Thursday")
+							$holThu = true; 
+						else if($holidayDay == "Friday")
+							$holFri = true; 
+						else if($holidayDay == "Saturday")
+							$holSat = true; 
+						else if($holidayDay == "Sunday")
+							$holSun = true; 
+						//Print "<script>alert('".$holidayName."')</script>";
+						Print "<input type='hidden' name='holidayName[]' value='".$holidayName."'>";
+						Print "<input type='hidden' name='holidayType[]' value='".$holidayType."'>";
+						Print "<input type='hidden' name='holidayDate[]' value='".$holidayDate."'>";
 					}
 					// $start_date = $date;
 					// $end_date = 'September 22, 2017';
@@ -414,13 +583,76 @@ $date = "September 26, 2017";
 					OVERTIME / UNDERTIME / NIGHT DIFFERENTIAL / HOLIDAY
 					
 					-->
-					<td colspan="2">FIRST</td>
-					<td colspan="2">FIRST</td>
-					<td colspan="2">FIRST</td>
-					<td colspan="2">FIRST</td>
-					<td colspan="2">FIRST</td>
-					<td colspan="2">FIRST</td>
-					<td colspan="2">FIRST</td>
+					<td colspan="2">
+						<?php
+							if($holWed)
+								Print 	"	<p> [Holiday]</p>";
+							if($OtWed)
+								Print 	"	<p> [OT]</p>";
+							if($NdWed)
+								Print 	"	<p> [ND]</p>";
+						?>
+					</td>
+					<td colspan="2">
+						<?php
+							if($holThu)
+								Print 	"	<p> [Holiday]</p>";
+							if($OtThu)
+								Print 	"	<p> [OT]</p>";
+							if($NdThu)
+								Print 	"	<p> [ND]</p>";
+						?>
+					</td>
+					<td colspan="2">
+						<?php
+							if($holFri)
+								Print 	"	<p> [Holiday]</p>";
+							if($OtFri)
+								Print 	"	<p> [OT]</p>";
+							if($NdFri)
+								Print 	"	<p> [ND]</p>";
+						?>
+					</td>
+					<td colspan="2">
+						<?php
+							if($holSat)
+								Print 	"	<p> [Holiday]</p>";
+							if($OtSat)
+								Print 	"	<p> [OT]</p>";
+							if($NdSat)
+								Print 	"	<p> [ND]</p>";
+						?>
+					</td>
+					<td colspan="2">
+						<?php
+							if($holSun)
+								Print 	"	<p> [Holiday]</p>";
+							if($OtSun)
+								Print 	"	<p> [OT]</p>";
+							if($NdSun)
+								Print 	"	<p> [ND]</p>";
+						?>
+					</td>
+					<td colspan="2">
+						<?php
+							if($holMon)
+								Print 	"	<p> [Holiday]</p>";
+							if($OtMon)
+								Print 	"	<p> [OT]</p>";
+							if($NdMon)
+								Print 	"	<p> [ND]</p>";
+						?>
+					</td>
+					<td colspan="2">
+						<?php
+							if($holTue)
+								Print 	"	<p> [Holiday]</p>";
+							if($OtTue)
+								Print 	"	<p> [OT]</p>";
+							if($NdTue)
+								Print 	"	<p> [ND]</p>";
+						?>
+					</td>
 				</tr>
 			</table>
 		</div>
@@ -487,8 +719,6 @@ $date = "September 26, 2017";
 										$sss = "N/A";
 									}
 
-									
-
 									if($pagibigNum > 0)
 									{
 										while($pagibigLatest = mysql_fetch_assoc($pagibigQuery))
@@ -530,7 +760,7 @@ $date = "September 26, 2017";
 									}
 									if($sss != "N/A")
 									{
-										Print "<input type='text' id='sss' class='form-control input-sm' placeholder='".$sss." PHP' onkeypress='validatenumber(event)'>";
+										Print "<input type='text' id='sss' class='form-control input-sm' placeholder='".number_format($sss, 2, '.', ',')." PHP' onkeypress='validatenumber(event)'>";
 									}
 									else
 									{
@@ -545,7 +775,7 @@ $date = "September 26, 2017";
 									<?php
 									if($pagibig != "N/A")
 									{
-										Print "<input type='text' id='pagibig' class='form-control input-sm' placeholder='".$pagibig." PHP' onkeypress='validatenumber(event)'>";
+										Print "<input type='text' id='pagibig' class='form-control input-sm' placeholder='".number_format($pagibig, 2, '.', ',')." PHP' onkeypress='validatenumber(event)'>";
 									}
 									else
 									{
@@ -563,6 +793,7 @@ $date = "September 26, 2017";
 									<span class="vale pull-right">
 										<?php 
 										if($vale != "N/A")
+
 								        Print number_format($vale, 2, '.', ',');
 								        else
 								        Print $vale;	
@@ -584,7 +815,6 @@ $date = "September 26, 2017";
 									?>
 								</div>
 						</div>
-
 
 						<div class="col-md-3">
 							<h4 class="text-left">Contributions</h4>
