@@ -322,13 +322,13 @@ $date = "September 26, 2017";
 
 				?>
 				<tr>
-					<td colspan="2"><?php Print $wedDate ?></td>
-					<td colspan="2"><?php Print $thuDate ?></td>
-					<td colspan="2"><?php Print $friDate ?></td>
-					<td colspan="2"><?php Print $satDate ?></td>
-					<td colspan="2"><?php Print $sunDate ?></td>
-					<td colspan="2"><?php Print $monDate ?></td>
-					<td colspan="2"><?php Print $tueDate ?></td>
+					<td colspan="2" class="navibar col-md-1"><?php Print $wedDate ?></td>
+					<td colspan="2" class="navibar col-md-1"><?php Print $thuDate ?></td>
+					<td colspan="2" class="navibar col-md-1"><?php Print $friDate ?></td>
+					<td colspan="2" class="navibar col-md-1"><?php Print $satDate ?></td>
+					<td colspan="2" class="navibar col-md-1"><?php Print $sunDate ?></td>
+					<td colspan="2" class="navibar col-md-1"><?php Print $monDate ?></td>
+					<td colspan="2" class="navibar col-md-1"><?php Print $tueDate ?></td>
 				</tr>
 				<tr>
 					<td colspan="2">Wednesday</td>
@@ -343,66 +343,66 @@ $date = "September 26, 2017";
 					<?php
 						if(!$wedAbsent)
 						{
-							Print 	"	<td style='width:75px; padding-top: 20px; padding-bottom: 20px'>Time In: ". trim($wedTimeIn) ."</td>
-										<td style='width:75px'>Time Out: ". trim($wedTimeOut) ."</td>";
+							Print 	"	<td style='padding-top: 20px; padding-bottom: 20px'>Time In: <br>". trim($wedTimeIn) ."</td>
+										<td>Time Out: <br>". trim($wedTimeOut) ."</td>";
 						}
 						else
 						{
-							Print 	"	<td colspan='2' style='width:150px' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
 						}
 						if(!$thuAbsent)
 						{
-							Print 	"	<td style='width:75px'>Time In: ". trim($thuTimeIn) ."</td>
-										<td style='width:75px'>Time Out: ". trim($thuTimeOut) ."</td>";
+							Print 	"	<td  >Time In: <br>". trim($thuTimeIn) ."</td>
+										<td  >Time Out: <br>". trim($thuTimeOut) ."</td>";
 						}
 						else
 						{
-							Print 	"	<td colspan='2' style='width:150px' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
 						}
 						if(!$friAbsent)
 						{
-							Print 	"	<td style='width:75px'>Time In: ". trim($friTimeIn) ."</td>
-										<td style='width:75px'>Time Out: ". trim($friTimeOut) ."</td>";
+							Print 	"	<td  >Time In: <br>". trim($friTimeIn) ."</td>
+										<td  >Time Out: <br>". trim($friTimeOut) ."</td>";
 						}
 						else
 						{
-							Print 	"	<td colspan='2' style='width:150px' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
 						}
 						if(!$satAbsent)
 						{
-							Print 	"	<td style='width:75px'>Time In: ". trim($satTimeIn) ."</td>
-										<td style='width:75px'>Time Out: ". trim($satTimeOut) ."</td>";
+							Print 	"	<td  >Time In: <br>". trim($satTimeIn) ."</td>
+										<td  >Time Out: <br>". trim($satTimeOut) ."</td>";
 						}
 						else
 						{
-							Print 	"	<td colspan='2' style='width:150px' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
 						}
 						if(!$sunAbsent)
 						{
-							Print 	"	<td style='width:75px'>Time In: ". trim($sunTimeIn) ."</td>
-										<td style='width:75px'>Time Out: ". trim($sunTimeOut) ."</td>";
+							Print 	"	<td  >Time In: <br>". trim($sunTimeIn) ."</td>
+										<td  >Time Out: <br>". trim($sunTimeOut) ."</td>";
 						}
 						else
 						{
-							Print 	"	<td colspan='2' style='width:150px' class='danger'> Day off </td>";
+							Print 	"	<td colspan='2' class='danger'> Day off </td>";
 						}
 						if(!$monAbsent)
 						{
-							Print 	"	<td style='width:75px'>Time In: ". trim($monTimeIn) ."</td>
-										<td style='width:75px'>Time Out: ". trim($monTimeOut) ."</td>";
+							Print 	"	<td  >Time In: <br>". trim($monTimeIn) ."</td>
+										<td  >Time Out: <br>". trim($monTimeOut) ."</td>";
 						}
 						else
 						{
-							Print 	"	<td colspan='2' style='width:150px' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
 						}
 						if(!$tueAbsent)
 						{
-							Print 	"	<td style='width:75px'>Time In: ". trim($tueTimeIn) ."</td>
-										<td style='width:75px'>Time Out: ". trim($tueTimeOut) ."</td>";
+							Print 	"	<td  >Time In: <br>". trim($tueTimeIn) ."</td>
+										<td  >Time Out: <br>". trim($tueTimeOut) ."</td>";
 						}
 						else
 						{
-							Print 	"	<td colspan='2' style='width:150px' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
 						}
 							
 					?>
