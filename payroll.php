@@ -545,8 +545,8 @@ if($holidayExist > 0)
 					<?php
 						if(!$wedAbsent)
 						{
-							Print 	"	<td style='padding-top: 20px; padding-bottom: 20px'>Time In: ". trim($wedTimeIn) ."</td>
-										<td>Time Out: ". trim($wedTimeOut) ."</td>
+							Print 	"	<td style='padding-top: 20px; padding-bottom: 20px'>Time In:<br>". trim($wedTimeIn) ."</td>
+										<td>Time Out:<br>". trim($wedTimeOut) ."</td>
 										<input type='hidden' name='wedWorkHrs' value='".$wedWorkHrs."'>";
 							
 							if($wedNDHrs != 0)
@@ -564,8 +564,8 @@ if($holidayExist > 0)
 						}
 						if(!$thuAbsent)
 						{
-							Print 	"	<td>Time In: ". trim($thuTimeIn) ."</td>
-										<td>Time Out: ". trim($thuTimeOut) ."</td>
+							Print 	"	<td>Time In:<br>". trim($thuTimeIn) ."</td>
+										<td>Time Out:<br>". trim($thuTimeOut) ."</td>
 										<input type='hidden' name='thuWorkHrs' value='".$thuWorkHrs."'>";
 							if($thuNDHrs != 0)
 							{
@@ -582,8 +582,8 @@ if($holidayExist > 0)
 						}
 						if(!$friAbsent)
 						{
-							Print 	"	<td>Time In: ". trim($friTimeIn) ."</td>
-										<td>Time Out: ". trim($friTimeOut) ."</td>
+							Print 	"	<td>Time In:<br>". trim($friTimeIn) ."</td>
+										<td>Time Out:<br>". trim($friTimeOut) ."</td>
 										<input type='hidden' name='friWorkHrs' value='".$friWorkHrs."'>";
 							if($friNDHrs != 0)
 							{
@@ -600,8 +600,8 @@ if($holidayExist > 0)
 						}
 						if(!$satAbsent)
 						{
-							Print 	"	<td>Time In: ". trim($satTimeIn) ."</td>
-										<td>Time Out: ". trim($satTimeOut) ."</td>
+							Print 	"	<td>Time In:<br>". trim($satTimeIn) ."</td>
+										<td>Time Out:<br>". trim($satTimeOut) ."</td>
 										<input type='hidden' name='satWorkHrs' value='".$satWorkHrs."'>";
 							if($satNDHrs !=  0)
 							{
@@ -618,8 +618,8 @@ if($holidayExist > 0)
 						}
 						if(!$sunAbsent)
 						{
-							Print 	"	<td>Time In: ". trim($sunTimeIn) ."</td>
-										<td>Time Out: ". trim($sunTimeOut) ."</td>
+							Print 	"	<td>Time In:<br>". trim($sunTimeIn) ."</td>
+										<td>Time Out:<br>". trim($sunTimeOut) ."</td>
 										<input type='hidden' name='sunWorkHrs' value='".$sunWorkHrs."'>";
 							if($sunNDHrs !=  0)
 							{
@@ -636,8 +636,8 @@ if($holidayExist > 0)
 						}
 						if(!$monAbsent)
 						{
-							Print 	"	<td>Time In: ". trim($monTimeIn) ."</td>
-										<td>Time Out: ". trim($monTimeOut) ."</td>
+							Print 	"	<td>Time In:<br>". trim($monTimeIn) ."</td>
+										<td>Time Out:<br>". trim($monTimeOut) ."</td>
 										<input type='hidden' name='monWorkHrs' value='".$monWorkHrs."'>";
 							if($monNDHrs != 0)
 							{
@@ -654,8 +654,8 @@ if($holidayExist > 0)
 						}
 						if(!$tueAbsent)
 						{
-							Print 	"	<td>Time In: ". trim($tueTimeIn) ."</td>
-										<td>Time Out: ". trim($tueTimeOut) ."</td>
+							Print 	"	<td>Time In:<br>". trim($tueTimeIn) ."</td>
+										<td>Time Out:<br>". trim($tueTimeOut) ."</td>
 										<input type='hidden' name='tueWorkHrs' value='".$tueWorkHrs."'>";
 							if($tueNDHrs != 0)
 							{
