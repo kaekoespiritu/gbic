@@ -247,6 +247,10 @@ if($holidayExist > 0)
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$sunTimeIn = $dateRow['timein'];
 								$sunTimeOut = $dateRow['timeout'];
+
+								$sunWorkHrs = $dateRow['workhours'];//Get the workhours
+								$sunNDHrs = $dateRow['nightdiff'];//Get the night diff
+								$sunOTHrs = $dateRow['overtime'];//Get the Overtime
 								//For badge of Night diff and Overtime
 								if($dateRow['nightdiff'] != 0)
 									$NdSun = true;
@@ -272,6 +276,10 @@ if($holidayExist > 0)
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$monTimeIn = $dateRow['timein'];
 								$monTimeOut = $dateRow['timeout'];
+
+								$monWorkHrs = $dateRow['workhours'];//Get the workhours
+								$monNDHrs = $dateRow['nightdiff'];//Get the night diff
+								$monOTHrs = $dateRow['overtime'];//Get the Overtime
 								//For badge of Night diff and Overtime
 								if($dateRow['nightdiff'] != 0)
 									$NdMon = true;
@@ -297,14 +305,15 @@ if($holidayExist > 0)
 								$tueTimeIn = $dateRow['timein'];
 								$tueTimeOut = $dateRow['timeout'];
 								
+								$tueWorkHrs = $dateRow['workhours'];//Get the workhours
+								$tueNDHrs = $dateRow['nightdiff'];//Get the night diff
+								$tueOTHrs = $dateRow['overtime'];//Get the Overtime
 								//For badge of Night diff and Overtime
 								if($dateRow['nightdiff'] != 0){
 									$NdTue = true;
-									Print "<script>alert('".$dateRow['nightdiff']."')</script>";
 								}
 								if($dateRow['overtime'] != 0){
 									$OtTue = true;
-									Print "<script>alert('".$OtTue."')</script>";
 								}
 								
 							}
@@ -326,6 +335,10 @@ if($holidayExist > 0)
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$wedTimeIn = $dateRow['timein'];
 								$wedTimeOut = $dateRow['timeout'];
+
+								$wedWorkHrs = $dateRow['workhours'];//Get the workhours
+								$wedNDHrs = $dateRow['nightdiff'];//Get the night diff
+								$wedOTHrs = $dateRow['overtime'];//Get the Overtime
 								//For badge of Night diff and Overtime
 								if(!empty($dateRow['nightdiff']))
 									$NdWed = true;
@@ -351,6 +364,10 @@ if($holidayExist > 0)
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$thuTimeIn = $dateRow['timein'];
 								$thuTimeOut = $dateRow['timeout'];
+
+								$thuWorkHrs = $dateRow['workhours'];//Get the workhours
+								$thuNDHrs = $dateRow['nightdiff'];//Get the night diff
+								$thuOTHrs = $dateRow['overtime'];//Get the Overtime
 								//For badge of Night diff and Overtime
 								if($dateRow['nightdiff'] != 0)
 									$NdThu = true;
@@ -376,6 +393,10 @@ if($holidayExist > 0)
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$friTimeIn = $dateRow['timein'];
 								$friTimeOut = $dateRow['timeout'];
+
+								$friWorkHrs = $dateRow['workhours'];//Get the workhours
+								$friNDHrs = $dateRow['nightdiff'];//Get the night diff
+								$friOTHrs = $dateRow['overtime'];//Get the Overtime
 								//For badge of Night diff and Overtime
 								if($dateRow['nightdiff'] != 0)
 									$NdFri = true;
@@ -401,6 +422,10 @@ if($holidayExist > 0)
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$satTimeIn = $dateRow['timein'];
 								$satTimeOut = $dateRow['timeout'];
+
+								$satWorkHrs = $dateRow['workhours'];//Get the workhours
+								$satNDHrs = $dateRow['nightdiff'];//Get the night diff
+								$satOTHrs = $dateRow['overtime'];//Get the Overtime
 								//For badge of Night diff and Overtime
 
 								if($dateRow['nightdiff'] != 0)
@@ -513,7 +538,17 @@ if($holidayExist > 0)
 						if(!$wedAbsent)
 						{
 							Print 	"	<td style='width:75px; padding-top: 20px; padding-bottom: 20px'>Time In: ". trim($wedTimeIn) ."</td>
-										<td style='width:75px'>Time Out: ". trim($wedTimeOut) ."</td>";
+										<td style='width:75px'>Time Out: ". trim($wedTimeOut) ."</td>
+										<input type='hidden' name='wedWorkHrs' value='".$wedWorkHrs."'>";
+							
+							if($wedNDHrs != 0)
+							{
+								Print "<input type='hidden' name='wedNDHrs' value='".$wedNDHrs."'>";
+							}
+							if($wedOTHrs != 0)
+							{
+								Print "<input type='hidden' name='wedOTHrs' value='".$wedOTHrs."'>";
+							}
 						}
 						else
 						{
@@ -522,7 +557,16 @@ if($holidayExist > 0)
 						if(!$thuAbsent)
 						{
 							Print 	"	<td style='width:75px'>Time In: ". trim($thuTimeIn) ."</td>
-										<td style='width:75px'>Time Out: ". trim($thuTimeOut) ."</td>";
+										<td style='width:75px'>Time Out: ". trim($thuTimeOut) ."</td>
+										<input type='hidden' name='thuWorkHrs' value='".$thuWorkHrs."'>";
+							if($thuNDHrs != 0)
+							{
+								Print "<input type='hidden' name='thuNDHrs' value='".$thuNDHrs."'>";
+							}
+							if($thuOTHrs != 0)
+							{
+								Print "<input type='hidden' name='thuOTHrs' value='".$thuOTHrs."'>";
+							}
 						}
 						else
 						{
@@ -531,7 +575,16 @@ if($holidayExist > 0)
 						if(!$friAbsent)
 						{
 							Print 	"	<td style='width:75px'>Time In: ". trim($friTimeIn) ."</td>
-										<td style='width:75px'>Time Out: ". trim($friTimeOut) ."</td>";
+										<td style='width:75px'>Time Out: ". trim($friTimeOut) ."</td>
+										<input type='hidden' name='friWorkHrs' value='".$friWorkHrs."'>";
+							if($friNDHrs != 0)
+							{
+								Print "<input type='hidden' name='friNDHrs' value='".$friNDHrs."'>";
+							}
+							if($friOTHrs != 0)
+							{
+								Print "<input type='hidden' name='friOTHrs' value='".$friOTHrs."'>";
+							}
 						}
 						else
 						{
@@ -540,7 +593,16 @@ if($holidayExist > 0)
 						if(!$satAbsent)
 						{
 							Print 	"	<td style='width:75px'>Time In: ". trim($satTimeIn) ."</td>
-										<td style='width:75px'>Time Out: ". trim($satTimeOut) ."</td>";
+										<td style='width:75px'>Time Out: ". trim($satTimeOut) ."</td>
+										<input type='hidden' name='satWorkHrs' value='".$satWorkHrs."'>";
+							if($satNDHrs !=  0)
+							{
+								Print "<input type='hidden' name='satNDHrs' value='".$satNDHrs."'>";
+							}
+							if($satOTHrs != 0)
+							{
+								Print "<input type='hidden' name='satOTHrs' value='".$satOTHrs."'>";
+							}
 						}
 						else
 						{
@@ -549,7 +611,16 @@ if($holidayExist > 0)
 						if(!$sunAbsent)
 						{
 							Print 	"	<td style='width:75px'>Time In: ". trim($sunTimeIn) ."</td>
-										<td style='width:75px'>Time Out: ". trim($sunTimeOut) ."</td>";
+										<td style='width:75px'>Time Out: ". trim($sunTimeOut) ."</td>
+										<input type='hidden' name='sunWorkHrs' value='".$sunWorkHrs."'>";
+							if($sunNDHrs !=  0)
+							{
+								Print "<input type='hidden' name='sunNDHrs' value='".$sunNDHrs."'>";
+							}
+							if($sunOTHrs != 0)
+							{
+								Print "<input type='hidden' name='sunOTHrs' value='".$sunOTHrs."'>";
+							}
 						}
 						else
 						{
@@ -558,7 +629,16 @@ if($holidayExist > 0)
 						if(!$monAbsent)
 						{
 							Print 	"	<td style='width:75px'>Time In: ". trim($monTimeIn) ."</td>
-										<td style='width:75px'>Time Out: ". trim($monTimeOut) ."</td>";
+										<td style='width:75px'>Time Out: ". trim($monTimeOut) ."</td>
+										<input type='hidden' name='monWorkHrs' value='".$monWorkHrs."'>";
+							if($monNDHrs != 0)
+							{
+								Print "<input type='hidden' name='monNDHrs' value='".$monNDHrs."'>";
+							}
+							if($monOTHrs != 0)
+							{
+								Print "<input type='hidden' name='monOTHrs' value='".$monOTHrs."'>";
+							}
 						}
 						else
 						{
@@ -567,7 +647,16 @@ if($holidayExist > 0)
 						if(!$tueAbsent)
 						{
 							Print 	"	<td style='width:75px'>Time In: ". trim($tueTimeIn) ."</td>
-										<td style='width:75px'>Time Out: ". trim($tueTimeOut) ."</td>";
+										<td style='width:75px'>Time Out: ". trim($tueTimeOut) ."</td>
+										<input type='hidden' name='tueWorkHrs' value='".$tueWorkHrs."'>";
+							if($tueNDHrs != 0)
+							{
+								Print "<input type='hidden' name='tueNDHrs' value='".$tueNDHrs."'>";
+							}
+							if($tueOTHrs != 0)
+							{
+								Print "<input type='hidden' name='tueOTHrs' value='".$tueOTHrs."'>";
+							}
 						}
 						else
 						{

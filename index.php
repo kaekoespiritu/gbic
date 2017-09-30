@@ -46,7 +46,20 @@ include('directives/db.php');
 					<h4 class="text-center">Total Employees</h4>
 				</div>
 			</td>
-			<td style="background-color: #AA4038"><h3>Today's<br>Attendance Status:<br><i>Incomplete!</i></h3></td>
+			<td style="background-color: #AA4038">
+				<h3>Today's
+					<br>Attendance Status:<br>
+					<i>
+						<?php
+							if(isset($_SESSION['completeAtt']))
+								Print "Complete!";
+							else
+								Print "Incomplete!";
+						?>
+						
+					</i>
+				</h3>
+			</td>
 		</tr>
 	</table>
 

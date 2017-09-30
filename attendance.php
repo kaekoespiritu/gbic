@@ -168,7 +168,7 @@ include('directives/session.php');
 								else
 								{
 									Print "<h4>Special Holiday</h4>";
-								}//dito
+								}
 								Print "	<button type='button' class='btn btn-danger btn-sm pull-down' onclick='cancelHoliday()' id='cancel'>
 										Cancel
 									</button>";	
@@ -281,8 +281,8 @@ include('directives/session.php');
 
 		<div class="col-md-9 col-md-offset-2">
 			<?php
-
-			$counter = 0;
+			$attCounter = 0;//Attendance Completion Checker
+			$counter = 0;//Counter for the While loop
 
 			$site_box = "SELECT location FROM site";
 			$site_box_query = mysql_query($site_box);
@@ -294,6 +294,7 @@ include('directives/session.php');
 				{
 					Print '<div class="row">';
 				}
+
 				//Check if overall attendance for a certain site is done
 				$attendanceChecker = "SELECT * FROM attendance WHERE date = '$date' AND site = '$site'";
 				$attendanceQuery = mysql_query($attendanceChecker);
@@ -365,8 +366,25 @@ include('directives/session.php');
 					Print '</div>';	
 					$counter = 0;
 				}
-
+				
+				// Counter for completed attendance each site
+				if($attendanceStatus == 1)
+				{
+					$attCounter++;
+				}
 			}
+				//Attendance Completion Checker
+				$siteChecker = "SELECT * FROM site";
+				$siteQuery = mysql_query($siteChecker);
+				$siteNum = mysql_num_rows($siteQuery);
+				if($siteNum == $attCounter)
+				{
+					$_SESSION['completeAtt'] = true;
+				}
+				else
+				{
+					unset($_SESSION['completeAtt']);
+				}
 			?>
 </div>
 </div>
