@@ -39,6 +39,14 @@ if($holidayExist > 0)
 		{
 			margin-bottom: 0px !important;
 		}
+		h3
+		{
+			margin: 0px !important;
+		}
+		.removePadding
+		{
+			padding: 0px !important;
+		}
 	</style>
 </head>
 <body style="font-family: Quicksand;">
@@ -58,7 +66,7 @@ if($holidayExist > 0)
 				<li><a href="payroll_table.php?position=<?php Print $position?>&site=<?php Print $site?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Table of Employees</a></li>
 				<li class="active"><?php Print "Payroll for site " .$site." on ".$date ?></li>
 
-			<button class="btn btn-success pull-right" style="margin-right:5px" onclick="saveChanges()">Save and compute <span class="glyphicon glyphicon-floppy-saved"></span></button>
+			<a class="btn btn-success pull-right" style="margin-right:5px" onclick="saveChanges()" href="#">Save and compute <span class="glyphicon glyphicon-floppy-saved"></span></a>
 			</ol>
 		</div>
 
@@ -577,81 +585,89 @@ if($holidayExist > 0)
 					?>
 				</tr>
 				<tr>
-					<!--
-
-					Add labels here indicating the following:
-					OVERTIME / UNDERTIME / NIGHT DIFFERENTIAL / HOLIDAY
-					
-					-->
-					<td colspan="2">
+					<td class="removePadding" colspan="2">
+						<h4>
 						<?php
 							if($holWed)
-								Print 	"	<p> [Holiday]</p>";
+								Print 	 "<span class='label label-succees'>Holiday</span>&emsp;";
 							if($OtWed)
-								Print 	"	<p> [OT]</p>";
+								Print 	"<span class='label label-primary'>OT</span>&emsp;";
 							if($NdWed)
-								Print 	"	<p> [ND]</p>";
+								Print 	"<span class='label label-warning'>ND</span>";
 						?>
+						</h4>
 					</td>
-					<td colspan="2">
+					<td class="removePadding" colspan="2">
+						<h4>
 						<?php
 							if($holThu)
-								Print 	"	<p> [Holiday]</p>";
+								Print 	 "<span class='label label-succees'>Holiday</span>&emsp;";
 							if($OtThu)
-								Print 	"	<p> [OT]</p>";
+								Print 	"<span class='label label-primary'>OT</span>&emsp;";
 							if($NdThu)
-								Print 	"	<p> [ND]</p>";
+								Print 	"<span class='label label-warning'>ND</span>";
 						?>
+						</h4>
 					</td>
-					<td colspan="2">
+					<td class="removePadding" colspan="2">
+						<h4>
 						<?php
 							if($holFri)
-								Print 	"	<p> [Holiday]</p>";
+								Print 	 "<span class='label label-succees'>Holiday</span>&emsp;";
 							if($OtFri)
-								Print 	"	<p> [OT]</p>";
+								Print 	"<span class='label label-primary'>OT</span>&emsp;";
 							if($NdFri)
-								Print 	"	<p> [ND]</p>";
+								Print 	"<span class='label label-warning'>ND</span>";
 						?>
+						</h4>
 					</td>
-					<td colspan="2">
+					<td class="removePadding" colspan="2">
+						<h4>
 						<?php
 							if($holSat)
-								Print 	"	<p> [Holiday]</p>";
+								Print 	 "<span class='label label-succees'>Holiday</span>&emsp;";
 							if($OtSat)
-								Print 	"	<p> [OT]</p>";
+								Print 	"<span class='label label-primary'>OT</span>&emsp;";
 							if($NdSat)
-								Print 	"	<p> [ND]</p>";
+								Print 	"<span class='label label-warning'>ND</span>";
 						?>
+						</h4>
 					</td>
-					<td colspan="2">
+					<td class="removePadding" colspan="2">
+						<h4>
 						<?php
 							if($holSun)
-								Print 	"	<p> [Holiday]</p>";
+								Print 	 "<span class='label label-succees'>Holiday</span>&emsp;";
 							if($OtSun)
-								Print 	"	<p> [OT]</p>";
+								Print 	"<span class='label label-primary'>OT</span>&emsp;";
 							if($NdSun)
-								Print 	"	<p> [ND]</p>";
+								Print 	"<span class='label label-warning'>ND</span>";
 						?>
+						</h4>
 					</td>
-					<td colspan="2">
+					<td class="removePadding" colspan="2">
+						<h4>
 						<?php
 							if($holMon)
-								Print 	"	<p> [Holiday]</p>";
+								Print 	"<span class='label label-succees'>Holiday</span>&emsp;"; 
 							if($OtMon)
-								Print 	"	<p> [OT]</p>";
+								Print 	"<span class='label label-primary'>OT</span>&emsp;"; 
 							if($NdMon)
-								Print 	"	<p> [ND]</p>";
+								Print 	"<span class='label label-warning'>ND</span>"; 
 						?>
+						</h4>
 					</td>
-					<td colspan="2">
+					<td class="removePadding" colspan="2">
+						<h4>
 						<?php
 							if($holTue)
-								Print 	"	<p> [Holiday]</p>";
+								Print 	 "<span class='label label-succees'>Holiday</span>&emsp;";
 							if($OtTue)
-								Print 	"	<p> [OT]</p>";
+								Print 	"<span class='label label-primary'>OT</span>&emsp;";
 							if($NdTue)
-								Print 	"	<p> [ND]</p>";
+								Print 	"<span class='label label-warning'>ND</span>";
 						?>
+						</h4>
 					</td>
 				</tr>
 			</table>
@@ -842,18 +858,33 @@ if($holidayExist > 0)
 
 
 						<div class="col-md-5">
-							<h4 class="text-left">Tools</h4>
-							<a class="btn btn-sm btn-primary col-md-1" onclick="addRow()"><span class="glyphicon glyphicon-plus"></span></a>
-							<div class="form-group" id="toolform">
-								<div id="1">
-									<label class="control-label col-md-2" for="tools">Name</label>
-									<div class="col-md-4">
-										<input type="text" id="tools" name="toolname[]" class="form-control input-sm" onkeypress="validateletter(event)">
+								<h4 class="text-left">Allowance</h4>
+								<div class="form-group">
+									<label class="control-label col-md-3">Weekly</label>
+									<div class="col-md-3">
+										<input type="text" id="allowance" class="form-control input-sm" placeholder="500.00 PHP">
 									</div>
-									<label class="control-label col-md-1" for="price">Price</label>
-									<div class="col-md-4">
-										<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)">
+									<label class="control-label col-md-2">Extra</label>
+									<div class="col-md-3">
+										<input type="text" id="allowance" class="form-control input-sm">
 									</div>
+								</div>
+
+
+							<div class="col-md-12">
+								<h4 class="text-left">Tools</h4>
+								<a class="btn btn-sm btn-primary col-md-1" onclick="addRow()"><span class="glyphicon glyphicon-plus"></span></a>
+								<div class="form-group" id="toolform">
+									<div id="1">
+										<label class="control-label col-md-2" for="tools">Name</label>
+										<div class="col-md-4">
+											<input type="text" id="tools" name="toolname[]" class="form-control input-sm" onkeypress="validateletter(event)">
+										</div>
+										<label class="control-label col-md-1" for="price">Price</label>
+										<div class="col-md-4">
+											<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)">
+										</div>
+									</div>	
 								</div>
 							</div>
 
@@ -1028,7 +1059,7 @@ function addvale() {
 
 	// Append innerHTML addition format
 	var computation = document.querySelector('#dynamicCompute');
-	computation.innerHTML = "<span style='right:5px;position:relative;'>+</span>" + addCommas(addVale);
+	computation.innerHTML = "<span style='right:5px;position:relative;'>+</span>" + addCommas(addVale) + "<br>";
 
 	// Add border to show computation
 	var result = document.createElement("div");
@@ -1105,7 +1136,7 @@ function deductvale() {
 	{
 		// Append innerHTML addition format
 		var computation = document.querySelector('#dynamicCompute');
-		computation.innerHTML = "<span style='right:5px;position:relative;'>-</span>"+addCommas(addVale);
+		computation.innerHTML = "<span style='right:5px;position:relative;'>-</span>"+addCommas(addVale)+"<br>";
 
 		// Add computed value
 		result.innerHTML = addCommas(compute.toFixed(2));
