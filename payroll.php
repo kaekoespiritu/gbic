@@ -677,7 +677,8 @@ if($holidayExist > 0)
 					<td class="removePadding" colspan="2">
 						<h4>
 						<?php
-							if($holWed)
+
+							if($holWed) 
 								Print 	 "<span class='label label-succees'>Holiday</span>&emsp;";
 							if($OtWed)
 								Print 	"<span class='label label-primary'>OT</span>&emsp;";
