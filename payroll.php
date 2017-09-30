@@ -678,8 +678,8 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 
-							if($holWed) 
-								Print 	 "<span class='label label-succees'>Holiday</span>&emsp;";
+							if($holWed)
+								Print 	 "<span class='label label-success'>Holiday</span>&emsp;";
 							if($OtWed)
 								Print 	"<span class='label label-primary'>OT</span>&emsp;";
 							if($NdWed)
@@ -691,7 +691,7 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 							if($holThu)
-								Print 	 "<span class='label label-succees'>Holiday</span>&emsp;";
+								Print 	 "<span class='label label-success'>Holiday</span>&emsp;";
 							if($OtThu)
 								Print 	"<span class='label label-primary'>OT</span>&emsp;";
 							if($NdThu)
@@ -703,7 +703,7 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 							if($holFri)
-								Print 	 "<span class='label label-succees'>Holiday</span>&emsp;";
+								Print 	 "<span class='label label-success'>Holiday</span>&emsp;";
 							if($OtFri)
 								Print 	"<span class='label label-primary'>OT</span>&emsp;";
 							if($NdFri)
@@ -715,7 +715,7 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 							if($holSat)
-								Print 	 "<span class='label label-succees'>Holiday</span>&emsp;";
+								Print 	 "<span class='label label-success'>Holiday</span>&emsp;";
 							if($OtSat)
 								Print 	"<span class='label label-primary'>OT</span>&emsp;";
 							if($NdSat)
@@ -727,7 +727,7 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 							if($holSun)
-								Print 	 "<span class='label label-succees'>Holiday</span>&emsp;";
+								Print 	 "<span class='label label-success'>Holiday</span>&emsp;";
 							if($OtSun)
 								Print 	"<span class='label label-primary'>OT</span>&emsp;";
 							if($NdSun)
@@ -739,7 +739,7 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 							if($holMon)
-								Print 	"<span class='label label-succees'>Holiday</span>&emsp;"; 
+								Print 	"<span class='label label-success'>Holiday</span>&emsp;"; 
 							if($OtMon)
 								Print 	"<span class='label label-primary'>OT</span>&emsp;"; 
 							if($NdMon)
@@ -751,7 +751,7 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 							if($holTue)
-								Print 	 "<span class='label label-succees'>Holiday</span>&emsp;";
+								Print 	 "<span class='label label-success'>Holiday</span>&emsp;";
 							if($OtTue)
 								Print 	"<span class='label label-primary'>OT</span>&emsp;";
 							if($NdTue)
