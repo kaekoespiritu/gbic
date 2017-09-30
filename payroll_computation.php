@@ -29,8 +29,8 @@ include('directives/db.php');
 		</ol>
 	</div>
 
-	<div class="pull-down col-md-10 col-md-offset-1">
-		<div class="col-md-6 text-left pull-down">
+	<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-6 text-left">
 			<h3>Earnings</h3>
 			<table class="table">
 				<thead>
@@ -136,14 +136,21 @@ include('directives/db.php');
 		<div class="col-md-12">
 			<div class="panel panel-primary">
 			  <div class="panel-heading">
-			    <h3>Computation</h3>
+			    <h3 style="margin:0px">Overall Computation</h3>
 			  </div>
-			  <div class="panel-body text-left">
-			    Subtotals
-			    Earnings: ###<br>
-			    Contributions: ###<br>
-			    Loans: ###<br>
-			    Grand total: ###
+			  <div class="panel-body text-center">
+			  	<div class="col-md-4">
+			  		<h4><span class="glyphicon glyphicon-plus" style="color:green;"></span> Total Earnings: ###</h4>
+			  	</div>
+			    <div class="col-md-4">
+			    	<h4><span class="glyphicon glyphicon-minus" style="color:red;"></span> Total Contributions: ###</h4>
+			    </div>
+			    <div class="col-md-4">
+			    	<h4><span class="glyphicon glyphicon-minus" style="color:red;"></span> Total Loans: ###</h4>
+			    </div>
+			    <div class="col-md-12">
+			    	<h3><u>Grand total: ###</u></h3>
+				</div>
 			  </div>
 			</div>
 		</div>
