@@ -676,14 +676,14 @@ if($holidayExist > 0)
 				<tr>
 					<td class="removePadding" colspan="2">
 						<h4>
-						<?php
+						<?php //Badges to display Holiday, OT, ND
 
 							if($holWed)
-								Print 	 "<span class='label label-success'>Holiday</span>&emsp;";
+								Print 	 "<span class='label label-success'>Holiday</span>&nbsp";
 							if($OtWed)
-								Print 	"<span class='label label-primary'>OT</span>&emsp;";
+								Print 	"<span class='label label-primary'>OT</span>&nbsp";
 							if($NdWed)
-								Print 	"<span class='label label-warning'>ND</span>";
+								Print 	"<span class='label label-warning'>ND</span>&nbsp";
 						?>
 						</h4>
 					</td>
@@ -691,9 +691,9 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 							if($holThu)
-								Print 	 "<span class='label label-success'>Holiday</span>&emsp;";
+								Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
 							if($OtThu)
-								Print 	"<span class='label label-primary'>OT</span>&emsp;";
+								Print 	"<span class='label label-primary'>OT</span>&nbsp;";
 							if($NdThu)
 								Print 	"<span class='label label-warning'>ND</span>";
 						?>
@@ -703,9 +703,9 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 							if($holFri)
-								Print 	 "<span class='label label-success'>Holiday</span>&emsp;";
+								Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
 							if($OtFri)
-								Print 	"<span class='label label-primary'>OT</span>&emsp;";
+								Print 	"<span class='label label-primary'>OT</span>&nbsp;";
 							if($NdFri)
 								Print 	"<span class='label label-warning'>ND</span>";
 						?>
@@ -715,9 +715,9 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 							if($holSat)
-								Print 	 "<span class='label label-success'>Holiday</span>&emsp;";
+								Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
 							if($OtSat)
-								Print 	"<span class='label label-primary'>OT</span>&emsp;";
+								Print 	"<span class='label label-primary'>OT</span>&nbsp;";
 							if($NdSat)
 								Print 	"<span class='label label-warning'>ND</span>";
 						?>
@@ -727,9 +727,9 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 							if($holSun)
-								Print 	 "<span class='label label-success'>Holiday</span>&emsp;";
+								Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
 							if($OtSun)
-								Print 	"<span class='label label-primary'>OT</span>&emsp;";
+								Print 	"<span class='label label-primary'>OT</span>&nbsp;";
 							if($NdSun)
 								Print 	"<span class='label label-warning'>ND</span>";
 						?>
@@ -739,9 +739,9 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 							if($holMon)
-								Print 	"<span class='label label-success'>Holiday</span>&emsp;"; 
+								Print 	"<span class='label label-success'>Holiday</span>&nbsp;"; 
 							if($OtMon)
-								Print 	"<span class='label label-primary'>OT</span>&emsp;"; 
+								Print 	"<span class='label label-primary'>OT</span>&nbsp;"; 
 							if($NdMon)
 								Print 	"<span class='label label-warning'>ND</span>"; 
 						?>
@@ -751,9 +751,9 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 							if($holTue)
-								Print 	 "<span class='label label-success'>Holiday</span>&emsp;";
+								Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
 							if($OtTue)
-								Print 	"<span class='label label-primary'>OT</span>&emsp;";
+								Print 	"<span class='label label-primary'>OT</span>&nbsp;";
 							if($NdTue)
 								Print 	"<span class='label label-warning'>ND</span>";
 						?>
