@@ -523,7 +523,7 @@ if($holidayExist > 0)
 					// }
 
 				?>
-				<tr>
+				<tr style="white-space: nowrap">
 					<td colspan="2" class="navibar col-md-1"><?php Print $wedDate ?></td>
 					<td colspan="2" class="navibar col-md-1"><?php Print $thuDate ?></td>
 					<td colspan="2" class="navibar col-md-1"><?php Print $friDate ?></td>
