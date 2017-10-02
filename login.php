@@ -13,35 +13,62 @@ include("directives/db.php");
 
 		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 		<link rel="stylesheet" href="css/style.css" type="text/css">
+
+		<style>
+		img.bg {
+		  /* Set rules to fill background */
+		  min-height: 100%;
+		  min-width: 1024px;
+			
+		  /* Set up proportionate scaling */
+		  width: 100%;
+		  height: auto;
+			
+		  /* Set up positioning */
+		  position: fixed;
+		  top: 0;
+		  left: 0;
+
+		  z-index: -1;
+		}
+		</style>
 	</head>
-	<body style='background-image: url("Images/bg.jpg");background-repeat: no-repeat;'>
+	<body>
+		<img src="Images/bg.jpg" class="bg">
 		<div class="wrapper">
 			<div class="panel" style="opacity: 0.8; margin-bottom: 0;">
-				<div class="panel-heading">
+				<div class="panel-heading text-center">
 					<img src="Images/Company Logo.png"><br>
 					<h4>Please log in to continue</h4>
 				</div>
 			</div>
 			<div class="pull-up">
-				<div class="panel-body" style="background-color: #3c763d; color: white; font-family: Quicksand; ">
+				<div class="panel-body login">
+
 					<form class="horizontal" action="" method="post">
 						<div class="form-group">
 							<label for="username" class="control-label col-md-3" style="font-size: 20px;">Username</label>
 							<div class="col-md-9">
 								<input type="text" class="form-control" name="username">
 							</div>
-						</div><br><br>
+						</div>
+
+						<br><br>
+						
+
 						<div class="form-group">
 							<label for="password" class="control-label col-md-3 " style="font-size: 20px;">Password</label>
 							<div class="col-md-9">
 								<input type="password" class="form-control" name="password">
 							</div>
 						</div>
+
 						<div class="form-group">
-							<div class="col-md-12"><br>
+							<div class="col-md-7 pull-right"><br>
 								<button type="submit" class="btn btn-primary btn_loginSubmit" style="font-size: 20px; width:100px; background-color:#628686;">Log in</button>
 							</div>
 						</div>
+
 					</form>
 				</div>
 			</div>
