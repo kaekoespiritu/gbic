@@ -97,7 +97,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 							<input type="text" class="form-control" name = "contactnum" placeholder="<?php Print "$contactnum"?>" id="contact">
 						</div>
 						<div class="col-md-1">
-							<label for="contact">DOB</label>
+							<label for="contact">Date of Birth</label>
 						</div>
 						<div class="col-md-3">
 							<input type="text" class="form-control" name = "dob" placeholder="<?php Print "$dob"?>" id="dtpkr_dob">
@@ -238,6 +238,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 								<div class="col-md-5">
 									<label style="font-weight: 700" for="sss">SSS</label>
 								</div>
+								<input type="checkbox" class="pull-left" name="sssCheck">
 								<div class="col-md-4">
 									<input type="text" class="form-control" name="sss" placeholder="<?php Print "$sss"?>" id="sss" readonly>
 								</div>
@@ -246,6 +247,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 							<div class="col-md-5">
 									<label style="font-weight: 700" for="philhealth" class="text-left">PhilHealth</label>
 								</div>
+								<input type="checkbox" class="pull-left" name="philhealthCheck">
 								<div class="col-md-4">
 									<input type="text" class="form-control" name="philhealth" placeholder="<?php Print "$philhealth"?>" id="philhealth" readonly>
 								</div>

@@ -11,6 +11,17 @@ include('directives/db.php');
 
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
+
+	<style>
+	body
+	{
+		background: #fafafa;
+	  	text-align: center;
+	  	height:100% !important;
+	}
+
+	</style>
+
 </head>
 <body style="font-family: Quicksand;">
 

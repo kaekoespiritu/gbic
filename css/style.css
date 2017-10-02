@@ -146,7 +146,6 @@ h6
 /* SITES */
 body
 {
-  background: #fafafa;
   text-align: center;
   height:100% !important;
 }
@@ -278,4 +277,9 @@ hr
 .fixedWidth
 {
   width: 120px !important;
+}
+
+.login
+{
+  background-color: #3c763d; color: white; font-family: Quicksand;
 }
