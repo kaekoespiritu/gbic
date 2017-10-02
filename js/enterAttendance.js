@@ -199,7 +199,7 @@ function computeTime(row, timeinhour,timeinmin,timeouthour,timeoutmin) {
 			}
 		
 		// Computing lunchbreak
-			if(timeinhour <= 11 && timeouthour >= 12)
+			if(timeinhour <= 12 && timeouthour >= 13)
 			{
 				workinghours = workinghours - 1;
 			}
@@ -436,7 +436,7 @@ function computeTime(row, timeinhour,timeinmin,timeouthour,timeoutmin) {
 			}
 			
 		// Computing lunchbreak for nightshift
-			if(timeinhour <= 2 && timeouthour >= 3)
+			if(timeinhour <= 1 && timeouthour >= 2)
 			{
 				workinghours = workinghours - 1;
 			}

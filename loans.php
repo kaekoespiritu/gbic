@@ -289,8 +289,10 @@ $date = strftime("%B %d, %Y");
 									</td>
 									<td>
 										<div class='form-group'>
+											<div class='form-group'>
 											<label for='vale'>Vale</label>
-											<input type='text' id='vale' name='vale[]' placeholder='". $vale ."' onkeypress='numValidate(event)' onblur='colorChange(this) class='form-control input-sm hasInput' />
+											<input type='text' id='vale' name='vale[]' placeholder='". $vale ."' onkeypress='numValidate(event)' onblur='colorChange(this)' class='form-control input-sm hasInput' />
+										</div>
 										</div>
 									</td>
 								</tr>";
