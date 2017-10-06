@@ -18,7 +18,7 @@ include("directives/db.php");
 	<body>
 		<img src="Images/bg.jpg" class="bg">
 		<div class="wrapper">
-			<div class="panel" style="opacity: 0.8; margin-bottom: 0;">
+			<div class="panel clear-fix">
 				<div class="panel-heading text-center">
 					<img src="Images/Company Logo.png"><br>
 					<h4>Please log in to continue</h4>
@@ -29,7 +29,7 @@ include("directives/db.php");
 
 					<form class="horizontal" action="" method="post">
 						<div class="form-group">
-							<label for="username" class="control-label col-md-3" style="font-size: 20px;">Username</label>
+							<label for="username" class="control-label col-md-3 login-text">Username</label>
 							<div class="col-md-9">
 								<input type="text" class="form-control" name="username">
 							</div>
@@ -39,7 +39,7 @@ include("directives/db.php");
 						
 
 						<div class="form-group">
-							<label for="password" class="control-label col-md-3 " style="font-size: 20px;">Password</label>
+							<label for="password" class="control-label col-md-3 login-text">Password</label>
 							<div class="col-md-9">
 								<input type="password" class="form-control" name="password">
 							</div>
@@ -47,7 +47,7 @@ include("directives/db.php");
 
 						<div class="form-group">
 							<div class="col-md-7 pull-right"><br>
-								<button type="submit" class="btn btn-primary btn_loginSubmit" style="font-size: 20px; width:100px; background-color:#628686;">Log in</button>
+								<button type="submit" class="btn btn-primary btn_loginSubmit login-text login-button">Log in</button>
 							</div>
 						</div>
 

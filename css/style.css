@@ -1,3 +1,4 @@
+/* LOGIN PAGE*/
 img.bg
 {
       /* Set rules to fill background */
@@ -15,6 +16,27 @@ img.bg
 
       z-index: -1;
 }
+
+.login
+{
+  background-color: #3c763d; color: white; font-family: Quicksand;
+}
+
+.clear-fix
+{
+  opacity: 0.8; margin-bottom: 0;
+}
+
+.login-text
+{
+  font-size: 20px;
+}
+
+.login-button
+{
+
+}
+/*==================*/
 
 
 /* NAVIGATION BAR */
@@ -59,6 +81,8 @@ img.bg
     padding-top: 15px;
   }
 }
+/*==================*/
+
 
 /* DROPDOWN MENU */
 .flipdown
@@ -85,6 +109,8 @@ img.bg
   text-decoration: none;
   color: white;
 }
+/*==================*/
+
 
 /* DROPDOWN CONTENTS */
 .flipdown-menu
@@ -185,8 +211,28 @@ body
 .card-1:hover {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
+.sitebox a
+{
+  color: white !important;
+  text-decoration: none !important;
+}
+.sitebox
+{
+  background-color: forestgreen;
+  border-width: 1px;
+  border-color: #d6e9c6;
+  border-style: solid;
+  border-radius: 5px;
+  margin: 2px;
+  padding: 5px;
+  height: 72px;
+  width: 143px;
+  float: left;
+}
+/*==================*/
 
-/* OTHERS */
+
+/* Quick Fixes */
 .wrapper
 {
   padding: 10% 30% 0% ;
@@ -199,6 +245,8 @@ body
 {
   margin-bottom: 2em;
 }
+/*==================*/
+
 
 /* CUSTOM FONTS */
 @font-face {
@@ -218,6 +266,8 @@ body
     src: url('../fonts/Quicksand-Bold.ttf');
     text-rendering: optimizeLegibility;
 }
+/*==================*/
+
 
 /* OTHERS */
 .checkbox
@@ -240,24 +290,6 @@ hr
   position:absolute;
   float:right;
   bottom-padding:100px;
-}
-.sitebox a
-{
-  color: white !important;
-  text-decoration: none !important;
-}
-.sitebox
-{
-  background-color: forestgreen;
-  border-width: 1px;
-  border-color: #d6e9c6;
-  border-style: solid;
-  border-radius: 5px;
-  margin: 2px;
-  padding: 5px;
-  height: 72px;
-  width: 143px;
-  float: left;
 }
 #checkboxes {
   display: none;
@@ -296,9 +328,4 @@ hr
 .fixedWidth
 {
   width: 120px !important;
-}
-
-.login
-{
-  background-color: #3c763d; color: white; font-family: Quicksand;
 }
