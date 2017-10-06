@@ -426,6 +426,11 @@ function attendance ()
 						<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' disabled>
 						<input type='hidden' class='nightdiffH' name='nightdiff[".$counter."]' >
 					</td>
+					<!-- Loans -->
+					<td>
+						<input type='hidden' name='loans' class='loans'>
+						<a class='btn btn-sm btn-primary' onclick='loansRedirect'>Loans</a>
+					</td>
 					<!-- Remarks Input --> 
 						<input type='hidden' name='remarks[".$counter."]' class='hiddenRemarks'>
 

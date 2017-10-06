@@ -119,7 +119,7 @@
 					<td>Overtime</td>
 					<td>Undertime</td>
 					<td>Night Differential</td>
-					<td colspan="2">Actions</td>
+					<td colspan="3">Actions</td>
 				</tr>
 				<?php
 				require "directives/attendance/enter_attendance.php";
