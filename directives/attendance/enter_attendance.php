@@ -69,11 +69,19 @@ function attendance ()
 									</td>
 								<!-- Time In -->
 									<td>
-										<input type='text' value='". $empRow['timein'] ."' class='timein timepicker form-control input-sm' name='timein[".$counter."]'>
+										<input type='text' value='". $empRow['timein'] ."' class='timein1 timepicker form-control input-sm' name='timein1[".$counter."]'>
 									</td>
 								<!-- Time Out-->
 									<td>
-										<input type='text' class='timeout timepicker form-control input-sm' value='' name='timeout[".$counter."]'>
+										<input type='text' class='timeout1 timepicker form-control input-sm' value='' name='timeout1[".$counter."]'>
+									</td>
+								<!-- AFTER BREAK Time In -->
+									<td>
+										<input type='text' value='". $empRow['timein'] ."' class='timein2 timepicker form-control input-sm' name='timein2[".$counter."]'>
+									</td>
+								<!-- AFTER BREAK Time Out-->
+									<td>
+										<input type='text' class='timeout2 timepicker form-control input-sm' value='' name='timeout2[".$counter."]'>
 									</td>
 								<!-- Working Hours -->
 									<td>
@@ -113,11 +121,19 @@ function attendance ()
 									</td>
 								<!-- Time In -->
 									<td>
-										<input type='text' placeholder='ABSENT' class='timein timepicker form-control input-sm' value='' name='timein[".$counter."]'>
+										<input type='text' placeholder='ABSENT' class='timein1 timepicker form-control input-sm' value='' name='timein1[".$counter."]'>
 									</td> 
 								<!-- Time Out-->
 									<td>
-										<input type='text' class='timeout timepicker form-control input-sm' placeholder='ABSENT' value='' name='timeout[".$counter."]'>
+										<input type='text' class='timeout1 timepicker form-control input-sm' placeholder='ABSENT' value='' name='timeout1[".$counter."]'>
+									</td>
+								<!-- AFTER BREAK Time In -->
+									<td>
+										<input type='text' placeholder='ABSENT' class='timein2 timepicker form-control input-sm' value='' name='timein2[".$counter."]'>
+									</td> 
+								<!-- AFTER BREAK Time Out-->
+									<td>
+										<input type='text' class='timeout2 timepicker form-control input-sm' placeholder='ABSENT' value='' name='timeout2[".$counter."]'>
 									</td>
 								<!-- Working Hours -->
 									<td>
@@ -155,12 +171,21 @@ function attendance ()
 									</td>
 								<!-- Time In -->
 									<td>
-										<input type='text' class='timein timepicker form-control input-sm' value='". $empRow['timein'] ."' name='timein[".$counter."]'>
+										<input type='text' class='timein1 timepicker form-control input-sm' value='". $empRow['timein'] ."' name='timein1[".$counter."]'>
 									</td>
 								<!-- Time Out-->
 									<td>
-										<input type='text' class='timeout timepicker form-control input-sm' value='". $empRow['timeout'] ."' name='timeout[".$counter."]'>
+										<input type='text' class='timeout1 timepicker form-control input-sm' value='". $empRow['timeout'] ."' name='timeout1[".$counter."]'>
+									</td>
+								<!-- AFTER BREAK Time In -->
+									<td>
+										<input type='text' class='timein2 timepicker form-control input-sm' value='". $empRow['timein'] ."' name='timein2[".$counter."]'>
+									</td>
+								<!-- AFTER BREAK Time Out-->
+									<td>
+										<input type='text' class='timeout2 timepicker form-control input-sm' value='". $empRow['timeout'] ."' name='timeout2[".$counter."]'>
 									</td>";
+
 				// Working hours
 					if($empRow['workhours'] <= 5)
 					{
@@ -367,11 +392,19 @@ function attendance ()
 					</td>
 					<!-- Time In -->
 					<td>
-						<input type='text' class='timein timepicker form-control input-sm' value='' name='timein[".$counter."]'>
+						<input type='text' class='timein1 timepicker form-control input-sm' value='' name='timein1[".$counter."]'>
 					</td> 
 					<!-- Time Out-->
 					<td>
-						<input type='text' class='timeout timepicker form-control input-sm' value='' name='timeout[".$counter."]'>
+						<input type='text' class='timeout1 timepicker form-control input-sm' value='' name='timeout1[".$counter."]'>
+					</td> 
+					<!-- AFTER BREAK Time In -->
+					<td>
+						<input type='text' class='timein2 timepicker form-control input-sm' value='' name='timein2[".$counter."]'>
+					</td> 
+					<!-- AFTER BREAK Time Out-->
+					<td>
+						<input type='text' class='timeout2 timepicker form-control input-sm' value='' name='timeout2[".$counter."]'>
 					</td> 
 					<!-- Working Hours -->
 					<td>

@@ -2,24 +2,24 @@ document.getElementById("attendance").setAttribute("style", "background-color: #
 
 	$(document).ready(function(){
 		console.log("jQuery comes in!");
-		$('input.timein').timepicker({
+		$('input.timein1').timepicker({
 			timeFormat: 'hh:mm p',
 			dynamic: false,
 			scrollbar: false,
 			dropdown: false
 		});
-		$('input.timein').change(function(){
+		$('input.timein2').change(function(){
 			var id = $(this).parent().parent().attr('id');
 			console.log(id);
 			timeIn(id);
 		});
-		$('input.timeout').timepicker({
+		$('input.timeout1').timepicker({
 			timeFormat: 'hh:mm p',
 			dynamic: false,
 			scrollbar: false,
 			dropdown: false
 		});
-		$('input.timeout').change(function(){
+		$('input.timeout2').change(function(){
 			var id = $(this).parent().parent().attr('id');
 			console.log(id);
 			timeOut(id);
@@ -95,8 +95,10 @@ document.getElementById("attendance").setAttribute("style", "background-color: #
 		// set attendance status to ABSENT
 		mainRow.querySelector('.attendance').value = "ABSENT";
 		// add text ABSENT to time in and time out
-		mainRow.querySelector('.timein').placeholder = "ABSENT";
-		mainRow.querySelector('.timeout').placeholder = "ABSENT";
+		mainRow.querySelector('.timein1').placeholder = "ABSENT";
+		mainRow.querySelector('.timeout1').placeholder = "ABSENT";
+		mainRow.querySelector('.timein2').placeholder = "ABSENT";
+		mainRow.querySelector('.timeout2').placeholder = "ABSENT";
 		mainRow.querySelector('.timein').value = "";
 		mainRow.querySelector('.timeout').value = "";
 		mainRow.querySelector('.workinghours').value = "";
@@ -577,8 +579,10 @@ function computeTime(row, timeinhour,timeinmin,timeouthour,timeoutmin) {
 		row.querySelector('.overtime').value = "";
 		row.querySelector('.undertime').value = "";
 		row.querySelector('.nightdiff').value = "";
-		row.querySelector('.timein').placeholder = "";
-		row.querySelector('.timeout').placeholder = "";
+		row.querySelector('.timein1').placeholder = "";
+		row.querySelector('.timeout1').placeholder = "";
+		row.querySelector('.timein2').placeholder = "";
+		row.querySelector('.timeout2').placeholder = "";
 		//for hidden rows
 		row.querySelector('.workinghoursH').value = "";
 		row.querySelector('.overtimeH').value = "";

@@ -22,8 +22,6 @@
 		{
 			$holidayType = $_SESSION['holidayType']; 
 			$holidayName = $_SESSION['holidayName'];
-			//Print "<script>alert('".$holidayType."')</script>";
-			//Print "<script>alert('".$holidayName."')</script>";
 		}
 	}
 
@@ -105,8 +103,6 @@
 					
 					<button type="button" class="btn btn-danger" onclick="clearFilter()">Clear Filter</button>
 				</div>
-				<!-- ACTION BUTTONS FOR FILTERS -->
-				<!-- END OF ACTION BUTTONS FOR FILTERS-->
 			
 			<!-- Attendance table -->
 			<form id="form" method="post" action="logic_attendance.php?site=<?php Print $site_name;?>">
@@ -117,6 +113,8 @@
 					<td>Position</td>
 					<td>Time In</td>
 					<td>Time Out</td>
+					<td>After break Time In</td>
+					<td>After break Time Out</td>
 					<td>Working Hours</td>
 					<td>Overtime</td>
 					<td>Undertime</td>
