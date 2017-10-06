@@ -1,9 +1,4 @@
-/* SEARCHING DATABASE VIA ENTER KEYPRESS */
-function enter(e) {
-	if (e.keyCode == 13) {
-	document.getElementById('search_form').submit();
-	}
-}
+
 
 function monthlySalary(salary){
 	var salary = document.getElementById('monthlysalary').value;
@@ -294,7 +289,7 @@ $( "#dtpkr_addDOB").datepicker({
 		var site = document.getElementById("site").value;
 		var siteReplaced = site.replace(/\s/g , "+");
 		localStorage.setItem("glob_site", siteReplaced);
-		window.location.assign("employees.php?site="+siteReplaced+"&position="+localStorage.getItem('glob_position'));
+		window.location.assign("employee_sample.php?site="+siteReplaced+"&position="+localStorage.getItem('glob_position'));
 	}
 
 	// POSITION FILTER 
@@ -315,13 +310,13 @@ $( "#dtpkr_addDOB").datepicker({
 		var position = document.getElementById("position").value;
 		var positionReplaced = position.replace(/\s/g , "+");
 		localStorage.setItem("glob_position", positionReplaced);
-		window.location.assign("employees.php?site="+localStorage.getItem("glob_site")+"&position="+positionReplaced);
+		window.location.assign("employee_sample.php?site="+localStorage.getItem("glob_site")+"&position="+positionReplaced);
 	}
 
 /* CLEAR FILTER */
 function clearFilter() {
 	localStorage.clear();
-	window.location.assign("employees.php?site=null&position=null");
+	window.location.assign("employee_sample.php?site=null&position=null");
 }
 
 /* SEARCH FILTER */

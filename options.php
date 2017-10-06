@@ -44,74 +44,353 @@ include('directives/db.php');
 								<td>Sunday</td>
 							</tr>
 							<tr>
+								<?php
+								$payroll = "SELECT * FROM payroll_day";
+								$payrollQuery = mysql_query($payroll);
+								$payrollRow = mysql_fetch_assoc($payrollQuery);
+								?>
 								<td>
-									<select id="Monday" class="form-control" name="dropdown" onchange="swap(Monday)" disabled>
+									<?php
+										if(($payrollRow['open'] == 'Monday') || ($payrollRow['close'] == 'Monday'))
+										{
+											Print '<select id="Monday" class="form-control" name="dropdown" onchange="swap(\'Monday\')">';
+										}
+										else
+										{
+											Print '<select id="Monday" class="form-control" name="dropdown" onchange="swap(\'Monday\')" disabled>';
+										}
+									?>
 										<option value="" disabled selected>--</option>
-										<option value="open" class="open">Open</option>
-										<option value="close" class="close">Close</option>
+										<?php
+										if($payrollRow['open'] == 'Monday')
+										{
+											Print '	<option value="open" class="open" selected>Open</option>
+													<option value="close" class="close">Close</option>';
+										}
+										else if(($payrollRow['close'] == 'Monday'))
+										{
+											Print '	<option value="open" class="open" >Open</option>
+													<option value="close" class="close" selected>Close</option>';
+										}
+										else
+										{
+											Print '	<option value="open" class="open" >Open</option>
+													<option value="close" class="close">Close</option>';
+										}
+										?>
 									</select>
 								</td>
 								<td>
-									<select id="Tuesday" class="form-control" name="dropdown" onchange="swap(Tuesday)" disabled>
+									<?php
+										if(($payrollRow['open'] == 'Tuesday') || ($payrollRow['close'] == 'Tuesday'))
+										{
+											Print '<select id="Tuesday" class="form-control" name="dropdown" onchange="swap(\'Tuesday\')">';
+										}
+										else
+										{
+											Print '<select id="Tuesday" class="form-control" name="dropdown" onchange="swap(\'Tuesday\')" disabled>';
+										}
+									?>
+									
 										<option value="" disabled selected>--</option>
-										<option value="open" class="open">Open</option>
-										<option value="close" class="close">Close</option>
+										<?php
+										if($payrollRow['open'] == 'Tuesday')
+										{
+											Print '	<option value="open" class="open" selected>Open</option>
+												<option value="close" class="close">Close</option>';
+										}
+										
+										else if(($payrollRow['close'] == 'Tuesday')) 
+										{
+											Print '	<option value="open" class="open">Open</option>
+												<option value="close" class="close" selected>Close</option>';
+										}
+										else
+										{
+											Print '	<option value="open" class="open" >Open</option>
+													<option value="close" class="close">Close</option>';
+										}
+										?>
 									</select>
 								</td>
 								<td>
-									<select id="Wednesday" class="form-control" name="dropdown" onchange="swap(Wednesday)" disabled>
+									<?php
+										if(($payrollRow['open'] == 'Wednesday') || ($payrollRow['close'] == 'Wednesday'))
+										{
+											Print '<select id="Wednesday" class="form-control" name="dropdown" onchange="swap(\'Wednesday\')">';
+										}
+										else
+										{
+											Print '<select id="Wednesday" class="form-control" name="dropdown" onchange="swap(\'Wednesday\')" disabled>';
+										}
+
+									?>
 										<option value="" disabled selected>--</option>
-										<option value="open" class="open">Open</option>
-										<option value="close" class="close">Close</option>
+										<?php
+										if($payrollRow['open'] == 'Wednesday')
+										{
+											Print '	<option value="open" class="open" selected>Open</option>
+												<option value="close" class="close">Close</option>';
+											}
+										else if(($payrollRow['close'] == 'Wednesday'))
+										{
+											Print '	<option value="open" class="open" >Open</option>
+												<option value="close" class="close" selected>Close</option>';
+										}
+										else
+										{
+											Print '	<option value="open" class="open" >Open</option>
+													<option value="close" class="close">Close</option>';
+										}
+										
+										?>
 									</select>
 								</td>
 								<td>
-									<select id="Thursday" class="form-control" name="dropdown" onchange="swap(Thursday)" disabled>
+									<?php
+										if(($payrollRow['open'] == 'Thursday') || ($payrollRow['close'] == 'Thursday'))
+										{
+											Print '<select id="Thursday" class="form-control" name="dropdown" onchange="swap(\'Thursday\')">';
+										}
+										else
+										{
+											Print '<select id="Thursday" class="form-control" name="dropdown" onchange="swap(\'Thursday\')" disabled>';
+										}
+									?>
 										<option value="" disabled selected>--</option>
-										<option value="open" class="open">Open</option>
-										<option value="close" class="close">Close</option>
+										<?php
+										if($payrollRow['open'] == 'Thursday')
+										{
+											Print '	<option value="open" class="open" selected>Open</option>
+												<option value="close" class="close">Close</option>';
+										}
+										else if(($payrollRow['close'] == 'Thursday'))
+										{
+											Print '	<option value="open" class="open" >Open</option>
+												<option value="close" class="close" selected>Close</option>';
+										}
+										else
+										{
+											Print '	<option value="open" class="open" >Open</option>
+													<option value="close" class="close">Close</option>';
+										}
+										?>
 									</select>
 								</td>
 								<td>
-									<select id="Friday" class="form-control" name="dropdown" onchange="swap(Friday)" disabled>
+									<?php
+										if(($payrollRow['open'] == 'Friday') || ($payrollRow['close'] == 'Friday'))
+										{
+											Print '<select id="Friday" class="form-control" name="dropdown" onchange="swap(\'Friday\')">';
+										}
+										else
+										{
+											Print '<select id="Friday" class="form-control" name="dropdown" onchange="swap(\'Friday\')" disabled>';
+										}
+									?>
 										<option value="" disabled selected>--</option>
-										<option value="open" class="open">Open</option>
-										<option value="close" class="close">Close</option>
+										<?php
+										if($payrollRow['open'] == 'Friday')
+										{
+											Print '	<option value="open" class="open" selected>Open</option>
+												<option value="close" class="close">Close</option>';
+										}
+										else if(($payrollRow['close'] == 'Friday'))
+										{
+											Print '	<option value="open" class="open" >Open</option>
+												<option value="close" class="close" selected>Close</option>';
+										}
+										else
+										{
+											Print '	<option value="open" class="open" >Open</option>
+													<option value="close" class="close">Close</option>';
+										}
+										?>
 									</select>
 								</td>
 								<td>
-									<select id="Saturday" class="form-control" name="dropdown" onchange="swap(Saturday)" disabled>
+									<?php
+										if(($payrollRow['open'] == 'Saturday') || ($payrollRow['close'] == 'Saturday'))
+										{
+											Print '<select id="Saturday" class="form-control" name="dropdown" onchange="swap(\'Saturday\')">';
+										}
+										else
+										{
+											Print '<select id="Saturday" class="form-control" name="dropdown" onchange="swap(\'Saturday\')" disabled>';
+										}
+									?>
 										<option value="" disabled selected>--</option>
-										<option value="open" class="open">Open</option>
-										<option value="close" class="close">Close</option>
+										<?php
+										if($payrollRow['open'] == 'Saturday')
+										{
+											Print '	<option value="open" class="open" selected>Open</option>
+												<option value="close" class="close">Close</option>';
+										}
+										else if(($payrollRow['close'] == 'Saturday'))
+										{
+											Print '	<option value="open" class="open" >Open</option>
+												<option value="close" class="close" selected>Close</option>';
+										}
+										else
+										{
+											Print '	<option value="open" class="open" >Open</option>
+													<option value="close" class="close">Close</option>';
+										}
+										?>
 									</select>
 								</td>
 								<td>
-									<select id="Sunday" class="form-control" name="dropdown" onchange="swap(Sunday)" disabled>
+									<?php
+										if(($payrollRow['open'] == 'Sunday') || ($payrollRow['close'] == 'Sunday'))
+										{
+											Print '<select id="Sunday" class="form-control" name="dropdown" onchange="swap(\'Sunday\')">';
+										}
+										else
+										{
+											Print '<select id="Sunday" class="form-control" name="dropdown" onchange="swap(\'Sunday\')" disabled>';
+										}
+									?>
 										<option value="" disabled selected>--</option>
-										<option value="open" class="open">Open</option>
-										<option value="close" class="close">Close</option>
+										<?php
+										if($payrollRow['open'] == 'Sunday')
+										{
+											Print '	<option value="open" class="open" selected>Open</option>
+												<option value="close" class="close">Close</option>';
+										}
+										else if(($payrollRow['close'] == 'Sunday'))
+										{
+											Print '	<option value="open" class="open" >Open</option>
+												<option value="close" class="close" selected>Close</option>';
+										}
+										else
+										{
+											Print '	<option value="open" class="open" >Open</option>
+													<option value="close" class="close">Close</option>';
+										}
+										?>
 									</select>
 								</td>
 							</tr>
 							<tr>
-								<td><input type="checkBOX" name="checkboxes" id="MondayBOX" onchange="triggerInput('Monday')"></td>
-								<td><input type="checkBOX" name="checkboxes" id="TuesdayBOX" onchange="triggerInput('Tuesday')"></td>
-								<td><input type="checkBOX" name="checkboxes" id="WednesdayBOX" onchange="triggerInput('Wednesday')"></td>
-								<td><input type="checkBOX" name="checkboxes" id="ThursdayBOX" onchange="triggerInput('Thursday')"></td>
-								<td><input type="checkBOX" name="checkboxes" id="FridayBOX" onchange="triggerInput('Friday')"></td>
-								<td><input type="checkBOX" name="checkboxes" id="SaturdayBOX" onchange="triggerInput('Saturday')"></td>
-								<td><input type="checkBOX" name="checkboxes" id="SundayBOX" onchange="triggerInput('Sunday')"></td>
+								<?php
+								//Monday Checkbox
+								if($payrollRow['open'] == 'Monday' || $payrollRow['close'] == 'Monday')
+								{
+									Print '	<td>
+												<input type="checkBOX" name="checkboxes" id="MondayBOX" onchange="triggerInput(\'Monday\')" checked>
+											</td>';
+								}
+								else
+								{
+									Print '	
+											<td>
+												<input type="checkBOX" name="checkboxes" id="MondayBOX" onchange="triggerInput(\'Monday\')" disabled>
+											</td>';
+								}
+								//Tuesday Checkbox
+								if($payrollRow['open'] == 'Tuesday' || $payrollRow['close'] == 'Tuesday')
+								{
+									Print '	
+											<td>
+												<input type="checkBOX" name="checkboxes" id="TuesdayBOX" onchange="triggerInput(\'Tuesday\')" checked>
+											</td>';
+								}	
+								else
+								{
+									Print '	
+											<td>
+												<input type="checkBOX" name="checkboxes" id="TuesdayBOX" onchange="triggerInput(\'Tuesday\')" disabled>
+											</td>';
+								}
+								//Wednesday Checkbox
+								if($payrollRow['open'] == 'Wednesday' || $payrollRow['close'] == 'Wednesday')
+								{
+									Print '	
+											<td>
+												<input type="checkBOX" name="checkboxes" id="WednesdayBOX" onchange="triggerInput(\'Wednesday\')" checked>
+											</td>';
+								}	
+								else
+								{
+									Print '	
+											<td>
+												<input type="checkBOX" name="checkboxes" id="WednesdayBOX" onchange="triggerInput(\'Wednesday\')" disabled>
+											</td>';
+								}
+								//Thursday Checkbox
+								if($payrollRow['open'] == 'Thursday' || $payrollRow['close'] == 'Thursday')	
+								{
+									Print '	
+											<td>
+												<input type="checkBOX" name="checkboxes" id="ThursdayBOX" onchange="triggerInput(\'Thursday\')" checked>
+											</td>';
+								}
+								else
+								{
+									Print '	
+											<td>
+												<input type="checkBOX" name="checkboxes" id="ThursdayBOX" onchange="triggerInput(\'Thursday\')" disabled>
+											</td>';
+								}
+								//Friday Checkbox
+								if($payrollRow['open'] == 'Friday' || $payrollRow['close'] == 'Friday')	
+								{
+									Print '		
+											<td>
+												<input type="checkBOX" name="checkboxes" id="FridayBOX" onchange="triggerInput(\'Friday\')" checked>
+											</td>';
+								}
+								else
+								{
+									Print '	
+											<td>
+												<input type="checkBOX" name="checkboxes" id="FridayBOX" onchange="triggerInput(\'Friday\')" disabled>
+											</td>';
+								}
+								//Saturday Checkbox
+								if($payrollRow['open'] == 'Saturday' || $payrollRow['close'] == 'Saturday')	
+								{
+									Print '	
+											<td>
+												<input type="checkBOX" name="checkboxes" id="SaturdayBOX" onchange="triggerInput(\'Saturday\')" checked>
+											</td>';
+								}
+								else
+								{
+									Print '	
+											<td>
+												<input type="checkBOX" name="checkboxes" id="SaturdayBOX" onchange="triggerInput(\'Saturday\')" disabled>
+											</td>';
+								}
+								//Sunday Checkbox
+								if($payrollRow['open'] == 'Sunday' || $payrollRow['close'] == 'Sunday')
+								{
+									Print '	
+											<td>
+												<input type="checkBOX" name="checkboxes" id="SundayBOX" onchange="triggerInput(\'Sunday\')" checked>
+											</td>';
+								}	
+								else
+								{
+									Print '	
+											<td>
+												<input type="checkBOX" name="checkboxes" id="SundayBOX" onchange="triggerInput(\'Sunday\')" disabled>
+											</td>';
+								}
+								?>
+								
 							</tr>
+							
 						</table>
-
-						<!-- Hidden input fields to save for database use -->
-						<input type="hidden" id="openPayroll" name="openPayroll">
-						<input type="hidden" id="closePayroll" name="openPayroll">
 
 						<!-- Save changes button -->
 						<div class="panel-body">
-							<a href="" class="btn btn-primary" onclick="save()">Save changes</a>
+							<form method="post" action="logic_options_payroll.php">
+								<!-- hidden inputs for database use -->
+								<input type="hidden" name="openPayroll" id="open">
+								<input type="hidden" name="closePayroll" id="close">
+								<input type="submit" name="payrolldaySubmit" class="btn btn-primary">
+							</form>
 						</div>
 					</form>
 				</div>
@@ -201,19 +480,10 @@ include('directives/db.php');
 		// Checkbox to trigger dropdown
 		function triggerInput(dayOfWeek)
 		{
+			//alert('yow');
 			var checkbox = document.getElementsByName('checkboxes'), i;
 			var checkboxlength = document.querySelectorAll('input[type=checkbox]').length;
 			var changeDefault = document.getElementById(dayOfWeek);
-
-			// Enable dropdown when checkbox is selected
-			if(document.getElementById(dayOfWeek+"BOX").checked==true)
-			{
-				var cellCHECK = document.getElementById(dayOfWeek);
-				cellCHECK.removeAttribute('disabled');
-				
-				cellCHECK.options[0].removeAttribute('selected');
-				cellCHECK.options[1].setAttribute('selected','');
-			}
 
 			// Disabled dropdown when checkbox is deselected
 			if(document.getElementById(dayOfWeek+"BOX").checked==false)
@@ -223,21 +493,43 @@ include('directives/db.php');
 
 				if(changeDefault.options[2].hasAttribute('selected'))
 				{
-					changeDefault.options[2].removeAttribute('selected');	
+					changeDefault.options[2].removeAttribute('selected');
 					changeDefault.options[0].setAttribute('selected','');
+					document.getElementById('close').value = "";//set hidden text to the day
 				}
+					
 				else if(changeDefault.options[1].hasAttribute('selected'))
 				{
 					changeDefault.options[1].removeAttribute('selected');
 					changeDefault.options[0].setAttribute('selected','');
+					document.getElementById('open').value = "";//set hidden text to the day
 				}
+			}
+
+			// Enable dropdown when checkbox is selected
+			else if(document.getElementById(dayOfWeek+"BOX").checked==true)
+			{
+				var cellCHECK = document.getElementById(dayOfWeek);
+				cellCHECK.removeAttribute('disabled');
+				cellCHECK.options[0].removeAttribute('selected');
+				cellCHECK.options[1].setAttribute('selected','');
+				if(document.getElementById('open').value == "") 
+				{
+					document.getElementById('open').value = dayOfWeek;//set hidden text to the day
+				}
+				else
+				{
+					document.getElementById('close').value = dayOfWeek;//set hidden text to the day
+				}
+				
 			}
 
 			// Checking if 2 checkboxes are active
 			if(document.querySelectorAll('input[type=checkbox]:checked').length === 2)
 			{
 				changeDefault.options[2].setAttribute('selected','');
-
+				document.getElementById('close').value = dayOfWeek;//set hidden text to the day
+				
 				 for(i = 0; i <= checkboxlength; i++)
 				 {
 
@@ -251,8 +543,8 @@ include('directives/db.php');
 				 		console.log(changeDefault);
 				 	}
 				 }
-			}
-
+			} 
+			
 			// Checking if only 1 checkbox is active
 			if(document.querySelectorAll('input[type=checkbox]:checked').length === 1)
 			{		
@@ -261,6 +553,7 @@ include('directives/db.php');
 				    if(!checkbox[i].checked)
 				    {
 				    	checkbox[i].removeAttribute('disabled');
+				    	document.getElementById(dayOfWeek).options[0].selected = true;
 				    }   
 				}
 			}
@@ -273,22 +566,30 @@ include('directives/db.php');
 
 			for(var a = 0; a < 7; a++)
 			{
+				
 				if(chosenDay != day[a])
 				{
 					if(document.getElementById(day[a]).disabled == false)
 					{	
-
-						if(chosenDay.options[1].selected == true) // OPEN
+						//alert(chosenDay +" "+ day[a]);
+						if(document.getElementById(day[a]).options[1].selected == true) // OPEN
 						{
 							document.getElementById(day[a]).options[2].selected = true; // CLOSE
 							document.getElementById(day[a]).options[1].selected = false;
-							chosenDay.options[1].selected = true;
+							document.getElementById(chosenDay).options[1].selected = true;
+							document.getElementById('close').value = day[a];//set hidden text to the day
+							document.getElementById('open').value = chosenDay;//set hidden text to the day
+							//alert('yeah');
+
 						}
-						else if(chosenDay.options[2].selected == true)
+						else if(document.getElementById(day[a]).options[2].selected == true)
 						{
 							document.getElementById(day[a]).options[1].selected = true; // CLOSE
 							document.getElementById(day[a]).options[2].selected = false;
-							chosenDay.options[2].selected = true;
+							document.getElementById(chosenDay).options[2].selected = true;
+							document.getElementById('open').value = day[a];//set hidden text to the day
+							document.getElementById('close').value = chosenDay;//set hidden text to the day
+							//alert('yeah');
 						}
 					}
 				}

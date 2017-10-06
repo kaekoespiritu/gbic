@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <?php
-error_reporting(0);
 include('directives/session.php');
 include('directives/db.php');
 include("pagination/function.php");//For pagination
@@ -137,34 +136,38 @@ if(isset($_GET['search']))
 						$emp_query = "SELECT * FROM employee ORDER BY site";
 						$emp_display = mysql_query($emp_query);
 //--------Search
-						//Print "<script>alert('search')</script>";
-						if($_GET['search'] != "" || $_GET['search'] != null)
+						if(isset($_GET['search']))
 						{
-							$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
-					    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
-					    	$startpoint = ($page * $limit) - $limit;
-					        $statement = "employee WHERE 
-											(empid LIKE '%$search%' OR 
-											firstname LIKE '%$search%' OR 
-											lastname LIKE '%$search%' OR
-											position LIKE '%$search%' OR
-											site LIKE '%$search%') AND employment_status = '1' ORDER BY position";
-
-							$res=mysql_query("select empid, firstname, lastname, position, site from {$statement} LIMIT {$startpoint} , {$limit}");
-							while($emp_row=mysql_fetch_array($res))
+							if($_GET['search'] != "" || $_GET['search'] != null)
 							{
-								Print "	<tr>
-										<td style='vertical-align: inherit'>".$emp_row['empid']."</td>
-										<td style='vertical-align: inherit'>".$emp_row ['firstname']." ".$emp_row['lastname']."</td>
-										<td style='vertical-align: inherit'>".$emp_row['position']."</td>
-										<td style='vertical-align: inherit'>".$emp_row['site']."</td>
-										<td>
-											<button type='button' class='btn btn-default' onclick='Edit(\"".$emp_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
-										</td>
-									</tr>";
+								$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
+						    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
+						    	$startpoint = ($page * $limit) - $limit;
+						        $statement = "employee WHERE 
+												(empid LIKE '%$search%' OR 
+												firstname LIKE '%$search%' OR 
+												lastname LIKE '%$search%' OR
+												position LIKE '%$search%' OR
+												site LIKE '%$search%') AND employment_status = '1' ORDER BY position";
+
+								$res=mysql_query("select empid, firstname, lastname, position, site from {$statement} LIMIT {$startpoint} , {$limit}");
+								while($emp_row=mysql_fetch_array($res))
+								{
+									Print "	<tr>
+											<td style='vertical-align: inherit'>".$emp_row['empid']."</td>
+											<td style='vertical-align: inherit'>".$emp_row ['firstname']." ".$emp_row['lastname']."</td>
+											<td style='vertical-align: inherit'>".$emp_row['position']."</td>
+											<td style='vertical-align: inherit'>".$emp_row['site']."</td>
+											<td>
+												<button type='button' class='btn btn-default' onclick='Edit(\"".$emp_row["empid"]."\")' id='editEmployee'>View / Edit details</button>
+											</td>
+										</tr>";
+								}
 							}
+
 						}
 //--------site		
+
 						else if($_GET['site'] != "null")
 						{
 							$siteReplaced = str_replace('/+/', ' ', $site_page);
@@ -266,11 +269,11 @@ if(isset($_GET['search']))
 	//-------default
 						else
 						{
-							//Print "<script>alert('default')</script>";
+							
 							$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
 					    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
 					    	$startpoint = ($page * $limit) - $limit;
-					        $statement = "employee WHERE employment_status = '1' ORDER BY site";
+					        $statement = "employee ORDER BY site";
 
 							$res=mysql_query("select * from {$statement} LIMIT {$startpoint} , {$limit}");
 							while($emp_row=mysql_fetch_array($res))
@@ -314,7 +317,7 @@ if(isset($_GET['search']))
 		if(e.keyCode == 13 || e.which == 13) 
 		{
 			var value = document.getElementById('search_box').value;
-			window.location.assign("employees.php?site=<?php Print $site_page?>&position=<?php Print $position_page?>&search="+value);
+			window.location.assign("employee_sample.php?site=<?php Print $site_page?>&position=<?php Print $position_page?>&search="+value);
 		}
 	}
 	/* VIEW/EDIT EMPLOYEE DETAILS */
