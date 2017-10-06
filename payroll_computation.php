@@ -30,6 +30,8 @@ include('directives/db.php');
 	</div>
 
 	<div class="col-md-10 col-md-offset-1">
+
+		<!-- Earnings -->
 		<div class="col-md-6 text-left">
 			<h3>Earnings</h3>
 			<table class="table">
@@ -71,6 +73,7 @@ include('directives/db.php');
 						<td># of hours</td>
 						<td>###</td>
 					</tr>
+					<!-- Holiday Rate -->
 					<tr>
 						<td>Holiday Rate (Regular/Special)</td>
 						<td># of hours</td>
@@ -83,6 +86,8 @@ include('directives/db.php');
 				</tbody>
 			</table>
 		</div>
+
+		<!-- Contributions -->
 		<div class="col-md-6 text-left">
 			<h3>Contributions</h3>
 			<table class="table">
@@ -108,6 +113,7 @@ include('directives/db.php');
 				</tbody>
 			</table>
 
+			<!-- Loans -->
 			<h3>Loans</h3>
 			<table class="table">
 				<thead>
@@ -132,7 +138,7 @@ include('directives/db.php');
 			</table>
 		</div>
 
-
+		<!-- Overall Computation -->
 		<div class="col-md-12">
 			<div class="panel panel-primary">
 			  <div class="panel-heading">
