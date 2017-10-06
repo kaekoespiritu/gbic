@@ -126,7 +126,6 @@ else
 	Employees deployed: ".$employee_num."	
 </div>";
 ++$cycles;
-			 		//Print "<script>alert('".$cycles."')</script>";
 }
 
 }
