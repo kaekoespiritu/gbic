@@ -676,14 +676,14 @@ if($holidayExist > 0)
 				<tr>
 					<td class="removePadding" colspan="2">
 						<h4>
-						<?php
+						<?php //Badges to display Holiday, OT, ND
 
 							if($holWed)
-								Print 	 "<span class='label label-success'>Holiday</span>&emsp;";
+								Print 	 "<span class='label label-success'>Holiday</span>&nbsp";
 							if($OtWed)
-								Print 	"<span class='label label-primary'>OT</span>&emsp;";
+								Print 	"<span class='label label-primary'>OT</span>&nbsp";
 							if($NdWed)
-								Print 	"<span class='label label-warning'>ND</span>";
+								Print 	"<span class='label label-warning'>ND</span>&nbsp";
 						?>
 						</h4>
 					</td>
@@ -691,9 +691,9 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 							if($holThu)
-								Print 	 "<span class='label label-success'>Holiday</span>&emsp;";
+								Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
 							if($OtThu)
-								Print 	"<span class='label label-primary'>OT</span>&emsp;";
+								Print 	"<span class='label label-primary'>OT</span>&nbsp;";
 							if($NdThu)
 								Print 	"<span class='label label-warning'>ND</span>";
 						?>
@@ -703,9 +703,9 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 							if($holFri)
-								Print 	 "<span class='label label-success'>Holiday</span>&emsp;";
+								Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
 							if($OtFri)
-								Print 	"<span class='label label-primary'>OT</span>&emsp;";
+								Print 	"<span class='label label-primary'>OT</span>&nbsp;";
 							if($NdFri)
 								Print 	"<span class='label label-warning'>ND</span>";
 						?>
@@ -715,9 +715,9 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 							if($holSat)
-								Print 	 "<span class='label label-success'>Holiday</span>&emsp;";
+								Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
 							if($OtSat)
-								Print 	"<span class='label label-primary'>OT</span>&emsp;";
+								Print 	"<span class='label label-primary'>OT</span>&nbsp;";
 							if($NdSat)
 								Print 	"<span class='label label-warning'>ND</span>";
 						?>
@@ -727,9 +727,9 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 							if($holSun)
-								Print 	 "<span class='label label-success'>Holiday</span>&emsp;";
+								Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
 							if($OtSun)
-								Print 	"<span class='label label-primary'>OT</span>&emsp;";
+								Print 	"<span class='label label-primary'>OT</span>&nbsp;";
 							if($NdSun)
 								Print 	"<span class='label label-warning'>ND</span>";
 						?>
@@ -739,9 +739,9 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 							if($holMon)
-								Print 	"<span class='label label-success'>Holiday</span>&emsp;"; 
+								Print 	"<span class='label label-success'>Holiday</span>&nbsp;"; 
 							if($OtMon)
-								Print 	"<span class='label label-primary'>OT</span>&emsp;"; 
+								Print 	"<span class='label label-primary'>OT</span>&nbsp;"; 
 							if($NdMon)
 								Print 	"<span class='label label-warning'>ND</span>"; 
 						?>
@@ -751,9 +751,9 @@ if($holidayExist > 0)
 						<h4>
 						<?php
 							if($holTue)
-								Print 	 "<span class='label label-success'>Holiday</span>&emsp;";
+								Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
 							if($OtTue)
-								Print 	"<span class='label label-primary'>OT</span>&emsp;";
+								Print 	"<span class='label label-primary'>OT</span>&nbsp;";
 							if($NdTue)
 								Print 	"<span class='label label-warning'>ND</span>";
 						?>
@@ -839,6 +839,7 @@ if($holidayExist > 0)
 												$pagibig = "N/A";
 											}
 										}
+										
 									}
 									else
 									{
@@ -866,11 +867,11 @@ if($holidayExist > 0)
 									}
 									if($sss != "N/A")
 									{
-										Print "<input type='text' id='sss' class='form-control input-sm' placeholder='".number_format($sss, 2, '.', ',')." PHP' onkeypress='validatenumber(event)'>";
+										Print "<input type='text' id='sss' name='loan_sss' class='form-control input-sm' placeholder='".number_format($sss, 2, '.', ',')."' onkeypress='validatenumber(event)'>";
 									}
 									else
 									{
-										Print "<input type='text' id='sss' class='form-control input-sm' placeholder='N/A' onkeypress='validatenumber(event)' readonly>";
+										Print "<input type='text' id='sss' name='loan_sss' class='form-control input-sm' placeholder='N/A' onkeypress='validatenumber(event)' readonly>";
 									}
 									?>
 								</div>
@@ -881,11 +882,11 @@ if($holidayExist > 0)
 									<?php
 									if($pagibig != "N/A")
 									{
-										Print "<input type='text' id='pagibig' class='form-control input-sm' placeholder='".number_format($pagibig, 2, '.', ',')." PHP' onkeypress='validatenumber(event)'>";
+										Print "<input type='text' id='pagibig' name='loan_pagibig' class='form-control input-sm' placeholder='".number_format($pagibig, 2, '.', ',')."' onkeypress='validatenumber(event)'>";
 									}
 									else
 									{
-										Print "<input type='text' id='pagibig' class='form-control input-sm' placeholder='N/A' onkeypress='validatenumber(event)' readonly>";
+										Print "<input type='text' id='pagibig' name='loan_pagibig' class='form-control input-sm' placeholder='N/A' onkeypress='validatenumber(event)' readonly>";
 									}
 									?>
 								</div>
@@ -908,8 +909,8 @@ if($holidayExist > 0)
 									<br>
 									<span id="dynamicCompute"></span>
 								</h5>
-								<input type="hidden" class="added">
-								<input type="hidden" class="deducted">
+								<input type="hidden" name="vale_added" class="added">
+								<input type="hidden" name="vale_deducted" class="deducted">
 								<div class="row">
 									<button type='button' class='btn btn-success btn-sm col-md-12' data-toggle='modal' data-target='#addVale'><span class='glyphicon glyphicon-plus'></span> Add new</button>
 									<?php
@@ -927,21 +928,20 @@ if($holidayExist > 0)
 							<div class="form-group">
 								<label class="control-label col-md-5" for="tax">Tax</label>
 								<div class="col-md-7">
-									<input type="text" id="tax" class="form-control input-sm" onkeypress="validatenumber(event)">
+									<input type="text" id="tax" name="tax" class="form-control input-sm" onkeypress="validatenumber(event)">
 								</div>
 								<label class="control-label col-md-5" for="sssContribution">SSS</label>
 								<div class="col-md-7">
-									
-									<input type="text" id="sssContribution" placeholder="No document" class="form-control input-sm" value="<?php Print $deductionSSS?>" onkeypress="validatenumber(event)" readonly>
+									<input type="text" id="sssContribution" name="sss" placeholder="No document" class="form-control input-sm" value="<?php Print $deductionSSS?>" onkeypress="validatenumber(event)" readonly>
 									
 								</div>
 								<label class="control-label col-md-5" for="pagibigContribution" style="white-space: nowrap;">Pag-IBIG</label>
 								<div class="col-md-7">
-									<input type="text" id="pagibigContribution" class="form-control input-sm" value="<?php Print $deductionPagibig?>" placeholder="No document" readonly>
+									<input type="text" id="pagibigContribution" name="pagibig" class="form-control input-sm" value="<?php Print $deductionPagibig?>" placeholder="No document" readonly>
 								</div>
 								<label class="control-label col-md-5" for="philhealth">PhilHealth</label>
 								<div class="col-md-7">
-									<input type="text" id="philhealth" placeholder="No document" class="form-control input-sm" value="<?php Print $deductionPhilhealth?>" onkeypress="validatenumber(event)" readonly>
+									<input type="text" id="philhealth" name="philhealth" placeholder="No document" class="form-control input-sm" value="<?php Print $deductionPhilhealth?>" onkeypress="validatenumber(event)" readonly>
 								</div>
 							</div>
 						</div>
@@ -952,11 +952,11 @@ if($holidayExist > 0)
 								<div class="form-group">
 									<label class="control-label col-md-3">Weekly</label>
 									<div class="col-md-3">
-										<input type="text" id="allowance" class="form-control input-sm" placeholder="500.00 PHP">
+										<input type="text" id="allowance" name="allowance" class="form-control input-sm" placeholder="None" name="allowance" value="<?php Print $empArr['allowance']?>">
 									</div>
 									<label class="control-label col-md-2">Extra</label>
 									<div class="col-md-3">
-										<input type="text" id="allowance" class="form-control input-sm">
+										<input type="text" id="allowance" name="extra_allowance" name="extra_allowance" class="form-control input-sm">
 									</div>
 								</div>
 
