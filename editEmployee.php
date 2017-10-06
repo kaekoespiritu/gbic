@@ -130,6 +130,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 							</div>
 						</div>
 					</div><br>
+
 					<div class="row">
 						<div class="col-md-3">
 							<label for="contact">Date of Hire</label>
@@ -137,13 +138,26 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 						<div class="col-md-9">
 							<input type="text" size="10" style="width:150px" name = "datehired" class="form-control" placeholder="<?php Print "$datehired"?>" id="dtpkr_datehired" >
 						</div>
+					</div>
+
+						<h4 class="modal-title"><br>Other Government info</h4>
+						<hr>
+
+						<div class="row pull-down">
+							<div class="col-md-3">
+								<label for="COLA">COLA</label>
+							</div>
+							<div class="col-md-3">
+								<input name="txt_Cola" type="text" class="form-control" placeholder="COLA">
+							</div>
+						</div>
+
 						<div class="col-md-12 pull-down">
 							
 							<input type='submit' class='btn btn-primary pull-down' value='Save Changes'>
 							
 
 						</div>
-					</div>
 				</div>
 
 				<div class="col-md-6">

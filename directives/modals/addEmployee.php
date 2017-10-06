@@ -83,6 +83,17 @@
 									<input name="txt_addDateHired" type="text" size="10" style="width:150px" class="form-control" id="dtpkr_addEmployee" placeholder="mm-dd-yyyy" required>
 								</div>
 							</div>
+
+							<h4 class="modal-title"><br>Other Government info</h4><hr>
+
+							<div class="row pull-down">
+								<div class="col-md-3">
+									<label for="COLA">COLA</label>
+								</div>
+								<div class="col-md-3">
+									<input name="txt_Cola" type="text" class="form-control" placeholder="COLA">
+								</div>
+							</div>
 						</div>
 
 						<div class="col-md-6">
