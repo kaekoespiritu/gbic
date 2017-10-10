@@ -138,7 +138,7 @@ $date = strftime("%B %d, %Y");
 						AMOUNT TO BE PAID HERE
 					</td>
 					<td>
-						<button class='btn btn-primary'><span class="glyphicon glyphicon-list-alt"></span> View</button>
+						<a class='btn btn-primary' href="loans_history.php"><span class="glyphicon glyphicon-list-alt"></span> View</a>
 					</td>
 				</tr>
 			</table>

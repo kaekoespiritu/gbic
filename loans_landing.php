@@ -30,7 +30,6 @@
 						<a href="employees.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a>
 					</li>
 					<li class="active">Loan Applications</li>
-					<a class="collapsed btn btn-primary pull-right" type="a" aria-expanded="false" aria-controls="addLoan" data-target="#addLoans" data-toggle="collapse">ADD NEW LOAN</a>
 				</ol>
 			</div>
 		</div>
@@ -63,13 +62,13 @@
 					<h4>To view employee loans, first select a loan type:</h4>
 					<a class="btn btn-success btn-lg" href="loans_view.php">SSS</a>
 					<a class="btn btn-success btn-lg" href="loans_view.php">PagIBIG</a>
-					<a class="btn btn-success btn-lg" href="loans_view.php">Vale</a>
+					<a class="btn btn-success btn-lg" href="loans_view.php">Old Vale</a>
+					<a class="btn btn-success btn-lg" href="loans_view.php">New Vale</a>
 				</div>
 			</div>
 
 			<div class="col-md-12">
 				<div class="row">
-					<div class="collapse" id="addLoans" aria-expanded="false">
 						<div class="panel panel-info">
 							<div class="panel-heading row">
 								<h4>To add a new loan, search for an employee:</h4>
@@ -81,7 +80,6 @@
 								</div>
 							</div>
 						</div>
-					</div>
 				</div>
 			</div>
 		</div>

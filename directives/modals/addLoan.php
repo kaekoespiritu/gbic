@@ -60,7 +60,8 @@
 									<select class="form-control" id="loanType">
 										<option>SSS</option>
 										<option>PagIBIG</option>
-										<option>Vale</option>
+										<option>Old vale</option>
+										<option>New vale</option>
 									</select>
 								</div>
 								<div class="col-md-5">
@@ -115,6 +116,14 @@
 							</div><br>
 							<div class="row">
 								<div class="col-md-5">
+									<label for="rate">New vale</label>
+								</div>
+								<div class="col-md-5">
+									<input name="txt_newVale"  type="text" class="form-control" id="vale" placeholder="--" readonly>
+								</div>
+							</div><br>
+							<div class="row">
+								<div class="col-md-5">
 									<label for="rate">SSS</label>
 								</div>
 								<div class="col-md-5">
@@ -128,7 +137,7 @@
 								<div class="col-md-5">
 									<input name="txt_pagibig"  type="text" class="form-control" id="pagibig" placeholder="--" readonly>
 								</div>
-							</div>
+							</div><br>
 					</div>
 
 				</div>	
