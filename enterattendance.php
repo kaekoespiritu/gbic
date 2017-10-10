@@ -106,7 +106,7 @@
 			
 			<!-- Attendance table -->
 			<form id="form" method="post" action="logic_attendance.php?site=<?php Print $site_name;?>">
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-12">
 			<table class="table table-condensed table-bordered" style="background-color:white;">
 				<tr>
 					<td style='width:200px !important;'>Name</td>
