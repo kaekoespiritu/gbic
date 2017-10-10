@@ -83,6 +83,7 @@
 							$position = "SELECT position FROM job_position";
 							$position_query = mysql_query($position);
 
+
 							while($row_position = mysql_fetch_assoc($position_query))
 							{
 								$positionReplaced = str_replace('/+/', ' ', $_GET['position']);
