@@ -1137,7 +1137,7 @@ if($holidayExist > 0)
 										</div>
 										<label class="control-label col-md-1" for="price">Cost</label>
 										<div class="col-md-4">
-											<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)">
+											<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)" onkeyup="getTotal()">
 										</div>
 									</div>	
 								</div>
@@ -1413,6 +1413,11 @@ function deductvale() {
 			saveToAdd.value = modalValue;
 		}
 	}
+	
+}
+
+function getTotal() {
+	// Add sum of all items and show amount to deduct
 	
 }
 
