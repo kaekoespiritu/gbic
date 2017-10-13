@@ -35,13 +35,19 @@
 		</div>
 
 		<div class="row col-md-10 col-md-offset-1">
-			<div class="text-left">
-				<h3>Name of Employee here</h3>
-				<h4>Position at Site</h4>
+			<div class="row">
+				<div class="col-md-6 text-left">
+					<h4>Name of Employee here</h4>
+					<h4>Position at Site</h4>
+				</div>
+				<div class="col-md-6 text-right">
+					<h4>Contact Number</h4>
+					<h4>Address</h4>
+				</div>
 			</div>
 
 
-			<table class="table table-bordered pull-down">
+			<table class="table table-bordered">
 				<tr>
 					<td>Date</td>
 					<td>Loan Amount</td>

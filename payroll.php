@@ -545,7 +545,139 @@ if($holidayExist > 0)
 					<?php
 						if(!$wedAbsent)
 						{
-							Print 	"	<td style='padding-top: 20px; padding-bottom: 20px'>Time In:<br>". trim($wedTimeIn) ."</td>
+							Print 	"	<td>Time In:<br>". trim($wedTimeIn) ."</td>
+										<td>Time Out:<br>". trim($wedTimeOut) ."</td>
+										<input type='hidden' name='wedWorkHrs' value='".$wedWorkHrs."'>";
+							
+							if($wedNDHrs != 0)
+							{
+								Print "<input type='hidden' name='wedNDHrs' value='".$wedNDHrs."'>";
+							}
+							if($wedOTHrs != 0)
+							{
+								Print "<input type='hidden' name='wedOTHrs' value='".$wedOTHrs."'>";
+							}
+						}
+						else
+						{
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+						}
+						if(!$thuAbsent)
+						{
+							Print 	"	<td>Time In:<br>". trim($thuTimeIn) ."</td>
+										<td>Time Out:<br>". trim($thuTimeOut) ."</td>
+										<input type='hidden' name='thuWorkHrs' value='".$thuWorkHrs."'>";
+							if($thuNDHrs != 0)
+							{
+								Print "<input type='hidden' name='thuNDHrs' value='".$thuNDHrs."'>";
+							}
+							if($thuOTHrs != 0)
+							{
+								Print "<input type='hidden' name='thuOTHrs' value='".$thuOTHrs."'>";
+							}
+						}
+						else
+						{
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+						}
+						if(!$friAbsent)
+						{
+							Print 	"	<td>Time In:<br>". trim($friTimeIn) ."</td>
+										<td>Time Out:<br>". trim($friTimeOut) ."</td>
+										<input type='hidden' name='friWorkHrs' value='".$friWorkHrs."'>";
+							if($friNDHrs != 0)
+							{
+								Print "<input type='hidden' name='friNDHrs' value='".$friNDHrs."'>";
+							}
+							if($friOTHrs != 0)
+							{
+								Print "<input type='hidden' name='friOTHrs' value='".$friOTHrs."'>";
+							}
+						}
+						else
+						{
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+						}
+						if(!$satAbsent)
+						{
+							Print 	"	<td>Time In:<br>". trim($satTimeIn) ."</td>
+										<td>Time Out:<br>". trim($satTimeOut) ."</td>
+										<input type='hidden' name='satWorkHrs' value='".$satWorkHrs."'>";
+							if($satNDHrs !=  0)
+							{
+								Print "<input type='hidden' name='satNDHrs' value='".$satNDHrs."'>";
+							}
+							if($satOTHrs != 0)
+							{
+								Print "<input type='hidden' name='satOTHrs' value='".$satOTHrs."'>";
+							}
+						}
+						else
+						{
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+						}
+						if(!$sunAbsent)
+						{
+							Print 	"	<td>Time In:<br>". trim($sunTimeIn) ."</td>
+										<td>Time Out:<br>". trim($sunTimeOut) ."</td>
+										<input type='hidden' name='sunWorkHrs' value='".$sunWorkHrs."'>";
+							if($sunNDHrs !=  0)
+							{
+								Print "<input type='hidden' name='sunNDHrs' value='".$sunNDHrs."'>";
+							}
+							if($sunOTHrs != 0)
+							{
+								Print "<input type='hidden' name='sunOTHrs' value='".$sunOTHrs."'>";
+							}
+						}
+						else
+						{
+							Print 	"	<td colspan='2' class='danger'> Day off </td>";
+						}
+						if(!$monAbsent)
+						{
+							Print 	"	<td>Time In:<br>". trim($monTimeIn) ."</td>
+										<td>Time Out:<br>". trim($monTimeOut) ."</td>
+										<input type='hidden' name='monWorkHrs' value='".$monWorkHrs."'>";
+							if($monNDHrs != 0)
+							{
+								Print "<input type='hidden' name='monNDHrs' value='".$monNDHrs."'>";
+							}
+							if($monOTHrs != 0)
+							{
+								Print "<input type='hidden' name='monOTHrs' value='".$monOTHrs."'>";
+							}
+						}
+						else
+						{
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+						}
+						if(!$tueAbsent)
+						{
+							Print 	"	<td>Time In:<br>". trim($tueTimeIn) ."</td>
+										<td>Time Out:<br>". trim($tueTimeOut) ."</td>
+										<input type='hidden' name='tueWorkHrs' value='".$tueWorkHrs."'>";
+							if($tueNDHrs != 0)
+							{
+								Print "<input type='hidden' name='tueNDHrs' value='".$tueNDHrs."'>";
+							}
+							if($tueOTHrs != 0)
+							{
+								Print "<input type='hidden' name='tueOTHrs' value='".$tueOTHrs."'>";
+							}
+						}
+						else
+						{
+							Print 	"	<td colspan='2' class='danger'> Absent </td>";
+						}
+							
+					?>
+				</tr>
+				<tr> <!-- ================ AFTER BREAK TIME IN AND TIME OUT ================ -->
+					<?php
+						if(!$wedAbsent)
+						{
+							Print 	"	<td>Time In:<br>". trim($wedTimeIn) ."</td>
 										<td>Time Out:<br>". trim($wedTimeOut) ."</td>
 										<input type='hidden' name='wedWorkHrs' value='".$wedWorkHrs."'>";
 							
@@ -683,7 +815,7 @@ if($holidayExist > 0)
 							if($OtWed)
 								Print 	"<span class='label label-primary'>OT</span>&nbsp";
 							if($NdWed)
-								Print 	"<span class='label label-warning'>ND</span>&nbsp";
+								Print 	"<span class='label label-warning'>ND</span>";
 						?>
 						</h4>
 					</td>
@@ -786,9 +918,9 @@ if($holidayExist > 0)
 
 				<div class="row">
 					<form class="horizontal">
-						<div class="col-md-2 col-md-offset-1">
+						<div class="col-md-2">
 							<h4>Loans</h4>
-							<div class="form-group">
+							<div class="form-group row">
 								<label class="control-label col-md-3" for="sss" >SSS</label>
 								<div class="col-md-9">
 									<?php
@@ -867,35 +999,68 @@ if($holidayExist > 0)
 									}
 									if($sss != "N/A")
 									{
-										Print "<input type='text' id='sss' name='loan_sss' class='form-control input-sm' placeholder='".number_format($sss, 2, '.', ',')."' onkeypress='validatenumber(event)'>";
+										Print "<span class='pull-right'>".number_format($sss, 2, '.', ',')."</span>";
 									}
 									else
 									{
-										Print "<input type='text' id='sss' name='loan_sss' class='form-control input-sm' placeholder='N/A' onkeypress='validatenumber(event)' readonly>";
+										Print "--";
 									}
 									?>
 								</div>
+								<div class="col-md-12">
+									<input type="text" class="form-control" placeholder="Amount to deduct">
+								</div>
 							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3" for="pagibig">Pag-IBIG</label>
+							<div class="form-group row">
+								<label class="control-label col-md-3" for="pagibig" style="white-space: nowrap;">Pag-IBIG</label>
 								<div class="col-md-9">
 									<?php
 									if($pagibig != "N/A")
 									{
-										Print "<input type='text' id='pagibig' name='loan_pagibig' class='form-control input-sm' placeholder='".number_format($pagibig, 2, '.', ',')."' onkeypress='validatenumber(event)'>";
+										Print "<span class='pull-right'>".number_format($pagibig, 2, '.', ',')."</span>";
 									}
 									else
 									{
-										Print "<input type='text' id='pagibig' name='loan_pagibig' class='form-control input-sm' placeholder='N/A' onkeypress='validatenumber(event)' readonly>";
+										Print "--";
 									}
 									?>
+								</div>
+								<div class="col-md-12">
+									<input type="text" class="form-control" placeholder="Amount to deduct">
 								</div>
 							</div>
 						</div>
 
 
 						<div class="col-md-1">
-							<h4 class="text-left">Vale</h4>
+							<h4 class="text-left" style="white-space: nowrap;">Old Vale</h4>
+								<h5 class="text-right" style="white-space: nowrap;">
+									<span class="vale pull-right">
+										<?php 
+										if($vale != "N/A")
+
+								        Print number_format($vale, 2, '.', ',');
+								        else
+								        Print $vale;	
+										?>
+									</span>
+									<br>
+									<span id="dynamicCompute"></span>
+								</h5>
+								<input type="hidden" name="vale_deducted" class="deducted">
+								<div class="row">
+									<?php
+									if($vale != "N/A")
+									{
+									Print "
+									<button type='button' class='btn btn-danger btn-sm col-md-12' data-toggle='modal' data-target='#deductVale'><span class='glyphicon glyphicon-minus'></span> Deduct</button>";
+									}
+									?>
+								</div>
+						</div>
+
+						<div class="col-md-1">
+							<h4 class="text-left" style="white-space: nowrap;">New Vale</h4>
 								<h5 class="text-right" style="white-space: nowrap;">
 									<span class="vale pull-right">
 										<?php 
@@ -924,7 +1089,7 @@ if($holidayExist > 0)
 						</div>
 
 						<div class="col-md-3">
-							<h4 class="text-left">Contributions</h4>
+							<h4 class="text-center">Contributions</h4>
 							<div class="form-group">
 								<label class="control-label col-md-5" for="tax">Tax</label>
 								<div class="col-md-7">
@@ -950,9 +1115,9 @@ if($holidayExist > 0)
 						<div class="col-md-5">
 								<h4 class="text-left">Allowance</h4>
 								<div class="form-group">
-									<label class="control-label col-md-3">Weekly</label>
+									<label class="control-label col-md-3">Daily</label>
 									<div class="col-md-3">
-										<input type="text" id="allowance" name="allowance" class="form-control input-sm" placeholder="None" name="allowance" value="<?php Print $empArr['allowance']?>">
+										<input type="text" id="allowance" name="allowance" class="form-control input-sm" placeholder="Daily allowance" name="allowance" value="<?php Print $empArr['allowance']?>" readonly>
 									</div>
 									<label class="control-label col-md-2">Extra</label>
 									<div class="col-md-3">
@@ -970,9 +1135,9 @@ if($holidayExist > 0)
 										<div class="col-md-4">
 											<input type="text" id="tools" name="toolname[]" class="form-control input-sm" onkeypress="validateletter(event)">
 										</div>
-										<label class="control-label col-md-1" for="price">Price</label>
+										<label class="control-label col-md-1" for="price">Cost</label>
 										<div class="col-md-4">
-											<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)">
+											<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)" onkeyup="getTotal()">
 										</div>
 									</div>	
 								</div>
@@ -985,7 +1150,7 @@ if($holidayExist > 0)
 								<div class="col-md-4">
 									<input type="text" id="tools" name="toolname[]" class="form-control input-sm" onkeypress="validateletter(event)">
 								</div>
-								<label class="control-label col-md-1" for="price">Price</label>
+								<label class="control-label col-md-1" for="price">Cost</label>
 								<div class="col-md-4">
 									<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)">
 								</div>
@@ -1249,9 +1414,10 @@ function deductvale() {
 		}
 	}
 	
-	
+}
 
-	
+function getTotal() {
+	// Add sum of all items and show amount to deduct
 	
 }
 
