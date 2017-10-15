@@ -1,7 +1,7 @@
 <?php
 
 
-	function updateQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate)
+	function updateQuery($timein1, $timeout1, $timein2, $timeout2, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate)
 	{
 		//Print "<script>alert('workinghrs ". $workinghrs ."')</script>";
 		//Print "<script>alert('".$attendance."')</script>";
@@ -10,8 +10,10 @@
 			//Print "<script>alert('1')</script>";
 			$AttQuery = "UPDATE attendance SET 	empid='".$empid."',
 											  	position= '".$position."',
-											  	timein= '".$timein."',
-											  	timeout='".$timeout."',
+											  	timein= '".$timein1."',
+											  	timeout='".$timeout1."',
+											  	afterbreak_timein= '".$timein2."',
+											  	afterbreak_timeout='".$timeout2."',
 											  	workhours='".$workinghrs."',
 											  	overtime='".$OtHrs."',
 											  	undertime='".$undertime."',
@@ -28,8 +30,10 @@
 			//Print "<script>alert('2')</script>";
 			$AttQuery = "UPDATE attendance SET 	empid='".$empid."',
 											  	position= '".$position."',
-											  	timein= '".$timein."',
-											  	timeout='".$timeout."',
+											  	timein= '".$timein1."',
+											  	timeout='".$timeout1."',
+											  	afterbreak_timein= '".$timein2."',
+											  	afterbreak_timeout='".$timeout2."',
 											  	workhours='".$workinghrs."',
 											  	overtime='".$OtHrs."',
 											  	undertime='".$undertime."',
@@ -49,8 +53,10 @@
 				//Print "<script>alert('4')</script>";
 				$AttQuery = "UPDATE attendance SET 	empid='".$empid."',
 												  	position= '".$position."',
-												  	timein= '".$timein."',
-												  	timeout='".$timeout."',
+												  	timein= '".$timein1."',
+											  		timeout='".$timeout1."',
+											  		afterbreak_timein= '".$timein2."',
+											  		afterbreak_timeout='".$timeout2."',
 												  	workhours='".$workinghrs."',
 												  	overtime='".$OtHrs."',
 												  	undertime='".$undertime."',
@@ -67,8 +73,10 @@
 				//Print "<script>alert('5')</script>";
 				$AttQuery = "UPDATE attendance SET 	empid='".$empid."',
 												  	position= '".$position."',
-												  	timein= '".$timein."',
-												  	timeout='".$timeout."',
+												  	timein= '".$timein1."',
+											  		timeout='".$timeout1."',
+											  		afterbreak_timein= '".$timein2."',
+											  		afterbreak_timeout='".$timeout2."',
 												  	workhours='".$workinghrs."',
 												  	overtime='".$OtHrs."',
 												  	undertime='".$undertime."',
@@ -85,14 +93,16 @@
 		return $AttQuery;
 	}
 
-	function newQuery($timein, $timeout, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate)
+	function newQuery($timein1, $timeout1, $timein2, $timeout2, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate)
 	{
 		if((!empty($timein) && !empty($timeout)) && $day == "Sunday")
 		{
 			$AttQuery .= "('".$empid."',
 					  '".$position."',
-					  '".$timein."',
-					  '".$timeout."',
+					  '".$timein1."',
+					  '".$timeout1."',
+					  '".$timein2."',
+					  '".$timeout2."',
 					  '".$workinghrs."',
 					  '".$OtHrs."',
 					  '".$undertime."',
@@ -108,8 +118,10 @@
 		{
 			$AttQuery .= "('".$empid."',
 					  '".$position."',
-					  '".$timein."',
-					  '".$timeout."',
+					  '".$timein1."',
+					  '".$timeout1."',
+					  '".$timein2."',
+					  '".$timeout2."',
 					  '".$workinghrs."',
 					  '".$OtHrs."',
 					  '".$undertime."',
@@ -127,8 +139,10 @@
 			{
 				$AttQuery .= "('".$empid."',
 						  '".$position."',
-						  '".$timein."',
-						  '".$timeout."',
+						  '".$timein1."',
+						  '".$timeout1."',
+						  '".$timein2."',
+						  '".$timeout2."',
 						  '".$workinghrs."',
 						  '".$OtHrs."',
 						  '".$undertime."',
@@ -144,8 +158,10 @@
 			{
 				$AttQuery .= "('".$empid."',
 						  '".$position."',
-						  '".$timein."',
-						  '".$timeout."',
+						  '".$timein1."',
+						  '".$timeout1."',
+						  '".$timein2."',
+						  '".$timeout2."',
 						  '".$workinghrs."',
 						  '".$OtHrs."',
 						  '".$undertime."',

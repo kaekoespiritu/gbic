@@ -179,11 +179,11 @@ function attendance ()
 									</td>
 								<!-- AFTER BREAK Time In -->
 									<td>
-										<input type='text' class='timein2 timepicker form-control input-sm' value='". $empRow['timein'] ."' name='timein2[".$counter."]'>
+										<input type='text' class='timein2 timepicker form-control input-sm' value='". $empRow['afterbreak_timein'] ."' name='timein2[".$counter."]'>
 									</td>
 								<!-- AFTER BREAK Time Out-->
 									<td>
-										<input type='text' class='timeout2 timepicker form-control input-sm' value='". $empRow['timeout'] ."' name='timeout2[".$counter."]'>
+										<input type='text' class='timeout2 timepicker form-control input-sm' value='". $empRow['afterbreak_timeout'] ."' name='timeout2[".$counter."]'>
 									</td>";
 
 				// Working hours
