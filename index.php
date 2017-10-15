@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <?php
 include('directives/session.php');
 include('directives/db.php');
@@ -72,7 +72,7 @@ include('directives/db.php');
 
 	<a href="applications.php"><div class="panel panel-danger">
 		<div class="panel-heading">
-			<!-- WILL REDIRECT TO APPLICATIONS PAGE WITH FILTER SET TO PENDING APPROVAL AND 7 DAYS INCURRED ABSENCE-->
+			<!-- TODO: WILL REDIRECT TO APPLICATIONS PAGE WITH FILTER SET TO PENDING APPROVAL AND 7 DAYS INCURRED ABSENCE-->
 			<h3 class="panel-title">ABSENCE NOTICE: There are 5 employee(s) absent for a week.</h3>
 		</div>
 	</div></a>
@@ -97,11 +97,11 @@ while($row = mysql_fetch_assoc($site_query))
 		{
 			$employee_num = mysql_num_rows($employee_find_query);
 		}
-		Print "<div class='col-md-2 col-md-offset-1 card card-1'>
-		<h4>".$row['location']."</h4>	
-		Employees deployed: ".$employee_num."
-	</div>";
-			 		//Print "<script>alert('".$cycles."')</script>";
+		Print "<a data-toggle='modal' href='#shortcut' onclick='shortcut(\"".$row['location']."\")''><div class='col-md-2 col-md-offset-1 card card-1'>
+				<h4 class='sitename' id='".$row['location']."'>".$row['location']."</h4>	
+				Employees deployed: ".$employee_num."
+			   </div></a>";
+
 	if($cycles == 4)
 	{
 		$cycles = 1;
@@ -121,21 +121,69 @@ else
 	{
 		$employee_num = mysql_num_rows($employee_find_query);
 	}
-	Print "<div class='col-md-2 card card-1'>
-	<h4>".$row['location']."</h4>
-	Employees deployed: ".$employee_num."	
-</div>";
+	Print "<a data-toggle='modal' href='#shortcut' onclick='shortcut(\"".$row['location']."\")''><div class='col-md-2 card card-1'>
+			<h4 class='sitename' id='".$row['location']."'>".$row['location']."</h4>
+			Employees deployed: ".$employee_num."	
+		   </div></a>";
 ++$cycles;
 }
 
 }
 ?>
 
-
+<!-- MODAL -->
+<div class="modal fade" id="shortcut" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<!-- TODO: ADD FILTER WHEN USING SHORTCUT -->
+				<div class="row">
+					<div class="col-md-4">
+						<a id="attendanceLink" class="btn btn-primary btn-lg col-md-12">
+						<img src="Images/attendance.png" class="center-block">Attendance</a>
+					</div>
+					<div class="col-md-4">
+						<a id="employeesLink" class="btn btn-primary btn-lg col-md-12">
+						<img src="Images/engineer.png" class="center-block"> Employees</a>
+					</div>
+					<div class="col-md-4">
+						<a id="reportsLink" class="btn btn-primary btn-lg col-md-12">
+						<img src="Images/tax.png" class="center-block">Reports</a>
+					</div>
+					<div class="pull-down col-md-12">
+						<h4 class="text-center">Click on the options above to view details for <span id="addSiteName"></span>.</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
+
+</div>
+<script src="js/jquery.min.js"></script>
+<script rel="javascript" src="js/bootstrap.min.js"></script>
 <script>
+	// Change main row color to Home
 	document.getElementById("home").setAttribute("style", "background-color: #10621e;");
+
+	
+	function shortcut(sitename) {
+		// Calling links to change
+		var attendance = document.getElementById('attendanceLink');
+		var employees = document.getElementById('employeesLink');
+		var reports = document.getElementById('reportsLink');
+
+		// Change name of modal to name of appropriate site
+		var span = document.getElementById('addSiteName').innerHTML = sitename;
+
+		console.log(sitename);
+
+		// Changing links accordingly
+		attendance.setAttribute("href", "enterattendance.php?site="+sitename+"&position=null"); 
+		employees.setAttribute("href", "employees.php?site="+sitename+"&position=null"); 
+		//reports to be added soon
+	}
 </script>
 <script rel="javascript" src="js/jquery.min.js"></script>
 </body>
