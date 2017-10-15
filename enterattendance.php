@@ -45,10 +45,6 @@
 		<?php
 		require_once("directives/nav.php");
 		?>
-		<?php
-		require_once('directives/modals/siteAttendance.php');
-
-		?>
 
 		<div class="row" style="z-index: 101">
 			<!-- BREAD CRUMBS -->
@@ -132,6 +128,7 @@
 			</table>
 		</div>
 			</form>
+			
 			<!-- DUMMY MODAL FOR REMARKS -->
 			<div class="modal fade" tabindex="-1" id="remarks" role="dialog">
 				<div class="modal-dialog" role="document">
