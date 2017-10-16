@@ -498,14 +498,14 @@ include('directives/session.php');
 		var sunday = "<?php Print $day ?>";
 		if(sunday == "Sunday")
 		{
-			
 			document.getElementById('holidayTitle').innerHTML = "Sunday attendance log";
 		}
 		else
 		{
-			
 			document.getElementById('holidayTitle').innerHTML = "Daily attendance log";
 		}
+		window.location.href = "holiday_query.php?date=<?php Print $date ?>";
+		//dito
 			// document.getElementById('forPHP').innerHTML = 	"<?php 	//unset($_SESSION['holidayType']);
 			// 														unset($_SESSION['holidayName']);
 			// 												?>";
@@ -602,6 +602,7 @@ include('directives/session.php');
 				
 				type.setAttribute("value", "regular");
 				document.getElementById('holidayForm').submit();
+				window.location.href = "holiday_query.php?type=regular&name="+name+"&date=<?php Print $date ?>";
 				//special.checked = false;
 			}
 			else if(specialHoliday.checked == true)
@@ -611,6 +612,7 @@ include('directives/session.php');
 				
 				type.setAttribute("value", "special");
 				document.getElementById('holidayForm').submit();
+				window.location.href = "holiday_query.php?type=special&name="+name+"&date=<?php Print $date ?>";
 				// special.checked = false;
 			}
 			// if(bool == false)
