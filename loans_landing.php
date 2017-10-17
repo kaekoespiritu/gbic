@@ -34,6 +34,36 @@
 			</div>
 		</div>
 
+		<!-- Add new loan -->
+		<div class="col-md-10 col-md-offset-1">
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h4>To add a new loan, search for an employee:</h4>
+						<div class="form-group col-md-6 col-md-offset-3" style="float:none">
+							<input placeholder="Search for employee (can look up any part of employees name)" class="form-control">
+						</div>
+
+					</div>
+				</div>
+				<div class="col-md-6 col-md-offset-3 searchResults">
+							SEARCH RESULTS...
+							</div>
+		</div>
+
+		<!-- View loans -->
+		<div class="col-md-10 col-md-offset-1">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h4>To view employee loans, first select a loan type:</h4>
+					<a class="btn btn-success btn-lg" href="loans_view.php">SSS</a>
+					<a class="btn btn-success btn-lg" href="loans_view.php">PagIBIG</a>
+					<a class="btn btn-success btn-lg" href="loans_view.php">Old Vale</a>
+					<a class="btn btn-success btn-lg" href="loans_view.php">New Vale</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- Dashboard -->
 		<div class="row col-md-10 col-md-offset-1">
 				<table class="table table-bordered table-responsive" style="color: white; font-family:Quicksand">
 					<tr>
@@ -56,35 +86,9 @@
 					</td>
 				</tr>
 			</table>
-
-		<div class="panel panel-info">
-				<div class="panel-heading">
-					<h4>To view employee loans, first select a loan type:</h4>
-					<a class="btn btn-success btn-lg" href="loans_view.php">SSS</a>
-					<a class="btn btn-success btn-lg" href="loans_view.php">PagIBIG</a>
-					<a class="btn btn-success btn-lg" href="loans_view.php">Old Vale</a>
-					<a class="btn btn-success btn-lg" href="loans_view.php">New Vale</a>
-				</div>
-			</div>
-
-			<div class="col-md-12">
-				<div class="row">
-						<div class="panel panel-info">
-							<div class="panel-heading row">
-								<h4>To add a new loan, search for an employee:</h4>
-								<div class="form-group col-md-6 col-md-offset-3">
-									<input placeholder="Search for employee (can look up any part of employees name)" class="form-control">
-								</div>
-								<div class="col-md-1">
-									<button class="btn btn-primary" data-target="#addLoan" data-toggle="modal">Search</button>
-								</div>
-							</div>
-						</div>
-				</div>
-			</div>
-		</div>
-
 	</div>
+
+</div>
 	<script rel="javascript" src="js/jquery.min.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script>

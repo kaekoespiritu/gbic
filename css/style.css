@@ -328,3 +328,15 @@ hr
 {
   width: 120px !important;
 }
+
+/* Loans Page */
+.searchResults 
+{
+  background-color: white;
+  z-index:10;
+  position:relative;
+  bottom:47px;
+  width:458px;
+  left:24px;
+  display:none;
+}
