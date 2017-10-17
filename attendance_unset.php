@@ -1,6 +1,6 @@
 <?php
 include('directives/session.php');
-
+include('directives/db.php');
 if(isset($_SESSION['holidayName']) && isset($_SESSION['holidayType']))
 {
 	$holidayDate = $_SESSION['holidayDate'];

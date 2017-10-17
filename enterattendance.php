@@ -79,6 +79,7 @@
 							$position = "SELECT position FROM job_position";
 							$position_query = mysql_query($position);
 
+
 							while($row_position = mysql_fetch_assoc($position_query))
 							{
 								$positionReplaced = str_replace('/+/', ' ', $_GET['position']);
@@ -183,6 +184,7 @@
 		localStorage.setItem("glob_position", positionReplaced);
 		window.location.assign("enterattendance.php?site=<?php Print $site_name ?>&position="+positionReplaced);
 	}
+
 	</script>
 </body>
 </html>
