@@ -11,8 +11,8 @@ $site = $_GET['site'];
 $position = $_GET['position'];
 $empid = $_GET['empid'];
 //Sample date for debugging purposes
-$date = strftime("%B %d, %Y");
-//$date = "September 26, 2017";
+//$date = strftime("%B %d, %Y");
+$date = "October 17, 2017";
 
 //Holiday Checker
 $holiday = "SELECT * FROM holiday WHERE date = '$date'";
@@ -172,7 +172,7 @@ if($holidayExist > 0)
 				<?php
 				//Sample query for debugging purposes
 					//$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY date DESC LIMIT 7";
-				$payrollDate = "SELECT * FROM attendance WHERE empid = '2017-0000011' ORDER BY date DESC LIMIT 2,8";
+				$payrollDate = "SELECT * FROM attendance WHERE empid = '2017-0000011' ORDER BY date DESC LIMIT 7";
 					$payrollQuery = mysql_query($payrollDate);
 					//Boolean for the conditions not to repeat just incase the employee does't attend sundays
 					$monBool = true;
@@ -211,35 +211,43 @@ if($holidayExist > 0)
 					$NdSat = false;
 					$NdSun = false;
 
+					$holidayName = '';
+					$holidayType = '';
+					$holidayDate = '';
+					$holidayDay = '';
 					$holidayCounter = 0;//count the days of holiday
 					while($dateRow = mysql_fetch_assoc($payrollQuery))
 					{
 						$holDateChecker = $dateRow['date'];
 						//Holiday Checker
-						$holiday = "SELECT * FROM holiday WHERE date = '$holDateChecker'";
+						$holiday = "SELECT * FROM holiday WHERE date = '$holDateChecker' ORDER BY date DESC";
 						$holidayQuery = mysql_query($holiday);
 						$holidayExist = mysql_num_rows($holidayQuery);
 
 						if($holidayExist > 0)//if holiday exist
 						{
-
-							$holidayCounter++;
 							$holidayRow = mysql_fetch_assoc($holidayQuery);
-							$holidayName = $holidayRow['holiday'];//Gets holiday name
-							$holidayType = $holidayRow['type'];
-							$holidayDate = $holidayRow['date'];
-							$holidayDay = date('l', strtotime($holidayRow['date']));;
-							//Print "<script>alert('".$holidayName."')</script>";
-							if($holidayCounter > 1)//if holiday lasted for more than 1day
+							$holDay = date('l', strtotime($holidayRow['date']));
+							if($holidayCounter > 0)//if holiday lasted for more than 1day
 							{
-
+								//Print "<script>console.log('if')</script>";
+								$holidayCounter++;
 								$holidayName .= "+".$holidayRow['holiday'];
 								$holidayType .= "+".$holidayRow['type'];
 								$holidayDate .= "+".$holidayRow['date'];
-								$holidayDay .= "+".$holidayRow['date'];
+								$holidayDay .= "+".$holDay;
+							}
+							else
+							{
+								//Print "<script>console.log('else')</script>";
+								$holidayCounter++;
+								$holidayName = $holidayRow['holiday'];//Gets holiday name
+								$holidayType = $holidayRow['type'];
+								$holidayDate = $holidayRow['date'];
+								$holidayDay = $holDay;
 							}
 						}
-						
+						//Print "<script>console.log('holyeah: ".$holidayName."')</script>";
 
 						//Print "<script>alert('".$dateRow['date']."')</script>";
 						$day = date('l', strtotime($dateRow['date']));
@@ -464,10 +472,11 @@ if($holidayExist > 0)
 						$holTypeArr = explode("+", $holidayType);
 						$holDateArr = explode("+", $holidayDate);
 						$holDayArr = explode("+", $holidayDay);
-
-						
+						Print "<script>console.log('".$holNameArr[0]." + ".$holNameArr[1]."')</script>";
+						$holidayCounter -= 1;
 						for($a = 0; $a <= $holidayCounter; $a++)
 						{
+							//Print "<script>console.log('".$holNameArr[$a]." + ".$a."')</script>";
 							Print "<input type='hidden' name='holidayName[]' value='".$holNameArr[$a]."'>";
 							Print "<input type='hidden' name='holidayType[]' value='".$holTypeArr[$a]."'>";
 							Print "<input type='hidden' name='holidayDate[]' value='".$holDateArr[$a]."'>";
