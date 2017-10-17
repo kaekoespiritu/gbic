@@ -56,7 +56,19 @@ $(document).ready(function(){
 
 });
 
-	
+//Time validation	
+function timeValidation(evt)
+{
+	var time = evt.value;
+	var validate = /^(?:(?:0?\d|1[0-2]):[0-5]\d\s[A|P]M)$/;
+	var valid = time.match(validate); 
+
+	if(!valid && time != '')
+	{
+		alert('You entered an invalid time.');
+		evt.value = "";
+	}
+}
 function timeIn(id) {
 	var mainRow = document.getElementById(id); // Get row to be computed
 	var timein1 = mainRow.querySelector('.timein1').value; // Get time in value

@@ -463,7 +463,6 @@ include('directives/session.php');
 				}
 			}
 	}
-
 	function fittext()
 	{
 		// Declare fixed div size

@@ -187,6 +187,7 @@
 		localStorage.setItem("glob_position", positionReplaced);
 		window.location.assign("enterattendance.php?site=<?php Print $site_name ?>&position="+positionReplaced);
 	}
+
 	</script>
 </body>
 </html>
