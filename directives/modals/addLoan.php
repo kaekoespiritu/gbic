@@ -10,7 +10,7 @@
 				</div>
 			</div>
 			<div class="modal-body">
-				<form class="horizontal" method="POST" action="">
+				<form class="horizontal" method="POST" action="logic_loans.php">
 					<div class="row">
 						<div class="col-md-6">
 							<h4 class="modal-title">Personal Information</h4><hr>
@@ -20,7 +20,7 @@
 									<label for="fname">First name</label>
 								</div>
 								<div class="col-md-9">
-									<input name="txt_addFirstName" onkeypress="validateletter(event)" type="text" class="form-control" id="fname" placeholder="Miguelito Joselito" readonly>
+									<input name="txt_addFirstName" onkeypress="validateletter(event)" type="text" class="form-control" id="fname" name="firstname" readonly>
 								</div>
 							</div><br>
 
@@ -29,7 +29,7 @@
 									<label for="lname">Last name</label>
 								</div>
 								<div class="col-md-9">
-									<input name="txt_addLastName" onkeypress="validateletter(event)" type="text" class="form-control" id="lname" placeholder="Dela Cruz" readonly>
+									<input name="txt_addLastName" onkeypress="validateletter(event)" type="text" class="form-control" id="lname"  name="lastname"readonly>
 								</div>
 							</div><br>
 
@@ -38,7 +38,7 @@
 									<label for="address">Address</label>
 								</div>
 								<div class="col-md-9">
-									<input name="txt_addAddress" onkeypress="validateletter(event)" type="text" class="form-control" id="address" placeholder="123 Horizon Boulevard Sunset City" readonly>
+									<input name="txt_addAddress" onkeypress="validateletter(event)" type="text" class="form-control" id="address" name="address" readonly>
 								</div>
 							</div><br>
 
@@ -47,7 +47,7 @@
 									<label for="contact">Contact number</label>
 								</div>
 								<div class="col-md-4">
-									<input name="txt_addContactNum" onkeypress="validatenumber(event)" type="text" class="form-control" id="contact" placeholder="09123456789" readonly>
+									<input name="txt_addContactNum" onkeypress="validatenumber(event)" type="text" class="form-control" id="contact" name="contactnum" readonly>
 								</div>
 							</div><br>
 
@@ -57,7 +57,7 @@
 									<label for="loanType">Loan Type</label>
 								</div>
 								<div class="form-group col-md-4">
-									<select class="form-control" id="loanType">
+									<select class="form-control" name="loanType" id="loanType">
 										<option>SSS</option>
 										<option>PagIBIG</option>
 										<option>Old vale</option>
@@ -65,13 +65,13 @@
 									</select>
 								</div>
 								<div class="col-md-5">
-									<input type="text" class="form-control" placeholder="Amount of loan">
+									<input type="text" class="form-control" name="loanAmount" placeholder="Amount of loan" required>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="col-md-offset-1">
-									<textarea class="form-control" rows="2" placeholder="Reason for getting a loan" required></textarea>
+									<textarea class="form-control" rows="2" name="reason" placeholder="Reason for getting a loan" required></textarea>
 								</div><br>
 							</div>
 						</div>
@@ -81,9 +81,10 @@
 							<div class="row">
 								<div class="col-md-5">
 									<label for="position" class="text-right">Position & Site</label>
+									<input type="hidden" id="position" name="position">
+									<input type="hidden" id="site" name="site">
 								</div>
-								<div class="col-md-5">
-									POSITION AT SITE
+								<div class="col-md-5" id="position&site">
 								</div>
 							</div><br>
 
@@ -92,7 +93,7 @@
 									<label for="rate">Monthly Salary</label>
 								</div>
 								<div class="col-md-5">
-									<input name="txt_addMonthlySalary"  type="text" class="form-control" id="monthlysalary" readonly placeholder="9500.00">
+									<input name="txt_addMonthlySalary" name="monthlysalary" type="text" class="form-control" id="monthlysalary" readonly >
 								</div>
 							</div><br>
 
@@ -101,7 +102,7 @@
 									<label for="rate">Rate Per Day</label>
 								</div>
 								<div class="col-md-5">
-									<input name="txt_addRatePerDay"  type="text" class="form-control" id="rate" placeholder="380" readonly>
+									<input name="txt_addRatePerDay" name="rate" type="text" class="form-control" id="rate"  readonly>
 								</div>
 							</div><br>
 
@@ -144,7 +145,7 @@
 				<div class="modal-footer">
 					<input type="submit" name="add_submit" id="add_submit" class="btn btn-primary" value="Add new loan">
 				</div>			
-			</form>
+				</form>
 			</div>
 			
 		</div>

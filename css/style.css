@@ -333,10 +333,10 @@ hr
 .searchResults 
 {
   background-color: white;
-  z-index:10;
+  border:solid 1px grey;
+  z-index:1000;
   position:relative;
   bottom:47px;
   width:458px;
   left:24px;
-  display:none;
 }
