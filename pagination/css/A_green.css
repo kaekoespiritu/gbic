@@ -13,15 +13,13 @@
 
 	ul.pagination li a
 	{
-        color: #FFFFFF;
+        color: white;
 		background:#2b823A;
-		background:-moz-linear-gradient(top,#2b823A,#2b823A);
-		background:-webkit-gradient(linear,0 0,0 100%,from(#2b823A),to(#10621e));	
 	}	
 	
 	ul.pagination li a:hover,
 	ul.pagination li a.current
 	{
-		color:#FFFFFF;
-		background:#E7F2C7;
+		color:white;
+		background:#1DB037;
 	}
