@@ -45,8 +45,10 @@
 
 					</div>
 				</div>
+
 				<div id="search_result"></div>
 				 
+
 		</div>
 
 		<!-- View loans -->

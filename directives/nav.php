@@ -17,6 +17,7 @@
 		<div class="flipdown-menu">
 			<a href="loans_landing.php">Loan Applications</a>
 			<a href="applications.php">Absence Notifications</a>
+			<a href="site_movement.php">Site movement</a>
 		</div>
 	</div>
 	</div>
