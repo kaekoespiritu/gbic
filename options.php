@@ -397,12 +397,9 @@ include('directives/db.php');
 			</div>
 
 			<div class="panel panel-default">
-				<a data-toggle="collapse" href="#collapseManageAccounts">
 					<div class="panel-heading">
 						<h3 class="panel-title">Manage accounts</h3>
 					</div>
-				</a>
-				<div id="collapseManageAccounts" class="panel-collapse collapse">
 					<div class="panel-body col-md-6">
 						<div class="panel panel-default">
 							<div class="panel-heading">
@@ -526,6 +523,24 @@ include('directives/db.php');
 			  </div>
 			</div>
 
+			<div class="modal fade bs-example-modal-sm" role="dialog" id="addPosition">
+			  <div class="modal-dialog modal-sm" role="document">
+			  	<div class="modal-content">
+				  	<div class="modal-header">
+				  		<h4 class="modal-title col-md-11">Add new position</h4>
+				        <button type="button" class="close col-md-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				    </div>
+				    <div class="modal-body">
+			     	<input type="text" class="form-control" placeholder="Name of new position">
+			     	</div>
+			     	<div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        <button type="button" class="btn btn-primary">Save changes</button>
+				      </div>
+			    </div>
+			  </div>
+			</div>
+
 			<!-- Position Management -->
 			<div class="col-md-6">
 				<div class="panel panel-default">
@@ -533,9 +548,69 @@ include('directives/db.php');
 						<h3 class="panel-title">Position management</h3>
 					</div>
 					<div class="panel-body">
-						Add position
-						Edit position
-						Delete position (?)
+						<div class="col-md-5">
+							<a data-target="#addPosition" data-toggle="modal" class="btn btn-primary col-md-12 pull-down">ADD POSITION</a>
+							<a class="btn btn-danger col-md-12 pull-down">REMOVE POSITION</a>
+						</div>
+
+						<div class="col-md-7 text-left">
+							<div class="sitelist">
+								<div class="alignlist">
+								  <label>
+								    <input type="checkbox" value="">
+								    POSITION NAME
+								  </label>
+								</div>
+								<div class="alignlist">
+								  <label>
+								    <input type="checkbox" value="">
+								    POSITION NAME
+								  </label>
+								</div>
+								<div class="alignlist">
+								  <label>
+								    <input type="checkbox" value="">
+								    POSITION NAME
+								  </label>
+								</div>
+								<div class="alignlist">
+								  <label>
+								    <input type="checkbox" value="">
+								    POSITION NAME
+								  </label>
+								</div>
+								<div class="alignlist">
+								  <label>
+								    <input type="checkbox" value="">
+								    POSITION NAME
+								  </label>
+								</div>
+								<div class="alignlist">
+								  <label>
+								    <input type="checkbox" value="">
+								    POSITION NAME
+								  </label>
+								</div>
+								<div class="alignlist">
+								  <label>
+								    <input type="checkbox" value="">
+								    POSITION NAME
+								  </label>
+								</div>
+								<div class="alignlist">
+								  <label>
+								    <input type="checkbox" value="">
+								    POSITION NAME
+								  </label>
+								</div>
+								<div class="alignlist">
+								  <label>
+								    <input type="checkbox" value="">
+								    POSITION NAME
+								  </label>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
