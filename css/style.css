@@ -330,7 +330,7 @@ hr
 }
 
 /* Loans Page */
-.searchResults 
+.searchresults 
 {
   background-color: white;
   z-index:10;
@@ -339,4 +339,20 @@ hr
   width:458px;
   left:24px;
   display:none;
+}
+
+/* Options page */
+.sitelist
+{
+  overflow: scroll;
+  background-color: white;
+  height: 200px;
+  width: 230px;
+  border: solid 1px black;
+}
+
+.alignlist
+{
+  margin-left: 15px;
+  margin-top:10px;
 }

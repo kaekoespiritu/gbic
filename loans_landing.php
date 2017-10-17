@@ -45,9 +45,9 @@
 
 					</div>
 				</div>
-				<div class="col-md-6 col-md-offset-3 searchResults">
+				<div class="col-md-6 col-md-offset-3 searchresults">
 							SEARCH RESULTS...
-							</div>
+				</div>
 		</div>
 
 		<!-- View loans -->

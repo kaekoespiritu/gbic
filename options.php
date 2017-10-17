@@ -440,11 +440,90 @@ include('directives/db.php');
 						<h3 class="panel-title">Site management</h3>
 					</div>
 					<div class="panel-body">
-						Add sites
-						Edit sites
-						Delete sites (?)
+						<div class="col-md-5">
+							<a data-target="#addSite" data-toggle="modal" class="btn btn-primary col-md-12 pull-down">ADD SITE</a>
+							<a class="btn btn-danger col-md-12 pull-down" href="options_site.php">END CONTRACT</a>
+						</div>
+
+						<div class="col-md-7 text-left">
+							<div class="sitelist">
+								<div class="alignlist">
+								  <label>
+								    <input type="checkbox" value="">
+								    SITE NAME
+								  </label>
+								</div>
+								<div class="alignlist">
+								  <label>
+								    <input type="checkbox" value="">
+								    SITE NAME
+								  </label>
+								</div>
+								<div class="alignlist">
+								  <label>
+								    <input type="checkbox" value="">
+								    SITE NAME
+								  </label>
+								</div>
+								<div class="alignlist">
+								  <label>
+								    <input type="checkbox" value="">
+								    SITE NAME
+								  </label>
+								</div>
+								<div class="alignlist">
+								  <label>
+								    <input type="checkbox" value="">
+								    SITE NAME
+								  </label>
+								</div>
+								<div class="alignlist">
+								  <label>
+								    <input type="checkbox" value="">
+								    SITE NAME
+								  </label>
+								</div>
+								<div class="alignlist">
+								  <label>
+								    <input type="checkbox" value="">
+								    SITE NAME
+								  </label>
+								</div>
+								<div class="alignlist">
+								  <label>
+								    <input type="checkbox" value="">
+								    SITE NAME
+								  </label>
+								</div>
+								<div class="alignlist">
+								  <label>
+								    <input type="checkbox" value="">
+								    SITE NAME
+								  </label>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
+			</div>
+
+			<!-- MODAL -->
+			<div class="modal fade bs-example-modal-sm" role="dialog" id="addSite">
+			  <div class="modal-dialog modal-sm" role="document">
+			  	<div class="modal-content">
+				  	<div class="modal-header">
+				  		<h4 class="modal-title col-md-11">Add new site</h4>
+				        <button type="button" class="close col-md-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				    </div>
+				    <div class="modal-body">
+			     	<input type="text" class="form-control" placeholder="Name of new site">
+			     	</div>
+			     	<div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        <button type="button" class="btn btn-primary">Save changes</button>
+				      </div>
+			    </div>
+			  </div>
 			</div>
 
 			<!-- Position Management -->
