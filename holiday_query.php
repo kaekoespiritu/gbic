@@ -26,7 +26,7 @@ if(isset($_GET['name']) && isset($_GET['type']) && isset($_GET['date']))
 										type='$holidayType' WHERE date = '$holidayDate'";
 	}
 	//adds Holiday to the finished attendance for that day
-	$attendanceArr = "UPDATE attendance SET holiday = '$holidayDate' WHERE date = '$holidayDate'";
+	$attendanceArr = "UPDATE attendance SET holiday = '$holidayDate' WHERE date = '$holidayDate' AND(attendance = '1' OR attendance = '2')";
 	mysql_query($attendanceArr);
 
 
