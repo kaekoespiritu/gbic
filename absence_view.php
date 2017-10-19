@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <?php
 include('directives/session.php');
-if(isset($_SESSION['empid']))
+include('directives/db.php');
+if(!isset($_POST['empid']))
 {
-	$empid = $_SESSION['empid'];
+	header("location:index.php");
 }
+else
+{
+	$empid = $_POST['empid'];
+	Print "<script>console.log('".$empid."')</script>";
+}
+
+$employee = "SELECT * FROM employee WHERE empid = '$empid'";
+$employeeQuery = mysql_query($employee);
+$empRow = mysql_fetch_assoc($employeeQuery);
 ?>
 <html>
 <head>
@@ -30,10 +40,10 @@ if(isset($_SESSION['empid']))
 		<div class="col-md-10 col-md-offset-1">
 		<ol class="breadcrumb text-left">
 			<li><a href="applications.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Absence Notifications</a></li>
-			<li class="active">Check details for [EMPLOYEE NAME]</li>
+			<li class="active">AWOL pending</li>
 			<button class="btn btn-danger pull-right">Terminate employee</button>
 		</ol>
-			<h2 class="text-left">Miguelito Joselito Dela Cruz</h2>
+			<h2 class="text-left"><?php Print $empRow['lastname'].", ".$empRow['firstname']?></h2>
 			<hr>
 
 			<div class="row">

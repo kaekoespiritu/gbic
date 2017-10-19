@@ -123,7 +123,6 @@ if(!isset($_GET['site']) && !isset($_GET['site']) && !isset($_GET['site']))
 							$empInfo = mysql_fetch_assoc($employeeQuery);
 							Print "
 										<tr>
-											
 											<td>
 												".$empid."
 											</td>
@@ -153,6 +152,7 @@ if(!isset($_GET['site']) && !isset($_GET['site']) && !isset($_GET['site']))
 						}
 					?>
 				</table>
+				<div id="hidden_form_container"></div>
 			</div>	
 		</div>
 
@@ -169,10 +169,26 @@ if(!isset($_GET['site']) && !isset($_GET['site']) && !isset($_GET['site']))
 			confirm("Note: After saving these changes, the loans you've entered will no longer be editable. Are you sure you want to save changes?");
 		}
 		document.getElementById("employees").setAttribute("style", "background-color: #10621e;");
-		function next(id){
-			//alert(id);
-			window.location.assign("applications_next.php?id="+id);
-		}
+		
+		function next(id) 
+		{
+	  	var form, input, newInput2;
+	  	//Created a form
+	  	form = document.createElement('form');
+	  	form.action = 'absence_view.php';
+	  	form.method = 'post';
+	  	//Elements insite the form
+	  	input = document.createElement('input');
+	  	input.type = 'hidden';
+	  	input.name = 'empid';
+	  	input.value = id;
+
+	  	//Insert inside the elements inside the form
+	  	form.appendChild(input);
+	  	document.getElementById('hidden_form_container').appendChild(form);
+	  	//used DOM to submit the form
+	  	form.submit();
+		}	
 	</script>
 </body>
 </html>

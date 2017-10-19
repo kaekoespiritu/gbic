@@ -20,7 +20,8 @@
 									<label for="fname">First name</label>
 								</div>
 								<div class="col-md-9">
-									<input name="txt_addFirstName" onkeypress="validateletter(event)" type="text" class="form-control" id="fname" name="firstname" readonly>
+									<input onkeypress="validateletter(event)" type="text" class="form-control" id="fname" name="firstname" readonly>
+									<input type="hidden" id="empid" name="empid">
 								</div>
 							</div><br>
 
@@ -29,7 +30,7 @@
 									<label for="lname">Last name</label>
 								</div>
 								<div class="col-md-9">
-									<input name="txt_addLastName" onkeypress="validateletter(event)" type="text" class="form-control" id="lname"  name="lastname"readonly>
+									<input onkeypress="validateletter(event)" type="text" class="form-control" id="lname"  name="lastname"readonly>
 								</div>
 							</div><br>
 
@@ -38,7 +39,7 @@
 									<label for="address">Address</label>
 								</div>
 								<div class="col-md-9">
-									<input name="txt_addAddress" onkeypress="validateletter(event)" type="text" class="form-control" id="address" name="address" readonly>
+									<input onkeypress="validateletter(event)" type="text" class="form-control" id="address" name="address" readonly>
 								</div>
 							</div><br>
 
@@ -47,7 +48,7 @@
 									<label for="contact">Contact number</label>
 								</div>
 								<div class="col-md-4">
-									<input name="txt_addContactNum" onkeypress="validatenumber(event)" type="text" class="form-control" id="contact" name="contactnum" readonly>
+									<input onkeypress="validatenumber(event)" type="text" class="form-control" id="contact" name="contactnum" readonly>
 								</div>
 							</div><br>
 
@@ -58,10 +59,10 @@
 								</div>
 								<div class="form-group col-md-4">
 									<select class="form-control" name="loanType" id="loanType">
-										<option>SSS</option>
-										<option>PagIBIG</option>
-										<option>Old vale</option>
-										<option>New vale</option>
+										<option value="SSS">SSS</option>
+										<option value="PagIBIG">PagIBIG</option>
+										<option value="oldVale">Old vale</option>
+										<option value="newVale">New vale</option>
 									</select>
 								</div>
 								<div class="col-md-5">
@@ -102,7 +103,7 @@
 									<label for="rate">Rate Per Day</label>
 								</div>
 								<div class="col-md-5">
-									<input name="txt_addRatePerDay" name="rate" type="text" class="form-control" id="rate"  readonly>
+									<input name="rate" type="text" class="form-control" id="rate"  readonly>
 								</div>
 							</div><br>
 
@@ -112,7 +113,7 @@
 									<label for="rate">Old vale</label>
 								</div>
 								<div class="col-md-5">
-									<input name="txt_oldVale"  type="text" class="form-control" id="vale" placeholder="--" readonly>
+									<input name="txt_oldVale"  type="text" class="form-control" id="oldvale" placeholder="--" readonly>
 								</div>
 							</div><br>
 							<div class="row">
@@ -120,7 +121,7 @@
 									<label for="rate">New vale</label>
 								</div>
 								<div class="col-md-5">
-									<input name="txt_newVale"  type="text" class="form-control" id="vale" placeholder="--" readonly>
+									<input name="txt_newVale"  type="text" class="form-control" id="newvale" placeholder="--" readonly>
 								</div>
 							</div><br>
 							<div class="row">

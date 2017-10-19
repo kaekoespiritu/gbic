@@ -5,6 +5,25 @@ date_default_timezone_set('Asia/Hong_Kong');
 
 $date = strftime("%B %d, %Y");// Gets the current date
 
+$empid = $_POST['empid'];
+$loanType = $_POST['loanType'];
+$loanAmount = $_POST['loanAmount'];
+$reason = mysql_real_escape_string($_POST['reason']);
+$position = $_POST['position'];
+$site = $_POST['site'];
+$rate = $_POST['rate'];
+
+$loanAmount = number_format($loanAmount, 2, '.', '');//for 2 decimal places
+$query = "INSERT INTO loans(empid, type, amount, remarks, date) VALUES('$empid', 
+																'$loanType',
+																'$loanAmount',
+																'$reason',
+																'$date')";
+mysql_query($query);
+
+Print "<script>window.location.assign('loans_view.php?type=".$loanType."')</script>";
+
+
 
 //---------------------------------------- OLD ALGORITHM -------------------------------------------------
 

@@ -4,6 +4,19 @@ include('directives/session.php');
 include('directives/db.php');
 
 $date = strftime("%B %d, %Y");
+
+if(!isset($_GET['type']))
+{
+	header("location: index.php");
+}
+$loanType = $_GET['type'];
+
+//For display on breadcrum
+$displayLoan = $loanType;
+if($loanType == "oldVale")
+	$displayLoan = "Old Vale";
+else if($loanType == "newVale")
+	$displayLoan = "New Vale";
 ?>
 <html>
 <head>
@@ -30,7 +43,7 @@ $date = strftime("%B %d, %Y");
 					<li>
 						<a href="loans_landing.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Loans Application</a>
 					</li>
-					<li class="active">Viewing loans for SSS/PagIBIG/Vale</li>
+					<li class="active">Viewing loans for <?Print $displayLoan?></li>
 				</ol>
 			</div>
 
@@ -53,7 +66,7 @@ $date = strftime("%B %d, %Y");
 					<select class="form-control" id="position" onchange="position()">
 						<option hidden>Position</option>
 						<?php
-						$position = "SELECT position FROM job_position";
+						$position = "SELECT * FROM position FROM job_position";
 						$position_query = mysql_query($position);
 
 						while($row_position = mysql_fetch_assoc($position_query))
@@ -79,7 +92,7 @@ $date = strftime("%B %d, %Y");
 					<select class="form-control" id="site" onchange="site()">
 						<option hidden>Site</option>
 						<?php
-						$site = "SELECT location FROM site";
+						$site = "SELECT * FROM location FROM site";
 						$site_query = mysql_query($site);
 
 						while($row_site = mysql_fetch_assoc($site_query))
@@ -120,27 +133,49 @@ $date = strftime("%B %d, %Y");
 					<td>Amount to be paid</td>
 					<td>History</td>
 				</tr>
-				<tr>
-					<input type='hidden' name='empid[]' value='". $empid ."'>
-					<td style='vertical-align: inherit'>
-						EMPID HERE
-					</td>
-					<td style='vertical-align: inherit'>
-						Last Name, First Name
-					</td>
-					<td style='vertical-align: inherit'>
-						Position
-					</td>
-					<td style='vertical-align: inherit'>
-						Site
-					</td>
-					<td style='vertical-align: inherit'>
-						AMOUNT TO BE PAID HERE
-					</td>
-					<td>
-						<a class='btn btn-primary' href="loans_history.php"><span class="glyphicon glyphicon-list-alt"></span> View</a>
-					</td>
-				</tr>
+				<?php 
+					$loans = "SELECT DISTINCT * FROM loans WHERE type = '$loanType' AND amount > 0 ORDER BY empid";
+					$loansQuery = mysql_query($loans);
+					if(mysql_num_rows($loansQuery) > 0)
+					{
+						while($row = mysql_fetch_assoc($loansQuery))
+						{
+							$empid = $row['empid'];
+							$employees = "SELECT * FROM employee WHERE empid = '$empid'";
+							$employeeQuery = mysql_query($employees);
+							$empArr = mysql_fetch_assoc($employeeQuery);
+
+							Print "
+									<tr>
+										<input type='hidden' name='empid[]' value='". $empid ."'>
+										<td style='vertical-align: inherit'>
+											".$empid."
+										</td>
+										<td style='vertical-align: inherit'>
+											".$empArr['lastname'].", ".$empArr['firstname']."
+										</td>
+										<td style='vertical-align: inherit'>
+											".$empArr['position']."
+										</td>
+										<td style='vertical-align: inherit'>
+											".$empArr['site']."
+										</td>
+										<td style='vertical-align: inherit'>
+											".number_format($row['amount'], 2, '.', ',')."
+										</td>
+										<td>
+											<a class='btn btn-primary' href='loans_history.php'><span class='glyphicon glyphicon-list-alt'></span> View</a>
+										</td>
+									</tr>
+									";
+						}
+					}
+					else
+					{
+
+					}
+				?>
+				
 			</table>
 			</form>
 		</div>	
