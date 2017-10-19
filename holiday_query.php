@@ -2,6 +2,7 @@
 include('directives/session.php');
 include('directives/db.php');
 //New Holiday & Update holiday
+
 if(isset($_GET['name']) && isset($_GET['type']) && isset($_GET['date']))
 {
 	$holidayName = $_GET['name'];
@@ -24,16 +25,21 @@ if(isset($_GET['name']) && isset($_GET['type']) && isset($_GET['date']))
 										date='$holidayDate',
 										type='$holidayType' WHERE date = '$holidayDate'";
 	}
+	//adds Holiday to the finished attendance for that day
+	$attendanceArr = "UPDATE attendance SET holiday = '$holidayDate' WHERE date = '$holidayDate'";
+	mysql_query($attendanceArr);
+
+
+	//Query for holiday
 	mysql_query($holiday);
 
 	 
 	Print "<script>window.location.assign('attendance.php')</script>";
 }
-//Cancel holiday
-else if(isset($_GET['date']))
+else if(isset($_GET['date']))//Cancel holiday
 {
 	$date = $_GET['date'];
-	$empHoliday = "UPDATE attendace SET holiday = '0' WHERE holiday = $date";
+	$empHoliday = "UPDATE attendance SET holiday = '0' WHERE date = '$date'";
 	mysql_query($empHoliday);
 	Print "<script>window.location.assign('attendance.php')</script>";
 

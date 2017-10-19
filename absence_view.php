@@ -48,10 +48,10 @@ $empRow = mysql_fetch_assoc($employeeQuery);
 
 			<div class="row">
 				<div class="col-md-8 text-left" style="word-break: keep-all">
-					<h4><b style="font-family: QuickSandMed">Employee ID:</b> 2014-1352845</h4>
-					<h4><b style="font-family: QuickSandMed">Date of hire:</b> July 14, 2014 </h4>
-					<h4><b style="font-family: QuickSandMed">Address:</b> 97 Waco St. Greenheights Village, Quezon City</h4>
-					<h4><b style="font-family: QuickSandMed">Contact Number:</b> 09123456789</h4>
+					<h4><b style="font-family: QuickSandMed">Employee ID:</b><?php Print $empRow['empid']?></h4>
+					<h4><b style="font-family: QuickSandMed">Date of hire:</b><?php Print $empRow['datehired']?></h4>
+					<h4><b style="font-family: QuickSandMed">Address:</b><?php Print $empRow['address']?></h4>
+					<h4><b style="font-family: QuickSandMed">Contact Number:</b><?php Print $empRow['contactnum']?></h4>
 				</div>
 				<div class="col-md-4 pull-right text-right">
 					<h4>Unpaid loans:<br><br>
@@ -62,7 +62,7 @@ $empRow = mysql_fetch_assoc($employeeQuery);
 			</div>
 			<br>
 
-			<div class="well well-sm"><h3>Total days absent: 3</h3></div>
+			<div class="well well-sm"><h3>Total days absent: </h3></div>
 
 		</div>	
 	</div>

@@ -169,9 +169,9 @@ include('directives/session.php');
 								{
 									Print "<h4>Special Holiday</h4>";
 								}
-								Print "	<button type='button' class='btn btn-danger btn-sm pull-down' onclick='cancelHoliday()' id='cancel'>
+								Print "	<a href='holiday_query.php?date=".$date."' class='btn btn-danger btn-sm pull-down'  id='cancel'>
 										Cancel
-									</button>";	
+									</a>";	
 							}
 							//Print "<script>alert('lololo')</script>";
 							// else if($_SESSION['holidayType'] == "regular")
@@ -490,24 +490,25 @@ include('directives/session.php');
 	}
 	function cancelHoliday()
 	{
-		//alert('pasok');
-		document.getElementById('dynamicForm').innerHTML = "<button id='holiday' class='btn btn-primary' onclick='Holiday(this)'>Holiday?</button>";
-		document.getElementById('holidayType').value = "";
-		document.getElementById('holidayName').value = "";
-		var sunday = "<?php Print $day ?>";
-		if(sunday == "Sunday")
-		{
-			document.getElementById('holidayTitle').innerHTML = "Sunday attendance log";
-		}
-		else
-		{
-			document.getElementById('holidayTitle').innerHTML = "Daily attendance log";
-		}
-		window.location.href = "holiday_query.php?date=<?php Print $date ?>";
-		//dito
-			// document.getElementById('forPHP').innerHTML = 	"<?php 	//unset($_SESSION['holidayType']);
-			// 														unset($_SESSION['holidayName']);
-			// 												?>";
+		alert('pasok');
+		// document.getElementById('dynamicForm').innerHTML = "<button id='holiday' class='btn btn-primary' onclick='Holiday(this)'>Holiday?</button>";
+		// document.getElementById('holidayType').value = "";
+		// document.getElementById('holidayName').value = "";
+		// var sunday = "<?php //Print $day ?>";
+		// if(sunday == "Sunday")
+		// {
+		// 	document.getElementById('holidayTitle').innerHTML = "Sunday attendance log";
+		// }
+		// else
+		// {
+		// 	document.getElementById('holidayTitle').innerHTML = "Daily attendance log";
+		// }
+		window.location.assign("holiday_query.php?type=regular&name=yow&date=<?php Print $date ?>");
+		//window.location.assign("holiday_query.php?date=<?php Print $date ?>");
+		// dito
+		// 	document.getElementById('forPHP').innerHTML = 	"<?php 	//unset($_SESSION['holidayType']);
+		// 															unset($_SESSION['holidayName']);
+		// 													?>";
 	}
 	function Holiday(element)
 	{
@@ -520,10 +521,11 @@ include('directives/session.php');
 			nameOfHoliday.setAttribute("onkeypress", "txtHoliday(event)");
 			nameOfHoliday.setAttribute("id", "nameOfHoliday");
 
-		var cancelButton = document.createElement("button");
+		var cancelButton = document.createElement("a");
 			cancelButton.setAttribute("class", "btn btn-danger btn-sm pull-down");
 			cancelButton.setAttribute("id", "cancel");
-			cancelButton.setAttribute("onclick", "cancelHoliday()");
+			cancelButton.setAttribute("href", "holiday_query.php?date=<?php Print $date ?>");
+			//cancelButton.setAttribute("onclick", "cancelHoliday()");
 			cancelButton.innerHTML = "Cancel";
 
 		// Replacing button with input field
@@ -564,10 +566,11 @@ include('directives/session.php');
 			var form = document.getElementById('dynamicForm');
 			var inputField = document.getElementById('nameOfHoliday');
 			var cancel = document.getElementById('cancel');
-			var cancelButton = document.createElement("button");
+			var cancelButton = document.createElement("a");
 				cancelButton.setAttribute("class", "btn btn-danger btn-sm pull-down");
 				cancelButton.setAttribute("id", "cancel");
-				cancelButton.setAttribute("onclick", "cancelHoliday()");
+				cancelButton.setAttribute("href", "holiday_query.php?date=<?php Print $date ?>");
+				//cancelButton.setAttribute("onclick", "cancelHoliday()");
 				cancelButton.innerHTML = "Cancel";
 
 			// Removing previous form
