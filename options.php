@@ -387,8 +387,8 @@ include('directives/db.php');
 						<div class="panel-body">
 							<form method="post" action="logic_options_payroll.php">
 								<!-- hidden inputs for database use -->
-								<input type="hidden" name="openPayroll" id="open">
-								<input type="hidden" name="closePayroll" id="close">
+								<input type="hidden" name="openPayroll" id="open" value="<?php Print $payrollRow['open']?>">
+								<input type="hidden" name="closePayroll" id="close" value="<?php Print $payrollRow['close']?>">
 								<input type="submit" name="payrolldaySubmit" class="btn btn-primary">
 							</form>
 						</div>
@@ -439,65 +439,27 @@ include('directives/db.php');
 					<div class="panel-body">
 						<div class="col-md-5">
 							<a data-target="#addSite" data-toggle="modal" class="btn btn-primary col-md-12 pull-down">ADD SITE</a>
-							<a class="btn btn-danger col-md-12 pull-down" href="options_site.php">END CONTRACT</a>
+							<a class="btn btn-danger col-md-12 pull-down" onclick="siteRemove()">END CONTRACT</a>
 						</div>
 
 						<div class="col-md-7 text-left">
 							<div class="sitelist">
-								<div class="alignlist">
-								  <label>
-								    <input type="checkbox" value="">
-								    SITE NAME
-								  </label>
-								</div>
-								<div class="alignlist">
-								  <label>
-								    <input type="checkbox" value="">
-								    SITE NAME
-								  </label>
-								</div>
-								<div class="alignlist">
-								  <label>
-								    <input type="checkbox" value="">
-								    SITE NAME
-								  </label>
-								</div>
-								<div class="alignlist">
-								  <label>
-								    <input type="checkbox" value="">
-								    SITE NAME
-								  </label>
-								</div>
-								<div class="alignlist">
-								  <label>
-								    <input type="checkbox" value="">
-								    SITE NAME
-								  </label>
-								</div>
-								<div class="alignlist">
-								  <label>
-								    <input type="checkbox" value="">
-								    SITE NAME
-								  </label>
-								</div>
-								<div class="alignlist">
-								  <label>
-								    <input type="checkbox" value="">
-								    SITE NAME
-								  </label>
-								</div>
-								<div class="alignlist">
-								  <label>
-								    <input type="checkbox" value="">
-								    SITE NAME
-								  </label>
-								</div>
-								<div class="alignlist">
-								  <label>
-								    <input type="checkbox" value="">
-								    SITE NAME
-								  </label>
-								</div>
+								<form id="siteForm" method="post" action="logic_options_removeSite.php">
+									<?php 
+									$site = "SELECT * FROM site WHERE active = '1'";
+									$siteQuery = mysql_query($site);
+									
+									while($siteRow = mysql_fetch_assoc($siteQuery))
+									{
+										Print '	<div class="alignlist">
+												  <label>
+												    <input type="checkbox" name="site[]" value="'.$siteRow['location'].'">
+												    '.$siteRow['location'].'
+												  </label>
+												</div>';
+									}
+									?>
+								</form>							
 							</div>
 						</div>
 					</div>
@@ -512,13 +474,17 @@ include('directives/db.php');
 				  		<h4 class="modal-title col-md-11">Add new site</h4>
 				        <button type="button" class="close col-md-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				    </div>
-				    <div class="modal-body">
-			     	<input type="text" class="form-control" placeholder="Name of new site">
-			     	</div>
-			     	<div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary">Save changes</button>
-				      </div>
+				    <!-- form for adding SITES -->
+				    <form method="POST" action="logic_options_addSite.php">
+					    <div class="modal-body">
+				     		<input type="text" class="form-control" name="site_name" placeholder="Name of new site">
+				     	</div>
+				     	<div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					        <button type="submit" class="btn btn-primary">Save changes</button>
+					    </div>
+				  	</form>
+
 			    </div>
 			  </div>
 			</div>
@@ -530,13 +496,17 @@ include('directives/db.php');
 				  		<h4 class="modal-title col-md-11">Add new position</h4>
 				        <button type="button" class="close col-md-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				    </div>
-				    <div class="modal-body">
-			     	<input type="text" class="form-control" placeholder="Name of new position">
-			     	</div>
-			     	<div class="modal-footer">
+				    <!-- form for adding POSITIONS -->
+				    <form method="POST" action="logic_options_addPosition.php">
+					    <div class="modal-body">
+				     		<input type="text" name="position_name" class="form-control" placeholder="Name of new position">
+				     	</div>
+			     	
+			     		<div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary">Save changes</button>
-				      </div>
+				        <button type="submit" class="btn btn-primary">Save changes</button>
+				      	</div>
+				  	</form>
 			    </div>
 			  </div>
 			</div>
@@ -550,65 +520,26 @@ include('directives/db.php');
 					<div class="panel-body">
 						<div class="col-md-5">
 							<a data-target="#addPosition" data-toggle="modal" class="btn btn-primary col-md-12 pull-down">ADD POSITION</a>
-							<a class="btn btn-danger col-md-12 pull-down">REMOVE POSITION</a>
+							<a class="btn btn-danger col-md-12 pull-down" onclick="positionRemove()">REMOVE POSITION</a>
 						</div>
 
 						<div class="col-md-7 text-left">
 							<div class="sitelist">
-								<div class="alignlist">
-								  <label>
-								    <input type="checkbox" value="">
-								    POSITION NAME
-								  </label>
-								</div>
-								<div class="alignlist">
-								  <label>
-								    <input type="checkbox" value="">
-								    POSITION NAME
-								  </label>
-								</div>
-								<div class="alignlist">
-								  <label>
-								    <input type="checkbox" value="">
-								    POSITION NAME
-								  </label>
-								</div>
-								<div class="alignlist">
-								  <label>
-								    <input type="checkbox" value="">
-								    POSITION NAME
-								  </label>
-								</div>
-								<div class="alignlist">
-								  <label>
-								    <input type="checkbox" value="">
-								    POSITION NAME
-								  </label>
-								</div>
-								<div class="alignlist">
-								  <label>
-								    <input type="checkbox" value="">
-								    POSITION NAME
-								  </label>
-								</div>
-								<div class="alignlist">
-								  <label>
-								    <input type="checkbox" value="">
-								    POSITION NAME
-								  </label>
-								</div>
-								<div class="alignlist">
-								  <label>
-								    <input type="checkbox" value="">
-								    POSITION NAME
-								  </label>
-								</div>
-								<div class="alignlist">
-								  <label>
-								    <input type="checkbox" value="">
-								    POSITION NAME
-								  </label>
-								</div>
+								<form id="positionForm" method="post" action="logic_options_removePosition.php">
+									<?php 
+									$position = "SELECT * FROM job_position WHERE active = '1'";
+									$positionQuery = mysql_query($position);
+									while($positionRow = mysql_fetch_assoc($positionQuery))
+									{
+										Print '	<div class="alignlist">
+												  <label>
+												    <input type="checkbox" name="position[]" value="'.$positionRow['position'].'">
+												    '.$positionRow['position'].'
+												  </label>
+												</div>';
+									}
+									?>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -750,7 +681,35 @@ include('directives/db.php');
 			}
 		}
 
+		function siteRemove(){
+			var a = confirm("Are you sure you want to Archive these Site(s)?")
+			if(a)
+			{
+				document.getElementById('siteForm').submit();
+			}
+		}
+		function positionRemove(){
+			var a = confirm("Are you sure you want to Archive these Position(s)?")
+			if(a)
+			{
+				document.getElementById('positionForm').submit();
+			}
+		}
+
 	</script>
 </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+

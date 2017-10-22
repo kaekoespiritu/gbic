@@ -256,6 +256,7 @@ $( "#dtpkr_addEmployee" ).datepicker({
 	dateFormat: 'mm-dd-yy',
 	showAnim: 'blind',
 	defaultDate: new Date(),
+	yearRange: "-50:+0",
 	beforeShow: function(){    
 	$(".ui-datepicker").css('font-size', 10) 
 	}
@@ -266,6 +267,7 @@ $( "#dtpkr_addDOB").datepicker({
 	dateFormat: 'mm-dd-yy',
 	showAnim: 'blind',
 	defaultDate: new Date(),
+	yearRange: "-70:+0",
 	beforeShow: function(){    
 	$(".ui-datepicker").css('font-size', 10) 
 	}
