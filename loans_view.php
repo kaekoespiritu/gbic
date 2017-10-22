@@ -36,6 +36,11 @@ else if($loanType == "newVale")
 		require_once("directives/nav.php");
 		?>
 
+		<!-- Modal for viewing loans history -->
+		<?php
+		require_once("directives/modals/loans_history.php");
+		?>
+
 		<!-- Breadcrumbs -->
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1 pull-down">
@@ -164,7 +169,7 @@ else if($loanType == "newVale")
 											".number_format($row['amount'], 2, '.', ',')."
 										</td>
 										<td>
-											<a class='btn btn-primary' href='loans_history.php'><span class='glyphicon glyphicon-list-alt'></span> View</a>
+											<a class='btn btn-primary' data-toggle='modal' data-target='#viewLoanHistory'><span class='glyphicon glyphicon-list-alt'></span> View</a>
 										</td>
 									</tr>
 									";
