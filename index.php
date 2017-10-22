@@ -70,12 +70,26 @@ include('directives/db.php');
 		</tr>
 	</table>
 
-	<a href="applications.php"><div class="panel panel-danger">
-		<div class="panel-heading">
+	
+		
 			<!-- TODO: WILL REDIRECT TO APPLICATIONS PAGE WITH FILTER SET TO PENDING APPROVAL AND 7 DAYS INCURRED ABSENCE-->
-			<h3 class="panel-title">ABSENCE NOTICE: There are 5 employee(s) absent for a week.</h3>
-		</div>
-	</div></a>
+			<?php
+			$awol = "SELECT * FROM awol_employees";
+			$awolQuery = mysql_query($awol);
+			$awolCount = mysql_num_rows($awolQuery);
+			if($awolCount > 0)
+			{
+				Print "<script>alert('Notice: There are ".$awolCount." Employees accumulated 7days of absences and are PENDING for AWOL')</script>";
+				Print "	<a href='applications.php'>
+							<div class='panel panel-danger'>
+								<div class='panel-heading'>
+									<h3 class='panel-title'>ABSENCE NOTICE: There are ".$awolCount." employee(s) absent for a week.</h3>
+								</div>
+							</div>
+						</a>";
+			}
+			?>
+	
 </div>
 
 <!-- SITES -->
