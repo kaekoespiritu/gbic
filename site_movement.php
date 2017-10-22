@@ -23,18 +23,26 @@ include('directives/session.php');
 		?>
 
 		<!-- Breadcrumbs -->
-		<div class="col-md-10 col-md-offset-1 pull-down">
-			<ol class="breadcrumb text-left">
-				<li>
-					<a href="employees.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a>
-				</li>
-				<li class="active">Moving employees to new site</li>
-			</ol>
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1 pull-down">
+				<ol class="breadcrumb text-left">
+					<li>
+						<a href="employees.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a>
+					</li>
+					<li class="active">Moving employees to new site</li>
+				</ol>
+			</div>
 		</div>
 
 		<!-- Table of vacant employees-->
 		<div class="col-md-10 col-md-offset-1">
-			<table class="table table-bordered">
+			<div class="pull-left">
+				<a data-target="#changeSite" data-toggle="modal" class="btn btn-default">
+					<span class="glyphicon glyphicon-arrow-down"></span> Change site for selected employees
+				</a>
+			</div>
+
+			<table class="table table-bordered pull-down">
 				<thead>
 				<tr>
 					<td>Select</td>
@@ -67,9 +75,6 @@ include('directives/session.php');
 					</tr>
 				</tbody>
 			</table>
-			<div class="text-left aligncheck">
-				<img src="Images/arrow_ltr.png"><a data-target="#changeSite" data-toggle="modal" class="btn btn-default">Change Site</a>
-			</div>
 		</div>
 
 		<!-- MODAL -->

@@ -333,12 +333,27 @@ hr
 .searchresults 
 {
   background-color: white;
-  border:solid 1px grey;
-  z-index:1000;
+  z-index:100;
   position:relative;
-  bottom:47px;
   width:458px;
-  left:24px;
+  margin-left:263px;
+}
+
+.searchresults:hover
+{
+  background-color: lightblue;
+}
+
+.searchresults a:hover
+{
+  text-decoration: none;
+  color: black;
+}
+
+#search_result
+{
+  position:absolute;
+  margin-top: -3.3em;
 }
 
 /* Options page */
@@ -367,7 +382,3 @@ hr
   -o-transform: rotate(270deg);
   transform: rotate(270deg);
 }
-
-.aligncheck
-{
-  margin-left: 35px;

@@ -49,7 +49,7 @@ require_once("directives/modals/addLoan.php");
 					</div>
 				</div>
 
-				<div id="search_result"></div>
+				<div id="search_result" class="col-md-12"></div>
 				 
 
 		</div>
@@ -122,21 +122,21 @@ require_once("directives/modals/addLoan.php");
 				<table class="table table-bordered table-responsive" style="color: white; font-family:Quicksand">
 					<tr>
 						<td style="background-color:chocolate">
-							<h2><br>
-								<?php  Print number_format($counter, 2, '.', ','); ?>
+							<h2 class="text-center"><br>
+								<?php  Print $counter ?>
 							</h2><br>
 							<h3>Employees with VALE</h3>
 						</td>
 						<td style="background-color: darkgray">
 							<h3 class="text-center">OLD VALE loaned to Employees</h3>
 							<br><br>
-							<h2 class="text-center"><?php Print number_format($oldValeComputation, 2, '.', ',') ?></h2><br>
+							<h2 class="text-center"><?php Print "₱" . number_format($oldValeComputation, 2, '.', ','); ?></h2><br>
 						</div>
 					</td>
 					<td style="background-color: cornflowerblue">
 						<h3 class="text-center">NEW VALE loaned to Employees</h3>
 						<br><br>
-						<h2 class="text-center"><?php Print number_format($newValeComputation, 2, '.', ',') ?></h2><br>
+						<h2 class="text-center"><?php Print "₱" . number_format($newValeComputation, 2, '.', ','); ?></h2><br>
 					</td>
 				</tr>
 			</table>
