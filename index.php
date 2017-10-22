@@ -80,7 +80,7 @@ include('directives/db.php');
 
 <!-- SITES -->
 <?php
-$query = "SELECT location FROM site";
+$query = "SELECT location FROM site WHERE active = '1'";
 $site_query = mysql_query($query);
 
 $cycles = 0;

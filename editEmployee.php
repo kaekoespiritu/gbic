@@ -171,7 +171,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 								<select class="form-control" name="position" aria-labelledby="dropdownMenu1">
 									<option hidden>Select a position</option>
 									<?php
-										$query = "SELECT position FROM job_position";
+										$query = "SELECT position FROM job_position WHERE active = '1'";
 										$job_query = mysql_query($query);
 										while($row = mysql_fetch_assoc($job_query))
 										{
@@ -200,7 +200,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 								<select name="site" class="form-control">
 									<option hidden>Select a site</option>
 									<?php
-										$site_query = "SELECT location FROM site";
+										$site_query = "SELECT location FROM site WHERE active = '1'";
 										$location_query = mysql_query($site_query);
 										while($row = mysql_fetch_assoc($location_query))
 										{

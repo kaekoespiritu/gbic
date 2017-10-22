@@ -26,7 +26,7 @@
 		if(mysql_num_rows($checkerQuery) == 0)
 		{
 			$success++;
-			$removePosition = "UPDATE job_position SET active = '0' WHERE position = '$position'";
+			$removePosition = "UPDATE job_position SET active = '0' WHERE position = '$position' ";
 			mysql_query($removePosition);
 			if($successArchive != "")
 			{

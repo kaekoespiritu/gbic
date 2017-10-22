@@ -12,7 +12,7 @@ date_default_timezone_set('Asia/Hong_Kong');
 $date =  strftime("%h %e, %Y");
 $filename = $date." - Attendance.xls";
 
-$location_q = "SELECT * FROM site";
+$location_q = "SELECT * FROM site WHERE active = '1'";
 $location_query = mysql_query($location_q);
 
 if($location_query)
@@ -33,7 +33,7 @@ for($counter = 0; $counter < $num_site; $counter++)//1st loop for sites
 	if(isset($_POST['selectedSite'][$counter]))
 	{
 		$selected = $_POST['selectedSite'][$counter];
-		$query = "SELECT * FROM site WHERE location = '$selected'";
+		$query = "SELECT * FROM site WHERE location = '$selected' AND active = '1'";
 		$selected_query = mysql_query($query);
 		$site = mysql_fetch_assoc($selected_query);
 

@@ -76,7 +76,7 @@
 						<select class="form-control" id="position" onchange="position()">
 							<option hidden>Position</option>
 							<?php
-							$position = "SELECT position FROM job_position";
+							$position = "SELECT position FROM job_position WHERE active = '1'";
 							$position_query = mysql_query($position);
 
 
