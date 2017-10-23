@@ -140,18 +140,6 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 						</div>
 					</div>
 
-						<h4 class="modal-title"><br>Other Government info</h4>
-						<hr>
-
-						<div class="row pull-down">
-							<div class="col-md-3">
-								<label for="COLA">COLA</label>
-							</div>
-							<div class="col-md-3">
-								<input name="txt_Cola" type="text" class="form-control">
-							</div>
-						</div>
-
 						<div class="col-md-12 pull-down">
 							
 							<input type='submit' class='btn btn-primary pull-down' value='Save Changes'>
