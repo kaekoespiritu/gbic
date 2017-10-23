@@ -376,6 +376,21 @@ hr
   margin-top:10px;
 }
 
+.accountlist
+{
+  overflow: scroll;
+  background-color: white;
+  height: 100px;
+  width: 190px;
+  border: solid 1px black;
+}
+
+.moveabit
+{
+  margin-left: 10px;
+}
+
+
 /* Site movement page */
 .flipicon
 {

@@ -406,7 +406,27 @@ include('directives/db.php');
 								<h3 class="panel-title">Administrator</h3>
 							</div>
 							<div class="panel-body">
-								Add account
+								<div class="col-md-6">
+									<button type="button" class="btn btn-primary col-md-12">
+										<span class="glyphicon glyphicon-user"></span> ADD ACCOUNT
+									</button>
+									<button type="button" class="btn btn-success pull-down col-md-12">
+										<span class="glyphicon glyphicon-pencil"></span> EDIT ACCOUNT
+									</button>
+									<button type="button" class="btn btn-danger pull-down col-md-12">
+										<span class="glyphicon glyphicon-remove"></span> REMOVE ACCOUNT
+									</button>
+								</div>
+								<div class="col-md-6">
+									<h4>Currently logged in as: Administrator</h4><br>
+									<div class="accountlist text-left">
+										<span class="moveabit">Accounts:</span><br>
+										<ul>
+											<li>Name</li>
+											<li>Name</li>
+										</ul>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -416,7 +436,27 @@ include('directives/db.php');
 								<h3 class="panel-title">Employee</h3>
 							</div>
 							<div class="panel-body">
-								Add account
+								<div class="col-md-6">
+									<button type="button" class="btn btn-primary col-md-12">
+										<span class="glyphicon glyphicon-user"></span> ADD ACCOUNT
+									</button>
+									<button type="button" class="btn btn-success pull-down col-md-12">
+										<span class="glyphicon glyphicon-pencil"></span> EDIT ACCOUNT
+									</button>
+									<button type="button" class="btn btn-danger pull-down col-md-12">
+										<span class="glyphicon glyphicon-remove"></span> REMOVE ACCOUNT
+									</button>
+								</div>
+								<div class="col-md-6">
+									<h4>Currently logged in as: N/A</h4><br>
+									<div class="accountlist text-left">
+										<span class="moveabit">Accounts:</span><br>
+										<ul>
+											<li>Name</li>
+											<li>Name</li>
+										</ul>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -440,7 +480,7 @@ include('directives/db.php');
 						<div class="col-md-5">
 							<a data-target="#addSite" data-toggle="modal" class="btn btn-primary col-md-12 pull-down">ADD SITE</a>
 							<a class="btn btn-danger col-md-12 pull-down" onclick="siteRemove()">END CONTRACT</a>
-							<a class="btn btn-warning col-md-12 pull-down" onclick="">ADD COLA</a>
+							<a class="btn btn-warning col-md-12 pull-down" data-target="#colaSettings" data-toggle="modal">SETTINGS FOR COLA</a>
 						</div>
 
 						<div class="col-md-7 text-left">
@@ -467,8 +507,8 @@ include('directives/db.php');
 				</div>
 			</div>
 
-			<!-- MODAL -->
-			<div class="modal fade bs-example-modal-sm" role="dialog" id="addSite">
+			<!-- MODAL for adding site-->
+			<div class="modal fade" role="dialog" id="addSite">
 			  <div class="modal-dialog modal-sm" role="document">
 			  	<div class="modal-content">
 				  	<div class="modal-header">
@@ -481,15 +521,55 @@ include('directives/db.php');
 				     		<input type="text" class="form-control" name="site_name" placeholder="Name of new site">
 				     	</div>
 				     	<div class="modal-footer">
-					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				     		<div class="col-md-5">
+				     			<input type="number" placeholder="COLA" class="form-control input-sm">
+				     		</div>
 					        <button type="submit" class="btn btn-primary">Save changes</button>
 					    </div>
 				  	</form>
-
 			    </div>
 			  </div>
 			</div>
 
+			<!-- MODAL for COLA settings-->
+			<div class="modal fade" role="dialog" id="colaSettings">
+			  <div class="modal-dialog modal-sm" role="document">
+			  	<div class="modal-content">
+				  	<div class="modal-header">
+				  		<h4 class="modal-title col-md-11">Manage COLA settings</h4>
+				        <button type="button" class="close col-md-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				    </div>
+				    <div class="modal-body">
+				    	<div class="row">
+					    	<div class="col-md-6">
+							    <div class="dropdown">
+									<select class="form-control" name="dd_site" required>
+										<option hidden>Select a site</option>
+									<?php
+										$site_query = "SELECT location FROM site WHERE active = '1'";
+										$location_query = mysql_query($site_query);
+										while($row = mysql_fetch_assoc($location_query))
+										{
+											Print '<option value="'.$row["location"].'">'.$row["location"].'</option>';
+										}
+									?>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<input type="number" class="form-control" placeholder="Enter COLA">
+							</div>
+						</div>
+					</div>
+			     	<div class="modal-footer">
+				        <button type="submit" class="btn btn-primary">Save changes</button>
+				    </div>
+			    </div>
+			  </div>
+			</div>
+
+
+			<!-- MODAL for adding a position-->
 			<div class="modal fade bs-example-modal-sm" role="dialog" id="addPosition">
 			  <div class="modal-dialog modal-sm" role="document">
 			  	<div class="modal-content">
@@ -504,7 +584,6 @@ include('directives/db.php');
 				     	</div>
 			     	
 			     		<div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				        <button type="submit" class="btn btn-primary">Save changes</button>
 				      	</div>
 				  	</form>
