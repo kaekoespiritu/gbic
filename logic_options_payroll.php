@@ -12,8 +12,9 @@
 		$openPayroll = $_POST['openPayroll'];
 		$closePayroll = $_POST['closePayroll'];
 
-		$query = "INSERT payroll_day(open, close) VALUES('$openPayroll','$closePayroll')";
-		$dayPayrollQuery = mysql_query($query);
+		Print "<script>alert('open:".$openPayroll."|close:".$closePayroll."')</script>";
+		$query = "UPDATE payroll_day SET open = '$openPayroll', close = '$closePayroll'";
+		mysql_query($query);
 		Print "	<script>
 					alert('Payroll day Successfully changed');
 					window.location.assign('options.php');

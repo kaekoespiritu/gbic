@@ -258,7 +258,7 @@ include('directives/session.php');
 					<div class="col-md-6">
 						<select multiple="multiple" class="text-left">
 							<?php
-							$site = "SELECT location FROM site";
+							$site = "SELECT location FROM site WHERE active = '1'";
 							$site_query = mysql_query($site);
 							while($row_site = mysql_fetch_assoc($site_query))
 							{
@@ -284,7 +284,7 @@ include('directives/session.php');
 			$attCounter = 0;//Attendance Completion Checker
 			$counter = 0;//Counter for the While loop
 
-			$site_box = "SELECT location FROM site";
+			$site_box = "SELECT location FROM site WHERE active = '1'";
 			$site_box_query = mysql_query($site_box);
 			while($row = mysql_fetch_assoc($site_box_query))
 			{
@@ -374,7 +374,7 @@ include('directives/session.php');
 				}
 			}
 				//Attendance Completion Checker
-				$siteChecker = "SELECT * FROM site";
+				$siteChecker = "SELECT * FROM site WHERE active = '1'";
 				$siteQuery = mysql_query($siteChecker);
 				$siteNum = mysql_num_rows($siteQuery);
 				if($siteNum == $attCounter)

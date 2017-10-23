@@ -107,7 +107,7 @@
 										<select name="dd_addPosition" class="form-control" aria-labelledby="dropdownMenu1" required>
 											<option hidden>Select a position</option>
 										<?php
-										$query = "SELECT position FROM job_position";
+										$query = "SELECT position FROM job_position WHERE active = '1'";
 										$job_query = mysql_query($query);
 										while($row = mysql_fetch_assoc($job_query))
 										{
@@ -128,7 +128,7 @@
 										<select class="form-control" name="dd_site" required>
 											<option hidden>Select a site</option>
 										<?php
-											$site_query = "SELECT location FROM site";
+											$site_query = "SELECT location FROM site WHERE active = '1'";
 											$location_query = mysql_query($site_query);
 											while($row = mysql_fetch_assoc($location_query))
 											{

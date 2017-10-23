@@ -48,7 +48,7 @@ include('directives/session.php');
 
 			$counter = 0;
 
-			$site_box = "SELECT location FROM site";
+			$site_box = "SELECT location FROM site WHERE active = '1'";
 			$site_box_query = mysql_query($site_box);
 			while($row = mysql_fetch_assoc($site_box_query))
 			{

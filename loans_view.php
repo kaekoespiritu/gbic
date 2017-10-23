@@ -71,7 +71,7 @@ else if($loanType == "newVale")
 					<select class="form-control" id="position" onchange="position()">
 						<option hidden>Position</option>
 						<?php
-						$position = "SELECT * FROM position FROM job_position";
+						$position = "SELECT * FROM position FROM job_position WHERE active = '1'";
 						$position_query = mysql_query($position);
 
 						while($row_position = mysql_fetch_assoc($position_query))
@@ -97,7 +97,7 @@ else if($loanType == "newVale")
 					<select class="form-control" id="site" onchange="site()">
 						<option hidden>Site</option>
 						<?php
-						$site = "SELECT * FROM location FROM site";
+						$site = "SELECT * FROM site WHERE active = '1'";
 						$site_query = mysql_query($site);
 
 						while($row_site = mysql_fetch_assoc($site_query))

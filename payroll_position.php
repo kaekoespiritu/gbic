@@ -56,7 +56,7 @@ include('directives/session.php');
 
 			$counter = 0;
 
-			$position_box = "SELECT position FROM job_position";
+			$position_box = "SELECT position FROM job_position WHERE active = '1'";
 			$position_box_query = mysql_query($position_box);
 			while($row = mysql_fetch_assoc($position_box_query))
 			{

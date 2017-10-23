@@ -3,7 +3,7 @@ include('directives/session.php');
 include('directives/db.php');
 include_once 'modules/Classes/PHPExcel.php';
 
-$site = "SELECT * FROM site";
+$site = "SELECT * FROM site WHERE active = '1'";
 $site_query = mysql_query($site);
 date_default_timezone_set('Asia/Hong_Kong');
 $date =  strftime("%h %e, %Y");
