@@ -115,6 +115,8 @@ if(!isset($_GET['site']) && !isset($_GET['site']) && !isset($_GET['site']))
 						$awol = "SELECT * FROM awol_employees";
 						$awolQuery = mysql_query($awol);
 
+						if(mysql_num_rows($awolQuery))
+						{
 						while($row = mysql_fetch_assoc($awolQuery))
 						{
 							$empid = $row['empid'];
@@ -150,6 +152,14 @@ if(!isset($_GET['site']) && !isset($_GET['site']) && !isset($_GET['site']))
 										</tr>
 									";
 						}
+					}
+					else
+					{
+						Print 
+						"
+						<tr><td colspan='7'><h3>No records found.</h3></td></tr>
+						";
+					}
 					?>
 				</table>
 				<div id="hidden_form_container"></div>

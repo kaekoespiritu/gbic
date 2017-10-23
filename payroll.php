@@ -1053,8 +1053,6 @@ if($holidayExist > 0)
 								        Print $vale;	
 										?>
 									</span>
-									<br>
-									<span id="dynamicCompute"></span>
 								</h5>
 								<input type="hidden" name="vale_deducted" class="deducted">
 								<div class="row">
@@ -1299,7 +1297,7 @@ function addCommas(nStr)
 function addvale() {
 
 	// Exception when Vale is N/A
-
+	
 
 	// Get current amount in vale
 	var original = document.querySelector(".vale");
@@ -1357,70 +1355,6 @@ function addvale() {
 	{
 		var saveToAdd = document.querySelector(".added");
 		saveToAdd.value = modalValue;
-	}
-	
-}
-
-// Subtracting new vale and displaying an subtraction format
-function deductvale() {
-
-	// Get current amount in vale
-	var original = document.querySelector(".vale");
-	var oldVale = original.innerHTML;
-	var division = oldVale.split(',');
-	var len = division.length;
-	var builder="";
-
-	for(var a=0; a<len; a++)
-	{
-		
-		builder += division[a];
-		
-	}
-	
-	builder = parseFloat(builder).toFixed(2);
-
-	// Get vale from modal and format to currency
-	var modalValue = document.querySelector("#newDeductVale").value;
-	var addVale = parseFloat(modalValue).toFixed(2); 
-
-
-	// Add border to show computation
-	var result = document.createElement("div");
-	result.setAttribute("class","result pull-right");
-	result.style.borderTop = "thin solid black";
-
-	var compute = parseFloat(builder) - parseFloat(addVale);
-	
-	if(compute<1)
-	{
-		alert("You entered an invalid amount for vale.");
-	}
-	else
-	{
-		// Append innerHTML addition format
-		var computation = document.querySelector('#dynamicCompute');
-		computation.innerHTML = "<span style='right:5px;position:relative;'>-</span>"+addCommas(addVale)+"<br>";
-
-		// Add computed value
-		result.innerHTML = addCommas(compute.toFixed(2));
-
-		computation.appendChild(result);
-
-		// Save to hidden input for database access
-		if(document.querySelector('.added').value)
-		{
-			var saveToAdd = document.querySelector(".deducted");
-			saveToAdd.value = modalValue;
-			var removePrevious = document.querySelector('.added');
-			removePrevious.value = "";
-			document.querySelector("#newAddVale").value = "";
-		}
-		else
-		{
-			var saveToAdd = document.querySelector(".deducted");
-			saveToAdd.value = modalValue;
-		}
 	}
 	
 }

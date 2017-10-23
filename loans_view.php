@@ -177,7 +177,10 @@ else if($loanType == "newVale")
 					}
 					else
 					{
-
+						Print 
+						"
+						<tr><td colspan='6'><h3>No records found.</h3></td></tr>
+						";
 					}
 				?>
 				

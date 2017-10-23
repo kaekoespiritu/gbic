@@ -148,7 +148,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 								<label for="COLA">COLA</label>
 							</div>
 							<div class="col-md-3">
-								<input name="txt_Cola" type="text" class="form-control" placeholder="COLA">
+								<input name="txt_Cola" type="text" class="form-control">
 							</div>
 						</div>
 

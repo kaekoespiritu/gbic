@@ -440,6 +440,7 @@ include('directives/db.php');
 						<div class="col-md-5">
 							<a data-target="#addSite" data-toggle="modal" class="btn btn-primary col-md-12 pull-down">ADD SITE</a>
 							<a class="btn btn-danger col-md-12 pull-down" onclick="siteRemove()">END CONTRACT</a>
+							<a class="btn btn-warning col-md-12 pull-down" onclick="">ADD COLA</a>
 						</div>
 
 						<div class="col-md-7 text-left">

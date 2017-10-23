@@ -42,7 +42,7 @@ include('directives/session.php');
 				</a>
 			</div>
 
-			<table class="table table-bordered pull-down">
+			<table class="table table-bordered pull-down-more">
 				<thead>
 				<tr>
 					<td>Select</td>
