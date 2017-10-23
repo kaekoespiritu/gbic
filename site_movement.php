@@ -37,9 +37,12 @@ include('directives/session.php');
 		<!-- Table of vacant employees-->
 		<div class="col-md-10 col-md-offset-1">
 			<div class="pull-left">
-				<a data-target="#changeSite" data-toggle="modal" class="btn btn-default">
+				<button type="button" data-target="#changeSite" data-toggle="modal" class="btn btn-default" id="siteButton">
 					<span class="glyphicon glyphicon-arrow-down"></span> Change site for selected employees
-				</a>
+				</button>
+			</div>
+			<div class="pull-right">
+				<a class="btn btn-primary">Idle employees <span class="badge badge-light">##</span></a>
 			</div>
 
 			<table class="table table-bordered pull-down-more">
@@ -56,7 +59,45 @@ include('directives/session.php');
 				<tbody>
 					<tr>
 						<td>
-							<input type="checkbox" value="">
+							<input type="checkbox" value="" onclick="selectMany()">
+						</td>
+						<td>2017-123123123</td>
+						<td>Miguelito Joselito Dela Cruz</td>
+						<td>Mason</td>
+						<td>Muralla</td>
+						<td>
+							<select class="form-control input-sm">
+							  <option>SITE NAME</option>
+							  <option>SITE NAME</option>
+							  <option>SITE NAME</option>
+							  <option>SITE NAME</option>
+							  <option>SITE NAME</option>
+							  <option>SITE NAME</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="checkbox" value="" onclick="selectMany()">
+						</td>
+						<td>2017-123123123</td>
+						<td>Miguelito Joselito Dela Cruz</td>
+						<td>Mason</td>
+						<td>Muralla</td>
+						<td>
+							<select class="form-control input-sm">
+							  <option>SITE NAME</option>
+							  <option>SITE NAME</option>
+							  <option>SITE NAME</option>
+							  <option>SITE NAME</option>
+							  <option>SITE NAME</option>
+							  <option>SITE NAME</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="checkbox" value="" onclick="selectMany()">
 						</td>
 						<td>2017-123123123</td>
 						<td>Miguelito Joselito Dela Cruz</td>
@@ -108,6 +149,25 @@ include('directives/session.php');
 		<script rel="javascript" src="js/bootstrap.min.js"></script>
 		<script>
 			document.getElementById("employees").setAttribute("style", "background-color: #10621e;");
+			window.onload = function(){
+				document.getElementById('siteButton').setAttribute("disabled", true);
+			}
+
+			function selectMany() {
+				var button = document.getElementById('siteButton');
+				var checkboxes = document.querySelectorAll("input[type='checkbox']:checked").length;
+				console.log(checkboxes);
+
+				if(checkboxes >= 2)
+				{
+					document.getElementById('siteButton').removeAttribute('disabled');
+				}
+				else
+				{
+					if(document.getElementById('siteButton').hasAttribute('disabled')==false)
+					document.getElementById('siteButton').setAttribute('disabled',true);
+				}
+			}
 		</script>
 	 	
 	 </div>

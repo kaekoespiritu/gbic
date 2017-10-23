@@ -182,7 +182,7 @@
 									<label for="pagibig">Pag-IBIG</label>
 								</div>
 								<div class="col-md-4">
-									<input name="txt_addPagibig" type="text" class="form-control" onblur="pagibigDecimal(event)" id="pagibig">
+									<input name="txt_addPagibig" type="text" class="form-control" onchange="pagibigDecimal(event)" id="pagibig">
 								</div>
 
 								<div class="col-md-10 col-md-offset-1 pull-down text-center well well-sm">
