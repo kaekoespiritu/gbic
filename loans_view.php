@@ -37,9 +37,14 @@ else if($loanType == "newVale")
 		?>
 
 		<!-- Modal for viewing loans history -->
-		<?php
-		require_once("directives/modals/loans_history.php");
-		?>
+		<div class="modal fade" id="viewLoanHistory" role="dialog">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div id="dynamicTable">
+					</div>
+				</div>	
+			</div>
+		</div>
 
 		<!-- Breadcrumbs -->
 		<div class="row">
@@ -139,7 +144,7 @@ else if($loanType == "newVale")
 					<td>History</td>
 				</tr>
 				<?php 
-					$loans = "SELECT DISTINCT * FROM loans WHERE type = '$loanType' AND amount > 0 ORDER BY empid";
+					$loans = "SELECT DISTINCT * FROM loans WHERE type = '$loanType' ORDER BY date";
 					$loansQuery = mysql_query($loans);
 					if(mysql_num_rows($loansQuery) > 0)
 					{
@@ -150,7 +155,13 @@ else if($loanType == "newVale")
 							$employeeQuery = mysql_query($employees);
 							$empArr = mysql_fetch_assoc($employeeQuery);
 
-							Print "
+							//Check if employee has already fully paid his/her loan
+							$checker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType'ORDER BY date DESC LIMIT 1";
+							$checkerQuery = mysql_query($checker);
+							$checkerArr = mysql_fetch_assoc($checkerQuery);
+							if($checkerArr['amount'] > 0)
+							{
+								Print "
 									<tr>
 										<input type='hidden' name='empid[]' value='". $empid ."'>
 										<td style='vertical-align: inherit'>
@@ -169,10 +180,12 @@ else if($loanType == "newVale")
 											".number_format($row['amount'], 2, '.', ',')."
 										</td>
 										<td>
-											<a class='btn btn-primary' data-toggle='modal' data-target='#viewLoanHistory'><span class='glyphicon glyphicon-list-alt'></span> View</a>
+											<a class='btn btn-primary' data-toggle='modal' data-target='#viewLoanHistory' onclick='load_history(\"".$empid."\", \"".$loanType."\")'><span class='glyphicon glyphicon-list-alt'></span> View</a>
 										</td>
 									</tr>
 									";
+							}
+							
 						}
 					}
 					else
@@ -265,6 +278,21 @@ function enter(e) {
 	if (e.keyCode == 13) {
 	document.getElementById('search_form').submit();
 	}
+}
+function load_history(id, type)
+{
+	$.ajax({
+		url:"fetch_loan_history.php",
+		method:"POST",
+		data:{
+				empid: id,
+				type: type
+			},
+		success:function(data)
+		{
+		$('#dynamicTable').html(data);
+		}
+	});
 }
 </script>
 </body>
