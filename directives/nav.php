@@ -15,7 +15,7 @@
 			<h6 class="text-center">EMPLOYEES <span class="caret"></span></h6>
 		</a>
 		<div class="flipdown-menu">
-			<a href="employees/php?site=null&position=null">List of Employees</a>
+			<a href="employees.php?site=null&position=null">List of Employees</a>
 			<a href="loans_landing.php">Loan Applications</a>
 			<a href="applications.php">Absence Notifications</a>
 			<a href="site_landing.php">Site movement</a>

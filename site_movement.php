@@ -41,9 +41,6 @@ include('directives/session.php');
 					<span class="glyphicon glyphicon-arrow-down"></span> Change site for selected employees
 				</button>
 			</div>
-			<div class="pull-right">
-				<a class="btn btn-primary">Idle employees <span class="badge badge-light">##</span></a>
-			</div>
 
 			<table class="table table-bordered pull-down-more">
 				<thead>

@@ -54,6 +54,7 @@ include('directives/session.php');
 						<a href="employees.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a>
 					</li>
 					<li class="active">Choosing a site</li>
+					<a class="btn btn-primary pull-right">Idle employees <span class="badge badge-light">##</span></a>
 				</ol>
 			</div>
 		</div>
