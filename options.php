@@ -641,9 +641,9 @@ include('directives/db.php');
 								<div class="panel panel-primary">
 									<div class="panel-body">
 									<h4>JustineDiza</h4>
-									<button class="btn btn-default">Set Restrictions</button>
-									<button class="btn btn-danger">Remove Account</button>
-									<button class="btn btn-warning">Reset Password</button>
+									<button class="btn btn-default" data-toggle="modal" data-target="#setRestrictions">Set Restrictions</button>
+									<button class="btn btn-danger" onclick="removeAccount()">Remove Account</button>
+									<button class="btn btn-warning" data-toggle="modal" data-target="#resetPass">Reset Password</button>
 									</div>
 								</div>
 							</div>
@@ -651,9 +651,9 @@ include('directives/db.php');
 								<div class="panel panel-primary">
 									<div class="panel-body">
 									<h4>KarloEspiritu</h4>
-									<button class="btn btn-default">Set Restrictions</button>
-									<button class="btn btn-danger">Remove Account</button>
-									<button class="btn btn-warning">Reset Password</button>
+									<button class="btn btn-default" data-toggle="modal" data-target="#setRestrictions">Set Restrictions</button>
+									<button class="btn btn-danger" onclick="removeAccount()">Remove Account</button>
+									<button class="btn btn-warning" data-toggle="modal" data-target="#resetPass">Reset Password</button>
 									</div>
 								</div>
 							</div>
@@ -661,88 +661,132 @@ include('directives/db.php');
 								<div class="panel panel-primary">
 									<div class="panel-body">
 									<h4>OliviaEscartin</h4>
-									<button class="btn btn-default">Set Restrictions</button>
-									<button class="btn btn-danger">Remove Account</button>
-									<button class="btn btn-warning">Reset Password</button>
+									<button class="btn btn-default" data-toggle="modal" data-target="#setRestrictions">Set Restrictions</button>
+									<button class="btn btn-danger" onclick="removeAccount()">Remove Account</button>
+									<button class="btn btn-warning" data-toggle="modal" data-target="#resetPass">Reset Password</button>
 									</div>
 								</div>
 							</div>
-							<div class="col-md-12">
-								<div class="panel panel-primary">
-									<div class="panel-body">
-									<h4>KaiehlaEspiritu</h4>
-									<button class="btn btn-default">Set Restrictions</button>
-									<button class="btn btn-danger">Remove Account</button>
-									<button class="btn btn-warning">Reset Password</button>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="panel panel-primary">
-									<div class="panel-body">
-									<h4>KaiehlaEspiritu</h4>
-									<button class="btn btn-default">Set Restrictions</button>
-									<button class="btn btn-danger">Remove Account</button>
-									<button class="btn btn-warning">Reset Password</button>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="panel panel-primary">
-									<div class="panel-body">
-									<h4>KaiehlaEspiritu</h4>
-									<button class="btn btn-default">Set Restrictions</button>
-									<button class="btn btn-danger">Remove Account</button>
-									<button class="btn btn-warning">Reset Password</button>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="panel panel-primary">
-									<div class="panel-body">
-									<h4>KaiehlaEspiritu</h4>
-									<button class="btn btn-default">Set Restrictions</button>
-									<button class="btn btn-danger">Remove Account</button>
-									<button class="btn btn-warning">Reset Password</button>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="panel panel-primary">
-									<div class="panel-body">
-									<h4>KaiehlaEspiritu</h4>
-									<button class="btn btn-default">Set Restrictions</button>
-									<button class="btn btn-danger">Remove Account</button>
-									<button class="btn btn-warning">Reset Password</button>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="panel panel-primary">
-									<div class="panel-body">
-									<h4>KaiehlaEspiritu</h4>
-									<button class="btn btn-default">Set Restrictions</button>
-									<button class="btn btn-danger">Remove Account</button>
-									<button class="btn btn-warning">Reset Password</button>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="panel panel-primary">
-									<div class="panel-body">
-									<h4>KaiehlaEspiritu</h4>
-									<button class="btn btn-default">Set Restrictions</button>
-									<button class="btn btn-danger">Remove Account</button>
-									<button class="btn btn-warning">Reset Password</button>
-									</div>
-								</div>
-							</div>
-
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
+		<!-- Reset Pass -->
+		<div class="modal fade" id="resetPass" role="dialog">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div class="col-md-10">
+							<h4 class="modal-title">Reset password</h4>
+						</div>
+						<div class="col-md-1">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-12">
+								<label>
+									New password
+									<input type="text" placeholder="SOMETHING" class="form-control" readonly>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Set Restrictions -->
+		<div class="modal fade" id="setRestrictions" role="dialog">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div class="col-md-10">
+							<h4 class="modal-title">Set Restrictions</h4>
+						</div>
+						<div class="col-md-1">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-12">
+								<ul class="list-unstyled text-left">
+									<li>
+										<label>
+											<input type="checkbox">
+											View Payroll
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox">
+											Manage AWOL employees
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox">
+											Adding of employees
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox">
+											Editing details of employees
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox">
+											Managing site movement
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox">
+											Adding of sites
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox">
+											Adding of positions
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox">
+											Viewing or reports
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox">
+											Managing loans application
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox">
+											Changing open/close payroll
+										</label>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary">Save Changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 
 		<div class="col-md-10 col-md-offset-1">
 			<div class="col-md-6">
@@ -1056,34 +1100,31 @@ include('directives/db.php');
 			var admin = document.getElementById('adminradio');
 			
 			// To change when admin is selected
-			var modalsize = document.getElementById('modalsize');
-			var modalcol = document.getElementById('modalcol');
-			var restrictions = document.getElementById('restrictions');
+			var checkboxlength = document.querySelectorAll('input[type="checkbox"]').length;
+			var checkbox = document.querySelectorAll('input[type="checkbox"]');
 
-			console.log(admin.checked);
 			// If admin is selected, hide restrictions pane and set width to full
 			if(admin.checked == true)
 			{
-				modalsize.setAttribute("class","modal-dialog modal-sm");
-				modalcol.setAttribute("class","col-md-12");
-				restrictions.setAttribute("style","display:none;");
+				
+				for(var i = 0; i < checkboxlength; i++){
+					checkbox[i].disabled = true;
+				}
+
 			}
 			else
 			{
 				// If previously selected admin revert changes
-				if(modalsize.hasAttribute("class")){
-					modalsize.setAttribute("class","modal-dialog");
-				}
-				if(modalcol.hasAttribute("class"))
-				{
-					modalcol.setAttribute("class","col-md-6");
-				}
-				if(restrictions.hasAttribute("style"))
-				{
-					restrictions.setAttribute("style","display:block;");
+				for(var i = 0; i < checkboxlength; i++){
+					checkbox[i].disabled = false;
 				}
 			}
 		}
+
+		function removeAccount(){
+			confirm("Are you sure you want to remove this employee account?");
+		}
+
 
 	</script>
 </div>

@@ -27,7 +27,7 @@ include('directives/session.php');
 			<div class="col-md-10 col-md-offset-1 pull-down">
 				<ol class="breadcrumb text-left">
 					<li>
-						<a href="employees.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a>
+						<a href="site_landing.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a>
 					</li>
 					<li class="active">Moving employees to new site</li>
 				</ol>
