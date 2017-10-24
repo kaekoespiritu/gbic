@@ -57,15 +57,6 @@ else if($loanType == "newVale")
 				</ol>
 			</div>
 
-			<!-- Search bar -->
-			<div class="col-md-3 col-md-offset-1">
-				<div class="">
-					<form method="post" action="" id="search_form">
-						<input type="text" class="form-control" name="search" placeholder="Search" onkeypress="enter(enter)"">
-					</form>
-				</div>
-			</div>
-
 
 			<div class="col-md-7 text-right">
 				Filter by:
@@ -76,7 +67,7 @@ else if($loanType == "newVale")
 					<select class="form-control" id="position" onchange="position()">
 						<option hidden>Position</option>
 						<?php
-						$position = "SELECT * FROM position FROM job_position WHERE active = '1'";
+						$position = "SELECT * FROM job_position WHERE active = '1'";
 						$position_query = mysql_query($position);
 
 						while($row_position = mysql_fetch_assoc($position_query))
@@ -151,41 +142,75 @@ else if($loanType == "newVale")
 						while($row = mysql_fetch_assoc($loansQuery))
 						{
 							$empid = $row['empid'];
-							$employees = "SELECT * FROM employee WHERE empid = '$empid'";
+							if(isset($_GET['position']) && isset($_GET['site']))
+							{
+								$position = $_GET['position'];
+								$site = $_GET['site'];
+
+								if($_GET['site'] != "null")
+								{
+									if($_GET['position'] != "null")
+									{
+										$employees = "SELECT * FROM employee WHERE empid = '$empid' AND site = '$site' AND position = '$position'";
+									}
+									else
+									{
+										$employees = "SELECT * FROM employee WHERE empid = '$empid' AND site = '$site'";
+									}
+								}
+								else if($_GET['position'] != "null")
+								{
+									if($_GET['site'] != "null")
+									{
+										$employees = "SELECT * FROM employee WHERE empid = '$empid' AND site = '$site' AND position = '$position'";
+									}
+									else
+									{
+										$employees = "SELECT * FROM employee WHERE empid = '$empid' AND position = '$position'";
+									}
+								}
+							}
+							else
+							{
+								$employees = "SELECT * FROM employee WHERE empid = '$empid'";
+							}
+
 							$employeeQuery = mysql_query($employees);
 							$empArr = mysql_fetch_assoc($employeeQuery);
-
+							//Print "<script>alert(".mysql_num_rows($employeeQuery).")</script>";
 							//Check if employee has already fully paid his/her loan
 							$checker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType'ORDER BY date DESC LIMIT 1";
 							$checkerQuery = mysql_query($checker);
 							$checkerArr = mysql_fetch_assoc($checkerQuery);
-							if($checkerArr['amount'] > 0)
+							if(mysql_num_rows($employeeQuery) != 0)
 							{
-								Print "
-									<tr>
-										<input type='hidden' name='empid[]' value='". $empid ."'>
-										<td style='vertical-align: inherit'>
-											".$empid."
-										</td>
-										<td style='vertical-align: inherit'>
-											".$empArr['lastname'].", ".$empArr['firstname']."
-										</td>
-										<td style='vertical-align: inherit'>
-											".$empArr['position']."
-										</td>
-										<td style='vertical-align: inherit'>
-											".$empArr['site']."
-										</td>
-										<td style='vertical-align: inherit'>
-											".number_format($row['amount'], 2, '.', ',')."
-										</td>
-										<td>
-											<a class='btn btn-primary' data-toggle='modal' data-target='#viewLoanHistory' onclick='load_history(\"".$empid."\", \"".$loanType."\")'><span class='glyphicon glyphicon-list-alt'></span> View</a>
-										</td>
-									</tr>
-									";
+								if($checkerArr['amount'] > 0)
+								{
+									Print "
+										<tr>
+											<input type='hidden' name='empid[]' value='". $empid ."'>
+											<td style='vertical-align: inherit'>
+												".$empid."
+											</td>
+											<td style='vertical-align: inherit'>
+												".$empArr['lastname'].", ".$empArr['firstname']."
+											</td>
+											<td style='vertical-align: inherit'>
+												".$empArr['position']."
+											</td>
+											<td style='vertical-align: inherit'>
+												".$empArr['site']."
+											</td>
+											<td style='vertical-align: inherit'>
+												".number_format($row['amount'], 2, '.', ',')."
+											</td>
+											<td>
+												<a class='btn btn-primary' data-toggle='modal' data-target='#viewLoanHistory' onclick='load_history(\"".$empid."\", \"".$loanType."\")'><span class='glyphicon glyphicon-list-alt'></span> View</a>
+											</td>
+										</tr>
+										";
+								}
 							}
-							
 						}
 					}
 					else
@@ -239,7 +264,7 @@ function site() {
 	var site = document.getElementById("site").value;
 	var siteReplaced = site.replace(/\s/g , "+");
 	localStorage.setItem("glob_site", siteReplaced);
-	window.location.assign("loans.php?site="+siteReplaced+"&position="+localStorage.getItem('glob_position'));
+	window.location.assign("loans_view.php?site="+siteReplaced+"&position="+localStorage.getItem('glob_position')+"&type=<?php Print $loanType?>");
 }
 
 // Position filter
@@ -260,7 +285,7 @@ function position() {
 	var position = document.getElementById("position").value;
 	var positionReplaced = position.replace(/\s/g , "+");
 	localStorage.setItem("glob_position", positionReplaced);
-	window.location.assign("loans.php?site="+localStorage.getItem("glob_site")+"&position="+positionReplaced);
+	window.location.assign("loans_view.php?site="+localStorage.getItem("glob_site")+"&position="+positionReplaced+"&type=<?php Print $loanType?>");
 }
 
 
@@ -270,15 +295,10 @@ document.getElementById("employees").setAttribute("style", "background-color: #1
 // Clearing filters
 function clearFilter() {
 	localStorage.clear();
-	window.location.assign("loans.php?site=null&position=null");
+	window.location.assign("loans_view.php?type=<?php Print $loanType?>");
 }
 
-// Search bar
-function enter(e) {
-	if (e.keyCode == 13) {
-	document.getElementById('search_form').submit();
-	}
-}
+
 function load_history(id, type)
 {
 	$.ajax({

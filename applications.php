@@ -32,70 +32,7 @@ if(!isset($_GET['site']) && !isset($_GET['site']) && !isset($_GET['site']))
 					<li class="active">Absence Notifications</li>
 				</ol>
 			</div>
-			<div class="col-md-4 col-md-offset-1">
-				<div class="input-group">
-					<input type="text" class="form-control">
-					<span class="input-group-btn">
-						<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-					</span>
-				</div>
-			</div>
-			<!-- FILTER EMPLOYEE BY POSITION -->
-			<div class="col-md-6 text-right">
-				Filter by:
-				<div class="btn-group">
-					<select class="form-control">
-						<option hidden>Position</option>
-						<?php
-							$position = "SELECT position FROM job_position WHERE active = '1'";
-							$position_query = mysql_query($position);
-
-							while($row_position = mysql_fetch_assoc($position_query))
-							{
-								$positionReplaced = str_replace('/+/', ' ', $_GET['position']);
-								$position = mysql_real_escape_string($row_position['position']);
-								if($position == $positionReplaced)
-								{
-									Print '<option value="'. $position .'" selected="selected">'. $position .'</option>';
-								}
-								else
-								{
-									Print '<option value="'. $position .'">'. $position .'</option>';
-								}
-							}
-						?>
-					</select>
-				</div>
-				<div class="btn-group">
-					<select class="form-control">
-						<option hidden>Site</option>
-						<?php
-							$site = "SELECT location FROM site WHERE active = '1'";
-							$site_query = mysql_query($site);
-
-							while($row_site = mysql_fetch_assoc($site_query))
-							{
-								$siteReplaced = str_replace('/+/', ' ', $_GET['site']);
-								if($row_site['location'] == $siteReplaced)
-								{
-									Print '<option value="'. $row_site['location'] .'" selected="selected">'. $row_site['location'] .'</option>';
-								}
-								else
-								{
-									Print '<option value="'. $row_site['location'] .'">'. $row_site['location'] .'</option>';
-								}
-							}
-							?>
-					</select>
-				</div>
-				<div class="btn-group">
-					<select class="form-control">
-						<option hidden>Status</option>
-						<option value="Pending Approval">Pending Approval</option>
-						<option value="Absence Approved">Absence Approved</option>
-					</select>
-				</div>
-			</div>
+			
 		</div>
 
 		<!-- EMPLOYEE TABLE -->
