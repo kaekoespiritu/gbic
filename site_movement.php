@@ -30,6 +30,7 @@ include('directives/session.php');
 						<a href="site_landing.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a>
 					</li>
 					<li class="active">Moving employees to new site</li>
+					<button class="btn btn-success pull-right">Save Changes</button>
 				</ol>
 			</div>
 		</div>

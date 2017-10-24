@@ -58,7 +58,7 @@ else if($loanType == "newVale")
 			</div>
 
 
-			<div class="col-md-7 text-right">
+			<div class="col-md-11 text-right">
 				Filter by:
 
 
