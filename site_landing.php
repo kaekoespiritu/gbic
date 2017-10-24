@@ -70,7 +70,9 @@ include('directives/session.php');
 							$sites .= "'".$pendingArr['location']."'";
 						}
 						$emp = mysql_query($initialQuery.$sites);
-						$empNum = mysql_num_rows($emp);
+						$empNum = 0;//Pre-set empNum just incase there is no pending site
+						if($emp)
+							$empNum = mysql_num_rows($emp);
 
 						if($empNum > 0)
 						{
