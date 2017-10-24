@@ -815,31 +815,39 @@ include('directives/db.php');
 				  		<h4 class="modal-title col-md-11">Manage COLA settings</h4>
 				        <button type="button" class="close col-md-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				    </div>
-				    <div class="modal-body">
-				    	<div class="row">
-					    	<div class="col-md-6">
-							    <div class="dropdown">
-									<select class="form-control" name="dd_site" required>
-										<option hidden>Select a site</option>
-									<?php
-										$site_query = "SELECT location FROM site WHERE active = '1'";
-										$location_query = mysql_query($site_query);
-										while($row = mysql_fetch_assoc($location_query))
-										{
-											Print '<option value="'.$row["location"].'">'.$row["location"].'</option>';
-										}
-									?>
-									</select>
+				    <!-- Form for COLA-->
+				    <form method="post" action="logic_options_cola.php" id="colaForm">
+					    <div class="modal-body">
+					    	<div class="row">
+						    	<div class="col-md-6">
+								    <div class="dropdown">
+										<select class="form-control" name="dd_site" required>
+											<option hidden>Select a site</option>
+										<?php
+											$site_query = "SELECT location FROM site WHERE active = '1'";
+											$location_query = mysql_query($site_query);
+											$cola = "";
+											while($row = mysql_fetch_assoc($location_query))
+											{
+												Print '<option value="'.$row["location"].'">'.$row["location"].'</option>';
+												if($row["cola"] != null)
+												{
+													$cola = $row["cola"];
+												}
+											}
+										?>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<input type="number" name="cola" class="form-control" value="<?php Print $cola?>" placeholder="Enter COLA">
 								</div>
 							</div>
-							<div class="col-md-6">
-								<input type="number" class="form-control" placeholder="Enter COLA">
-							</div>
 						</div>
-					</div>
-			     	<div class="modal-footer">
-				        <button type="submit" class="btn btn-primary">Save changes</button>
-				    </div>
+				     	<div class="modal-footer">
+					        <button type="submit" class="btn btn-primary">Save changes</button>
+				    	</div>
+					</form>
 			    </div>
 			  </div>
 			</div>
@@ -876,7 +884,6 @@ include('directives/db.php');
 					<div class="panel-body">
 						<div class="col-md-5">
 							<a data-target="#addPosition" data-toggle="modal" class="btn btn-primary col-md-12 pull-down">ADD POSITION</a>
-							<!-- <a class="btn btn-danger col-md-12 pull-down" onclick="positionRemove()">REMOVE POSITION</a> -->
 						</div>
 
 						<div class="col-md-7 text-left">
@@ -889,7 +896,6 @@ include('directives/db.php');
 									{
 										Print '	<div class="alignlist">
 												  <label>
-												    <input type="checkbox" name="position[]" value="'.$positionRow['position'].'">
 												    '.$positionRow['position'].'
 												  </label>
 												</div>';
@@ -1044,13 +1050,7 @@ include('directives/db.php');
 				document.getElementById('siteForm').submit();
 			}
 		}
-		function positionRemove(){
-			var a = confirm("Are you sure you want to Archive these Position(s)?")
-			if(a)
-			{
-				document.getElementById('positionForm').submit();
-			}
-		}
+		
 
 		function hideRestrictions() {
 			var admin = document.getElementById('adminradio');

@@ -280,7 +280,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 								<label for="pagibig">Pag-IBIG</label>
 							</div>
 							<div class="col-md-4">
-								<input type="text" class="form-control" name="pagibig" placeholder="<?php Print "$pagibig"?>" onblur="pagibigDecimal(event)" id="pagibig">
+								<input type="text" class="form-control" name="pagibig" placeholder="<?php Print "$pagibig"?>" onchange="pagibigDecimal(event)" id="pagibig">
 							</div>
 							<div class="col-md-10 col-md-offset-1 pull-down text-center well well-sm">
 								* SSS & PhilHealth contributions are automatically computed.
