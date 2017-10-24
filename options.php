@@ -670,11 +670,6 @@ include('directives/db.php');
 					<div class="panel-body">
 						<div class="col-md-5">
 							<a data-target="#addPosition" data-toggle="modal" class="btn btn-primary col-md-12 pull-down">ADD POSITION</a>
-<<<<<<< HEAD
-							
-=======
-							<!-- <a class="btn btn-danger col-md-12 pull-down" onclick="positionRemove()">REMOVE POSITION</a> -->
->>>>>>> c9bfd04ff2fe08f80b58fe71c532a479dded000e
 						</div>
 
 						<div class="col-md-7 text-left">
