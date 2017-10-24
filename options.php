@@ -441,7 +441,7 @@ include('directives/db.php');
 							<ul class="nav nav-pills nav-stacked">
 								<li class="active"><a href="#changepass" data-toggle="tab">Change Password</a></li>
 								<li><a href="#changeuser" data-toggle="tab">Change Username</a></li>
-								<li><a href="#securityq" data-toggle="tab">Configure security questions</li>
+								<li><a href="#securityq" data-toggle="tab">Configure security questions</a></li>
 							</ul>
 							</div>
 							<div class="col-md-7 text-left" style="border-left-style: solid;">
@@ -449,24 +449,36 @@ include('directives/db.php');
 								<div class="tab-content">
 									<div id="changepass" class="tab-pane active">
 									<label>Old password:
-										<input type="text" class="form-control" placeholder="Old password">
+										<input type="text" class="form-control">
 									</label>
 									<label>New password:
-										<input type="text" class="form-control" placeholder="New password">
+										<input type="text" class="form-control">
 									</label>
 									<label>Confirm password:
-										<input type="text" class="form-control" placeholder="Confirm password">
+										<input type="text" class="form-control">
 									</label>
 									</div>
 									<div id="changeuser" class="tab-pane">
 										<h4>Current username: Username</h4>
 									<label>New username:
-										<input type="text" class="form-control" placeholder="New username">
+										<input type="text" class="form-control">
 									</label>
 									</div>
 									<div id="securityq" class="tab-pane">
-									<label>Select a question:
-										<br>Question here
+									<label>
+										Security Question:
+										<select class="form-control">
+											<option>City were you born in?</option>
+											<option>Province were you born in?</option>
+											<option>Name of the street you grew up in?</option>
+											<option>Your childhood hero?</option>
+											<option>Name of your elementary school?</option>
+											<option>Name of your first pet?</option>
+										</select>
+									</label>
+									<label>
+										Answer:
+										<input type="text" class="form-control">
 									</label>
 									</div>
 								</div>
@@ -482,32 +494,129 @@ include('directives/db.php');
 		</div>
 
 		<div class="modal fade" id="newAccount" role="dialog">
-			<div class="modal-dialog modal-sm">
+			<div class="modal-dialog" id='modalsize'>
 				<div class="modal-content">
 					<div class="modal-header">
-						<div class="col-md-10">
+						<div class="col-md-12">
 							<h4 class="modal-title">Add new account</h4>
-						</div>
-						<div class="col-md-1">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
 						</div>
 					</div>
 					<div class="modal-body">
+						<div class="row">
 						<form class="form-inline text-left">
-						<label>
-							Username:
-							<input type="text" class="form-control" placeholder="Username">
-						</label>
-						<label>
-							Password:
-							<input type="text" class="form-control" placeholder="Password">
-						</label>
-						<label>
-							Repeat:
-							<input type="text" class="form-control" placeholder="Repeat Password">
-						</label>
+						<div class="col-md-6" id='modalcol'>
+							<label class="col-md-12">
+								Username:
+								<input type="text" class="form-control">
+							</label>
+							<label class="col-md-12">
+								Password:
+								<input type="text" class="form-control">
+							</label>
+							<label class="col-md-12">
+								Confirm Password:
+								<input type="text" class="form-control">
+							</label>
+							<label class="col-md-12">
+								Security Question:
+								<select class="form-control">
+									<option>City were you born in?</option>
+									<option>Province were you born in?</option>
+									<option>Name of the street you grew up in?</option>
+									<option>Your childhood hero?</option>
+									<option>Name of your elementary school?</option>
+									<option>Name of your first pet?</option>
+								</select>
+							</label>
+							<label class="col-md-12">
+								Answer:
+								<input type="text" class="form-control">
+							</label>
+							<div class="col-md-12">
+								Choose account role:
+								<div class="radio">
+									<label>
+										<input type="radio" name="account" value="Employee" checked onchange="hideRestrictions()">
+										Employee
+									</label>
+									<label>
+										<input type="radio" name="account" value="Employee" onchange="hideRestrictions()" id='adminradio'>
+										Administrator
+									</label>
+								</div>
+							</div>
+						</div>
+						<!-- To appear only when employee is selected -->
+							<div class="col-md-6" id='restrictions' style="display:block">
+								<h4>Restrictions</h4>
+								<ul class="list-unstyled">
+									<li>
+										<label>
+											<input type="checkbox">
+											View Payroll
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox">
+											Manage AWOL employees
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox">
+											Adding of employees
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox">
+											Editing details of employees
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox">
+											Managing site movement
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox">
+											Adding of sites
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox">
+											Adding of positions
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox">
+											Viewing or reports
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox">
+											Managing loans application
+										</label>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox">
+											Changing open/close payroll
+										</label>
+									</li>
+								</ul>
+							</div>
+
 						</form>
-					<div class="modal-footer">
+					</div>
+					<div class="modal-footer pull-down">
+						<button class="btn btn-default" data-dismiss="modal">Cancel</button>
 						<button class="btn btn-primary">Save Changes</button>
 					</div>
 					</div>
@@ -516,16 +625,121 @@ include('directives/db.php');
 		</div>
 
 		<div class="modal fade" id="manageAccount" role="dialog">
-			<div class="modal-dialog modal-lg">
+			<div class="modal-dialog">
 				<div class="modal-content">
-						<div class="well well-sm">
-							<div class="col-md-6">
-							Username / Role
-							<button class="btn btn-primary">Set Restrictions</button>
-							<button class="btn btn-primary">Remove Account</button>
-							<button class="btn btn-primary">Reset Password</button>
-							</div>
+					<div class="modal-header">
+						<div class="col-md-11">
+							<h4 class="modal-title">Manage employee accounts</h4>
 						</div>
+						<div class="col-md-1">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+					</div>
+					<div class="modal-body">
+						<div class="row" style="overflow:scroll; height:300px">
+							<div class="col-md-12">
+								<div class="panel panel-primary">
+									<div class="panel-body">
+									<h4>JustineDiza</h4>
+									<button class="btn btn-default">Set Restrictions</button>
+									<button class="btn btn-danger">Remove Account</button>
+									<button class="btn btn-warning">Reset Password</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="panel panel-primary">
+									<div class="panel-body">
+									<h4>KarloEspiritu</h4>
+									<button class="btn btn-default">Set Restrictions</button>
+									<button class="btn btn-danger">Remove Account</button>
+									<button class="btn btn-warning">Reset Password</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="panel panel-primary">
+									<div class="panel-body">
+									<h4>OliviaEscartin</h4>
+									<button class="btn btn-default">Set Restrictions</button>
+									<button class="btn btn-danger">Remove Account</button>
+									<button class="btn btn-warning">Reset Password</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="panel panel-primary">
+									<div class="panel-body">
+									<h4>KaiehlaEspiritu</h4>
+									<button class="btn btn-default">Set Restrictions</button>
+									<button class="btn btn-danger">Remove Account</button>
+									<button class="btn btn-warning">Reset Password</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="panel panel-primary">
+									<div class="panel-body">
+									<h4>KaiehlaEspiritu</h4>
+									<button class="btn btn-default">Set Restrictions</button>
+									<button class="btn btn-danger">Remove Account</button>
+									<button class="btn btn-warning">Reset Password</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="panel panel-primary">
+									<div class="panel-body">
+									<h4>KaiehlaEspiritu</h4>
+									<button class="btn btn-default">Set Restrictions</button>
+									<button class="btn btn-danger">Remove Account</button>
+									<button class="btn btn-warning">Reset Password</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="panel panel-primary">
+									<div class="panel-body">
+									<h4>KaiehlaEspiritu</h4>
+									<button class="btn btn-default">Set Restrictions</button>
+									<button class="btn btn-danger">Remove Account</button>
+									<button class="btn btn-warning">Reset Password</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="panel panel-primary">
+									<div class="panel-body">
+									<h4>KaiehlaEspiritu</h4>
+									<button class="btn btn-default">Set Restrictions</button>
+									<button class="btn btn-danger">Remove Account</button>
+									<button class="btn btn-warning">Reset Password</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="panel panel-primary">
+									<div class="panel-body">
+									<h4>KaiehlaEspiritu</h4>
+									<button class="btn btn-default">Set Restrictions</button>
+									<button class="btn btn-danger">Remove Account</button>
+									<button class="btn btn-warning">Reset Password</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="panel panel-primary">
+									<div class="panel-body">
+									<h4>KaiehlaEspiritu</h4>
+									<button class="btn btn-default">Set Restrictions</button>
+									<button class="btn btn-danger">Remove Account</button>
+									<button class="btn btn-warning">Reset Password</button>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -838,20 +1052,40 @@ include('directives/db.php');
 			}
 		}
 
+		function hideRestrictions() {
+			var admin = document.getElementById('adminradio');
+			
+			// To change when admin is selected
+			var modalsize = document.getElementById('modalsize');
+			var modalcol = document.getElementById('modalcol');
+			var restrictions = document.getElementById('restrictions');
+
+			console.log(admin.checked);
+			// If admin is selected, hide restrictions pane and set width to full
+			if(admin.checked == true)
+			{
+				modalsize.setAttribute("class","modal-dialog modal-sm");
+				modalcol.setAttribute("class","col-md-12");
+				restrictions.setAttribute("style","display:none;");
+			}
+			else
+			{
+				// If previously selected admin revert changes
+				if(modalsize.hasAttribute("class")){
+					modalsize.setAttribute("class","modal-dialog");
+				}
+				if(modalcol.hasAttribute("class"))
+				{
+					modalcol.setAttribute("class","col-md-6");
+				}
+				if(restrictions.hasAttribute("style"))
+				{
+					restrictions.setAttribute("style","display:block;");
+				}
+			}
+		}
+
 	</script>
 </div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
