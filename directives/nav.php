@@ -18,7 +18,7 @@
 			<a href="employees/php?site=null&position=null">List of Employees</a>
 			<a href="loans_landing.php">Loan Applications</a>
 			<a href="applications.php">Absence Notifications</a>
-			<a href="site_movement.php">Site movement</a>
+			<a href="site_landing.php">Site movement</a>
 		</div>
 	</div>
 	</div>
