@@ -397,76 +397,138 @@ include('directives/db.php');
 			</div>
 
 			<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">Manage accounts</h3>
-					</div>
-					<div class="panel-body col-md-6">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">Administrator</h3>
-							</div>
-							<div class="panel-body">
-								<div class="col-md-6">
-									<button type="button" class="btn btn-primary col-md-12">
-										<span class="glyphicon glyphicon-user"></span> ADD ACCOUNT
-									</button>
-									<button type="button" class="btn btn-success pull-down col-md-12">
-										<span class="glyphicon glyphicon-pencil"></span> EDIT ACCOUNT
-									</button>
-									<button type="button" class="btn btn-danger pull-down col-md-12">
-										<span class="glyphicon glyphicon-remove"></span> REMOVE ACCOUNT
-									</button>
-								</div>
-								<div class="col-md-6">
-									<h4>Currently logged in as: Administrator</h4><br>
-									<div class="accountlist text-left">
-										<span class="moveabit">Accounts:</span><br>
-										<ul>
-											<li>Name</li>
-											<li>Name</li>
-										</ul>
-									</div>
-								</div>
-							</div>
+				<div class="panel-heading">
+					<h3 class="panel-title">Manage accounts</h3>
+				</div>
+				<div class="panel-body">
+					<div class="col-md-12">
+						<div class="alert alert-success col-md-6 col-md-offset-3" role="alert">
+							NAME, you're an <span class="mediumtext">admin/employee.</span>
 						</div>
 					</div>
-					<div class="panel-body col-md-6">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">Employee</h3>
-							</div>
-							<div class="panel-body">
-								<div class="col-md-6">
-									<button type="button" class="btn btn-primary col-md-12">
-										<span class="glyphicon glyphicon-user"></span> ADD ACCOUNT
-									</button>
-									<button type="button" class="btn btn-success pull-down col-md-12">
-										<span class="glyphicon glyphicon-pencil"></span> EDIT ACCOUNT
-									</button>
-									<button type="button" class="btn btn-danger pull-down col-md-12">
-										<span class="glyphicon glyphicon-remove"></span> REMOVE ACCOUNT
-									</button>
-								</div>
-								<div class="col-md-6">
-									<h4>Currently logged in as: N/A</h4><br>
-									<div class="accountlist text-left">
-										<span class="moveabit">Accounts:</span><br>
-										<ul>
-											<li>Name</li>
-											<li>Name</li>
-										</ul>
-									</div>
-								</div>
-							</div>
+					<div class="col-md-12">
+						<div class="col-md-4 pull-right">
+							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#accountOptions"><span class="glyphicon glyphicon-user"></span> Options for this account</button>
 						</div>
-					</div>
-					<div class="panel-body">
-							<a href="" class="btn btn-primary">Save changes</a>
+						<!-- Only visible on admin side -->
+						<div class="col-md-4">
+							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#newAccount"><span class="glyphicon glyphicon-plus"></span> Add new admin/employee account</button>
+						</div>
+						<!-- Only visible on admin side -->
+						<div class="col-md-4">
+							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#manageAccount"><span class="glyphicon glyphicon-cog"></span> Manage employees account</button>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
+		<!-- Modal -->
+		<div class="modal fade" id="accountOptions" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div class="col-md-11">
+							<h4 class="modal-title">Options for this account</h4>
+						</div>
+						<div class="col-md-1">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-5">
+							<ul class="nav nav-pills nav-stacked">
+								<li class="active"><a href="#changepass" data-toggle="tab">Change Password</a></li>
+								<li><a href="#changeuser" data-toggle="tab">Change Username</a></li>
+								<li><a href="#securityq" data-toggle="tab">Configure security questions</li>
+							</ul>
+							</div>
+							<div class="col-md-7 text-left" style="border-left-style: solid;">
+								<form class="form-inline">
+								<div class="tab-content">
+									<div id="changepass" class="tab-pane active">
+									<label>Old password:
+										<input type="text" class="form-control" placeholder="Old password">
+									</label>
+									<label>New password:
+										<input type="text" class="form-control" placeholder="New password">
+									</label>
+									<label>Confirm password:
+										<input type="text" class="form-control" placeholder="Confirm password">
+									</label>
+									</div>
+									<div id="changeuser" class="tab-pane">
+										<h4>Current username: Username</h4>
+									<label>New username:
+										<input type="text" class="form-control" placeholder="New username">
+									</label>
+									</div>
+									<div id="securityq" class="tab-pane">
+									<label>Select a question:
+										<br>Question here
+									</label>
+									</div>
+								</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary">Save Changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="newAccount" role="dialog">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div class="col-md-10">
+							<h4 class="modal-title">Add new account</h4>
+						</div>
+						<div class="col-md-1">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+					</div>
+					<div class="modal-body">
+						<form class="form-inline text-left">
+						<label>
+							Username:
+							<input type="text" class="form-control" placeholder="Username">
+						</label>
+						<label>
+							Password:
+							<input type="text" class="form-control" placeholder="Password">
+						</label>
+						<label>
+							Repeat:
+							<input type="text" class="form-control" placeholder="Repeat Password">
+						</label>
+						</form>
+					<div class="modal-footer">
+						<button class="btn btn-primary">Save Changes</button>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="manageAccount" role="dialog">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+						<div class="well well-sm">
+							<div class="col-md-6">
+							Username / Role
+							<button class="btn btn-primary">Set Restrictions</button>
+							<button class="btn btn-primary">Remove Account</button>
+							<button class="btn btn-primary">Reset Password</button>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
 
 		<div class="col-md-10 col-md-offset-1">
 			<div class="col-md-6">
@@ -608,7 +670,11 @@ include('directives/db.php');
 					<div class="panel-body">
 						<div class="col-md-5">
 							<a data-target="#addPosition" data-toggle="modal" class="btn btn-primary col-md-12 pull-down">ADD POSITION</a>
+<<<<<<< HEAD
 							
+=======
+							<!-- <a class="btn btn-danger col-md-12 pull-down" onclick="positionRemove()">REMOVE POSITION</a> -->
+>>>>>>> c9bfd04ff2fe08f80b58fe71c532a479dded000e
 						</div>
 
 						<div class="col-md-7 text-left">

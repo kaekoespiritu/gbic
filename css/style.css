@@ -390,6 +390,11 @@ hr
   margin-left: 10px;
 }
 
+.mediumtext
+{
+  font-family: QuicksandMed !important;
+}
+
 
 /* Site movement page */
 .flipicon
