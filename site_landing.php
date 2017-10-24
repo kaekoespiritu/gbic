@@ -54,7 +54,34 @@ include('directives/session.php');
 						<a href="employees.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a>
 					</li>
 					<li class="active">Choosing a site</li>
-					<a class="btn btn-primary pull-right" href="site_movement.php">Idle employees <span class="badge badge-light">##</span></a>
+					<?php
+						$pendingSites = "SELECT * FROM site WHERE active = 'pending'";
+						$pendingQuery = mysql_query($pendingSites);
+						
+						$initialQuery = "SELECT * FROM employee WHERE site = ";
+
+						$sites = "";//Store sites that are pending
+						while($pendingArr = mysql_fetch_assoc($pendingQuery))
+						{
+							if($sites != "")
+							{
+								$sites .= " OR site = ";
+							}
+							$sites .= "'".$pendingArr['location']."'";
+						}
+						$emp = mysql_query($initialQuery.$sites);
+						$empNum = mysql_num_rows($emp);
+
+						if($empNum > 0)
+						{
+							Print '<a class="btn btn-primary pull-right" href="site_movement.php?site=pending">Idle employees <span class="badge badge-light">'.$empNum.'</span></a>';
+						}
+						else
+						{
+							Print '<a class="btn btn-primary pull-right" href="site_movement.php?site=pending" disabled>Idle employees <span class="badge badge-light">0</span></a>';
+						}
+
+					?>
 				</ol>
 			</div>
 		</div>

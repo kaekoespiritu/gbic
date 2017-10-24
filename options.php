@@ -636,11 +636,41 @@ include('directives/db.php');
 						</div>
 					</div>
 					<div class="modal-body">
-						<div class="row" style="overflow:scroll; height:300px">
+						<div class="row" style="overflow:scroll; height: 500px">
 							<div class="col-md-12">
 								<div class="panel panel-primary">
 									<div class="panel-body">
 									<h4>JustineDiza</h4>
+									<button class="btn btn-default" data-toggle="modal" data-target="#setRestrictions">Set Restrictions</button>
+									<button class="btn btn-danger" onclick="removeAccount()">Remove Account</button>
+									<button class="btn btn-warning" data-toggle="modal" data-target="#resetPass">Reset Password</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="panel panel-primary">
+									<div class="panel-body">
+									<h4>KarloEspiritu</h4>
+									<button class="btn btn-default" data-toggle="modal" data-target="#setRestrictions">Set Restrictions</button>
+									<button class="btn btn-danger" onclick="removeAccount()">Remove Account</button>
+									<button class="btn btn-warning" data-toggle="modal" data-target="#resetPass">Reset Password</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="panel panel-primary">
+									<div class="panel-body">
+									<h4>KarloEspiritu</h4>
+									<button class="btn btn-default" data-toggle="modal" data-target="#setRestrictions">Set Restrictions</button>
+									<button class="btn btn-danger" onclick="removeAccount()">Remove Account</button>
+									<button class="btn btn-warning" data-toggle="modal" data-target="#resetPass">Reset Password</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="panel panel-primary">
+									<div class="panel-body">
+									<h4>KarloEspiritu</h4>
 									<button class="btn btn-default" data-toggle="modal" data-target="#setRestrictions">Set Restrictions</button>
 									<button class="btn btn-danger" onclick="removeAccount()">Remove Account</button>
 									<button class="btn btn-warning" data-toggle="modal" data-target="#resetPass">Reset Password</button>

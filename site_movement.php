@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <?php
 include('directives/session.php');
+include('directives/db.php');
+
+$location = $_GET['site'];
+
 ?>
 <html>
 	<head>
@@ -30,10 +34,11 @@ include('directives/session.php');
 						<a href="site_landing.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a>
 					</li>
 					<li class="active">Moving employees to new site</li>
-					<button class="btn btn-success pull-right">Save Changes</button>
+					<button class="btn btn-success pull-right" onclick="saveForm()">Save Changes</button>
 				</ol>
 			</div>
 		</div>
+
 
 		<!-- Table of vacant employees-->
 		<div class="col-md-10 col-md-offset-1">
@@ -42,78 +47,134 @@ include('directives/session.php');
 					<span class="glyphicon glyphicon-arrow-down"></span> Change site for selected employees
 				</button>
 			</div>
+			<!-- FILTER EMPLOYEE BY POSITION -->
+				<div class="col-md-4 pull-right text-right">
+					Filter by:
+					<!-- POSITION DROPDOWN -->
+					<div class="btn-group">
+						<select class="form-control" id="position" onchange="position()">
+							<option hidden>Position</option>
+							<?php
+							$position = "SELECT position FROM job_position WHERE active = '1'";
+							$position_query = mysql_query($position);
 
-			<table class="table table-bordered pull-down-more">
-				<thead>
-				<tr>
-					<td>Select</td>
-					<td>Employee ID</td>
-					<td>Name</td>
-					<td>Position</td>
-					<td>Previous Site</td>
-					<td>New Site</td>
-				</tr>
-				</thead>
-				<tbody>
+
+							while($row_position = mysql_fetch_assoc($position_query))
+							{
+								$positionReplaced = str_replace('/+/', ' ', $_GET['position']);
+								$position = mysql_real_escape_string($row_position['position']);
+								if($position == $positionReplaced)
+								{
+									Print '<option value="'. $position .'" selected="selected">'. $position .'</option>';
+								}
+								else
+								{
+									Print '<option value="'. $position .'">'. $position .'</option>';
+								}
+							}
+							?>
+						</select>
+					</div>
+
+					<button type="button" class="btn btn-danger" onclick="clearFilter()">Clear Filter</button>
+				</div>
+
+			<form method="post" action="logic_site_movement.php?s=<?php Print $location?>" id="siteMovementForm">
+				<table class="table table-bordered pull-down-more">
+					<thead>
 					<tr>
-						<td>
-							<input type="checkbox" value="" onclick="selectMany()">
-						</td>
-						<td>2017-123123123</td>
-						<td>Miguelito Joselito Dela Cruz</td>
-						<td>Mason</td>
-						<td>Muralla</td>
-						<td>
-							<select class="form-control input-sm">
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							</select>
-						</td>
+						<td>Select</td>
+						<td>Employee ID</td>
+						<td>Name</td>
+						<td>Position</td>
+						<td>Current Site</td>
+						<td>New Site</td>
 					</tr>
-					<tr>
-						<td>
-							<input type="checkbox" value="" onclick="selectMany()">
-						</td>
-						<td>2017-123123123</td>
-						<td>Miguelito Joselito Dela Cruz</td>
-						<td>Mason</td>
-						<td>Muralla</td>
-						<td>
-							<select class="form-control input-sm">
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<input type="checkbox" value="" onclick="selectMany()">
-						</td>
-						<td>2017-123123123</td>
-						<td>Miguelito Joselito Dela Cruz</td>
-						<td>Mason</td>
-						<td>Muralla</td>
-						<td>
-							<select class="form-control input-sm">
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							</select>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<?php
+						if($location != "pending")
+						{
+							if(isset($_GET['position']))
+							{
+								$pos = $_GET['position'];
+								$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site='$location' AND position = '$pos'";
+							}
+							else
+							{
+								$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site='$location'";
+							}
+						}
+						else//this is to display pending employees or idle employees with no site
+						{
+							$pendingSites = "SELECT * FROM site WHERE active = 'pending'";
+							$pendingQuery = mysql_query($pendingSites);
+							
+							$initialQuery = "SELECT * FROM employee WHERE (site = ";
+
+							$sites = "";//Store sites that are pending
+							while($pendingArr = mysql_fetch_assoc($pendingQuery))
+							{
+								if($sites != "")
+								{
+									$sites .= " OR site = ";
+								}
+								$sites .= "'".$pendingArr['location']."'";
+							}
+							//Print '<script>console.log("'.$Query.$sites.'")</script>';
+
+							if(isset($_GET['position']))
+							{
+								$pos = $_GET['position'];
+								$employee = $initialQuery.$sites.") AND position = '$pos'";
+							}
+							else
+							{
+								$employee = $initialQuery.$sites.")";
+							}
+							
+						}
+
+						$empQuery = mysql_query($employee);
+							
+						$site = "SELECT * FROM site WHERE active = '1'";
+						$siteQuery = mysql_query($site);
+						
+						$site_dropdown = "
+											<select class='form-control' name='newSite[]' input-sm'>
+											<option hidden value=''>Site</option>
+										";//this will contain the available positions
+						while($siteRow = mysql_fetch_assoc($siteQuery))
+						{//for the site dropdown to save execution time
+							if($siteRow['location'] != $location)
+								$site_dropdown .= "<option value='".$siteRow['location']."'>".$siteRow['location']."</option>";
+						}
+						$site_dropdown .= "</select>";
+						if(mysql_num_rows($empQuery) > 0)
+						{
+							while($row = mysql_fetch_assoc($empQuery))
+							{
+								Print "
+								<tr>
+									<input type='hidden' name='empid[]' value='".$row['empid']."'>
+									<td>
+										<input type='checkbox' name='chkbox_chosen[]' value=".$row['empid']." onclick='selectMany()''>
+									</td>
+									<td>".$row['empid']."</td>
+									<td>".$row['lastname'].", ".$row['firstname']."</td>
+									<td>".$row['position']."</td>
+									<td>".$row['site']."</td>
+									<td>
+										".$site_dropdown."
+									</td>
+								</tr>
+								";
+							}
+						}
+						?>
+					</tbody>
+				</table>
+			</form>
 		</div>
 
 		<!-- MODAL -->
@@ -125,18 +186,23 @@ include('directives/session.php');
 				        <button type="button" class="close col-md-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				    </div>
 				    <div class="modal-body">
-			     	<select class="form-control input-sm">
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							  <option>SITE NAME</option>
-							</select>
+			     	<select class="form-control input-sm" onchange="groupChange(this)">
+			     		<option hidden>Position</option>
+						<?php
+							$site = "SELECT * FROM site WHERE active = '1'";
+							$siteQuery = mysql_query($site);
+							
+							while($siteRow = mysql_fetch_assoc($siteQuery))
+							{
+								if($siteRow['location'] != $location)
+									Print "<option value='".$siteRow['location']."'>".$siteRow['location']."</option>";
+							}
+						?> 
+					</select>
 			     	</div>
 			     	<div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary">Save changes</button>
+				        <button type="button" class="btn btn-primary" onclick="saveForm()">Save changes</button>
 				      </div>
 			    </div>
 			  </div>
@@ -166,8 +232,82 @@ include('directives/session.php');
 					document.getElementById('siteButton').setAttribute('disabled',true);
 				}
 			}
+
+			// Position Filter 
+			function position() {
+				if(document.URL.match(/position=([0-9]+)/))
+				{
+					var arr = document.URL.match(/position=([0-9]+)/)
+					var positionUrl = arr[1];
+					if(positionUrl)
+					{
+						localStorage.setItem("counter", 0);
+					}
+					else if(localStorage.getItem('counter') > 2)
+					{
+						localStorage.clear();
+					}
+				}
+				var position = document.getElementById("position").value;
+				var positionReplaced = position.replace(/\s/g , "+");
+				localStorage.setItem("glob_position", positionReplaced);
+				window.location.assign("site_movement.php?position="+positionReplaced+"&site=<?php Print $location?>");
+			}
+
+			function saveForm(){
+				var a = confirm("Are you sure you want to change the site of those employees?");
+				if(a == true)
+				{
+					document.getElementById("siteMovementForm").submit();
+				}
+			}
+
+			function groupChange(pos){
+				var hidden = document.createElement("input");
+				hidden.setAttribute("type", "hidden");
+				hidden.setAttribute("value", pos.value);
+				hidden.setAttribute("name", "groupChange");
+				hidden.setAttribute("id", "groupModal");
+				var form = document.getElementById('siteMovementForm');
+				var checker = document.getElementById('groupModal');
+				if(document.getElementById("siteMovementForm").contains(checker))
+				{
+					document.getElementById("groupModal").value =  pos.value;
+				}
+				else
+				{
+					form.appendChild(hidden);
+				}
+				
+			}
+
+			function clearFilter() {
+				window.location.assign("site_movement.php?site=<?php Print $location?>");
+			}
+			$("#changeSite").on("hidden.bs.modal", function () {
+				$("#groupModal").remove();
+    		
+			});
 		</script>
 	 	
 	 </div>
 	</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
