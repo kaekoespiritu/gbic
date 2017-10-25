@@ -242,7 +242,7 @@ body
 }
 .pull-down-more
 {
-  margin-top: 5em;
+  margin-top: 4em;
 }
 .pull-up
 {
@@ -418,3 +418,13 @@ hr
   color:orange;
   text-decoration: none;
 }
+
+.moveright
+{
+  margin-right: 15px;
+}
+
+.disabletotally:hover
+{
+  pointer-events: none;
+  cursor: not-allowed;

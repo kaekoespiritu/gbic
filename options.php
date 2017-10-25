@@ -2,6 +2,17 @@
 <?php
 include('directives/session.php');
 include('directives/db.php');
+
+
+$user = $_SESSION['user_logged_in'];
+
+$admin = "SELECT * FROM administrator WHERE username = '$user'";
+$adminQuery = mysql_query($admin);
+$adminArr = mysql_fetch_assoc($adminQuery);
+
+
+$adminName = $adminArr['firstname']." ".$adminArr['lastname'];
+$adminRole = $adminArr['role'];
 ?>
 <html>
 <head>
@@ -403,7 +414,7 @@ include('directives/db.php');
 				<div class="panel-body">
 					<div class="col-md-12">
 						<div class="alert alert-success col-md-6 col-md-offset-3" role="alert">
-							NAME, you're an <span class="mediumtext">admin/employee.</span>
+							<?php Print $adminName ?>, you're an <span class="mediumtext"><?php Print $adminRole ?>.</span>
 						</div>
 					</div>
 					<div class="col-md-12">
@@ -445,49 +456,71 @@ include('directives/db.php');
 							</ul>
 							</div>
 							<div class="col-md-7 text-left" style="border-left-style: solid;">
-								<form class="form-inline">
-								<div class="tab-content">
-									<div id="changepass" class="tab-pane active">
-									<label>Old password:
-										<input type="text" class="form-control">
-									</label>
-									<label>New password:
-										<input type="text" class="form-control">
-									</label>
-									<label>Confirm password:
-										<input type="text" class="form-control">
-									</label>
+								<?php
+									$user = $_SESSION['user_logged_in'];
+
+									$admin = "SELECT * FROM administrator WHERE username = '$user'";
+									$adminQuery = mysql_query($admin);
+									$adminRow = mysql_fetch_assoc($adminQuery);
+									$user = $adminRow['username'];
+
+									$question = "SELECT * FROM secret_questions";
+									$quesQuery = mysql_query($question);
+
+								//Secret Questions
+									$secretQuestions = "";
+									while($questionArr = mysql_fetch_assoc($quesQuery))
+									{
+										$secretQuestions .=  "<option value='".$questionArr['id']."'>".$questionArr['questions']."</option>";
+									}
+								?>
+								<form class="form-inline" id="account_option" method="POST" action="logic_options_account.php">
+									<div class="tab-content">
+										<div id="changepass" class="tab-pane active">
+										<label>Old password:
+											<input type="password" name="oldPassword" class="form-control">
+										</label>
+										<label>New password:
+											<input type="password" name="newPassword"class="form-control">
+										</label>
+										<label>Confirm password:
+											<input type="password" name="confirmPassword"class="form-control">
+										</label>
+										</div>
+										<div id="changeuser" class="tab-pane">
+											<h4>Current username: <?php Print $user ?></h4>
+										<label>New username:
+											<input type="text" name="newUsername" class="form-control">
+										</label>
+										</div>
+										<div id="securityq" class="tab-pane">
+										<label>
+											Security Question:
+											<!-- TODO: CHANGE DROPDOWN TO RADIO BUTTON -->
+											<div class="">
+											<select class="form-control" name="securityQuestion">
+												<option value="" hidden>-- Choose security question --</option>
+												<?php Print $secretQuestions ?>
+											</select>
+
+											<label>
+												<input type="checkbox" >
+
+											</label>
+											</div>
+										</label>
+										<label>
+											Answer:
+											<input type="text" name="answer" class="form-control">
+										</label>
+										</div>
 									</div>
-									<div id="changeuser" class="tab-pane">
-										<h4>Current username: Username</h4>
-									<label>New username:
-										<input type="text" class="form-control">
-									</label>
-									</div>
-									<div id="securityq" class="tab-pane">
-									<label>
-										Security Question:
-										<select class="form-control">
-											<option>City were you born in?</option>
-											<option>Province were you born in?</option>
-											<option>Name of the street you grew up in?</option>
-											<option>Your childhood hero?</option>
-											<option>Name of your elementary school?</option>
-											<option>Name of your first pet?</option>
-										</select>
-									</label>
-									<label>
-										Answer:
-										<input type="text" class="form-control">
-									</label>
-									</div>
-								</div>
 								</form>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button class="btn btn-primary">Save Changes</button>
+						<button onclick="optionAccount()" class="btn btn-primary">Save Changes</button>
 					</div>
 				</div>
 			</div>
@@ -503,44 +536,50 @@ include('directives/db.php');
 					</div>
 					<div class="modal-body">
 						<div class="row">
-						<form class="form-inline text-left">
+						<form id="newAccountForm" method="POST" action="logic_options_newAccount.php" class="form-inline text-left">
 						<div class="col-md-6" id='modalcol'>
+							<?php
+							
+							?>
+							<label class="col-md-12">
+								Firstname:
+								<input type="text" name="n_firstname" class="form-control" required>
+							</label>
+							<label class="col-md-12">
+								Lastname:
+								<input type="text" name="n_lastname" class="form-control" required>
+							</label>
 							<label class="col-md-12">
 								Username:
-								<input type="text" class="form-control">
+								<input type="text" name="n_username" class="form-control" required>
 							</label>
 							<label class="col-md-12">
 								Password:
-								<input type="text" class="form-control">
+								<input type="password" name="n_password" class="form-control" required>
 							</label>
 							<label class="col-md-12">
 								Confirm Password:
-								<input type="text" class="form-control">
+								<input type="password" name="n_confirmPassword" class="form-control" required>
 							</label>
 							<label class="col-md-12">
 								Security Question:
-								<select class="form-control">
-									<option>City were you born in?</option>
-									<option>Province were you born in?</option>
-									<option>Name of the street you grew up in?</option>
-									<option>Your childhood hero?</option>
-									<option>Name of your elementary school?</option>
-									<option>Name of your first pet?</option>
+								<select class="form-control" name="n_security">
+									<?php Print $secretQuestions?>
 								</select>
 							</label>
 							<label class="col-md-12">
 								Answer:
-								<input type="text" class="form-control">
+								<input type="text" name="n_answer" class="form-control" required>
 							</label>
 							<div class="col-md-12">
 								Choose account role:
 								<div class="radio">
 									<label>
-										<input type="radio" name="account" value="Employee" checked onchange="hideRestrictions()">
+										<input type="radio" name="n_role[]" value="Employee" checked onchange="hideRestrictions()">
 										Employee
 									</label>
 									<label>
-										<input type="radio" name="account" value="Employee" onchange="hideRestrictions()" id='adminradio'>
+										<input type="radio" name="n_role[]" value="Administrator" onchange="hideRestrictions()" id='adminradio'>
 										Administrator
 									</label>
 								</div>
@@ -552,72 +591,72 @@ include('directives/db.php');
 								<ul class="list-unstyled">
 									<li>
 										<label>
-											<input type="checkbox">
+											<input type="checkbox" disabled>
 											View Payroll
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox">
+											<input type="checkbox" disabled>
 											Manage AWOL employees
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox">
+											<input type="checkbox" disabled>
 											Adding of employees
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox">
+											<input type="checkbox" disabled>
 											Editing details of employees
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox">
+											<input type="checkbox" disabled>
 											Managing site movement
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox">
+											<input type="checkbox" disabled>
 											Adding of sites
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox">
+											<input type="checkbox" disabled>
 											Adding of positions
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox">
+											<input type="checkbox" disabled>
 											Viewing or reports
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox">
+											<input type="checkbox" disabled>
 											Managing loans application
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox">
+											<input type="checkbox" disabled>
 											Changing open/close payroll
 										</label>
 									</li>
 								</ul>
 							</div>
-
+							<input id="newAccount_submit" type="submit" style="display: none">
 						</form>
 					</div>
 					<div class="modal-footer pull-down">
 						<button class="btn btn-default" data-dismiss="modal">Cancel</button>
-						<button class="btn btn-primary">Save Changes</button>
+						<button class="btn btn-primary" onclick="newAccountFunction()">Save Changes</button>
 					</div>
 					</div>
 				</div>
@@ -636,37 +675,38 @@ include('directives/db.php');
 						</div>
 					</div>
 					<div class="modal-body">
-						<div class="row" style="overflow:scroll; height:300px">
-							<div class="col-md-12">
-								<div class="panel panel-primary">
-									<div class="panel-body">
-									<h4>JustineDiza</h4>
-									<button class="btn btn-default" data-toggle="modal" data-target="#setRestrictions">Set Restrictions</button>
-									<button class="btn btn-danger" onclick="removeAccount()">Remove Account</button>
-									<button class="btn btn-warning" data-toggle="modal" data-target="#resetPass">Reset Password</button>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="panel panel-primary">
-									<div class="panel-body">
-									<h4>KarloEspiritu</h4>
-									<button class="btn btn-default" data-toggle="modal" data-target="#setRestrictions">Set Restrictions</button>
-									<button class="btn btn-danger" onclick="removeAccount()">Remove Account</button>
-									<button class="btn btn-warning" data-toggle="modal" data-target="#resetPass">Reset Password</button>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="panel panel-primary">
-									<div class="panel-body">
-									<h4>OliviaEscartin</h4>
-									<button class="btn btn-default" data-toggle="modal" data-target="#setRestrictions">Set Restrictions</button>
-									<button class="btn btn-danger" onclick="removeAccount()">Remove Account</button>
-									<button class="btn btn-warning" data-toggle="modal" data-target="#resetPass">Reset Password</button>
-									</div>
-								</div>
-							</div>
+						<div class="row" style="overflow:scroll; height: 500px">
+							<?php
+							$accounts = "SELECT * FROM administrator WHERE role = 'Employee'";
+							$accountQuery = mysql_query($accounts);
+							
+							if(mysql_num_rows($accountQuery) > 0)
+							{
+								while($AcctRow = mysql_fetch_assoc($accountQuery))
+								{
+									Print "
+										<div class='col-md-12'>
+											<div class='panel panel-primary'>
+												<div class='panel-body'>
+												<h4>
+													".$AcctRow['lastname'].", ".$AcctRow['firstname']."
+												</h4>
+												<button class='btn btn-default' data-toggle='modal' data-target='#setRestrictions'>
+													Set Restrictions
+												</button>
+												<button class='btn btn-danger' onclick='removeAccount(\"".$AcctRow['username']."\")''>
+													Remove Account
+												</button>
+												<button class='btn btn-warning' data-toggle='modal' data-target='#resetPass' onclick='passwordReset(\"".$AcctRow['username']."\")'>Reset Password</button>
+												</div>
+											</div>
+										</div>	
+									";
+								}
+							}
+							?>
+							
+
 						</div>
 					</div>
 				</div>
@@ -690,7 +730,7 @@ include('directives/db.php');
 							<div class="col-md-12">
 								<label>
 									New password
-									<input type="text" placeholder="SOMETHING" class="form-control" readonly>
+									<div id="newGeneratedPassword"></div>
 								</label>
 							</div>
 						</div>
@@ -698,7 +738,8 @@ include('directives/db.php');
 				</div>
 			</div>
 		</div>
-
+		<!-- Hidden form for removing users -->
+		<div id="hiddenFormDiv"></div>
 
 		<!-- Set Restrictions -->
 		<div class="modal fade" id="setRestrictions" role="dialog">
@@ -1108,7 +1149,7 @@ include('directives/db.php');
 			{
 				
 				for(var i = 0; i < checkboxlength; i++){
-					checkbox[i].disabled = true;
+					checkbox[i].disabled = false;
 				}
 
 			}
@@ -1116,13 +1157,59 @@ include('directives/db.php');
 			{
 				// If previously selected admin revert changes
 				for(var i = 0; i < checkboxlength; i++){
-					checkbox[i].disabled = false;
+					checkbox[i].disabled = true;
 				}
 			}
 		}
 
-		function removeAccount(){
-			confirm("Are you sure you want to remove this employee account?");
+		function removeAccount(user){
+			var a = confirm("Are you sure you want to remove this employee account?");
+			if(a)
+			{
+				var username = user;
+				//Create form to pass the values through POST and not GET
+				var form = document.createElement("form");
+				form.setAttribute("method","post");
+				form.setAttribute("action","logic_options_removeUser.php");
+				form.setAttribute("id","RemoveAcctForm");
+
+				var user = document.createElement("input");
+				user.setAttribute("type","hidden");
+				user.setAttribute("name","userTerminate");
+				user.setAttribute("value",username);
+				//append User inside form
+				form.appendChild(user);
+
+				document.getElementById('hiddenFormDiv').appendChild(form);
+				document.getElementById('RemoveAcctForm').submit();
+			}
+		}
+
+		function optionAccount() {
+			var a = confirm("Are you sure?");
+			if(a)
+			{
+				document.getElementById('account_option').submit();
+			}
+		}
+
+		function newAccountFunction() {
+		 	document.getElementById('newAccount_submit').click();
+		  
+		}
+
+		function passwordReset(user) {
+			$.ajax({
+				url:"fetch_password_reset.php",
+				method:"POST",
+				data:{
+						username: user
+				},
+				success:function(data)
+				{
+					$('#newGeneratedPassword').html(data)
+				}
+			});
 		}
 
 

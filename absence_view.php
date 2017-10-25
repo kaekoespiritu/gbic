@@ -42,6 +42,7 @@ $empRow = mysql_fetch_assoc($employeeQuery);
 			<li><a href="applications.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Absence Notifications</a></li>
 			<li class="active">AWOL pending</li>
 			<button class="btn btn-danger pull-right" onclick="terminateEmployee()">Terminate employee</button>
+			<button class="btn btn-primary pull-right moveright" onclick="">Restore employee</button>
 		</ol>
 			<h2 class="text-left"><?php Print $empRow['lastname'].", ".$empRow['firstname']?></h2>
 			<hr>
