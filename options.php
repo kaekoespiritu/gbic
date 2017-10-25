@@ -496,9 +496,18 @@ $adminRole = $adminArr['role'];
 										<div id="securityq" class="tab-pane">
 										<label>
 											Security Question:
+											<!-- TODO: CHANGE DROPDOWN TO RADIO BUTTON -->
+											<div class="">
 											<select class="form-control" name="securityQuestion">
+												<option value="" hidden>-- Choose security question --</option>
 												<?php Print $secretQuestions ?>
 											</select>
+
+											<label>
+												<input type="checkbox" >
+
+											</label>
+											</div>
 										</label>
 										<label>
 											Answer:

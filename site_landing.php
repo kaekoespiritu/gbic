@@ -80,7 +80,7 @@ include('directives/session.php');
 						}
 						else
 						{
-							Print '<a class="btn btn-primary pull-right" href="site_movement.php?site=pending" disabled>Idle employees <span class="badge badge-light">0</span></a>';
+							Print '<a class="btn btn-primary pull-right disabledtotally" disabled>Idle employees <span class="badge badge-light">0</span></a>';
 						}
 
 					?>

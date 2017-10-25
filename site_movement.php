@@ -168,7 +168,7 @@ $location = $_GET['site'];
 									<td>
 										".$site_dropdown."
 									</td>
-									<td><button href='' class='btn btn-primary'><span class='glyphicon glyphicon-list'></span> History</button></td>
+									<td><button class='btn btn-primary'><span class='glyphicon glyphicon-list'></span> History</button></td>
 								</tr>
 								";
 							}

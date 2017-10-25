@@ -406,3 +406,14 @@ hr
   -o-transform: rotate(270deg);
   transform: rotate(270deg);
 }
+
+.moveright
+{
+  margin-right: 15px;
+}
+
+.disabletotally:hover
+{
+  pointer-events: none;
+  cursor: not-allowed;
+}
