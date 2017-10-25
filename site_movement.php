@@ -89,6 +89,7 @@ $location = $_GET['site'];
 						<td>Position</td>
 						<td>Current Site</td>
 						<td>New Site</td>
+						<td>View History</td>
 					</tr>
 					</thead>
 					<tbody>
@@ -167,6 +168,7 @@ $location = $_GET['site'];
 									<td>
 										".$site_dropdown."
 									</td>
+									<td><button href='' class='btn btn-primary'><span class='glyphicon glyphicon-list'></span> History</button></td>
 								</tr>
 								";
 							}
