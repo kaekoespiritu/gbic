@@ -406,3 +406,15 @@ hr
   -o-transform: rotate(270deg);
   transform: rotate(270deg);
 }
+
+.whitelink
+{
+  text-decoration:none;
+  color:white;
+}
+
+.whitelink:hover
+{
+  color:orange;
+  text-decoration: none;
+}

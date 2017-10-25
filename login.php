@@ -46,8 +46,9 @@ include("directives/db.php");
 						</div>
 
 						<div class="form-group">
-							<div class="col-md-7 pull-right"><br>
-								<button type="submit" class="btn btn-primary btn_loginSubmit login-text login-button">Log in</button>
+							<div class="col-md-12"><br>
+								<a href='#' class='whitelink'><h5>Forgot your password?</h5></a>
+								<button type="submit" class="btn btn-warning btn_loginSubmit login-text login-button">Log in</button>
 							</div>
 						</div>
 
@@ -55,6 +56,16 @@ include("directives/db.php");
 				</div>
 			</div>
 		</div>
+		<script>
+			var $slider = document.getElementById('slider');
+			var $toggle = document.getElementById('toggle');
+
+			$toggle.addEventListener('click', function() {
+				var isOpen = $slider.classList.contains('slide-in');
+
+				$slider.setAttribute('class', isOpen ? 'slide-out' : 'slide-in');
+			});
+		</script>
 	</body>
 </html>
 <?php
