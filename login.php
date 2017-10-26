@@ -16,6 +16,57 @@ include("directives/db.php");
 
 	</head>
 	<body>
+		<!-- MODAL FOR FORGOT PASSWORD -->
+		<div class="modal fade" role="dialog" id="forgotPass">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div class="col-md-10 text-right">
+							<h5 class="modal-title">Forgot your password?</h5>
+						</div>
+						<div class="col-md-1 pull-right">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						</div>
+					</div>
+					<div class="modal-body">
+						<label>
+							Username:
+							<input type="text" class="form-control">
+						</label>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary" data-toggle="modal" data-target="#askQ">Submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" role="dialog" id="askQ">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div class="col-md-10 text-right">
+							<h5 class="modal-title">Answer the security question</h5>
+						</div>
+						<div class="col-md-1 pull-right">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						</div>
+					</div>
+					<div class="modal-body">
+						<h5>Security Question:<br>What is the name of the street you grew up on?</h5><br>
+						<label>
+							Answer:
+							<input type="text" class="form-control">
+						</label>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary" onclick="resetPass()">Submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
 		<img src="Images/bg.jpg" class="bg">
 		<div class="wrapper">
 			<div class="panel clear-fix">
@@ -47,11 +98,11 @@ include("directives/db.php");
 
 						<div class="form-group">
 							<div class="col-md-12"><br>
-								<a href='#' class='whitelink'><h5>Forgot your password?</h5></a>
+								<!-- FIX PLACEMENT OF LINK AND ADD MODAL -->
+								<a href="#" data-toggle="modal" data-target="#forgotPass" class='whitelink'><h5>Forgot your password?</h5></a>
 								<button type="submit" class="btn btn-warning btn_loginSubmit login-text login-button">Log in</button>
 							</div>
 						</div>
-
 					</form>
 				</div>
 			</div>
@@ -66,6 +117,8 @@ include("directives/db.php");
 				$slider.setAttribute('class', isOpen ? 'slide-out' : 'slide-in');
 			});
 		</script>
+		<script rel="javascript" src="js/jquery.min.js"></script>
+		<script rel="javascript" src="js/bootstrap.min.js"></script>
 	</body>
 </html>
 <?php
