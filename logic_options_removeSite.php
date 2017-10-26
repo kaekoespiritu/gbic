@@ -65,7 +65,7 @@
 		$sitePending = $primaryQuery.$secondaryQuery;
 		mysql_query($sitePending);
 		//Print '<script>alert("'.$primaryQuery.''.$secondaryQuery.'")</script>';
-		Print "<script>window.location.assign('options_site.php')</script>";
+		Print "<script>window.location.assign('site_movement.php?site=pending')</script>";
 	}
 
 ?>

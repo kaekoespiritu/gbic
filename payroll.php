@@ -171,8 +171,8 @@ if($holidayExist > 0)
 			<table class="table-bordered table-condensed" style="background-color:white;">
 				<?php
 				//Sample query for debugging purposes
-					//$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY date DESC LIMIT 7";
-				$payrollDate = "SELECT * FROM attendance WHERE empid = '2017-0000011' ORDER BY date DESC LIMIT 7";
+					$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY date DESC LIMIT 7";
+				//$payrollDate = "SELECT * FROM attendance WHERE empid = '2017-0000011' ORDER BY date DESC LIMIT 7";
 					$payrollQuery = mysql_query($payrollDate);
 					//Boolean for the conditions not to repeat just incase the employee does't attend sundays
 					$monBool = true;
@@ -263,6 +263,8 @@ if($holidayExist > 0)
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$sunTimeIn = $dateRow['timein'];
 								$sunTimeOut = $dateRow['timeout'];
+								$ABsunTimeIn = $dateRow['afterbreak_timein'];
+								$ABsunTimeOut = $dateRow['afterbreak_timeout'];
 
 								$sunWorkHrs = $dateRow['workhours'];//Get the workhours
 								$sunNDHrs = $dateRow['nightdiff'];//Get the night diff
@@ -292,6 +294,9 @@ if($holidayExist > 0)
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$monTimeIn = $dateRow['timein'];
 								$monTimeOut = $dateRow['timeout'];
+								$ABmonTimeIn = $dateRow['afterbreak_timein'];
+								$ABmonTimeOut = $dateRow['afterbreak_timeout'];
+
 
 								$monWorkHrs = $dateRow['workhours'];//Get the workhours
 								$monNDHrs = $dateRow['nightdiff'];//Get the night diff
@@ -320,6 +325,8 @@ if($holidayExist > 0)
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$tueTimeIn = $dateRow['timein'];
 								$tueTimeOut = $dateRow['timeout'];
+								$ABtueTimeIn = $dateRow['afterbreak_timein'];
+								$ABtueTimeOut = $dateRow['afterbreak_timeout'];
 								
 								$tueWorkHrs = $dateRow['workhours'];//Get the workhours
 								$tueNDHrs = $dateRow['nightdiff'];//Get the night diff
@@ -351,6 +358,8 @@ if($holidayExist > 0)
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$wedTimeIn = $dateRow['timein'];
 								$wedTimeOut = $dateRow['timeout'];
+								$ABwedTimeIn = $dateRow['afterbreak_timein'];
+								$ABwedTimeOut = $dateRow['afterbreak_timeout'];
 
 								$wedWorkHrs = $dateRow['workhours'];//Get the workhours
 								$wedNDHrs = $dateRow['nightdiff'];//Get the night diff
@@ -380,6 +389,8 @@ if($holidayExist > 0)
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$thuTimeIn = $dateRow['timein'];
 								$thuTimeOut = $dateRow['timeout'];
+								$ABthuTimeIn = $dateRow['afterbreak_timein'];
+								$ABthuTimeOut = $dateRow['afterbreak_timeout'];
 
 								$thuWorkHrs = $dateRow['workhours'];//Get the workhours
 								$thuNDHrs = $dateRow['nightdiff'];//Get the night diff
@@ -409,6 +420,8 @@ if($holidayExist > 0)
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$friTimeIn = $dateRow['timein'];
 								$friTimeOut = $dateRow['timeout'];
+								$ABfriTimeIn = $dateRow['afterbreak_timein'];
+								$ABfriTimeOut = $dateRow['afterbreak_timeout'];
 
 								$friWorkHrs = $dateRow['workhours'];//Get the workhours
 								$friNDHrs = $dateRow['nightdiff'];//Get the night diff
@@ -438,6 +451,8 @@ if($holidayExist > 0)
 								$totalUT += $dateRow['undertime'];//Get the total Undertime
 								$satTimeIn = $dateRow['timein'];
 								$satTimeOut = $dateRow['timeout'];
+								$ABsatTimeIn = $dateRow['afterbreak_timein'];
+								$ABsatTimeOut = $dateRow['afterbreak_timeout'];
 
 								$satWorkHrs = $dateRow['workhours'];//Get the workhours
 								$satNDHrs = $dateRow['nightdiff'];//Get the night diff
@@ -686,8 +701,8 @@ if($holidayExist > 0)
 					<?php
 						if(!$wedAbsent)
 						{
-							Print 	"	<td>Time In:<br>". trim($wedTimeIn) ."</td>
-										<td>Time Out:<br>". trim($wedTimeOut) ."</td>
+							Print 	"	<td>Time In:<br>". trim($ABwedTimeIn) ."</td>
+										<td>Time Out:<br>". trim($ABwedTimeOut) ."</td>
 										<input type='hidden' name='wedWorkHrs' value='".$wedWorkHrs."'>";
 							
 							if($wedNDHrs != 0)
@@ -705,8 +720,8 @@ if($holidayExist > 0)
 						}
 						if(!$thuAbsent)
 						{
-							Print 	"	<td>Time In:<br>". trim($thuTimeIn) ."</td>
-										<td>Time Out:<br>". trim($thuTimeOut) ."</td>
+							Print 	"	<td>Time In:<br>". trim($ABthuTimeIn) ."</td>
+										<td>Time Out:<br>". trim($ABthuTimeOut) ."</td>
 										<input type='hidden' name='thuWorkHrs' value='".$thuWorkHrs."'>";
 							if($thuNDHrs != 0)
 							{
@@ -723,8 +738,8 @@ if($holidayExist > 0)
 						}
 						if(!$friAbsent)
 						{
-							Print 	"	<td>Time In:<br>". trim($friTimeIn) ."</td>
-										<td>Time Out:<br>". trim($friTimeOut) ."</td>
+							Print 	"	<td>Time In:<br>". trim($ABfriTimeIn) ."</td>
+										<td>Time Out:<br>". trim($ABfriTimeOut) ."</td>
 										<input type='hidden' name='friWorkHrs' value='".$friWorkHrs."'>";
 							if($friNDHrs != 0)
 							{
@@ -741,8 +756,8 @@ if($holidayExist > 0)
 						}
 						if(!$satAbsent)
 						{
-							Print 	"	<td>Time In:<br>". trim($satTimeIn) ."</td>
-										<td>Time Out:<br>". trim($satTimeOut) ."</td>
+							Print 	"	<td>Time In:<br>". trim($ABsatTimeIn) ."</td>
+										<td>Time Out:<br>". trim($ABsatTimeOut) ."</td>
 										<input type='hidden' name='satWorkHrs' value='".$satWorkHrs."'>";
 							if($satNDHrs !=  0)
 							{
@@ -759,8 +774,8 @@ if($holidayExist > 0)
 						}
 						if(!$sunAbsent)
 						{
-							Print 	"	<td>Time In:<br>". trim($sunTimeIn) ."</td>
-										<td>Time Out:<br>". trim($sunTimeOut) ."</td>
+							Print 	"	<td>Time In:<br>". trim($ABsunTimeIn) ."</td>
+										<td>Time Out:<br>". trim($ABsunTimeOut) ."</td>
 										<input type='hidden' name='sunWorkHrs' value='".$sunWorkHrs."'>";
 							if($sunNDHrs !=  0)
 							{
@@ -777,8 +792,8 @@ if($holidayExist > 0)
 						}
 						if(!$monAbsent)
 						{
-							Print 	"	<td>Time In:<br>". trim($monTimeIn) ."</td>
-										<td>Time Out:<br>". trim($monTimeOut) ."</td>
+							Print 	"	<td>Time In:<br>". trim($ABmonTimeIn) ."</td>
+										<td>Time Out:<br>". trim($ABmonTimeOut) ."</td>
 										<input type='hidden' name='monWorkHrs' value='".$monWorkHrs."'>";
 							if($monNDHrs != 0)
 							{
@@ -795,8 +810,8 @@ if($holidayExist > 0)
 						}
 						if(!$tueAbsent)
 						{
-							Print 	"	<td>Time In:<br>". trim($tueTimeIn) ."</td>
-										<td>Time Out:<br>". trim($tueTimeOut) ."</td>
+							Print 	"	<td>Time In:<br>". trim($ABtueTimeIn) ."</td>
+										<td>Time Out:<br>". trim($ABtueTimeOut) ."</td>
 										<input type='hidden' name='tueWorkHrs' value='".$tueWorkHrs."'>";
 							if($tueNDHrs != 0)
 							{
@@ -933,79 +948,60 @@ if($holidayExist > 0)
 								<label class="control-label col-md-3" for="sss" >SSS</label>
 								<div class="col-md-9">
 									<?php
-									$getSSS = "SELECT sss FROM loans WHERE empid = '$empid' AND sss IS NOT NULL ORDER BY date DESC";
-									$getPAGIBIG = "SELECT pagibig FROM loans WHERE empid = '$empid' AND pagibig IS NOT NULL ORDER BY date DESC";
-									$getVALE = "SELECT vale FROM loans WHERE empid = '$empid' AND vale IS NOT NULL ORDER BY date DESC";
+									$getSSS = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' ORDER BY date DESC LIMIT 1";
+									$getPAGIBIG = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' ORDER BY date DESC LIMIT 1";
+									$getNewVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'newVale' ORDER BY date DESC LIMIT 1";
+									$getOldVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY date DESC LIMIT 1";
 									//Query
 									$sssQuery = mysql_query($getSSS);
 									$pagibigQuery = mysql_query($getPAGIBIG);
-									$valeQuery = mysql_query($getVALE);
-
-									//Get the number of Rows
-									$sssNum = mysql_num_rows($sssQuery);
-									$pagibigNum = mysql_num_rows($pagibigQuery);
-									$valeNum = mysql_num_rows($valeQuery);
-									if($sssNum > 0)
+									$newValeQuery = mysql_query($getNewVALE);
+									$oldValeQuery = mysql_query($getOldVALE);
+									
+									//SSS Loan
+									if(mysql_num_rows($sssQuery) > 0)
 									{
-										while($sssLatests = mysql_fetch_assoc($sssQuery))
-										{	
-											
-											if($sssLatests['sss'] != NULL)
-											{
-												$sss = $sssLatests['sss'];
-												break 1;
-											}
-											else
-											{
-												$sss = "N/A";
-											}
-										}
+										$sssArr = mysql_fetch_assoc($getSSS);
+										$sss = $sssArr['amount'];
 									}
 									else
 									{
 										$sss = "N/A";
 									}
 
-									if($pagibigNum > 0)
+									//Pagibig Loan
+									if(mysql_num_rows($pagibigQuery) > 0)
 									{
-										while($pagibigLatest = mysql_fetch_assoc($pagibigQuery))
-										{
-											if($pagibigLatest['pagibig'] != NULL)
-											{
-												$pagibig = $pagibigLatest['pagibig'];
-												break 1;
-											}
-											else
-											{
-												$pagibig = "N/A";
-											}
-										}
-										
+										$pagibigArr = mysql_fetch_assoc($pagibigQuery);
+										$pagibig = $pagibigArr['amount'];
 									}
 									else
 									{
 										$pagibig = "N/A";
 									}
 
-									if($valeNum > 0)
+									//New Vale
+									if(mysql_num_rows($newValeQuery) > 0)
 									{
-										while($valeLatest = mysql_fetch_assoc($valeQuery))
-										{
-											if($valeLatest['vale'] != NULL)
-											{
-												$vale = $valeLatest['vale'];
-												break 1;
-											}
-											else
-											{
-												$vale = "N/A";
-											}
-										}
+										$newValeArr = mysql_fetch_assoc($newValeQuery);
+										$newVale = $newValeArr['amount'];
 									}
 									else
 									{
-										$vale = "N/A";
+										$newVale = "N/A";
 									}
+
+									//Old Vale
+									if(mysql_num_rows($oldValeQuery) > 0)
+									{
+										$oldValeArr = mysql_fetch_assoc($oldValeQuery);
+										$oldVale = $oldValeArr['amount'];
+									}
+									else
+									{
+										$oldVale = "N/A";
+									}
+
 									if($sss != "N/A")
 									{
 										Print "<span class='pull-right'>".number_format($sss, 2, '.', ',')."</span>";
@@ -1046,18 +1042,18 @@ if($holidayExist > 0)
 								<h5 class="text-right" style="white-space: nowrap;">
 									<span class="vale pull-right">
 										<?php 
-										if($vale != "N/A")
+										if($oldVale != "N/A")
 
-								        Print number_format($vale, 2, '.', ',');
+								        Print number_format($oldVale, 2, '.', ',');
 								        else
-								        Print $vale;	
+								        Print $oldVale;	
 										?>
 									</span>
 								</h5>
 								<input type="hidden" name="vale_deducted" class="deducted">
 								<div class="row">
 									<?php
-									if($vale != "N/A")
+									if($oldVale != "N/A")
 									{
 									Print "
 									<button type='button' class='btn btn-danger btn-sm col-md-12' data-toggle='modal' data-target='#deductVale'><span class='glyphicon glyphicon-minus'></span> Deduct</button>";
@@ -1071,11 +1067,11 @@ if($holidayExist > 0)
 								<h5 class="text-right" style="white-space: nowrap;">
 									<span class="vale pull-right">
 										<?php 
-										if($vale != "N/A")
+										if($newVale != "N/A")
 
-								        Print number_format($vale, 2, '.', ',');
+								        Print number_format($newVale, 2, '.', ',');
 								        else
-								        Print $vale;	
+								        Print $newVale;	
 										?>
 									</span>
 									<br>
@@ -1086,7 +1082,7 @@ if($holidayExist > 0)
 								<div class="row">
 									<button type='button' class='btn btn-success btn-sm col-md-12' data-toggle='modal' data-target='#addVale'><span class='glyphicon glyphicon-plus'></span> Add new</button>
 									<?php
-									if($vale != "N/A")
+									if($newVale != "N/A")
 									{
 									Print "
 									<button type='button' class='btn btn-danger btn-sm col-md-12' data-toggle='modal' data-target='#deductVale'><span class='glyphicon glyphicon-minus'></span> Deduct</button>";
