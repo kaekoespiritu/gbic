@@ -152,7 +152,7 @@
 									<label for="allowance">Allowance</label>
 								</div>
 								<div class="col-md-5">
-									<input name="txt_addAllowance" onkeypress="validatenumber(event)" type="text" class="form-control" onblur="allowanceDecimal()" id="allowance">
+									<input name="txt_addAllowance" onkeypress="validatenumber(event)" type="text" class="form-control" onchange="allowanceDecimal()" id="allowance">
 								</div>
 							</div>
 

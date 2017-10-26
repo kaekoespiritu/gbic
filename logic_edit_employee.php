@@ -1,6 +1,15 @@
 <?php
 	include('directives/session.php');
 	include('directives/db.php');
+
+	$date = strftime("%B %d, %Y");//Get the current date
+	//Gets the admin who change the site and position
+	$user = $_SESSION['user_logged_in'];
+	$admin = "SELECT * FROM administrator WHERE username = '$user'";
+	$adminQuery = mysql_query($admin);
+	$adminArr = mysql_fetch_assoc($adminQuery);
+	$adminName = $adminArr['firstname']." ".$adminArr['lastname'];
+
 	$empid = $_GET['empid'];
 	if($_POST['address'] != null)
 	{
@@ -30,12 +39,16 @@
 	if($_POST['position'] != null)
 	{
 		$position = mysql_real_escape_string($_POST['position']);
-		mysql_query("UPDATE employee SET position = '$position' WHERE empid = '$empid'");	
+		mysql_query("UPDATE employee SET position = '$position' WHERE empid = '$empid'");
+		//Set historical for this change
+		mysql_query("INSERT INTO position_history(empid, position, date, admin) VALUES('$empid', '$position', '$date', '$adminName')");	
 	}
 	if($_POST['site'] != null)
 	{
 		$site = mysql_real_escape_string($_POST['site']);
 		mysql_query("UPDATE employee SET site = '$site' WHERE empid = '$empid'");	
+		//Set historical for this change
+		mysql_query("INSERT INTO site_history(empid, site, date, admin) VALUES('$empid', '$site', '$date', '$adminName')");
 	}
 	if($_POST['salary'] != null)
 	{

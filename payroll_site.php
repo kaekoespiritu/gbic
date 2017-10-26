@@ -3,6 +3,10 @@
 include('directives/db.php');
 include('directives/session.php');
   date_default_timezone_set('Asia/Hong_Kong');
+
+  //$date = $date = strftime("%B %d, %Y");
+  //sample date
+  $date = "October 24, 2017";
 ?>
 <html>
 <head>
@@ -34,10 +38,17 @@ include('directives/session.php');
 	<div class="row">
 	<h2>Payroll for this week</h2>
 	<h3>Today is <?php 
-					date_default_timezone_set('Asia/Hong_Kong');
-					$date = date('l, F d, Y', time());
-					echo $date; ?></h3>
-	<h4>Open: Tuesday | Close: Wednesday</h4>
+					
+		//$date = date('l, F d, Y', time());
+		echo $date; 
+
+		$payrollDay = "SELECT * FROM payroll_day";
+		$payrollDayQuery = mysql_query($payrollDay);
+		$PdayArr = mysql_fetch_assoc($payrollDayQuery);
+
+	?></h3>
+
+	<h4>Open: <?php Print $PdayArr['open']?> | Close: <?php Print $PdayArr['close']?></h4>
 	</div>
 
 	<div class="container">
@@ -52,6 +63,54 @@ include('directives/session.php');
 			$site_box_query = mysql_query($site_box);
 			while($row = mysql_fetch_assoc($site_box_query))
 			{
+				$site = $row['location'];
+
+				$day1 = $date;
+				$day2 = date('F j, Y', strtotime('-1 day', strtotime($date)));
+				$day3 = date('F j, Y', strtotime('-2 day', strtotime($date)));
+				$day4 = date('F j, Y', strtotime('-3 day', strtotime($date)));
+				$day5 = date('F j, Y', strtotime('-4day', strtotime($date)));
+				$day6 = date('F j, Y', strtotime('-5 day', strtotime($date)));
+				$day7 = date('F j, Y', strtotime('-6 day', strtotime($date)));
+
+				$days = array("$day1","$day2","$day3","$day4","$day5","$day6","$day7");
+				$attendanceStatus = 0;
+				foreach($days as $checkDay)
+				{
+					//Check if overall attendance for a certain site is done
+					$attendanceChecker = "SELECT * FROM attendance WHERE date = '$checkDay' AND site = '$site'";
+					$attendanceQuery = mysql_query($attendanceChecker);
+					if($attendanceQuery)
+					{
+						$attNum = mysql_num_rows($attendanceQuery);
+						if($attNum == 0)
+						{
+							$attendanceStatus = 0;
+						}
+						else
+						{
+							$checker = null;
+							while($attRow = mysql_fetch_assoc($attendanceQuery))
+							{
+								if($attRow['attendance'] != 0)//0 is for no input
+								{
+									$checker++;//counter
+								}
+							}
+							if($checker == $attNum)//check if number of attendance and the counter are the same
+							{
+								++$attendanceStatus;//Trigger for completing the attendance for the site
+							}
+						}
+					}
+				}
+				//Print "<script>console.log('".$attendanceStatus."')</script>";
+				$weekComplete = false; // boolean to check if attendance is complete for the whole week
+				if($attendanceStatus == 7)
+				{
+					$weekComplete = true;
+				}
+				//Print "<script>console.log('".$weekComplete." : ".$site."')</script>";
 
 				if($counter == 0)
 				{
@@ -73,23 +132,67 @@ include('directives/session.php');
 					/* If location is long, font-size to smaller */
 					if(strlen($row['location'])>=16)
 					{
-						Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
-									<div class="sitebox">
+						if(!$weekComplete)
+						{
+							Print "<script>console.log('1')</script>";
+							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important; pointer-events:none; cursor:not-allowed;" disabled>
+									<div class="sitebox" style="background-color:grey !important; ">
 										<span class="smalltext">'
-											. $row['location'] .'</span><br><br><span>Employees: '. $employee_num .
+											. $row['location'] .'</span>
+											<br>
+												<span class="glyphicon glyphicon-ban-circle"></span>
+											<br><span>Employees: '. $employee_num .
 										'</span>
 									</div>
 								</a>';
+						}
+						else
+						{
+							Print "<script>console.log('2')</script>";
+							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important; ">
+									<div class="sitebox" >
+										<span class="smalltext">'
+											. $row['location'] .'</span>
+											<br>
+												<span class="glyphicon glyphicon-ok"></span>
+											<br><span>Employees: '. $employee_num .
+										'</span>
+									</div>
+								</a>';
+						}
+						
 					}
 					else
 					{
-						Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
-									<div class="sitebox">
+						Print "<script>console.log('3')</script>";
+						if(!$weekComplete)
+						{
+							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important;  text-decoration: none !important; pointer-events:none; cursor:not-allowed;" disabled> 
+									<div class="sitebox" style="background-color:grey !important; ">
 										<span class="autofit">'
-											. $row['location'] .'<br><br>Employees: '. $employee_num .
+											. $row['location'] .'<br>
+												<span class="glyphicon glyphicon-ban-circle"></span>
+											<br>Employees: '. $employee_num .
 										'</span>
 									</div>
 								</a>';
+						}
+						else
+						{
+							Print "<script>console.log('4')</script>";
+							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
+									<div class="sitebox">
+									
+										<span class="autofit">'
+											. $row['location'] .'<br>
+											<span class="glyphicon glyphicon-ok"></span>
+											<br>Employees: '. $employee_num .
+										'</span>
+
+									</div>
+								</a>';
+						}
+						
 					}
 					$counter++;
 					if($counter == 5)
