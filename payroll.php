@@ -988,7 +988,7 @@ if($holidayExist > 0)
 									}
 									else
 									{
-										$newVale = "N/A";
+										$newVale = "<span id = 'newValeText'>N/A</span>";
 									}
 
 									//Old Vale
@@ -1037,10 +1037,11 @@ if($holidayExist > 0)
 						</div>
 
 
-						<div class="col-md-1">
+						<div class="col-md-2">
+						<div class="col-md-6">
 							<h4 class="text-left" style="white-space: nowrap;">Old Vale</h4>
 								<h5 class="text-right" style="white-space: nowrap;">
-									<span class="vale pull-right">
+									<span class="pull-right">
 										<?php 
 										if($oldVale != "N/A")
 
@@ -1056,33 +1057,37 @@ if($holidayExist > 0)
 									if($oldVale != "N/A")
 									{
 									Print "
-									<input type='text' placeholder='Amount to deduct'>";
+									<input type='text' placeholder='Amount' class='form-control input-sm pull-down'>";
 									}
 									?>
 								</div>
 						</div>
 
-						<div class="col-md-1">
+						<div class="col-md-6">
 							<h4 class="text-left" style="white-space: nowrap;">New Vale</h4>
 								<h5 class="text-right" style="white-space: nowrap;">
-									<span class="vale pull-right">
+									<span class="vale pull-right" id="parent">
 										<?php 
 										if($newVale != "N/A")
 
-								        Print number_format($newVale, 2, '.', ',');
-								        else
-								        Print $newVale;	
+								        Print $newVale;
 										?>
 									</span>
 									<br>
-									<span id="dynamicCompute"></span>
+									<!-- <span id="dynamicCompute"></span> -->
 								</h5>
 								<input type="hidden" name="vale_added" class="added">
 								<input type="hidden" name="vale_deducted" class="deducted">
-								<div class="row">
-									<button type='button' class='btn btn-success btn-sm col-md-12' data-toggle='modal' data-target='#addVale'><span class='glyphicon glyphicon-plus'></span> Add new</button>
+								<div class="row" style="margin-top:9px">
+									<button type='button' class='btn btn-success btn-sm col-md-12' data-toggle='modal' data-target='#addVale'><span class='glyphicon glyphicon-plus'></span> Add</button>
 								</div>
 						</div>
+
+						<div class="col-md-12">
+							<h4>COLA</h4>
+							<input type="text" class="form-control" readonly>
+						</div>
+					</div>
 
 						<div class="col-md-3">
 							<h4 class="text-center">Contributions</h4>
@@ -1324,28 +1329,21 @@ function addvale() {
 	var modalValue = document.querySelector("#newAddVale").value;
 	var addVale = parseFloat(modalValue).toFixed(2); 
 
-	// Append innerHTML addition format
-	var computation = document.querySelector('#dynamicCompute');
-	computation.innerHTML = "<span style='right:5px;position:relative;'>+</span>" + addCommas(addVale) + "<br>";
+	var compute = parseFloat(addVale);
 
-	// Add border to show computation
-	var result = document.createElement("div");
-	result.setAttribute("class","result pull-right");
-	result.style.borderTop = "thin solid black";
+	var child = document.getElementById('newValeText');
 
-	if(oldVale.trim()!=="N/A")
+	if(compute > 0)
 	{
-		var compute = parseFloat(builder) + parseFloat(addVale);
+		// Show value to payroll page
+		child.innerHTML = addCommas(addVale);
+		console.log(child);
 	}
 	else
 	{
-		var compute = parseFloat(addVale);
+		child.innerHTML = "N/A";
 	}
 
-	// Add computed value
-	result.innerHTML = addCommas(compute.toFixed(2));
-
-	computation.appendChild(result);
 
 	// Save to hidden input for database access
 	if(document.querySelector('.deducted').value)
