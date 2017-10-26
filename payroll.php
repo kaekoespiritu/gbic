@@ -11,8 +11,10 @@ $site = $_GET['site'];
 $position = $_GET['position'];
 $empid = $_GET['empid'];
 //Sample date for debugging purposes
-$date = strftime("%B %d, %Y");
-//$date = "October 17, 2017";
+//$date = strftime("%B %d, %Y");
+$date = "October 24, 2017";
+$day7 = date('F j, Y', strtotime('-6 day', strtotime($date)));
+
 
 //Holiday Checker
 $holiday = "SELECT * FROM holiday WHERE date = '$date'";
