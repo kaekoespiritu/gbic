@@ -1129,13 +1129,29 @@ if($holidayExist > 0)
 									<div id="1">
 										<label class="control-label col-md-2" for="tools">Name</label>
 										<div class="col-md-4">
-											<input type="text" id="tools" name="toolname[]" class="form-control input-sm" onkeypress="validateletter(event)">
+											<input type="text" id="tools" name="toolname" class="form-control input-sm" onkeypress="validateletter(event)">
 										</div>
 										<label class="control-label col-md-1" for="price">Cost</label>
 										<div class="col-md-4">
-											<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)" onkeyup="getTotal()">
+											<input type="text" id="price" name="toolprice" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal()" onblur="addDecimal(this.value)">
 										</div>
 									</div>	
+								</div>
+								<div class="col-md-12 pull-down">
+									<label class="col-md-5">
+										Total Cost
+									</label>
+									<div class="col-md-6">
+										<input type="text" class="form-control" id="totalcost" value="" readonly>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<label class="col-md-5">
+										Amount to Pay
+									</label>
+									<div class="col-md-6">
+										<input type="text" class="form-control">
+									</div>
 								</div>
 							</div>
 
@@ -1144,11 +1160,11 @@ if($holidayExist > 0)
 							<div class="form-group" id="template" style="display:none">
 								<label class="control-label col-md-2" for="tools">Name</label>
 								<div class="col-md-4">
-									<input type="text" id="tools" name="toolname[]" class="form-control input-sm" onkeypress="validateletter(event)">
+									<input type="text" id="toolstemp" name="toolname" class="form-control input-sm" onkeypress="validateletter(event)">
 								</div>
 								<label class="control-label col-md-1" for="price">Cost</label>
 								<div class="col-md-4">
-									<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)">
+									<input type="text" id="pricetemp" name="toolpricetemp" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal()">
 								</div>
 							</div>
 						</div>
@@ -1350,7 +1366,40 @@ function addvale() {
 
 function getTotal() {
 	// Add sum of all items and show amount to deduct
+	var totalcost = 0;
+	var length = document.getElementsByClassName('toolpricetemp').length;
+	var toolprices = document.getElementsByClassName('toolpricetemp');
+
+	console.log("Total Cost = " + totalcost + " | Length of NodeList =  " + length);
 	
+	if( length > 1 )
+	{
+		for(var i = 0; i < length-1; i++){
+			if(toolprices[i].value!="")
+			{
+				totalcost+=parseFloat(toolprices[i].value);
+			console.log("Total Cost = " + totalcost + " | toolpricetemp = " + parseInt(toolprices[i].value));
+			}
+			else
+			{
+				break;
+			}
+		}
+		totalcost+= parseFloat(document.getElementById('price').value);
+		console.log(totalcost);
+	}
+	else
+	{
+		totalcost = parseFloat(document.getElementById('price').value);
+		console.log(totalcost);
+	}
+
+	document.getElementById('totalcost').value = totalcost.toFixed(2);
+	
+}
+
+function addDecimal(val){
+	document.getElementById('price').value.toFixed(2);
 }
 
 </script>
