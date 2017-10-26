@@ -3,6 +3,15 @@
 error_reporting(0);
 	include('directives/session.php');
 	include('directives/db.php');
+
+	$date = strftime("%B %d, %Y");//Get the current date
+	//Gets the admin who change the site and position
+	$user = $_SESSION['user_logged_in'];
+	$admin = "SELECT * FROM administrator WHERE username = '$user'";
+	$adminQuery = mysql_query($admin);
+	$adminArr = mysql_fetch_assoc($adminQuery);
+	$adminName = $adminArr['firstname']." ".$adminArr['lastname'];
+
 		$firstName = mysql_real_escape_string($_POST['txt_addFirstName']);
 		$lastName = mysql_real_escape_string($_POST['txt_addLastName']);
 		$address = mysql_real_escape_string($_POST['txt_addAddress']);
@@ -19,6 +28,9 @@ error_reporting(0);
 		$pagibig = mysql_real_escape_string($_POST['txt_addPagibig']);
 		$salary = mysql_real_escape_string($_POST['txt_addMonthlySalary']);
 		//debug
+
+		$firstName = ucwords($firstName);
+		$lastName = ucwords($lastName);
 
 		$yearHired = substr($dateHired, -4); //get the year 
 	
@@ -307,7 +319,10 @@ error_reporting(0);
 																	'$pagibig',
 																	'$employment_status',
 																	'$complete_doc')");//adds values to employee table
-
+		//Set historical for Position
+		mysql_query("INSERT INTO position_history(empid, position, date, admin) VALUES('$empid', '$position', '$date', '$adminName')");	
+		//Set historical for Site
+		mysql_query("INSERT INTO site_history(empid, site, date, admin) VALUES('$empid', '$site', '$date', '$adminName')");
 	
 		Print "<script>alert('You have successfully added an employee.')</script>";
 		Print "<script>window.location.assign('employees.php?site=null&position=null')</script>";

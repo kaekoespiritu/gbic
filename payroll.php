@@ -1080,7 +1080,7 @@ if($holidayExist > 0)
 								<input type="hidden" name="vale_added" class="added">
 								<input type="hidden" name="vale_deducted" class="deducted">
 								<div class="row">
-									<button type='button' class='btn btn-success btn-sm col-md-12' data-toggle='modal' data-target='#addVale'><span class='glyphicon glyphicon-plus'></span> Add new</button>
+									<button type='button' class='btn btn-success btn-sm col-md-12' data-toggle='modal' data-target='#addVale'><span class='glyphicon glyphicon-plus'></span> Add new</but
 								</div>
 						</div>
 

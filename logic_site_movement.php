@@ -5,6 +5,14 @@ include('directives/db.php');
 $empNum = count($_POST['empid']);
 $s = $_GET['s'];
 // Print "<script>console.log('".$empNum."')</script>";
+//for admin history
+$user = $_SESSION['user_logged_in'];
+$admin = "SELECT * FROM administrator WHERE username = '$user'";
+$adminQuery = mysql_query($admin);
+$adminArr = mysql_fetch_assoc($adminQuery);
+$adminName = $adminArr['firstname']." ".$adminArr['lastname'];
+
+$date = strftime("%B %d, %Y");//Get the current date
 
 
 if(isset($_POST['groupChange']))//group site movement
@@ -15,6 +23,7 @@ if(isset($_POST['groupChange']))//group site movement
 	{
 		$empid = $_POST['chkbox_chosen'][$counter];
 		mysql_query("UPDATE employee SET site = '$site' WHERE empid = '$empid'");
+		mysql_query("INSERT INTO site_history(empid, site, date, admin) VALUES(	'$empid', '$site', '$date', '$adminName')");
 	}
 	Print "<script>alert('Successfully transfered employees.')</script>";
 	
@@ -22,7 +31,7 @@ if(isset($_POST['groupChange']))//group site movement
 else
 {
 	$empChange = "";// store employees that has been changed
-	$positionNum = "";//store index of new site to trasfer
+	$siteNum = "";//store index of new site to trasfer
 	$moreThanTwo = false;
 	for($counter = 0; $counter < $empNum; $counter++)
 	{
@@ -31,30 +40,33 @@ else
 			if($empChange != "")
 			{
 				$empChange .= ",";
-				$positionNum .= ",";
+				$siteNum .= ",";
 				$moreThanTwo = true;
 			}
 			$empChange .= $_POST['empid'][$counter];
-			$positionNum .= $_POST['newSite'][$counter];
+			$siteNum .= $_POST['newSite'][$counter];
 		}
 	}
 	if($moreThanTwo)
 	{
 		$empSite = explode(",", $empChange);
-		$newSite = explode(",", $positionNum);
+		$newSite = explode(",", $siteNum);
 		$changeNum = count($empSite);
 	 	for($count = 0; $count < $changeNum; $count++)
 		{
 			$empid = $empSite[$count];
 			$site = $newSite[$count];
 			mysql_query("UPDATE employee SET site = '$site' WHERE empid = '$empid'");
+			mysql_query("INSERT INTO site_history(empid, site, date, admin) VALUES('$empid', '$site', '$date', '$adminName')");
+
 		}
 		Print "<script>alert('Successfully transfered employees.')</script>";
 
 	}
 	else
 	{
-		mysql_query("UPDATE employee SET site = '$positionNum' WHERE empid = '$empChange'");
+		mysql_query("UPDATE employee SET site = '$siteNum' WHERE empid = '$empChange'");
+		mysql_query("INSERT INTO site_history(empid, site, date, admin) VALUES('$empChange', '$siteNum', '$date', '$adminName')");
 		Print "<script>alert('Successfully transfered employees.')</script>";
 	}
 }

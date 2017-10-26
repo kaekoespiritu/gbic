@@ -30,32 +30,8 @@ $location = $_GET['site'];
 			<div class="modal fade" role="dialog" id="viewSiteHistory">
 				<div class="modal-dialog">
 					<div class="modal-content">
-						<div class="modal-header">
-							<div class="col-md-11">
-								<h4 class="modal-title">Site History for Name of Employee</h4>
-							</div>
-							<div class="col-md-1 pull-right">
-					        	<button type="button" class="close col-md-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				        	</div>
-						</div>
-						<div class="modal-body">
-							<table class="table table-bordered">
-								<thead>
-									<tr>
-										<td>Date</td>
-										<td>Site</td>
-										<td>Admin</td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>Oct. 26, 2017</td>
-										<td>Muralla</td>
-										<td>Karlo Espiritu</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+						<!-- Ajax Fetch modal -->
+						<div id="fetchHistoryModal"></div>
 					</div>
 				</div>
 			</div>
@@ -202,7 +178,7 @@ $location = $_GET['site'];
 									<td>
 										".$site_dropdown."
 									</td>
-									<td><a class='btn btn-primary' data-toggle='modal' data-target='#viewSiteHistory'><span class='glyphicon glyphicon-list'></span> History</a></td>
+									<td><a class='btn btn-primary' data-toggle='modal' data-target='#viewSiteHistory' onclick='load_history(\"".$row['empid']."\")'><span class='glyphicon glyphicon-list'></span> History</a></td>
 								</tr>
 								";
 							}
@@ -326,6 +302,21 @@ $location = $_GET['site'];
 				$("#groupModal").remove();
     		
 			});
+
+			function load_history(id)
+			{
+				$.ajax({
+					url:"fetch_history_site.php",
+					method:"POST",
+					data:{
+							empid: id
+						},
+					success:function(data)
+					{
+						$('#fetchHistoryModal').html(data);
+					}
+				});
+			}
 		</script>
 	 	
 	 </div>
