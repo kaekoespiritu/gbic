@@ -961,7 +961,7 @@ if($holidayExist > 0)
 									//SSS Loan
 									if(mysql_num_rows($sssQuery) > 0)
 									{
-										$sssArr = mysql_fetch_assoc($getSSS);
+										$sssArr = mysql_fetch_assoc($sssQuery);
 										$sss = $sssArr['amount'];
 									}
 									else
@@ -1056,7 +1056,7 @@ if($holidayExist > 0)
 									if($oldVale != "N/A")
 									{
 									Print "
-									<button type='button' class='btn btn-danger btn-sm col-md-12' data-toggle='modal' data-target='#deductVale'><span class='glyphicon glyphicon-minus'></span> Deduct</button>";
+									<input type='text' placeholder='Amount to deduct'>";
 									}
 									?>
 								</div>
@@ -1081,13 +1081,6 @@ if($holidayExist > 0)
 								<input type="hidden" name="vale_deducted" class="deducted">
 								<div class="row">
 									<button type='button' class='btn btn-success btn-sm col-md-12' data-toggle='modal' data-target='#addVale'><span class='glyphicon glyphicon-plus'></span> Add new</button>
-									<?php
-									if($newVale != "N/A")
-									{
-									Print "
-									<button type='button' class='btn btn-danger btn-sm col-md-12' data-toggle='modal' data-target='#deductVale'><span class='glyphicon glyphicon-minus'></span> Deduct</button>";
-									}
-									?>
 								</div>
 						</div>
 
