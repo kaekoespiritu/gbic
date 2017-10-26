@@ -492,6 +492,10 @@ $adminRole = $adminArr['role'];
 										<label>New username:
 											<input type="text" name="newUsername" class="form-control">
 										</label>
+										<br><br>
+										<div>
+											<span class="well well-sm">Remember: Username is case sensitive.</span>
+										</div>
 										</div>
 										<div id="securityq" class="tab-pane">
 										<label>
@@ -502,11 +506,6 @@ $adminRole = $adminArr['role'];
 												<option value="" hidden>-- Choose security question --</option>
 												<?php Print $secretQuestions ?>
 											</select>
-
-											<label>
-												<input type="checkbox" >
-
-											</label>
 											</div>
 										</label>
 										<label>
