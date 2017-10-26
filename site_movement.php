@@ -26,6 +26,40 @@ $location = $_GET['site'];
 			require_once("directives/nav.php");
 		?>
 
+		<!-- MODAL FOR VIEW SITE HISTORY -->
+			<div class="modal fade" role="dialog" id="viewSiteHistory">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<div class="col-md-11">
+								<h4 class="modal-title">Site History for Name of Employee</h4>
+							</div>
+							<div class="col-md-1 pull-right">
+					        	<button type="button" class="close col-md-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        	</div>
+						</div>
+						<div class="modal-body">
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<td>Date</td>
+										<td>Site</td>
+										<td>Admin</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Oct. 26, 2017</td>
+										<td>Muralla</td>
+										<td>Karlo Espiritu</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
 		<!-- Breadcrumbs -->
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1 pull-down">
@@ -168,7 +202,7 @@ $location = $_GET['site'];
 									<td>
 										".$site_dropdown."
 									</td>
-									<td><button class='btn btn-primary'><span class='glyphicon glyphicon-list'></span> History</button></td>
+									<td><a class='btn btn-primary' data-toggle='modal' data-target='#viewSiteHistory'><span class='glyphicon glyphicon-list'></span> History</a></td>
 								</tr>
 								";
 							}
@@ -209,6 +243,8 @@ $location = $_GET['site'];
 			    </div>
 			  </div>
 			</div>
+
+			
 	 	
 	 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 		<script rel="javascript" src="js/jquery.min.js"></script>
