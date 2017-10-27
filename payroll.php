@@ -941,7 +941,6 @@ if($holidayExist > 0)
 					</tr>
 				</table>
 
-
 				<div class="row">
 					<form class="horizontal">
 						<div class="col-md-2">
@@ -950,14 +949,54 @@ if($holidayExist > 0)
 								<label class="control-label col-md-3" for="sss" >SSS</label>
 								<div class="col-md-9">
 									<?php
+									//this is to check if employee has multiple new vales in a week
+									$day1 = $date;
+									$day2 = date('F j, Y', strtotime('-1 day', strtotime($date)));
+									$day3 = date('F j, Y', strtotime('-2 day', strtotime($date)));
+									$day4 = date('F j, Y', strtotime('-3 day', strtotime($date)));
+									$day5 = date('F j, Y', strtotime('-4 day', strtotime($date)));
+									$day6 = date('F j, Y', strtotime('-5 day', strtotime($date)));
+									$day7 = date('F j, Y', strtotime('-6 day', strtotime($date)));
+
+									$days = array("$day1","$day2","$day3","$day4","$day5","$day6","$day7");
+									
+									$newVale = 0;
+									foreach($days as $checkDay)
+									{
+										//Check if overall attendance for a certain site is done
+										$loanChecker = "SELECT * FROM loans WHERE date = '$checkDay' AND type = 'newVale' AND empid = '$empid'";
+										//Print '<script>colsole.log("'.$loanChecker.'")</script>';
+										$loanCheckerQuery = mysql_query($loanChecker);
+										if($loanCheckerQuery)
+										{
+											$newValeNum = mysql_num_rows($loanCheckerQuery);
+											if($newValeNum != 0)
+											{
+												//Print "<script>alert('yea')</script>";
+												if($newValeNum > 1)
+												{
+													while($newValeArr = mysql_fetch_assoc($loanCheckerQuery))
+													{
+														$newVale += $newValeArr['amount'];
+													}
+												}
+												else
+												{
+													//Print "<script>alert('yea')</script>";
+													$newValeRow = mysql_fetch_assoc($loanCheckerQuery);
+													$newVale += $newValeRow['amount'];
+												}
+											}
+										}
+									}
+
 									$getSSS = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' ORDER BY date DESC LIMIT 1";
 									$getPAGIBIG = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' ORDER BY date DESC LIMIT 1";
-									$getNewVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'newVale' ORDER BY date DESC LIMIT 1";
+									
 									$getOldVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY date DESC LIMIT 1";
 									//Query
 									$sssQuery = mysql_query($getSSS);
 									$pagibigQuery = mysql_query($getPAGIBIG);
-									$newValeQuery = mysql_query($getNewVALE);
 									$oldValeQuery = mysql_query($getOldVALE);
 									
 									//SSS Loan
@@ -983,15 +1022,11 @@ if($holidayExist > 0)
 									}
 
 									//New Vale
-									if(mysql_num_rows($newValeQuery) > 0)
-									{
-										$newValeArr = mysql_fetch_assoc($newValeQuery);
-										$newVale = $newValeArr['amount'];
-									}
-									else
+									if($newVale == 0)
 									{
 										$newVale = "<span id = 'newValeText'>N/A</span>";
 									}
+									
 
 									//Old Vale
 									if(mysql_num_rows($oldValeQuery) > 0)
@@ -1070,7 +1105,7 @@ if($holidayExist > 0)
 								<h5 class="text-right" style="white-space: nowrap;">
 									<span class="vale pull-right" id="parent">
 										<?php 
-										if($newVale != "N/A")
+										if($newVale != "<span id = 'newValeText'>N/A</span>")
 
 								        Print $newVale;
 										?>
@@ -1086,8 +1121,20 @@ if($holidayExist > 0)
 						</div>
 
 						<div class="col-md-12">
+							<?php
+							$cola = "SELECT * FROM site WHERE location = '$site'";
+							$colaQuery = mysql_query($cola);
+							$colaArr = mysql_fetch_assoc($colaQuery);
+
+							$colaValue = $colaArr['cola'];
+							if($colaValue == NULL)
+							{
+								$colaValue = "N/A";
+							}
+
+							?>
 							<h4>COLA</h4>
-							<input type="text" class="form-control" readonly>
+							<input type="text" value="<?php Print $colaValue?>" class="form-control" readonly>
 						</div>
 					</div>
 
