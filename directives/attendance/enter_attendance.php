@@ -75,6 +75,10 @@ function attendance ()
 									<td>
 										<input type='text' onblur='timeValidation(this)' class='timeout1 timepicker form-control input-sm' value='' name='timeout1[".$counter."]'>
 									</td>
+								<!-- Half Day Checkbox-->
+									<td>
+										<input type='checkbox' value='' class='halfdayChk' onclick='halfDay(\"". $row_employee['empid'] ."\")' name='halfday[".$counter."]' disabled>
+									</td>
 								<!-- AFTER BREAK Time In -->
 									<td>
 										<input type='text' onblur='timeValidation(this)' value='". $empRow['timein'] ."' class='timein2 timepicker form-control input-sm' name='timein2[".$counter."]'>
@@ -127,6 +131,10 @@ function attendance ()
 									<td>
 										<input type='text' onblur='timeValidation(this)' class='timeout1 timepicker form-control input-sm' placeholder='ABSENT' value='' name='timeout1[".$counter."]'>
 									</td>
+								<!-- Half Day Checkbox-->
+									<td>
+										<input type='checkbox' value='' name='halfday[".$counter."]'>
+									</td>
 								<!-- AFTER BREAK Time In -->
 									<td>
 										<input type='text' onblur='timeValidation(this.)' placeholder='ABSENT' class='timein2 timepicker form-control input-sm' value='' name='timein2[".$counter."]'>
@@ -176,8 +184,30 @@ function attendance ()
 								<!-- Time Out-->
 									<td>
 										<input type='text' onblur='timeValidation(this)' class='timeout1 timepicker form-control input-sm' value='". $empRow['timeout'] ."' name='timeout1[".$counter."]'>
+									</td>";
+
+					if(empty($empRow['afterbreak_timein']) && empty($empRow['afterbreak_timeout']))//employee took a halfday
+					{
+						Print 	"<!-- Half Day Checkbox-->
+									<td>
+										<input type='checkbox' value='' class='halfdayChk'  onclick='halfDay(\"". $row_employee['empid'] ."\")' name='halfday[".$counter."]' checked>
+									</td>";
+						Print	"<!-- AFTER BREAK Time In -->
+									<td>
+										<input type='text' onblur='timeValidation(this)' class='timein2 timepicker form-control input-sm' placeholder='Half Day' name='timein2[".$counter."]'>
 									</td>
-								<!-- AFTER BREAK Time In -->
+								<!-- AFTER BREAK Time Out-->
+									<td>
+										<input type='text' onblur='timeValidation(this)' class='timeout2 timepicker form-control input-sm' placeholder='Half Day' name='timeout2[".$counter."]'>
+									</td>";
+					}
+					else
+					{
+						Print 	"<!-- Half Day Checkbox-->
+									<td>
+										<input type='checkbox' class='halfdayChk' onclick='halfDay(\"". $row_employee['empid'] ."\")' name='halfday[".$counter."]'>
+									</td>";
+						Print	"<!-- AFTER BREAK Time In -->
 									<td>
 										<input type='text' onblur='timeValidation(this)' class='timein2 timepicker form-control input-sm' value='". $empRow['afterbreak_timein'] ."' name='timein2[".$counter."]'>
 									</td>
@@ -185,6 +215,8 @@ function attendance ()
 									<td>
 										<input type='text' onblur='timeValidation(this)' class='timeout2 timepicker form-control input-sm' value='". $empRow['afterbreak_timeout'] ."' name='timeout2[".$counter."]'>
 									</td>";
+					}
+						
 
 				// Working hours
 					if($empRow['workhours'] <= 5)
@@ -343,10 +375,14 @@ function attendance ()
 						<input type='hidden' name='attendance[".$counter."]' value='PRESENT' class='attendance'>";
 				}
 				Print 	
-					"<input type='hidden' name='empid[".$counter."]' value=". $row_employee['empid'] .">";	
-			
+					"<input type='hidden' name='empid[".$counter."]' value=". $row_employee['empid'] .">	
+				<!-- Loans -->
+					<td>
+						<input type='hidden' name='loans' class='loans'>
+						<a class='btn btn-sm btn-primary' onclick='loansRedirect'>Loans</a>
+					</td>";
 			// REMARKS	
-				if($empRow['remarks']!=="")
+				if($empRow['remarks'] != "")
 				{
 					Print "<!-- Remarks Input --> 
 						<input type='hidden' value='". $empRow['remarks'] ."' name='remarks[".$counter."]' class='hiddenRemarks'>";
@@ -398,9 +434,13 @@ function attendance ()
 					<td>
 						<input type='text' onblur='timeValidation(this)' class='timeout1 timepicker form-control input-sm' value='' name='timeout1[".$counter."]'>
 					</td> 
+					<!-- Half Day Checkbox-->
+					<td>
+						<input type='checkbox' class='halfdayChk' name='halfday[".$counter."]' onclick='halfDay(\"". $row_employee['empid'] ."\")' disabled>
+					</td>
 					<!-- AFTER BREAK Time In -->
 					<td>
-						<input type='text' onblur='timeValidation(this)' class='timein2 timepicker form-control input-sm' value='' name='timein2[".$counter."]'>
+						<input type='text' onblur='timeValidation(this)' class='timein2 timepicker form-control input-sm' value=''  name='timein2[".$counter."]'>
 					</td> 
 					<!-- AFTER BREAK Time Out-->
 					<td>

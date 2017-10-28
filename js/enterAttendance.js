@@ -91,6 +91,10 @@ function timeIn(id) {
 	var timeouthour2 = getHour(timeout2);
 	var timeoutmin2 = getMin(timeout2);
 
+	if(timein1 && timeout1)
+	{
+		halfDayCheckbox(id);
+	}
 	// Function call to compute for working hours, undertime and overtime
 	computeTime(mainRow, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timeinhour2,timeinmin2,timeouthour2,timeoutmin2);
 }
@@ -116,12 +120,80 @@ function timeOut(id) {
 	// Function call to get time of after break
 	var timeouthour2 = getHour(timeout2);
 	var timeoutmin2 = getMin(timeout2);
-
+	
+	if(timein1 && timeout1)
+	{
+		halfDayCheckbox(id);
+	}
 	// Function call to compute for working hours, undertime and overtime
 	computeTime(mainRow, timeinhour1, timeinmin1, timeouthour1, timeoutmin1, timeinhour2, timeinmin2, timeouthour2, timeoutmin2);
 }	
 
+	function halfDayCheckbox(id) {
+		var mainRow = document.getElementById(id); // Get row to be computed
+		mainRow.querySelector('.halfdayChk').disabled = false; // enable checkbox
+	}
 
+	function halfDay(id){
+		var mainRow = document.getElementById(id); // Get row to be computed
+		if(mainRow.querySelector('.halfdayChk').checked == false) // enable checkbox)
+		{
+			mainRow.querySelector('.timein2').placeholder = "";
+			mainRow.querySelector('.timeout2').placeholder = "";
+			// delete values
+			mainRow.querySelector('.timein2').value = "";
+			mainRow.querySelector('.timeout2').value = "";
+			mainRow.querySelector('.workinghours').value = "";
+			mainRow.querySelector('.overtime').value = "";
+			mainRow.querySelector('.undertime').value = "";
+			//for hidden rows
+			mainRow.querySelector('.workinghoursH').value = "";
+			mainRow.querySelector('.overtimeH').value = "";
+			mainRow.querySelector('.undertimeH').value = "";
+			mainRow.querySelector('.nightdiffH').value = "";
+
+			mainRow.querySelector('.timein2').readOnly = false; // unset the textbox to readonly
+			mainRow.querySelector('.timeout2').readOnly = false; // Unset the textbox to readonly
+
+			// If absent was initially placed, changed to success
+			if(mainRow.classList.contains('danger'))
+			{
+				mainRow.classList.remove('danger');
+			}
+			else 
+			{
+				mainRow.classList.remove('success');
+			}
+		}
+		else
+		{
+			var timein1 = mainRow.querySelector('.timein1').value; // Get time in value
+			var timeout1 = mainRow.querySelector('.timeout1').value; // Get time out value
+
+			//Delete value
+			mainRow.querySelector('.timein2').value = "";
+			mainRow.querySelector('.timeout2').value = "";
+			// Function call to get time
+			var timeinhour1 = getHour(timein1);
+			var timeinmin1 = getMin(timein1);
+			// Function call to get time
+			var timeouthour1 = getHour(timeout1);
+			var timeoutmin1 = getMin(timeout1);
+
+			var timeinhour2 = "HD";
+			var timeinmin2 = "HD";
+			var timeouthour2 = "HD";
+			var timeoutmin2 = "HD";
+
+			//Disable afterbreak
+			mainRow.querySelector('.timein2').readOnly = true; // Set the textbox to readonly
+			mainRow.querySelector('.timein2').placeholder = "Half Day";
+			mainRow.querySelector('.timeout2').readOnly = true; // Set the textbox to readonly
+			mainRow.querySelector('.timeout2').placeholder = "Half Day";
+			computeTime(mainRow, timeinhour1, timeinmin1, timeouthour1, timeoutmin1, timeinhour2, timeinmin2, timeouthour2, timeoutmin2);
+		}
+		
+	}
 
 	//Submit the form
 	function save() {
@@ -204,6 +276,9 @@ function timeOut(id) {
 		mainRow.querySelector('.overtimeH').value = "";
 		mainRow.querySelector('.undertimeH').value = "";
 		mainRow.querySelector('.nightdiffH').value = "";
+		//for halfday
+		if(mainRow.querySelector('.halfdayChk').checked = true)
+			mainRow.querySelector('.halfdayChk').checked = false;
 	}
 
 	function getHour(time) {
@@ -258,6 +333,11 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 	//console.log("Time in: " + timeinhour1 + ":" + timeinmin1 + " Time out: " + timeouthour1 + ":" + timeoutmin1 + "/AFTER BREAK - Time in: " + timeinhour2 + ":" + timeinmin2 + " Time out: " + timeouthour2 + ":" + timeoutmin2 );
 
 	row.querySelector('.attendance').value = "";
+
+	if(timeinhour2)
+		console.log("yeah");
+	else
+		console.log("No");
 	// Verifies that time in and time out input fields have value
 	if(timeinhour1 && timeouthour1 && timeinhour2 && timeouthour2)
 	{	
@@ -268,40 +348,62 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		var workinghours1;
 		var workinghours2;
 
-
-		// If time is 12AM
-		if(timeinhour1 == 0)
+//If employee chooses halfday
+		if(timeinhour2 == "HD")//if Halfday
 		{
-			workinghours1 = timeouthour1;
+			// If time is 12AM
+			if(timeinhour1 == 0)
+			{
+				workinghours = timeouthour1;
+			}
+			else
+			{
+				workinghours = timeouthour1 - timeinhour1;
+				//alert(workinghours);
+			}
+			//Decrement workinghours if minutes is more than time out mins
+			if(timeinmin1 > timeoutmin1)
+			{
+				workinghours = workinghours1 - 1;
+			}
 		}
 		else
 		{
-			workinghours1 = timeouthour1 - timeinhour1;
-			//alert(workinghours);
+			// If time is 12AM
+			if(timeinhour1 == 0)
+			{
+				workinghours1 = timeouthour1;
+			}
+			else
+			{
+				workinghours1 = timeouthour1 - timeinhour1;
+				//alert(workinghours);
+			}
+			// If time in 12AM of after break
+			if(timeinhour2 == 0)
+			{
+				workinghours2 = timeouthour2;
+			}
+			else
+			{
+				workinghours2 = timeouthour2 - timeinhour2;
+				//alert(workinghours);
+			}
+			//Decrement workinghours if minutes is more than time out mins
+			if(timeinmin1 > timeoutmin1)
+			{
+				workinghours1 = workinghours1 - 1;
+			}
+			//Decrement workinghours if minutes is more than time out mins
+			if(timeinmin2 > timeoutmin2)
+			{
+				workinghours2 = workinghours2 - 1;
+			}
+			// Gets the overal working hours;
+			workinghours = workinghours1 + workinghours2;
+			console.log("Workinghours :  "+workinghours);
 		}
-		// If time in 12AM of after break
-		if(timeinhour2 == 0)
-		{
-			workinghours2 = timeouthour2;
-		}
-		else
-		{
-			workinghours2 = timeouthour2 - timeinhour2;
-			//alert(workinghours);
-		}
-		//Decrement workinghours if minutes is more than time out mins
-		if(timeinmin1 > timeoutmin1)
-		{
-			workinghours1 = workinghours1 - 1;
-		}
-		//Decrement workinghours if minutes is more than time out mins
-		if(timeinmin2 > timeoutmin2)
-		{
-			workinghours2 = workinghours2 - 1;
-		}
-		// Gets the overal working hours;
-		workinghours = workinghours1 + workinghours2;
-		console.log("Workinghours :  "+workinghours);
+		
 
 		// MORNING SHIFT
 		if(workinghours >= 1)
@@ -309,33 +411,55 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		// Computing minutes
 			console.log("Morning shift");
 			//Before break
-			if(timeinmin1 > timeoutmin1)
+			//If employee chooses halfday
+			if(timeinhour2 == "HD")
 			{
-				workingmins1 = timeinmin1 - timeoutmin1;
+				if(timeinmin1 > timeoutmin1)
+				{
+					workingmins = timeinmin1 - timeoutmin1;
+				}
+				if(timeoutmin1 > timeinmin1)
+				{
+					workingmins = timeoutmin1 - timeinmin1;
+				}
+				if(timeinmin1 == timeoutmin1)
+				{
+					workingmins = 0;
+				}
 			}
-			if(timeoutmin1 > timeinmin1)
+			else
 			{
-				workingmins1 = timeoutmin1 - timeinmin1;
-			}
-			if(timeinmin1 == timeoutmin1)
-			{
-				workingmins1 = 0;
-			}
-			//After break
-			if(timeinmin2 > timeoutmin2)
-			{
-				workingmins2 = timeinmin2 - timeoutmin2;
-			}
-			if(timeoutmin2 > timeinmin2)
-			{
-				workingmins2 = timeoutmin2 - timeinmin2;
-			}
-			if(timeinmin2 == timeoutmin2)
-			{
-				workingmins2 = 0;
-			}
+				if(timeinmin1 > timeoutmin1)
+				{
+					workingmins1 = timeinmin1 - timeoutmin1;
+				}
+				if(timeoutmin1 > timeinmin1)
+				{
+					workingmins1 = timeoutmin1 - timeinmin1;
+				}
+				if(timeinmin1 == timeoutmin1)
+				{
+					workingmins1 = 0;
+				}
+				//After break
+				if(timeinmin2 > timeoutmin2)
+				{
+					workingmins2 = timeinmin2 - timeoutmin2;
+				}
+				if(timeoutmin2 > timeinmin2)
+				{
+					workingmins2 = timeoutmin2 - timeinmin2;
+				}
+				if(timeinmin2 == timeoutmin2)
+				{
+					workingmins2 = 0;
+				}
 
-			workingmins = workingmins1 + workingmins2;
+				workingmins = workingmins1 + workingmins2;
+			}
+				
+
+			
 
 			if(workingmins >= 60)
 			{
@@ -433,8 +557,60 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			{
 				timeouthour2 = 24;
 			}
+			//If employee chooses halfday
+			if(timeinhour2 == "HD")//Night diff
+			{
+				if ((timeinhour1 <= 22 && timeouthour1 <= 6) ||
+			   (timeinhour1 <= 22 && timeouthour1 <= 24))
+				{
+					console.log("timein: "+timeinhour1+" | timeout: "+timeouthour1);
+					//posibility 1
+					if(timeinhour1 <= 24 && timeouthour1 >= 22)
+					{
+						console.log("possibility 1");
+						nightdiff = timeouthour1 - 22;
+						console.log("nightdiff : "+nightdiff);
+					}
+				// // possibility 2 -- When after break time is past 12AM (and started past 10PM)
+				// 	else if((timeinhour1 <= 22 || timeinhour1 >= 22))
+				// 	{
+				// 		console.log("possibility 2la");
 
-			if ((timeinhour1 <= 22 && timeouthour1 <= 6) ||
+				// 		nightdiff = timeouthour1 - 22;
+				// 	}
+					else
+					{
+						nightdiff = "";
+					}
+					if(Number.isInteger(nightdiff))
+					{
+					   	nightdiff = Math.abs(nightdiff);		
+					}
+				}
+				if(nightdiff != "")
+				{
+					
+					row.querySelector('.nightdiff').value = nightdiff + " hrs";
+					row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+				}
+				else
+				{
+					
+					row.querySelector('.nightdiff').value = "";
+					row.querySelector('.nightdiffH').value = "";
+				}
+				// If absent was initially placed, changed to success
+				if(row.classList.contains('danger'))
+				{
+					row.classList.remove('danger');
+					row.classList.add('success');
+				}
+				else 
+				{
+					row.classList.add('success');
+				}
+			}
+			else if ((timeinhour1 <= 22 && timeouthour1 <= 6) ||
 			   (timeinhour1 <= 22 && timeouthour1 <= 24) ||
 			   (timeinhour2 <= 22 && timeouthour2 <= 6) ||
 			   (timeinhour2 <= 22 && timeouthour2 <= 24))//night diff needs reconfiguration
@@ -461,8 +637,6 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 						nightdiff = timeouthour1 - 22 + (6 - timeinhour2);
 					}
 
-					console.log("Checking before break: " + nightdiff + ", IN: " + timeinhour1 + ", OUT: " + timeouthour1);
-					console.log("Checking after break: " + nightdiff+", IN: " + timeinhour2 + ", OUT: "+timeouthour2);
 				}
 				else
 				{
@@ -515,6 +689,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			// timeouthour1 += 12;
 			// timeinhour2 += 12;
 			// timeouthour2 += 12;
+
 			if(timeinhour1 < 10)
 				timeinhour1 +=12;
 			else
@@ -523,29 +698,49 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				timeouthour1 +=12;
 			else
 				timeouthour1 -=12;
-			if(timeinhour2 < 10)
+			//If employee chooses halfday
+			if(timeinhour2 != "HD")//Night diff
+			{
+				if(timeinhour2 < 10)
 				timeinhour2 +=12;
-			else
-				timeinhour2 -=12;
-			if(timeouthour2 < 10)
-				timeouthour2 +=12;
-			else
-				timeouthour2 -=12;
+				else
+					timeinhour2 -=12;
+				if(timeouthour2 < 10)
+					timeouthour2 +=12;
+				else
+					timeouthour2 -=12;
+			}
+			
 			
 			console.log("timein1: "+timeinhour1+"// timeout1: "+timeouthour1+"// timein2: "+timeinhour2+"// timeout2: "+timeouthour2);
 			workinghours1 = timeouthour1 - timeinhour1;
-			workinghours2 = timeouthour2 - timeinhour2;
+			if(timeinhour2 != "HD")//Night diff
+			{
+				workinghours2 = timeouthour2 - timeinhour2;
+			}
 			//Decrement workinghours if minutes is more than time out mins
 			if(timeinmin1 > timeoutmin1)
 			{
 				workinghours1 = workinghours1 - 1;
 			}
-			//Decrement workinghours if minutes is more than time out mins
-			if(timeinmin2 > timeoutmin2)
+			//If employee chooses halfday
+			if(timeinhour2 != "HD")//Night diff
 			{
-				workinghours2 = workinghours2 - 1;
+				//Decrement workinghours if minutes is more than time out mins
+				if(timeinmin2 > timeoutmin2)
+				{
+					workinghours2 = workinghours2 - 1;
+				}
 			}
-			workinghours = Math.abs(workinghours1) + Math.abs(workinghours2);
+			//If employee chooses halfday
+			if(timeinhour2 != "HD")//Night diff
+			{
+				workinghours = Math.abs(workinghours1) + Math.abs(workinghours2);
+			}
+			else
+			{
+				workinghours = Math.abs(workinghours1);
+			}
 			
 			//alert(workinghours);
 			//alert("timein: "+timeinhour + " timeout: " + timeouthour);
@@ -562,22 +757,30 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			{
 				workingmins1 = 0;
 			}
-			//After break
-			if(timeinmin2 > timeoutmin2)
-			{
-				workingmins2 = timeinmin2 - timeoutmin2;
-			}
-			if(timeoutmin2 > timeinmin2)
-			{
-				workingmins2 = timeoutmin2 - timeinmin2;
-			}
-			if(timeinmin2 == timeoutmin2)
-			{
-				workingmins2 = 0;
-			}
 
-			workingmins = workingmins1 + workingmins2;
+			//If employee chooses halfday
+			if(timeinhour2 != "HD")//Night diff
+			{
+				//After break
+				if(timeinmin2 > timeoutmin2)
+				{
+					workingmins2 = timeinmin2 - timeoutmin2;
+				}
+				if(timeoutmin2 > timeinmin2)
+				{
+					workingmins2 = timeoutmin2 - timeinmin2;
+				}
+				if(timeinmin2 == timeoutmin2)
+				{
+					workingmins2 = 0;
+				}
 
+				workingmins = workingmins1 + workingmins2;
+			}
+			else
+			{
+				workingmins = workingmins1;
+			}
 			if(workingmins >= 60)
 			{
 				workinghours++;
@@ -649,76 +852,130 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		// 10 is 10pm and 18 is 6pm
 		//alert("timein: "+timeinhour+"timeout: "+ timeouthour);
 			var nightdiff = "";
-			//alert("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
-			if((timeinhour1 <= 10 && timeouthour1 <= 18) || (timeinhour2 <= 10 && timeouthour2 <= 18))//night diff needs reconfiguration
+
+			//If employee chooses halfday
+			if(timeinhour2 != "HD")
 			{
-				console.log("nightdiff");
-				var NDin;
-				var NDout;
-				var workhrs;
-				//Possibility 2: if 10pm is in after lunch
-				if(timeinhour2 < 10)
+				//alert("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
+				if((timeinhour1 <= 10 && timeouthour1 <= 18) || (timeinhour2 <= 10 && timeouthour2 <= 18))//night diff needs reconfiguration
 				{
-					console.log("possibility 2");
-					NDin = timeinhour2 - 10;
-					NDout = 0;
-					if(timeouthour2 >= 18)
+					console.log("nightdiff");
+					var NDin;
+					var NDout;
+					var workhrs;
+					//Possibility 2: if 10pm is in after lunch
+					if(timeinhour2 < 10)
 					{
-						NDout = timeouthour2 - 18;
-					}
-					console.log("NDout : "+ NDout);
-					workhrs = timeinhour2 - timeouthour2;
-					nightdiff = Math.abs(NDin) - Math.abs(workhrs);
-					console.log("nightdiff : "+ nightdiff);
-					nightdiff += NDout;
-					// console.log("ND: "+nightdiff);
-				}
-				//Possibility 1: if 10pm is in before lunch
-				else if(timeinhour1 <= 10)
-				{
-					if(timeouthour1 >= 18)//If timein encapsulated all of the night diff
-					{
-						console.log("possibility 1-1");
-
-						NDin = timeinhour1 - 10;
-						NDout = timeouthour1 - 18;
-						workhrs = timeinhour1 - timeouthour1;
-						nightdiff = (Math.abs(NDin) + Math.abs(NDout1)) - Math.abs(workhrs);
-					}
-					else//the normal night diff
-					{
-						console.log("possibility 1-2");
-
-						workhrs1 = timeinhour1 - timeouthour1;
-						NDin1 = timeinhour1 - 10;
-						nightdiff1 = Math.abs(NDin1) - Math.abs(workhrs1);
-						// console.log("ND1: "+nightdiff1);
-						// console.log(timeouthour2);
-						NDin2 = timeinhour2 - 10;
-						if(timeouthour2 <=18)
+						console.log("possibility 2");
+						NDin = timeinhour2 - 10;
+						NDout = 0;
+						if(timeouthour2 >= 18)
 						{
-							console.log("possibility 1-2-1");
-							NDout2 = timeouthour2 - 10;
+							NDout = timeouthour2 - 18;
 						}
-						else
+						console.log("NDout : "+ NDout);
+						workhrs = timeinhour2 - timeouthour2;
+						nightdiff = Math.abs(NDin) - Math.abs(workhrs);
+						console.log("nightdiff : "+ nightdiff);
+						nightdiff += NDout;
+						// console.log("ND: "+nightdiff);
+					}
+					//Possibility 1: if 10pm is in before lunch
+					else if(timeinhour1 <= 10)
+					{
+						if(timeouthour1 >= 18)//If timein encapsulated all of the night diff
 						{
-							console.log("possibility 1-2-2");
-							NDout2 = 8;
+							console.log("possibility 1-1");
+
+							NDin = timeinhour1 - 10;
+							NDout = timeouthour1 - 18;
+							workhrs = timeinhour1 - timeouthour1;
+							nightdiff = (Math.abs(NDin) + Math.abs(NDout1)) - Math.abs(workhrs);
 						}
-						nightdiff2 = Math.abs(NDin2) - Math.abs(NDout2);
-						// console.log("NDout2: "+NDout2);
-						// console.log("ND2: "+nightdiff2);
-						nightdiff = nightdiff1 + nightdiff2;
+						else//the normal night diff
+						{
+							console.log("possibility 1-2");
+
+							workhrs1 = timeinhour1 - timeouthour1;
+							NDin1 = timeinhour1 - 10;
+							nightdiff1 = Math.abs(NDin1) - Math.abs(workhrs1);
+							// console.log("ND1: "+nightdiff1);
+							// console.log(timeouthour2);
+							NDin2 = timeinhour2 - 10;
+							if(timeouthour2 <=18)
+							{
+								console.log("possibility 1-2-1");
+								NDout2 = timeouthour2 - 10;
+							}
+							else
+							{
+								console.log("possibility 1-2-2");
+								NDout2 = 8;
+							}
+							nightdiff2 = Math.abs(NDin2) - Math.abs(NDout2);
+							// console.log("NDout2: "+NDout2);
+							// console.log("ND2: "+nightdiff2);
+							nightdiff = nightdiff1 + nightdiff2;
+							
+							nightdiff = Math.abs(nightdiff);
+						}
 						
-						nightdiff = Math.abs(nightdiff);
 					}
+						
 					
+					if(Number.isInteger(nightdiff))
+					{
+					   	nightdiff = Math.abs(nightdiff);		
+					}
 				}
-					
-				
-				if(Number.isInteger(nightdiff))
+			}
+			else
+			{
+				//alert("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
+				if((timeinhour1 <= 10 && timeouthour1 <= 18))//night diff needs reconfiguration
 				{
-				   	nightdiff = Math.abs(nightdiff);		
+					console.log("nightdiff");
+					var NDin;
+					var NDout;
+					var workhrs;
+					
+					//Possibility 1: if 10pm is in before lunch
+					if(timeinhour1 <= 10)
+					{
+						if(timeouthour1 >= 18)//If timein encapsulated all of the night diff
+						{
+							console.log("possibility 1-1");
+
+							NDin = timeinhour1 - 10;
+							NDout = timeouthour1 - 18;
+							workhrs = timeinhour1 - timeouthour1;
+							nightdiff = (Math.abs(NDin) + Math.abs(NDout1)) - Math.abs(workhrs);
+						}
+						else//the normal night diff
+						{
+							console.log("possibility 1-2");
+
+							workhrs1 = timeinhour1 - timeouthour1;
+							NDin1 = timeinhour1 - 10;
+							nightdiff1 = Math.abs(NDin1) - Math.abs(workhrs1);
+							// console.log("ND1: "+nightdiff1);
+							// console.log(timeouthour2);
+							
+							
+							// console.log("NDout2: "+NDout2);
+							// console.log("ND2: "+nightdiff2);
+							nightdiff = nightdiff1;
+							
+							nightdiff = Math.abs(nightdiff);
+						}
+						
+					}
+						
+					
+					if(Number.isInteger(nightdiff))
+					{
+					   	nightdiff = Math.abs(nightdiff);		
+					}
 				}
 			}
 			if(nightdiff != "")
@@ -757,15 +1014,18 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		row.querySelector('.nightdiff').value = "";
 		row.querySelector('.timein1').placeholder = "";
 		row.querySelector('.timeout1').placeholder = "";
-		row.querySelector('.timein2').placeholder = "";
-		row.querySelector('.timeout2').placeholder = "";
+		if(row.querySelector('.halfdayChk').disabled == false)
+		{
+			row.querySelector('.timein2').placeholder = "";
+			row.querySelector('.timeout2').placeholder = "";
+		}
+		
 		//for hidden rows
 		row.querySelector('.workinghoursH').value = "";
 		row.querySelector('.overtimeH').value = "";
 		row.querySelector('.undertimeH').value = "";
 		row.querySelector('.nightdiffH').value = "";
 		row.querySelector('.attendance').value = "";
-		console.log("dito");
 		if(row.classList.contains('danger'))
 		{
 			row.classList.remove('danger');
@@ -776,3 +1036,21 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		}
 	}
 }	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -135,7 +135,7 @@ else if($loanType == "newVale")
 					<td>History</td>
 				</tr>
 				<?php 
-					$loans = "SELECT DISTINCT * FROM loans WHERE type = '$loanType' ORDER BY date";
+					$loans = "SELECT DISTINCT * FROM loans WHERE type = '$loanType' GROUP BY empid ORDER BY date";
 					$loansQuery = mysql_query($loans);
 					if(mysql_num_rows($loansQuery) > 0)
 					{

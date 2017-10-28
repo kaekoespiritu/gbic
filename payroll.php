@@ -1183,7 +1183,7 @@ if($holidayExist > 0)
 									<div id="1">
 										<label class="control-label col-md-2" for="tools">Name</label>
 										<div class="col-md-4">
-											<input type="text" id="tools" name="toolname" class="form-control input-sm" onkeypress="validateletter(event)">
+											<input type="text" id="tools" name="toolname" class="form-control input-sm">
 										</div>
 										<label class="control-label col-md-1" for="price">Cost</label>
 										<div class="col-md-4">
@@ -1198,6 +1198,15 @@ if($holidayExist > 0)
 									<div class="col-md-6">
 										<input type="text" class="form-control" id="totalcost" value="" readonly>
 									</div>
+									
+								</div>
+								<div class="col-md-12">
+									<label class="col-md-5">
+											Previous Payable
+										</label>
+										<div class="col-md-6">
+											<input type="text" class="form-control" id="outstandingPayable" value="" readonly>
+										</div>
 								</div>
 								<div class="col-md-12">
 									<label class="col-md-5">
