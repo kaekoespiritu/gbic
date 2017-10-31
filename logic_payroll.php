@@ -110,6 +110,7 @@
 //Computation for Night Differential --------------------------------------------------
 	$compND = 0;
 	$NdRatePerHour = (($dailyRate / 8)*.10);//NightDiff Hourly Rate
+	$totalND = 0;
 	if(!empty($_POST['totalNightDiff']))
 	{
 		$totalND = $_POST['totalNightDiff'];
@@ -144,10 +145,13 @@
 //Computation for Regular Holiday ----------------------------------------------------- Incomplete
 	$regHolidayInc = $dailyRate * 2;
 
+
 //Special Holiday --------------------------------------------------------------------- Incomplete
 	$speHolidayInc = (($dailyRate * .30) + $dailyRate);
 
-//Loans deduction ---------------------------------------------------------------------
+
+//Loans deduction --------------------------------------------------------------------- Incomplete
+//*query to loans table the deduction
 	$loan_sss = $_POST['sssDeduct'];
 	$loan_pagibig = $_POST['pagibigDeduct'];
 	$loan_oldVale = 0;
@@ -162,6 +166,7 @@
 	$toolNum = count($_POST['toolname']);
 	$outStandingBalance = 0;
 	$totalToolCost = 0;
+	$BoolTool = false; //Boolean to if there is more than 2 tools
 	if($toolNum > 1)
 	{
 		$toolQuery = "INSERT INTO tools(empid, tools, cost, date) VALUES";
@@ -195,8 +200,9 @@
 			$outStandingBalance = abs($outStandingBalance);
 		}
 	}
-	else
+	else if(!empty($_POST['toolprice'][0]) && !empty($_POST['toolname'][0]))
 	{
+		$BoolTool = true;//True to query the update 
 		$toolname = $_POST['toolname'][0];
 		$toolprice = $_POST['toolprice'][0];
 
@@ -223,9 +229,26 @@
 																			'$toolprice',
 																			'$date')"; 
 	}
+	else if(!empty($_POST['previousPayable']))// If admin did not have any tools but have outstanding balance
+	{
+		if($_POST['previousPayable'] != $_POST['amountToPay'])
+		{
+			$outStandingBalance = $_POST['previousPayable'] - $_POST['amountToPay'];
+			$outStandingBalance = abs($outStandingBalance);
+		}
+	}
 	if(isset($toolQuery))
 	{
-		mysql_query($toolQuery);
+		$toolsChecker = mysql_query("SELECT * FROM tools WHERE empid='$empid' AND date='$date'");
+		if(mysql_num_rows($toolsChecker) == 0)
+		{
+			mysql_query($toolQuery);
+		}
+		else//if employee has tools already
+		{//replace the old tools that the employee made 
+			mysql_query("DELETE FROM tools WHERE empid='$empid' AND date = '$date'");
+			mysql_query($toolQuery);
+		}
 	}
 	$tools_paid = $_POST['amountToPay'];
 
@@ -233,7 +256,7 @@
 // --------------------------------- GRAND TOTAL -----------------------------------------
 
 //Grand Total Computation
-	$GrandTotal = ((($dailyRate * $overallWorkDays) + $compAllowance + $compND + $compOT + $cola) - $compDeductions - $compLoan); 
+	$GrandTotal = ((($dailyRate * $overallWorkDays) + $compAllowance + $compND + $compOT + $cola) - $compDeductions - $compLoan - $tools_paid); 
 //Print "<script>console.log('SubTotal: ".$SubTotal."')</script>";
 
 
@@ -241,12 +264,16 @@
 									num_days,
 									overtime,
 									ot_num,
+									ot_comp,
 									allow,
 									comp_allowance,
 									x_allowance,
 									cola,
 									sunday_rate,
 									sunday_hrs,
+									nightdiff_rate,
+									nightdiff_num,
+									nightdiff,
 									reg_holiday,
 									spe_holiday,
 									tax,
@@ -265,12 +292,16 @@
 														'$daysAttended',
 														'$OtRatePerHour',
 														'$totalOT',
+														'$compOT',
 														'$dailyAllowance',
 														'$compAllowance',
 														'$extraAllowance',
 														'$cola',
 														'$SundayRatePerHour',
 														'$sunWorkHrs',
+														'$NdRatePerHour',
+														'$totalND',
+														'$compND',
 														'$regHolidayInc',
 														'$speHolidayInc',
 														'$tax',
@@ -287,7 +318,12 @@
 														'$loan_newVale',
 														'$loan_oldVale')";
 	//Print "<script>console.log('".$query."')</script>";
-	mysql_query($query);
+	$mainChecker = mysql_query("SELECT * FROM payroll WHERE empid='$empid' AND date='$date'");
+	if(mysql_num_rows($mainChecker) == 0)
+	{
+		mysql_query($query);
+	}					
+	
 	//holiday
 	// $_POST['holidayName[]'];
 	// $_POST['holidayType[]'];
@@ -302,14 +338,70 @@
 	// $_POST['monNDHrs'];
 	// $_POST['tueNDHrs'];
 
-
-
-
 	// //Allowance
 	// $_POST['allowance'];
 	// $_POST['OverallAllowance'];
 	// $_POST['extra_allowance'];
 
+	$url = "http://localhost/gbic/payroll_computation.php";
 
+	$post_data = array(
+		'method' => 'post',
+		'empid' => $empid,
+		'date' => $date
+	);
 
+	$ch = curl_init();
+
+	//URL to submit to
+	curl_setopt($ch, CURLOPT_URL, $url);
+
+	//Return output instead of outputting it
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+	//Post request
+	curl_setopt($ch, CURLOPT_POST, 1);
+
+	//Adding the post variables to the request
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+
+	//Execute the request and fetch the response to check for errors
+	$output = curl_exec($ch);
+
+	if($output === false) {
+		echo "cURL Error: ".curl_error($ch);
+	}
+
+	//close and free up the curl handle
+	curl_close($ch);
+
+	//Display the row output
+	print_r($output);
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

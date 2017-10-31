@@ -14,15 +14,38 @@ $position = $_POST['position'];
 $site = $_POST['site'];
 $rate = $_POST['rate'];
 
+//Check if they already have balance for that type of loan
+$loanCheck = "SELECT * FROM loans WHERE empid = '$empid' AND type='$loanType' ORDER BY date DESC LIMIT 1";
+$checkQuery = mysql_query($loanCheck);
+$balance = 0;
+if(mysql_num_rows($checkQuery) > 0)
+{
+	$checkBalance = mysql_fetch_assoc($checkQuery);
+	$balance = $checkBalance['balance'] + $loanAmount; 
+}
+else
+{
+	$checkBalance = mysql_fetch_assoc($checkQuery);
+	$balance = $loanAmount; 
+}
+
+
+
 $loanAmount = number_format($loanAmount, 2, '.', '');//for 2 decimal places
-$query = "INSERT INTO loans(empid, type, amount, remarks, date) VALUES('$empid', 
+$query = "INSERT INTO loans(empid, type, balance, amount, remarks, date, action) VALUES('$empid', 
 																'$loanType',
+																'$balance',
 																'$loanAmount',
 																'$reason',
-																'$date')";
+																'$date',
+																'1')";
 mysql_query($query);
 
-Print "<script>window.location.assign('loans_view.php?type=".$loanType."')</script>";
+$employee = "SELECT * FROM employee WHERE empid = '$empid'";
+$empQuery = mysql_query($employee);
+$empArr = mysql_fetch_assoc($empQuery);
+Print "<script>alert('You have successfully processed ".$empArr['lastname'].", ".$empArr['firstname']." ".$loanType." loan')</script>";
+Print "<script>window.location.assign('loans_landing.php')</script>";
 
 
 
