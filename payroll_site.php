@@ -69,44 +69,63 @@ include('directives/session.php');
 				$day2 = date('F j, Y', strtotime('-1 day', strtotime($date)));
 				$day3 = date('F j, Y', strtotime('-2 day', strtotime($date)));
 				$day4 = date('F j, Y', strtotime('-3 day', strtotime($date)));
-				$day5 = date('F j, Y', strtotime('-4day', strtotime($date)));
+				$day5 = date('F j, Y', strtotime('-4 day', strtotime($date)));
 				$day6 = date('F j, Y', strtotime('-5 day', strtotime($date)));
 				$day7 = date('F j, Y', strtotime('-6 day', strtotime($date)));
 
 				$days = array("$day1","$day2","$day3","$day4","$day5","$day6","$day7");
+				
 				$attendanceStatus = 0;
 				foreach($days as $checkDay)
 				{
-					//Check if overall attendance for a certain site is done
-					$attendanceChecker = "SELECT * FROM attendance WHERE date = '$checkDay' AND site = '$site'";
-					$attendanceQuery = mysql_query($attendanceChecker);
-					if($attendanceQuery)
+					$day = date('l', strtotime($checkDay));//Gets the Day in the week of the date
+					
+					$holidayChecker = "SELECT * FROM holiday WHERE date = '$checkDay'";
+					$holCheckerQuery = mysql_query($holidayChecker);
+					
+					//For holiday skip or increment Attendance status Because it is possible that no one set the attendance for that day
+					if(mysql_num_rows($holCheckerQuery) > 0)//if they didnt do the attendance on holiday
 					{
-						$attNum = mysql_num_rows($attendanceQuery);
-						if($attNum == 0)
+						$attendanceStatus++;
+					}
+					else if($day == "Sunday")//If there Sunday is not inputted
+					{
+						$attendanceStatus++;
+					}
+					else
+					{
+						//Check if overall attendance for a certain site is done
+						$attendanceChecker = "SELECT * FROM attendance WHERE date = '$checkDay' AND site = '$site'";
+						$attendanceQuery = mysql_query($attendanceChecker);
+						if($attendanceQuery)
 						{
-							$attendanceStatus = 0;
-						}
-						else
-						{
-							$checker = null;
-							while($attRow = mysql_fetch_assoc($attendanceQuery))
+							$attNum = mysql_num_rows($attendanceQuery);
+							if($attNum == 0)
 							{
-								if($attRow['attendance'] != 0)//0 is for no input
-								{
-									$checker++;//counter
-								}
+								$attendanceStatus = 0;
 							}
-							if($checker == $attNum)//check if number of attendance and the counter are the same
+							else
 							{
-								++$attendanceStatus;//Trigger for completing the attendance for the site
+								$checker = null;
+								while($attRow = mysql_fetch_assoc($attendanceQuery))
+								{
+									if($attRow['attendance'] != 0)//0 is for no input
+									{
+										$checker++;//counter
+									}
+								}
+								if($checker == $attNum)//check if number of attendance and the counter are the same
+								{
+									++$attendanceStatus;//Trigger for completing the attendance for the site
+								}
 							}
 						}
 					}
+					
 				}
 				//Print "<script>console.log('".$attendanceStatus."')</script>";
 				$weekComplete = false; // boolean to check if attendance is complete for the whole week
-				if($attendanceStatus == 7)
+				if($attendanceStatus >= 7)
 				{
 					$weekComplete = true;
 				}

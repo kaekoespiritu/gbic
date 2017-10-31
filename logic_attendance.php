@@ -75,9 +75,9 @@ $count = 0;
 for($count; $count <= $empNum; $count++)
 {
 	if((!empty($_POST['timein1'][$count]) && 
-		!empty($_POST['timeout1'][$count]) && 
-		!empty($_POST['timein2'][$count]) && 
-		!empty($_POST['timeout2'][$count])) || $_POST['attendance'][$count] == "ABSENT")
+		!empty($_POST['timeout1'][$count])) && 
+		((empty($_POST['timein2'][$count]) && empty($_POST['timeout2'][$count])) || (!empty($_POST['timein2'][$count]) && !empty($_POST['timeout2'][$count]))) 
+		 || $_POST['attendance'][$count] == "ABSENT")
 	{
 		//Print "<script>alert('yea')</script>";
 		break 1;
@@ -113,15 +113,25 @@ if(!empty($dateRows))// Updating attendance
 		{
 			$AttQuery .= ",";
 		}
-		if((!empty($_POST['timein1'][$counter]) && !empty($_POST['timeout1'][$counter]) && !empty($_POST['timein2'][$counter]) && !empty($_POST['timeout2'][$counter])) && $_POST['attendance'][$counter] == "PRESENT")
+		if((!empty($_POST['timein1'][$counter]) && !empty($_POST['timeout1'][$counter]) && 
+			(!empty($_POST['timein2'][$counter]) && !empty($_POST['timeout2'][$counter])) || (empty($_POST['timein2'][$counter]) && empty($_POST['timeout2'][$counter]))) && $_POST['attendance'][$counter] == "PRESENT")
 		{	
 			//Print "<script>alert('present')</script>";
 			$empid = $_POST['empid'][$counter];
 			
 			$timein1 = $_POST['timein1'][$counter];
 			$timeout1 = $_POST['timeout1'][$counter];
-			$timein2 = $_POST['timein2'][$counter];
-			$timeout2 = $_POST['timeout2'][$counter];
+			if(!empty($_POST['timein2'][$counter]))
+			{
+				$timein2 = $_POST['timein2'][$counter];
+				$timeout2 = $_POST['timeout2'][$counter];
+			}
+			else
+			{
+				$timein2 = "";
+				$timeout2 = "";
+			}
+			
 			 // Print "<script>alert('counter ". $counter ."')</script>";
 			 // Print "<script>alert('timein ". $timein ."')</script>";
 			 // Print "<script>alert('timeout ". $timeout ."')</script>";
@@ -145,7 +155,7 @@ if(!empty($dateRows))// Updating attendance
 					$workinghrs = $hrs[0].$hrs[1].".".$mins[1].$mins[2];
 					
 					$workinghrs = str_replace(' ', '', $workinghrs);//removes all the spaces
-					Print "<script>alert('workinghrs ". $workinghrs ."')</script>";
+					//Print "<script>alert('workinghrs ". $workinghrs ."')</script>";
 				}
 				 //Print "<script>alert('workinghrs ".$workinghrs."')</script>";
 			}
@@ -163,7 +173,7 @@ if(!empty($dateRows))// Updating attendance
 				//Print "<script>alert('yeah')</script>";
 				if($justMins == true && $hasMins == false)
 				{
-					Print "<script>alert('yeah')</script>";
+					//Print "<script>alert('yeah')</script>";
 					$OtHrs = "0.".$OtHrs[0].$OtHrs[1];//Gets the first 2 characters
 					$OtHrs = str_replace(' ', '', $OtHrs);//removes all the spaces
 				}
@@ -175,7 +185,7 @@ if(!empty($dateRows))// Updating attendance
 				else
 				{
 					//dito
-					Print "<script>alert('yepa')</script>";
+					//Print "<script>alert('yepa')</script>";
 					$work = explode(",", $OtHrs);//Separates the string
 					$hrs = $work[0];//gets the Hours
 					$mins = $work[1];//Gets the minutes
@@ -197,7 +207,7 @@ if(!empty($dateRows))// Updating attendance
 				//Print "<script>alert('yeah')</script>";
 				if($justMins == true && $hasMins == false)
 				{
-					Print "<script>alert('yeah')</script>";
+					//Print "<script>alert('yeah')</script>";
 					$undertime = "0.".$undertime[0].$undertime[1];//Gets the first 2 characters
 					$undertime = str_replace(' ', '', $undertime);//removes all the spaces
 				}
@@ -284,7 +294,7 @@ if(!empty($dateRows))// Updating attendance
 				$checkAwolQuery = mysql_query($checkAwol);
 				if(mysql_num_rows($checkAwolQuery) == 0)
 				{
-					Print "<script>alert('2')</script>";
+					//Print "<script>alert('2')</script>";
 					$AwolPending = "INSERT awol_employees(empid, start_date, end_date, status) 
 												VALUES(	'$empid',
 														'$start',
@@ -327,11 +337,9 @@ if(!empty($dateRows))// Updating attendance
 		
 
 		}
-		else if(empty($_POST['attendance'][$counter]))
+		else if(empty($_POST['attendance'][$counter]))// NO INPUT
 		{
-
-			
-			Print "<script>alert('no input')</script>";
+			//Print "<script>alert('no input')</script>";
 			$empid = $_POST['empid'][$counter];
 			$timein1 = "";
 			$timeout1 = "";
@@ -385,15 +393,24 @@ else// NEW attendance
 		{
 			$AttQuery .= ",";
 		}
-		if((!empty($_POST['timein1'][$counter]) && !empty($_POST['timeout1'][$counter]) && !empty($_POST['timein2'][$counter]) && !empty($_POST['timeout2'][$counter])) && $_POST['attendance'][$counter] == "PRESENT")
+		if((!empty($_POST['timein1'][$counter]) && !empty($_POST['timeout1'][$counter]) && 
+			(!empty($_POST['timein2'][$counter]) && !empty($_POST['timeout2'][$counter])) || (empty($_POST['timein2'][$counter]) && empty($_POST['timeout2'][$counter]))) && $_POST['attendance'][$counter] == "PRESENT")
 		{	
-			
+			//Print "<script>alert('Pasok')</script>";
 			$empid = $_POST['empid'][$counter];
-			// Print "<script>alert('empid ". $empid ."')</script>";
 			$timein1 = $_POST['timein1'][$counter];
 			$timeout1 = $_POST['timeout1'][$counter];
-			$timein2 = $_POST['timein2'][$counter];
-			$timeout2 = $_POST['timeout2'][$counter];
+			if(!empty($_POST['timein2'][$counter]))
+			{
+				$timein2 = $_POST['timein2'][$counter];
+				$timeout2 = $_POST['timeout2'][$counter];
+			}
+			else
+			{
+				$timein2 = "";
+				$timeout2 = "";
+			}
+			
 			 // Print "<script>alert('counter ". $counter ."')</script>";
 			 // Print "<script>alert('timein ". $timein ."')</script>";
 			 // Print "<script>alert('timeout ". $timeout ."')</script>";
@@ -462,7 +479,7 @@ else// NEW attendance
 				//Print "<script>alert('yeah')</script>";
 				if($justMins == true && $hasMins == false)
 				{
-					Print "<script>alert('yeah')</script>";
+					//Print "<script>alert('yeah')</script>";
 					$undertime = "0.".$undertime[0].$undertime[1];//Gets the first 2 characters
 					$undertime = str_replace(' ', '', $undertime);//removes all the spaces
 				}
@@ -544,7 +561,7 @@ else// NEW attendance
 			}
 			if($AwolCounter == 7)
 			{
-				Print "<script>alert('1')</script>";
+				//Print "<script>alert('1')</script>";
 				$AwolPending = "INSERT awol_employees(empid, start_date, end_date, status) 
 												VALUES(	'$empid',
 														'$start',
@@ -611,7 +628,7 @@ else// NEW attendance
 	}
 	//Print "<script>alert('".$AttQuery."')</script>";
 	$FinalQuery = $initialQuery . $AttQuery;
-	//Print "<script>alert('".$FinalQuery."')</script>";
+	Print "<script>console.log('".$FinalQuery."')</script>";
 	$queryAttendance = mysql_query($FinalQuery);
 }
 
