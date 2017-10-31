@@ -5,7 +5,7 @@ include('directives/session.php');
 
 $empid = $_POST['empid'];
 $type = $_POST['type'];
-$history = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$type' ORDER BY date DESC";
+$history = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$type' ORDER BY date DESC, time DESC";
 $historyQuery = mysql_query($history);
 
 $employee = "SELECT * FROM employee WHERE empid = '$empid'";
@@ -31,8 +31,8 @@ if(mysql_num_rows($historyQuery) > 0)
 	{
 		$output .= "
 					<tr>
-						<td>".$row['balance']."</td>
-						<td>".$row['amount']."</td>";
+						<td>".number_format($row['balance'], 2, '.', ',')."</td>
+						<td>".number_format($row['amount'], 2, '.', ',')."</td>";
 		if($row['action'] == '1')
 			$output .= "<td>Loaned</td>";
 		else

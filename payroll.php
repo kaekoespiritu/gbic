@@ -7,12 +7,16 @@ else
 {
 	header("location:payroll_login.php");
 }
+
 $site = $_GET['site'];
 $position = $_GET['position'];
 $empid = $_GET['empid'];
 //Sample date for debugging purposes
 //$date = strftime("%B %d, %Y");
 $date = "October 24, 2017";
+
+$time = strftime("%X");//TIME
+
 $day1 = $date;
 $day2 = date('F j, Y', strtotime('-1 day', strtotime($date)));
 $day3 = date('F j, Y', strtotime('-2 day', strtotime($date)));
@@ -970,7 +974,21 @@ if($holidayExist > 0)
 								{
 									while($newValeArr = mysql_fetch_assoc($loanCheckerQuery))
 									{
-										$newVale += $newValeArr['amount'];
+										//Print "<script>alert('yea')</script>";
+										if($newValeNum > 1)
+										{
+											while($newValeArr = mysql_fetch_assoc($loanCheckerQuery))
+											{
+												$newVale += $newValeArr['amount'];
+											}
+										}
+										else
+										{
+											//Print "<script>alert('yea')</script>";
+											$newValeRow = mysql_fetch_assoc($loanCheckerQuery);
+											$newVale += $newValeRow['amount'];
+											Print "<script>console.log('".$newVale."')</script>";
+										}
 									}
 								}
 								else
@@ -985,7 +1003,10 @@ if($holidayExist > 0)
 					$getSSS = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' ORDER BY date DESC LIMIT 1";
 					$getPAGIBIG = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' ORDER BY date DESC LIMIT 1";
 
-					$getOldVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY date DESC LIMIT 1";
+							$getSSS = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' ORDER BY date DESC, time DESC LIMIT 1";
+							$getPAGIBIG = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' ORDER BY date DESC, time DESC LIMIT 1";
+							
+							$getOldVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY date DESC, time DESC  LIMIT 1";
 							//Query
 					$sssQuery = mysql_query($getSSS);
 					$pagibigQuery = mysql_query($getPAGIBIG);
@@ -1043,7 +1064,7 @@ if($holidayExist > 0)
 							?>
 						</div>
 						<div class="col-md-12">
-							<input type="text" class="form-control" name="sssDeduct" placeholder="Amount to deduct" onblur="addDecimal(this)">
+							<input type="number" class="form-control" name="sssDeduct" placeholder="Amount to deduct" onblur="addDecimal(this)">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -1061,7 +1082,7 @@ if($holidayExist > 0)
 							?>
 						</div>
 						<div class="col-md-12">
-							<input type="text" class="form-control" name="pagibigDeduct" placeholder="Amount to deduct" onblur="addDecimal(this)">
+							<input type="number" class="form-control" name="pagibigDeduct" placeholder="Amount to deduct" onblur="addDecimal(this)">
 						</div>
 					</div>
 				</div>
@@ -1136,7 +1157,7 @@ if($holidayExist > 0)
 					<div class="form-group">
 						<label class="control-label col-md-5" for="tax">Tax</label>
 						<div class="col-md-7">
-							<input type="text" id="tax" name="tax" class="form-control input-sm" onkeypress="validatenumber(event)" onblur="addDecimal(this)" required>
+							<input type="number" id="tax" name="tax" class="form-control input-sm" onkeypress="validatenumber(event)" onblur="addDecimal(this)">
 						</div>
 						<label class="control-label col-md-5" for="sssContribution">SSS</label>
 						<div class="col-md-7">
@@ -1179,7 +1200,7 @@ if($holidayExist > 0)
 						</div>
 						<label class="control-label col-md-2">Extra</label>
 						<div class="col-md-2 nopadding">
-							<input type="text" id="allowance" name="extra_allowance" name="extra_allowance" class="form-control input-sm" onblur="addDecimal(this)">
+							<input type="number" id="allowance" name="extra_allowance" name="extra_allowance" class="form-control input-sm" onblur="addDecimal(this)">
 						</div>
 					</div>
 
@@ -1195,7 +1216,7 @@ if($holidayExist > 0)
 								</div>
 								<label class="control-label col-md-1" for="price">Cost</label>
 								<div class="col-md-4">
-									<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this.value)" onblur="addDecimal(this)">
+									<input type="number" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this.value)" onblur="addDecimal(this)">
 								</div>
 							</div>	
 						</div>
@@ -1221,7 +1242,7 @@ if($holidayExist > 0)
 								Amount to Pay
 							</label>
 							<div class="col-md-6">
-								<input type="text" name="amountToPay" class="form-control">
+								<input type="number" name="amountToPay" class="form-control" onblur="addDecimal(this)">
 							</div>
 						</div>
 					</div>

@@ -18,7 +18,7 @@
 		'<input type="text" id="toolstemp" name="toolname[]" class="form-control input-sm" onkeypress="validateletter(event)">' +
 		'</div>' +
 		'<label class="control-label col-md-1" for="price">Cost</label>' +
-		'<div class="col-md-4"><input type="text" id="pricetemp" name="toolprice[]" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal()" onblur="addDecimal(this)">' +
+		'<div class="col-md-4"><input type="number" id="pricetemp" name="toolprice[]" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal()" onblur="addDecimal(this)">' +
 		'</div>';
 
 		div1.innerHTML = delLink + template;
@@ -163,5 +163,8 @@
 }
 
 function addDecimal(val){
+	if(val.value!==null || val.value!=="")
 	val.value = parseFloat(val.value).toFixed(2);
+	else
+		return "";
 }
