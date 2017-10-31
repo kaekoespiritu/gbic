@@ -13,7 +13,6 @@ $empid = $_GET['empid'];
 //Sample date for debugging purposes
 //$date = strftime("%B %d, %Y");
 $date = "October 24, 2017";
-
 $day1 = $date;
 $day2 = date('F j, Y', strtotime('-1 day', strtotime($date)));
 $day3 = date('F j, Y', strtotime('-2 day', strtotime($date)));
@@ -21,8 +20,6 @@ $day4 = date('F j, Y', strtotime('-3 day', strtotime($date)));
 $day5 = date('F j, Y', strtotime('-4 day', strtotime($date)));
 $day6 = date('F j, Y', strtotime('-5 day', strtotime($date)));
 $day7 = date('F j, Y', strtotime('-6 day', strtotime($date)));
-
-
 //Holiday Checker
 $holiday = "SELECT * FROM holiday WHERE date = '$date'";
 $holidayQuery = mysql_query($holiday);
@@ -32,7 +29,6 @@ if($holidayExist > 0)
 {
 	$holidayRow = mysql_fetch_assoc($holidayQuery);
 	$holidayName = $holiday['holiday'];//Gets holiday name
-
 }
 //Sunday Checker
 ?>
@@ -43,109 +39,102 @@ if($holidayExist > 0)
 
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
-	<style>
-		.well
-		{
-			margin-bottom: 0px !important;
-		}
-		h3
-		{
-			margin: 0px !important;
-		}
-		.removePadding
-		{
-			padding: 0px !important;
-		}
-	</style>
+
 </head>
 <body style="font-family: Quicksand;">
-<form action="logic_payroll.php" method="POST" id="payrollForm">
-	<div class="container-fluid">
+	<form action="logic_payroll.php" method="POST" id="payrollForm">
+		<div class="container-fluid">
 
-	<!-- Navigation bar -->
-	<?php
-	require_once("directives/nav.php");
-	?>
-
-	<input type="hidden" name="employeeID" value="<?php Print $empid?>">
-	<div class="row pull-down">
-		<div class="col-md-10 col-md-offset-1">
-			<ol class="breadcrumb text-left" style="margin-bottom: 0px">
-
-				<li><a href="payroll_table.php?position=<?php Print $position?>&site=<?php Print $site?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Table of Employees</a></li>
-				<li class="active"><?php Print "Payroll for site " .$site." on ".$date ?></li>
-
-			<input type="submit" value="Save and compute" class="btn btn-success pull-right" style="margin-right:5px" onclick="saveChanges()" href="#">
-			</ol>
-		</div>
-
-
-		<div class="col-md-10 col-md-offset-1">
+			<!-- Navigation bar -->
 			<?php
-			$employee = "SELECT * FROM employee WHERE empid = '$empid'";
-			$employeeQuery = mysql_query($employee);
-			$empArr = mysql_fetch_assoc($employeeQuery);
+			require_once("directives/nav.php");
+			?>
+
+			<!-- MODALS -->
+			<?php
+			require_once('directives/modals/addNewVale.php');
+			?>
+
+			<!-- Breadcrumbs -->
+			<input type="hidden" name="employeeID" value="<?php Print $empid?>">
+			<div class="row pull-down">
+				<div class="col-md-10 col-md-offset-1">
+					<ol class="breadcrumb text-left" style="margin-bottom: 0px">
+
+						<li><a href="payroll_table.php?position=<?php Print $position?>&site=<?php Print $site?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Table of Employees</a></li>
+						<li class="active"><?php Print "Payroll for site " .$site." on ".$date ?></li>
+
+						<input type="submit" value="Save and compute" class="btn btn-success pull-right" style="margin-right:5px" onclick="saveChanges()" href="#">
+					</ol>
+				</div>
+
+				<!-- Employee information -->
+				<div class="col-md-10 col-md-offset-1">
+					<?php
+					$employee = "SELECT * FROM employee WHERE empid = '$empid'";
+					$employeeQuery = mysql_query($employee);
+					$empArr = mysql_fetch_assoc($employeeQuery);
 			//For deduction section 4 for 4 weeks in a month
-			$deductionSSS = $empArr['sss']/4;
-			$deductionPagibig = $empArr['pagibig']/4;
-			$deductionPhilhealth = $empArr['philhealth']/4;
+					$deductionSSS = $empArr['sss']/4;
+					$deductionPagibig = $empArr['pagibig']/4;
+					$deductionPhilhealth = $empArr['philhealth']/4;
 			//2 decimal places
-			$deductionSSS =  number_format($deductionSSS, 2, '.', ',');
-			$deductionPagibig = number_format($deductionPagibig, 2, '.', ',');
-			$deductionPhilhealth = number_format($deductionPhilhealth, 2, '.', ',');
+					$deductionSSS =  number_format($deductionSSS, 2, '.', ',');
+					$deductionPagibig = number_format($deductionPagibig, 2, '.', ',');
+					$deductionPhilhealth = number_format($deductionPhilhealth, 2, '.', ',');
 			//Change to no value string if the employee has no document
-			if($deductionSSS == 0)
-			{
-				$deductionSSS = "";
-			}
-			else
-			{
-				$deductionSSS = $deductionSSS." PHP";
-			}
-			if($deductionPagibig == 0)
-			{
-				$deductionPagibig = "";
-			}
-			else
-			{
-				$deductionPagibig = $deductionPagibig." PHP";
-			}
-			if($deductionPhilhealth == 0)
-			{
-				$deductionPhilhealth = "";
-			}
-			else
-			{
-				$deductionPhilhealth = $deductionPhilhealth." PHP";
-			}
-			Print "
-			<h2 class='text-left'>". $empArr['lastname'] .", ". $empArr['firstname'] ."</h2>
-			<div class='row'>
-				<div class='col-md-8 text-left' style='word-break: keep-all'>
+					if($deductionSSS == 0)
+					{
+						$deductionSSS = "";
+					}
+					else
+					{
+						$deductionSSS = $deductionSSS." PHP";
+					}
+					if($deductionPagibig == 0)
+					{
+						$deductionPagibig = "";
+					}
+					else
+					{
+						$deductionPagibig = $deductionPagibig." PHP";
+					}
+					if($deductionPhilhealth == 0)
+					{
+						$deductionPhilhealth = "";
+					}
+					else
+					{
+						$deductionPhilhealth = $deductionPhilhealth." PHP";
+					}
+					Print "
+					<h2 class='text-left'>". $empArr['lastname'] .", ". $empArr['firstname'] ."</h2>
+					<div class='row'>
+					<div class='col-md-8 text-left' style='word-break: keep-all'>
 					
-						<h4>
-							<b style='font-family: QuickSandMed'>
-								Employee ID:
-							</b>". $empArr['empid'] ."
-						</h4>
-						<h4>
-							<b style='font-family: QuickSandMed'>
-								Position:
-							</b>". $empArr['position'] ."
-						</h4>
-						<h4>
-							<b style='font-family: QuickSandMed'>
-								Address:
-							</b>". $empArr['address'] ."
-						</h4>
-						<h4>
-							<b style='font-family: QuickSandMed'>
-								Contact Number:
-							</b>". $empArr['contactnum'] ."
-						</h4>
-				</div>";
-				Print "
-				<div class='col-md-4 text-right'>";
+					<h4>
+					<b style='font-family: QuickSandMed'>
+					Employee ID:
+					</b>". $empArr['empid'] ."
+					</h4>
+					<h4>
+					<b style='font-family: QuickSandMed'>
+					Position:
+					</b>". $empArr['position'] ."
+					</h4>
+					<h4>
+					<b style='font-family: QuickSandMed'>
+					Address:
+					</b>". $empArr['address'] ."
+					</h4>
+					<h4>
+					<b style='font-family: QuickSandMed'>
+					Contact Number:
+					</b>". $empArr['contactnum'] ."
+					</h4>
+					</div>";
+					Print "
+					<div class='col-md-4 text-right'>";
 				if($empArr['philhealth'] != 0)//Phil Health Display
 				{
 					Print "<h4><span class='glyphicon glyphicon-ok'></span> PhilHealth documents</h4>";
@@ -172,13 +161,14 @@ if($holidayExist > 0)
 				}
 				Print "</div>
 				</div>";
-			?>
-		</div>
+				?>
+			</div>
 
 
-		<div class="col-md-10 col-md-offset-1">
-			<table class="table-bordered table-condensed" style="background-color:white;">
-				<?php
+			<!-- Attendance table -->
+			<div class="col-md-10 col-md-offset-1">
+				<table class="table-bordered table-condensed" style="background-color:white;">
+					<?php
 				//Sample query for debugging purposes
 					$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY date DESC LIMIT 7";
 				//$payrollDate = "SELECT * FROM attendance WHERE empid = '2017-0000011' ORDER BY date DESC LIMIT 7";
@@ -210,7 +200,6 @@ if($holidayExist > 0)
 					$OtFri = false;
 					$OtSat = false;
 					$OtSun = false;
-
 					$NdMon = false;
 					$NdTue = false;
 					$NdWed = false;
@@ -218,9 +207,7 @@ if($holidayExist > 0)
 					$NdFri = false;
 					$NdSat = false;
 					$NdSun = false;
-
 					$allowCounter = 0;//Counter for the allowance
-
 					$holidayName = '';
 					$holidayType = '';
 					$holidayDate = '';
@@ -233,7 +220,6 @@ if($holidayExist > 0)
 						$holiday = "SELECT * FROM holiday WHERE date = '$holDateChecker' ORDER BY date DESC";
 						$holidayQuery = mysql_query($holiday);
 						$holidayExist = mysql_num_rows($holidayQuery);
-
 						if($holidayExist > 0)//if holiday exist
 						{
 							$holidayRow = mysql_fetch_assoc($holidayQuery);
@@ -258,7 +244,6 @@ if($holidayExist > 0)
 							}
 						}
 						//Print "<script>console.log('holyeah: ".$holidayName."')</script>";
-
 						//Print "<script>alert('".$dateRow['date']."')</script>";
 						$day = date('l', strtotime($dateRow['date']));
 						if($day == "Sunday" && $sunBool)
@@ -273,7 +258,6 @@ if($holidayExist > 0)
 								$sunTimeOut = $dateRow['timeout'];
 								$ABsunTimeIn = $dateRow['afterbreak_timein'];
 								$ABsunTimeOut = $dateRow['afterbreak_timeout'];
-
 								$sunWorkHrs = $dateRow['workhours'];//Get the workhours
 								$sunNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$sunOTHrs = $dateRow['overtime'];//Get the Overtime
@@ -303,8 +287,6 @@ if($holidayExist > 0)
 								$monTimeOut = $dateRow['timeout'];
 								$ABmonTimeIn = $dateRow['afterbreak_timein'];
 								$ABmonTimeOut = $dateRow['afterbreak_timeout'];
-
-
 								$monWorkHrs = $dateRow['workhours'];//Get the workhours
 								$monNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$monOTHrs = $dateRow['overtime'];//Get the Overtime
@@ -367,7 +349,6 @@ if($holidayExist > 0)
 								$wedTimeOut = $dateRow['timeout'];
 								$ABwedTimeIn = $dateRow['afterbreak_timein'];
 								$ABwedTimeOut = $dateRow['afterbreak_timeout'];
-
 								$wedWorkHrs = $dateRow['workhours'];//Get the workhours
 								$wedNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$wedOTHrs = $dateRow['overtime'];//Get the Overtime
@@ -398,7 +379,6 @@ if($holidayExist > 0)
 								$thuTimeOut = $dateRow['timeout'];
 								$ABthuTimeIn = $dateRow['afterbreak_timein'];
 								$ABthuTimeOut = $dateRow['afterbreak_timeout'];
-
 								$thuWorkHrs = $dateRow['workhours'];//Get the workhours
 								$thuNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$thuOTHrs = $dateRow['overtime'];//Get the Overtime
@@ -429,7 +409,6 @@ if($holidayExist > 0)
 								$friTimeOut = $dateRow['timeout'];
 								$ABfriTimeIn = $dateRow['afterbreak_timein'];
 								$ABfriTimeOut = $dateRow['afterbreak_timeout'];
-
 								$friWorkHrs = $dateRow['workhours'];//Get the workhours
 								$friNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$friOTHrs = $dateRow['overtime'];//Get the Overtime
@@ -459,12 +438,10 @@ if($holidayExist > 0)
 								$satTimeOut = $dateRow['timeout'];
 								$ABsatTimeIn = $dateRow['afterbreak_timein'];
 								$ABsatTimeOut = $dateRow['afterbreak_timeout'];
-
 								$satWorkHrs = $dateRow['workhours'];//Get the workhours
 								$satNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$satOTHrs = $dateRow['overtime'];//Get the Overtime
 								//For badge of Night diff and Overtime
-
 								if($dateRow['nightdiff'] != 0)
 									$NdSat = true;
 								if($dateRow['overtime'] != 0)
@@ -479,7 +456,6 @@ if($holidayExist > 0)
 							$satBool = false;
 						}	
 						
-
 					}
 					$holMon = false; 
 					$holTue = false; 
@@ -502,7 +478,6 @@ if($holidayExist > 0)
 							Print "<input type='hidden' name='holidayName[]' value='".$holNameArr[$a]."'>";
 							Print "<input type='hidden' name='holidayType[]' value='".$holTypeArr[$a]."'>";
 							Print "<input type='hidden' name='holidayDate[]' value='".$holDateArr[$a]."'>";
-
 							if($holDayArr[$a] == "Monday")
 								$holMon = true; 
 							else if($holDayArr[$a] == "Tuesday")
@@ -523,7 +498,7 @@ if($holidayExist > 0)
 					{	
 						
 						if($holidayDay == "Monday")
-								$holMon = true; 
+							$holMon = true; 
 						else if($holidayDay == "Tuesday")
 							$holTue = true; 
 						else if($holidayDay == "Wednesday")
@@ -552,35 +527,34 @@ if($holidayExist > 0)
 					//     echo $yea;
 					//   }
 					// }
-
-				?>
-				<tr style="white-space: nowrap">
-					<td colspan="2" class="navibar col-md-1"><?php Print $day1 ?></td>
-					<td colspan="2" class="navibar col-md-1"><?php Print $day2 ?></td>
-					<td colspan="2" class="navibar col-md-1"><?php Print $day3 ?></td>
-					<td colspan="2" class="navibar col-md-1"><?php Print $day4 ?></td>
-					<td colspan="2" class="navibar col-md-1"><?php Print $day5 ?></td>
-					<td colspan="2" class="navibar col-md-1"><?php Print $day6 ?></td>
-					<td colspan="2" class="navibar col-md-1"><?php Print $day7 ?></td>
-				</tr>
-				<tr>
-					<td colspan="2">Wednesday</td>
-					<td colspan="2">Thursday</td>
-					<td colspan="2">Friday</td>
-					<td colspan="2">Saturday</td>
-					<td colspan="2">Sunday</td>
-					<td colspan="2">Monday</td>
-					<td colspan="2">Tuesday</td>
-				</tr>
-				<tr>
-					<?php
+					?>
+					<tr style="white-space: nowrap">
+						<td colspan="2" class="navibar col-md-1"><?php Print $day1 ?></td>
+						<td colspan="2" class="navibar col-md-1"><?php Print $day2 ?></td>
+						<td colspan="2" class="navibar col-md-1"><?php Print $day3 ?></td>
+						<td colspan="2" class="navibar col-md-1"><?php Print $day4 ?></td>
+						<td colspan="2" class="navibar col-md-1"><?php Print $day5 ?></td>
+						<td colspan="2" class="navibar col-md-1"><?php Print $day6 ?></td>
+						<td colspan="2" class="navibar col-md-1"><?php Print $day7 ?></td>
+					</tr>
+					<tr>
+						<td colspan="2">Wednesday</td>
+						<td colspan="2">Thursday</td>
+						<td colspan="2">Friday</td>
+						<td colspan="2">Saturday</td>
+						<td colspan="2">Sunday</td>
+						<td colspan="2">Monday</td>
+						<td colspan="2">Tuesday</td>
+					</tr>
+					<tr>
+						<?php
 						if(!$wedAbsent)
 						{
 							if(isset($wedTimeIn) && isset($wedTimeOut))
 							{
 								Print 	"	<td>Time In:<br>". trim($wedTimeIn) ."</td>
-											<td>Time Out:<br>". trim($wedTimeOut) ."</td>
-											<input type='hidden' name='wedWorkHrs' value='".$wedWorkHrs."'>";
+								<td>Time Out:<br>". trim($wedTimeOut) ."</td>
+								<input type='hidden' name='wedWorkHrs' value='".$wedWorkHrs."'>";
 								
 								if($wedNDHrs != 0)
 								{
@@ -604,17 +578,17 @@ if($holidayExist > 0)
 						{
 							if(isset($thuTimeIn) && isset($thuTimeOut))
 							{
-							Print 	"	<td>Time In:<br>". trim($thuTimeIn) ."</td>
-										<td>Time Out:<br>". trim($thuTimeOut) ."</td>
-										<input type='hidden' name='thuWorkHrs' value='".$thuWorkHrs."'>";
-							if($thuNDHrs != 0)
-							{
-								Print "<input type='hidden' name='thuNDHrs' value='".$thuNDHrs."'>";
-							}
-							if($thuOTHrs != 0)
-							{
-								Print "<input type='hidden' name='thuOTHrs' value='".$thuOTHrs."'>";
-							}
+								Print 	"	<td>Time In:<br>". trim($thuTimeIn) ."</td>
+								<td>Time Out:<br>". trim($thuTimeOut) ."</td>
+								<input type='hidden' name='thuWorkHrs' value='".$thuWorkHrs."'>";
+								if($thuNDHrs != 0)
+								{
+									Print "<input type='hidden' name='thuNDHrs' value='".$thuNDHrs."'>";
+								}
+								if($thuOTHrs != 0)
+								{
+									Print "<input type='hidden' name='thuOTHrs' value='".$thuOTHrs."'>";
+								}
 							}
 							else
 							{
@@ -630,8 +604,8 @@ if($holidayExist > 0)
 							if(isset($friTimeIn) && isset($friTimeOut))
 							{
 								Print 	"	<td>Time In:<br>". trim($friTimeIn) ."</td>
-											<td>Time Out:<br>". trim($friTimeOut) ."</td>
-											<input type='hidden' name='friWorkHrs' value='".$friWorkHrs."'>";
+								<td>Time Out:<br>". trim($friTimeOut) ."</td>
+								<input type='hidden' name='friWorkHrs' value='".$friWorkHrs."'>";
 								if($friNDHrs != 0)
 								{
 									Print "<input type='hidden' name='friNDHrs' value='".$friNDHrs."'>";
@@ -655,8 +629,8 @@ if($holidayExist > 0)
 							if(isset($satTimeIn) && isset($satTimeOut))
 							{
 								Print 	"	<td>Time In:<br>". trim($satTimeIn) ."</td>
-											<td>Time Out:<br>". trim($satTimeOut) ."</td>
-											<input type='hidden' name='satWorkHrs' value='".$satWorkHrs."'>";
+								<td>Time Out:<br>". trim($satTimeOut) ."</td>
+								<input type='hidden' name='satWorkHrs' value='".$satWorkHrs."'>";
 								if($satNDHrs !=  0)
 								{
 									Print "<input type='hidden' name='satNDHrs' value='".$satNDHrs."'>";
@@ -680,8 +654,8 @@ if($holidayExist > 0)
 							if(isset($sunTimeIn) && isset($sunTimeOut))
 							{
 								Print 	"	<td>Time In:<br>". trim($sunTimeIn) ."</td>
-											<td>Time Out:<br>". trim($sunTimeOut) ."</td>
-											<input type='hidden' name='sunWorkHrs' value='".$sunWorkHrs."'>";
+								<td>Time Out:<br>". trim($sunTimeOut) ."</td>
+								<input type='hidden' name='sunWorkHrs' value='".$sunWorkHrs."'>";
 								if($sunNDHrs !=  0)
 								{
 									Print "<input type='hidden' name='sunNDHrs' value='".$sunNDHrs."'>";
@@ -706,8 +680,8 @@ if($holidayExist > 0)
 							if(isset($monTimeIn) && isset($monTimeIn))
 							{
 								Print 	"	<td>Time In:<br>". trim($monTimeIn) ."</td>
-											<td>Time Out:<br>". trim($monTimeOut) ."</td>
-											<input type='hidden' name='monWorkHrs' value='".$monWorkHrs."'>";
+								<td>Time Out:<br>". trim($monTimeOut) ."</td>
+								<input type='hidden' name='monWorkHrs' value='".$monWorkHrs."'>";
 								if($monNDHrs != 0)
 								{
 									Print "<input type='hidden' name='monNDHrs' value='".$monNDHrs."'>";
@@ -731,8 +705,8 @@ if($holidayExist > 0)
 							if(isset($tueTimeIn) && isset($tueTimeOut))
 							{
 								Print 	"	<td>Time In:<br>". trim($tueTimeIn) ."</td>
-											<td>Time Out:<br>". trim($tueTimeOut) ."</td>
-											<input type='hidden' name='tueWorkHrs' value='".$tueWorkHrs."'>";
+								<td>Time Out:<br>". trim($tueTimeOut) ."</td>
+								<input type='hidden' name='tueWorkHrs' value='".$tueWorkHrs."'>";
 								if($tueNDHrs != 0)
 								{
 									Print "<input type='hidden' name='tueNDHrs' value='".$tueNDHrs."'>";
@@ -751,18 +725,18 @@ if($holidayExist > 0)
 						{
 							Print 	"	<td colspan='2' rowspan='2' class='danger'> Absent </td>";
 						}
-							
-					?>
-				</tr>
-				<tr> <!-- ================ AFTER BREAK TIME IN AND TIME OUT ================ -->
-					<?php
+
+						?>
+					</tr>
+					<tr> <!-- ================ AFTER BREAK TIME IN AND TIME OUT ================ -->
+						<?php
 						if(!$wedAbsent)
 						{
 							//if Halfday
 							if(!empty($ABwedTimeIn) && !empty($ABwedTimeOut))
 							{
 								Print 	"	<td>Time In:<br>". trim($ABwedTimeIn) ."</td>
-										<td>Time Out:<br>". trim($ABwedTimeOut) ."</td>";
+								<td>Time Out:<br>". trim($ABwedTimeOut) ."</td>";
 							}
 							else if (isset($wedTimeIn) && isset($wedTimeOut))
 							{
@@ -776,7 +750,7 @@ if($holidayExist > 0)
 							if(!empty($ABthuTimeIn) && !empty($ABthuTimeOut))
 							{
 								Print 	"	<td>Time In:<br>". trim($ABthuTimeIn) ."</td>
-										<td>Time Out:<br>". trim($ABthuTimeOut) ."</td>";
+								<td>Time Out:<br>". trim($ABthuTimeOut) ."</td>";
 							}
 							else if (isset($thuTimeIn) && isset($thuTimeOut))
 							{
@@ -789,7 +763,7 @@ if($holidayExist > 0)
 							if(!empty($ABfriTimeOut) && !empty($ABfriTimeIn))
 							{
 								Print 	"	<td>Time In:<br>". trim($ABfriTimeIn) ."</td>
-										<td>Time Out:<br>". trim($ABfriTimeOut) ."</td>";
+								<td>Time Out:<br>". trim($ABfriTimeOut) ."</td>";
 							}
 							else if (isset($friTimeOut) && isset($friTimeIn))
 							{
@@ -802,7 +776,7 @@ if($holidayExist > 0)
 							if(!empty($ABsatTimeIn) && !empty($ABsatTimeOut))
 							{
 								Print 	"	<td>Time In:<br>". trim($ABsatTimeIn) ."</td>
-										<td>Time Out:<br>". trim($ABsatTimeOut) ."</td>";
+								<td>Time Out:<br>". trim($ABsatTimeOut) ."</td>";
 							}
 							else if (isset($satTimeIn) && isset($satTimeOut))
 							{
@@ -818,7 +792,7 @@ if($holidayExist > 0)
 								if(!empty($ABsunTimeIn) && !empty($ABsunTimeOut))
 								{
 									Print 	"	<td>Time In:<br>". trim($ABsunTimeIn) ."</td>
-											<td>Time Out:<br>". trim($ABsunTimeOut) ."</td>";
+									<td>Time Out:<br>". trim($ABsunTimeOut) ."</td>";
 								}
 								else
 								{
@@ -832,7 +806,7 @@ if($holidayExist > 0)
 							if(isset($ABmonTimeIn) && isset($ABmonTimeOut))
 							{
 								Print 	"	<td>Time In:<br>". trim($ABmonTimeIn) ."</td>
-										<td>Time Out:<br>". trim($ABmonTimeOut) ."</td>";
+								<td>Time Out:<br>". trim($ABmonTimeOut) ."</td>";
 							}
 							else if (isset($monTimeIn) && isset($monTimeOut))
 							{
@@ -845,701 +819,423 @@ if($holidayExist > 0)
 							if(!empty($ABtueTimeIn) && !empty($ABtueTimeOut))
 							{
 								Print 	"	<td>Time In:<br>". trim($ABtueTimeIn) ."</td>
-										<td>Time Out:<br>". trim($ABtueTimeOut) ."</td>";
+								<td>Time Out:<br>". trim($ABtueTimeOut) ."</td>";
 							}
 							else if (isset($tueTimeIn) && isset($tueTimeOut))
 							{
 								Print 	"	<td colspan='2'>Half Day</td>";
 							}
 						}
-							
-					?>
-				</tr>
-				<tr>
-					<td class="removePadding" colspan="2">
-						<h4>
-						<?php //Badges to display Holiday, OT, ND
 
-							if($holWed)
-								Print 	 "<span class='label label-success'>Holiday</span>&nbsp";
-							if($OtWed)
-								Print 	"<span class='label label-primary'>OT</span>&nbsp";
-							if($NdWed)
-								Print 	"<span class='label label-warning'>ND</span>";
 						?>
-						</h4>
-					</td>
-					<td class="removePadding" colspan="2">
-						<h4>
+					</tr>
+					<tr>
+						<td class="nopadding" colspan="2">
+							<h4>
+						<?php //Badges to display Holiday, OT, ND
+						if($holWed)
+							Print 	 "<span class='label label-success'>Holiday</span>&nbsp";
+						if($OtWed)
+							Print 	"<span class='label label-primary'>OT</span>&nbsp";
+						if($NdWed)
+							Print 	"<span class='label label-warning'>ND</span>";
+						?>
+					</h4>
+				</td>
+				<td class="nopadding" colspan="2">
+					<h4>
 						<?php
-							if($holThu)
-								Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
-							if($OtThu)
-								Print 	"<span class='label label-primary'>OT</span>&nbsp;";
-							if($NdThu)
-								Print 	"<span class='label label-warning'>ND</span>";
+						if($holThu)
+							Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
+						if($OtThu)
+							Print 	"<span class='label label-primary'>OT</span>&nbsp;";
+						if($NdThu)
+							Print 	"<span class='label label-warning'>ND</span>";
 						?>
-						</h4>
-					</td>
-					<td class="removePadding" colspan="2">
-						<h4>
+					</h4>
+				</td>
+				<td class="nopadding" colspan="2">
+					<h4>
 						<?php
-							if($holFri)
-								Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
-							if($OtFri)
-								Print 	"<span class='label label-primary'>OT</span>&nbsp;";
-							if($NdFri)
-								Print 	"<span class='label label-warning'>ND</span>";
+						if($holFri)
+							Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
+						if($OtFri)
+							Print 	"<span class='label label-primary'>OT</span>&nbsp;";
+						if($NdFri)
+							Print 	"<span class='label label-warning'>ND</span>";
 						?>
-						</h4>
-					</td>
-					<td class="removePadding" colspan="2">
-						<h4>
+					</h4>
+				</td>
+				<td class="nopadding" colspan="2">
+					<h4>
 						<?php
-							if($holSat)
-								Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
-							if($OtSat)
-								Print 	"<span class='label label-primary'>OT</span>&nbsp;";
-							if($NdSat)
-								Print 	"<span class='label label-warning'>ND</span>";
+						if($holSat)
+							Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
+						if($OtSat)
+							Print 	"<span class='label label-primary'>OT</span>&nbsp;";
+						if($NdSat)
+							Print 	"<span class='label label-warning'>ND</span>";
 						?>
-						</h4>
-					</td>
-					<td class="removePadding" colspan="2">
-						<h4>
+					</h4>
+				</td>
+				<td class="nopadding" colspan="2">
+					<h4>
 						<?php
-							if($holSun)
-								Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
-							if($OtSun)
-								Print 	"<span class='label label-primary'>OT</span>&nbsp;";
-							if($NdSun)
-								Print 	"<span class='label label-warning'>ND</span>";
+						if($holSun)
+							Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
+						if($OtSun)
+							Print 	"<span class='label label-primary'>OT</span>&nbsp;";
+						if($NdSun)
+							Print 	"<span class='label label-warning'>ND</span>";
 						?>
-						</h4>
-					</td>
-					<td class="removePadding" colspan="2">
-						<h4>
+					</h4>
+				</td>
+				<td class="nopadding" colspan="2">
+					<h4>
 						<?php
-							if($holMon)
-								Print 	"<span class='label label-success'>Holiday</span>&nbsp;"; 
-							if($OtMon)
-								Print 	"<span class='label label-primary'>OT</span>&nbsp;"; 
-							if($NdMon)
-								Print 	"<span class='label label-warning'>ND</span>"; 
+						if($holMon)
+							Print 	"<span class='label label-success'>Holiday</span>&nbsp;"; 
+						if($OtMon)
+							Print 	"<span class='label label-primary'>OT</span>&nbsp;"; 
+						if($NdMon)
+							Print 	"<span class='label label-warning'>ND</span>"; 
 						?>
-						</h4>
-					</td>
-					<td class="removePadding" colspan="2">
-						<h4>
+					</h4>
+				</td>
+				<td class="nopadding" colspan="2">
+					<h4>
 						<?php
-							if($holTue)
-								Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
-							if($OtTue)
-								Print 	"<span class='label label-primary'>OT</span>&nbsp;";
-							if($NdTue)
-								Print 	"<span class='label label-warning'>ND</span>";
+						if($holTue)
+							Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
+						if($OtTue)
+							Print 	"<span class='label label-primary'>OT</span>&nbsp;";
+						if($NdTue)
+							Print 	"<span class='label label-warning'>ND</span>";
 						?>
-						</h4>
+					</h4>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<!-- Summary of attendance -->
+	<div class="col-md-10 col-md-offset-1">
+		<div class="panel">
+			<table class="table table-bordered table-responsive">
+				<tr>
+					<td style="background-color: peachpuff">
+						<h4>Total hours rendered: <?php Print $totalHours ?></h4>
 					</td>
+					<td style="background-color: lemonchiffon">
+						<h4>Total overtime: <?php Print $totalOT ?></h4>
+					</td>
+					<td style="background-color: powderblue">
+						<h4>Total night differential: <?php Print $totalNightDiff ?></h4>
+					</td>
+					<input type="hidden" name="totalOverTime" value="<?php Print $totalOT?>">
+					<input type="hidden" name="totalNightDiff" value="<?php Print $totalNightDiff?>">
 				</tr>
 			</table>
-		</div>
 
 
-		<div class="col-md-10 col-md-offset-1">
-			<div class="panel">
-				<table class="table table-bordered table-responsive">
-					<tr>
-						<td style="background-color: peachpuff">
-							<h4>Total hours rendered: <?php Print $totalHours ?></h4>
-						</td>
-						<td style="background-color: lemonchiffon">
-							<h4>Total overtime: <?php Print $totalOT ?></h4>
-						</td>
-						<td style="background-color: powderblue">
-							<h4>Total night differential: <?php Print $totalNightDiff ?></h4>
-						</td>
-						<input type="hidden" name="totalOverTime" value="<?php Print $totalOT?>">
-						<input type="hidden" name="totalNightDiff" value="<?php Print $totalNightDiff?>">
-					</tr>
-				</table>
-
-
-				<div class="row">
-						<div class="col-md-2">
-							<h4>Loans</h4>
-<<<<<<< HEAD
-							<div class="form-group row">
-								<label class="control-label col-md-3" for="sss" >SSS</label>
-								<div class="col-md-9">
-									<?php
-									$getSSS = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' ORDER BY date DESC LIMIT 1";
-									$getPAGIBIG = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' ORDER BY date DESC LIMIT 1";
-									$getNewVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'newVale' ORDER BY date DESC LIMIT 1";
-									$getOldVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY date DESC LIMIT 1";
-									//Query
-									$sssQuery = mysql_query($getSSS);
-									$pagibigQuery = mysql_query($getPAGIBIG);
-									$newValeQuery = mysql_query($getNewVALE);
-									$oldValeQuery = mysql_query($getOldVALE);
-									
-									//SSS Loan
-									if(mysql_num_rows($sssQuery) > 0)
-									{
-										$sssArr = mysql_fetch_assoc($sssQuery);
-										$sss = $sssArr['amount'];
-									}
-									else
-									{
-										$sss = "N/A";
-									}
-
-									//Pagibig Loan
-									if(mysql_num_rows($pagibigQuery) > 0)
-									{
-										$pagibigArr = mysql_fetch_assoc($pagibigQuery);
-										$pagibig = $pagibigArr['amount'];
-									}
-									else
-									{
-										$pagibig = "N/A";
-									}
-
-									//New Vale
-									if(mysql_num_rows($newValeQuery) > 0)
-									{
-										$newValeArr = mysql_fetch_assoc($newValeQuery);
-										$newVale = $newValeArr['amount'];
-										$newVale = "<span id='newValeText'>".$newValeArr['amount']."</span>";
-									}
-									else
-									{
-										$newVale = "<span id = 'newValeText'>N/A</span>";
-									}
-=======
-							<?php
+			<!-- Deductions to be made -->
+			<!-- LOANS -->
+			<div class="row">
+				<div class="col-md-2">
+					<h4>Loans</h4>
+					<?php
 							//this is to check if employee has multiple new vales in a week
-							$day1 = $date;
-							$day2 = date('F j, Y', strtotime('-1 day', strtotime($date)));
-							$day3 = date('F j, Y', strtotime('-2 day', strtotime($date)));
-							$day4 = date('F j, Y', strtotime('-3 day', strtotime($date)));
-							$day5 = date('F j, Y', strtotime('-4 day', strtotime($date)));
-							$day6 = date('F j, Y', strtotime('-5 day', strtotime($date)));
-							$day7 = date('F j, Y', strtotime('-6 day', strtotime($date)));
-
-							$days = array("$day1","$day2","$day3","$day4","$day5","$day6","$day7");
-
-							$newVale = 0;
-							foreach($days as $checkDay)
-							{
+					$day1 = $date;
+					$day2 = date('F j, Y', strtotime('-1 day', strtotime($date)));
+					$day3 = date('F j, Y', strtotime('-2 day', strtotime($date)));
+					$day4 = date('F j, Y', strtotime('-3 day', strtotime($date)));
+					$day5 = date('F j, Y', strtotime('-4 day', strtotime($date)));
+					$day6 = date('F j, Y', strtotime('-5 day', strtotime($date)));
+					$day7 = date('F j, Y', strtotime('-6 day', strtotime($date)));
+					$days = array("$day1","$day2","$day3","$day4","$day5","$day6","$day7");
+					$newVale = 0;
+					foreach($days as $checkDay)
+					{
 								//Check if overall attendance for a certain site is done
-								$loanChecker = "SELECT * FROM loans WHERE date = '$checkDay' AND type = 'newVale' AND empid = '$empid'";
+						$loanChecker = "SELECT * FROM loans WHERE date = '$checkDay' AND type = 'newVale' AND empid = '$empid'";
 								//Print '<script>colsole.log("'.$loanChecker.'")</script>';
-								$loanCheckerQuery = mysql_query($loanChecker);
-								if($loanCheckerQuery)
-								{
-									$newValeNum = mysql_num_rows($loanCheckerQuery);
-									if($newValeNum != 0)
-									{
+						$loanCheckerQuery = mysql_query($loanChecker);
+						if($loanCheckerQuery)
+						{
+							$newValeNum = mysql_num_rows($loanCheckerQuery);
+							if($newValeNum != 0)
+							{
 										//Print "<script>alert('yea')</script>";
-										if($newValeNum > 1)
-										{
-											while($newValeArr = mysql_fetch_assoc($loanCheckerQuery))
-											{
-												$newVale += $newValeArr['amount'];
-											}
-										}
-										else
-										{
-											//Print "<script>alert('yea')</script>";
-											$newValeRow = mysql_fetch_assoc($loanCheckerQuery);
-											$newVale += $newValeRow['amount'];
-										}
+								if($newValeNum > 1)
+								{
+									while($newValeArr = mysql_fetch_assoc($loanCheckerQuery))
+									{
+										$newVale += $newValeArr['amount'];
 									}
 								}
+								else
+								{
+											//Print "<script>alert('yea')</script>";
+									$newValeRow = mysql_fetch_assoc($loanCheckerQuery);
+									$newVale += $newValeRow['amount'];
+								}
 							}
+						}
+					}
+					$getSSS = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' ORDER BY date DESC LIMIT 1";
+					$getPAGIBIG = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' ORDER BY date DESC LIMIT 1";
 
-							$getSSS = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' ORDER BY date DESC LIMIT 1";
-							$getPAGIBIG = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' ORDER BY date DESC LIMIT 1";
-							
-							$getOldVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY date DESC LIMIT 1";
+					$getOldVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY date DESC LIMIT 1";
 							//Query
-							$sssQuery = mysql_query($getSSS);
-							$pagibigQuery = mysql_query($getPAGIBIG);
-							$oldValeQuery = mysql_query($getOldVALE);
-							
+					$sssQuery = mysql_query($getSSS);
+					$pagibigQuery = mysql_query($getPAGIBIG);
+					$oldValeQuery = mysql_query($getOldVALE);
+
 							//SSS Loan
-							if(mysql_num_rows($sssQuery) > 0)
-							{
-								$sssArr = mysql_fetch_assoc($sssQuery);
-								$sss = $sssArr['balance'];
-							}
-							else
-							{
-								$sss = "N/A";
-							}
-
+					if(mysql_num_rows($sssQuery) > 0)
+					{
+						$sssArr = mysql_fetch_assoc($sssQuery);
+						$sss = $sssArr['balance'];
+					}
+					else
+					{
+						$sss = "N/A";
+					}
 							//Pagibig Loan
-							if(mysql_num_rows($pagibigQuery) > 0)
-							{
-								$pagibigArr = mysql_fetch_assoc($pagibigQuery);
-								$pagibig = $pagibigArr['balance'];
-							}
-							else
-							{
-								$pagibig = "N/A";
-							}
->>>>>>> fe3bd28dc2a67877ef27773453f3ca173157bfee
-
+					if(mysql_num_rows($pagibigQuery) > 0)
+					{
+						$pagibigArr = mysql_fetch_assoc($pagibigQuery);
+						$pagibig = $pagibigArr['balance'];
+					}
+					else
+					{
+						$pagibig = "N/A";
+					}
 							//New Vale
-							if($newVale == 0)
-							{
-								$newVale = "<span id = 'newValeText'>N/A</span>";
-							}
-							
+					if($newVale == 0)
+					{
+						$newVale = "<span id = 'newValeText'>N/A</span>";
+					}
 
 							//Old Vale
-							if(mysql_num_rows($oldValeQuery) > 0)
+					if(mysql_num_rows($oldValeQuery) > 0)
+					{
+						$oldValeArr = mysql_fetch_assoc($oldValeQuery);
+						$oldVale = $oldValeArr['balance'];
+					}
+					else
+					{
+						$oldVale = "N/A";
+					}
+					?>
+					<div class="form-group row">
+						<label class="control-label col-md-3" for="sss" >SSS</label>
+						<div class="col-md-9">
+							<?php
+							if($sss != "N/A")
 							{
-								$oldValeArr = mysql_fetch_assoc($oldValeQuery);
-								$oldVale = $oldValeArr['balance'];
+								Print "<span class='pull-right'>".number_format($sss, 2, '.', ',')."</span>";
 							}
 							else
 							{
-								$oldVale = "N/A";
+								Print "--";
 							}
 							?>
-							<div class="form-group row">
-								<label class="control-label col-md-3" for="sss" >SSS</label>
-								<div class="col-md-9">
-									<?php
-									if($sss != "N/A")
-									{
-										Print "<span class='pull-right'>".number_format($sss, 2, '.', ',')."</span>";
-									}
-									else
-									{
-										Print "--";
-									}
-									?>
-								</div>
-								<div class="col-md-12">
-									<input type="text" class="form-control" name="sssDeduct" placeholder="Amount to deduct">
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="control-label col-md-3" for="pagibig" style="white-space: nowrap;">Pag-IBIG</label>
-								<div class="col-md-9">
-									<?php
-									if($pagibig != "N/A")
-									{
-										Print "<span class='pull-right'>".number_format($pagibig, 2, '.', ',')."</span>";
-									}
-									else
-									{
-										Print "--";
-									}
-									?>
-								</div>
-								<div class="col-md-12">
-									<input type="text" class="form-control" name="pagibigDeduct" placeholder="Amount to deduct">
-								</div>
-							</div>
 						</div>
-
-
-						<div class="col-md-2">
-						<div class="col-md-6">
-							<h4 class="text-left" style="white-space: nowrap;">Old Vale</h4>
-								<h5 class="text-right" style="white-space: nowrap;">
-									<span class="pull-right">
-										<?php 
-										if($oldVale != "N/A")
-								        	Print number_format($oldVale, 2, '.', ',');
-								        else
-								       	 	Print $oldVale;	
-										?>
-									</span>
-								</h5>
-								<div class="row">
-									<?php
-									if($oldVale != "N/A")
-									{
-									Print "
-										<input type='text' placeholder='Amount' name='oldValeDeduct' class='form-control input-sm pull-down'>";
-									}
-									?>
-								</div>
-						</div>
-
-						<div class="col-md-6">
-							<h4 class="text-left" style="white-space: nowrap;">New Vale</h4>
-								<h5 class="text-right" style="white-space: nowrap;">
-									<span class="vale pull-right" id="parent">
-										<?php 
-										if($newVale != "N/A")
-
-								        Print $newVale;
-										?>
-									</span>
-									<br>
-									<!-- <span id="dynamicCompute"></span> -->
-								</h5>
-								<input type="hidden" name="newValeAdded" class="added">
-								
-								<div class="row" style="margin-top:9px">
-									<button type='button' class='btn btn-success btn-sm col-md-12' data-toggle='modal' data-target='#addVale'><span class='glyphicon glyphicon-plus'></span> Add</button>
-								</div>
-						</div>
-
 						<div class="col-md-12">
-							<h4>COLA</h4>
-<<<<<<< HEAD
-							<input type="text" class="form-control" readonly>
-=======
-							<input type="text" value="<?php Print $colaValue?>" name="cola" class="form-control" readonly>
->>>>>>> fe3bd28dc2a67877ef27773453f3ca173157bfee
+							<input type="text" class="form-control" name="sssDeduct" placeholder="Amount to deduct">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="control-label col-md-3" for="pagibig" style="white-space: nowrap;">Pag-IBIG</label>
+						<div class="col-md-9">
+							<?php
+							if($pagibig != "N/A")
+							{
+								Print "<span class='pull-right'>".number_format($pagibig, 2, '.', ',')."</span>";
+							}
+							else
+							{
+								Print "--";
+							}
+							?>
+						</div>
+						<div class="col-md-12">
+							<input type="text" class="form-control" name="pagibigDeduct" placeholder="Amount to deduct">
+						</div>
+					</div>
+				</div>
+
+				<!-- OLD VALE -->
+				<div class="col-md-2">
+					<div class="col-md-6">
+						<h4 class="text-left" style="white-space: nowrap;">Old Vale</h4>
+						<h5 class="text-right" style="white-space: nowrap;">
+							<span class="pull-right">
+								<?php 
+								if($oldVale != "N/A")
+									Print number_format($oldVale, 2, '.', ',');
+								else
+									Print $oldVale;	
+								?>
+							</span>
+						</h5>
+						<div class="row">
+							<?php
+							if($oldVale != "N/A")
+							{
+								Print "
+								<input type='text' placeholder='Amount' name='oldValeDeduct' class='form-control input-sm pull-down'>";
+							}
+							?>
 						</div>
 					</div>
 
-						<div class="col-md-3">
-							<h4 class="text-center">Contributions</h4>
-							<div class="form-group">
-								<label class="control-label col-md-5" for="tax">Tax</label>
-								<div class="col-md-7">
-									<input type="text" id="tax" name="tax" class="form-control input-sm" onkeypress="validatenumber(event)" required>
-								</div>
-								<label class="control-label col-md-5" for="sssContribution">SSS</label>
-								<div class="col-md-7">
-									<input type="text" id="sssContribution" name="sss" placeholder="No document" class="form-control input-sm" value="<?php Print $deductionSSS?>" onkeypress="validatenumber(event)" readonly>
-									
-								</div>
-								<label class="control-label col-md-5" for="pagibigContribution" style="white-space: nowrap;">Pag-IBIG</label>
-								<div class="col-md-7">
-									<input type="text" id="pagibigContribution" name="pagibig" class="form-control input-sm" value="<?php Print $deductionPagibig?>" placeholder="No document" readonly>
-								</div>
-								<label class="control-label col-md-5" for="philhealth">PhilHealth</label>
-								<div class="col-md-7">
-									<input type="text" id="philhealth" name="philhealth" placeholder="No document" class="form-control input-sm" value="<?php Print $deductionPhilhealth?>" onkeypress="validatenumber(event)" readonly>
-								</div>
-							</div>
+					<!-- NEW VALE -->
+					<div class="col-md-6">
+						<h4 class="text-left" style="white-space: nowrap;">New Vale</h4>
+						<h5 class="text-right" style="white-space: nowrap;">
+							<span class="vale pull-right" id="parent">
+								<?php 
+								if($newVale != "<span id = 'newValeText'>N/A</span>")
+									Print $newVale;
+								else
+									Print $newVale;
+								?>
+							</span>
+							<br>
+							<!-- <span id="dynamicCompute"></span> -->
+						</h5>
+						<input type="hidden" name="newValeAdded" class="added">
+
+						<div class="row" style="margin-top:9px">
+							<button type='button' class='btn btn-success btn-sm col-md-12' data-toggle='modal' data-target='#addVale'><span class='glyphicon glyphicon-plus'></span> Add</button>
 						</div>
+					</div>
+
+					<!-- COLA -->
+					<div class="col-md-12">
 						<?php
-						//Computation for overall allowance
-						$overallAllow = "";
-						if(!empty($empArr['allowance']))
+						$cola = "SELECT * FROM site WHERE location = '$site'";
+						$colaQuery = mysql_query($cola);
+						$colaArr = mysql_fetch_assoc($colaQuery);
+						$colaValue = $colaArr['cola'];
+						if($colaValue == NULL)
 						{
-							$overallAllow = $empArr['allowance'] * $allowCounter;
-							$overallAllow = number_format($overallAllow, 2, '.', ',');
+							$colaValue = "N/A";
 						}
 						?>
-						<!-- Days the employee came to work -->
-						<input type="hidden" name="daysAttended" value="<?php Print $allowCounter?>">
-						<div class="col-md-5">
-								<h4 class="text-left">Allowance</h4>
-								<div class="form-group">
-									<label class="control-label col-md-3">Daily</label>
-									<div class="col-md-3">
-										<input type="text" id="allowance" name="allowance" class="form-control input-sm" placeholder="Daily allowance" value="<?php Print $empArr['allowance']?>" readonly>
-									</div>
-									<label class="control-label col-md-3">Overall</label>
-									<div class="col-md-3">
-										<input type="text" id="OverallAllowance" name="OverallAllowance" class="form-control input-sm" placeholder="Overall Allow."  value="<?php Print $overallAllow?>" readonly>
-									</div>
-									<label class="control-label col-md-2">Extra</label>
-									<div class="col-md-3">
-										<input type="text" id="allowance" name="extra_allowance" name="extra_allowance" class="form-control input-sm">
-									</div>
-								</div>
+						<h4>COLA</h4>
+						<input type="text" value="<?php Print $colaValue?>" name="cola" class="form-control" readonly>
+					</div>
+				</div>
 
+				<!-- Contributions -->
+				<div class="col-md-3">
+					<h4 class="text-center">Contributions</h4>
+					<div class="form-group">
+						<label class="control-label col-md-5" for="tax">Tax</label>
+						<div class="col-md-7">
+							<input type="text" id="tax" name="tax" class="form-control input-sm" onkeypress="validatenumber(event)" required>
+						</div>
+						<label class="control-label col-md-5" for="sssContribution">SSS</label>
+						<div class="col-md-7">
+							<input type="text" id="sssContribution" name="sss" placeholder="No document" class="form-control input-sm" value="<?php Print $deductionSSS?>" onkeypress="validatenumber(event)" readonly>
 
-							<div class="col-md-12">
-								<h4 class="text-left">Tools</h4>
-								<a class="btn btn-sm btn-primary col-md-1" onclick="addRow()"><span class="glyphicon glyphicon-plus"></span></a>
-								<div class="form-group" id="toolform">
-									<div id="1">
-										<label class="control-label col-md-2" for="tools">Name</label>
-										<div class="col-md-4">
-											<input type="text" id="tools" name="toolname[]" class="form-control input-sm">
-										</div>
-										<label class="control-label col-md-1" for="price">Cost</label>
-										<div class="col-md-4">
-											<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this.value)" onblur="addDecimal(this)">
-										</div>
-									</div>	
+						</div>
+						<label class="control-label col-md-5" for="pagibigContribution" style="white-space: nowrap;">Pag-IBIG</label>
+						<div class="col-md-7">
+							<input type="text" id="pagibigContribution" name="pagibig" class="form-control input-sm" value="<?php Print $deductionPagibig?>" placeholder="No document" readonly>
+						</div>
+						<label class="control-label col-md-5" for="philhealth">PhilHealth</label>
+						<div class="col-md-7">
+							<input type="text" id="philhealth" name="philhealth" placeholder="No document" class="form-control input-sm" value="<?php Print $deductionPhilhealth?>" onkeypress="validatenumber(event)" readonly>
+						</div>
+					</div>
+				</div>
+
+				<!-- Allowance computation -->
+				<?php
+						//Computation for overall allowance
+				$overallAllow = "";
+				if(!empty($empArr['allowance']))
+				{
+					$overallAllow = $empArr['allowance'] * $allowCounter;
+					$overallAllow = number_format($overallAllow, 2, '.', ',');
+				}
+				?>
+				<!-- Days the employee came to work -->
+				<input type="hidden" name="daysAttended" value="<?php Print $allowCounter?>">
+				<div class="col-md-5">
+					<h4 class="text-left">Allowance</h4>
+					<div class="form-group">
+						<label class="control-label col-md-2">Daily</label>
+						<div class="col-md-2 nopadding">
+							<input type="text" id="allowance" name="allowance" class="form-control input-sm" placeholder="Daily allowance" value="<?php Print $empArr['allowance']?>" readonly>
+						</div>
+						<label class="control-label col-md-2">Overall</label>
+						<div class="col-md-2 nopadding">
+							<input type="text" id="OverallAllowance" name="OverallAllowance" class="form-control input-sm" placeholder="Overall Allow."  value="<?php Print $overallAllow?>" readonly>
+						</div>
+						<label class="control-label col-md-2">Extra</label>
+						<div class="col-md-2 nopadding">
+							<input type="text" id="allowance" name="extra_allowance" name="extra_allowance" class="form-control input-sm">
+						</div>
+					</div>
+
+					<!-- Tools deductions -->
+					<div class="col-md-12">
+						<h4 class="text-left">Tools</h4>
+						<a class="btn btn-sm btn-primary col-md-1" onclick="addRow()"><span class="glyphicon glyphicon-plus"></span></a>
+						<div class="form-group" id="toolform">
+							<div id="1">
+								<label class="control-label col-md-2" for="tools">Name</label>
+								<div class="col-md-4">
+									<input type="text" id="tools" name="toolname[]" class="form-control input-sm">
 								</div>
-								<div class="col-md-12 pull-down">
-									<label class="col-md-5">
-										Total Cost
-									</label>
-									<div class="col-md-6">
-										<input type="text" class="form-control" id="totalcost" name="totalcost" value="" readonly>
-									</div>
-									
+								<label class="control-label col-md-1" for="price">Cost</label>
+								<div class="col-md-4">
+									<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this.value)" onblur="addDecimal(this)">
 								</div>
-								<div class="col-md-12">
-									<label class="col-md-5">
-											Previous Payable
-										</label>
-										<div class="col-md-6">
-											<input type="text" class="form-control" name="previousPayable" id="outstandingPayable" value="" readonly>
-										</div>
-								</div>
-								<div class="col-md-12">
-									<label class="col-md-5">
-										Amount to Pay
-									</label>
-									<div class="col-md-6">
-										<input type="text" name="amountToPay" class="form-control">
-									</div>
-								</div>
+							</div>	
+						</div>
+						<div class="col-md-12 pull-down">
+							<label class="col-md-5">
+								Total Cost
+							</label>
+							<div class="col-md-6">
+								<input type="text" class="form-control" id="totalcost" name="totalcost" value="" readonly>
+							</div>
+
+						</div>
+						<div class="col-md-12">
+							<label class="col-md-5">
+								Previous Payable
+							</label>
+							<div class="col-md-6">
+								<input type="text" class="form-control" name="previousPayable" id="outstandingPayable" value="" readonly>
 							</div>
 						</div>
-				</div>
-				
-
-				<br>
-
-
-				<!-- MODALS -->
-				<div class="modal fade" id="addVale">
-				  <div class="modal-dialog modal-sm" role="document">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				        <h4 class="modal-title" id="myModalLabel">Add new vale</h4>
-				      </div>
-				      <div class="modal-body">
-				      	<div class="row">
-				      		<div class="col-md-8 col-md-offset-2">
-				        		<input type="text" id="newAddVale" class="form-control" placeholder="Add as new vale" onkeypress="validatenumber(event)">
-				    		</div>
-				    	</div>
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary" onclick="addvale()" data-dismiss="modal">Add</button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
-
-				<div class="modal fade" id="deductVale">
-				  <div class="modal-dialog modal-sm" role="document">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				        <h4 class="modal-title" id="myModalLabel">Deduct old vale</h4>
-				      </div>
-				      <div class="modal-body">
-				      	<div class="row">
-				      		<div class="col-md-8 col-md-offset-2">
-				        		<input type="text" id="newDeductVale" class="form-control col-md-4" placeholder="Deduct from old vale" onkeypress="validatenumber(event)">
-				        	</div>
-				        </div>
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary" onclick="deductvale()" data-dismiss="modal">Deduct</button>
-				      </div>
-				    </div>
-				  </div>
+						<div class="col-md-12">
+							<label class="col-md-5">
+								Amount to Pay
+							</label>
+							<div class="col-md-6">
+								<input type="text" name="amountToPay" class="form-control">
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>	
-	</div>
+		</div>
+	</div>	
+</div>
 </div>
 
 <!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 <script rel="javascript" src="js/jquery.min.js"></script>
 <script rel="javascript" src="js/bootstrap.min.js"></script>
-<script>
-
-document.getElementById("payroll").setAttribute("style", "background-color: #10621e;");
-
-var ct = 1;
-function addRow(){
-	ct++;
-	var div1 = document.createElement('div');
-	div1.id = ct;
-	var delLink = '<div class="col-md-1" style="padding:0px"><button class="btn-sm btn btn-danger" onclick="deleteRow('+ ct +')"><span class="glyphicon glyphicon-minus"></span></button></div>';
-	var template = '<label class="control-label col-md-2" for="tools">Name</label> <div class="col-md-4"><input type="text" id="toolstemp" name="toolname[]" class="form-control input-sm" onkeypress="validateletter(event)"> </div><label class="control-label col-md-1" for="price">Cost</label><div class="col-md-4"><input type="text" id="pricetemp" name="toolprice[]" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal()"></div>';
-	div1.innerHTML = delLink + template;
-	document.getElementById('toolform').appendChild(div1);
-}
-
-function deleteRow(eleId){
-	var ele = document.getElementById(eleId);
-	var parentEle = document.getElementById('toolform');
-	parentEle.removeChild(ele);
-	console.log(parentEle);
-	console.log(ele);
-	console.log(parentEle.children);
-}
-
-function validatenumber(evt) {
-	var theEvent = evt || window.event;
-	var key = theEvent.keyCode || theEvent.which;
-	key = String.fromCharCode( key );
-	var regex = /[0-9]|\./;
-	if( !regex.test(key) ) {
-		 theEvent.returnValue = false;
-	if(theEvent.preventDefault) 
-		theEvent.preventDefault();
-	}
-}
-
-function validateletter(evt) {
-	var theEvent = evt || window.event;
-	var key = theEvent.keyCode || theEvent.which;
-	key = String.fromCharCode( key );
-	var regex = /^[a-zA-Z ]*$/;
-	if( !regex.test(key) ) {
-		 theEvent.returnValue = false;
-	if(theEvent.preventDefault) 
-		theEvent.preventDefault();
-	}
-}
-
-function validateprice(evt) {
-	var theEvent = evt || window.event;
-	var key = theEvent.keyCode || theEvent.which;
-	key = String.fromCharCode( key );
-	var regex = /^[0-9.,]+$/;
-	if( !regex.test(key) ) {
-		 theEvent.returnValue = false;
-	if(theEvent.preventDefault) 
-		theEvent.preventDefault();
-	}
-
-}
-function addCommas(nStr)
-{
-	nStr += '';
-	x = nStr.split('.');
-	x1 = x[0];
-	x2 = x.length > 1 ? '.' + x[1] : '';
-	var rgx = /(\d+)(\d{3})/;
-	while (rgx.test(x1)) {
-		x1 = x1.replace(rgx, '$1' + ',' + '$2');
-	}
-	return x1 + x2;
-}
-
-// Adding new vale and displaying an addition format
-function addvale() {
-
-	// Exception when Vale is N/A
-	
-
-	// Get current amount in vale
-	var original = document.querySelector(".vale");
-	var oldVale = original.innerHTML;
-	var division = oldVale.split(',');
-	var len = division.length;
-	var builder="";
-
-	for(var a=0; a<len; a++)
-	{
-		
-		builder += division[a];
-		
-	}
-	
-	builder = parseFloat(builder).toFixed(2);
-
-	// Check if there is already new vale in place
-	var child = document.getElementById('newValeText');
-	console.log(child.value);
-
-	// Get vale from modal and format to currency
-	var modalValue = document.querySelector("#newAddVale").value;
-	var addVale = parseFloat(modalValue).toFixed(2); 
-
-	var compute = parseFloat(addVale);
-
-	if(compute > 0)
-	{
-		// Show value to payroll page
-		child.innerHTML = addCommas(addVale);
-		console.log(child);
-	}
-	else
-	{
-		child.innerHTML = "N/A";
-	}
-
-
-	// Save to hidden input for database access
-	if(document.querySelector('.deducted').value)
-	{
-		var saveToAdd = document.querySelector(".added");
-		saveToAdd.value = modalValue;
-		var removePrevious = document.querySelector('.deducted');
-		removePrevious.value = "";
-		document.querySelector("#newDeductVale").value = "";
-	}
-	else
-	{
-		var saveToAdd = document.querySelector(".added");
-		saveToAdd.value = modalValue;
-	}
-	
-}
-
-function getTotal(evt) {
-	// Add sum of all items and show amount to deduct
-	var totalcost = 0;
-	var length = document.getElementsByClassName('toolpricetemp').length;
-	var toolprices = document.getElementsByClassName('toolpricetemp');
-
-	console.log("Total Cost = " + totalcost + " | Length of NodeList =  " + length);
-	
-	if( length > 1 )
-	{
-		for(var i = 0; i < length-1; i++){
-			if(toolprices[i].value!="")
-			{
-				totalcost+=parseFloat(toolprices[i].value);
-			console.log("Total Cost = " + totalcost + " | toolpricetemp = " + parseInt(toolprices[i].value));
-			}
-			else
-			{
-				break;
-			}
-		}
-		totalcost+= parseFloat(document.getElementById('price').value);
-		console.log(totalcost);
-	}
-	else
-	{
-		totalcost = parseFloat(document.getElementById('price').value);
-		console.log(totalcost);
-	}
-
-	//console.log("value: "+ evt);
-	if(evt != '')
-	{
-		document.getElementsByName('amountToPay')[0].required = true;
-	}
-	else
-	{
-		document.getElementsByName('amountToPay')[0].required = false;
-	}
-	document.getElementById('totalcost').value = totalcost.toFixed(2);
-	
-}
-
-function addDecimal(val){
-	// console.log(this.parentNode.nodeName);
-	// var toolname = this.parentNode.querySelector('#tools').value;
-	// console.log("Tool name = "+toolname);
-	var val = parseInt(val);
-	var number = val.toFixed(2);
-	this.value = number; 
-}
-
-</script>
+<script rel="javascript" src="js/payroll.js"></script>
 
 </div>
 </form>
