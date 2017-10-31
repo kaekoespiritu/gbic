@@ -19,9 +19,11 @@ $output .= "<div class='col-md-12'>
 				<div class='modal-body pull-down'>
 					<table class='table table-bordered'>
 					<tr>
-						<td>Date</td>
 						<td>Balance</td>
+						<td>Amount</td>
+						<td>Action</td>
 						<td>Remarks</td>
+						<td>Date</td>
 					</tr>";
 if(mysql_num_rows($historyQuery) > 0)
 {
@@ -29,9 +31,15 @@ if(mysql_num_rows($historyQuery) > 0)
 	{
 		$output .= "
 					<tr>
+						<td>".$row['balance']."</td>
+						<td>".$row['amount']."</td>";
+		if($row['action'] == '1')
+			$output .= "<td>Loaned</td>";
+		else
+			$output .= "<td>Payed</td>";
+		
+		$output .= 	"	<td>".$row['remarks']."</td>
 						<td>".$row['date']."</td>
-						<td>".$row['amount']."</td>
-						<td>".$row['remarks']."</td>
 					</tr>
 				";
 	}

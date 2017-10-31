@@ -135,7 +135,7 @@ else if($loanType == "newVale")
 					<td>History</td>
 				</tr>
 				<?php 
-					$loans = "SELECT DISTINCT * FROM loans WHERE type = '$loanType' GROUP BY empid ORDER BY date";
+					$loans = "SELECT DISTINCT * FROM loans WHERE type = '$loanType' GROUP BY empid ORDER BY date DESC";
 					$loansQuery = mysql_query($loans);
 					if(mysql_num_rows($loansQuery) > 0)
 					{
@@ -179,12 +179,12 @@ else if($loanType == "newVale")
 							$empArr = mysql_fetch_assoc($employeeQuery);
 							//Print "<script>alert(".mysql_num_rows($employeeQuery).")</script>";
 							//Check if employee has already fully paid his/her loan
-							$checker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType'ORDER BY date DESC LIMIT 1";
+							$checker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY date ASC LIMIT 1";
 							$checkerQuery = mysql_query($checker);
 							$checkerArr = mysql_fetch_assoc($checkerQuery);
 							if(mysql_num_rows($employeeQuery) != 0)
 							{
-								if($checkerArr['amount'] > 0)
+								if($checkerArr['balance'] > 0)
 								{
 									Print "
 										<tr>
@@ -202,7 +202,7 @@ else if($loanType == "newVale")
 												".$empArr['site']."
 											</td>
 											<td style='vertical-align: inherit'>
-												".number_format($row['amount'], 2, '.', ',')."
+												".number_format($checkerArr['balance'], 2, '.', ',')."
 											</td>
 											<td>
 												<a class='btn btn-primary' data-toggle='modal' data-target='#viewLoanHistory' onclick='load_history(\"".$empid."\", \"".$loanType."\")'><span class='glyphicon glyphicon-list-alt'></span> View</a>

@@ -1072,7 +1072,7 @@ if($holidayExist > 0)
 							if(mysql_num_rows($sssQuery) > 0)
 							{
 								$sssArr = mysql_fetch_assoc($sssQuery);
-								$sss = $sssArr['amount'];
+								$sss = $sssArr['balance'];
 							}
 							else
 							{
@@ -1083,7 +1083,7 @@ if($holidayExist > 0)
 							if(mysql_num_rows($pagibigQuery) > 0)
 							{
 								$pagibigArr = mysql_fetch_assoc($pagibigQuery);
-								$pagibig = $pagibigArr['amount'];
+								$pagibig = $pagibigArr['balance'];
 							}
 							else
 							{
@@ -1102,7 +1102,7 @@ if($holidayExist > 0)
 							if(mysql_num_rows($oldValeQuery) > 0)
 							{
 								$oldValeArr = mysql_fetch_assoc($oldValeQuery);
-								$oldVale = $oldValeArr['amount'];
+								$oldVale = $oldValeArr['balance'];
 							}
 							else
 							{

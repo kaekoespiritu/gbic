@@ -53,22 +53,22 @@ if(!empty($result))
         if(!empty($sssNum))
         {
             $sssRow = mysql_fetch_assoc($sssQuery);
-            $employeeSSS = $sssRow['amount'];
+            $employeeSSS = $sssRow['balance'];
         }
         if(!empty($pagibigNum))
         {
             $pagibigRow = mysql_fetch_assoc($pagibigQuery);
-            $employeePAGIBIG = $pagibigRow['amount'];;
+            $employeePAGIBIG = $pagibigRow['balance'];
         }
         if(!empty($oldValeNum))
         {
             $oldValeRow = mysql_fetch_assoc($oldValeQuery);
-            $employeeOldVale = $oldValeRow['amount'];; 
+            $employeeOldVale = $oldValeRow['balance'];
         }
         if(!empty($newValeNum))
         { 
             $newValeRow = mysql_fetch_assoc($newValeQuery);
-            $employeeNewVale = $newValeRow['amount'];;
+            $employeeNewVale = $newValeRow['balance'];
         }
 
 
