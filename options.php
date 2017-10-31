@@ -530,6 +530,54 @@ $adminRole = $adminArr['role'];
 <script rel="javascript" src="js/jquery.min.js"></script>
 <script rel="javascript" src="js/bootstrap.min.js"></script>
 <script rel="javascript" src="js/options.js"></script>
+<script>
+	function addColaSubmit() {
+			document.getElementById('addColaForm').submit();
+	}
+
+	function modColaSubmit() {
+			document.getElementById('modColaForm').submit();
+	}
+
+	function modifyCola(val) {
+		var site = 'mod'+val;
+		var loc = document.getElementById(site).value;
+		document.getElementById('modifyColaInput').value = loc;
+	}
+
+	function removeSiteCola(val){
+		document.getElementById('colaToRemove').value = val;
+	}
+
+	function colaRemove() {
+		if(document.getElementById('colaToRemove').value != "")
+		{
+			var site = document.getElementById('colaToRemove').value;
+			window.location.assign('logic_options_removeCola.php?site='+site);
+		}
+	}
+</script>
+
 </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

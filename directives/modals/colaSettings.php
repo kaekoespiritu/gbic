@@ -7,7 +7,7 @@
 				        <button type="button" class="close col-md-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				    </div>
 				    <!-- Form for COLA-->
-				    <form method="post" action="logic_options_cola.php" id="colaForm">
+				    
 					    <div class="modal-body">
 					    	<div class="row">
 					    		<h4 class="modal-title">Sites with COLA</h4><br>
@@ -19,28 +19,26 @@
 
 					    		<div class="col-md-6 text-left">
 					    			<div class="sitelist">
-					    				<form id="siteForm" method="post" action="logic_options_removeSite.php">
 					    					<?php 
-					    					$site = "SELECT * FROM site WHERE active = '1'";
+					    					$site = "SELECT * FROM site WHERE active = '1' AND cola IS NOT NULL";
 					    					$siteQuery = mysql_query($site);
 
 					    					while($siteRow = mysql_fetch_assoc($siteQuery))
 					    					{
 					    						Print '	<div class="alignlist">
 					    						<label>
-					    						<input type="radio" name="site[]" value="'.$siteRow['location'].'">
+					    						<input type="radio" name="remcola[]" onclick="removeSiteCola(this.value)" value="'.$siteRow['location'].'">
 					    						'.$siteRow['location'].'
-					    						</label> -- [COLA AMOUNT]
+					    						</label> - ['.$siteRow['cola'].']
 					    						</div>';
 					    					}
 					    					?>
-					    				</form>							
+					    				<input type="hidden" id="colaToRemove">
+					    			</div>
 					    		</div>
-					    	</div>
-						</div>
+							</div>
 						</div>
 				     	<div class="modal-footer">
-					        <button type="submit" class="btn btn-primary">Save changes</button>
 				    	</div>
 					</form>
 			    </div>
