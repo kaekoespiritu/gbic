@@ -428,3 +428,9 @@ hr
 {
   pointer-events: none;
   cursor: not-allowed;
+}
+
+.nopadding
+{
+ padding:0px !important;
+}
