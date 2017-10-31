@@ -590,61 +590,61 @@ $adminRole = $adminArr['role'];
 								<ul class="list-unstyled">
 									<li>
 										<label>
-											<input type="checkbox" disabled>
+											<input type="checkbox" >
 											View Payroll
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox" disabled>
+											<input type="checkbox" >
 											Manage AWOL employees
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox" disabled>
+											<input type="checkbox" >
 											Adding of employees
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox" disabled>
+											<input type="checkbox" >
 											Editing details of employees
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox" disabled>
+											<input type="checkbox" >
 											Managing site movement
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox" disabled>
+											<input type="checkbox" >
 											Adding of sites
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox" disabled>
+											<input type="checkbox" >
 											Adding of positions
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox" disabled>
+											<input type="checkbox" >
 											Viewing or reports
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox" disabled>
+											<input type="checkbox" >
 											Managing loans application
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox" disabled>
+											<input type="checkbox" >
 											Changing open/close payroll
 										</label>
 									</li>
@@ -1144,7 +1144,7 @@ $adminRole = $adminArr['role'];
 			var checkbox = document.querySelectorAll('input[type="checkbox"]');
 
 			// If admin is selected, hide restrictions pane and set width to full
-			if(admin.checked == true)
+			if(admin.checked == false)
 			{
 				
 				for(var i = 0; i < checkboxlength; i++){

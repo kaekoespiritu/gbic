@@ -3,8 +3,8 @@ include('directives/db.php');
 include('directives/session.php');
 date_default_timezone_set('Asia/Hong_Kong');
 
-$date = strftime("%B %d, %Y");// Gets the current date
-//$date = "October 22, 2017";
+//$date = strftime("%B %d, %Y");// Gets the current date
+$date = "October 22, 2017";
 
 $empid = $_POST['empid'];
 $loanType = $_POST['loanType'];
@@ -13,9 +13,10 @@ $reason = mysql_real_escape_string($_POST['reason']);
 $position = $_POST['position'];
 $site = $_POST['site'];
 $rate = $_POST['rate'];
+$time = strftime("%X");//TIME
 
 //Check if they already have balance for that type of loan
-$loanCheck = "SELECT * FROM loans WHERE empid = '$empid' AND type='$loanType' ORDER BY date DESC LIMIT 1";
+$loanCheck = "SELECT * FROM loans WHERE empid = '$empid' AND type='$loanType' ORDER BY date DESC, time DESC  LIMIT 1";
 $checkQuery = mysql_query($loanCheck);
 $balance = 0;
 if(mysql_num_rows($checkQuery) > 0)
@@ -32,12 +33,13 @@ else
 
 
 $loanAmount = number_format($loanAmount, 2, '.', '');//for 2 decimal places
-$query = "INSERT INTO loans(empid, type, balance, amount, remarks, date, action) VALUES('$empid', 
+$query = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time,action) VALUES('$empid', 
 																'$loanType',
 																'$balance',
 																'$loanAmount',
 																'$reason',
 																'$date',
+																'$time',
 																'1')";
 mysql_query($query);
 

@@ -72,9 +72,9 @@ require_once("directives/modals/addLoan.php");
 		{
 			if($type == 'empVale')//Employees with vale
 			$empVale = "SELECT DISTINCT empid FROM loans WHERE type = 'oldVale' OR type = 'newVale'";
-			if($type == 'newVale')//Employees with vale
+			if($type == 'newVale')//Employees with new vale
 			$empVale = "SELECT DISTINCT empid FROM loans WHERE type = 'newVale'";
-			if($type == 'oldVale')//Employees with vale
+			if($type == 'oldVale')//Employees with old vale
 			$empVale = "SELECT DISTINCT empid FROM loans WHERE type = 'oldVale'";
 
 			$empValeQuery = mysql_query($empVale);
@@ -89,16 +89,16 @@ require_once("directives/modals/addLoan.php");
 				{
 					$empid = $row['empid'];
 
-					$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND amount > 0 ORDER BY date DESC LIMIT 1");
+					$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND amount > 0 ORDER BY date DESC, time DESC LIMIT 1");
 					if(mysql_num_rows($checkerQuery) != 0)
 					{
 						$checkRow = mysql_fetch_assoc($checkerQuery);
 						if($type == 'empVale')//Employees with vale
 						$counter++;
 						if($type == 'newVale')//Company cost to newvale
-						$newValeComputation += $checkRow['amount'];
+						$newValeComputation += $checkRow['balance'];
 						if($type == 'oldVale')//Company cost to oldvale
-						$oldValeComputation += $checkRow['amount'];
+						$oldValeComputation += $checkRow['balance'];
 					}
 				}
 			}

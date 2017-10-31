@@ -142,12 +142,89 @@
 		$cola = $_POST['COLA'];
 	}
 
-//Computation for Regular Holiday ----------------------------------------------------- Incomplete
-	$regHolidayInc = $dailyRate * 2;
+//Holiday Computation ----------------------------------------------------- Incomplete
+
+	$regHolidayInc = $dailyRate;//Computation for Regular Holiday 
+	$speHolidayInc = $dailyRate * .30;//Special Holiday 
+	$addHoliday = 0;//Preset Additional holiday value for the grand total
+	$regHolNum = 0;//Preset number of regular holiday this payroll period
+	$speHolNum = 0;//Preset number of special holiday this payroll period
+	
+	if(isset($_POST['holidayName']) && isset($_POST['holidayType']) && isset($_POST['holidayDate']))
+	{
+		Print "<script>console.log('pasok1')</script>";
+		$holidayNum = count($_POST['holidayDate']);
+		if($holidayNum == 1)//if there is only one Holiday in the week
+		{	
+			$holidayName = $_POST['holidayName'][0];
+			$holidayType = $_POST['holidayType'][0];
+			$holidayDate = $_POST['holidayDate'][0];
+
+			$dayBefore = date('F j, Y', strtotime('-1 day', strtotime($holidayDate)));
+			$dayBeforeChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayBefore'");
+			if(mysql_num_rows($dayBeforeChecker) > 0)
+			{
+				$dayBeforeArr = mysql_fetch_assoc($dayBeforeChecker);
+				if($dayBeforeArr['attendance'] == '2')//2 if employee is present on the day before the holiday
+				{
+					Print "<script>console.log('".$overallWorkDays."')</script>";
+					$overallWorkDays++;//increment workdays 
+					Print "<script>console.log('".$overallWorkDays."')</script>";
+				}
+			}
+
+			
+			
+			
+			$holidayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayDate'");
+			$holidayArr = mysql_fetch_assoc($holidayChecker);
+			if($holidayArr['attendance'] == 2)
+			{
+				if($holidayType == "special")//Special Holiday
+				{
+					$addHoliday = $speHolidayInc;
+					$speHolNum++;
+				}
+				else//Regular Holiday
+				{
+					$addHoliday = $regHolidayInc;
+					$regHolNum++;
+				}
+			}
+		}
+		else if($holidayNum > 1)// if there is more than 1 holidays in the week
+		{
+
+			for($count = 0; $count < $holidayNum; $count++)
+			{
+				$overallWorkDays++;//increment workdays 
+			
+				$holidayName = $_POST['holidayName'][$count];
+				$holidayType = $_POST['holidayType'][$count];
+				$holidayDate = $_POST['holidayDate'][$count];
+				$holidayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayDate'");
+				$holdayArr = mysql_fetch_assoc($holidayChecker);
+
+				if($holdayArr['attendance'] == 2)
+				{
+					if($holidayType == "special")//Special Holiday
+					{
+						$addHoliday += $speHolidayInc;
+						$speHolNum++;
+					}
+					else//Regular Holiday
+					{
+						$addHoliday += $regHolidayInc;
+						$regHolNum++;
+					}
+				}
+			}
+		}
+	}
+	
 
 
-//Special Holiday --------------------------------------------------------------------- Incomplete
-	$speHolidayInc = (($dailyRate * .30) + $dailyRate);
+	
 
 
 //Loans deduction --------------------------------------------------------------------- Incomplete
@@ -256,7 +333,7 @@
 // --------------------------------- GRAND TOTAL -----------------------------------------
 
 //Grand Total Computation
-	$GrandTotal = ((($dailyRate * $overallWorkDays) + $compAllowance + $compND + $compOT + $cola) - $compDeductions - $compLoan - $tools_paid); 
+	$GrandTotal = ((($dailyRate * $overallWorkDays) + $compAllowance + $compND + $compOT + $cola + $addHoliday) - $compDeductions - $compLoan - $tools_paid); 
 //Print "<script>console.log('SubTotal: ".$SubTotal."')</script>";
 
 
@@ -276,6 +353,9 @@
 									nightdiff,
 									reg_holiday,
 									spe_holiday,
+									holiday_added,
+									spe_holiday_num,
+									reg_holiday_num,
 									tax,
 									sss,
 									pagibig,
@@ -289,7 +369,7 @@
 									loan_pagibig,
 									new_vale,
 									old_vale) VALUES(	'$empid',
-														'$daysAttended',
+														'$overallWorkDays',
 														'$OtRatePerHour',
 														'$totalOT',
 														'$compOT',
@@ -304,6 +384,9 @@
 														'$compND',
 														'$regHolidayInc',
 														'$speHolidayInc',
+														'$addHoliday',
+														'$speHolNum', 
+														'$regHolNum',
 														'$tax',
 														'$sss',
 														'$pagibig',
@@ -317,17 +400,49 @@
 														'$loan_pagibig',
 														'$loan_newVale',
 														'$loan_oldVale')";
+	$updateQuery = "UPDATE payroll SET	
+									num_days = '$overallWorkDays',
+									overtime = '$OtRatePerHour',
+									ot_num = '$totalOT',
+									ot_comp = '$compOT',
+									allow = '$dailyAllowance',
+									comp_allowance = '$compAllowance',
+									x_allowance = '$extraAllowance',
+									cola = '$cola',
+									sunday_rate = '$SundayRatePerHour',
+									sunday_hrs = '$sunWorkHrs',
+									nightdiff_rate = '$NdRatePerHour',
+									nightdiff_num = '$totalND',
+									nightdiff = '$compND',
+									reg_holiday = '$regHolidayInc',
+									spe_holiday = '$speHolidayInc',
+									holiday_added = '$addHoliday',
+									spe_holiday_num = '$speHolNum',
+									reg_holiday_num = '$regHolNum',
+									tax = '$tax',
+									sss = '$sss',
+									pagibig = '$pagibig',
+									philhealth = '$philhealth',
+									tools = '$date',
+									tools_paid = '$tools_paid',
+									tools_outstanding = '$outStandingBalance',
+									total_salary = '$GrandTotal',
+									loan_sss = '$loan_sss',
+									loan_pagibig = '$loan_pagibig',
+									new_vale = '$loan_newVale',
+									old_vale = '$loan_oldVale' WHERE empid = '$empid' AND date = '$date'";
 	//Print "<script>console.log('".$query."')</script>";
 	$mainChecker = mysql_query("SELECT * FROM payroll WHERE empid='$empid' AND date='$date'");
 	if(mysql_num_rows($mainChecker) == 0)
 	{
 		mysql_query($query);
 	}					
+	else
+	{
+		mysql_query($updateQuery);
+	}
 	
-	//holiday
-	// $_POST['holidayName[]'];
-	// $_POST['holidayType[]'];
-	// $_POST['holidayDate[]'];
+	
 
 	// //Nightdiff
 	// $_POST['wedNDHrs'];

@@ -7,12 +7,15 @@ else
 {
 	header("location:payroll_login.php");
 }
+
 $site = $_GET['site'];
 $position = $_GET['position'];
 $empid = $_GET['empid'];
 //Sample date for debugging purposes
 //$date = strftime("%B %d, %Y");
 $date = "October 24, 2017";
+
+$time = strftime("%X");//TIME
 
 $day1 = $date;
 $day2 = date('F j, Y', strtotime('-1 day', strtotime($date)));
@@ -1004,15 +1007,16 @@ if($holidayExist > 0)
 											//Print "<script>alert('yea')</script>";
 											$newValeRow = mysql_fetch_assoc($loanCheckerQuery);
 											$newVale += $newValeRow['amount'];
+											Print "<script>console.log('".$newVale."')</script>";
 										}
 									}
 								}
 							}
 
-							$getSSS = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' ORDER BY date DESC LIMIT 1";
-							$getPAGIBIG = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' ORDER BY date DESC LIMIT 1";
+							$getSSS = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' ORDER BY date DESC, time DESC LIMIT 1";
+							$getPAGIBIG = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' ORDER BY date DESC, time DESC LIMIT 1";
 							
-							$getOldVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY date DESC LIMIT 1";
+							$getOldVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY date DESC, time DESC  LIMIT 1";
 							//Query
 							$sssQuery = mysql_query($getSSS);
 							$pagibigQuery = mysql_query($getPAGIBIG);
@@ -1128,7 +1132,7 @@ if($holidayExist > 0)
 										<?php 
 										if($newVale != "<span id = 'newValeText'>N/A</span>")
 
-								        Print $newVale;
+								        Print number_format($newVale, 2, '.', ',');
 										?>
 									</span>
 									<br>
@@ -1164,7 +1168,7 @@ if($holidayExist > 0)
 							<div class="form-group">
 								<label class="control-label col-md-5" for="tax">Tax</label>
 								<div class="col-md-7">
-									<input type="text" id="tax" name="tax" class="form-control input-sm" onkeypress="validatenumber(event)" required>
+									<input type="text" id="tax" name="tax" class="form-control input-sm" onkeypress="validatenumber(event)">
 								</div>
 								<label class="control-label col-md-5" for="sssContribution">SSS</label>
 								<div class="col-md-7">
