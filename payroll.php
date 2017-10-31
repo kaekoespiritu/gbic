@@ -1043,7 +1043,7 @@ if($holidayExist > 0)
 							?>
 						</div>
 						<div class="col-md-12">
-							<input type="text" class="form-control" name="sssDeduct" placeholder="Amount to deduct">
+							<input type="text" class="form-control" name="sssDeduct" placeholder="Amount to deduct" onblur="addDecimal(this)">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -1061,7 +1061,7 @@ if($holidayExist > 0)
 							?>
 						</div>
 						<div class="col-md-12">
-							<input type="text" class="form-control" name="pagibigDeduct" placeholder="Amount to deduct">
+							<input type="text" class="form-control" name="pagibigDeduct" placeholder="Amount to deduct" onblur="addDecimal(this)">
 						</div>
 					</div>
 				</div>
@@ -1136,7 +1136,7 @@ if($holidayExist > 0)
 					<div class="form-group">
 						<label class="control-label col-md-5" for="tax">Tax</label>
 						<div class="col-md-7">
-							<input type="text" id="tax" name="tax" class="form-control input-sm" onkeypress="validatenumber(event)" required>
+							<input type="text" id="tax" name="tax" class="form-control input-sm" onkeypress="validatenumber(event)" onblur="addDecimal(this)" required>
 						</div>
 						<label class="control-label col-md-5" for="sssContribution">SSS</label>
 						<div class="col-md-7">
@@ -1179,7 +1179,7 @@ if($holidayExist > 0)
 						</div>
 						<label class="control-label col-md-2">Extra</label>
 						<div class="col-md-2 nopadding">
-							<input type="text" id="allowance" name="extra_allowance" name="extra_allowance" class="form-control input-sm">
+							<input type="text" id="allowance" name="extra_allowance" name="extra_allowance" class="form-control input-sm" onblur="addDecimal(this)">
 						</div>
 					</div>
 
