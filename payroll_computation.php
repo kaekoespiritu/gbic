@@ -133,7 +133,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					</tr>
 					<!-- Sunday Rate -->
 					<?php
-						$subTotalSundayRate = $payrollArr['ot_num']*$payrollArr['overtime'];
+						$subTotalSundayRate = $payrollArr['sunday_rate'] * $payrollArr['sunday_hrs'];
 						$totalSundayRate = $subTotalSundayRate;//for the Subtotal of Earnings
 						$sundayHrs = $payrollArr['sunday_hrs']." Hour(s)";
 						if($subTotalSundayRate == 0)

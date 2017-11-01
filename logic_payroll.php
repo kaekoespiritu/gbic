@@ -62,7 +62,7 @@
 //Computation for Sunday --------------------------------------------------------------
 		
 		$compSunday = $SundayRatePerHour * $sunWorkHrs;
-		Print "<script>console.log('compSunday: ".$compSunday."')</script>";
+Print "<script>console.log('sunWorkHrs: ".$sunWorkHrs."')</script>";
 	}
 	if(isset($_POST['monWorkHrs']))
 	{
@@ -93,7 +93,7 @@
 			$overallWorkDays++;
 		}
 	}
-	Print "<script>console.log('overallWorkDays: ".$overallWorkDays."')</script>";
+	//Print "<script>console.log('overallWorkDays: ".$overallWorkDays."')</script>";
 
 //Computation for OVER TIME -----------------------------------------------------------
 	$compOT = 0;
@@ -105,7 +105,7 @@
 
 		$compOT = $totalOT * $OtRatePerHour;//Computed Overtime
 	}
-	Print "<script>console.log('compOT: ".$compOT."')</script>";
+	//Print "<script>console.log('compOT: ".$compOT."')</script>";
 
 //Computation for Night Differential --------------------------------------------------
 	$compND = 0;
@@ -117,15 +117,9 @@
 
 		$compND = $totalND * $NdRatePerHour;//Computed Night Differential
 	}
-	Print "<script>console.log('compND: ".$compND."')</script>";
+	Print "<script>console.log('totalND: ".$totalND."')</script>";
 
-//Computation for Allowance -----------------------------------------------------------
-	$dailyAllowance = $_POST['allowance'];// for database use
-	$extraAllowance = $_POST['extra_allowance'];
 
-	$allowance = $_POST['OverallAllowance'] + $extraAllowance;
-	$compAllowance = $daysAttended * $allowance;
-	Print "<script>console.log('compAllowance: ".$compAllowance."')</script>";
 
 //Computation for Deductions ----------------------------------------------------------
 	$tax = $_POST['tax'];
@@ -133,7 +127,7 @@
 	$pagibig = $_POST['pagibig'];
 	$philhealth = $_POST['philhealth'];
 	$compDeductions = $tax + $sss + $pagibig + $philhealth;
-	Print "<script>console.log('compDeductions: ".$compDeductions."')</script>";
+	//Print "<script>console.log('compDeductions: ".$compDeductions."')</script>";
 
 //COLA incrementation -----------------------------------------------------------------
 	$cola = 0;
@@ -152,7 +146,7 @@
 	
 	if(isset($_POST['holidayName']) && isset($_POST['holidayType']) && isset($_POST['holidayDate']))
 	{
-		Print "<script>console.log('pasok1')</script>";
+		//Print "<script>console.log('pasok1')</script>";
 		$holidayNum = count($_POST['holidayDate']);
 		if($holidayNum == 1)//if there is only one Holiday in the week
 		{	
@@ -167,9 +161,9 @@
 				$dayBeforeArr = mysql_fetch_assoc($dayBeforeChecker);
 				if($dayBeforeArr['attendance'] == '2')//2 if employee is present on the day before the holiday
 				{
-					Print "<script>console.log('".$overallWorkDays."')</script>";
+					//Print "<script>console.log('".$overallWorkDays."')</script>";
 					$overallWorkDays++;//increment workdays 
-					Print "<script>console.log('".$overallWorkDays."')</script>";
+					//Print "<script>console.log('".$overallWorkDays."')</script>";
 				}
 			}
 
@@ -241,11 +235,11 @@
 		}
 	}
 	
+//Computation for Allowance -----------------------------------------------------------
+	$dailyAllowance = $_POST['allowance'];// for database use
+	$extraAllowance = $_POST['extra_allowance'];
 
-
-	
-
-
+	$compAllowance = (($overallWorkDays*$dailyAllowance)  + $extraAllowance);
 //Loans deduction --------------------------------------------------------------------- Incomplete
 //*query to loans table the deduction
 	$loan_sss = $_POST['sssDeduct'];
@@ -302,9 +296,9 @@
 		$toolname = $_POST['toolname'][0];
 		$toolprice = $_POST['toolprice'][0];
 
-		Print "<script>console.log('toolname: ".$toolname."')</script>";
-		Print "<script>console.log('toolprice: ".$toolprice."')</script>";
-		Print "<script>console.log('amountToPay: ".$_POST["amountToPay"]."')</script>";
+		//Print "<script>console.log('toolname: ".$toolname."')</script>";
+		//Print "<script>console.log('toolprice: ".$toolprice."')</script>";
+		//Print "<script>console.log('amountToPay: ".$_POST["amountToPay"]."')</script>";
 
 		if(!empty($_POST['previousPayable']))
 		{
@@ -352,8 +346,21 @@
 // --------------------------------- GRAND TOTAL -----------------------------------------
 
 //Grand Total Computation
-	$GrandTotal = ((($dailyRate * $overallWorkDays) + $compAllowance + $compND + $compOT + $cola + $addHoliday) - $compDeductions - $compLoan - $tools_paid); 
-//Print "<script>console.log('SubTotal: ".$SubTotal."')</script>";
+	$GrandTotal = ((($dailyRate * $overallWorkDays) + abs($compAllowance) + abs($compND) + abs($compOT) + abs($cola) + abs($addHoliday)) - abs($compDeductions) - abs($compLoan) - abs($tools_paid)); 
+
+	$ast = ($dailyRate * $overallWorkDays);
+	$bnd = abs($compAllowance) + abs($compND) + abs($compOT) + abs($cola) + abs($addHoliday) + abs($compSunday);
+	$crd = abs($compDeductions) + abs($compLoan) + abs($tools_paid);
+Print "<script>console.log('1: ".$ast."')</script>";
+Print "<script>console.log('2: ".$bnd."')</script>";
+Print "<script>console.log('compAllowance: ".$compAllowance."')</script>";
+Print "<script>console.log('compND: ".$compND."')</script>";
+Print "<script>console.log('compOT: ".$compOT."')</script>";
+Print "<script>console.log('cola: ".$cola."')</script>";
+Print "<script>console.log('compSunday: ".$compSunday."')</script>";
+Print "<script>console.log('addHoliday: ".$addHoliday."')</script>";
+
+Print "<script>console.log('3: ".$crd."')</script>";
 
 
 	$query = "INSERT INTO payroll(	empid,
