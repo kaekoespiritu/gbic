@@ -1063,13 +1063,13 @@ if($holidayExist > 0)
 							}
 							?>
 						</div>
-						<div class="col-md-12">
+						<div class="col-md-12 has-error">
 							<input type="number" class="form-control" id="sssDeduct" placeholder="To deduct" onblur="addDecimal(this)" onchange="setsssLimit(this)">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="control-label col-md-3" for="pagibig" style="white-space: nowrap;">Pag-IBIG</label>
-						<div class="col-md-9">
+						<div class="col-md-9 has-error">
 							<?php
 							if($pagibig != "N/A")
 							{
@@ -1101,12 +1101,12 @@ if($holidayExist > 0)
 								?>
 							</span>
 						</h5>
-						<div class="row">
+						<div class="row has-error">
 							<?php
 							if($oldVale != "N/A")
 							{
 								Print "
-								<input type='text' placeholder='Deduct' name='oldValeDeduct' class='form-control input-sm pull-down' onchange='setoldvaleLimit(this)'>";
+								<input type='text' placeholder='Deduct' id='oldValeDeduct' class='form-control input-sm pull-down' onchange='setoldvaleLimit(this)'>";
 							}
 							?>
 						</div>
@@ -1212,11 +1212,11 @@ if($holidayExist > 0)
 							<div id="1">
 								<label class="control-label col-md-2" for="tools">Name</label>
 								<div class="col-md-4">
-									<input type="text" id="tools" name="toolname[]" class="form-control input-sm">
+									<input type="text" id="tools" name="toolname" class="form-control input-sm" onchange="checkName(this)">
 								</div>
 								<label class="control-label col-md-1" for="price">Cost</label>
 								<div class="col-md-4">
-									<input type="number" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this.value)" onblur="addDecimal(this)">
+									<input type="number" id="price" name="toolprice" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">
 								</div>
 							</div>	
 						</div>
@@ -1242,7 +1242,7 @@ if($holidayExist > 0)
 								Amount to Pay
 							</label>
 							<div class="col-md-6">
-								<input type="number" name="amountToPay" class="form-control" onblur="addDecimal(this)" onchange="settotalLimit(this)">
+								<input type="number" id="amountToPay" class="form-control" onblur="addDecimal(this)" onchange="settotalLimit(this)" readonly>
 							</div>
 						</div>
 					</div>

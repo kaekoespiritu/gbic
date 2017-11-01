@@ -15,10 +15,10 @@
 
 		var template = '<label class="control-label col-md-2" for="tools">Name</label>' +
 		'<div class="col-md-4">' +
-		'<input type="text" id="toolstemp" name="toolname[]" class="form-control input-sm" onkeypress="validateletter(event)">' +
+		'<input type="text" id="toolstemp" name="toolname" class="form-control input-sm" onkeypress="validateletter(event)" onchange="checkName(this)">' +
 		'</div>' +
 		'<label class="control-label col-md-1" for="price">Cost</label>' +
-		'<div class="col-md-4"><input type="number" id="pricetemp" name="toolprice[]" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal()" onblur="addDecimal(this)">' +
+		'<div class="col-md-4"><input type="number" id="pricetemp" name="toolprice" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">' +
 		'</div>';
 
 		div1.innerHTML = delLink + template;
@@ -132,33 +132,101 @@
 	var totalcost = 0;
 	var length = document.getElementsByClassName('toolpricetemp').length;
 	var toolprices = document.getElementsByClassName('toolpricetemp');
+	var names = document.getElementsByName('toolname');
+	var amountToPay = document.getElementById('amountToPay');
 
-	console.log("Total Cost = " + totalcost + " | Length of NodeList =  " + length);
+	// For the first tool
+	if(document.getElementById('price').value!==""){ // If there is a cost
+		names[0].setAttribute('required','');
+		if(names[0].value!==""){
+			names[0].parentElement.classList.add('has-success');
+		}
+		else {
+			names[0].parentElement.classList.add('has-error');
+		}
+	}
+	else { // If there is no cost added
+		names[0].removeAttribute('required','');
+		if(names[0].parentElement.classList.contains('has-error')){
+			names[0].parentElement.classList.remove('has-error');
+		}
+		if(names[0].parentElement.classList.contains('has-success')){
+			names[0].parentElement.classList.remove('has-success');
+		}	
+	}
 	
+	console.log(names[0].parentElement.classList.contains('has-success'));
+
 	// Looping through the dynamic list of tools
 	if( length >= 1 ) { // If there are many tools 
 		for(var i = 0; i < length; i++) {
 			if(toolprices[i].value!="") {
 				totalcost += parseFloat(toolprices[i].value);
-				console.log("Total Cost = " + totalcost + " | toolpricetemp = " + parseInt(toolprices[i].value));
+				// console.log("Total Cost = " + totalcost + " | toolpricetemp = " + parseInt(toolprices[i].value));
+
+				// If the element was removed
 				if(!document.getElementById(i+1)){
 					totalcost -= parseFloat(toolprices[i].value);
-					console.log("Total Cost = " + totalcost + " | toolpricetemp = " + parseInt(toolprices[i].value) + " | div = " + i);
+					// console.log("Total Cost = " + totalcost + " | toolpricetemp = " + parseInt(toolprices[i].value) + " | div = " + i);
 				}
+				
+				// Require name if there is an amount placed
+				names[i+1].setAttribute('required','');
+				if(names[i+1].value!==""){
+					names[i+1].parentElement.classList.add('has-success');
+				}
+				else {
+					names[i+1].parentElement.classList.add('has-error');
+				}
+
 			}
 			else {
-				break;
+				names[i+1].removeAttribute('required','');
+					if(names[i+1].parentElement.classList.contains('has-error')){
+						names[i+1].parentElement.classList.remove('has-error');
+					}
+					if(names[i+1].parentElement.classList.contains('has-success')){
+						names[i+1].parentElement.classList.remove('has-success');
+					}	
+					break;
 			}
+			console.log(names[i].innerHTML);
 		}
-		totalcost+= parseFloat(document.getElementById('price').value);
-		console.log("Inside IF: " + totalcost);
+
+		totalcost += parseFloat(document.getElementById('price').value);
+		// console.log("Inside IF: " + totalcost);
 	}
-	else { // If only 1 tool was entered
+	else if(length == 0) { // If only 1 tool was entered
 		totalcost = parseFloat(document.getElementById('price').value);
-		console.log("Inside ELSE: " + totalcost);
+		// console.log("Inside ELSE: " + totalcost);
 	}
 
-	document.getElementById('totalcost').value = totalcost.toFixed(2);
+	// Only allowing numbers and null to be displayed
+	if(!isNaN(totalcost)) {
+		document.getElementById('totalcost').value = totalcost.toFixed(2);
+	}
+	else {
+		document.getElementById('totalcost').value = "";
+	}
+
+	// Remove readonly from amount to pay field
+	if(amountToPay.hasAttribute('readonly') && totalcost !== ""){
+		amountToPay.removeAttribute('readonly');
+		amountToPay.parentElement.classList.add('has-error');
+		amountToPay.setAttribute('required','');
+	}
+	else if (isNaN(totalcost)){
+		amountToPay.setAttribute('readonly','');
+		amountToPay.removeAttribute('required','');
+		if(amountToPay.parentElement.classList.contains('has-error')){
+			amountToPay.parentElement.classList.remove('has-error');
+		}
+		if(amountToPay.parentElement.classList.contains('has-success')){
+			amountToPay.parentElement.classList.remove('has-success');
+		}
+	}
+
+	console.log(totalcost);
 	
 }
 
@@ -176,35 +244,80 @@ function checkloans(){
 	var sss = document.getElementById('sssDeduct');
 	var pagibigVal = document.getElementById('pagibigValue');
 	var pagibig = document.getElementById('pagibigDeduct');
+	var oldvale = document.getElementById('oldValeDeduct');
+	var oldvaleVal = document.getElementById('oldvaleValue');;
 
 	if(!sssVal){
 		// Set disabled to input field
 		sss.setAttribute('readonly','');
+	}
+	else {
+		sss.setAttribute('required','');
 	}
 
 	if(!pagibigVal){
 		// Set disabled to input field
 		pagibig.setAttribute('readonly', '');
 	}
+	else {
+		pagibig.setAttribute('required','');
+	}
+
+	if(!oldvaleVal){
+		// Set disabled to input field
+		oldvale.setAttribute('readonly', '');
+	}
+	else {
+		oldvale.setAttribute('required','');
+	}
 }
 
 function setsssLimit(value){
 	var sss = document.getElementById('sssValue').innerHTML;
 	var num = sss.replace(',','');
+	var classList = value.parentElement.classList;
 
+	// Alert error
 	if(parseFloat(value.value) > parseFloat(num) ){
-		alert("You have entered an amount greater than the loaned amount.");
+		alert("You have entered an amount greater than the loaned amount. Please re-enter an amount less than or equal to " + num + ".");
 		value.value = "";
 	}
+
+	// Update validation state
+	if(classList.contains('has-error') && value.value != ""){
+		classList.remove('has-error');
+		classList.add('has-success');
+	}
+	else {
+		if(classList.contains('has-success')){
+			classList.remove('has-success');
+			classList.add('has-error');
+		}
+	}
+
 }
 
 function setpagibigLimit(value){
 	var pagibig = document.getElementById('pagibigValue').innerHTML;
 	var num = pagibig.replace(',','');
+	var classList = value.parentElement.classList;
 
+	// Alert error
 	if(parseFloat(value.value) > parseFloat(num) ){
-		alert("You have entered an amount greater than the loaned amount.");
+		alert("You have entered an amount greater than the loaned amount. Please re-enter an amount less than or equal to " + num + ".");
 		value.value = "";
+	}
+
+	// Update validation state
+	if(classList.contains('has-error') && value.value != ""){
+		classList.remove('has-error');
+		classList.add('has-success');
+	}
+	else {
+		if(classList.contains('has-success')){
+			classList.remove('has-success');
+			classList.add('has-error');
+		}
 	}
 
 }
@@ -212,21 +325,61 @@ function setpagibigLimit(value){
 function setoldvaleLimit(value) { 
 	var oldvale = document.getElementById('oldvaleValue').innerHTML;
 	var num = oldvale.replace(',','');
-
-	console.log(oldvale);
+	var classList = value.parentElement.classList;
 
 	if(parseFloat(value.value) > parseFloat(num)) {
-		alert("You have entered an amount greater than the loaned amount.");
+		alert("You have entered an amount greater than the loaned amount. Please re-enter an amount less than or equal to " + num + ".");
 		value.value = "";
+	}
+
+	// Update validation state
+	if(classList.contains('has-error') && value.value != ""){
+		classList.remove('has-error');
+		classList.add('has-success');
+	}
+	else {
+		if(classList.contains('has-success')){
+			classList.remove('has-success');
+			classList.add('has-error');
+		}
 	}
 }
 
 function settotalLimit(value){
 	var total = document.getElementById('totalcost').value;
 	var num = total.replace(',','');
+	var parent = value.parentElement.classList;
 
 	if(parseFloat(value.value) > parseFloat(num)) {
-		alert("You have entered an amount greater than the loaned amount.");
+		alert("You have entered an amount greater than the loaned amount. Please re-enter an amount less than or equal to " + num + ".");
 		value.value = "";
+	}
+
+	if(value.value!=="") {
+		parent.remove('has-error');
+		parent.add('has-success');
+	}
+	else {
+		if(parent.contains('has-success')){
+			parent.remove('has-success');
+			parent.add('has-error');
+		}
+	}
+
+	console.log(parent);
+}
+
+function checkName(value) {
+	var parent = value.parentElement.classList;
+
+	if(parent.contains('has-error') && value.value !== ""){
+		parent.remove('has-error');
+		parent.add('has-success');
+	}
+	else {
+		if(parent.contains('has-success')){
+			parent.remove('has-success');
+			parent.add('has-error');
+		}
 	}
 }
