@@ -163,8 +163,70 @@
 }
 
 function addDecimal(val){
-	if(val.value!==null || val.value!=="")
-	val.value = parseFloat(val.value).toFixed(2);
-	else
+	if(val.value !== ""){
+		val.value = parseFloat(val.value).toFixed(2);
+	}
+	else {
 		return "";
+	}
+}
+
+function checkloans(){
+	var sssVal = document.getElementById('sssValue');
+	var sss = document.getElementById('sssDeduct');
+	var pagibigVal = document.getElementById('pagibigValue');
+	var pagibig = document.getElementById('pagibigDeduct');
+
+	if(!sssVal){
+		// Set disabled to input field
+		sss.setAttribute('readonly','');
+	}
+
+	if(!pagibigVal){
+		// Set disabled to input field
+		pagibig.setAttribute('readonly', '');
+	}
+}
+
+function setsssLimit(value){
+	var sss = document.getElementById('sssValue').innerHTML;
+	var num = sss.replace(',','');
+
+	if(parseFloat(value.value) > parseFloat(num) ){
+		alert("You have entered an amount greater than the loaned amount.");
+		value.value = "";
+	}
+}
+
+function setpagibigLimit(value){
+	var pagibig = document.getElementById('pagibigValue').innerHTML;
+	var num = pagibig.replace(',','');
+
+	if(parseFloat(value.value) > parseFloat(num) ){
+		alert("You have entered an amount greater than the loaned amount.");
+		value.value = "";
+	}
+
+}
+
+function setoldvaleLimit(value) { 
+	var oldvale = document.getElementById('oldvaleValue').innerHTML;
+	var num = oldvale.replace(',','');
+
+	console.log(oldvale);
+
+	if(parseFloat(value.value) > parseFloat(num)) {
+		alert("You have entered an amount greater than the loaned amount.");
+		value.value = "";
+	}
+}
+
+function settotalLimit(value){
+	var total = document.getElementById('totalcost').value;
+	var num = total.replace(',','');
+
+	if(parseFloat(value.value) > parseFloat(num)) {
+		alert("You have entered an amount greater than the loaned amount.");
+		value.value = "";
+	}
 }

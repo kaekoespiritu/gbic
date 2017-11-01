@@ -45,7 +45,7 @@ if($holidayExist > 0)
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 
 </head>
-<body style="font-family: Quicksand;">
+<body style="font-family: Quicksand;" onload="checkloans()">
 	<form action="logic_payroll.php" method="POST" id="payrollForm">
 		<div class="container-fluid">
 
@@ -1055,7 +1055,7 @@ if($holidayExist > 0)
 							<?php
 							if($sss != "N/A")
 							{
-								Print "<span class='pull-right'>".number_format($sss, 2, '.', ',')."</span>";
+								Print "<span class='pull-right' id='sssValue'>".number_format($sss, 2, '.', ',')."</span>";
 							}
 							else
 							{
@@ -1064,7 +1064,7 @@ if($holidayExist > 0)
 							?>
 						</div>
 						<div class="col-md-12">
-							<input type="number" class="form-control" name="sssDeduct" placeholder="Amount to deduct" onblur="addDecimal(this)">
+							<input type="number" class="form-control" id="sssDeduct" placeholder="To deduct" onblur="addDecimal(this)" onchange="setsssLimit(this)">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -1073,7 +1073,7 @@ if($holidayExist > 0)
 							<?php
 							if($pagibig != "N/A")
 							{
-								Print "<span class='pull-right'>".number_format($pagibig, 2, '.', ',')."</span>";
+								Print "<span class='pull-right' id='pagibigValue'>".number_format($pagibig, 2, '.', ',')."</span>";
 							}
 							else
 							{
@@ -1082,7 +1082,7 @@ if($holidayExist > 0)
 							?>
 						</div>
 						<div class="col-md-12">
-							<input type="number" class="form-control" name="pagibigDeduct" placeholder="Amount to deduct" onblur="addDecimal(this)">
+							<input type="number" class="form-control" id="pagibigDeduct" placeholder="To deduct" onblur="addDecimal(this)" onchange="setpagibigLimit(this)">
 						</div>
 					</div>
 				</div>
@@ -1095,7 +1095,7 @@ if($holidayExist > 0)
 							<span class="pull-right">
 								<?php 
 								if($oldVale != "N/A")
-									Print number_format($oldVale, 2, '.', ',');
+									Print "<span class='pull-right' id='oldvaleValue'>".number_format($oldVale, 2, '.', ',')."</span";
 								else
 									Print $oldVale;	
 								?>
@@ -1106,7 +1106,7 @@ if($holidayExist > 0)
 							if($oldVale != "N/A")
 							{
 								Print "
-								<input type='text' placeholder='Amount' name='oldValeDeduct' class='form-control input-sm pull-down'>";
+								<input type='text' placeholder='Deduct' name='oldValeDeduct' class='form-control input-sm pull-down' onchange='setoldvaleLimit(this)'>";
 							}
 							?>
 						</div>
@@ -1242,7 +1242,7 @@ if($holidayExist > 0)
 								Amount to Pay
 							</label>
 							<div class="col-md-6">
-								<input type="number" name="amountToPay" class="form-control" onblur="addDecimal(this)">
+								<input type="number" name="amountToPay" class="form-control" onblur="addDecimal(this)" onchange="settotalLimit(this)">
 							</div>
 						</div>
 					</div>
