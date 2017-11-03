@@ -1,5 +1,6 @@
 <?php
 	require_once('directives/session.php');
+	require_once('directives/db.php');
 	//Print "<script>console.log('".$overtimeRate1."')</script>";
 
 

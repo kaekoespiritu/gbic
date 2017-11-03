@@ -362,6 +362,43 @@ include('directives/session.php');
 <script rel="javascript" src="js/timepicker/jquery.timepicker.js"></script>
 <script src="js/multiple-select.js"></script>
 <script src="js/attendance.js"></script>
+<script>
+	$(function(){
+		$("select").multipleSelect({
+			placeholder: "Select site for attendance&#9662;",
+			selectAll: false,
+			width: 200,
+			multiple: true,
+			multipleWidth: 200
+		});
+
+		//var currentDate = new Date();
+		var currentDate = "<?php Print "$date"; ?>";
+		/* DATE PICKER CONFIGURATIONS*/
+		$( "#dtpkr_attendance" ).datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: 'MM dd, yy',
+			showAnim: 'blind',
+			maxDate: new Date(),
+			beforeShow: function(){    
+				$(".ui-datepicker").css('font-size', 15) 
+			}
+		});
+
+		$("#dtpkr_attendance").datepicker("setDate", currentDate);
+
+	
+		$("#dtpkr_attendance").change(function(){
+			var date = $(this).val();
+			window.location.href = "date_attendance.php?date="+date;
+		});
+		$( "#cancel").on("click",function(){
+			window.location.href = "attendance_unset.php";
+		});
+		
+	});
+</script>
 
 	
 </body>

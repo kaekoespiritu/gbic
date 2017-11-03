@@ -1,39 +1,5 @@
 document.getElementById("attendance").setAttribute("style", "background-color: #10621e;");
-	$(function(){
-		$("select").multipleSelect({
-			placeholder: "Select site for attendance&#9662;",
-			selectAll: false,
-			width: 200,
-			multiple: true,
-			multipleWidth: 200
-		});
-
-		//var currentDate = new Date();
-		var currentDate = "<?php Print "$date"; ?>";
-		/* DATE PICKER CONFIGURATIONS*/
-		$( "#dtpkr_attendance" ).datepicker({
-			changeMonth: true,
-			changeYear: true,
-			dateFormat: 'MM dd, yy',
-			showAnim: 'blind',
-			maxDate: new Date(),
-			beforeShow: function(){    
-				$(".ui-datepicker").css('font-size', 15) 
-			}
-		});
-
-		$("#dtpkr_attendance").datepicker("setDate", currentDate);
-
 	
-		$("#dtpkr_attendance").change(function(){
-			var date = $(this).val();
-			window.location.href = "date_attendance.php?date="+date;
-		});
-		$( "#cancel").on("click",function(){
-			window.location.href = "attendance_unset.php";
-		});
-		
-	});
 
 	window.onload = function checkAttendance(){
 			var sites = document.getElementsByName('site');

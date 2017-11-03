@@ -148,7 +148,7 @@
 			{
 				
 				for(var i = 0; i < checkboxlength; i++){
-					checkbox[i].disabled = false;
+					checkbox[i].disabled = true;
 				}
 
 			}
@@ -156,7 +156,7 @@
 			{
 				// If previously selected admin revert changes
 				for(var i = 0; i < checkboxlength; i++){
-					checkbox[i].disabled = true;
+					checkbox[i].disabled = false;
 				}
 			}
 		}

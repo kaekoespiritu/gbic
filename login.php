@@ -31,11 +31,11 @@ include_once("directives/db.php");
 					<div class="modal-body">
 						<label>
 							Username:
-							<input type="text" class="form-control">
+							<input type="text" class="form-control" id="forgotPassUsername" name="forgot_username">
 						</label>
 					</div>
 					<div class="modal-footer">
-						<button class="btn btn-primary" data-toggle="modal" data-target="#askQ">Submit</button>
+						<button class="btn btn-primary" onclick="forgotPass_User()" data-toggle="modal" data-target="#askQ">Submit</button>
 					</div>
 				</div>
 			</div>
@@ -44,24 +44,7 @@ include_once("directives/db.php");
 		<div class="modal fade" role="dialog" id="askQ">
 			<div class="modal-dialog modal-sm">
 				<div class="modal-content">
-					<div class="modal-header">
-						<div class="col-md-10 text-right">
-							<h5 class="modal-title">Answer the security question</h5>
-						</div>
-						<div class="col-md-1 pull-right">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						</div>
-					</div>
-					<div class="modal-body">
-						<h5>Security Question:<br>What is the name of the street you grew up on?</h5><br>
-						<label>
-							Answer:
-							<input type="text" class="form-control">
-						</label>
-					</div>
-					<div class="modal-footer">
-						<button class="btn btn-primary" onclick="resetPass()">Submit</button>
-					</div>
+					<div id="modal_forgotQuestions"></div>
 				</div>
 			</div>
 		</div>
@@ -107,18 +90,84 @@ include_once("directives/db.php");
 				</div>
 			</div>
 		</div>
+		<div id="forgotPasswordReset"></div>
 		<script>
-			var $slider = document.getElementById('slider');
-			var $toggle = document.getElementById('toggle');
+			// var $slider = document.getElementById('slider');
+			// var $toggle = document.getElementById('toggle');
 
-			$toggle.addEventListener('click', function() {
-				var isOpen = $slider.classList.contains('slide-in');
+			// $toggle.addEventListener('click', function() {
+			// 	var isOpen = $slider.classList.contains('slide-in');
 
-				$slider.setAttribute('class', isOpen ? 'slide-out' : 'slide-in');
-			});
+			// 	$slider.setAttribute('class', isOpen ? 'slide-out' : 'slide-in');
+			// });
 		</script>
 		<script rel="javascript" src="js/jquery.min.js"></script>
 		<script rel="javascript" src="js/bootstrap.min.js"></script>
+		<script>
+		
+		// function forgotPass_User() {
+		// 	var user = document.getElementById('forgotPassUsername').value;
+		//   	$.ajax({
+		//    	url:"fetch_forgotpassword.php",
+		//    	method:"POST",
+		//    	info:{
+		//    		username : user
+		//    	},
+		//    	success:function(info){
+		//    		// if(data != ""){
+		//     		$('#modal_forgotQuestions').html(info);
+		//    		// }
+		//     	// else {
+		//     	// 	alert('Username Invalid');
+		//     	// 	window.location.assign('login.php');
+		//     	// }
+		//    	}
+		//   	});
+		// }
+
+		function forgotPass_User()
+		{
+			var user = document.getElementById('forgotPassUsername').value;
+			$.ajax({
+				url:"fetch_forgotpassword.php",
+				method:"POST",
+				data:{
+						username: user
+					},
+				success:function(data)
+				{
+					if(data != ""){
+		    			$('#modal_forgotQuestions').html(data);
+		    			$('#forgotPass').modal('hide');
+		   			}
+		   			else
+		   			{
+		   				alert("none");
+		   			}
+				}
+			});
+		}
+
+		function resetPass() {
+			var ans = document.getElementById('securityAnswers').value;
+			var user = document.getElementById('forgotPass_Username').value;
+			$.ajax({
+				url:"fetch_forgotpassword_reset.php",
+				method:"POST",
+				data:{
+						answer: ans,
+						username: user
+					},
+				success:function(data)
+				{
+		    			$('#forgotPasswordReset').html(data);
+		    			$('#forgotPass').modal('hide');
+		    			$('#askQ').modal('hide');
+				}
+			});
+		}
+		</script>
+		
 	</body>
 </html>
 <?php
@@ -131,8 +180,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 	$result = mysql_query($sql);
 	$row = mysql_fetch_assoc($result);
 	$count = mysql_num_rows($result);
+	$user = $row['username'];
+	$pass = $row['password'];
 
-	if($count == 1)
+	if($username === $user && $password === $pass)
 	{
 		$_SESSION['user_logged_in'] = $username;
 		header("location: index.php");

@@ -1155,14 +1155,14 @@ if($holidayExist > 0)
 						$cola = "SELECT * FROM site WHERE location = '$site'";
 						$colaQuery = mysql_query($cola);
 						$colaArr = mysql_fetch_assoc($colaQuery);
-						$colaValue = $colaArr['cola'];
+						$colaValue = $colaArr['cola']/4;
 						if($colaValue == NULL)
 						{
 							$colaValue = "N/A";
 						}
 						?>
 						<h4>COLA</h4>
-						<input type="text" value="<?php Print $colaValue?>" name="cola" class="form-control" readonly>
+						<input type="text" placeholder="<?php Print $colaValue?>" name="cola" class="form-control" readonly>
 					</div>
 				</div>
 
