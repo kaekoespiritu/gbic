@@ -250,6 +250,9 @@ function checkloans(){
 	if(!sssVal){
 		// Set disabled to input field
 		sss.setAttribute('readonly','');
+		if(sss.parentElement.classList.contains('has-error')){
+			sss.parentElement.classList.remove('has-error');
+		}
 	}
 	else {
 		sss.setAttribute('required','');
@@ -263,11 +266,7 @@ function checkloans(){
 		pagibig.setAttribute('required','');
 	}
 
-	if(!oldvaleVal){
-		// Set disabled to input field
-		oldvale.setAttribute('readonly', '');
-	}
-	else {
+	if(oldvaleVal) {
 		oldvale.setAttribute('required','');
 	}
 }
