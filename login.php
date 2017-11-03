@@ -83,6 +83,7 @@ include_once("directives/db.php");
 							<div class="col-md-12"><br>
 								<!-- FIX PLACEMENT OF LINK AND ADD MODAL -->
 								<a href="#" data-toggle="modal" data-target="#forgotPass" class='whitelink'><h5>Forgot your password?</h5></a>
+								<input type="hidden" name="login">
 								<button type="submit" class="btn btn-warning btn_loginSubmit login-text login-button">Log in</button>
 							</div>
 						</div>
@@ -171,7 +172,7 @@ include_once("directives/db.php");
 	</body>
 </html>
 <?php
-if($_SERVER["REQUEST_METHOD"] == "POST")
+if(isset($_POST['login']))
 {
 	$username = mysql_real_escape_string($_POST['username']);
 	$password = mysql_real_escape_string($_POST['password']);
@@ -186,7 +187,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 	if($username === $user && $password === $pass)
 	{
 		$_SESSION['user_logged_in'] = $username;
-		header("location: index.php");
+		Print "<script>window.location.assign('index.php')</script>";
 	}
 	else
 	{
