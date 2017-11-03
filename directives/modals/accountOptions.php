@@ -53,8 +53,8 @@
 										</div>
 										<div id="changeuser" class="tab-pane">
 											<h4>Current username: <?php Print $user ?></h4>
-										<label>New username:
-											<input type="text" name="newUsername" class="form-control">
+										<label id="currUsername">New username:
+											<input type="text" name="newUsername" onkeyup="updateUsernameValidation(this.value)" id="newUsername" class="form-control">
 										</label>
 										<br><br>
 										<div>
@@ -83,7 +83,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button onclick="optionAccount()" class="btn btn-primary">Save Changes</button>
+						<button onclick="optionAccount()" class="btn btn-primary" id="accountOptionsSubmit">Save Changes</button>
 					</div>
 				</div>
 			</div>

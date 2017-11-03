@@ -556,6 +556,66 @@ $adminRole = $adminArr['role'];
 			window.location.assign('logic_options_removeCola.php?site='+site);
 		}
 	}
+
+	function usernameValidation(val) {
+		$.ajax({
+			url:"fetch_validation_username.php",
+			method:"POST",
+			data:{
+					username: val
+				},
+			success:function(data)
+			{
+	    		if(data == "has-success"){
+	    			$('#usernameVal').removeClass("has-warning");
+    				$('#usernameVal').addClass(data);
+    				if($('#errorPrompt').length)
+    					$('#errorPrompt').remove();
+    				$('#addAccountSubmit').prop("disabled", false);
+	    		}
+	    			
+    			else{
+    				$('#usernameVal').removeClass("has-success");
+    				$('#usernameVal').addClass(data);
+    				if($('#errorPrompt').length == 0)
+    					$('#usernameVal').append("<b style='color:red' id='errorPrompt'><br>*Invalid Username</b>");
+    				$('#addAccountSubmit').prop("disabled", true);
+    			}
+    				
+    			console.log(data);
+			}
+		});
+	}
+
+	function updateUsernameValidation(val) {
+		$.ajax({
+			url:"fetch_validation_username.php",
+			method:"POST",
+			data:{
+					username: val
+				},
+			success:function(data)
+			{
+	    		if(data == "has-success"){
+	    			$('#currUsername').removeClass("has-warning");
+    				$('#currUsername').addClass(data);
+    				if($('#errorPrompt').length)
+    					$('#errorPrompt').remove();
+    				$('#accountOptionsSubmit').prop("disabled", false);
+	    		}
+	    			
+    			else{
+    				$('#currUsername').removeClass("has-success");
+    				$('#currUsername').addClass(data);
+    				if($('#errorPrompt').length == 0)
+    					$('#currUsername').append("<b style='color:red' id='errorPrompt'>*Invalid Username</b>");
+    				$('#accountOptionsSubmit').prop("disabled", true);
+    			}
+    				
+    			console.log(data);
+			}
+		});
+	}
 </script>
 
 </div>

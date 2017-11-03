@@ -22,9 +22,9 @@
 								Lastname:
 								<input type="text" name="n_lastname" class="form-control" required>
 							</label>
-							<label class="col-md-12">
+							<label class="col-md-12" id="usernameVal">
 								Username:
-								<input type="text" name="n_username" class="form-control" required>
+								<input type="text" name="n_username" onkeyup="usernameValidation(this.value)" class="form-control" required>
 							</label>
 							<label class="col-md-12">
 								Password:
@@ -129,7 +129,7 @@
 					</div>
 					<div class="modal-footer pull-down">
 						<button class="btn btn-default" data-dismiss="modal">Cancel</button>
-						<button class="btn btn-primary" onclick="newAccountFunction()">Save Changes</button>
+						<button class="btn btn-primary" onclick="newAccountFunction()" id="addAccountSubmit" disabled>Save Changes</button>
 					</div>
 					</div>
 				</div>
