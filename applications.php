@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 include('directives/session.php');
-include('directives/db.php');
+include_once('directives/db.php');
 if(!isset($_GET['site']) && !isset($_GET['site']) && !isset($_GET['site']))
 {
 	header("Location: applications.php?site=null&position=null&status=null");

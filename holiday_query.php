@@ -1,6 +1,6 @@
 <?php
 include('directives/session.php');
-include('directives/db.php');
+include_once('directives/db.php');
 //New Holiday & Update holiday
 
 if(isset($_GET['name']) && isset($_GET['type']) && isset($_GET['date']))

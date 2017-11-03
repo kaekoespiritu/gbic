@@ -2,7 +2,7 @@
 <?php
 // Connecting to database
 session_start();
-include("directives/db.php");
+include_once("directives/db.php");
 
 
 ?>

@@ -2,7 +2,7 @@
 <?php
 error_reporting(0);
 include('directives/session.php');
-include('directives/db.php');
+include_once('directives/db.php');
 include("pagination/function.php");//For pagination
 if(!isset($_GET['site']) && !isset($_GET['position']))
 {

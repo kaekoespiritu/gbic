@@ -1,6 +1,6 @@
 <?php
 include('directives/session.php');
-include('directives/db.php');
+include_once('directives/db.php');
 
 $user = $_POST['userTerminate'];
 Print "<script>console.log('".$user."')</script>";

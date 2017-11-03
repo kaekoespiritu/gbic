@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 include('directives/session.php');
-include('directives/db.php');
+include_once('directives/db.php');
 if(!isset($_POST['empid']))
 {
 	header("location:index.php");

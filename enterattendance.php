@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 	include('directives/session.php');
-	include('directives/db.php');
+	include_once('directives/db.php');
 	date_default_timezone_set('Asia/Manila');
 	$site_name = $_GET['site'];
 	if(isset($_SESSION['date']))

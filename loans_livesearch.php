@@ -1,6 +1,6 @@
 <?php
 //fetch.php
-include('directives/db.php');
+include_once('directives/db.php');
 if(isset($_POST["query"]))
 {
   if($_POST["query"] != '')
