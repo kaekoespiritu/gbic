@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 include('directives/session.php');
-include_once('directives/db.php');
+require_once('directives/db.php');
 
 // if(!isset($_POST['empid']))
 // {

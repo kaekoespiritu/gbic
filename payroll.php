@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
 include('directives/session.php');
+require_once('directives/db.php');
 if(isset($_GET['site']) && isset($_GET['position']))
 {}
 else
