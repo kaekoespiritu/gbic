@@ -1,5 +1,5 @@
 <?php
-	include('directives/db.php');
+	include_once('directives/db.php');
 	include('directives/session.php');
 
 	$positionName = mysql_real_escape_string($_POST['position_name']);

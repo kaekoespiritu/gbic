@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 include('directives/session.php');
-include('directives/db.php');
+require_once('directives/db.php');
 
 // if(!isset($_POST['empid']))
 // {
@@ -235,6 +235,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 									<td>".$toolArr['cost']."</td>
 								</tr>
 								";
+							//Print "<script>alert('".$toolArr['tools']."')</script>";
 						}
 					}
 					$toolsChecker = "SELECT * FROM payroll WHERE empid='$empid' AND date != '$date' ORDER BY date DESC LIMIT 1";

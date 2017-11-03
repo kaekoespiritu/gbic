@@ -1,6 +1,6 @@
 <?php
 include('directives/session.php');
-include('directives/db.php');
+include_once('directives/db.php');
 include_once 'modules/Classes/PHPExcel.php';
 
 if(!isset($_POST['checkbox_submit']))

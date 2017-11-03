@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-include('directives/db.php');
+include_once('directives/db.php');
 include('directives/session.php');
   date_default_timezone_set('Asia/Hong_Kong');
   if(isset($_SESSION['date']))

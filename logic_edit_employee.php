@@ -1,6 +1,6 @@
 <?php
 	include('directives/session.php');
-	include('directives/db.php');
+	include_once('directives/db.php');
 
 	$date = strftime("%B %d, %Y");//Get the current date
 	//Gets the admin who change the site and position

@@ -1,5 +1,5 @@
 <?php
-include('directives/db.php');
+include_once('directives/db.php');
 include('directives/session.php');
 require "directives/attendance/attendance_query.php";
 //error_reporting(0);// fetch no error

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 include('directives/session.php');
-include('directives/db.php');
+include_once('directives/db.php');
 
 
 $user = $_SESSION['user_logged_in'];

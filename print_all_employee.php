@@ -1,6 +1,6 @@
 <?php
 include('directives/session.php');
-include('directives/db.php');
+include_once('directives/db.php');
 include_once 'modules/Classes/PHPExcel.php';
 
 $site = "SELECT * FROM site WHERE active = '1'";

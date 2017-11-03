@@ -1,7 +1,7 @@
 <?php
-	include('directives/db.php');
-	include('directives/session.php');
+	require_once('directives/session.php');
 	//Print "<script>console.log('".$overtimeRate1."')</script>";
+
 
 	//$date = strftime("%B %d, %Y");
 	$date = "October 24, 2017";
@@ -290,11 +290,11 @@ Print "<script>console.log('sunWorkHrs: ".$sunWorkHrs."')</script>";
 			$outStandingBalance = abs($outStandingBalance);
 		}
 	}
-	else if(!empty($_POST['toolprice'][0]) && !empty($_POST['toolname'][0]))
+	else if(!empty($_POST['toolprice']) && !empty($_POST['toolname']))
 	{
 		$BoolTool = true;//True to query the update 
-		$toolname = $_POST['toolname'][0];
-		$toolprice = $_POST['toolprice'][0];
+		$toolname = $_POST['toolname'];
+		$toolprice = $_POST['toolprice'];
 
 		//Print "<script>console.log('toolname: ".$toolname."')</script>";
 		//Print "<script>console.log('toolprice: ".$toolprice."')</script>";

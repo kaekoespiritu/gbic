@@ -1,5 +1,5 @@
 <?php
-include('directives/db.php');
+include_once('directives/db.php');
 include('directives/session.php');
  
 $site = $_POST['dd_site'];

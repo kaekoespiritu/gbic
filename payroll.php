@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <?php
 include('directives/session.php');
+require_once('directives/db.php');
 if(isset($_GET['site']) && isset($_GET['position']))
 {}
 else
 {
 	header("location:payroll_login.php");
 }
+
 
 $site = $_GET['site'];
 $position = $_GET['position'];
@@ -82,10 +84,11 @@ if($holidayExist > 0)
 					$deductionSSS = $empArr['sss']/4;
 					$deductionPagibig = $empArr['pagibig']/4;
 					$deductionPhilhealth = $empArr['philhealth']/4;
+					
 			//2 decimal places
-					$deductionSSS =  number_format($deductionSSS, 2, '.', ',');
-					$deductionPagibig = number_format($deductionPagibig, 2, '.', ',');
-					$deductionPhilhealth = number_format($deductionPhilhealth, 2, '.', ',');
+					$deductionSSS =  numberExactFormat($deductionSSS, 2, '.');
+					$deductionPagibig = numberExactFormat($deductionPagibig, 2, '.');
+					$deductionPhilhealth = numberExactFormat($deductionPhilhealth, 2, '.');
 			//Change to no value string if the employee has no document
 					if($deductionSSS == 0)
 					{
@@ -224,8 +227,10 @@ if($holidayExist > 0)
 						$holiday = "SELECT * FROM holiday WHERE date = '$holDateChecker' ORDER BY date DESC";
 						$holidayQuery = mysql_query($holiday);
 						$holidayExist = mysql_num_rows($holidayQuery);
+						Print "<script>console.log('".$holidayExist."')</script>";
 						if($holidayExist > 0)//if holiday exist
 						{
+							Print "<script>console.log('holiday')</script>";
 							$holidayRow = mysql_fetch_assoc($holidayQuery);
 							$holDay = date('l', strtotime($holidayRow['date']));
 							if($holidayCounter > 0)//if holiday lasted for more than 1day
@@ -468,17 +473,18 @@ if($holidayExist > 0)
 					$holFri = false; 
 					$holSat = false;
 					$holSun = false;
+					Print "<script>console.log('holidayCounter: ".$holidayCounter."')</script>";
 					if($holidayCounter > 1)//Output as Hidden Name, Type, Date of holiday 
 					{
 						$holNameArr = explode("+", $holidayName);
 						$holTypeArr = explode("+", $holidayType);
 						$holDateArr = explode("+", $holidayDate);
 						$holDayArr = explode("+", $holidayDay);
-						Print "<script>console.log('".$holNameArr[0]." + ".$holNameArr[1]."')</script>";
+						//Print "<script>console.log('".$holNameArr[0]." + ".$holNameArr[1]."')</script>";
 						$holidayCounter -= 1;
 						for($a = 0; $a <= $holidayCounter; $a++)
 						{
-							//Print "<script>console.log('".$holNameArr[$a]." + ".$a."')</script>";
+							Print "<script>console.log('".$holNameArr[$a]." + ".$a."')</script>";
 							Print "<input type='hidden' name='holidayName[]' value='".$holNameArr[$a]."'>";
 							Print "<input type='hidden' name='holidayType[]' value='".$holTypeArr[$a]."'>";
 							Print "<input type='hidden' name='holidayDate[]' value='".$holDateArr[$a]."'>";
@@ -833,92 +839,102 @@ if($holidayExist > 0)
 
 						?>
 					</tr>
-					<tr>
-						<td class="nopadding" colspan="2">
-							<h4>
-						<?php //Badges to display Holiday, OT, ND
+					<?php
+					if(	$holWed || $OtWed || $NdWed ||
+						$holThu || $OtThu || $NdThu ||
+						$holFri || $OtFri || $NdFri ||
+						$holSat || $OtSat || $NdSat ||
+						$holSun || $OtSun || $NdSun ||
+						$holMon || $OtMon || $NdMon ||
+						$holTue || $OtTue || $NdTue)
+					{
+						Print "	<tr>
+									<td class='nopadding' colspan='2'>
+										<h4>";
 						if($holWed)
-							Print 	 "<span class='label label-success'>Holiday</span>&nbsp";
+							Print 	 "	<span class='label label-success'>Holiday</span>&nbsp";
 						if($OtWed)
-							Print 	"<span class='label label-primary'>OT</span>&nbsp";
+							Print 	"	<span class='label label-primary'>OT</span>&nbsp";
 						if($NdWed)
-							Print 	"<span class='label label-warning'>ND</span>";
-						?>
-					</h4>
-				</td>
-				<td class="nopadding" colspan="2">
-					<h4>
-						<?php
+							Print 	"	<span class='label label-warning'>ND</span>";
+						Print "			</h4>
+									</td>
+									<td class='nopadding' colspan='2'>
+										<h4>";
 						if($holThu)
-							Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
+							Print 	 "	<span class='label label-success'>Holiday</span>&nbsp;";
 						if($OtThu)
-							Print 	"<span class='label label-primary'>OT</span>&nbsp;";
+							Print 	"	<span class='label label-primary'>OT</span>&nbsp;";
 						if($NdThu)
-							Print 	"<span class='label label-warning'>ND</span>";
-						?>
-					</h4>
-				</td>
-				<td class="nopadding" colspan="2">
-					<h4>
-						<?php
+							Print 	"	<span class='label label-warning'>ND</span>";
+						
+							Print "		</h4>	
+									</td>
+									<td class='nopadding' colspan='2'>
+										<h4>";
+						
 						if($holFri)
-							Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
+							Print 	 "	<span class='label label-success'>Holiday</span>&nbsp;";
 						if($OtFri)
-							Print 	"<span class='label label-primary'>OT</span>&nbsp;";
+							Print 	"	<span class='label label-primary'>OT</span>&nbsp;";
 						if($NdFri)
-							Print 	"<span class='label label-warning'>ND</span>";
-						?>
-					</h4>
-				</td>
-				<td class="nopadding" colspan="2">
-					<h4>
-						<?php
+							Print 	"	<span class='label label-warning'>ND</span>";
+						
+							Print "		</h4>
+									</td>
+									<td class='nopadding' colspan='2'>
+										<h4>";
+						
 						if($holSat)
 							Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
 						if($OtSat)
 							Print 	"<span class='label label-primary'>OT</span>&nbsp;";
 						if($NdSat)
 							Print 	"<span class='label label-warning'>ND</span>";
-						?>
-					</h4>
-				</td>
-				<td class="nopadding" colspan="2">
-					<h4>
-						<?php
+
+							Print "		</h4>
+									</td>
+									<td class='nopadding' colspan='2'>
+										<h4>";
+						
 						if($holSun)
 							Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
 						if($OtSun)
 							Print 	"<span class='label label-primary'>OT</span>&nbsp;";
 						if($NdSun)
 							Print 	"<span class='label label-warning'>ND</span>";
-						?>
-					</h4>
-				</td>
-				<td class="nopadding" colspan="2">
-					<h4>
-						<?php
+					
+							Print "		</h4>
+									</td>
+									<td class='nopadding' colspan='2'>
+										<h4>";
+						
 						if($holMon)
 							Print 	"<span class='label label-success'>Holiday</span>&nbsp;"; 
 						if($OtMon)
 							Print 	"<span class='label label-primary'>OT</span>&nbsp;"; 
 						if($NdMon)
 							Print 	"<span class='label label-warning'>ND</span>"; 
-						?>
-					</h4>
-				</td>
-				<td class="nopadding" colspan="2">
-					<h4>
-						<?php
+					
+							Print "		</h4>
+									</td>
+									<td class='nopadding' colspan='2'>
+										<h4>";
+					
 						if($holTue)
 							Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
 						if($OtTue)
 							Print 	"<span class='label label-primary'>OT</span>&nbsp;";
 						if($NdTue)
 							Print 	"<span class='label label-warning'>ND</span>";
-						?>
-					</h4>
-				</td>
-			</tr>
+					
+							Print "		</h4>
+									</td>";
+						Print "</tr>";
+					}
+					?>
+				
+
 		</table>
 	</div>
 
@@ -1064,7 +1080,7 @@ if($holidayExist > 0)
 							?>
 						</div>
 						<div class="col-md-12 has-error">
-							<input type="number" class="form-control" id="sssDeduct" placeholder="To deduct" onblur="addDecimal(this)" onchange="setsssLimit(this)">
+							<input type="number" class="form-control" id="sssDeduct" name="sssDeduct" placeholder="To deduct" onblur="addDecimal(this)" onchange="setsssLimit(this)">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -1082,7 +1098,7 @@ if($holidayExist > 0)
 							?>
 						</div>
 						<div class="col-md-12">
-							<input type="number" class="form-control" id="pagibigDeduct" placeholder="To deduct" onblur="addDecimal(this)" onchange="setpagibigLimit(this)">
+							<input type="number" class="form-control" id="pagibigDeduct" name="pagibigDeduct" placeholder="To deduct" onblur="addDecimal(this)" onchange="setpagibigLimit(this)">
 						</div>
 					</div>
 				</div>
@@ -1103,11 +1119,10 @@ if($holidayExist > 0)
 						</h5>
 						<div class="row has-error">
 							<?php
-							if($oldVale != "N/A")
-							{
+							
 								Print "
 								<input type='text' placeholder='Deduct' id='oldValeDeduct' class='form-control input-sm pull-down' onchange='setoldvaleLimit(this)'>";
-							}
+							
 							?>
 						</div>
 					</div>
@@ -1242,7 +1257,7 @@ if($holidayExist > 0)
 								Amount to Pay
 							</label>
 							<div class="col-md-6">
-								<input type="number" id="amountToPay" class="form-control" onblur="addDecimal(this)" onchange="settotalLimit(this)" readonly>
+								<input type="number" id="amountToPay" name="amountToPay" class="form-control" onblur="addDecimal(this)" onchange="settotalLimit(this)" readonly>
 							</div>
 						</div>
 					</div>
