@@ -119,12 +119,9 @@
 			child.innerHTML = "N/A";
 		}
 		// Save to hidden input for database access
-		if(document.querySelector('.added').value)
-		{
-			var saveToAdd = document.querySelector(".added");
-			saveToAdd.value = modalValue;
-		}
-
+		
+		var saveToAdd = document.querySelector(".added");
+		saveToAdd.value = modalValue;
 	}
 
 	function getTotal(evt) {

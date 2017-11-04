@@ -6,6 +6,7 @@
 
 	//$date = strftime("%B %d, %Y");
 	$date = "October 24, 2017";
+	$time = strftime("%X");//TIME
 //Employee ID
 	$empid = $_POST['employeeID'];
 
@@ -63,7 +64,7 @@
 //Computation for Sunday --------------------------------------------------------------
 		
 		$compSunday = $SundayRatePerHour * $sunWorkHrs;
-Print "<script>console.log('sunWorkHrs: ".$sunWorkHrs."')</script>";
+// Print "<script>console.log('sunWorkHrs: ".$sunWorkHrs."')</script>";
 	}
 	if(isset($_POST['monWorkHrs']))
 	{
@@ -118,7 +119,7 @@ Print "<script>console.log('sunWorkHrs: ".$sunWorkHrs."')</script>";
 
 		$compND = $totalND * $NdRatePerHour;//Computed Night Differential
 	}
-	Print "<script>console.log('totalND: ".$totalND."')</script>";
+	// Print "<script>console.log('totalND: ".$totalND."')</script>";
 
 
 
@@ -243,13 +244,119 @@ Print "<script>console.log('sunWorkHrs: ".$sunWorkHrs."')</script>";
 	$compAllowance = (($overallWorkDays*$dailyAllowance)  + $extraAllowance);
 //Loans deduction --------------------------------------------------------------------- Incomplete
 //*query to loans table the deduction
+	function loanQuery($loanType , $empid, $DeductedLoan) //function for loans query
+	{
+		$date = "October 24, 2017";
+		$time = strftime("%X");//TIME
+
+		//Check if there is an existing query for this loan to avoid duplication
+		$loanChecker = mysql_query("SELECT * FROM loans WHERE date='$date' AND empid='$empid' AND type='$loanType'");
+		if(mysql_num_rows($loanChecker) > 0)
+		{
+			mysql_query("DELETE FROM loans WHERE date='$date' AND empid='$empid' AND type='$loanType'");
+		}
+
+
+		$Loan = "SELECT * FROM loans WHERE type='$loanType' AND empid='$empid' ORDER BY date DESC, time DESC LIMIT 1";
+		$Query = mysql_query($Loan);
+		$loanArr = mysql_fetch_assoc($Query);
+		$LoanBalance = $DeductedLoan - $loanArr['balance'];
+		$LoanBalance = abs($LoanBalance);//make it positive if ever it is negative
+
+		
+
+		$Update = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
+						VALUES('$empid', '$loanType', '$LoanBalance', '$DeductedLoan', 'deducted', '$date', '$time', '0')";
+		mysql_query($Update);
+	}
+
+
+	$loan_oldVale = 0;
 	$loan_sss = $_POST['sssDeduct'];
 	$loan_pagibig = $_POST['pagibigDeduct'];
-	$loan_oldVale = 0;
-	if(isset($_POST['oldValeDeduct']))
-		$loan_oldVale = $_POST['oldValeDeduct'];
-	$loan_newVale = $_POST['newValeAdded'];
+	$loan_oldVale = $_POST['oldValeDeduct'];
+	//$loan_newVale = $_POST['newValeAdded'];
 
+	if(!empty($_POST['sssDeduct']))//if SSS loan textbox in payroll has value
+	{
+		Print "<script>console.log('sssDeduct')</script>";
+		loanQuery('SSS', $empid, $loan_sss);
+	}
+	if(!empty($_POST['pagibigDeduct']))//if SSS loan textbox in payroll has value
+	{
+		Print "<script>console.log('pagibigDeduct')</script>";
+		loanQuery('PagIBIG', $empid, $loan_pagibig);
+	}
+
+	$loan_newVale = 0;//preset the newvale
+	if(!empty($_POST['newValeAdded']))//if SSS loan textbox in payroll has value
+	{
+		Print "<script>console.log('newValeAdded')</script>";
+		//Check if there is an existing query for this loan to avoid duplication
+		$loanChecker = mysql_query("SELECT * FROM loans WHERE date='$date' AND empid='$empid' AND type='newVale'");
+		if(mysql_num_rows($loanChecker) > 0)
+		{
+			mysql_query("DELETE FROM loans WHERE date='$date' AND empid='$empid' AND type='newVale'");
+		}
+
+		$Loan = "SELECT * FROM loans WHERE type='newVale' AND empid='$empid' ORDER BY date DESC, time DESC LIMIT 1";
+		$newValeQuery = mysql_query($Loan);
+		$DeductedLoan = $_POST['newValeAdded'];
+		
+		if(mysql_num_rows($newValeQuery) > 0)
+		{
+			Print "<script>console.log('newValeAdded1')</script>";
+			$loanArr = mysql_fetch_assoc($Query);
+			//Loaned
+			$newValeBalance = $loanArr['balance'];
+			$LoanAdded = $DeductedLoan + $loanArr['balance'];
+			//Deducted loan
+			$LoanBalance = $DeductedLoan - $loanArr['balance'];
+			
+			$LoanBalance = abs($LoanBalance);//make it positive if ever it is negative
+			$Update1 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
+							VALUES('$empid', 'newVale', '$newValeBalance', '$LoanAdded', 'loaned', '$date', '$time', '1')";
+			$Update2 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
+							VALUES('$empid', 'newVale', '$LoanBalance', '$DeductedLoan', 'deducted', '$date', '$time', '0')";
+			mysql_query($Update1);
+			mysql_query($Update2);
+		}
+		else//Employee has no newvale balance but added newvale in the payroll
+		{
+			Print "<script>console.log('newValeAdded2')</script>";
+			$loanArr = mysql_fetch_assoc($Query);
+			//Deducted loan
+			$LoanAdded = $DeductedLoan;
+			
+			$Update1 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
+							VALUES('$empid', 'newVale', '$DeductedLoan', '$DeductedLoan', 'loaned', '$date', '$time', '1')";
+			$Update2 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
+							VALUES('$empid', 'newVale', '0', '$DeductedLoan', 'deducted', '$date', '$time', '0')";
+			mysql_query($Update1);
+			mysql_query($Update2);
+		}
+		
+
+		$loan_newVale = $LoanAdded;
+	}
+	else if(!empty($_POST['newVale']))//if employee didnot add any new vales but have previous newvale
+	{
+		$loanChecker = mysql_query("SELECT * FROM loans WHERE date='$date' AND empid='$empid' AND type='newVale'");
+		if(mysql_num_rows($loanChecker) > 0)
+		{
+			mysql_query("DELETE FROM loans WHERE date='$date' AND empid='$empid' AND type='newVale'");
+		}
+		Print "<script>console.log('newVale')</script>";
+		$loan_newVale = $_POST['newVale'];
+		$Update = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
+							VALUES('$empid', 'newVale', '0', '$loan_newVale', 'deducted', '$date', '$time', '0')";
+		mysql_query($Update);
+	}
+	if(!empty($_POST['oldValeDeduct']))//if SSS loan textbox in payroll has value
+	{
+		Print "<script>console.log('oldValeDeduct')</script>";
+		loanQuery('oldVale', $empid, $loan_oldVale);
+	}
 	$compLoan = $loan_sss + $loan_pagibig + $loan_oldVale + $loan_newVale;
 
 //Tools Computation -------------------------------------------------------------------
@@ -352,16 +459,16 @@ Print "<script>console.log('sunWorkHrs: ".$sunWorkHrs."')</script>";
 	$ast = ($dailyRate * $overallWorkDays);
 	$bnd = abs($compAllowance) + abs($compND) + abs($compOT) + abs($cola) + abs($addHoliday) + abs($compSunday);
 	$crd = abs($compDeductions) + abs($compLoan) + abs($tools_paid);
-Print "<script>console.log('1: ".$ast."')</script>";
-Print "<script>console.log('2: ".$bnd."')</script>";
-Print "<script>console.log('compAllowance: ".$compAllowance."')</script>";
-Print "<script>console.log('compND: ".$compND."')</script>";
-Print "<script>console.log('compOT: ".$compOT."')</script>";
-Print "<script>console.log('cola: ".$cola."')</script>";
-Print "<script>console.log('compSunday: ".$compSunday."')</script>";
-Print "<script>console.log('addHoliday: ".$addHoliday."')</script>";
+// Print "<script>console.log('1: ".$ast."')</script>";
+// Print "<script>console.log('2: ".$bnd."')</script>";
+// Print "<script>console.log('compAllowance: ".$compAllowance."')</script>";
+// Print "<script>console.log('compND: ".$compND."')</script>";
+// Print "<script>console.log('compOT: ".$compOT."')</script>";
+// Print "<script>console.log('cola: ".$cola."')</script>";
+// Print "<script>console.log('compSunday: ".$compSunday."')</script>";
+// Print "<script>console.log('addHoliday: ".$addHoliday."')</script>";
 
-Print "<script>console.log('3: ".$crd."')</script>";
+// Print "<script>console.log('3: ".$crd."')</script>";
 
 
 	$query = "INSERT INTO payroll(	empid,

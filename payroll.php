@@ -964,69 +964,69 @@ if($holidayExist > 0)
 				<div class="col-md-2">
 					<h4>Loans</h4>
 					<?php
-							//this is to check if employee has multiple new vales in a week
-					$day1 = $date;
-					$day2 = date('F j, Y', strtotime('-1 day', strtotime($date)));
-					$day3 = date('F j, Y', strtotime('-2 day', strtotime($date)));
-					$day4 = date('F j, Y', strtotime('-3 day', strtotime($date)));
-					$day5 = date('F j, Y', strtotime('-4 day', strtotime($date)));
-					$day6 = date('F j, Y', strtotime('-5 day', strtotime($date)));
-					$day7 = date('F j, Y', strtotime('-6 day', strtotime($date)));
-					$days = array("$day1","$day2","$day3","$day4","$day5","$day6","$day7");
-					$newVale = 0;
-					foreach($days as $checkDay)
-					{
+					// 		//this is to check if employee has multiple new vales in a week
+					// $day1 = $date;
+					// $day2 = date('F j, Y', strtotime('-1 day', strtotime($date)));
+					// $day3 = date('F j, Y', strtotime('-2 day', strtotime($date)));
+					// $day4 = date('F j, Y', strtotime('-3 day', strtotime($date)));
+					// $day5 = date('F j, Y', strtotime('-4 day', strtotime($date)));
+					// $day6 = date('F j, Y', strtotime('-5 day', strtotime($date)));
+					// $day7 = date('F j, Y', strtotime('-6 day', strtotime($date)));
+					// $days = array("$day1","$day2","$day3","$day4","$day5","$day6","$day7");
+					// $newVale = 0;
+					// foreach($days as $checkDay)
+					// {
 								//Check if overall attendance for a certain site is done
-						$loanChecker = "SELECT * FROM loans WHERE date = '$checkDay' AND type = 'newVale' AND empid = '$empid'";
-								//Print '<script>colsole.log("'.$loanChecker.'")</script>';
-						$loanCheckerQuery = mysql_query($loanChecker);
-						if($loanCheckerQuery)
-						{
-							$newValeNum = mysql_num_rows($loanCheckerQuery);
-							if($newValeNum != 0)
-							{
-										//Print "<script>alert('yea')</script>";
-								if($newValeNum > 1)
-								{
-									while($newValeArr = mysql_fetch_assoc($loanCheckerQuery))
-									{
-										//Print "<script>alert('yea')</script>";
-										if($newValeNum > 1)
-										{
-											while($newValeArr = mysql_fetch_assoc($loanCheckerQuery))
-											{
-												$newVale += $newValeArr['amount'];
-											}
-										}
-										else
-										{
-											//Print "<script>alert('yea')</script>";
-											$newValeRow = mysql_fetch_assoc($loanCheckerQuery);
-											$newVale += $newValeRow['amount'];
-											Print "<script>console.log('".$newVale."')</script>";
-										}
-									}
-								}
-								else
-								{
-											//Print "<script>alert('yea')</script>";
-									$newValeRow = mysql_fetch_assoc($loanCheckerQuery);
-									$newVale += $newValeRow['amount'];
-								}
-							}
-						}
-					}
-					$getSSS = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' ORDER BY date DESC LIMIT 1";
-					$getPAGIBIG = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' ORDER BY date DESC LIMIT 1";
-
-							$getSSS = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' ORDER BY date DESC, time DESC LIMIT 1";
-							$getPAGIBIG = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' ORDER BY date DESC, time DESC LIMIT 1";
-							
-							$getOldVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY date DESC, time DESC  LIMIT 1";
+						// $loanChecker = "SELECT * FROM loans WHERE date = '$checkDay' AND type = 'newVale' AND empid = '$empid'";
+						// 		//Print '<script>colsole.log("'.$loanChecker.'")</script>';
+						// $loanCheckerQuery = mysql_query($loanChecker);
+						// if($loanCheckerQuery)
+						// {
+						// 	$newValeNum = mysql_num_rows($loanCheckerQuery);
+						// 	if($newValeNum != 0)
+						// 	{
+						// 				//Print "<script>alert('yea')</script>";
+						// 		if($newValeNum > 1)
+						// 		{
+						// 			while($newValeArr = mysql_fetch_assoc($loanCheckerQuery))
+						// 			{
+						// 				//Print "<script>alert('yea')</script>";
+						// 				if($newValeNum > 1)
+						// 				{
+						// 					while($newValeArr = mysql_fetch_assoc($loanCheckerQuery))
+						// 					{
+						// 						$newVale += $newValeArr['amount'];
+						// 					}
+						// 				}
+						// 				else
+						// 				{
+						// 					//Print "<script>alert('yea')</script>";
+						// 					$newValeRow = mysql_fetch_assoc($loanCheckerQuery);
+						// 					$newVale += $newValeRow['amount'];
+						// 					Print "<script>console.log('".$newVale."')</script>";
+						// 				}
+						// 			}
+						// 		}
+						// 		else
+						// 		{
+						// 					//Print "<script>alert('yea')</script>";
+						// 			$newValeRow = mysql_fetch_assoc($loanCheckerQuery);
+						// 			$newVale += $newValeRow['amount'];
+						// 		}
+						// 	}
+						// }
+					// }
+					
+					$getSSS = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' ORDER BY date DESC, time DESC LIMIT 1";
+					$getPAGIBIG = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' ORDER BY date DESC, time DESC LIMIT 1";
+					
+					$getOldVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY date DESC, time DESC  LIMIT 1";
+					$getNewVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'newVale' ORDER BY date DESC, time DESC  LIMIT 1";
 							//Query
 					$sssQuery = mysql_query($getSSS);
 					$pagibigQuery = mysql_query($getPAGIBIG);
 					$oldValeQuery = mysql_query($getOldVALE);
+					$newValeQuery = mysql_query($getNewVALE);
 
 							//SSS Loan
 					if(mysql_num_rows($sssQuery) > 0)
@@ -1049,9 +1049,14 @@ if($holidayExist > 0)
 						$pagibig = "N/A";
 					}
 							//New Vale
-					if($newVale == 0)
+					if(mysql_num_rows($newValeQuery) > 0)
 					{
-						$newVale = "<span id = 'newValeText'>N/A</span>";
+						$newValeArr = mysql_fetch_assoc($newValeQuery);
+						$newVale = $newValeArr['balance'];
+					}
+					else
+					{
+						$newVale = "N/A";
 					}
 
 							//Old Vale
@@ -1118,12 +1123,7 @@ if($holidayExist > 0)
 							</span>
 						</h5>
 						<div class="row has-error">
-							<?php
-							
-								Print "
-								<input type='text' placeholder='Deduct' id='oldValeDeduct' class='form-control input-sm pull-down' onchange='setoldvaleLimit(this)'>";
-							
-							?>
+							<input type='text' placeholder='Deduct' id='oldValeDeduct' name='oldValeDeduct'class='form-control input-sm pull-down' onchange='setoldvaleLimit(this)'>";
 						</div>
 					</div>
 
@@ -1142,6 +1142,7 @@ if($holidayExist > 0)
 							<br>
 							<!-- <span id="dynamicCompute"></span> -->
 						</h5>
+						<?php Print "<input type='hidden' name='newVale' value='".$newVale."'>" ?>
 						<input type="hidden" name="newValeAdded" class="added">
 
 						<div class="row" style="margin-top:9px">
