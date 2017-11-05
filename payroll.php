@@ -1084,13 +1084,13 @@ if($holidayExist > 0)
 							}
 							?>
 						</div>
-						<div class="col-md-12 has-error">
+						<div class="col-md-12">
 							<input type="number" class="form-control" id="sssDeduct" name="sssDeduct" placeholder="To deduct" onblur="addDecimal(this)" onchange="setsssLimit(this)">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="control-label col-md-3" for="pagibig" style="white-space: nowrap;">Pag-IBIG</label>
-						<div class="col-md-9 has-error">
+						<div class="col-md-9">
 							<?php
 							if($pagibig != "N/A")
 							{
@@ -1122,7 +1122,7 @@ if($holidayExist > 0)
 								?>
 							</span>
 						</h5>
-						<div class="row has-error">
+						<div class="row">
 							<input type='text' placeholder='Deduct' id='oldValeDeduct' name='oldValeDeduct'class='form-control input-sm pull-down' onchange='setoldvaleLimit(this)'>";
 						</div>
 					</div>

@@ -248,25 +248,13 @@ function checkloans(){
 	if(!sssVal){
 		// Set disabled to input field
 		sss.setAttribute('readonly','');
-		if(sss.parentElement.classList.contains('has-error')){
-			sss.parentElement.classList.remove('has-error');
-		}
-	}
-	else {
-		sss.setAttribute('required','');
 	}
 
 	if(!pagibigVal){
 		// Set disabled to input field
 		pagibig.setAttribute('readonly', '');
 	}
-	else {
-		pagibig.setAttribute('required','');
-	}
 
-	if(oldvaleVal) {
-		oldvale.setAttribute('required','');
-	}
 }
 
 function setsssLimit(value){
