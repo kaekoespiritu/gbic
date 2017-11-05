@@ -2,9 +2,7 @@
 <?php
 include('directives/session.php');
 require_once('directives/db.php');
-if(isset($_GET['site']) && isset($_GET['position']))
-{}
-else
+if(!isset($_GET['site']) && !isset($_GET['position']))
 {
 	header("location:payroll_login.php");
 }
@@ -539,13 +537,13 @@ if($holidayExist > 0)
 					// }
 					?>
 					<tr style="white-space: nowrap">
-						<td colspan="2" class="navibar col-md-1"><?php Print $day1 ?></td>
-						<td colspan="2" class="navibar col-md-1"><?php Print $day2 ?></td>
-						<td colspan="2" class="navibar col-md-1"><?php Print $day3 ?></td>
-						<td colspan="2" class="navibar col-md-1"><?php Print $day4 ?></td>
-						<td colspan="2" class="navibar col-md-1"><?php Print $day5 ?></td>
-						<td colspan="2" class="navibar col-md-1"><?php Print $day6 ?></td>
 						<td colspan="2" class="navibar col-md-1"><?php Print $day7 ?></td>
+						<td colspan="2" class="navibar col-md-1"><?php Print $day6 ?></td>
+						<td colspan="2" class="navibar col-md-1"><?php Print $day5 ?></td>
+						<td colspan="2" class="navibar col-md-1"><?php Print $day4 ?></td>
+						<td colspan="2" class="navibar col-md-1"><?php Print $day3 ?></td>
+						<td colspan="2" class="navibar col-md-1"><?php Print $day2 ?></td>
+						<td colspan="2" class="navibar col-md-1"><?php Print $day1 ?></td>
 					</tr>
 					<tr>
 						<td colspan="2">Wednesday</td>
@@ -1056,7 +1054,7 @@ if($holidayExist > 0)
 					}
 					else
 					{
-						$newVale = "N/A";
+						$newVale = "<span id = 'newValeText'>N/A</span>";
 					}
 
 							//Old Vale
@@ -1123,7 +1121,7 @@ if($holidayExist > 0)
 							</span>
 						</h5>
 						<div class="row">
-							<input type='text' placeholder='Deduct' id='oldValeDeduct' name='oldValeDeduct'class='form-control input-sm pull-down' onchange='setoldvaleLimit(this)'>";
+							<input type='text' placeholder='Deduct' id='oldValeDeduct' name='oldValeDeduct'class='form-control input-sm pull-down' onchange='setoldvaleLimit(this)'>
 						</div>
 					</div>
 
@@ -1228,11 +1226,11 @@ if($holidayExist > 0)
 							<div id="1">
 								<label class="control-label col-md-2" for="tools">Name</label>
 								<div class="col-md-4">
-									<input type="text" id="tools" name="toolname" class="form-control input-sm" onchange="checkName(this)">
+									<input type="text" id="tools" name="toolname[]" class="form-control input-sm" onchange="checkName(this)">
 								</div>
 								<label class="control-label col-md-1" for="price">Cost</label>
 								<div class="col-md-4">
-									<input type="number" id="price" name="toolprice" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">
+									<input type="number" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">
 								</div>
 							</div>	
 						</div>

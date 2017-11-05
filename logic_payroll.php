@@ -365,8 +365,10 @@
 	$outStandingBalance = 0;
 	$totalToolCost = 0;
 	$BoolTool = false; //Boolean to if there is more than 2 tools
+	Print "<script>console.log('toolNum: ".$toolNum."')</script>";
 	if($toolNum > 1)
 	{
+		Print "<script>console.log('More')</script>";
 		$toolQuery = "INSERT INTO tools(empid, tools, cost, date) VALUES";
 		for($counter = 0; $counter < $toolNum; $counter++)
 		{
@@ -400,6 +402,7 @@
 	}
 	else if(!empty($_POST['toolprice']) && !empty($_POST['toolname']))
 	{
+		Print "<script>console.log('One')</script>";
 		$BoolTool = true;//True to query the update 
 		$toolname = $_POST['toolname'];
 		$toolprice = $_POST['toolprice'];

@@ -16,10 +16,10 @@
 
 		var template = '<label class="control-label col-md-2" for="tools">Name</label>' +
 		'<div class="col-md-4">' +
-		'<input type="text" id="toolstemp" name="toolname" class="form-control input-sm" onkeypress="validateletter(event)" onchange="checkName(this)">' +
+		'<input type="text" id="toolstemp" name="toolname[]" class="form-control input-sm" onkeypress="validateletter(event)" onchange="checkName(this)">' +
 		'</div>' +
 		'<label class="control-label col-md-1" for="price">Cost</label>' +
-		'<div class="col-md-4"><input type="number" id="pricetemp" name="toolprice" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">' +
+		'<div class="col-md-4"><input type="number" id="pricetemp" name="toolprice[]" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">' +
 		'</div>';
 
 		div1.innerHTML = delLink + template;
