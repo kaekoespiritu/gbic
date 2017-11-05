@@ -53,7 +53,7 @@ include('directives/session.php');
 					<li>
 						<a href="employees.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a>
 					</li>
-					<li class="active">Choosing a site</li>
+					<li class="active">Site Movement</li>
 					<?php
 						$pendingSites = "SELECT * FROM site WHERE active = 'pending'";
 						$pendingQuery = mysql_query($pendingSites);
@@ -89,7 +89,7 @@ include('directives/session.php');
 		</div>
 
 	<div class="container pull-down">
-		<h3>Sites</h3>
+		<h3>Choose a site</h3>
 
 		<div class="col-md-9 col-md-offset-2">
 			<?php
