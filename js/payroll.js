@@ -88,7 +88,7 @@
 
 	// Adding new vale
 	function addvale() {
-
+		console.log("yow");
 		// Get current amount in vale
 		var original = document.querySelector(".vale");
 		var oldVale = original.innerHTML;
@@ -104,11 +104,11 @@
 		
 		builder = parseFloat(builder).toFixed(2);
 		// Get vale from modal and format to currency
-		var modalValue = document.querySelector("#newAddVale").value;
+		var modalValue = document.getElementById("newAddVale").value;
 		var addVale = parseFloat(modalValue).toFixed(2); 
-		var compute = parseFloat(addVale);
+		//var compute = parseFloat(addVale);
 		var child = document.getElementById('newValeText');
-		if(compute > 0)
+		if(addVale > 0)
 		{
 			// Show value to payroll page
 			child.innerHTML = addCommas(addVale);
@@ -119,7 +119,7 @@
 			child.innerHTML = "N/A";
 		}
 		// Save to hidden input for database access
-		
+		console.log("yow:"+modalValue);
 		var saveToAdd = document.querySelector(".added");
 		saveToAdd.value = modalValue;
 	}

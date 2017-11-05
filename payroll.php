@@ -1066,7 +1066,7 @@ if($holidayExist > 0)
 					}
 					else
 					{
-						$newVale = "<span id = 'newValeText'>N/A</span>";
+						$newVale = "N/A";
 					}
 
 							//Old Vale
@@ -1147,16 +1147,22 @@ if($holidayExist > 0)
 						<h5 class="text-right" style="white-space: nowrap;">
 							<span class="vale pull-right" id="parent">
 								<?php 
-								if($newVale != "<span id = 'newValeText'>N/A</span>")
-									Print $newVale;
+								if($newVale != "N/A")
+									Print "<span id = 'newValeText'>".$newVale."</span>";
 								else
-									Print $newVale;
+									Print "<span id = 'newValeText'>N/A</span>";
 								?>
 							</span>
 							<br>
 							<!-- <span id="dynamicCompute"></span> -->
 						</h5>
-						<?php Print "<input type='hidden' name='newVale' value='".$newVale."'>" ?>
+						<?php 
+						//hidden input the Current Newvale
+						if($newVale != "N/A")
+							Print "<input type='hidden' name='newVale' value='".$newVale."'>";
+						else
+							Print "<input type='hidden' name='newVale'";
+						?>
 						<input type="hidden" name="newValeAdded" class="added">
 
 						<div class="row" style="margin-top:9px">

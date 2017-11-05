@@ -306,7 +306,7 @@
 		if(mysql_num_rows($newValeQuery) > 0)
 		{
 			Print "<script>console.log('newValeAdded1')</script>";
-			$loanArr = mysql_fetch_assoc($Query);
+			$loanArr = mysql_fetch_assoc($newValeQuery);
 			//Loaned
 			$newValeBalance = $loanArr['balance'];
 			$LoanAdded = $DeductedLoan + $loanArr['balance'];
@@ -315,24 +315,37 @@
 			
 			$LoanBalance = abs($LoanBalance);//make it positive if ever it is negative
 			$Update1 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
-							VALUES('$empid', 'newVale', '$newValeBalance', '$LoanAdded', 'loaned', '$date', '$time', '1')";
-			$Update2 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
-							VALUES('$empid', 'newVale', '$LoanBalance', '$DeductedLoan', 'deducted', '$date', '$time', '0')";
+							VALUES('$empid', 'newVale', '$LoanAdded', '$LoanAdded', 'loaned', '$date', '$time', '1')";
+			
+			$loanCheck = "SELECT * FROM loans WHERE type='newVale' AND empid='$empid' ORDER BY date DESC, time DESC LIMIT 1";
+
 			mysql_query($Update1);
+			$payNewVale = mysql_query($loanCheck);
+			$newValeArr = mysql_fetch_assoc($payNewVale);
+			$newBalance = $newValeArr['balance'];
+
+			$Update2 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
+							VALUES('$empid', 'newVale', '0', '$newBalance', 'deducted', '$date', '$time', '0')";
 			mysql_query($Update2);
 		}
 		else//Employee has no newvale balance but added newvale in the payroll
 		{
 			Print "<script>console.log('newValeAdded2')</script>";
-			$loanArr = mysql_fetch_assoc($Query);
+			$loanArr = mysql_fetch_assoc($newValeQuery);
 			//Deducted loan
 			$LoanAdded = $DeductedLoan;
 			
 			$Update1 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
 							VALUES('$empid', 'newVale', '$DeductedLoan', '$DeductedLoan', 'loaned', '$date', '$time', '1')";
-			$Update2 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
-							VALUES('$empid', 'newVale', '0', '$DeductedLoan', 'deducted', '$date', '$time', '0')";
+
+			$loanCheck = "SELECT * FROM loans WHERE type='newVale' AND empid='$empid' ORDER BY date DESC, time DESC LIMIT 1";
 			mysql_query($Update1);
+			$payNewVale = mysql_query($loanCheck);
+			$newValeArr = mysql_fetch_assoc($payNewVale);
+			$newBalance = $newValeArr['balance'];
+
+			$Update2 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
+							VALUES('$empid', 'newVale', '0', '$newBalance', 'deducted', '$date', '$time', '0')";
 			mysql_query($Update2);
 		}
 		

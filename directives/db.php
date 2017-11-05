@@ -16,6 +16,11 @@ function numberExactFormat($number, $precision, $separator)//For number format
         $response .= $separator;
         $response .= substr($numberParts[1], 0, $precision);
     }
+    else
+    {
+    	$response .= $separator;
+    	$response .= "00";
+    }
     return $response;
 }
 ?>

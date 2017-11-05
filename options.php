@@ -3,7 +3,6 @@
 include('directives/session.php');
 include_once('directives/db.php');
 
-
 $user = $_SESSION['user_logged_in'];
 
 $admin = "SELECT * FROM administrator WHERE username = '$user'";

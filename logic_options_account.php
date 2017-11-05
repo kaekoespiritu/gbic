@@ -31,6 +31,7 @@ else if(!empty($_POST['newUsername']))
 {
 	$username = mysql_real_escape_string($_POST['newUsername']);
 	$newUsername = "UPDATE administrator SET username = '$username' WHERE username = '$user'";
+	$_SESSION['user_logged_in'] = $username;
 	mysql_query($newUsername);
 }
 else if(!empty($_POST['answer']))

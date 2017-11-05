@@ -70,7 +70,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 						if($subTotalRatePerDay == 0)
 							$subTotalRatePerDay = "--";
 						else
-							$subTotalRatePerDay = number_format($subTotalRatePerDay, 2, '.', ',');
+							$subTotalRatePerDay = numberExactFormat($subTotalRatePerDay, 2, '.');
 						if($numDays == 0)
 							$numDays = "--";
 					?>
@@ -80,14 +80,17 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 						<td><?php Print $numDays?></td>
 						<td><?php Print $subTotalRatePerDay?></td>
 					</tr>
+
 					<!-- Allowance -->
 					<?php
 						$subTotalAllowance = $empArr['allowance']*$payrollArr['num_days'];
-						$totalAllowance = $subTotalAllowance;//for the Subtotal of Earnings
+							$totalAllowance = $subTotalAllowance;//for the Subtotal of Earnings
+
+						// Print "<script>alert('".$totalAllowance." | ".$payrollArr['x_allowance']."')</script>";
 						if($subTotalAllowance == 0)
 							$subTotalAllowance = "--";
 						else
-							$subTotalAllowance = number_format($subTotalAllowance, 2, '.', ',');
+							$subTotalAllowance = numberExactFormat($subTotalAllowance, 2, '.');
 					?>
 					<tr>
 						<td>Allowance</td>
@@ -95,6 +98,25 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 						<td><?php Print $numDays?></td>
 						<td><?php Print $subTotalAllowance?></td>
 					</tr>
+
+					<!-- Extra Allowance -->
+
+					<?php
+					$xAllowance = 0;
+					if($payrollArr['x_allowance'] != 0)
+					{
+					Print "
+							<tr>
+								<td>Extra Allowance</td>
+								<td>".numberExactFormat($payrollArr['x_allowance'], 2, '.')."</td>
+								<td>--</td>
+								<td>".numberExactFormat($payrollArr['x_allowance'], 2, '.')."</td>
+							</tr>
+							";
+					$xAllowance = $payrollArr['x_allowance'];
+					}
+					
+					?>
 					<!-- Overtime -->
 					<?php
 						$subTotalOvertime = $payrollArr['ot_num']*$payrollArr['overtime'];
@@ -103,7 +125,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 						if($subTotalOvertime == 0)
 							$subTotalOvertime = "--";
 						else
-							$subTotalOvertime = number_format($subTotalOvertime, 2, '.', ',');
+							$subTotalOvertime = numberExactFormat($subTotalOvertime, 2, '.');
 						if($ot_num == 0)
 							$ot_num = "--";
 					?>
@@ -121,7 +143,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 						if($subTotalNightDifferential == 0)
 							$subTotalNightDifferential = "--";
 						else
-							$subTotalNightDifferential = number_format($subTotalNightDifferential, 2, '.', ',');
+							$subTotalNightDifferential = numberExactFormat($subTotalNightDifferential, 2, '.', ',');
 						if($nightdiffNum == 0)
 							$nightdiffNum = "--";
 					?>
@@ -139,7 +161,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 						if($subTotalSundayRate == 0)
 							$subTotalSundayRate = "--";
 						else
-							$subTotalSundayRate = number_format($subTotalSundayRate, 2, '.', ',');
+							$subTotalSundayRate = numberExactFormat($subTotalSundayRate, 2, '.');
 						if($sundayHrs == 0)
 							$sundayHrs = "--";
 					?>
@@ -157,7 +179,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 						if($subTotalSpecialHolidayRate == 0)
 							$subTotalSpecialHolidayRate = "--";
 						else
-							$subTotalSpecialHolidayRate = number_format($subTotalSpecialHolidayRate, 2, '.', ',');
+							$subTotalSpecialHolidayRate = numberExactFormat($subTotalSpecialHolidayRate, 2, '.');
 						if($regHolNum == 0)
 							$regHolNum = "--";
 					
@@ -176,7 +198,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 						if($subTotalRegularHolidayRate == 0)
 							$subTotalRegularHolidayRate = "--";
 						else
-							$subTotalRegularHolidayRate = number_format($subTotalRegularHolidayRate, 2, '.', ',');
+							$subTotalRegularHolidayRate = numberExactFormat($subTotalRegularHolidayRate, 2, '.');
 						if($speHolNum == 0)
 							$speHolNum = "--";
 						
@@ -188,13 +210,13 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 						<td><?php Print $subTotalRegularHolidayRate?></td>
 					</tr>
 					<?php
-						$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay;
+						$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance;
 						
 					?>
 					<tr style="font-family: QuicksandMed;">
 						<td colspan="2" class="active">Subtotal</td>
 						<td class="active"></td>
-						<td class="active"><?php Print number_format($totalEarnings, 2, '.', ',')?></td>
+						<td class="active"><?php Print numberExactFormat($totalEarnings, 2, '.')?></td>
 
 					</tr>
 				</tbody>
@@ -248,10 +270,9 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 							Print "	<tr>
 										<td>Outstanding Payable</td>
 										<td colspan='3'></td>
-										<td>".Print number_format($outstandingChecker['tools_outstanding'], 2, '.', ',')."</td>
+										<td>".Print numberExactFormat($outstandingChecker['tools_outstanding'], 2, '.', ',')."</td>
 									</tr>";
 					}
-					
 					
 				}
 				if($Notools)
@@ -265,7 +286,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 				if($toolSubTotal == 0)
 					$displayToolSubTotal = "--";
 				else
-					$displayToolSubTotal = number_format($toolSubTotal, 2, '.', ',');
+					$displayToolSubTotal = numberExactFormat($toolSubTotal, 2, '.');
 			?>
 			<!-- Rate per day -->
 					<tr style='font-family: QuicksandMed;''>
@@ -293,7 +314,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 							if($payrollArr['tax'] == 0)
 								Print "--";
 							else
-								Print number_format($payrollArr['tax'], 2, '.', ',');
+								Print numberExactFormat($payrollArr['tax'], 2, '.');
 							?>
 						</td>
 					</tr>
@@ -306,7 +327,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 							if($payrollArr['sss'] == 0)
 								Print "--";
 							else
-								Print number_format($payrollArr['sss'], 2, '.', ',');
+								Print numberExactFormat($payrollArr['sss'], 2, '.');
 							?>
 						</td>
 					</tr>
@@ -317,7 +338,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 							if($payrollArr['philhealth'] == 0)
 								Print "--";
 							else
-								Print number_format($payrollArr['philhealth'], 2, '.', ',');
+								Print numberExactFormat($payrollArr['philhealth'], 2, '.');
 							?>
 						</td>
 					</tr>
@@ -328,13 +349,13 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 							if($payrollArr['pagibig'] == 0)
 								Print "--";
 							else
-								Print number_format($payrollArr['pagibig'], 2, '.', ',');
+								Print numberExactFormat($payrollArr['pagibig'], 2, '.');
 							?>
 						</td>
 					</tr>
 					<tr class="active" style="font-family: QuicksandMed;">
 						<td>Subtotal</td>
-						<td><?php Print number_format($contributions, 2, '.', ',')?></td>
+						<td><?php Print numberExactFormat($contributions, 2, '.', ',')?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -352,7 +373,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 							if($payrollArr['new_vale'] == 0)
 								Print "--";
 							else
-								Print number_format($payrollArr['new_vale'], 2, '.', ',');
+								Print numberExactFormat($payrollArr['new_vale'], 2, '.');
 							?>
 						</td>
 					</tr>
@@ -363,7 +384,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 							if($payrollArr['old_vale'] == 0)
 								Print "--";
 							else
-								Print number_format($payrollArr['old_vale'], 2, '.', ',');
+								Print numberExactFormat($payrollArr['old_vale'], 2, '.');
 							?>
 						</td>
 					</tr>
@@ -376,7 +397,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 							if($payrollArr['loan_sss'] == 0)
 								Print "--";
 							else
-								Print number_format($payrollArr['loan_sss'], 2, '.', ',');
+								Print numberExactFormat($payrollArr['loan_sss'], 2, '.');
 							?>
 						</td>
 					</tr>
@@ -387,7 +408,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 							if($payrollArr['loan_pagibig'] == 0)
 								Print "--";
 							else
-								Print number_format($payrollArr['loan_pagibig'], 2, '.', ',');
+								Print numberExactFormat($payrollArr['loan_pagibig'], 2, '.');
 							?>
 						</td>
 					</tr>
@@ -398,7 +419,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 							if($totalLoans  == 0)
 								Print "--";
 							else
-								Print number_format($totalLoans, 2, '.', ',');
+								Print numberExactFormat($totalLoans, 2, '.');
 							?>
 						</td>
 					</tr>
@@ -415,14 +436,14 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 			  	<div class="col-md-3">
 			  		<h4><span class="glyphicon glyphicon-plus" style="color:green;"></span> Total Earnings:<br>
 			  			<b>
-			  				<?php Print number_format($totalEarnings, 2, '.', ',')?>
+			  				<?php Print numberExactFormat($totalEarnings, 2, '.')?>
 			  			</b>
 			  		</h4>
 			  	</div>
 			    <div class="col-md-3">
 			    	<h4><span class="glyphicon glyphicon-minus" style="color:red;"></span> Total Contributions:<br>
 			    		<strong>
-			    			<?php Print number_format($contributions, 2, '.', ',') ?>
+			    			<?php Print numberExactFormat($contributions, 2, '.') ?>
 			    		</strong>
 			    	</h4>
 			    </div>
@@ -430,7 +451,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 			    	<h4><span class="glyphicon glyphicon-minus" style="color:red;"></span> Total Loans:
 			    	<br>
 			    		<strong>
-			    			<?php Print number_format($totalLoans, 2, '.', ',') ?>
+			    			<?php Print numberExactFormat($totalLoans, 2, '.') ?>
 			    		</strong>
 			    	</h4>
 			    </div>
@@ -438,7 +459,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 			    	<h4><span class="glyphicon glyphicon-minus" style="color:red;"></span> Total Tools:
 			    	<br> 
 			    		<b>
-			    			<?php Print number_format($toolSubTotal, 2, '.', ',') ?>
+			    			<?php Print numberExactFormat($toolSubTotal, 2, '.') ?>
 			    		</b>
 			    	</h4>
 			    </div>
@@ -447,7 +468,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 			    	$grandTotal = abs($grandTotal);
 			    ?>
 			    <div class="col-md-12">
-			    	<h3><u>Grand total: <?php Print number_format($grandTotal, 2, '.', ',') ?></u></h3>
+			    	<h3><u>Grand total: <?php Print numberExactFormat($grandTotal, 2, '.') ?></u></h3>
 				</div>
 			  </div>
 			</div>
