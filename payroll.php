@@ -68,7 +68,7 @@ if($holidayExist > 0)
 						<li><a href="payroll_table.php?position=<?php Print $position?>&site=<?php Print $site?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Table of Employees</a></li>
 						<li class="active"><?php Print "Payroll for site " .$site." on ".$date ?></li>
 
-						<input type="submit" value="Save and compute" class="btn btn-success pull-right" style="margin-right:5px" onclick="saveChanges()" href="#">
+						<input type="submit" value="Save and compute" class="btn btn-success pull-right" style="margin-right:5px" href="#">
 					</ol>
 				</div>
 
@@ -1030,7 +1030,11 @@ if($holidayExist > 0)
 					if(mysql_num_rows($sssQuery) > 0)
 					{
 						$sssArr = mysql_fetch_assoc($sssQuery);
-						$sss = $sssArr['balance'];
+
+						if($sssArr['balance'] > 0)
+							$sss = $sssArr['balance'];
+						else
+							$sss = "N/A";
 					}
 					else
 					{
@@ -1040,7 +1044,11 @@ if($holidayExist > 0)
 					if(mysql_num_rows($pagibigQuery) > 0)
 					{
 						$pagibigArr = mysql_fetch_assoc($pagibigQuery);
-						$pagibig = $pagibigArr['balance'];
+
+						if($pagibigArr['balance'] > 0)
+							$pagibig = $pagibigArr['balance'];
+						else
+							$pagibig = "N/A";
 					}
 					else
 					{
@@ -1050,7 +1058,11 @@ if($holidayExist > 0)
 					if(mysql_num_rows($newValeQuery) > 0)
 					{
 						$newValeArr = mysql_fetch_assoc($newValeQuery);
-						$newVale = $newValeArr['balance'];
+
+						if($newValeArr['balance'] > 0)
+							$newVale = $newValeArr['balance'];
+						else
+							$newVale = "N/A";
 					}
 					else
 					{
@@ -1061,7 +1073,11 @@ if($holidayExist > 0)
 					if(mysql_num_rows($oldValeQuery) > 0)
 					{
 						$oldValeArr = mysql_fetch_assoc($oldValeQuery);
-						$oldVale = $oldValeArr['balance'];
+
+						if($newValeArr['balance'] > 0)
+							$oldVale = $oldValeArr['balance'];
+						else
+							$oldVale = "N/A";
 					}
 					else
 					{

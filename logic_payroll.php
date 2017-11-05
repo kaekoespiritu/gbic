@@ -360,99 +360,108 @@
 	$compLoan = $loan_sss + $loan_pagibig + $loan_oldVale + $loan_newVale;
 
 //Tools Computation -------------------------------------------------------------------
-
-	$toolNum = count($_POST['toolname']);
+	$tools_paid = 0;
 	$outStandingBalance = 0;
-	$totalToolCost = 0;
-	$BoolTool = false; //Boolean to if there is more than 2 tools
-	Print "<script>console.log('toolNum: ".$toolNum."')</script>";
-	if($toolNum > 1)
+	if(!empty($_POST['toolname'][0]))
 	{
-		Print "<script>console.log('More')</script>";
-		$toolQuery = "INSERT INTO tools(empid, tools, cost, date) VALUES";
-		for($counter = 0; $counter < $toolNum; $counter++)
+		Print "<script>console.log('lala: ".$_POST['toolname']."')</script>";
+		$toolNum = count($_POST['toolname']);
+		
+		$totalToolCost = 0;
+		$BoolTool = false; //Boolean to if there is more than 2 tools
+		Print "<script>console.log('toolNum: ".$toolNum."')</script>";
+		if($toolNum > 1)
 		{
-			$toolname = $_POST['toolname'][$counter];
-			$toolprice = $_POST['toolprice'][$counter];
-			$totalToolCost += $toolprice;//gets the total tool cost
+			Print "<script>console.log('More')</script>";
+			$toolQuery = "INSERT INTO tools(empid, tools, cost, date) VALUES";
+			for($counter = 0; $counter < $toolNum; $counter++)
+			{
+				$toolname = $_POST['toolname'][$counter];
+				$toolprice = $_POST['toolprice'][$counter];
+				$totalToolCost += $toolprice;//gets the total tool cost
 
-			if($toolQuery != "INSERT INTO tools(empid, tools, cost, date) VALUES")
-			{
-				$toolQuery .= ",";//Add comma after every additional values
+				if($toolQuery != "INSERT INTO tools(empid, tools, cost, date) VALUES")
+				{
+					$toolQuery .= ",";//Add comma after every additional values
+				}
+				$toolQuery .= "('$empid',
+								'$toolname',
+								'$toolprice',
+								'$date')"; 
 			}
-			$toolQuery .= "('$empid',
-							'$toolname',
-							'$toolprice',
-							'$date')"; 
-		}
-		if(!empty($_POST['previousPayable']))
-		{
-			//Gets the new Previous payable
-			if(($_POST['previousPayable'] + $totalToolCost) != $_POST['amountToPay'])
+			if(!empty($_POST['previousPayable']))
 			{
-				$outStandingBalance = ($_POST['previousPayable'] + $totalToolCost) - $_POST['amountToPay'];
+				//Gets the new Previous payable
+				if(($_POST['previousPayable'] + $totalToolCost) != $_POST['amountToPay'])
+				{
+					$outStandingBalance = ($_POST['previousPayable'] + $totalToolCost) - $_POST['amountToPay'];
+					$outStandingBalance = abs($outStandingBalance);
+				}
+			}
+			else if($totalToolCost != $_POST['amountToPay'])
+			{
+				$outStandingBalance = $totalToolCost - $_POST['amountToPay'];
 				$outStandingBalance = abs($outStandingBalance);
 			}
 		}
-		else if($totalToolCost != $_POST['amountToPay'])
+		else if(!empty($_POST['toolprice']) && !empty($_POST['toolname']))
 		{
-			$outStandingBalance = $totalToolCost - $_POST['amountToPay'];
-			$outStandingBalance = abs($outStandingBalance);
-		}
-	}
-	else if(!empty($_POST['toolprice']) && !empty($_POST['toolname']))
-	{
-		Print "<script>console.log('One')</script>";
-		$BoolTool = true;//True to query the update 
-		$toolname = $_POST['toolname'];
-		$toolprice = $_POST['toolprice'];
+			Print "<script>console.log('One')</script>";
+			$BoolTool = true;//True to query the update 
+			$toolname = $_POST['toolname'];
+			$toolprice = $_POST['toolprice'];
 
-		//Print "<script>console.log('toolname: ".$toolname."')</script>";
-		//Print "<script>console.log('toolprice: ".$toolprice."')</script>";
-		//Print "<script>console.log('amountToPay: ".$_POST["amountToPay"]."')</script>";
+			//Print "<script>console.log('toolname: ".$toolname."')</script>";
+			//Print "<script>console.log('toolprice: ".$toolprice."')</script>";
+			//Print "<script>console.log('amountToPay: ".$_POST["amountToPay"]."')</script>";
 
-		if(!empty($_POST['previousPayable']))
-		{
-			//Gets the new Previous payable
-			if(($_POST['previousPayable'] + $toolprice) != $_POST['amountToPay'])
+			if(!empty($_POST['previousPayable']))
 			{
-				$outStandingBalance = ($_POST['previousPayable'] + $toolprice) - $_POST['amountToPay'];
+				//Gets the new Previous payable
+				if(($_POST['previousPayable'] + $toolprice) != $_POST['amountToPay'])
+				{
+					$outStandingBalance = ($_POST['previousPayable'] + $toolprice) - $_POST['amountToPay'];
+					$outStandingBalance = abs($outStandingBalance);
+				}
+			}
+			else if($toolprice != $_POST['amountToPay'])
+			{
+				$outStandingBalance = $toolprice - $_POST['amountToPay'];
+				$outStandingBalance = abs($outStandingBalance);
+			}
+			$toolQuery = "INSERT INTO tools(empid, tools, cost, date) VALUES(	'$empid',
+																				'$toolname',
+																				'$toolprice',
+																				'$date')"; 
+		}
+		else if(!empty($_POST['previousPayable']))// If admin did not have any tools but have outstanding balance
+		{
+			if($_POST['previousPayable'] != $_POST['amountToPay'])
+			{
+				$outStandingBalance = $_POST['previousPayable'] - $_POST['amountToPay'];
 				$outStandingBalance = abs($outStandingBalance);
 			}
 		}
-		else if($toolprice != $_POST['amountToPay'])
+		if(isset($toolQuery))
 		{
-			$outStandingBalance = $toolprice - $_POST['amountToPay'];
-			$outStandingBalance = abs($outStandingBalance);
+			$toolsChecker = mysql_query("SELECT * FROM tools WHERE empid='$empid' AND date='$date'");
+			if(mysql_num_rows($toolsChecker) == 0)
+			{
+				mysql_query($toolQuery);
+			}
+			else//if employee has tools already
+			{//replace the old tools that the employee made 
+				mysql_query("DELETE FROM tools WHERE empid='$empid' AND date = '$date'");
+				mysql_query($toolQuery);
+			}
 		}
-		$toolQuery = "INSERT INTO tools(empid, tools, cost, date) VALUES(	'$empid',
-																			'$toolname',
-																			'$toolprice',
-																			'$date')"; 
+		$tools_paid = $_POST['amountToPay'];
 	}
-	else if(!empty($_POST['previousPayable']))// If admin did not have any tools but have outstanding balance
+	else//if they did not input any tools when they get back
 	{
-		if($_POST['previousPayable'] != $_POST['amountToPay'])
-		{
-			$outStandingBalance = $_POST['previousPayable'] - $_POST['amountToPay'];
-			$outStandingBalance = abs($outStandingBalance);
-		}
+		mysql_query("DELETE FROM tools WHERE empid='$empid' AND date = '$date'");
 	}
-	if(isset($toolQuery))
-	{
-		$toolsChecker = mysql_query("SELECT * FROM tools WHERE empid='$empid' AND date='$date'");
-		if(mysql_num_rows($toolsChecker) == 0)
-		{
-			mysql_query($toolQuery);
-		}
-		else//if employee has tools already
-		{//replace the old tools that the employee made 
-			mysql_query("DELETE FROM tools WHERE empid='$empid' AND date = '$date'");
-			mysql_query($toolQuery);
-		}
-	}
-	$tools_paid = $_POST['amountToPay'];
-
+	
 
 // --------------------------------- GRAND TOTAL -----------------------------------------
 

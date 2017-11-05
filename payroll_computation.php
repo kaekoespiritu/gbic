@@ -40,7 +40,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 	<div class="col-md-10 col-md-offset-1 pull-down">
 		<ol class="breadcrumb text-left" style="margin-bottom: 0px">
 
-			<li><a href="payroll.php?site=<?php Print $empArr['site']?>&position=<?php Print $empArr['position']?>&empid=<?php Print $empid?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Payroll</a></li>
+			<li><a href="logic_payroll_backPayroll.php?e=<?php Print $empid?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Payroll</a></li>
 			<li class="active">Computation for <?php Print $empArr['lastname'].", ".$empArr['firstname']." the ". $empArr['position']." from ". $empArr['site']?>
 			</li>
 			<button class="btn btn-success pull-right">Choose next employee</button>
