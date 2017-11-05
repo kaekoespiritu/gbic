@@ -34,6 +34,7 @@ include('directives/session.php');
 		<ol class="breadcrumb text-left">
 			<li><a href="payroll_site.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a></li>
 			<li class="active">Position</li>
+			<button class="btn btn-primary pull-right">Print Payroll sheet</button>
 		</ol>
 	</div>
 	</div>
