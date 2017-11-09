@@ -1,22 +1,28 @@
 	
 	document.getElementById("payroll").setAttribute("style", "background-color: #10621e;");
 
-	var ct = 1;
+	
 
 	function addRow(){
-		ct++;
+		var toolsLength = document.getElementsByName('toolname[]').length;
+		
+		var ct = parseInt(toolsLength);
+
+		
+		
 		var div1 = document.createElement('div');
 		div1.id = ct;
+		div1.setAttribute('name','toolsRow[]');
 
 		var delLink = '<div class="col-md-1 nopadding">'+
-		'<button class="btn-sm btn btn-danger" onclick="deleteRow('+ ct +')">'+
+		'<button class="btn-sm btn btn-danger" name="rowDelete[]" onclick="deleteRow('+ ct +')">'+
 		'<span class="glyphicon glyphicon-minus"></span>'+
 		'</button>'+
 		'</div>';
 
 		var template = '<label class="control-label col-md-2" for="tools">Name</label>' +
 		'<div class="col-md-4">' +
-		'<input type="text" id="toolstemp" name="toolname[]" class="form-control input-sm" onkeypress="validateletter(event)" onchange="checkName(this)">' +
+		'<input type="text" id="toolstemp" name="toolname[]" class="form-control input-sm" onchange="checkName(this)">' +
 		'</div>' +
 		'<label class="control-label col-md-1" for="price">Cost</label>' +
 		'<div class="col-md-4"><input type="number" id="pricetemp" name="toolprice[]" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">' +
@@ -24,6 +30,7 @@
 
 		div1.innerHTML = delLink + template;
 		document.getElementById('toolform').appendChild(div1);
+
 	}
 
 	function deleteRow(eleId){
@@ -33,6 +40,17 @@
 
 		getTotal();
 
+		var toolsLength = document.getElementsByName('toolsRow[]').length;
+		if(toolsLength > 1)
+		{
+			for(var count = 0; count < toolsLength; count++)
+			{
+
+				console.log("count: "+count);
+				document.getElementsByName('toolsRow[]')[count].setAttribute('id',count+1);
+				document.getElementsByName('rowDelete[]')[count].setAttribute('onclick','deleteRow('+(count+1)+')');
+			}
+		}
 		console.log(parentEle);
 		console.log(ele);
 		console.log(parentEle.children);
@@ -88,7 +106,7 @@
 
 	// Adding new vale
 	function addvale() {
-		console.log("yow");
+		//console.log("yow");
 		// Get current amount in vale
 		var original = document.querySelector(".vale");
 		var oldVale = original.innerHTML;
@@ -108,18 +126,49 @@
 		var addVale = parseFloat(modalValue).toFixed(2); 
 		//var compute = parseFloat(addVale);
 		var child = document.getElementById('newValeText');
+		var oNewVale = document.getElementsByName('newVale')[0].value;//this is the old new-vale
+		var modalNewVale = document.getElementsByName('newValeAdded')[0].value;//this is the new-vale from Modal
+		modalNewVale = modalValue;
 		if(addVale > 0)
 		{
+			console.log('1');
+			if(oNewVale != "")
+			{
+				console.log('2');
+				if(child.innerHTML != "N/A")
+				{
+					console.log('3');
+					var newVale = parseFloat(oNewVale) + parseFloat(addVale);
+					var oNewVale = parseFloat(oNewVale).toFixed(2);
+					console.log(newVale);
+					newVale = parseFloat(newVale).toFixed(2);
+					child.innerHTML = null;
+					child.innerHTML += addCommas(oNewVale)+"<br><u>+ "+addCommas(addVale)+"</u><br>"+addCommas(newVale);
+					console.log(child);
+				}
+				else
+				{
+					console.log('4');
+					child.innerHTML = addCommas(addVale);
+				}
+				
+			}
+			else
+			{
+				console.log('5');
+				child.innerHTML = addCommas(addVale);
+			}
 			// Show value to payroll page
-			child.innerHTML = addCommas(addVale);
-			console.log(child);
+			
 		}
 		else
 		{
-			child.innerHTML = "N/A";
+			console.log('6');
+			child.innerHTML = addCommas(childValue);
 		}
+		
 		// Save to hidden input for database access
-		console.log("yow:"+modalValue);
+		//console.log("yow:"+modalValue);
 		var saveToAdd = document.querySelector(".added");
 		saveToAdd.value = modalValue;
 	}
@@ -128,9 +177,9 @@
 
 	// Add sum of all items and show amount to deduct
 	var totalcost = 0;
-	var length = document.getElementsByClassName('toolpricetemp').length;
-	var toolprices = document.getElementsByClassName('toolpricetemp');
-	var names = document.getElementsByName('toolname');
+	var length = document.getElementsByName('toolname[]').length;
+	var toolprices = document.getElementsByName('toolprice[]');
+	var names = document.getElementsByName('toolname[]');
 	var amountToPay = document.getElementById('amountToPay');
 
 	// For the first tool
@@ -153,48 +202,48 @@
 		}	
 	}
 	
-	console.log(names[0].parentElement.classList.contains('has-success'));
+	//console.log(names[0].parentElement.classList.contains('has-success'));
 
 	// Looping through the dynamic list of tools
-	if( length >= 1 ) { // If there are many tools 
-		for(var i = 0; i < length; i++) {
+	if( length > 1 ) { // If there are many tools 
+		for(var i = 1; i < length; i++) {
 			if(toolprices[i].value!="") {
 				totalcost += parseFloat(toolprices[i].value);
 				// console.log("Total Cost = " + totalcost + " | toolpricetemp = " + parseInt(toolprices[i].value));
 
-				// If the element was removed
-				if(!document.getElementById(i+1)){
-					totalcost -= parseFloat(toolprices[i].value);
-					// console.log("Total Cost = " + totalcost + " | toolpricetemp = " + parseInt(toolprices[i].value) + " | div = " + i);
-				}
+				// // If the element was removed
+				// if(!document.getElementById(i)){
+				// 	totalcost -= parseFloat(toolprices[i].value);
+				// 	// console.log("Total Cost = " + totalcost + " | toolpricetemp = " + parseInt(toolprices[i].value) + " | div = " + i);
+				// }
 				
 				// Require name if there is an amount placed
-				names[i+1].setAttribute('required','');
-				if(names[i+1].value!==""){
-					names[i+1].parentElement.classList.add('has-success');
+				names[i].setAttribute('required','');
+				if(names[i].value!=""){
+					names[i].parentElement.classList.add('has-success');
 				}
 				else {
-					names[i+1].parentElement.classList.add('has-error');
+					names[i].parentElement.classList.add('has-error');
 				}
 
 			}
 			else {
-				names[i+1].removeAttribute('required','');
-					if(names[i+1].parentElement.classList.contains('has-error')){
-						names[i+1].parentElement.classList.remove('has-error');
+				names[i].removeAttribute('required','');
+					if(names[i].parentElement.classList.contains('has-error')){
+						names[i].parentElement.classList.remove('has-error');
 					}
-					if(names[i+1].parentElement.classList.contains('has-success')){
-						names[i+1].parentElement.classList.remove('has-success');
+					if(names[i].parentElement.classList.contains('has-success')){
+						names[i].parentElement.classList.remove('has-success');
 					}	
 					break;
 			}
-			console.log(names[i].innerHTML);
+			// console.log(names[i].innerHTML);
 		}
 
 		totalcost += parseFloat(document.getElementById('price').value);
 		// console.log("Inside IF: " + totalcost);
 	}
-	else if(length == 0) { // If only 1 tool was entered
+	else if(length == 1) { // If only 1 tool was entered
 		totalcost = parseFloat(document.getElementById('price').value);
 		// console.log("Inside ELSE: " + totalcost);
 	}
@@ -211,11 +260,11 @@
 	if(amountToPay.hasAttribute('readonly') && totalcost !== ""){
 		amountToPay.removeAttribute('readonly');
 		amountToPay.parentElement.classList.add('has-error');
-		amountToPay.setAttribute('required','');
+		//amountToPay.setAttribute('required','');
 	}
 	else if (isNaN(totalcost)){
 		amountToPay.setAttribute('readonly','');
-		amountToPay.removeAttribute('required','');
+		//amountToPay.removeAttribute('required','');
 		if(amountToPay.parentElement.classList.contains('has-error')){
 			amountToPay.parentElement.classList.remove('has-error');
 		}

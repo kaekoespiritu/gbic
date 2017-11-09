@@ -14,6 +14,8 @@ $date = $_POST['date'];
 $employee = "SELECT * FROM employee WHERE empid = '$empid'";
 $employeeQuery = mysql_query($employee);
 $empArr = mysql_fetch_assoc($employeeQuery);
+$site = $empArr['site'];
+$position = $empArr['position'];
 
 $payroll = "SELECT * FROM payroll WHERE date = '$date' AND empid = '$empid'";
 $payrollQuery = mysql_query($payroll);
@@ -43,7 +45,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 			<li><a href="logic_payroll_backPayroll.php?e=<?php Print $empid?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Payroll</a></li>
 			<li class="active">Computation for <?php Print $empArr['lastname'].", ".$empArr['firstname']." the ". $empArr['position']." from ". $empArr['site']?>
 			</li>
-			<button class="btn btn-success pull-right">Choose next employee</button>
+			<a class="btn btn-success pull-right" href="payroll_table.php?position=<?php Print $position?>&site=<?php Print $site?>">Choose next employee</a>
 		</ol>
 	</div>
 
@@ -64,9 +66,33 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 				<tbody>
 					<!-- Rate per day -->
 					<?php
-						$subTotalRatePerDay = $payrollArr['num_days'] * $empArr['rate'];
-						$totalRatePerDay = $subTotalRatePerDay;//for the Subtotal of Earnings
+						
 						$numDays = $payrollArr['num_days']." Day(s)";
+
+						$ratePerDaySub = 0;
+						if(!empty($payrollArr['sunday_hrs']))
+						{
+							if($payrollArr['sunday_hrs'] >= 8)
+							{
+								$ratePerDaySub = $payrollArr['num_days'] - 1;
+								$ratePerDaySub = abs($ratePerDaySub);
+							}
+							else
+							{
+								$ratePerDaySub = ($payrollArr['sunday_hrs']/8)-$payrollArr['num_days'];
+								$ratePerDaySub = abs($ratePerDaySub);
+							}
+							$ratePerDayDisp = $ratePerDaySub." Day(s)";
+
+						}
+						else
+						{
+							$ratePerDaySub = $payrollArr['num_days'];
+							$ratePerDayDisp = $payrollArr['num_days']." Day(s)";
+						}
+						$subTotalRatePerDay = $ratePerDaySub * numberExactFormat($empArr['rate'],2,'.');
+						$totalRatePerDay = $subTotalRatePerDay;//for the Subtotal of Earnings
+
 						if($subTotalRatePerDay == 0)
 							$subTotalRatePerDay = "--";
 						else
@@ -77,7 +103,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					<tr>
 						<td>Rate per day</td>
 						<td><?php Print $empArr['rate']?></td>
-						<td><?php Print $numDays?></td>
+						<td><?php Print $ratePerDayDisp?></td>
 						<td><?php Print $subTotalRatePerDay?></td>
 					</tr>
 

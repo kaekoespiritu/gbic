@@ -225,10 +225,10 @@ if($holidayExist > 0)
 						$holiday = "SELECT * FROM holiday WHERE date = '$holDateChecker' ORDER BY date DESC";
 						$holidayQuery = mysql_query($holiday);
 						$holidayExist = mysql_num_rows($holidayQuery);
-						Print "<script>console.log('".$holidayExist."')</script>";
+						//Print "<script>console.log('".$holidayExist."')</script>";
 						if($holidayExist > 0)//if holiday exist
 						{
-							Print "<script>console.log('holiday')</script>";
+							//Print "<script>console.log('holiday')</script>";
 							$holidayRow = mysql_fetch_assoc($holidayQuery);
 							$holDay = date('l', strtotime($holidayRow['date']));
 							if($holidayCounter > 0)//if holiday lasted for more than 1day
@@ -471,7 +471,7 @@ if($holidayExist > 0)
 					$holFri = false; 
 					$holSat = false;
 					$holSun = false;
-					Print "<script>console.log('holidayCounter: ".$holidayCounter."')</script>";
+					//Print "<script>console.log('holidayCounter: ".$holidayCounter."')</script>";
 					if($holidayCounter > 1)//Output as Hidden Name, Type, Date of holiday 
 					{
 						$holNameArr = explode("+", $holidayName);
@@ -482,7 +482,7 @@ if($holidayExist > 0)
 						$holidayCounter -= 1;
 						for($a = 0; $a <= $holidayCounter; $a++)
 						{
-							Print "<script>console.log('".$holNameArr[$a]." + ".$a."')</script>";
+							//Print "<script>console.log('".$holNameArr[$a]." + ".$a."')</script>";
 							Print "<input type='hidden' name='holidayName[]' value='".$holNameArr[$a]."'>";
 							Print "<input type='hidden' name='holidayType[]' value='".$holTypeArr[$a]."'>";
 							Print "<input type='hidden' name='holidayDate[]' value='".$holDateArr[$a]."'>";
@@ -1148,7 +1148,7 @@ if($holidayExist > 0)
 							<span class="vale pull-right" id="parent">
 								<?php 
 								if($newVale != "N/A")
-									Print "<span id = 'newValeText'>".$newVale."</span>";
+									Print "<span id = 'newValeText' value='".$newVale."'>".$newVale."</span>";
 								else
 									Print "<span id = 'newValeText'>N/A</span>";
 								?>
@@ -1161,7 +1161,7 @@ if($holidayExist > 0)
 						if($newVale != "N/A")
 							Print "<input type='hidden' name='newVale' value='".$newVale."'>";
 						else
-							Print "<input type='hidden' name='newVale'";
+							Print "<input type='hidden' name='newVale'>";
 						?>
 						<input type="hidden" name="newValeAdded" class="added">
 
@@ -1245,7 +1245,7 @@ if($holidayExist > 0)
 						<h4 class="text-left">Tools</h4>
 						<a class="btn btn-sm btn-primary col-md-1" onclick="addRow()"><span class="glyphicon glyphicon-plus"></span></a>
 						<div class="form-group" id="toolform">
-							<div id="1">
+							<div>
 								<label class="control-label col-md-2" for="tools">Name</label>
 								<div class="col-md-4">
 									<input type="text" id="tools" name="toolname[]" class="form-control input-sm" onchange="checkName(this)">

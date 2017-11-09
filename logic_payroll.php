@@ -23,28 +23,28 @@
 //Daily Workhours ----------------------------------------------------------------------
 //if employee is absent on these days Post value will not be available
 	$WorkHrsArr = "";//This is to array all these values
-	if(isset($_POST['wedWorkHrs']))
+	if(!empty($_POST['wedWorkHrs']))
 	{
 		$wedWorkHrs = $_POST['wedWorkHrs'];
 		if($WorkHrsArr != "")
 			$WorkHrsArr .= ","; 
 		$WorkHrsArr .= $wedWorkHrs;
 	}
-	if(isset($_POST['thuWorkHrs']))
+	if(!empty($_POST['thuWorkHrs']))
 	{
 		$thuWorkHrs = $_POST['thuWorkHrs'];
 		if($WorkHrsArr != "")
 			$WorkHrsArr .= ","; 
 		$WorkHrsArr .= $thuWorkHrs;
 	}
-	if(isset($_POST['friWorkHrs']))
+	if(!empty($_POST['friWorkHrs']))
 	{
 		$friWorkHrs = $_POST['friWorkHrs'];
 		if($WorkHrsArr != "")
 			$WorkHrsArr .= ","; 
 		$WorkHrsArr .= $friWorkHrs;
 	}
-	if(isset($_POST['satWorkHrs']))
+	if(!empty($_POST['satWorkHrs']))
 	{
 		$satWorkHrs = $_POST['satWorkHrs'];
 		if($WorkHrsArr != "")
@@ -54,8 +54,10 @@
 	$compSunday = 0;//Pre set value for Sunday Computation
 	$SundayRatePerHour = (($dailyRate + ($dailyRate * .30))/8);//Sunday Hourly Rate
 	$sunWorkHrs = 0;
-	if(isset($_POST['sunWorkHrs']))
+	$sundayBool = false;//Boolean to filter the sunday from the work days
+	if(!empty($_POST['sunWorkHrs']))
 	{
+		$sundayBool = true;
 		$sunWorkHrs = $_POST['sunWorkHrs'];
 		if($WorkHrsArr != "")
 			$WorkHrsArr .= ","; 
@@ -66,14 +68,14 @@
 		$compSunday = $SundayRatePerHour * $sunWorkHrs;
 // Print "<script>console.log('sunWorkHrs: ".$sunWorkHrs."')</script>";
 	}
-	if(isset($_POST['monWorkHrs']))
+	if(!empty($_POST['monWorkHrs']))
 	{
 		$monWorkHrs = $_POST['monWorkHrs'];
 		if($WorkHrsArr != "")
 			$WorkHrsArr .= ","; 
 		$WorkHrsArr .= $monWorkHrs;
 	}
-	if(isset($_POST['tueWorkHrs']))
+	if(!empty($_POST['tueWorkHrs']))
 	{
 		$tueWorkHrs = $_POST['tueWorkHrs'];
 		if($WorkHrsArr != "")
@@ -84,9 +86,22 @@
 //Computes the Overall Work Days ------------------------------------------------------
 	$workHrs = explode("," ,$WorkHrsArr);
 	$overallWorkDays = 0;
+	$sunday_Att = 0;//Preset the sunday attendance to filter out the overal to the sunday
 	foreach($workHrs as $hrsCheck)
 	{
-		if($hrsCheck < 8)
+		if($sundayBool)
+		{
+			if($hrsCheck < 8)
+			{
+				$overallWorkDays = (($hrsCheck / 8) + $overallWorkDays);
+			}
+			else
+			{
+				$overallWorkDays++;
+				$sunday_Att = 1;
+			}
+		}
+		else if($hrsCheck < 8)
 		{
 			$overallWorkDays = (($hrsCheck / 8) + $overallWorkDays);
 		}
@@ -101,6 +116,7 @@
 	$compOT = 0;
 	$totalOT = 0;
 	$OtRatePerHour = (($dailyRate + ($dailyRate * .25))/8);//Overtime Hourly Rate
+	$OtRatePerHour = numberExactFormat($OtRatePerHour, 2, '.');
 	if(!empty($_POST['totalOverTime']))
 	{
 		$totalOT = $_POST['totalOverTime'];//Total Overtime by employee
@@ -377,7 +393,7 @@
 	$outStandingBalance = 0;
 	if(!empty($_POST['toolname'][0]))
 	{
-		Print "<script>console.log('lala: ".$_POST['toolname']."')</script>";
+		//Print "<script>console.log('lala: ".$_POST['toolname']."')</script>";
 		$toolNum = count($_POST['toolname']);
 		
 		$totalToolCost = 0;
@@ -417,12 +433,12 @@
 				$outStandingBalance = abs($outStandingBalance);
 			}
 		}
-		else if(!empty($_POST['toolprice']) && !empty($_POST['toolname']))
+		else if(!empty($_POST['toolprice'][0]) && !empty($_POST['toolname'][0]))
 		{
 			Print "<script>console.log('One')</script>";
 			$BoolTool = true;//True to query the update 
-			$toolname = $_POST['toolname'];
-			$toolprice = $_POST['toolprice'];
+			$toolname = $_POST['toolname'][0];
+			$toolprice = $_POST['toolprice'][0];
 
 			//Print "<script>console.log('toolname: ".$toolname."')</script>";
 			//Print "<script>console.log('toolprice: ".$toolprice."')</script>";
@@ -439,7 +455,9 @@
 			}
 			else if($toolprice != $_POST['amountToPay'])
 			{
+				//Print "<script>alert('".$toolprice."')</script>";
 				$outStandingBalance = $toolprice - $_POST['amountToPay'];
+
 				$outStandingBalance = abs($outStandingBalance);
 			}
 			$toolQuery = "INSERT INTO tools(empid, tools, cost, date) VALUES(	'$empid',
@@ -455,6 +473,7 @@
 				$outStandingBalance = abs($outStandingBalance);
 			}
 		}
+
 		if(isset($toolQuery))
 		{
 			$toolsChecker = mysql_query("SELECT * FROM tools WHERE empid='$empid' AND date='$date'");
@@ -507,6 +526,7 @@
 									cola,
 									sunday_rate,
 									sunday_hrs,
+									sunday_att,
 									nightdiff_rate,
 									nightdiff_num,
 									nightdiff,
@@ -538,6 +558,7 @@
 														'$cola',
 														'$SundayRatePerHour',
 														'$sunWorkHrs',
+														'$sunday_Att',
 														'$NdRatePerHour',
 														'$totalND',
 														'$compND',
@@ -570,6 +591,7 @@
 									cola = '$cola',
 									sunday_rate = '$SundayRatePerHour',
 									sunday_hrs = '$sunWorkHrs',
+									sunday_att = '$sunday_Att',
 									nightdiff_rate = '$NdRatePerHour',
 									nightdiff_num = '$totalND',
 									nightdiff = '$compND',

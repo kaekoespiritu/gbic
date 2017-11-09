@@ -9,8 +9,8 @@ if(!isset($_GET['site']) && !isset($_GET['position']))
 
 $site = $_GET['site'];
 $position = $_GET['position'];
-$date = strftime("%B %d, %Y");
-
+// $date = strftime("%B %d, %Y"); 
+$date = "October 24, 2017";//Test date
 ?>
 <html>
 <head>
@@ -64,8 +64,6 @@ $date = strftime("%B %d, %Y");
 			<!-- Date -->
 			<div class="col-md-3">
 				<h3 style="margin-top:0px"><?php 
-				date_default_timezone_set('Asia/Hong_Kong');
-				$date = date('F d, Y', time());
 				echo $date;
 				?></h3>
 			</div>
@@ -83,18 +81,28 @@ $date = strftime("%B %d, %Y");
 						<?php 
 							if(isset($_GET['document']))
 							{
-								if($_GET['document'] == "complete")
+								if($_GET['document'] != "null")
+								{
+									if($_GET['document'] == "complete")
 									Print '	<option value="complete" selected>Complete</option>
 											<option value="incomplete" >Incomplete</option>';
-								else
+									else
 									Print '	<option value="complete">Complete</option>
 											<option value="incomplete" selected>Incomplete</option>';
+								}
+								else//default
+								{
+									Print '	<option value="complete">Complete</option>
+											<option value="incomplete">Incomplete</option>';
+								}
+								
 							}
-							else
+							else//default
 							{
 								Print '	<option value="complete">Complete</option>
 										<option value="incomplete">Incomplete</option>';
 							}
+							
 						?>
 					</select>
 				</div>
@@ -107,14 +115,22 @@ $date = strftime("%B %d, %Y");
 						<?php 
 							if(isset($_GET['status']))
 							{
-								if($_GET['status'] == "complete")
-									Print '	<option value="complete" selected>Complete</option>
-											<option value="incomplete" >Incomplete</option>';
-								else
+								if($_GET['status'] != "null")
+								{
+									if($_GET['status'] == "complete")
+										Print '	<option value="complete" selected>Complete</option>
+												<option value="incomplete" >Incomplete</option>';
+									else
+										Print '	<option value="complete">Complete</option>
+												<option value="incomplete" selected>Incomplete</option>';
+								}
+								else//default
+								{
 									Print '	<option value="complete">Complete</option>
-											<option value="incomplete" selected>Incomplete</option>';
+											<option value="incomplete">Incomplete</option>';
+								}
 							}
-							else
+							else//default
 							{
 								Print '	<option value="complete">Complete</option>
 										<option value="incomplete">Incomplete</option>';
@@ -135,7 +151,7 @@ $date = strftime("%B %d, %Y");
 						<td>Employee ID</td>
 						<td style='width:200px !important;'>Name</td>
 						<td>Payroll status</td>
-						<td>Incomplete documents</td>
+						<td>Document status</td>
 						<td>Loans</td>
 						<td>Action</td>
 					</tr>
@@ -165,6 +181,12 @@ $date = strftime("%B %d, %Y");
 						$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'AND position = '$position' AND complete_doc = '$documentFilter'";
 					}
 					// Status Filter
+					else if(isset($_GET['status']))
+					{
+						Print "<script>alert('1')</script>";
+						$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname FROM employee AS p INNER JOIN payroll AS p ON e.empid = p.empid WHERE e.empid = '$site' AND e.position = '$position'";
+						
+					}
 					//Default
 					else 
 					{
@@ -175,7 +197,7 @@ $date = strftime("%B %d, %Y");
 					//$employee = "SELECT * FROM employee WHERE employment_status = 1 ";
 					$employeeQuery = mysql_query($employee);
 
-
+					Print "<script>alert('".mysql_num_rows($employeeQuery)."')</script>";
 					while($row = mysql_fetch_assoc($employeeQuery))
 					{
 						$empid = $row['empid'];//Employee ID
@@ -333,14 +355,22 @@ $date = strftime("%B %d, %Y");
 						}
 						//$loans = "SELECT * FROM loans WHERE empid = '$empid'";
 						//$loansQuery = mysql_query($loans);
-
+						//Payroll Status
+						$payrollChecker = "SELECT * FROM payroll WHERE empid = '$empid' AND date='$date'";
+						$payrollQuery = mysql_query($payrollChecker);
+						$payrollStatus = "Incomplete";
+						Print '<script>console.log("'.$payrollChecker.'")</script>';
+						if(mysql_num_rows($payrollQuery) > 0)
+						{
+							$payrollStatus = "Complete";	
+						}
 						Print "	<tr id=".$empid.">
 									<td>".$empid."</td>
 									<td>".$row['lastname'].", ".$row['firstname']."</td>
-									<td class='payrollStatus'>Incomplete</td>
+									<td class='payrollStatus'>".$payrollStatus."</td>
 									<td>". $document ."</td>
 									<td>". $loan ."</td>
-									<td><a class='btn btn-primary' href='payroll.php?site=". $site ."&position=". $position ."&empid=".$empid."'>View Payroll</a></td>
+									<td><a class='btn btn-primary' href='payroll.php?site=". $site ."&position=". $position ."&empid=".$empid."'>Start Payroll</a></td>
 								</tr>";
 					}
 					?>
@@ -408,18 +438,19 @@ $date = strftime("%B %d, %Y");
 
 
 		window.onload =	function completePayroll(){
-			var checker = document.querySelector('.payrollStatus');
-			if(checker != null)
+			//var checker = document.querySelector('.payrollStatus');
+			if(document.querySelector('.payrollStatus') != null)
 			{
+				//alert('yea');
 				var status = document.getElementsByClassName('payrollStatus');
 
 				for(var i = 0; i < status.length; i++){
 					if(status[i].innerText == 'Complete'){// Changing color of row to green when status is complete
 						status[i].parentNode.setAttribute('class','success');
 					}
-					else if(status[i].innerText == 'Incomplete'){// Change button label if incomplete
-						status[i].nextElementSibling.nextElementSibling.nextElementSibling.innerHTML = '<a class="btn btn-primary" href="payroll.php?site=<?php Print $site?>&position=<?php Print $position?>&empid=<?php Print $empid?>">Start Payroll</a>';
-					}
+					// else if(status[i].innerText == 'Incomplete'){// Change button label if incomplete
+					// 	status[i].nextElementSibling.nextElementSibling.nextElementSibling.innerHTML = '<a class="btn btn-primary" href="payroll.php?site=<?php //Print $site?>&position=<?php //Print $position?>&empid=<?php //Print $empid?>">Start Payroll</a>';
+					// }
 				}
 			}
 		}
@@ -427,7 +458,7 @@ $date = strftime("%B %d, %Y");
 		// Clearing filters
 		function clearFilter() {
 			localStorage.clear();
-			window.location.assign("payroll_table.php?documents=null&status=null");
+			window.location.assign("payroll_table.php?position=<?php Print $position?>&site=<?php Print $site?>");
 		}
 	</script>
 </body>

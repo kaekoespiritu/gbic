@@ -1014,12 +1014,14 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		row.querySelector('.nightdiff').value = "";
 		row.querySelector('.timein1').placeholder = "";
 		row.querySelector('.timeout1').placeholder = "";
-		if(row.querySelector('.halfdayChk').disabled == false)
+
+		if(!row.querySelector('.halfdayChk').checked)
 		{
+			console.log('yea');
 			row.querySelector('.timein2').placeholder = "";
 			row.querySelector('.timeout2').placeholder = "";
 		}
-		
+		console.log('yow');
 		//for hidden rows
 		row.querySelector('.workinghoursH').value = "";
 		row.querySelector('.overtimeH').value = "";

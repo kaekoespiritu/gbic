@@ -133,7 +133,7 @@ function attendance ()
 									</td>
 								<!-- Half Day Checkbox-->
 									<td>
-										<input type='checkbox' value='' name='halfday[".$counter."]'>
+										<input type='checkbox' onclick='halfDay(\"". $row_employee['empid'] ."\")' class='halfdayChk' name='halfday[".$counter."]' disabled>
 									</td>
 								<!-- AFTER BREAK Time In -->
 									<td>
@@ -205,7 +205,7 @@ function attendance ()
 					{
 						Print 	"<!-- Half Day Checkbox-->
 									<td>
-										<input type='checkbox' class='halfdayChk' onclick='halfDay(\"". $row_employee['empid'] ."\")' name='halfday[".$counter."]'>
+										<input type='checkbox' class='halfdayChk' onclick='halfDay(\"". $row_employee['empid'] ."\")' name='halfday[".$counter."]' disabled>
 									</td>";
 						Print	"<!-- AFTER BREAK Time In -->
 									<td>
