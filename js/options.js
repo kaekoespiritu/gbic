@@ -9,10 +9,40 @@
 
 
 		// Open and close payroll
-		function () {
-			
+		function setPayroll() {
+			// Get value of open and close dropdown
+			var open = document.getElementById('open');
+			var close = document.getElementById('close');
+			var openIndex = open.selectedIndex;
+			var closeIndex = close.selectedIndex;
+
+			// selectedIndex = 0-6
+			// options[#].text = days of week
+
+			/* 
+			0 - Monday 
+			1 - Tuesday
+			2 - Wednesday
+			3 - Thursday
+			4 - Friday
+			5 - Saturday
+			6 - Sunday
+			*/
+
+			// If open is set, be sure that close is only +/- 1 away from selection
+			// Prompt an error for selecting a close payroll that exceeds said limit
+			// Static open, close will determine the validity of duration
+			// Can be more or less than make a new variable
+
+			if(openIndex > closeIndex+2){
+				alert("You have selected an invalid combination.");
+			}
+			if(closeIndex > openIndex+2){
+				alert("You have selected an invalid combination.");
+			}
+
+			// 
 		}
-		
 
 		function hideRestrictions() {
 			var admin = document.getElementById('adminradio');

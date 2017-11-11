@@ -60,7 +60,7 @@ $adminRole = $adminArr['role'];
 						</tr>
 						<tr>
 							<td>
-								<select class="form-control" onchange="setPayroll()">
+								<select class="form-control" onchange="setPayroll()" id="open">
 									<option value="Monday">Monday</option>
 									<option value="Tuesday">Tuesday</option>
 									<option value="Wednesday">Wednesday</option>
@@ -71,7 +71,8 @@ $adminRole = $adminArr['role'];
 								</select>
 							</td>
 							<td>
-								<select class="form-control" onchange="setPayroll()">
+								<select class="form-control" onchange="setPayroll()" id="close">
+									<option disabled selected>Choose a day</option>
 									<option value="Monday">Monday</option>
 									<option value="Tuesday">Tuesday</option>
 									<option value="Wednesday">Wednesday</option>
