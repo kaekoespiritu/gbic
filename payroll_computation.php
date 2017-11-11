@@ -313,8 +313,8 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					$displayToolSubTotal = "--";
 				else
 					$displayToolSubTotal = numberExactFormat($toolSubTotal, 2, '.');
-				if(!empty($_POST['tools_paid']))
-					$displayToolPayed = numberExactFormat($_POST['tools_paid'], 2, '.');
+				if(!empty($payrollArr['tools_paid']))
+					$displayToolPayed = numberExactFormat($payrollArr['tools_paid'], 2, '.');
 				else
 					$displayToolPayed = "--";
 			?>
@@ -325,13 +325,17 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 						<td class='active'><?php Print $displayToolSubTotal?></td>
 					</tr>
 					<?php
-					if(!empty($_POST['tools_paid']))
+					Print "<script>alert('1')</script>";
+					if(!empty($payrollArr['tools_paid']))
+					{
+						Print "<script>alert('2')</script>";
 						Print 
 							"<tr style='font-family: QuicksandMed;''>
 								<td class='active'>Amount paid</td>
 								<td colspan='3' class='active'></td>
-								<td class='active'>".$displayToolSubTotal."</td>
+								<td class='active'>".$displayToolPayed."</td>
 							</tr>";
+					}
 					?>
 				</tbody>
 			</table>
@@ -498,12 +502,12 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 			    	<h4><span class="glyphicon glyphicon-minus" style="color:red;"></span> Total Tools:
 			    	<br> 
 			    		<b>
-			    			<?php Print numberExactFormat($toolSubTotal, 2, '.') ?>
+			    			<?php Print numberExactFormat($payrollArr['tools_paid'], 2, '.') ?>
 			    		</b>
 			    	</h4>
 			    </div>
 			    <?php
-			    	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($toolSubTotal);
+			    	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($payrollArr['tools_paid']);
 			    	$grandTotal = abs($grandTotal);
 			    ?>
 			    <div class="col-md-12">
