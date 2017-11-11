@@ -294,7 +294,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 						$outstandingChecker = mysql_fetch_assoc($toolsCheckerQuery);
 						$toolSubTotal += $outstandingChecker['tools_outstanding'];
 							Print "	<tr>
-										<td>Outstanding Payable</td>
+										<td>Previous Payable</td>
 										<td colspan='3'></td>
 										<td>".Print numberExactFormat($outstandingChecker['tools_outstanding'], 2, '.', ',')."</td>
 									</tr>";
@@ -318,25 +318,34 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 				else
 					$displayToolPayed = "--";
 			?>
-			<!-- Rate per day -->
-					<tr style='font-family: QuicksandMed;''>
-						<td class='active'>Subtotal</td>
-						<td colspan='3' class='active'></td>
-						<td class='active'><?php Print $displayToolSubTotal?></td>
-					</tr>
+					
 					<?php
-					Print "<script>alert('1')</script>";
-					if(!empty($payrollArr['tools_paid']))
+					
+
+					if(!empty($payrollArr['tools_paid']))//Tools paid
 					{
-						Print "<script>alert('2')</script>";
 						Print 
 							"<tr style='font-family: QuicksandMed;''>
-								<td class='active'>Amount paid</td>
-								<td colspan='3' class='active'></td>
-								<td class='active'>".$displayToolPayed."</td>
+								<td>Amount Paid</td>
+								<td colspan='3' ></td>
+								<td>".$displayToolPayed."</td>
+							</tr>";
+					}
+					if(!empty($payrollArr['tools_outstanding']))//outstanding Payable
+					{
+						Print 
+							"<tr style='font-family: QuicksandMed;''>
+								<td>Outstanding Payable</td>
+								<td colspan='3' ></td>
+								<td>".numberExactFormat($payrollArr['tools_outstanding'], 2, '.')."</td>
 							</tr>";
 					}
 					?>
+					<tr style='font-family: QuicksandMed;''>
+						<td class='active'>Subtotal</td>
+						<td colspan='3' class='active'></td>
+						<td class='active'><?php Print $displayToolPayed?></td>
+					</tr>
 				</tbody>
 			</table>
 			
