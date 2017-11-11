@@ -158,15 +158,15 @@ $date = "October 24, 2017";//Test date
 					<?php
 					if(isset($_POST['txt_search']))
 					{
-						Print "<script>alert('lo')</script>";
+						Print "<script>alert('1')</script>";
 						$find = $_POST['txt_search'];
 						$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site' AND position = '$position' AND (empid LIKE '%$find%' OR
 							firstname LIKE '%$find%' OR
 							lastname LIKE '%$find%') ORDER BY position";
 
 					}
-					// Document Filter
-					else if(isset($_GET['document']))
+					// Document Filter and Status Filter
+					else if(isset($_GET['document']) && isset($_GET['status']))
 					{
 						if($_GET['document'] == "complete")
 						{
@@ -178,14 +178,35 @@ $date = "October 24, 2017";//Test date
 						}
 						//Print "<script>alert('".$documentFilter."')</script>";
 						$statusFilter = $_GET['document'];
-						$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'AND position = '$position' AND complete_doc = '$documentFilter'";
-					}
-					// Status Filter
-					else if(isset($_GET['status']))
-					{
-						Print "<script>alert('1')</script>";
-						$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname FROM employee AS p INNER JOIN payroll AS p ON e.empid = p.empid WHERE e.empid = '$site' AND e.position = '$position'";
-						
+
+						if($_GET['document'] == "complete" || $_GET['document'] == "incomplete")
+						{
+							Print "<script>console.log('1')</script>";
+							if($_GET['status'] == "complete")
+							{
+								Print "<script>console.log('2')</script>";
+								$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname, e.position, e.site FROM employee AS e INNER JOIN payroll AS p ON e.empid = p.empid WHERE e.site = '$site' AND e.position = '$position' AND e.complete_doc = '$documentFilter'";
+							}
+							else
+							{
+								Print "<script>console.log('3')</script>";
+								$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'AND position = '$position' AND complete_doc = '$documentFilter'";
+							}
+						}
+						else if($_GET['status'] == "complete" || $_GET['status'] == "incomplete")
+						{
+							Print "<script>console.log('4')</script>";
+							if($_GET['document'] == "complete")
+							{
+								Print "<script>console.log('5')</script>";
+								$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname, e.position, e.site FROM employee AS e INNER JOIN payroll AS p ON e.empid = p.empid WHERE e.site = '$site' AND e.position = '$position' AND e.complete_doc = '$documentFilter'";
+							}
+							else
+							{
+								Print "<script>console.log('6')</script>";
+								$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname, e.position, e.site FROM employee AS e INNER JOIN payroll AS p ON e.empid = p.empid WHERE e.site = '$site' AND e.position = '$position'";
+							}
+						}
 					}
 					//Default
 					else 
@@ -196,183 +217,191 @@ $date = "October 24, 2017";//Test date
 
 					//$employee = "SELECT * FROM employee WHERE employment_status = 1 ";
 					$employeeQuery = mysql_query($employee);
-
-					Print "<script>alert('".mysql_num_rows($employeeQuery)."')</script>";
-					while($row = mysql_fetch_assoc($employeeQuery))
+					if(!$employeeQuery)
 					{
-						$empid = $row['empid'];//Employee ID
+						Print "<script>alert('fail')</script>";
+					}
+					Print "<script>alert('num: ".mysql_num_rows($employeeQuery)."')</script>";
+					if(mysql_num_rows($employeeQuery) > 0)
+					{
+						while($row = mysql_fetch_assoc($employeeQuery))
+						{
 
-						if($row['complete_doc'] == 1)// For employee document
-						{
-							$document = "Complete";
-						}
-						else
-						{
-							$bool = false;
-							$document = "Incomplete - ";
-							if($row['sss'] == 0)//Checks if SSS is not complete yet
+							$empid = $row['empid'];//Employee ID
+
+							if($row['complete_doc'] == 1)// For employee document
 							{
-								$document .= "SSS";
-								$bool = true;
+								$document = "Complete";
 							}
-							if($bool)//for commas
+							else
 							{
-								$document .= ", ";
 								$bool = false;
+								$document = "Incomplete - ";
+								if($row['sss'] == 0)//Checks if SSS is not complete yet
+								{
+									$document .= "SSS";
+									$bool = true;
+								}
+								if($bool)//for commas
+								{
+									$document .= ", ";
+									$bool = false;
+								}
+								if($row['pagibig'] == 0)
+								{
+									$document .= "PAGIBIG";
+									$bool = true;
+								}
+								if($bool)//for commas
+								{
+									$document .= ", ";
+									$bool = false;
+								}
+								if($row['philhealth'] == 0)
+								{
+									$document .= "PhilHealth";
+								}
+								$document = trim($document);
+								$commaChecker = substr($document, -1); 
+
+								if($commaChecker == ",") // Removes the comma if there is no following value
+								{
+									$document = substr($document, 0, -1);
+								}
+								
+								
 							}
-							if($row['pagibig'] == 0)
+							// LOANS
+							$getSSS = "SELECT sss FROM loans WHERE empid = '$empid' AND sss IS NOT NULL ORDER BY date DESC";
+							$getPAGIBIG = "SELECT pagibig FROM loans WHERE empid = '$empid' AND pagibig IS NOT NULL ORDER BY date DESC";
+							$getVALE = "SELECT vale FROM loans WHERE empid = '$empid' AND vale IS NOT NULL ORDER BY date DESC";
+
+							$sssQuery = mysql_query($getSSS);
+							$pagibigQuery = mysql_query($getPAGIBIG);
+							$valeQuery = mysql_query($getVALE);
+							$sss = "";
+							$pagibig = "";
+							$vale = "";
+							if($sssQuery)
 							{
-								$document .= "PAGIBIG";
-								$bool = true;
+								while($sssLatest = mysql_fetch_assoc($sssQuery))
+								{
+									if($sssLatest['sss'] != NULL)
+									{
+										$sss = "SSS";
+										break 1;
+									}
+									else
+									{
+										$sss = "";
+									}
+								}
 							}
-							if($bool)//for commas
+							else
 							{
-								$document .= ", ";
-								$bool = false;
+								$sss = "";
 							}
-							if($row['philhealth'] == 0)
+							if($pagibigQuery)
 							{
-								$document .= "PhilHealth";
+								while($pagibigLatest = mysql_fetch_assoc($pagibigQuery))
+								{
+									if($pagibigLatest['pagibig'] != NULL)
+									{
+										$pagibig = "PAGIBIG";
+										break 1;
+									}
+									else
+									{
+										$pagibig = "";
+									}
+								}
 							}
-							$document = trim($document);
-							$commaChecker = substr($document, -1); 
+							else
+							{
+								$pagibig = "";
+							}
+							if($valeQuery)
+							{
+								while($valeLatest = mysql_fetch_assoc($valeQuery))
+								{
+									if($valeLatest['vale'] != NULL)
+									{
+										$vale = "Vale";
+										break 1;
+									}
+									else
+									{
+										$vale = "";
+									}
+								}
+							}
+							else
+							{
+								$vale = "";
+							}
+							$loan = "";
+							$comma = false;
+							$bool_loan = true;
+							if($sss != "")//Checks if there is Loan on SSS
+							{
+								$loan .= $sss; 
+								$comma = true;
+								$bool_loan = false;
+							}
+							if($comma)
+							{
+								$loan .= ", "; 
+								$comma = false;
+							}
+							if($pagibig != "")//Checks if there is Loan on PAGIBIG
+							{
+								$loan .= $pagibig; 
+								$comma = true;
+								$bool_loan = false;
+							}
+							if($comma)
+							{
+								$loan .= ", "; 
+								$comma = false;
+							}
+							if($vale != "")//Checks if there is Loan on VALE
+							{
+								$loan .= $vale; 
+								$bool_loan = false;
+							}
+							if($bool_loan)
+							{
+								$loan = "None";
+							}
+							$loan = trim($loan);
+							$commaChecker = substr($loan, -1); 
 
 							if($commaChecker == ",") // Removes the comma if there is no following value
 							{
-								$document = substr($document, 0, -1);
+								$loan = substr($loan, 0, -1);
 							}
-							
-							
-						}
-						// LOANS
-						$getSSS = "SELECT sss FROM loans WHERE empid = '$empid' AND sss IS NOT NULL ORDER BY date DESC";
-						$getPAGIBIG = "SELECT pagibig FROM loans WHERE empid = '$empid' AND pagibig IS NOT NULL ORDER BY date DESC";
-						$getVALE = "SELECT vale FROM loans WHERE empid = '$empid' AND vale IS NOT NULL ORDER BY date DESC";
-
-						$sssQuery = mysql_query($getSSS);
-						$pagibigQuery = mysql_query($getPAGIBIG);
-						$valeQuery = mysql_query($getVALE);
-						$sss = "";
-						$pagibig = "";
-						$vale = "";
-						if($sssQuery)
-						{
-							while($sssLatest = mysql_fetch_assoc($sssQuery))
+							//$loans = "SELECT * FROM loans WHERE empid = '$empid'";
+							//$loansQuery = mysql_query($loans);
+							//Payroll Status
+							$payrollChecker = "SELECT * FROM payroll WHERE empid = '$empid' AND date='$date'";
+							$payrollQuery = mysql_query($payrollChecker);
+							$payrollStatus = "Incomplete";
+							Print '<script>console.log("'.$payrollChecker.'")</script>';
+							if(mysql_num_rows($payrollQuery) > 0)
 							{
-								if($sssLatest['sss'] != NULL)
-								{
-									$sss = "SSS";
-									break 1;
-								}
-								else
-								{
-									$sss = "";
-								}
+								$payrollStatus = "Complete";	
 							}
+							Print "	<tr id=".$empid.">
+										<td>".$empid."</td>
+										<td>".$row['lastname'].", ".$row['firstname']."</td>
+										<td class='payrollStatus'>".$payrollStatus."</td>
+										<td>". $document ."</td>
+										<td>". $loan ."</td>
+										<td><a class='btn btn-primary' href='payroll.php?site=". $site ."&position=". $position ."&empid=".$empid."'>Start Payroll</a></td>
+									</tr>";
 						}
-						else
-						{
-							$sss = "";
-						}
-						if($pagibigQuery)
-						{
-							while($pagibigLatest = mysql_fetch_assoc($pagibigQuery))
-							{
-								if($pagibigLatest['pagibig'] != NULL)
-								{
-									$pagibig = "PAGIBIG";
-									break 1;
-								}
-								else
-								{
-									$pagibig = "";
-								}
-							}
-						}
-						else
-						{
-							$pagibig = "";
-						}
-						if($valeQuery)
-						{
-							while($valeLatest = mysql_fetch_assoc($valeQuery))
-							{
-								if($valeLatest['vale'] != NULL)
-								{
-									$vale = "Vale";
-									break 1;
-								}
-								else
-								{
-									$vale = "";
-								}
-							}
-						}
-						else
-						{
-							$vale = "";
-						}
-						$loan = "";
-						$comma = false;
-						$bool_loan = true;
-						if($sss != "")//Checks if there is Loan on SSS
-						{
-							$loan .= $sss; 
-							$comma = true;
-							$bool_loan = false;
-						}
-						if($comma)
-						{
-							$loan .= ", "; 
-							$comma = false;
-						}
-						if($pagibig != "")//Checks if there is Loan on PAGIBIG
-						{
-							$loan .= $pagibig; 
-							$comma = true;
-							$bool_loan = false;
-						}
-						if($comma)
-						{
-							$loan .= ", "; 
-							$comma = false;
-						}
-						if($vale != "")//Checks if there is Loan on VALE
-						{
-							$loan .= $vale; 
-							$bool_loan = false;
-						}
-						if($bool_loan)
-						{
-							$loan = "None";
-						}
-						$loan = trim($loan);
-						$commaChecker = substr($loan, -1); 
-
-						if($commaChecker == ",") // Removes the comma if there is no following value
-						{
-							$loan = substr($loan, 0, -1);
-						}
-						//$loans = "SELECT * FROM loans WHERE empid = '$empid'";
-						//$loansQuery = mysql_query($loans);
-						//Payroll Status
-						$payrollChecker = "SELECT * FROM payroll WHERE empid = '$empid' AND date='$date'";
-						$payrollQuery = mysql_query($payrollChecker);
-						$payrollStatus = "Incomplete";
-						Print '<script>console.log("'.$payrollChecker.'")</script>';
-						if(mysql_num_rows($payrollQuery) > 0)
-						{
-							$payrollStatus = "Complete";	
-						}
-						Print "	<tr id=".$empid.">
-									<td>".$empid."</td>
-									<td>".$row['lastname'].", ".$row['firstname']."</td>
-									<td class='payrollStatus'>".$payrollStatus."</td>
-									<td>". $document ."</td>
-									<td>". $loan ."</td>
-									<td><a class='btn btn-primary' href='payroll.php?site=". $site ."&position=". $position ."&empid=".$empid."'>Start Payroll</a></td>
-								</tr>";
 					}
+					
 					?>
 
 				</table>

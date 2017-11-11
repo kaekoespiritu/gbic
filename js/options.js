@@ -1,4 +1,4 @@
-		// Changes color of active tab to admin options
+// Changes color of active tab to admin options
 		document.getElementById("adminOptions").setAttribute("style", "background-color: #10621e;");
 
 		// Save function to database
@@ -8,41 +8,133 @@
 		}
 
 
-		// Open and close payroll
-		function setPayroll() {
-			// Get value of open and close dropdown
-			var open = document.getElementById('open');
-			var close = document.getElementById('close');
-			var openIndex = open.selectedIndex;
-			var closeIndex = close.selectedIndex;
+		// Checkbox to trigger dropdown
+		function triggerInput(dayOfWeek)
+		{
+			//alert('yow');
+			var checkbox = document.getElementsByName('checkboxes'), i;
+			var checkboxlength = document.querySelectorAll('input[type=checkbox]').length;
+			var changeDefault = document.getElementById(dayOfWeek);
 
-			// selectedIndex = 0-6
-			// options[#].text = days of week
+			// Disabled dropdown when checkbox is deselected
+			if(document.getElementById(dayOfWeek+"BOX").checked==false)
+			{
+				var cellUNCHECK = document.getElementById(dayOfWeek);
+				cellUNCHECK.setAttribute('disabled', '');
 
-			/* 
-			0 - Monday 
-			1 - Tuesday
-			2 - Wednesday
-			3 - Thursday
-			4 - Friday
-			5 - Saturday
-			6 - Sunday
-			*/
-
-			// If open is set, be sure that close is only +/- 1 away from selection
-			// Prompt an error for selecting a close payroll that exceeds said limit
-			// Static open, close will determine the validity of duration
-			// Can be more or less than make a new variable
-
-			if(openIndex > closeIndex+2){
-				alert("You have selected an invalid combination.");
-			}
-			if(closeIndex > openIndex+2){
-				alert("You have selected an invalid combination.");
+				if(changeDefault.options[2].hasAttribute('selected'))
+				{
+					changeDefault.options[2].removeAttribute('selected');
+					changeDefault.options[0].setAttribute('selected','');
+					document.getElementById('close').value = "";//set hidden text to the day
+				}
+					
+				else if(changeDefault.options[1].hasAttribute('selected'))
+				{
+					changeDefault.options[1].removeAttribute('selected');
+					changeDefault.options[0].setAttribute('selected','');
+					document.getElementById('open').value = "";//set hidden text to the day
+				}
 			}
 
-			// 
+			// Enable dropdown when checkbox is selected
+			else if(document.getElementById(dayOfWeek+"BOX").checked==true)
+			{
+				var cellCHECK = document.getElementById(dayOfWeek);
+				cellCHECK.removeAttribute('disabled');
+				cellCHECK.options[0].removeAttribute('selected');
+				cellCHECK.options[1].setAttribute('selected','');
+				if(document.getElementById('open').value == "") 
+				{
+					document.getElementById('open').value = dayOfWeek;//set hidden text to the day
+				}
+				else
+				{
+					document.getElementById('close').value = dayOfWeek;//set hidden text to the day
+				}
+				
+			}
+
+			// Checking if 2 checkboxes are active
+			if(document.querySelectorAll('input[type=checkbox]:checked').length === 2)
+			{
+				changeDefault.options[2].setAttribute('selected','');
+				document.getElementById('close').value = dayOfWeek;//set hidden text to the day
+				
+				 for(i = 0; i <= checkboxlength; i++)
+				 {
+
+				 	if(!checkbox[i].checked)
+				 	{
+				 		checkbox[i].setAttribute('disabled', 'disabled');	
+				 	}
+
+				 	if(checkbox[i].checked==true)
+				 	{
+				 		console.log(changeDefault);
+				 	}
+				 }
+			} 
+			
+			// Checking if only 1 checkbox is active
+			if(document.querySelectorAll('input[type=checkbox]:checked').length === 1)
+			{		
+				for(var i = 0; i <= checkboxlength; i++)
+				{
+				    if(!checkbox[i].checked)
+				    {
+				    	checkbox[i].removeAttribute('disabled');
+				    	document.getElementById(dayOfWeek).options[0].selected = true;
+				    }   
+				}
+			}
 		}
+
+		// Swapping elements after selecting a different dropdown option
+		function swap(chosenDay) {
+			var day = ['Monday', 'Tuesday','Wednesday','Thursday','Friday','Saturday'];		
+			var first = "";	
+
+			for(var a = 0; a < 7; a++)
+			{
+				
+				if(chosenDay != day[a])
+				{
+					if(document.getElementById(day[a]).disabled == false)
+					{	
+						//alert(chosenDay +" "+ day[a]);
+						if(document.getElementById(day[a]).options[1].selected == true) // OPEN
+						{
+							document.getElementById(day[a]).options[2].selected = true; // CLOSE
+							document.getElementById(day[a]).options[1].selected = false;
+							document.getElementById(chosenDay).options[1].selected = true;
+							document.getElementById('close').value = day[a];//set hidden text to the day
+							document.getElementById('open').value = chosenDay;//set hidden text to the day
+							//alert('yeah');
+
+						}
+						else if(document.getElementById(day[a]).options[2].selected == true)
+						{
+							document.getElementById(day[a]).options[1].selected = true; // CLOSE
+							document.getElementById(day[a]).options[2].selected = false;
+							document.getElementById(chosenDay).options[2].selected = true;
+							document.getElementById('open').value = day[a];//set hidden text to the day
+							document.getElementById('close').value = chosenDay;//set hidden text to the day
+							//alert('yeah');
+						}
+					}
+				}
+			}
+		}
+
+		function siteRemove(){
+			var a = confirm("Are you sure you want to Archive these Site(s)?")
+			if(a)
+			{
+				document.getElementById('siteForm').submit();
+			}
+		}
+		
 
 		function hideRestrictions() {
 			var admin = document.getElementById('adminradio');
