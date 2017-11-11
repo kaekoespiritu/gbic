@@ -7,8 +7,6 @@
 		var toolsLength = document.getElementsByName('toolname[]').length;
 		
 		var ct = parseInt(toolsLength);
-
-		
 		
 		var div1 = document.createElement('div');
 		div1.id = ct;
@@ -129,6 +127,8 @@
 		var oNewVale = document.getElementsByName('newVale')[0].value;//this is the old new-vale
 		var modalNewVale = document.getElementsByName('newValeAdded')[0].value;//this is the new-vale from Modal
 		modalNewVale = modalValue;
+		//checker for N/A value
+
 		if(addVale > 0)
 		{
 			console.log('1');
@@ -158,13 +158,14 @@
 				console.log('5');
 				child.innerHTML = addCommas(addVale);
 			}
-			// Show value to payroll page
-			
+			// Show value to payroll page	
 		}
 		else
 		{
 			console.log('6');
-			child.innerHTML = addCommas(childValue);
+			child.innerHTML = oNewVale;
+			if(modalValue === "")
+			child.innerHTML = "N/A";
 		}
 		
 		// Save to hidden input for database access
