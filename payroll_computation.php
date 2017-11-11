@@ -313,6 +313,10 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					$displayToolSubTotal = "--";
 				else
 					$displayToolSubTotal = numberExactFormat($toolSubTotal, 2, '.');
+				if(!empty($_POST['tools_paid']))
+					$displayToolPayed = numberExactFormat($_POST['tools_paid'], 2, '.');
+				else
+					$displayToolPayed = "--";
 			?>
 			<!-- Rate per day -->
 					<tr style='font-family: QuicksandMed;''>
@@ -320,6 +324,15 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 						<td colspan='3' class='active'></td>
 						<td class='active'><?php Print $displayToolSubTotal?></td>
 					</tr>
+					<?php
+					if(!empty($_POST['tools_paid']))
+						Print 
+							"<tr style='font-family: QuicksandMed;''>
+								<td class='active'>Amount paid</td>
+								<td colspan='3' class='active'></td>
+								<td class='active'>".$displayToolSubTotal."</td>
+							</tr>";
+					?>
 				</tbody>
 			</table>
 			

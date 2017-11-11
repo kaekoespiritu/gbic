@@ -131,6 +131,7 @@
 	$totalND = 0;
 	if(!empty($_POST['totalNightDiff']))
 	{
+		Print "<script>alert('Yow')</script>";
 		$totalND = $_POST['totalNightDiff'];
 
 		$compND = $totalND * $NdRatePerHour;//Computed Night Differential
@@ -140,10 +141,22 @@
 
 
 //Computation for Deductions ----------------------------------------------------------
-	$tax = $_POST['tax'];
-	$sss = $_POST['sss'];
-	$pagibig = $_POST['pagibig'];
-	$philhealth = $_POST['philhealth'];
+	//Pre set values for database
+	$tax = 0;
+	$sss = 0;
+	$pagibig = 0;
+	$philhealth = 0;
+
+	//if values are not empty
+	if(!empty($_POST['tax']))
+		$tax = $_POST['tax'];
+	if(!empty($_POST['sss']))
+		$sss = $_POST['sss'];
+	if(!empty($_POST['pagibig']))
+		$pagibig = $_POST['pagibig'];
+	if(!empty($_POST['philhealth']))
+		$philhealth = $_POST['philhealth'];
+
 	$compDeductions = $tax + $sss + $pagibig + $philhealth;
 	//Print "<script>console.log('compDeductions: ".$compDeductions."')</script>";
 
@@ -254,8 +267,14 @@
 	}
 	
 //Computation for Allowance -----------------------------------------------------------
-	$dailyAllowance = $_POST['allowance'];// for database use
-	$extraAllowance = $_POST['extra_allowance'];
+
+	$dailyAllowance = 0;
+	$extraAllowance = 0;
+
+	if(!empty($_POST['allowance']))
+		$dailyAllowance = $_POST['allowance'];// for database use
+	if(!empty($_POST['extra_allowance']))
+		$extraAllowance = $_POST['extra_allowance'];
 
 	$compAllowance = (($overallWorkDays*$dailyAllowance)  + $extraAllowance);
 //Loans deduction --------------------------------------------------------------------- Incomplete
@@ -580,6 +599,43 @@
 														'$loan_pagibig',
 														'$loan_newVale',
 														'$loan_oldVale')";
+
+
+Print "<script>console.log('empid: ".$empid."')</script>";
+Print "<script>console.log('overallWorkDays: ".$overallWorkDays."')</script>";
+Print "<script>console.log('OtRatePerHour: ".$OtRatePerHour."')</script>";
+Print "<script>console.log('totalOT: ".$totalOT."')</script>";
+Print "<script>console.log('compOT: ".$compOT."')</script>";
+Print "<script>console.log('dailyAllowance: ".$dailyAllowance."')</script>";
+Print "<script>console.log('compAllowance: ".$compAllowance."')</script>";
+Print "<script>console.log('extraAllowance: ".$extraAllowance."')</script>";
+Print "<script>console.log('cola: ".$cola."')</script>";
+Print "<script>console.log('SundayRatePerHour: ".$SundayRatePerHour."')</script>";
+Print "<script>console.log('sunWorkHrs: ".$sunWorkHrs."')</script>";
+Print "<script>console.log('sunday_Att: ".$sunday_Att."')</script>";
+Print "<script>console.log('NdRatePerHour: ".$NdRatePerHour."')</script>";
+Print "<script>console.log('totalND: ".$totalND."')</script>";
+Print "<script>console.log('compND: ".$compND."')</script>";
+Print "<script>console.log('regHolidayInc: ".$regHolidayInc."')</script>";
+Print "<script>console.log('speHolidayInc: ".$speHolidayInc."')</script>";
+Print "<script>console.log('addHoliday: ".$addHoliday."')</script>";
+Print "<script>console.log('speHolNum: ".$speHolNum."')</script>";
+Print "<script>console.log('regHolNum: ".$regHolNum."')</script>";
+Print "<script>console.log('tax: ".$tax."')</script>";
+Print "<script>console.log('sss: ".$sss."')</script>";
+Print "<script>console.log('pagibig: ".$pagibig."')</script>";
+Print "<script>console.log('philhealth: ".$philhealth."')</script>";
+Print "<script>console.log('date: ".$date."')</script>";
+Print "<script>console.log('tools_paid: ".$tools_paid."')</script>";
+Print "<script>console.log('outStandingBalance: ".$outStandingBalance."')</script>";
+Print "<script>console.log('GrandTotal: ".$GrandTotal."')</script>";
+Print "<script>console.log('date: ".$date."')</script>";
+Print "<script>console.log('loan_sss: ".$loan_sss."')</script>";
+Print "<script>console.log('loan_pagibig: ".$loan_pagibig."')</script>";
+Print "<script>console.log('loan_newVale: ".$loan_newVale."')</script>";
+Print "<script>console.log('loan_oldVale: ".$loan_oldVale."')</script>";
+
+
 	$updateQuery = "UPDATE payroll SET	
 									num_days = '$overallWorkDays',
 									overtime = '$OtRatePerHour',
@@ -616,11 +672,11 @@
 	$mainChecker = mysql_query("SELECT * FROM payroll WHERE empid='$empid' AND date='$date'");
 	if(mysql_num_rows($mainChecker) == 0)
 	{
-		mysql_query($query);
+		mysql_query($query)or die(mysql_error());;
 	}					
 	else
 	{
-		mysql_query($updateQuery);
+		mysql_query($updateQuery)or die(mysql_error());;
 	}
 	
 	
