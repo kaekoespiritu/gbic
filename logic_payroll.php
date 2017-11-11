@@ -131,7 +131,7 @@
 	$totalND = 0;
 	if(!empty($_POST['totalNightDiff']))
 	{
-		Print "<script>alert('Yow')</script>";
+		//Print "<script>alert('Yow')</script>";
 		$totalND = $_POST['totalNightDiff'];
 
 		$compND = $totalND * $NdRatePerHour;//Computed Night Differential
