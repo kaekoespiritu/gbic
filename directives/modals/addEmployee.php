@@ -134,7 +134,7 @@
 									<label for="rate">Monthly Salary</label>
 								</div>
 								<div class="col-md-5">
-									<input name="txt_addMonthlySalary"  type="text" class="form-control" id="monthlysalary" onkeyup="monthlySalary()" onblur="salaryDecimal()" required>
+									<input name="txt_addMonthlySalary"  type="text" class="form-control" id="monthlysalary" onkeyup="monthlySalary()" onchange="salaryDecimal()" required>
 								</div>
 							</div><br>
 

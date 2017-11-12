@@ -176,6 +176,22 @@ require_once("directives/modals/addLoan.php");
 		 });
 		});
 
+		function validate(element) {
+			// If it has an entry, change state to green
+			var parent = element.parentElement;
+
+			// If left empty, change state to red
+			if(element.value == "") {
+				parent.classList.remove('has-success');
+				parent.classList.add('has-error');
+			}
+			else {
+				parent.classList.add('has-success');
+				parent.classList.remove('has-error');
+			}
+
+		}
+
 		function sendToModal(id){
 			var parent = document.getElementById(id);
 			// Getting values from the searched employee

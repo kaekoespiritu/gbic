@@ -212,7 +212,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 							<label for="rate">Monthly Salary</label>
 						</div>
 						<div class="col-md-5">
-							<input name="salary"  type="text" class="form-control" id="monthlysalary" onkeyup="monthlySalary()" placeholder="<?php Print "$salary"?>" onblur="salaryDecimal()">
+							<input name="salary"  type="text" class="form-control" id="monthlysalary" onkeyup="monthlySalary()" placeholder="<?php Print "$salary"?>" onchange="salaryDecimal()">
 						</div>
 					</div><br>
 
@@ -230,7 +230,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 							<label for="allowance">Allowance</label>
 						</div>
 						<div class="col-md-5">
-							<input type="text" name="allowance" placeholder="<?php Print "$allowance"?>" class="form-control" onblur="allowanceDecimal()" id="allowance">
+							<input type="text" name="allowance" placeholder="<?php Print "$allowance"?>" class="form-control" onchange="allowanceDecimal()" id="allowance">
 						</div>
 					</div>
 					<div class="row">
