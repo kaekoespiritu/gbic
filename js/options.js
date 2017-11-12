@@ -9,7 +9,7 @@
 
 
 		// Open and close payroll
-		function setPayroll() {
+		function setPayroll(day, cond) {
 			// Get value of open and close dropdown
 			var open = document.getElementById('open');
 			var close = document.getElementById('close');
@@ -34,37 +34,58 @@
 			// Static open, close will determine the validity of duration
 			// Can be more or less than make a new variable
 
-			if(closeIndex==0 && openIndex==6){
+			if(closeIndex==0 && openIndex==0){
 				// Reset value to Monday
-				for(var i = 0; i < close.options.length; i++){
-					if(close.options[i].value==closeIndex){
-						close.options[closeIndex-closeIndex].selected = true;
+				for(var i = 0; i < open.options.length; i++){
+					if(open.options[i].value==closeIndex){
+						open.options[closeIndex-closeIndex].selected = true;
 					}
 				}
 			}
+			//For open Payroll
+			if(cond == "open") {
+				if((closeIndex > 0) && (closeIndex > openIndex+1) || (closeIndex > 0) && (closeIndex < openIndex - 1)){
+					alert("You have selected an invalid date range. Please select dates that are adjacent. Like Monday-Tuesday.");
+					// Reset value to Monday
 
-			if((closeIndex > 0) && (closeIndex > openIndex+1) || (closeIndex > 0) && (closeIndex < openIndex - 1)){
-				alert("You have selected an invalid date range. Please select dates that are adjacent. Like Monday-Tuesday. Close payroll will be reset to Monday.");
-				// Reset value to Monday
-				for(var i = 0; i < close.options.length; i++){
-					if(close.options[i].value==closeIndex){
-						close.options[0].selected = true;
+					for(var i = 0; i < open.options.length; i++){
+						if(open.options[i].value == day){
+							open.options[i].selected = true;
+						}
+					}
+				}
+				if(closeIndex == openIndex){
+					alert("Error. Please select two different days. Open payroll will be reset to "+day+".");
+					// Reset value to Monday
+					for(var a = 0; a < open.options.length; a++){
+						if(open.options[a].value == day){
+							open.options[a].selected = true;
+						}
 					}
 				}
 			}
-			if(closeIndex == openIndex){
-				alert("Error. Please select two different days. Close payroll will be reset to Monday.");
-				// Reset value to Monday
-				for(var i = 0; i < close.options.length; i++){
-					if(close.options[i].value==closeIndex){
-						close.options[0].selected = true;
+			// For close payroll
+			else if(cond == "close"){
+				if((closeIndex > 0) && (closeIndex > openIndex+1) || (closeIndex > 0) && (closeIndex < openIndex - 1)){
+					alert("You have selected an invalid date range. Please select dates that are adjacent. Like Monday-Tuesday.");
+					// Reset value to Monday
+
+					for(var i = 0; i < close.options.length; i++){
+						if(close.options[i].value == day){
+							close.options[i].selected = true;
+						}
+					}
+				}
+				if(closeIndex == openIndex){
+					alert("Error. Please select two different days. Close payroll will be reset to "+day+".");
+					// Reset value to Monday
+					for(var a = 0; a < close.options.length; a++){
+						if(close.options[a].value == day){
+							close.options[a].selected = true;
+						}
 					}
 				}
 			}
-
-			console.log("close:" + closeIndex + " open: " + openIndex);
-
-			// 
 		}
 
 		function hideRestrictions() {

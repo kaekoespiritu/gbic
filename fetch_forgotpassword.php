@@ -34,7 +34,7 @@
 			</div>
 			<div class="modal-footer">
 				<input type="hidden" id="forgotPass_Username" value="'.$username.'">
-				<button class="btn btn-primary" onclick="resetPass()">Submit</button>
+				<button class="btn btn-primary" data-toggle="modal" data-target="#newPass" onclick="resetPass()">Submit</button>
 			</div>';
 	}
 	else

@@ -17,7 +17,7 @@
 		$updatePassword ="UPDATE administrator SET password = '$password' WHERE username = '$username'";
 		mysql_query($updatePassword);
 
-		$output = "<script>alert('Your password has been reset. Here is your temporary password : ".$password."')</script>";
+		$output = $password;
 		echo $output;
 	}
 	else

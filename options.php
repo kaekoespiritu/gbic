@@ -55,26 +55,45 @@ $adminRole = $adminArr['role'];
 							<td>Close</td>
 						</tr>
 						<tr>
+							<?php
+								//For the opening payroll
+								$payrollDay = "SELECT * FROM payroll_day";
+								$payrollQuery = mysql_query($payrollDay) or die(mysql_error());
+
+								$payrollArr = mysql_fetch_assoc($payrollQuery);
+								$openingPayroll = $payrollArr['open'];
+								$closingPayroll = $payrollArr['close'];
+								$WeekDays = array("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday");
+
+							?>
 							<td>
-								<select class="form-control" id="open">
-									<option value="0">Monday</option>
-									<option value="1">Tuesday</option>
-									<option value="2">Wednesday</option>
-									<option value="3">Thursday</option>
-									<option value="4">Friday</option>
-									<option value="5">Saturday</option>
-									<option value="6">Sunday</option>
+								<?php
+								//For the system to know what day is the default
+									Print "<select class='form-control' name='openPayroll' onchange='setPayroll(\"".$openingPayroll."\", \"open\")' id='open'>";
+									
+									foreach($WeekDays as $dayOfWeek)
+									{
+										if($openingPayroll == $dayOfWeek)
+											Print "<option value='".$dayOfWeek."' selected>".$dayOfWeek."</option>";
+										else
+											Print "<option value='".$dayOfWeek."'>".$dayOfWeek."</option>";
+									}
+									?>
 								</select>
 							</td>
 							<td>
-								<select class="form-control" onchange="setPayroll()" id="close">
-									<option value="0">Monday</option>
-									<option value="1">Tuesday</option>
-									<option value="2">Wednesday</option>
-									<option value="3">Thursday</option>
-									<option value="4">Friday</option>
-									<option value="5">Saturday</option>
-									<option value="6">Sunday</option>
+								<?php
+								//For the system to know what day is the default
+									Print "<select class='form-control' name='closePayroll' onchange='setPayroll(\"".$closingPayroll."\", \"close\")' id='close'>";
+									
+									foreach($WeekDays as $daysOfWeek)
+									{
+										if($closingPayroll == $daysOfWeek)
+											Print "<option value='".$daysOfWeek."' selected>".$daysOfWeek."</option>";
+										else
+											Print "<option value='".$daysOfWeek."'>".$daysOfWeek."</option>";
+									}
+									?>
 								</select>
 							</td>
 						</tr>

@@ -40,11 +40,24 @@ include_once("directives/db.php");
 				</div>
 			</div>
 		</div>
-
+		<!-- Forgot password secret Question-->
 		<div class="modal fade" role="dialog" id="askQ">
 			<div class="modal-dialog modal-sm">
 				<div class="modal-content">
 					<div id="modal_forgotQuestions"></div>
+				</div>
+			</div>
+		</div>
+
+		<!-- New password Modal -->
+		<div class="modal fade" role="dialog" id="newPass">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+
+					<!-- This will be the new password-->
+					<span id="newPassword"></span>
+					<!-- ------------------------------ -->
+
 				</div>
 			</div>
 		</div>
@@ -91,7 +104,7 @@ include_once("directives/db.php");
 				</div>
 			</div>
 		</div>
-		<div id="forgotPasswordReset"></div>
+		
 		<script>
 			// var $slider = document.getElementById('slider');
 			// var $toggle = document.getElementById('toggle');
@@ -161,7 +174,7 @@ include_once("directives/db.php");
 					},
 				success:function(data)
 				{
-		    			$('#forgotPasswordReset').html(data);
+		    			$('#newPassword').html(data);
 		    			$('#forgotPass').modal('hide');
 		    			$('#askQ').modal('hide');
 				}

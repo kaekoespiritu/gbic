@@ -196,16 +196,24 @@ $date = "October 24, 2017";//Test date
 						else if($_GET['status'] == "complete" || $_GET['status'] == "incomplete")
 						{
 							Print "<script>console.log('4')</script>";
-							if($_GET['document'] == "complete")
+							if($_GET['document'] == "complete" || $_GET['document'] == "incomplete")
 							{
 								Print "<script>console.log('5')</script>";
 								$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname, e.position, e.site FROM employee AS e INNER JOIN payroll AS p ON e.empid = p.empid WHERE e.site = '$site' AND e.position = '$position' AND e.complete_doc = '$documentFilter'";
 							}
-							else
+							else if($_GET['status'] == "incomplete")
 							{
 								Print "<script>console.log('6')</script>";
+								$employee = "SELECT e.* FROM employee e NATURAL LEFT JOIN payroll p 
+											WHERE p.empid IS NULL AND e.site = '$site' AND e.position = '$position'";
+							}
+							//status = Complete
+							else 
+							{
 								$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname, e.position, e.site FROM employee AS e INNER JOIN payroll AS p ON e.empid = p.empid WHERE e.site = '$site' AND e.position = '$position'";
 							}
+
+
 						}
 					}
 					//Default

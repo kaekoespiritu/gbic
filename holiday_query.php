@@ -39,8 +39,17 @@ if(isset($_GET['name']) && isset($_GET['type']) && isset($_GET['date']))
 else if(isset($_GET['date']))//Cancel holiday
 {
 	$date = $_GET['date'];
+	//Removes all of the holidays on the employee on that specific date
 	$empHoliday = "UPDATE attendance SET holiday = '0' WHERE date = '$date'";
+	//Delete Holiday from the database
+	$deleteHoliday = "DELETE FROM holiday WHERE date = '$date'";
+	mysql_query($deleteHoliday);
 	mysql_query($empHoliday);
+
+	//Unset the holiday session
+	unset($_SESSION['holidayName']);
+	unset($_SESSION['holidayDate']);
+	unset($_SESSION['holidayType']);
 	Print "<script>window.location.assign('attendance.php')</script>";
 
 }
