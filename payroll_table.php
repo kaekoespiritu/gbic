@@ -181,31 +181,28 @@ $date = "October 24, 2017";//Test date
 
 						if($_GET['document'] == "complete" || $_GET['document'] == "incomplete")
 						{
-							Print "<script>console.log('1')</script>";
 							if($_GET['status'] == "complete")
 							{
-								Print "<script>console.log('2')</script>";
 								$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname, e.position, e.site FROM employee AS e INNER JOIN payroll AS p ON e.empid = p.empid WHERE e.site = '$site' AND e.position = '$position' AND e.complete_doc = '$documentFilter'";
+							}
+							else if($_GET['status'] == "complete")
+							{
+								$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'AND position = '$position' AND complete_doc = '$documentFilter'";
 							}
 							else
 							{
-								Print "<script>console.log('3')</script>";
 								$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'AND position = '$position' AND complete_doc = '$documentFilter'";
 							}
 						}
 						else if($_GET['status'] == "complete" || $_GET['status'] == "incomplete")
 						{
-							Print "<script>console.log('4')</script>";
 							if($_GET['document'] == "complete" || $_GET['document'] == "incomplete")
 							{
-								Print "<script>console.log('5')</script>";
-								$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname, e.position, e.site FROM employee AS e INNER JOIN payroll AS p ON e.empid = p.empid WHERE e.site = '$site' AND e.position = '$position' AND e.complete_doc = '$documentFilter'";
+								$employee = "SELECT * FROM employee WHERE empid NOT IN (SELECT empid FROM payroll) AND site = '$site' AND position = '$position' AND complete_doc = '$documentFilter'";
 							}
 							else if($_GET['status'] == "incomplete")
 							{
-								Print "<script>console.log('6')</script>";
-								$employee = "SELECT e.* FROM employee e NATURAL LEFT JOIN payroll p 
-											WHERE p.empid IS NULL AND e.site = '$site' AND e.position = '$position'";
+								$employee = "SELECT * FROM employee WHERE empid NOT IN (SELECT empid FROM payroll) AND site = '$site' AND position = '$position'";
 							}
 							//status = Complete
 							else 
@@ -219,17 +216,13 @@ $date = "October 24, 2017";//Test date
 					//Default
 					else 
 					{
+						Print "<script>console.log('8')</script>";
 						$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'AND position = '$position'";
 					}
 					
 
 					//$employee = "SELECT * FROM employee WHERE employment_status = 1 ";
-					$employeeQuery = mysql_query($employee);
-					if(!$employeeQuery)
-					{
-						Print "<script>alert('fail')</script>";
-					}
-					Print "<script>alert('num: ".mysql_num_rows($employeeQuery)."')</script>";
+					$employeeQuery = mysql_query($employee) or die(mysql_error());
 					if(mysql_num_rows($employeeQuery) > 0)
 					{
 						while($row = mysql_fetch_assoc($employeeQuery))
@@ -408,6 +401,12 @@ $date = "October 24, 2017";//Test date
 										<td><a class='btn btn-primary' href='payroll.php?site=". $site ."&position=". $position ."&empid=".$empid."'>Start Payroll</a></td>
 									</tr>";
 						}
+					}
+					else
+					{
+						Print "	<tr>
+									<td colspan='6'><h3>No records found</h3></td>
+								</tr>";
 					}
 					
 					?>
