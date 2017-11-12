@@ -56,31 +56,30 @@ $adminRole = $adminArr['role'];
 						</tr>
 						<tr>
 							<td>
-								<select class="form-control" onchange="setPayroll()" id="open">
-									<option value="Monday">Monday</option>
-									<option value="Tuesday">Tuesday</option>
-									<option value="Wednesday">Wednesday</option>
-									<option value="Thursday">Thursday</option>
-									<option value="Friday">Friday</option>
-									<option value="Saturday">Saturday</option>
-									<option value="Sunday">Sunday</option>
+								<select class="form-control" id="open">
+									<option value="0">Monday</option>
+									<option value="1">Tuesday</option>
+									<option value="2">Wednesday</option>
+									<option value="3">Thursday</option>
+									<option value="4">Friday</option>
+									<option value="5">Saturday</option>
+									<option value="6">Sunday</option>
 								</select>
 							</td>
 							<td>
 								<select class="form-control" onchange="setPayroll()" id="close">
-									<option disabled selected>Choose a day</option>
-									<option value="Monday">Monday</option>
-									<option value="Tuesday">Tuesday</option>
-									<option value="Wednesday">Wednesday</option>
-									<option value="Thursday">Thursday</option>
-									<option value="Friday">Friday</option>
-									<option value="Saturday">Saturday</option>
-									<option value="Sunday">Sunday</option>
+									<option value="0">Monday</option>
+									<option value="1">Tuesday</option>
+									<option value="2">Wednesday</option>
+									<option value="3">Thursday</option>
+									<option value="4">Friday</option>
+									<option value="5">Saturday</option>
+									<option value="6">Sunday</option>
 								</select>
 							</td>
 						</tr>
 					</table>
-					<button class="btn btn-primary" style="margin-bottom:25px">Save changes</button>
+					<button class="btn btn-primary marginbottom">Save changes</button>
 				</form>
 				</div>
 			</div>
@@ -99,15 +98,15 @@ $adminRole = $adminArr['role'];
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="col-md-12">
+						<div class="col-md-12 margin-separator">
 							<button type="button" class="btn btn-default col-md-12" data-toggle="modal" data-target="#accountOptions"><span class="glyphicon glyphicon-user"></span> Options</button>
 						</div>
 						<!-- Only visible on admin side -->
-						<div class="col-md-12">
+						<div class="col-md-12 margin-separator">
 							<button type="button" class="btn btn-default col-md-12" data-toggle="modal" data-target="#newAccount"><span class="glyphicon glyphicon-plus"></span> Add new account</button>
 						</div>
 						<!-- Only visible on admin side -->
-						<div class="col-md-12">
+						<div class="col-md-12 margin-separator">
 							<button type="button" class="btn btn-default col-md-12" data-toggle="modal" data-target="#manageAccount"><span class="glyphicon glyphicon-cog"></span> Manage employees</button>
 						</div>
 					</div>

@@ -34,12 +34,35 @@
 			// Static open, close will determine the validity of duration
 			// Can be more or less than make a new variable
 
-			if(openIndex > closeIndex+2){
-				alert("You have selected an invalid combination.");
+			if(closeIndex==0 && openIndex==6){
+				// Reset value to Monday
+				for(var i = 0; i < close.options.length; i++){
+					if(close.options[i].value==closeIndex){
+						close.options[closeIndex-closeIndex].selected = true;
+					}
+				}
 			}
-			if(closeIndex > openIndex+2){
-				alert("You have selected an invalid combination.");
+
+			if((closeIndex > 0) && (closeIndex > openIndex+1) || (closeIndex > 0) && (closeIndex < openIndex - 1)){
+				alert("You have selected an invalid date range. Please select dates that are adjacent. Like Monday-Tuesday. Close payroll will be reset to Monday.");
+				// Reset value to Monday
+				for(var i = 0; i < close.options.length; i++){
+					if(close.options[i].value==closeIndex){
+						close.options[0].selected = true;
+					}
+				}
 			}
+			if(closeIndex == openIndex){
+				alert("Error. Please select two different days. Close payroll will be reset to Monday.");
+				// Reset value to Monday
+				for(var i = 0; i < close.options.length; i++){
+					if(close.options[i].value==closeIndex){
+						close.options[0].selected = true;
+					}
+				}
+			}
+
+			console.log("close:" + closeIndex + " open: " + openIndex);
 
 			// 
 		}
@@ -118,4 +141,3 @@
 				}
 			});
 		}
-		
