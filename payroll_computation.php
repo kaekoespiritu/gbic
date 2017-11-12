@@ -325,7 +325,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					if(!empty($payrollArr['tools_paid']))//Tools paid
 					{
 						Print 
-							"<tr style='font-family: QuicksandMed;''>
+							"<tr>
 								<td>Amount Paid</td>
 								<td colspan='3' ></td>
 								<td>".$displayToolPayed."</td>
@@ -334,8 +334,8 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					if(!empty($payrollArr['tools_outstanding']))//outstanding Payable
 					{
 						Print 
-							"<tr style='font-family: QuicksandMed;''>
-								<td>Outstanding Payable</td>
+							"<tr>
+								<td>Previous Payable</td>
 								<td colspan='3' ></td>
 								<td>".numberExactFormat($payrollArr['tools_outstanding'], 2, '.')."</td>
 							</tr>";
