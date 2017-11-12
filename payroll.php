@@ -1269,8 +1269,23 @@ if($holidayExist > 0)
 							<label class="col-md-5">
 								Previous Payable
 							</label>
+							<?php
+							//Outstanding payable
+							
+							//gets the previous payroll result
+							$previousPayable = "SELECT * FROM payroll WHERE empid = '$empid' AND date != '$date' ORDER BY date DESC LIMIT 1";
+							$payableQuery = mysql_query($previousPayable);
+
+							$outstanding = null;//pre set outstanding payable
+							if(mysql_num_rows($payableQuery) > 0);
+							{
+								$outstArr = mysql_fetch_assoc($payableQuery);
+								if($outstArr['tools_outstanding'] != 0)
+									$outstanding = $outstArr['tools_outstanding'];
+							}
+							?>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="previousPayable" id="outstandingPayable" value="" readonly>
+								<input type="text" class="form-control" name="previousPayable" id="outstandingPayable" value="<?php Print $outstanding ?>" readonly>
 							</div>
 						</div>
 						<div class="col-md-12">

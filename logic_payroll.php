@@ -508,6 +508,16 @@
 		}
 		$tools_paid = $_POST['amountToPay'];
 	}
+	else if(!empty($_POST['previousPayable']))//if Employee has no tools but has outstanding payable
+	{
+		//if precious payable is not equal to amountpaid it means the employee still has outstanding payable 
+		if($_POST['previousPayable'] != $_POST['amountToPay'])
+		{
+			$outStandingBalance = $_POST['previousPayable'] - $_POST['amountToPay'];
+			$outStandingBalance = abs($outStandingBalance);
+		}
+		$tools_paid = $_POST['amountToPay'];
+	}
 	else//if they did not input any tools when they get back
 	{
 		mysql_query("DELETE FROM tools WHERE empid='$empid' AND date = '$date'");

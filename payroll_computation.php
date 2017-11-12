@@ -286,21 +286,10 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 							//Print "<script>alert('".$toolArr['tools']."')</script>";
 						}
 					}
-					$toolsChecker = "SELECT * FROM payroll WHERE empid='$empid' AND date != '$date' ORDER BY date DESC LIMIT 1";
-					$toolsCheckerQuery = mysql_query($toolsChecker);
-					if(mysql_num_rows($toolsCheckerQuery) == 1)
-					{
-						$Notools = false;
-						$outstandingChecker = mysql_fetch_assoc($toolsCheckerQuery);
-						$toolSubTotal += $outstandingChecker['tools_outstanding'];
-							Print "	<tr>
-										<td>Previous Payable</td>
-										<td colspan='3'></td>
-										<td>".Print numberExactFormat($outstandingChecker['tools_outstanding'], 2, '.', ',')."</td>
-									</tr>";
-					}
+
 					
 				}
+				
 				if($Notools)
 				{
 					Print "	<tr>
@@ -309,6 +298,24 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 								<td>--</td>
 							</tr>";
 				}
+
+				//Outstanding Payable
+				$toolsChecker = "SELECT * FROM payroll WHERE empid='$empid' AND date != '$date' ORDER BY date DESC LIMIT 1";
+				$toolsCheckerQuery = mysql_query($toolsChecker);
+
+				if(mysql_num_rows($toolsCheckerQuery) == 1)
+				{
+					Print "<script>alert('yow1')</script>";
+					$Notools = false;
+					$outstandingChecker = mysql_fetch_assoc($toolsCheckerQuery);
+					//$toolSubTotal += $outstandingChecker['tools_outstanding'];
+						Print "	<tr>
+									<td>Outstanding Payable</td>
+									<td colspan='3'></td>
+									<td>".Print numberExactFormat($outstandingChecker['tools_outstanding'], 2, '.')."</td>
+								</tr>";
+				}
+
 				if($toolSubTotal == 0)
 					$displayToolSubTotal = "--";
 				else
@@ -317,9 +324,6 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					$displayToolPayed = numberExactFormat($payrollArr['tools_paid'], 2, '.');
 				else
 					$displayToolPayed = "--";
-			?>
-					
-					<?php
 					
 
 					if(!empty($payrollArr['tools_paid']))//Tools paid
@@ -407,7 +411,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					</tr>
 					<tr class="active" style="font-family: QuicksandMed;">
 						<td>Subtotal</td>
-						<td><?php Print numberExactFormat($contributions, 2, '.', ',')?></td>
+						<td><?php Print numberExactFormat($contributions, 2, '.')?></td>
 					</tr>
 				</tbody>
 			</table>
