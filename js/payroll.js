@@ -305,6 +305,11 @@ function checkloans(){
 		pagibig.setAttribute('readonly', '');
 	}
 
+	if(!oldvaleVal){
+		// Set disabled to input field
+		oldvale.setAttribute('readonly', '');	
+	}
+
 }
 
 function setsssLimit(value){
