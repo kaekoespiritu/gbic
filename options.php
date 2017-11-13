@@ -30,6 +30,7 @@ $adminRole = $adminArr['role'];
 		require_once("directives/modals/newAccount.php");
 		require_once("directives/modals/manageAccount.php");
 		require_once("directives/modals/resetPass.php");
+		require_once("directives/modals/secureChanges.php");
 		require_once("directives/modals/setRestrictions.php");
 		require_once("directives/modals/addSite.php");
 		require_once("directives/modals/colaSettings.php");
@@ -98,8 +99,8 @@ $adminRole = $adminArr['role'];
 							</td>
 						</tr>
 					</table>
-					<button class="btn btn-primary marginbottom">Save changes</button>
 				</form>
+				<button class="btn btn-primary marginbottom" data-toggle="modal" data-target="#secureChanges">Save changes</button>
 				</div>
 			</div>
 
