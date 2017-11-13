@@ -183,7 +183,7 @@ $date = "October 24, 2017";//Test date
 						{
 							if($_GET['status'] == "complete")
 							{
-								$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname, e.position, e.site FROM employee AS e INNER JOIN payroll AS p ON e.empid = p.empid WHERE e.site = '$site' AND e.position = '$position' AND e.complete_doc = '$documentFilter'";
+								$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname, e.position, e.site FROM employee AS e INNER JOIN payroll AS p ON e.empid = p.empid WHERE e.site = '$site' AND e.position = '$position' AND e.complete_doc = '$documentFilter' AND p.date = '$date'";
 							}
 							else if($_GET['status'] == "complete")
 							{
@@ -198,16 +198,16 @@ $date = "October 24, 2017";//Test date
 						{
 							if($_GET['document'] == "complete" || $_GET['document'] == "incomplete")
 							{
-								$employee = "SELECT * FROM employee WHERE empid NOT IN (SELECT empid FROM payroll) AND site = '$site' AND position = '$position' AND complete_doc = '$documentFilter'";
+								$employee = "SELECT * FROM employee WHERE empid NOT IN (SELECT empid FROM payroll WHERE date = '$date') AND site = '$site' AND position = '$position' AND complete_doc = '$documentFilter' AND date = '$date'";
 							}
 							else if($_GET['status'] == "incomplete")
 							{
-								$employee = "SELECT * FROM employee WHERE empid NOT IN (SELECT empid FROM payroll) AND site = '$site' AND position = '$position'";
+								$employee = "SELECT * FROM employee WHERE empid NOT IN (SELECT empid FROM payroll WHERE date = '$date') AND site = '$site' AND position = '$position'";
 							}
 							//status = Complete
 							else 
 							{
-								$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname, e.position, e.site FROM employee AS e INNER JOIN payroll AS p ON e.empid = p.empid WHERE e.site = '$site' AND e.position = '$position'";
+								$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname, e.position, e.site FROM employee AS e INNER JOIN payroll AS p ON e.empid = p.empid WHERE e.site = '$site' AND e.position = '$position' AND p.date = '$date'";
 							}
 
 
