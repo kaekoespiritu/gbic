@@ -45,10 +45,10 @@
 											<input type="password" name="oldPassword" class="form-control">
 										</label>
 										<label>New password:
-											<input type="password" name="newPassword"class="form-control">
+											<input type="password" name="newPassword" class="form-control">
 										</label>
 										<label>Confirm password:
-											<input type="password" name="confirmPassword"class="form-control">
+											<input type="password" name="confirmPassword" class="form-control">
 										</label>
 										</div>
 										<div id="changeuser" class="tab-pane">
