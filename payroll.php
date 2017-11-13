@@ -68,7 +68,7 @@ if($holidayExist > 0)
 						<li><a href="payroll_table.php?position=<?php Print $position?>&site=<?php Print $site?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Table of Employees</a></li>
 						<li class="active"><?php Print "Payroll for site " .$site." on ".$date ?></li>
 
-						<input type="submit" value="Save and compute" class="btn btn-success pull-right" style="margin-right:5px" href="#">
+						<button type="submit" class="btn btn-success pull-right" style="margin-right:5px" href="#" data-toggle="tooltip" data-placement="bottom" title="Note: Proceeding will prevent you from editing values entered. If you need to come back here and change anything, you will have to redo everything.">Save and compute</button>
 					</ol>
 				</div>
 
@@ -1308,7 +1308,11 @@ if($holidayExist > 0)
 <script rel="javascript" src="js/jquery.min.js"></script>
 <script rel="javascript" src="js/bootstrap.min.js"></script>
 <script rel="javascript" src="js/payroll.js"></script>
-
+<script>
+	$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
 </div>
 </form>
 </body>

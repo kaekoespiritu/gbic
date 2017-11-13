@@ -8,7 +8,10 @@
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
-						<input type="text" id="newAddVale" class="form-control" placeholder="Add as new vale" onkeypress="validatenumber(event)">
+						<h4 class="text-left">Amount:</h4>
+						<input type="text" id="newAddVale" class="form-control" placeholder="Amount of new vale" onkeypress="validatenumber(event)"><br>
+						<h4 class="text-left">Reason:</h4>
+						<textarea class="form-control" rows="3" placeholder="Add reason for getting new vale"></textarea>
 					</div>
 				</div>
 			</div>
