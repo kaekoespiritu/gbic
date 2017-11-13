@@ -299,34 +299,32 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 							</tr>";
 				}
 
-				//Outstanding Payable
-				$toolsChecker = "SELECT * FROM payroll WHERE empid='$empid' AND date != '$date' ORDER BY date DESC LIMIT 1";
-				$toolsCheckerQuery = mysql_query($toolsChecker);
-
-				if(mysql_num_rows($toolsCheckerQuery) == 1)
+				if($toolSubTotal == 0)
 				{
-					Print "<script>alert('yow1')</script>";
-					$Notools = false;
-					$outstandingChecker = mysql_fetch_assoc($toolsCheckerQuery);
-					//$toolSubTotal += $outstandingChecker['tools_outstanding'];
-						Print "	<tr>
-									<td>Outstanding Payable</td>
-									<td colspan='3'></td>
-									<td>".Print numberExactFormat($outstandingChecker['tools_outstanding'], 2, '.')."</td>
-								</tr>";
+					$displayToolSubTotal = "--";
+				}
+				else
+				{
+					$displayToolSubTotal = numberExactFormat($toolSubTotal, 2, '.');
+				}
+				if($payrollArr['tools_paid'] != 0)
+				{
+					$displayToolPayed = numberExactFormat($payrollArr['tools_paid'], 2, '.');
+				}
+				else if($payrollArr['tools_paid'] == 0)//if employee didnot input any amount to pay
+				{
+					$displayToolPayed = numberExactFormat($toolSubTotal, 2, '.');
+				}
+				else
+				{
+					$displayToolPayed = "--";
 				}
 
-				if($toolSubTotal == 0)
-					$displayToolSubTotal = "--";
-				else
-					$displayToolSubTotal = numberExactFormat($toolSubTotal, 2, '.');
-				if(!empty($payrollArr['tools_paid']))
-					$displayToolPayed = numberExactFormat($payrollArr['tools_paid'], 2, '.');
-				else
-					$displayToolPayed = "--";
-					
 
-					if(!empty($payrollArr['tools_paid']))//Tools paid
+
+					
+					$toolsSubTotal = "--";
+					if($payrollArr['tools_paid'] != 0)//Tools paid
 					{
 						Print 
 							"<tr>
@@ -334,12 +332,13 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 								<td colspan='3' ></td>
 								<td>".$displayToolPayed."</td>
 							</tr>";
+						$toolsSubTotal = numberExactFormat($payrollArr['tools_paid'], 2, '.');
 					}
-					if(!empty($payrollArr['tools_outstanding']))//outstanding Payable
+					if($payrollArr['tools_outstanding'] != 0)//outstanding Payable
 					{
 						Print 
 							"<tr>
-								<td>Previous Payable</td>
+								<td>Outstanding Payable</td>
 								<td colspan='3' ></td>
 								<td>".numberExactFormat($payrollArr['tools_outstanding'], 2, '.')."</td>
 							</tr>";
@@ -348,7 +347,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					<tr style='font-family: QuicksandMed;''>
 						<td class='active'>Subtotal</td>
 						<td colspan='3' class='active'></td>
-						<td class='active'><?php Print $displayToolPayed?></td>
+						<td class='active'><?php Print $toolsSubTotal?></td>
 					</tr>
 				</tbody>
 			</table>
