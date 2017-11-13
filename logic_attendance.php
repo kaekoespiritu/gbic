@@ -272,20 +272,12 @@ if(!empty($dateRows))// Updating attendance
 			$absentCounter = 0;
 			while($AwolChecker = mysql_fetch_assoc($AwolQuery))
 			{
-				$absentCounter++;
-				if($absentCounter == 1)//1 is the numeric representation of ABSENT
-				{
-					$start = $AwolChecker['date'];// Gets the first date
-					//Print "<script>alert('".$start."')</script>";
-				}
-				
-				
-				//Print "<script>alert('".$counter."')</script>";
-				
 				if($AwolChecker['attendance'] == 1)
 				{
 					$AwolCounter++;
 				}
+				if($AwolCounter == 7)
+					$start = $AwolChecker['date'];
 			}
 			if($AwolCounter == 7)
 			{
