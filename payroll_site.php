@@ -146,6 +146,20 @@ include('directives/session.php');
 					$employee_num = mysql_num_rows($employee_query);
 				}
 
+				// check if all employees are done in the site
+				$siteBool = false;
+				$siteEmpNum = 0;
+				$siteChecker = "SELECT p.empid FROM payroll AS p LEFT OUTER JOIN employee AS e ON p.empid = e.empid WHERE e.site = '$site_num' AND p.date = '$date'";
+				$checkerQuery = mysql_query($siteChecker) or die(mysql_error());
+
+				$siteEmpNum = mysql_num_rows($checkerQuery); // gets the number of emp that has finished payroll
+				
+				if($employee_num == $siteEmpNum)
+				{
+					Print "<script>console.log('".$employee_num." == ".$siteEmpNum."')</script>";
+					$siteBool = true;//site is finish with payroll
+				}
+
 				if($employee_num != 0)
 				{
 					/* If location is long, font-size to smaller */
@@ -153,7 +167,6 @@ include('directives/session.php');
 					{
 						if(!$weekComplete)
 						{
-							Print "<script>console.log('1')</script>";
 							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important; pointer-events:none; cursor:not-allowed;" disabled>
 									<div class="sitebox" style="background-color:grey !important; ">
 										<span class="smalltext">'
@@ -167,14 +180,15 @@ include('directives/session.php');
 						}
 						else
 						{
-							Print "<script>console.log('2')</script>";
 							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important; ">
 									<div class="sitebox" >
 										<span class="smalltext">'
 											. $row['location'] .'</span>
-											<br>
-												<span class="glyphicon glyphicon-ok"></span>
-											<br><span>Employees: '. $employee_num .
+											<br>';
+							if($siteBool)
+							Print  			'<span class="glyphicon glyphicon-ok"></span>';
+
+							Print			'<br><span>Employees: '. $employee_num .
 										'</span>
 									</div>
 								</a>';
@@ -183,7 +197,6 @@ include('directives/session.php');
 					}
 					else
 					{
-						Print "<script>console.log('3')</script>";
 						if(!$weekComplete)
 						{
 							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important;  text-decoration: none !important; pointer-events:none; cursor:not-allowed;" disabled> 
@@ -198,14 +211,15 @@ include('directives/session.php');
 						}
 						else
 						{
-							Print "<script>console.log('4')</script>";
 							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
 									<div class="sitebox">
 									
 										<span class="autofit">'
-											. $row['location'] .'<br>
-											<span class="glyphicon glyphicon-ok"></span>
-											<br>Employees: '. $employee_num .
+											. $row['location'] .'<br>';
+						if($siteBool)
+							Print		'<span class="glyphicon glyphicon-ok"></span>';
+
+							Print			'<br>Employees: '. $employee_num .
 										'</span>
 
 									</div>

@@ -43,8 +43,10 @@ include('directives/session.php');
 	<h2>Payroll for this week</h2>
 	<h3>Today is <?php 
 					date_default_timezone_set('Asia/Hong_Kong');
-					$date = date('l, F d, Y', time());
-					echo $date; ?></h3>
+					//$date = date('F d, Y', time());
+					$date = "October 24, 2017";
+					$dayToday = date('l, F d, Y', time());
+					echo $dayToday; ?></h3>
 	<h4>Open: Tuesday | Close: Wednesday</h4>
 	<h4>At site <?Print $site?></h4>
 	</div>
@@ -76,6 +78,21 @@ include('directives/session.php');
 				{
 					$employee_num = mysql_num_rows($employee_query);
 				}
+				// check if all employees are done in the site
+				$positionBool = false;
+				$positionEmpNum = 0;
+				$positionChecker = "SELECT p.empid FROM payroll AS p LEFT OUTER JOIN employee AS e ON p.empid = e.empid WHERE e.site = '$site' AND e.position = '$position_num'AND p.date = '$date'";
+				Print "<script>console.log('".$site." | ".$position_num." | ".$date."')</script>";
+				$checkerQuery = mysql_query($positionChecker) or die(mysql_error());
+
+				$positionEmpNum = mysql_num_rows($checkerQuery); // gets the number of emp that has finished payroll
+				
+				if($employee_num == $positionEmpNum)
+				{
+					Print "<script>console.log('yow')</script>";
+					$positionBool = true;//site is finish with payroll
+				}
+
 				if($employee_num != 0)
 				{
 					/* If location is long, font-size to smaller */
@@ -84,7 +101,11 @@ include('directives/session.php');
 						Print '	<a href="payroll_table.php?position='. $row['position'] .'&site='. $site .'" style="color: white !important; text-decoration: none !important;">
 									<div class="sitebox">
 										<span class="smalltext">'
-											. $row['position'] .'</span><br><br><span>Employees: '. $employee_num .
+											. $row['position'] .'</span><br>';
+						if($positionBool)
+							Print  			'<span class="glyphicon glyphicon-ok"></span>';
+							
+							Print			'<span><br>Employees: '. $employee_num .
 										'</span>
 									</div>
 								</a>';
@@ -94,7 +115,12 @@ include('directives/session.php');
 						Print '	<a href="payroll_table.php?position='. $row['position'] .'&site='. $site .'" style="color: white !important; text-decoration: none !important;">
 									<div class="sitebox">
 										<span class="autofit">'
-											. $row['position'] .'<br><br>Employees: '. $employee_num .
+											. $row['position'] .'<br>';
+						if($positionBool)
+							Print  			'<span class="glyphicon glyphicon-ok">';
+						
+
+							Print 			'</span><br>Employees: '. $employee_num .
 										'</span>
 									</div>
 								</a>';

@@ -354,7 +354,32 @@ include('directives/session.php');
 			?>
 </div>
 </div>
+<?php
+// Algorithm on getting the opening Day for the date picker
+	$payrollDay = "SELECT * FROM payroll_day";
+	$payrollQuery = mysql_query($payrollDay);
+	$payrollArr = mysql_fetch_assoc($payrollQuery);
+	$openPayroll = $payrollArr['open'];//Gets the open payroll
 
+	for($a = 1; $a<7; $a++)
+	{
+		$dayCheck = "-".$a." day";
+		$checker = date('F j, Y', strtotime($dayCheck, strtotime($date)));
+		$dayOfWeek = date('l', strtotime($checker));
+		if($dayOfWeek == $openPayroll)
+		{
+			$a++;
+			$datePickerMin = "-".$a;
+		}
+		else if($day == $openPayroll)
+		{
+			$datePickerMin = "0";
+			break;
+		}
+
+	}
+	Print "<input type='hidden' id='datePickerMin' value='".$datePickerMin."'>";
+?>
 <!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 <script rel="javascript" src="js/jquery.min.js"></script>
 <script src="js/jquery-ui.min.js"></script>
@@ -381,7 +406,7 @@ include('directives/session.php');
 			dateFormat: 'MM dd, yy',
 			showAnim: 'blind',
 			maxDate: new Date(),
-			//minDate: -7, Restrict them from editing the past weeks
+			//minDate: $("#datePickerMin").val(), 
 			beforeShow: function(){    
 				$(".ui-datepicker").css('font-size', 15) 
 			}
