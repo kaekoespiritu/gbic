@@ -848,85 +848,85 @@ if($holidayExist > 0)
 					{
 						Print "	<tr>
 									<td class='nopadding' colspan='2'>
-										<h4>";
+										";
 						if($holWed)
-							Print 	 "	<span class='label label-success'>Holiday</span>&nbsp";
+							Print 	 "	<span class='label block label-success'>Holiday</span>";
 						if($OtWed)
-							Print 	"	<span class='label label-primary'>OT</span>&nbsp";
+							Print 	"	<span class='label block label-primary'>Overtime</span>";
 						if($NdWed)
-							Print 	"	<span class='label label-warning'>ND</span>";
-						Print "			</h4>
+							Print 	"	<span class='label block label-warning'>Night Differential</span>";
+						Print "			
 									</td>
 									<td class='nopadding' colspan='2'>
-										<h4>";
+										";
 						if($holThu)
-							Print 	 "	<span class='label label-success'>Holiday</span>&nbsp;";
+							Print 	 "	<span class='label block label-success'>Holiday</span>";
 						if($OtThu)
-							Print 	"	<span class='label label-primary'>OT</span>&nbsp;";
+							Print 	"	<span class='label block label-primary'>Overtime</span>";
 						if($NdThu)
-							Print 	"	<span class='label label-warning'>ND</span>";
+							Print 	"	<span class='label block label-warning'>Night Differential</span>";
 						
-							Print "		</h4>	
+							Print "			
 									</td>
 									<td class='nopadding' colspan='2'>
-										<h4>";
+										";
 						
 						if($holFri)
-							Print 	 "	<span class='label label-success'>Holiday</span>&nbsp;";
+							Print 	 "	<span class='label block label-success'>Holiday</span>";
 						if($OtFri)
-							Print 	"	<span class='label label-primary'>OT</span>&nbsp;";
+							Print 	"	<span class='label block label-primary'>Overtime</span>";
 						if($NdFri)
-							Print 	"	<span class='label label-warning'>ND</span>";
+							Print 	"	<span class='label block label-warning'>Night Differential</span>";
 						
-							Print "		</h4>
+							Print "		
 									</td>
 									<td class='nopadding' colspan='2'>
-										<h4>";
+										";
 						
 						if($holSat)
-							Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
+							Print 	 "<span class='label block label-success'>Holiday</span>";
 						if($OtSat)
-							Print 	"<span class='label label-primary'>OT</span>&nbsp;";
+							Print 	"<span class='label block label-primary'>Overtime</span>";
 						if($NdSat)
-							Print 	"<span class='label label-warning'>ND</span>";
+							Print 	"<span class='label block label-warning'>Night Differential</span>";
 
-							Print "		</h4>
+							Print "		
 									</td>
 									<td class='nopadding' colspan='2'>
-										<h4>";
+									";
 						
 						if($holSun)
-							Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
+							Print 	 "<span class='label block label-success'>Holiday</span>";
 						if($OtSun)
-							Print 	"<span class='label label-primary'>OT</span>&nbsp;";
+							Print 	"<span class='label block label-primary'>Overtime</span>";
 						if($NdSun)
-							Print 	"<span class='label label-warning'>ND</span>";
+							Print 	"<span class='label block label-warning'>Night Differential</span>";
 					
-							Print "		</h4>
+							Print "		
 									</td>
 									<td class='nopadding' colspan='2'>
-										<h4>";
+										";
 						
 						if($holMon)
-							Print 	"<span class='label label-success'>Holiday</span>&nbsp;"; 
+							Print 	"<span class='label block label-success'>Holiday</span>"; 
 						if($OtMon)
-							Print 	"<span class='label label-primary'>OT</span>&nbsp;"; 
+							Print 	"<span class='label block label-primary'>Overtime</span>"; 
 						if($NdMon)
-							Print 	"<span class='label label-warning'>ND</span>"; 
+							Print 	"<span class='label block label-warning'>Night Differential</span>"; 
 					
-							Print "		</h4>
+							Print "		
 									</td>
 									<td class='nopadding' colspan='2'>
-										<h4>";
+										";
 					
 						if($holTue)
-							Print 	 "<span class='label label-success'>Holiday</span>&nbsp;";
+							Print 	 "<span class='label block label-success'>Holiday</span>";
 						if($OtTue)
-							Print 	"<span class='label label-primary'>OT</span>&nbsp;";
+							Print 	"<span class='label block label-primary'>Overtime</span>";
 						if($NdTue)
-							Print 	"<span class='label label-warning'>ND</span>";
+							Print 	"<span class='label block label-warning'>Night Differential</span>";
 					
-							Print "		</h4>
+							Print "		
 									</td>";
 						Print "</tr>";
 					}

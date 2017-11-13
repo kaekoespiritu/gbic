@@ -444,3 +444,8 @@ hr
 {
   margin-bottom: 10px;
 }
+
+.block
+{
+  display:block;
+}
