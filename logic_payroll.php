@@ -187,10 +187,11 @@
 
 			$dayBefore = date('F j, Y', strtotime('-1 day', strtotime($holidayDate)));
 			$dayBeforeChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayBefore'");
-			if(mysql_num_rows($dayBeforeChecker) > 0)
+			$sameDayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$date'");
+			if(mysql_num_rows($dayBeforeChecker) == 1 && mysql_num_rows($sameDayChecker) == 0)
 			{
 				$dayBeforeArr = mysql_fetch_assoc($dayBeforeChecker);
-				if($dayBeforeArr['attendance'] == '2')//2 if employee is present on the day before the holiday
+				if($dayBeforeArr['attendance'] == '2' )//2 if employee is present on the day before the holiday
 				{
 					//Print "<script>console.log('".$overallWorkDays."')</script>";
 					$overallWorkDays++;//increment workdays 
