@@ -53,11 +53,23 @@ include_once("directives/db.php");
 		<div class="modal fade" role="dialog" id="newPass">
 			<div class="modal-dialog modal-sm">
 				<div class="modal-content">
+					<div class="modal-header">
+						<div class="col-md-10 text-right">
+							<h4 class="modal-title">Password is reset</h4>
+						</div>
+						<div class="col-md-1 pull-right">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						</div>
+					</div>
+					<div class="modal-body">
 
-					<!-- This will be the new password-->
-					<span id="newPassword"></span>
-					<!-- ------------------------------ -->
+					Use this temporary password: <b><span id="newPassword"></span></b><br>
+					Log into your account and go to Options to change your new password.
 
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary" data-dismiss='modal'>Okay</button>
+					</div>
 				</div>
 			</div>
 		</div>
