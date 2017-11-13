@@ -125,9 +125,14 @@ $empRow = mysql_fetch_assoc($employeeQuery);
 				$start = new DateTime($row['start_date']);
 				$end = new DateTime($row['end_date']);
 				$diff = $start->diff($end);
+				$diff = $diff->days;
+				$diff++
 				
 			?>
-			<div class="well well-sm"><h3>Absent From: <?php Print $row['start_date']?></h3><h3>Absent To: <?php Print $row['end_date']?></h3><h3>Equivalent of <?php print_r($diff->days)?> Days</h3></div>
+			<div class="well well-sm">
+				<h3>Absent From: <?php Print $row['start_date']?></h3>
+				<h3>Absent To: <?php Print $row['end_date']?></h3>
+				<h3>Equivalent of <?php Print $diff?> Days</h3></div>
 
 		</div>	
 	</div>
