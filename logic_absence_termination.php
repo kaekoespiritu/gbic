@@ -15,6 +15,6 @@
 	$empRow = mysql_fetch_assoc($empQuery);
 	Print "	<script>
 					alert('".$empRow['lastname'].", ".$empRow['lastname']." Terminated.');
-					window.location.assign('applications.php?site=null&position=null&status=null');
+					window.location.assign('applications.php');
 				</script>";
 ?>
