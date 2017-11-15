@@ -42,7 +42,10 @@ $empRow = mysql_fetch_assoc($employeeQuery);
 			<li><a href="applications.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Absence Notifications</a></li>
 			<li class="active">AWOL pending</li>
 			<button class="btn btn-danger pull-right" onclick="terminateEmployee()">Terminate employee</button>
-			<button class="btn btn-primary pull-right moveright" onclick="">Don't terminate employee</button>
+			<?php
+				Print "
+					<button class='btn btn-primary pull-right moveright' onclick='approveAwol(\"".$empid."\")'>Approve AWOL</button>";
+			?>
 		</ol>
 			<h2 class="text-left"><?php Print $empRow['lastname'].", ".$empRow['firstname']?></h2>
 			<hr>
@@ -154,6 +157,13 @@ $empRow = mysql_fetch_assoc($employeeQuery);
 			document.getElementById('terminationForm').submit();
 		}
 		
+	}
+	function approveAwol(id) {
+		var a = confirm("Are you sure you want to approve the AWOL of this Employee?");
+		if(a)
+		{
+			window.location.assign('logic_absence_approved.php?empid='+id);
+		}
 	}
 </script>
 

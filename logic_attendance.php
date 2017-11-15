@@ -297,7 +297,9 @@ if(!empty($dateRows))// Updating attendance
 														'Pending')";
 					mysql_query($AwolPending);
 				}
-				
+				//update employment status of employee to 3 = pending
+				$empAwolPending = "UPDATE employee SET employment_status = '2' WHERE empid = '$empid'";
+				mysql_query($empAwolPending);//update employment status of employee to 3 = pending
 				
 				$emp = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1'";
 				$empQuery = mysql_query($emp);
@@ -555,12 +557,15 @@ else// NEW attendance
 			if($AwolCounter >= 6)
 			{
 				//Print "<script>alert('1')</script>";
+				//insert to AWOL PENDING
 				$AwolPending = "INSERT awol_employees(empid, start_date, end_date, status) 
 												VALUES(	'$empid',
 														'$start',
 														'$end',
 														'Pending')";
-				mysql_query($AwolPending);//dito
+				$empAwolPending = "UPDATE employee SET employment_status = '2' WHERE empid = '$empid'";
+				mysql_query($empAwolPending);//update employment status of employee to 2 = pending
+				mysql_query($AwolPending);//insert AWOL pending to awol_employees
 				$emp = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1'";
 				$empQuery = mysql_query($emp);
 				$empArr = mysql_fetch_assoc($empQuery);
