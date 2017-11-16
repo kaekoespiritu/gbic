@@ -10,7 +10,10 @@ if(!isset($_GET['site']) && !isset($_GET['position']))
 $site = $_GET['site'];
 $position = $_GET['position'];
 // $date = strftime("%B %d, %Y"); 
-$date = "October 24, 2017";//Test date
+  //1st sample date
+  // $date = "October 24, 2017";
+  //2nd sample date
+  $date = "October 31, 2017";
 ?>
 <html>
 <head>
@@ -152,7 +155,6 @@ $date = "October 24, 2017";//Test date
 						<td style='width:200px !important;'>Name</td>
 						<td>Payroll status</td>
 						<td>Document status</td>
-						<td>Loans</td>
 						<td>Action</td>
 					</tr>
 					<?php
@@ -272,115 +274,7 @@ $date = "October 24, 2017";//Test date
 								
 								
 							}
-							// LOANS
-							$getSSS = "SELECT sss FROM loans WHERE empid = '$empid' AND sss IS NOT NULL ORDER BY date DESC";
-							$getPAGIBIG = "SELECT pagibig FROM loans WHERE empid = '$empid' AND pagibig IS NOT NULL ORDER BY date DESC";
-							$getVALE = "SELECT vale FROM loans WHERE empid = '$empid' AND vale IS NOT NULL ORDER BY date DESC";
-
-							$sssQuery = mysql_query($getSSS);
-							$pagibigQuery = mysql_query($getPAGIBIG);
-							$valeQuery = mysql_query($getVALE);
-							$sss = "";
-							$pagibig = "";
-							$vale = "";
-							if($sssQuery)
-							{
-								while($sssLatest = mysql_fetch_assoc($sssQuery))
-								{
-									if($sssLatest['sss'] != NULL)
-									{
-										$sss = "SSS";
-										break 1;
-									}
-									else
-									{
-										$sss = "";
-									}
-								}
-							}
-							else
-							{
-								$sss = "";
-							}
-							if($pagibigQuery)
-							{
-								while($pagibigLatest = mysql_fetch_assoc($pagibigQuery))
-								{
-									if($pagibigLatest['pagibig'] != NULL)
-									{
-										$pagibig = "PAGIBIG";
-										break 1;
-									}
-									else
-									{
-										$pagibig = "";
-									}
-								}
-							}
-							else
-							{
-								$pagibig = "";
-							}
-							if($valeQuery)
-							{
-								while($valeLatest = mysql_fetch_assoc($valeQuery))
-								{
-									if($valeLatest['vale'] != NULL)
-									{
-										$vale = "Vale";
-										break 1;
-									}
-									else
-									{
-										$vale = "";
-									}
-								}
-							}
-							else
-							{
-								$vale = "";
-							}
-							$loan = "";
-							$comma = false;
-							$bool_loan = true;
-							if($sss != "")//Checks if there is Loan on SSS
-							{
-								$loan .= $sss; 
-								$comma = true;
-								$bool_loan = false;
-							}
-							if($comma)
-							{
-								$loan .= ", "; 
-								$comma = false;
-							}
-							if($pagibig != "")//Checks if there is Loan on PAGIBIG
-							{
-								$loan .= $pagibig; 
-								$comma = true;
-								$bool_loan = false;
-							}
-							if($comma)
-							{
-								$loan .= ", "; 
-								$comma = false;
-							}
-							if($vale != "")//Checks if there is Loan on VALE
-							{
-								$loan .= $vale; 
-								$bool_loan = false;
-							}
-							if($bool_loan)
-							{
-								$loan = "None";
-							}
-							$loan = trim($loan);
-							$commaChecker = substr($loan, -1); 
-
-							if($commaChecker == ",") // Removes the comma if there is no following value
-							{
-								$loan = substr($loan, 0, -1);
-							}
+							
 							//$loans = "SELECT * FROM loans WHERE empid = '$empid'";
 							//$loansQuery = mysql_query($loans);
 							//Payroll Status
@@ -397,7 +291,6 @@ $date = "October 24, 2017";//Test date
 										<td>".$row['lastname'].", ".$row['firstname']."</td>
 										<td class='payrollStatus'>".$payrollStatus."</td>
 										<td>". $document ."</td>
-										<td>". $loan ."</td>
 										<td><a class='btn btn-primary' href='payroll.php?site=". $site ."&position=". $position ."&empid=".$empid."'>Start Payroll</a></td>
 									</tr>";
 						}

@@ -5,7 +5,10 @@
 
 
 	//$date = strftime("%B %d, %Y");
-	$date = "October 24, 2017";
+	  //1st sample date
+	  // $date = "October 24, 2017";
+	  //2nd sample date
+	  $date = "October 31, 2017";
 	$time = strftime("%X");//TIME
 //Employee ID
 	$empid = $_POST['employeeID'];
@@ -315,19 +318,19 @@
 
 	if(!empty($_POST['sssDeduct']))//if SSS loan textbox in payroll has value
 	{
-		Print "<script>console.log('sssDeduct')</script>";
+		//Print "<script>console.log('sssDeduct')</script>";
 		loanQuery('SSS', $empid, $loan_sss);
 	}
 	if(!empty($_POST['pagibigDeduct']))//if SSS loan textbox in payroll has value
 	{
-		Print "<script>console.log('pagibigDeduct')</script>";
+		//Print "<script>console.log('pagibigDeduct')</script>";
 		loanQuery('PagIBIG', $empid, $loan_pagibig);
 	}
 
 	$loan_newVale = 0;//preset the newvale
 	if(!empty($_POST['newValeAdded']))//if SSS loan textbox in payroll has value
 	{
-		Print "<script>console.log('newValeAdded')</script>";
+		//Print "<script>console.log('newValeAdded')</script>";
 		//Check if there is an existing query for this loan to avoid duplication
 		$loanChecker = mysql_query("SELECT * FROM loans WHERE date='$date' AND empid='$empid' AND type='newVale'");
 		if(mysql_num_rows($loanChecker) > 0)
@@ -341,7 +344,7 @@
 		
 		if(mysql_num_rows($newValeQuery) > 0)
 		{
-			Print "<script>console.log('newValeAdded1')</script>";
+			//Print "<script>console.log('newValeAdded1')</script>";
 			$loanArr = mysql_fetch_assoc($newValeQuery);
 			//Loaned
 			$newValeBalance = $loanArr['balance'];
@@ -366,7 +369,7 @@
 		}
 		else//Employee has no newvale balance but added newvale in the payroll
 		{
-			Print "<script>console.log('newValeAdded2')</script>";
+			// Print "<script>console.log('newValeAdded2')</script>";
 			$loanArr = mysql_fetch_assoc($newValeQuery);
 			//Deducted loan
 			$LoanAdded = $DeductedLoan;
@@ -395,7 +398,7 @@
 		{
 			mysql_query("DELETE FROM loans WHERE date='$date' AND empid='$empid' AND type='newVale'");
 		}
-		Print "<script>console.log('newVale')</script>";
+		// Print "<script>console.log('newVale')</script>";
 		$loan_newVale = $_POST['newVale'];
 		$Update = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
 							VALUES('$empid', 'newVale', '0', '$loan_newVale', 'deducted', '$date', '$time', '0')";
@@ -403,7 +406,7 @@
 	}
 	if(!empty($_POST['oldValeDeduct']))//if SSS loan textbox in payroll has value
 	{
-		Print "<script>console.log('oldValeDeduct')</script>";
+		// Print "<script>console.log('oldValeDeduct')</script>";
 		loanQuery('oldVale', $empid, $loan_oldVale);
 	}
 	$compLoan = $loan_sss + $loan_pagibig + $loan_oldVale + $loan_newVale;
@@ -418,10 +421,10 @@
 		
 		$totalToolCost = 0;
 		$BoolTool = false; //Boolean to if there is more than 2 tools
-		Print "<script>console.log('toolNum: ".$toolNum."')</script>";
+		// Print "<script>console.log('toolNum: ".$toolNum."')</script>";
 		if($toolNum > 1)
 		{
-			Print "<script>console.log('More')</script>";
+			// Print "<script>console.log('More')</script>";
 			$toolQuery = "INSERT INTO tools(empid, tools, cost, date) VALUES";
 			for($counter = 0; $counter < $toolNum; $counter++)
 			{
@@ -455,7 +458,7 @@
 		}
 		else if(!empty($_POST['toolprice'][0]) && !empty($_POST['toolname'][0]))
 		{
-			Print "<script>console.log('One')</script>";
+			// Print "<script>console.log('One')</script>";
 			$BoolTool = true;//True to query the update 
 			$toolname = $_POST['toolname'][0];
 			$toolprice = $_POST['toolprice'][0];
@@ -612,39 +615,39 @@
 														'$loan_oldVale')";
 
 
-Print "<script>console.log('empid: ".$empid."')</script>";
-Print "<script>console.log('overallWorkDays: ".$overallWorkDays."')</script>";
-Print "<script>console.log('OtRatePerHour: ".$OtRatePerHour."')</script>";
-Print "<script>console.log('totalOT: ".$totalOT."')</script>";
-Print "<script>console.log('compOT: ".$compOT."')</script>";
-Print "<script>console.log('dailyAllowance: ".$dailyAllowance."')</script>";
-Print "<script>console.log('compAllowance: ".$compAllowance."')</script>";
-Print "<script>console.log('extraAllowance: ".$extraAllowance."')</script>";
-Print "<script>console.log('cola: ".$cola."')</script>";
-Print "<script>console.log('SundayRatePerHour: ".$SundayRatePerHour."')</script>";
-Print "<script>console.log('sunWorkHrs: ".$sunWorkHrs."')</script>";
-Print "<script>console.log('sunday_Att: ".$sunday_Att."')</script>";
-Print "<script>console.log('NdRatePerHour: ".$NdRatePerHour."')</script>";
-Print "<script>console.log('totalND: ".$totalND."')</script>";
-Print "<script>console.log('compND: ".$compND."')</script>";
-Print "<script>console.log('regHolidayInc: ".$regHolidayInc."')</script>";
-Print "<script>console.log('speHolidayInc: ".$speHolidayInc."')</script>";
-Print "<script>console.log('addHoliday: ".$addHoliday."')</script>";
-Print "<script>console.log('speHolNum: ".$speHolNum."')</script>";
-Print "<script>console.log('regHolNum: ".$regHolNum."')</script>";
-Print "<script>console.log('tax: ".$tax."')</script>";
-Print "<script>console.log('sss: ".$sss."')</script>";
-Print "<script>console.log('pagibig: ".$pagibig."')</script>";
-Print "<script>console.log('philhealth: ".$philhealth."')</script>";
-Print "<script>console.log('date: ".$date."')</script>";
-Print "<script>console.log('tools_paid: ".$tools_paid."')</script>";
-Print "<script>console.log('outStandingBalance: ".$outStandingBalance."')</script>";
-Print "<script>console.log('GrandTotal: ".$GrandTotal."')</script>";
-Print "<script>console.log('date: ".$date."')</script>";
-Print "<script>console.log('loan_sss: ".$loan_sss."')</script>";
-Print "<script>console.log('loan_pagibig: ".$loan_pagibig."')</script>";
-Print "<script>console.log('loan_newVale: ".$loan_newVale."')</script>";
-Print "<script>console.log('loan_oldVale: ".$loan_oldVale."')</script>";
+// Print "<script>console.log('empid: ".$empid."')</script>";
+// Print "<script>console.log('overallWorkDays: ".$overallWorkDays."')</script>";
+// Print "<script>console.log('OtRatePerHour: ".$OtRatePerHour."')</script>";
+// Print "<script>console.log('totalOT: ".$totalOT."')</script>";
+// Print "<script>console.log('compOT: ".$compOT."')</script>";
+// Print "<script>console.log('dailyAllowance: ".$dailyAllowance."')</script>";
+// Print "<script>console.log('compAllowance: ".$compAllowance."')</script>";
+// Print "<script>console.log('extraAllowance: ".$extraAllowance."')</script>";
+// Print "<script>console.log('cola: ".$cola."')</script>";
+// Print "<script>console.log('SundayRatePerHour: ".$SundayRatePerHour."')</script>";
+// Print "<script>console.log('sunWorkHrs: ".$sunWorkHrs."')</script>";
+// Print "<script>console.log('sunday_Att: ".$sunday_Att."')</script>";
+// Print "<script>console.log('NdRatePerHour: ".$NdRatePerHour."')</script>";
+// Print "<script>console.log('totalND: ".$totalND."')</script>";
+// Print "<script>console.log('compND: ".$compND."')</script>";
+// Print "<script>console.log('regHolidayInc: ".$regHolidayInc."')</script>";
+// Print "<script>console.log('speHolidayInc: ".$speHolidayInc."')</script>";
+// Print "<script>console.log('addHoliday: ".$addHoliday."')</script>";
+// Print "<script>console.log('speHolNum: ".$speHolNum."')</script>";
+// Print "<script>console.log('regHolNum: ".$regHolNum."')</script>";
+// Print "<script>console.log('tax: ".$tax."')</script>";
+// Print "<script>console.log('sss: ".$sss."')</script>";
+// Print "<script>console.log('pagibig: ".$pagibig."')</script>";
+// Print "<script>console.log('philhealth: ".$philhealth."')</script>";
+// Print "<script>console.log('date: ".$date."')</script>";
+// Print "<script>console.log('tools_paid: ".$tools_paid."')</script>";
+// Print "<script>console.log('outStandingBalance: ".$outStandingBalance."')</script>";
+// Print "<script>console.log('GrandTotal: ".$GrandTotal."')</script>";
+// Print "<script>console.log('date: ".$date."')</script>";
+// Print "<script>console.log('loan_sss: ".$loan_sss."')</script>";
+// Print "<script>console.log('loan_pagibig: ".$loan_pagibig."')</script>";
+// Print "<script>console.log('loan_newVale: ".$loan_newVale."')</script>";
+// Print "<script>console.log('loan_oldVale: ".$loan_oldVale."')</script>";
 
 
 	$updateQuery = "UPDATE payroll SET	

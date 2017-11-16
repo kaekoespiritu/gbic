@@ -5,8 +5,10 @@ include('directives/session.php');
   date_default_timezone_set('Asia/Hong_Kong');
 
   //$date = $date = strftime("%B %d, %Y");
-  //sample date
-  $date = "October 24, 2017";
+  //1st sample date
+  // $date = "October 24, 2017";
+  //2nd sample date
+  $date = "October 31, 2017";
 ?>
 <html>
 <head>

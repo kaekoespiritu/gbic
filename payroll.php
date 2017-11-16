@@ -13,7 +13,11 @@ $position = $_GET['position'];
 $empid = $_GET['empid'];
 //Sample date for debugging purposes
 //$date = strftime("%B %d, %Y");
-$date = "October 24, 2017";
+
+  //1st sample date
+  // $date = "October 24, 2017";
+  //2nd sample date
+  $date = "October 31, 2017";
 
 $time = strftime("%X");//TIME
 

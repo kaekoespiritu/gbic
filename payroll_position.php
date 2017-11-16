@@ -44,7 +44,12 @@ include('directives/session.php');
 	<h3>Today is <?php 
 					date_default_timezone_set('Asia/Hong_Kong');
 					//$date = date('F d, Y', time());
-					$date = "October 24, 2017";
+					
+					// 1st sample date
+					//$date = "October 24, 2017";
+					// 2nd sample date
+					$date = "October 31, 2017";
+
 					$dayToday = date('l, F d, Y', time());
 					echo $dayToday; ?></h3>
 	<h4>Open: Tuesday | Close: Wednesday</h4>
@@ -81,12 +86,12 @@ include('directives/session.php');
 				// check if all employees are done in the site
 				$positionBool = false;
 				$positionEmpNum = 0;
-				$positionChecker = "SELECT p.empid FROM payroll AS p LEFT OUTER JOIN employee AS e ON p.empid = e.empid WHERE e.site = '$site' AND e.position = '$position_num'AND p.date = '$date'";
-				Print "<script>console.log('".$site." | ".$position_num." | ".$date."')</script>";
+				$positionChecker = "SELECT p.empid FROM payroll AS p LEFT OUTER JOIN employee AS e ON p.empid = e.empid WHERE e.site = '$site' AND e.position = '$position_num' AND p.date = '$date'";
+				
 				$checkerQuery = mysql_query($positionChecker) or die(mysql_error());
 
 				$positionEmpNum = mysql_num_rows($checkerQuery); // gets the number of emp that has finished payroll
-				
+				Print "<script>console.log('".$positionEmpNum."')</script>";
 				if($employee_num == $positionEmpNum)
 				{
 					Print "<script>console.log('yow')</script>";

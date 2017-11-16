@@ -1,7 +1,13 @@
 	
 	document.getElementById("payroll").setAttribute("style", "background-color: #10621e;");
 
-	
+	$( document ).ready(function() {
+console.log('123');
+    	if($('#outstandingPayable').val()){
+    		$('#amountToPay').removeAttr("readonly");
+    		console.log('123');
+    	}
+	});
 
 	function addRow(){
 		var toolsLength = document.getElementsByName('toolname[]').length;

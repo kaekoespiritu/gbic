@@ -4,7 +4,10 @@
 	require_once('directives/db.php');
 
 	$empid = $_GET['e'];
-	$date = "October 24, 2017";
+	  //1st sample date
+	  // $date = "October 24, 2017";
+	  //2nd sample date
+	  $date = "October 31, 2017";
 
 	$employee = "SELECT * FROM employee WHERE empid = '$empid'";
 	$empQuery = mysql_query($employee);

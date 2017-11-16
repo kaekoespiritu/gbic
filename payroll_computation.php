@@ -320,9 +320,21 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					$displayToolPayed = "--";
 				}
 
+				$prevPayCheck = "SELECT * FROM payroll WHERE empid = '$empid' AND date <> '$date' ORDER BY date DESC LIMIT 1";
+				$prevPayQuery = mysql_query($prevPayCheck) or die (mysql_error());
 
-
-					
+					//Previous payable
+					if(mysql_num_rows($prevPayQuery) > 0)
+					{
+						$prevPayArr = mysql_fetch_assoc($prevPayQuery);
+						if($prevPayArr['tools_outstanding'] > 0)
+						Print 
+							"<tr>
+								<td>Previous Payable</td>
+								<td colspan='3' ></td>
+								<td>".$prevPayArr['tools_outstanding']."</td>
+							</tr>";
+					}
 					$toolsSubTotal = "--";
 					if($payrollArr['tools_paid'] != 0)//Tools paid
 					{
