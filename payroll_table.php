@@ -291,8 +291,10 @@ $position = $_GET['position'];
 										<td>".$row['lastname'].", ".$row['firstname']."</td>
 										<td class='payrollStatus'>".$payrollStatus."</td>
 										<td>". $document ."</td>
-										<td><a class='btn btn-info' href='payroll.php?site=". $site ."&position=". $position ."&empid=".$empid."'>Start Payroll</a></td>
+										<td><a class='btn btn-primary' href='payroll.php?site=". $site ."&position=". $position ."&empid=".$empid."'>Start Payroll</a></td>
 									</tr>";
+									// <a class='btn btn-cornflowerblue' href='payroll.php?site=". $site ."&position=". $position ."&empid=".$empid."'>View Payroll Computation</a></td>
+									// For completed
 						}
 					}
 					else

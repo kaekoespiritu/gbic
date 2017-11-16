@@ -449,3 +449,8 @@ hr
 {
   display:block;
 }
+
+.btn-cornflowerblue {
+  background-color: cornflowerblue;
+  color:white;
+}
