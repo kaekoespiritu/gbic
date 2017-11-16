@@ -45,7 +45,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 			<li><a href="logic_payroll_backPayroll.php?e=<?php Print $empid?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Payroll</a></li>
 			<li class="active">Computation for <?php Print $empArr['lastname'].", ".$empArr['firstname']." the ". $empArr['position']." from ". $empArr['site']?>
 			</li>
-			<a class="btn btn-success pull-right" href="payroll_table.php?position=<?php Print $position?>&site=<?php Print $site?>">Choose next employee</a>
+			<a class="btn btn-warning pull-right" href="payroll_table.php?position=<?php Print $position?>&site=<?php Print $site?>">Edit Payroll</a>
 		</ol>
 	</div>
 

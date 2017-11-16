@@ -11,9 +11,9 @@ $site = $_GET['site'];
 $position = $_GET['position'];
 // $date = strftime("%B %d, %Y"); 
   //1st sample date
-  // $date = "October 24, 2017";
+   $date = "October 24, 2017";
   //2nd sample date
-  $date = "October 31, 2017";
+  //$date = "October 31, 2017";
 ?>
 <html>
 <head>
@@ -291,7 +291,7 @@ $position = $_GET['position'];
 										<td>".$row['lastname'].", ".$row['firstname']."</td>
 										<td class='payrollStatus'>".$payrollStatus."</td>
 										<td>". $document ."</td>
-										<td><a class='btn btn-primary' href='payroll.php?site=". $site ."&position=". $position ."&empid=".$empid."'>Start Payroll</a></td>
+										<td><a class='btn btn-info' href='payroll.php?site=". $site ."&position=". $position ."&empid=".$empid."'>Start Payroll</a></td>
 									</tr>";
 						}
 					}

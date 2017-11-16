@@ -6,9 +6,9 @@
 
 	//$date = strftime("%B %d, %Y");
 	  //1st sample date
-	  // $date = "October 24, 2017";
+	   $date = "October 24, 2017";
 	  //2nd sample date
-	  $date = "October 31, 2017";
+	  //$date = "October 31, 2017";
 	$time = strftime("%X");//TIME
 //Employee ID
 	$empid = $_POST['employeeID'];
