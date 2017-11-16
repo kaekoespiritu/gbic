@@ -291,7 +291,18 @@ $position = $_GET['position'];
 										<td>".$row['lastname'].", ".$row['firstname']."</td>
 										<td class='payrollStatus'>".$payrollStatus."</td>
 										<td>". $document ."</td>
-										<td><a class='btn btn-primary' href='payroll.php?site=". $site ."&position=". $position ."&empid=".$empid."'>Start Payroll</a></td>
+										<td>";
+							if($payrollStatus == "Complete") 
+							{
+								Print		"<button class='btn btn-cornflowerblue' onclick='viewPayrollComp(\"".$empid."\",\"".$date."\")'>View Payroll Computation</button>";
+							}
+							else
+							{
+								Print		"<a class='btn btn-primary' href='payroll.php?site=". $site ."&position=". $position ."&empid=".$empid."'>Start Payroll</a>";
+							}
+							
+
+							Print 		"</td>
 									</tr>";
 									// <a class='btn btn-cornflowerblue' href='payroll.php?site=". $site ."&position=". $position ."&empid=".$empid."'>View Payroll Computation</a></td>
 									// For completed
@@ -310,7 +321,8 @@ $position = $_GET['position'];
 			</div>
 		</div>
 	</div>
-
+	<!-- This is for the hidden form that that will be use to pass data to payroll computation -->
+	<div id="hiddenFormDiv"></div>
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -390,6 +402,33 @@ $position = $_GET['position'];
 		function clearFilter() {
 			localStorage.clear();
 			window.location.assign("payroll_table.php?position=<?php Print $position?>&site=<?php Print $site?>");
+		}
+		//View the payroll computation
+		function viewPayrollComp(id, date) {
+			var empid = id;
+
+				//Create form to pass the values through POST and not GET
+				var form = document.createElement("form");
+				form.setAttribute("method","post");
+				form.setAttribute("action","payroll_computation.php");
+				form.setAttribute("id","payrollCompForm");
+
+				var user = document.createElement("input");
+				user.setAttribute("type","hidden");
+				user.setAttribute("name","empid");
+				user.setAttribute("value",empid);
+
+				var day = document.createElement("input");
+				day.setAttribute("type","hidden");
+				day.setAttribute("name","date");
+				day.setAttribute("value",date);
+				
+				//append User inside form
+				form.appendChild(user);
+				form.appendChild(day);
+
+				document.getElementById('hiddenFormDiv').appendChild(form);
+				document.getElementById('payrollCompForm').submit();
 		}
 	</script>
 </body>
