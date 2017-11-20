@@ -2,7 +2,7 @@
 include_once('directives/db.php');
 include('directives/session.php');
 require "directives/attendance/attendance_query.php";
-//error_reporting(0);// fetch no error
+error_reporting(0);// fetch no error
 date_default_timezone_set('Asia/Hong_Kong');
 $location = $_GET['site'];
 //Print "<script>alert('absent')</script>";
@@ -274,7 +274,7 @@ if(!empty($dateRows))// Updating attendance
 			{
 				if($AwolChecker['attendance'] == 1)
 				{
-					Print "<script>alert('".$AwolCounter."')</script>";
+					//Print "<script>alert('".$AwolCounter."')</script>";
 					$AwolCounter++;
 				}
 				if($AwolCounter >= 7)
@@ -288,7 +288,7 @@ if(!empty($dateRows))// Updating attendance
 				$checkAwolQuery = mysql_query($checkAwol);
 				if(mysql_num_rows($checkAwolQuery) == 0)
 				{
-					Print "<script>alert('start: ".$start." | end: ".$end."')</script>";
+					//Print "<script>alert('start: ".$start." | end: ".$end."')</script>";
 					//Print "<script>alert('2')</script>";
 					$AwolPending = "INSERT awol_employees(empid, start_date, end_date, status) 
 												VALUES(	'$empid',
@@ -548,7 +548,7 @@ else// NEW attendance
 			{
 				if($AwolChecker['attendance'] == 1)
 				{
-					Print "<script>alert('".$AwolCounter."')</script>";
+					//Print "<script>alert('".$AwolCounter."')</script>";
 					$AwolCounter++;
 				}
 				if($AwolCounter >= 6)

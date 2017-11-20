@@ -815,7 +815,7 @@ if($holidayExist > 0)
 						if(!$monAbsent)
 						{
 							//if halfday
-							if(isset($ABmonTimeIn) && isset($ABmonTimeOut))
+							if(!empty($ABmonTimeIn) && !empty($ABmonTimeOut))
 							{
 								Print 	"	<td>Time In:<br>". trim($ABmonTimeIn) ."</td>
 								<td>Time Out:<br>". trim($ABmonTimeOut) ."</td>";
@@ -1078,7 +1078,7 @@ if($holidayExist > 0)
 					{
 						$oldValeArr = mysql_fetch_assoc($oldValeQuery);
 
-						if($newValeArr['balance'] > 0)
+						if($oldValeArr['balance'] > 0)
 							$oldVale = $oldValeArr['balance'];
 						else
 							$oldVale = "N/A";

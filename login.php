@@ -208,7 +208,9 @@ if(isset($_POST['login']))
 	$count = mysql_num_rows($result);
 	$user = $row['username'];
 	$pass = $row['password'];
-
+	
+	Print "<script>alert('".$user." || ".$pass."')</script>";
+	
 	if($username === $user && $password === $pass)
 	{
 		$_SESSION['user_logged_in'] = $username;
