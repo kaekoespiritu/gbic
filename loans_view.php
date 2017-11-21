@@ -139,7 +139,7 @@ else if($loanType == "newVale")
 					$loansQuery = mysql_query($loans) or die (mysql_error());
 					if(mysql_num_rows($loansQuery) > 0)
 					{
-						Print "<script>alert('1')</script>";
+						//Print "<script>alert('1')</script>";
 						while($row = mysql_fetch_assoc($loansQuery))
 						{
 							$empid = $row['empid'];
