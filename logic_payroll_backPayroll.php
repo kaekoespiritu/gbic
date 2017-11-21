@@ -20,8 +20,7 @@
 
 	if(mysql_num_rows($loansQuery) > 0)
 	{
-		mysql_query("DELETE FROM loans WHERE empid = '$empid' AND date = '$date' AND action = '0'");
-		mysql_query("DELETE FROM loans WHERE empid = '$empid' AND date = '$date' AND remarks = 'loaned' AND action = '1'");
+		mysql_query("DELETE FROM loans WHERE empid = '$empid' AND date = '$date'");
 	}
 
 	Print "<script>window.location.assign('payroll.php?site=".$site."&position=".$position."&empid=".$empid."')</script>";

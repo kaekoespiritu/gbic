@@ -11,7 +11,7 @@
 						<h4 class="text-left">Amount:</h4>
 						<input type="text" id="newAddVale" class="form-control" placeholder="Amount of new vale" onkeypress="validatenumber(event)"><br>
 						<h4 class="text-left">Reason:</h4>
-						<textarea class="form-control" rows="3" placeholder="Add reason for getting new vale"></textarea>
+						<textarea class="form-control" rows="3" id="newValeRemarks" placeholder="Add reason for getting new vale"></textarea>
 					</div>
 				</div>
 			</div>

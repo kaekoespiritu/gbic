@@ -2,14 +2,14 @@
 	require_once('directives/session.php');
 	require_once('directives/db.php');
 	//Print "<script>console.log('".$overtimeRate1."')</script>";
-
+	$time = strftime("%X");//TIME
 
 	//$date = strftime("%B %d, %Y");
 	  //1st sample date
 	   $date = "October 24, 2017";
 	  //2nd sample date
 	  //$date = "October 31, 2017";
-	$time = strftime("%X");//TIME
+	
 //Employee ID
 	$empid = $_POST['employeeID'];
 
@@ -165,7 +165,7 @@
 
 //COLA incrementation -----------------------------------------------------------------
 	$cola = 0;
-	if(!empty($_POST['COLA']))
+	if($_POST['COLA'] != "N/A")
 	{
 		$cola = $_POST['COLA'];
 	}
@@ -321,14 +321,14 @@
 		//Print "<script>console.log('sssDeduct')</script>";
 		loanQuery('SSS', $empid, $loan_sss);
 	}
-	if(!empty($_POST['pagibigDeduct']))//if SSS loan textbox in payroll has value
+	if(!empty($_POST['pagibigDeduct']))//if Pagibig loan textbox in payroll has value
 	{
 		//Print "<script>console.log('pagibigDeduct')</script>";
 		loanQuery('PagIBIG', $empid, $loan_pagibig);
 	}
 
 	$loan_newVale = 0;//preset the newvale
-	if(!empty($_POST['newValeAdded']))//if SSS loan textbox in payroll has value
+	if(!empty($_POST['newValeAdded']))//if newVale loan textbox in payroll has value
 	{
 		//Print "<script>console.log('newValeAdded')</script>";
 		//Check if there is an existing query for this loan to avoid duplication
@@ -341,10 +341,11 @@
 		$Loan = "SELECT * FROM loans WHERE type='newVale' AND empid='$empid' ORDER BY date DESC, time DESC LIMIT 1";
 		$newValeQuery = mysql_query($Loan);
 		$DeductedLoan = $_POST['newValeAdded'];
-		
+		$remarks = $_POST['newValeRemarks'];
+
 		if(mysql_num_rows($newValeQuery) > 0)
 		{
-			//Print "<script>console.log('newValeAdded1')</script>";
+			Print "<script>console.log('newValeAdded1')</script>";
 			$loanArr = mysql_fetch_assoc($newValeQuery);
 			//Loaned
 			$newValeBalance = $loanArr['balance'];
@@ -354,12 +355,14 @@
 			
 			$LoanBalance = abs($LoanBalance);//make it positive if ever it is negative
 			$Update1 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
-							VALUES('$empid', 'newVale', '$LoanAdded', '$LoanAdded', 'loaned', '$date', '$time', '1')";
+							VALUES('$empid', 'newVale', '$LoanAdded', '$LoanAdded', '$remarks', '$date', '$time', '1')";
 			
 			$loanCheck = "SELECT * FROM loans WHERE type='newVale' AND empid='$empid' ORDER BY date DESC, time DESC LIMIT 1";
 
 			mysql_query($Update1);
-			$payNewVale = mysql_query($loanCheck);
+
+			$time = date('H:i:s', strtotime('+1 seconds'));//Adds 1 seconds to the time
+			$payNewVale = mysql_query($loanCheck) or die (mysql_error());
 			$newValeArr = mysql_fetch_assoc($payNewVale);
 			$newBalance = $newValeArr['balance'];
 
@@ -369,17 +372,19 @@
 		}
 		else//Employee has no newvale balance but added newvale in the payroll
 		{
-			// Print "<script>console.log('newValeAdded2')</script>";
+			 Print "<script>console.log('newValeAdded2')</script>";
 			$loanArr = mysql_fetch_assoc($newValeQuery);
 			//Deducted loan
 			$LoanAdded = $DeductedLoan;
 			
 			$Update1 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
-							VALUES('$empid', 'newVale', '$DeductedLoan', '$DeductedLoan', 'loaned', '$date', '$time', '1')";
+							VALUES('$empid', 'newVale', '$DeductedLoan', '$DeductedLoan', '$remarks', '$date', '$time', '1')";
 
 			$loanCheck = "SELECT * FROM loans WHERE type='newVale' AND empid='$empid' ORDER BY date DESC, time DESC LIMIT 1";
 			mysql_query($Update1);
-			$payNewVale = mysql_query($loanCheck);
+
+			$time = date('H:i:s', strtotime('+1 seconds'));//Adds 1 seconds to the time
+			$payNewVale = mysql_query($loanCheck) or die (mysql_error());
 			$newValeArr = mysql_fetch_assoc($payNewVale);
 			$newBalance = $newValeArr['balance'];
 
@@ -398,11 +403,11 @@
 		{
 			mysql_query("DELETE FROM loans WHERE date='$date' AND empid='$empid' AND type='newVale'");
 		}
-		// Print "<script>console.log('newVale')</script>";
+		Print "<script>console.log('newVale')</script>";
 		$loan_newVale = $_POST['newVale'];
 		$Update = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
 							VALUES('$empid', 'newVale', '0', '$loan_newVale', 'deducted', '$date', '$time', '0')";
-		mysql_query($Update);
+		mysql_query($Update)  or die (mysql_error());
 	}
 	if(!empty($_POST['oldValeDeduct']))//if SSS loan textbox in payroll has value
 	{

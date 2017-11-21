@@ -239,9 +239,29 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 						<td><?php Print $speHolNum?></td>
 						<td><?php Print $subTotalRegularHolidayRate?></td>
 					</tr>
+					<!-- COLA -->
 					<?php
-						$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance;
-						
+						$subTotalCola = $payrollArr['cola'];
+						if($subTotalCola == 0)
+							$subTotalCola = "--";
+						else
+							$subTotalCola = numberExactFormat($subTotalCola, 2, '.');
+
+						if($payrollArr['cola'] != 0)
+						{
+							Print "
+								<tr>
+									<td>COLA</td>
+									<td></td>
+									<td></td>
+									<td>".$subTotalCola."</td>
+								</tr>
+							";
+						}
+					?>
+
+					<?php
+						$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $payrollArr['cola'];
 					?>
 					<tr style="font-family: QuicksandMed;">
 						<td colspan="2" class="active">Subtotal</td>

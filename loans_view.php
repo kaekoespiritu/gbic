@@ -135,10 +135,11 @@ else if($loanType == "newVale")
 					<td>History</td>
 				</tr>
 				<?php 
-					$loans = "SELECT DISTINCT * FROM loans WHERE type = '$loanType' GROUP BY empid ORDER BY date DESC, time DESC";
-					$loansQuery = mysql_query($loans);
+					$loans = "SELECT DISTINCT * FROM loans WHERE type = '$loanType'  GROUP BY empid ORDER BY date DESC, time DESC";
+					$loansQuery = mysql_query($loans) or die (mysql_error());
 					if(mysql_num_rows($loansQuery) > 0)
 					{
+						Print "<script>alert('1')</script>";
 						while($row = mysql_fetch_assoc($loansQuery))
 						{
 							$empid = $row['empid'];
@@ -182,6 +183,8 @@ else if($loanType == "newVale")
 							$checker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY date DESC, time DESC LIMIT 1";
 							$checkerQuery = mysql_query($checker);
 							$checkerArr = mysql_fetch_assoc($checkerQuery);
+
+							$noLoanChecker = true;
 							if(mysql_num_rows($employeeQuery) != 0)
 							{
 								if($checkerArr['balance'] > 0)
@@ -209,8 +212,16 @@ else if($loanType == "newVale")
 											</td>
 										</tr>
 										";
+									$noLoanChecker = false;
 								}
 							}
+						}
+						if($noLoanChecker)
+						{
+							Print 
+							"
+							<tr><td colspan='6'><h3>No records found.</h3></td></tr>
+							";
 						}
 					}
 					else

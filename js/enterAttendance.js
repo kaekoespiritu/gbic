@@ -636,7 +636,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					}
 
 				}
-				else if (timeinhour1 <= 22 && timeouthour1 <= 24)
+				else if (timeinhour1 <= 22 && timeouthour1 >= 22)
 				{
 					console.log("possibility 3");
 					nightdiff = timeouthour1 - 22;
