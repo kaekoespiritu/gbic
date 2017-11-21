@@ -132,6 +132,7 @@ console.log('123');
 		var child = document.getElementById('newValeText');
 		var oNewVale = document.getElementsByName('newVale')[0].value;//this is the old new-vale
 		var modalNewVale = document.getElementsByName('newValeAdded')[0].value;//this is the new-vale from Modal
+
 		modalNewVale = modalValue;
 		//checker for N/A value
 
@@ -176,6 +177,9 @@ console.log('123');
 		
 		// Save to hidden input for database access
 		//console.log("yow:"+modalValue);
+		var remarks = document.getElementById('newValeRemarks').value;
+		document.querySelector(".addRemarks").value = remarks;
+
 		var saveToAdd = document.querySelector(".added");
 		saveToAdd.value = modalValue;
 	}

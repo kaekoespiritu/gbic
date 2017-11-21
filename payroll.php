@@ -1166,8 +1166,11 @@ if($holidayExist > 0)
 							Print "<input type='hidden' name='newVale' value='".$newVale."'>";
 						else
 							Print "<input type='hidden' name='newVale'>";
-						?>
+						?> 
+
+						<!-- Hidden inputs for the new vale -->
 						<input type="hidden" name="newValeAdded" class="added">
+						<input type="hidden" name="newValeRemarks" class="addRemarks">
 
 						<div class="row" style="margin-top:9px">
 							<button type='button' class='btn btn-success btn-sm col-md-12' data-toggle='modal' data-target='#addVale'><span class='glyphicon glyphicon-plus'></span> Add</button>
@@ -1187,7 +1190,7 @@ if($holidayExist > 0)
 						}
 						?>
 						<h4>COLA</h4>
-						<input type="text" placeholder="<?php Print $colaValue?>" name="cola" class="form-control" readonly>
+						<input type="text" value="<?php Print $colaValue?>" name="cola" class="form-control" readonly>
 					</div>
 				</div>
 

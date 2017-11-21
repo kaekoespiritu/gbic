@@ -31,12 +31,17 @@ if(mysql_num_rows($historyQuery) > 0)
 	{
 		$output .= "
 					<tr>
-						<td>".number_format($row['balance'], 2, '.', ',')."</td>
-						<td>".number_format($row['amount'], 2, '.', ',')."</td>";
+						<td>".number_format($row['balance'], 2, '.', ',')."</td>";
 		if($row['action'] == '1')
-			$output .= "<td>Loaned</td>";
+		{
+			$output .= "<td> +".number_format($row['amount'], 2, '.', ',')."</td>
+						<td>Loaned</td>";
+		}
 		else
-			$output .= "<td>Payed</td>";
+		{
+			$output .= "<td> -".number_format($row['amount'], 2, '.', ',')."</td>
+						<td>Paid</td>";
+		}
 		
 		$output .= 	"	<td>".$row['remarks']."</td>
 						<td>".$row['date']."</td>
