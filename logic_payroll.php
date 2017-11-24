@@ -165,9 +165,9 @@
 
 //COLA incrementation -----------------------------------------------------------------
 	$cola = 0;
-	if($_POST['COLA'] != "N/A")
+	if($_POST['cola'] != "N/A")
 	{
-		$cola = $_POST['COLA'];
+		$cola = $_POST['cola'];
 	}
 
 //Holiday Computation ----------------------------------------------------- Incomplete
