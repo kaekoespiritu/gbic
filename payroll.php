@@ -36,7 +36,7 @@ $holidayName = "";
 if($holidayExist > 0)
 {
 	$holidayRow = mysql_fetch_assoc($holidayQuery);
-	$holidayName = $holiday['holiday'];//Gets holiday name
+	$holidayName = $holidayRow['holiday'];//Gets holiday name
 }
 //Sunday Checker
 ?>

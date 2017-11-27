@@ -209,8 +209,6 @@ if(isset($_POST['login']))
 	$user = $row['username'];
 	$pass = $row['password'];
 	
-	Print "<script>alert('".$user." || ".$pass."')</script>";
-	
 	if($username === $user && $password === $pass)
 	{
 		$_SESSION['user_logged_in'] = $username;
