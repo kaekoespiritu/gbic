@@ -146,6 +146,24 @@ img.bg
   display:block;
 }
 
+.sub-flipdown-menu {
+  display: none;
+}
+
+.sub-flipdown:hover .sub-flipdown-menu {
+  display: inline;
+  left: 100%;
+  position: relative;
+  bottom: 43px;
+  background-color: #fff;
+}
+
+.sub-flipdown-menu:hover {
+  background-color: #10621e;
+  color:white;
+  display: flex;
+}
+
 
 /*--------------------------------*/
 @keyframes bounce
