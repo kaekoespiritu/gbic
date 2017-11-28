@@ -24,7 +24,6 @@ if(isset($_GET['search']))
 <head>
 	<title>Payroll</title>
 	<!-- Company Name: Green Built Industrial Corporation -->
-
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 	<link rel="stylesheet" href="css/jquery-ui.css">
@@ -49,6 +48,7 @@ if(isset($_GET['search']))
 				</div>
 			</div>
 		</div>
+		
 		<!-- NAVIGATION BAR -->
 		<?php
 		require_once("directives/nav.php");
