@@ -40,10 +40,56 @@
 	</div>
 	<!-- REPORTS BUTTON -->
 	<div id="reports" class="col-md-1 navibutton">
-	<a href="reports.php" class="reports">
-		<img src="Images/tax.png" class="center-block">
-		<h6 class="text-center">REPORTS</h6>
-	</a>
+	<div class="flipdown">
+		<a href="reports.php" class="reports flipbtn">
+			<img src="Images/tax.png" class="center-block">
+			<h6 class="text-center">REPORTS</h6>
+		</a>
+		<div class="flipdown-menu">
+			<div class="sub-flipdown">
+				<a class="subflipbtn">Earnings</a>
+				<div class="sub-flipdown-menu">
+					<a>Individual</a>
+					<a>Overall</a>
+				</div>
+			</div>
+			<div class="sub-flipdown">
+				<a class="subflipbtn">Contributions</a>
+				<div class="sub-flipdown-menu">
+					<a>Individual</a>
+					<a>Overall</a>
+				</div>
+			</div>
+			<div class="sub-flipdown">
+				<a class="subflipbtn">Loans</a>
+				<div class="sub-flipdown-menu">
+					<a>Individual</a>
+					<a>Overall</a>
+				</div>
+			</div>
+			<div class="sub-flipdown">
+				<a class="subflipbtn">Attendance</a>
+				<div class="sub-flipdown-menu">
+					<a>Individual</a>
+					<a>Overall</a>
+				</div>
+			</div>
+			<div class="sub-flipdown">
+				<a class="subflipbtn">Payroll</a>
+				<div class="sub-flipdown-menu">
+					<a>Individual</a>
+					<a>Overall</a>
+				</div>
+			</div>
+			<div class="sub-flipdown">
+				<a class="subflipbtn">Payslip</a>
+				<div class="sub-flipdown-menu">
+					<a>Individual</a>
+					<a>Overall</a>
+				</div>
+			</div>
+		</div>
+	</div>
 	</div>
 	<!-- OPTIONS BUTTON-->
 	<div id="adminOptions" class="col-md-1 navibutton">
@@ -65,4 +111,3 @@
 	</div>
 </div>
 </div>
-
