@@ -1,33 +1,67 @@
 <!DOCTYPE html>
 <?php
 include('directives/session.php');
-
-if(isset($_GET['type']))
+include('directives/db.php');
+include("pagination/reports_individual_function.php");//For pagination
+if(isset($_GET['type']) && isset($_GET['period']))
 {
-	Print "<script>alert('".$_GET['type']."')</script>";
-
+	// Allow only these types
 	switch($_GET['type'])
 	{
-		case "attendance": break;
-		case "payroll": break;
-		case "loans": break;
-		case "payslip": break;
-		case "contributions": break;
-		case "earnings": break;
+		case "Attendance": break;
+		case "Payroll": break;
+		case "Loans": break;
+		case "Payslip": break;
+		case "Contributions": break;
+		case "Earnings": break;
+		default: Print Print "<script>window.location.assign('index.php')</script>";
+	}
+	// Allow only these periods
+	switch($_GET['period'])
+	{
+		case "week": break;
+		case "month": break;
+		case "year": break;
 		default: Print Print "<script>window.location.assign('index.php')</script>";
 	}
 }
 else
 {
-	Print "<script>alert('index.php2')</script>";
 	Print "<script>window.location.assign('index.php')</script>";
 }
+if(!isset($_GET['site']) && !isset($_GET['position']))
+{
+	Print "<script>window.location.assign('index.php')</script>";
+}
+//for pagination
+$site_page = $_GET['site'];
+$position_page = $_GET['position'];
+$statement = "";
+$period = $_GET['period'];
+$reportType = $_GET['type'];
+
+//Search bar
+$search = "";
+if(isset($_GET['search']))
+{
+	if($_GET['search'] != "" || $_GET['search'] != null)
+	{
+		$search = $_GET['search'];
+	}
+}
+
+
 ?>
 <html>
 <head>
 	<title>Payroll</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
+
+	<!-- For pagination -->
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link href="pagination/css/pagination.css" rel="stylesheet" type="text/css" />
+	<link href="pagination/css/A_green.css" rel="stylesheet" type="text/css" />
 </head>
 <body style="font-family: Quicksand;">
 	<div class="container-fluid">
@@ -38,7 +72,7 @@ else
 
 		<div class="container pull-down">
 			<div class="col-md-12 pull-down">
-				<h2>Individual Attendance Report</h2>
+				<h2>Individual <?php Print $_GET['type']?> Report</h2>
 			</div>
 
 			<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
@@ -56,10 +90,16 @@ else
 					<div class="btn-group">
 						<select class="form-control" id="position" onchange="position()">
 							<option hidden>Position</option>
-							<option>Position here</option>
-							<option>Position here</option>
-							<option>Position here</option>
-							<option>Position here</option>
+							<?php 
+								$position = "SELECT * FROM job_position WHERE active = '1'";
+								$positionQuery = mysql_query($position);
+
+								while($positionArr = mysql_fetch_assoc($positionQuery))
+								{
+									Print "<option value='".$positionArr['position']."'>".$positionArr['position']."</option>";
+								}
+
+							?>
 						</select>
 					</div>
 					<!-- END OF POSITION DROPDOWN -->
@@ -67,10 +107,16 @@ else
 					<div class="btn-group">
 						<select class="form-control" id="site" onchange="site()">
 							<option hidden>Site</option>
-							<option>Sites here</option>
-							<option>Sites here</option>
-							<option>Sites here</option>
-							<option>Sites here</option>
+							<?php 
+								$site = "SELECT * FROM site WHERE active = '1'";
+								$siteQuery = mysql_query($site);
+
+								while($siteArr = mysql_fetch_assoc($siteQuery))
+								{
+									Print "<option value='".$siteArr['location']."'>".$siteArr['location']."</option>";
+								}
+
+							?>
 						</select>
 					</div>
 					<!-- END OF SITES DROPDOWN -->
@@ -78,10 +124,35 @@ else
 					View period:
 					<!-- CHANGE PERIOD VIEW -->
 					<div class="col-md-2 pull-right">
-						<select class="form-control">
-							<option>Weekly</option>
-							<option>Monthly</option>
-							<option>Yearly</option>
+						<?php
+							Print "<select class='form-control' onchange='changePeriod(this.value, \"".$position_page."\", \"".$site_page ."\", \"".$search ."\", \"".$reportType ."\", \"".$period ."\")'>";
+						?>
+						<option hidden>Period</option>
+							<?php
+							$timePeriods = array("week", "month", "year");
+							foreach($timePeriods as $periods)
+							{
+								if($periods == $period)
+								{
+									if($periods == "week")
+										Print "<option value='".$periods."' selected>Weekly</option>";
+									else if($periods == "month")
+										Print "<option value='".$periods."' selected>Monthly</option>";
+									else if($periods == "year")
+										Print "<option value='".$periods."' selected>Yearly</option>";
+								}
+								else
+								{
+									if($periods == "week")
+										Print "<option value='".$periods."'>Weekly</option>";
+									else if($periods == "month")
+										Print "<option value='".$periods."'>Monthly</option>";
+									else if($periods == "year")
+										Print "<option value='".$periods."'>Yearly</option>";
+								}
+							}
+								
+							?>
 						</select>
 					</div>
 				</div>
@@ -93,6 +164,7 @@ else
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
 					<table class="table table-bordered table-condensed" style="background-color:white;">
+
 						<tr>
 							<th class='fixedWidth text-center'>Employee ID</th>
 							<th class='text-center'>Name</th>
@@ -100,17 +172,42 @@ else
 							<th class='text-center'>Site</th>
 							<th class='text-center'>Actions</th>
 						</tr>
-						<tr>
-							<td style='vertical-align: inherit'>1</td>
-							<td style='vertical-align: inherit'>Name goes here</td>
-							<td style='vertical-align: inherit'>Position goes here</td>
-							<td style='vertical-align: inherit'>Site goes here</td>
-							<td style='vertical-align: inherit'><button class="btn btn-default">Print / View</button></td>
-						</tr>
+						<?php
+						//Print "<script>alert('default')</script>";
+							$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
+					    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
+					    	$startpoint = ($page * $limit) - $limit;
+					        $statement = "employee WHERE employment_status = '1' ORDER BY site ASC, position ASC, lastname ASC";
+
+							$res=mysql_query("select * from {$statement} LIMIT {$startpoint} , {$limit}");
+
+						while($empArr = mysql_fetch_assoc($res))
+						{
+							Print "
+								
+								<tr>
+									<td style='vertical-align: inherit'>".$empArr['empid']."</td>
+									<td style='vertical-align: inherit'>".$empArr['lastname'].", ".$empArr['firstname']."</td>
+									<td style='vertical-align: inherit'>".$empArr['position']."</td>
+									<td style='vertical-align: inherit'>".$empArr['site']."</td>
+									<td style='vertical-align: inherit'>
+										<button class='btn btn-default' onclick='printViewBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
+											Print / View
+										</button>
+									</td>
+								</tr>
+							";
+						}
+						?>
 					</table>
 				</div>
 			</div>
-
+			<?php
+				echo "<div id='pagingg' >";
+				if($statement && $limit && $page && $site_page && $position_page && $reportType && $period)
+					echo pagination($statement,$limit,$page, $site_page, $position_page, $search, $reportType, $period);
+				echo "</div>";
+			?>
 		</div>
 	</div>
 
@@ -119,6 +216,36 @@ else
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script>
 		document.getElementById("reports").setAttribute("style", "background-color: #10621e;");
+
+		function printViewBtn(id, type) {
+
+		}		
+
+		function changePeriod(period, position, site, search, type) {
+
+			window.location.assign("reports_individual.php?site="+site+"&position="+position+"&search="+search+"&type="+type+"&period="+period)
+		}
 	</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

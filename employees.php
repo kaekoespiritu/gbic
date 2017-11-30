@@ -3,7 +3,7 @@
 error_reporting(0);
 include('directives/session.php');
 include_once('directives/db.php');
-include("pagination/function.php");//For pagination
+include("pagination/employees_function.php");//For pagination
 if(!isset($_GET['site']) && !isset($_GET['position']))
 {
 	header("location:employee_sample.php?site=null&position=null");
