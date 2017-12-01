@@ -27,7 +27,7 @@ if(!empty($result))
     while($row = mysql_fetch_assoc($result))
     {
         $output .= '
-        <div class="col-md-6 col-md-offset-3 searchResults text-left" id="'.$row['empid'].'">
+        <div class="searchResults text-left" id="'.$row['empid'].'" style="padding:0.5em">
         <a href="#"  onclick="searchBox(\''.$row['empid'].'\')">'.$row['lastname'].', '.$row['firstname'].'<cite>['.$row['position'].', '.$row['site'].']</cite></a>
         </div>
         ';
@@ -36,14 +36,14 @@ if(!empty($result))
     }
     else
     {   
-        echo '<div class="col-md-6 col-md-offset-3 searchResults text-left">
+        echo '<div class="searchResults text-left" style="padding:0.5em">
          Employee Not Found...
         </div>';
     }
 }
 else
     {   
-        echo '<div class="col-md-6 col-md-offset-3 searchResults text-left">
+        echo '<div class="searchResults text-left" style="padding:0.5em">
          Employee Not Found...
         </div>';
     }

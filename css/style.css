@@ -472,3 +472,32 @@ hr
   background-color: cornflowerblue;
   color:white;
 }
+
+/* Search field for reports page*/
+.report-search {
+
+    top: 6em;
+    width: fit-content;
+    z-index: 1000;
+    background-color: white;
+    border-left-style: solid;
+    border-left-color: #ddd;
+    border-left-width: 1px;
+    border-right-style: solid;
+    border-right-color: #ddd;
+    border-right-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #ddd;
+    border-bottom-width: 1px;
+}
+
+.report-search div:hover
+{
+  background-color: lightblue;
+}
+
+.report-search div a:hover
+{
+  text-decoration: none;
+  color: black;
+}

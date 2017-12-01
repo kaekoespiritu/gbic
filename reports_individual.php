@@ -81,7 +81,7 @@ if(isset($_GET['search']))
 					<div class="form-group">
 						<input type="text" placeholder="Search" id="search_box" name="txt_search"  class="form-control" autocomplete="off">
 					</div>
-					<div id="search_result" class="col-md-12"></div>
+					<div id="search_result" class="report-search"></div>
 				</div>
 			<!-- FOR LIVE SEARCH -->
 				<input type="hidden" id="report_type" value="<?php Print $reportType?>">
