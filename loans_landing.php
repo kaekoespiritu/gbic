@@ -154,7 +154,7 @@ require_once("directives/modals/addLoan.php");
 		 function load_data(query)
 		 {
 		  $.ajax({
-		   url:"loans_livesearch.php",
+		   url:"livesearch_loans.php",
 		   method:"POST",
 		   data:{query:query},
 		   success:function(data)

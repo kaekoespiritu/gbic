@@ -79,9 +79,17 @@ if(isset($_GET['search']))
 			<div class="row">
 				<div class="col-md-3 col-md-offset-1 pull-down">
 					<div class="form-group">
-						<input type="text" placeholder="Search" id="search_box" name="txt_search" onkeyup="enter(event)" class="form-control">
+						<input type="text" placeholder="Search" id="search_box" name="txt_search"  class="form-control" autocomplete="off">
 					</div>
+					<div id="search_result" class="col-md-12"></div>
 				</div>
+			<!-- FOR LIVE SEARCH -->
+				<input type="hidden" id="report_type" value="<?php Print $reportType?>">
+				<input type="hidden" id="period" value="<?php Print $period?>">
+				<input type="hidden" id="position" value="<?php Print $position_page?>">
+				<input type="hidden" id="site" value="<?php Print $site_page?>">
+
+
 
 				<!-- FILTER EMPLOYEE BY POSITION -->
 				<div class="col-md-7 pull-down text-right">
@@ -217,6 +225,36 @@ if(isset($_GET['search']))
 	<script>
 		document.getElementById("reports").setAttribute("style", "background-color: #10621e;");
 
+
+		$(document).ready(function(){
+			function load_data(search)
+			{
+
+			  	$.ajax({
+			   		url:"livesearch_reports.php",
+			   		method:"POST",
+			   		data:{
+			   			search: search
+			   		},
+			   		success:function(data)
+			   		{
+			    		$('#search_result').html(data);
+			   		}
+			  	});
+			}
+			$('#search_box').keyup(function(){
+			  	var search = $(this).val();
+			  	if(search != '')
+			  	{
+			   		load_data(search);
+			  	}
+			  	else
+			  	{
+			   		load_data();
+			  	}
+			});
+		});
+
 		function printViewBtn(id, type) {
 
 		}		
@@ -224,6 +262,10 @@ if(isset($_GET['search']))
 		function changePeriod(period, position, site, search, type) {
 
 			window.location.assign("reports_individual.php?site="+site+"&position="+position+"&search="+search+"&type="+type+"&period="+period)
+		}
+
+		function searchBox(id) {
+			
 		}
 	</script>
 </body>
