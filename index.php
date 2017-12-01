@@ -77,6 +77,7 @@ include_once('directives/db.php');
 			if($awolCount > 0)
 			{
 				Print "<script>alert('Notice: There are ".$awolCount." Employees accumulated 7days of absences and are PENDING for AWOL')</script>";
+				
 				Print "	<a href='applications.php'>
 							<div class='panel panel-danger'>
 								<div class='panel-heading'>

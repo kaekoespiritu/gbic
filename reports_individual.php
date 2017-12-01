@@ -72,7 +72,6 @@ if(isset($_GET['search']))
 
 		<div class="container pull-down">
 			<div class="col-md-12 pull-down">
-				<!-- TODO: Make type dynamic based on input from dropdown -->
 				<h2>Individual <?php Print $_GET['type']?> Report</h2>
 			</div>
 
