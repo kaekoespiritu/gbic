@@ -69,10 +69,7 @@ include_once('directives/db.php');
 			</td>
 		</tr>
 	</table>
-
-	
-		
-			<!-- TODO: WILL REDIRECT TO APPLICATIONS PAGE WITH FILTER SET TO PENDING APPROVAL AND 7 DAYS INCURRED ABSENCE-->
+			<!-- TODO: Change this alert to modal -->
 			<?php
 			$awol = "SELECT * FROM awol_employees";
 			$awolQuery = mysql_query($awol);
@@ -150,7 +147,6 @@ else
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body">
-				<!-- TODO: ADD FILTER WHEN USING SHORTCUT -->
 				<div class="row">
 					<div class="col-md-4">
 						<a id="attendanceLink" class="btn btn-primary btn-lg col-md-12">
