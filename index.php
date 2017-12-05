@@ -21,6 +21,7 @@ include_once('directives/db.php');
 	}
 
 	</style>
+<script src="js/jquery.min.js"></script>
 
 </head>
 <body style="font-family: Quicksand;">
@@ -76,9 +77,18 @@ include_once('directives/db.php');
 			$awolCount = mysql_num_rows($awolQuery);
 			if($awolCount > 0)
 			{
-				Print "<script>alert('Notice: There are ".$awolCount." Employees accumulated 7days of absences and are PENDING for AWOL')</script>";
+
+				// Call modal to show  
+
+				Print "<script>
+						$(document).ready(function(){
+							$('#awolNumber').html(\"".$awolCount."\");
+							$('#show').modal('show');
+						});
+					</script>";
 				
-				Print "	<a href='applications.php'>
+				Print "
+					<a href='applications.php'>
 							<div class='panel panel-danger'>
 								<div class='panel-heading'>
 									<h3 class='panel-title'>ABSENCE NOTICE: There are ".$awolCount." employee(s) absent for a week.</h3>
@@ -170,15 +180,34 @@ else
 	</div>
 </div>
 
+<!-- Modal for showing AWOL employees -->
+	<div class="modal fade" id="show" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<h4>
+					Absence Notice: There are <span id="awolNumber"></span> employees that have accumulated 7 days of absences and are now pending for AWOL.
+					</h4>
+					<br/>
+					<h5><i>Click anywhere to close this notification.</i></h5>
+				</div>
+			</div>
+		</div>
+	</div>	
+
 
 </div>
-<script src="js/jquery.min.js"></script>
-<script rel="javascript" src="js/bootstrap.min.js"></script>
 <script>
 	// Change main row color to Home
 	document.getElementById("home").setAttribute("style", "background-color: #10621e;");
 
 	
+    function loadAwol(num){
+    	console.log('asd');
+		// $('#awolNumber').val(num);
+		// $('#show').modal('show');
+	}
+
 	function shortcut(sitename) {
 		// Calling links to change
 		var attendance = document.getElementById('attendanceLink');
@@ -197,5 +226,7 @@ else
 	}
 </script>
 <script rel="javascript" src="js/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script rel="javascript" src="js/bootstrap.min.js"></script>
 </body>
 </html>
