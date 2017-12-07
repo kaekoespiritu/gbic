@@ -158,11 +158,11 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 								</div>
 							</div>
 
-						<div class="col-md-12 pull-down">
-							
+						<div class="col-md-4 col-md-offset-3 pull-down">
 							<input type='submit' class='btn btn-primary pull-down' value='Save Changes'>
-							
-
+						</div>
+						<div class="col-md-1 pull-down">
+							<input type='submit' class='btn btn-danger pull-down' value='Terminate Employee'>
 						</div>
 				</div>
 
