@@ -40,17 +40,6 @@ $statement = "";
 $period = $_GET['period'];
 $reportType = $_GET['type'];
 
-//Search bar
-$search = "";
-if(isset($_GET['search']))
-{
-	if($_GET['search'] != "" || $_GET['search'] != null)
-	{
-		$search = $_GET['search'];
-	}
-}
-
-
 ?>
 <html>
 <head>
@@ -133,7 +122,7 @@ if(isset($_GET['search']))
 					<!-- CHANGE PERIOD VIEW -->
 					<div class="col-md-2 pull-right">
 						<?php
-							Print "<select class='form-control' onchange='changePeriod(this.value, \"".$position_page."\", \"".$site_page ."\", \"".$search ."\", \"".$reportType ."\", \"".$period ."\")'>";
+							Print "<select class='form-control' onchange='changePeriod(this.value, \"".$position_page."\", \"".$site_page ."\", \"".$reportType ."\", \"".$period ."\")'>";
 						?>
 						<option hidden>Period</option>
 							<?php
@@ -213,7 +202,7 @@ if(isset($_GET['search']))
 			<?php
 				echo "<div id='pagingg' >";
 				if($statement && $limit && $page && $site_page && $position_page && $reportType && $period)
-					echo pagination($statement,$limit,$page, $site_page, $position_page, $search, $reportType, $period);
+					echo pagination($statement,$limit,$page, $site_page, $position_page, $reportType, $period);
 				echo "</div>";
 			?>
 		</div>
@@ -259,13 +248,13 @@ if(isset($_GET['search']))
 
 		}		
 
-		function changePeriod(period, position, site, search, type) {
+		function changePeriod(period, position, site, type) {
 
-			window.location.assign("reports_individual.php?site="+site+"&position="+position+"&search="+search+"&type="+type+"&period="+period)
+			window.location.assign("reports_individual.php?site="+site+"&position="+position+"&type="+type+"&period="+period)
 		}
 
 		function searchBox(id) {
-			
+
 		}
 	</script>
 </body>

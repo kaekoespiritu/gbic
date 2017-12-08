@@ -1,7 +1,7 @@
 <?php
 
  
-   function pagination($query, $per_page,$page, $site, $position, $search, $reportType, $period, $url = '?'){        
+   function pagination($query, $per_page,$page, $site, $position, $reportType, $period, $url = '?'){        
     	$query = "SELECT COUNT(*) as `num` FROM {$query}";
     	$row = mysql_fetch_array(mysql_query($query));
     	$total = $row['num'];
@@ -28,7 +28,7 @@
     				if ($counter == $page)
     					$pagination.= "<li><a class='current'>$counter</a></li>";
     				else
-    					$pagination.= "<li><a href='{$url}page=$counter&site={$site}&position={$position}&search={$search}&type={$reportType}&period={$period}'>$counter</a></li>";					
+    					$pagination.= "<li><a href='{$url}page=$counter&site={$site}&position={$position}&type={$reportType}&period={$period}'>$counter</a></li>";					
     			}
     		}
     		elseif($lastpage > 5 + ($adjacents * 2))
@@ -40,46 +40,46 @@
     					if ($counter == $page)
     						$pagination.= "<li><a class='current'>$counter</a></li>";
     					else
-    						$pagination.= "<li><a href='{$url}page=$counter&site={$site}&position={$position}&search={$search}&type={$reportType}&period={$period}'>$counter</a></li>";					
+    						$pagination.= "<li><a href='{$url}page=$counter&site={$site}&position={$position}&type={$reportType}&period={$period}'>$counter</a></li>";					
     				}
     				$pagination.= "<li class='dot'>...</li>";
-    				$pagination.= "<li><a href='{$url}page=$lpm1&site={$site}&position={$position}&search={$search}&type={$reportType}&period={$period}'>$lpm1</a></li>";
-    				$pagination.= "<li><a href='{$url}page=$lastpage&site={$site}&position={$position}&search={$search}&type={$reportType}&period={$period}'>$lastpage</a></li>";		
+    				$pagination.= "<li><a href='{$url}page=$lpm1&site={$site}&position={$position}&type={$reportType}&period={$period}'>$lpm1</a></li>";
+    				$pagination.= "<li><a href='{$url}page=$lastpage&site={$site}&position={$position}&type={$reportType}&period={$period}'>$lastpage</a></li>";		
     			}
     			elseif($lastpage - ($adjacents * 2) > $page && $page > ($adjacents * 2))
     			{
-    				$pagination.= "<li><a href='{$url}page=1&site={$site}&position={$position}&search={$search}&type={$reportType}&period={$period}'>1</a></li>";
-    				$pagination.= "<li><a href='{$url}page=2&site={$site}&position={$position}&search={$search}&type={$reportType}&period={$period}'>2</a></li>";
+    				$pagination.= "<li><a href='{$url}page=1&site={$site}&position={$position}&type={$reportType}&period={$period}'>1</a></li>";
+    				$pagination.= "<li><a href='{$url}page=2&site={$site}&position={$position}&type={$reportType}&period={$period}'>2</a></li>";
     				$pagination.= "<li class='dot'>...</li>";
     				for ($counter = $page - $adjacents; $counter <= $page + $adjacents; $counter++)
     				{
     					if ($counter == $page)
     						$pagination.= "<li><a class='current'>$counter</a></li>";
     					else
-    						$pagination.= "<li><a href='{$url}page=$counter&site={$site}&position={$position}&search={$search}&type={$reportType}&period={$period}'>$counter</a></li>";					
+    						$pagination.= "<li><a href='{$url}page=$counter&site={$site}&position={$position}&type={$reportType}&period={$period}'>$counter</a></li>";					
     				}
     				$pagination.= "<li class='dot'>..</li>";
-    				$pagination.= "<li><a href='{$url}page=$lpm1&site={$site}&position={$position}&search={$search}&type={$reportType}&period={$period}'>$lpm1</a></li>";
-    				$pagination.= "<li><a href='{$url}page=$lastpage&site={$site}&position={$position}&search={$search}&type={$reportType}&period={$period}'>$lastpage</a></li>";		
+    				$pagination.= "<li><a href='{$url}page=$lpm1&site={$site}&position={$position}&type={$reportType}&period={$period}'>$lpm1</a></li>";
+    				$pagination.= "<li><a href='{$url}page=$lastpage&site={$site}&position={$position}&type={$reportType}&period={$period}'>$lastpage</a></li>";		
     			}
     			else
     			{
-    				$pagination.= "<li><a href='{$url}page=1&site={$site}&position={$position}&search={$search}&type={$reportType}&period={$period}'>1</a></li>";
-    				$pagination.= "<li><a href='{$url}page=2&site={$site}&position={$position}&search={$search}&type={$reportType}&period={$period}'>2</a></li>";
+    				$pagination.= "<li><a href='{$url}page=1&site={$site}&position={$position}&type={$reportType}&period={$period}'>1</a></li>";
+    				$pagination.= "<li><a href='{$url}page=2&site={$site}&position={$position}&type={$reportType}&period={$period}'>2</a></li>";
     				$pagination.= "<li class='dot'>..</li>";
     				for ($counter = $lastpage - (2 + ($adjacents * 2)); $counter <= $lastpage; $counter++)
     				{
     					if ($counter == $page)
     						$pagination.= "<li><a class='current'>$counter</a></li>";
     					else
-    						$pagination.= "<li><a href='{$url}page=$counter&site={$site}&position={$position}&search={$search}&type={$reportType}&period={$period}'>$counter</a></li>";					
+    						$pagination.= "<li><a href='{$url}page=$counter&site={$site}&position={$position}&type={$reportType}&period={$period}'>$counter</a></li>";					
     				}
     			}
     		}
     		
     		if ($page < $counter - 1){ 
-    			$pagination.= "<li><a href='{$url}page=$next&site={$site}&position={$position}&search={$search}&type={$reportType}&period={$period}'>Next</a></li>";
-                $pagination.= "<li><a href='{$url}page=$lastpage&site={$site}&position={$position}&search={$search}&type={$reportType}&period={$period}'>Last</a></li>";
+    			$pagination.= "<li><a href='{$url}page=$next&site={$site}&position={$position}&type={$reportType}&period={$period}'>Next</a></li>";
+                $pagination.= "<li><a href='{$url}page=$lastpage&site={$site}&position={$position}&type={$reportType}&period={$period}'>Last</a></li>";
     		}else{
     			$pagination.= "<li><a class='current'>Next</a></li>";
                 $pagination.= "<li><a class='current'>Last</a></li>";
