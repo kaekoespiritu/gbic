@@ -122,7 +122,7 @@ require_once("directives/modals/addLoan.php");
 				<table class="table table-bordered table-responsive" style="color: white; font-family:Quicksand">
 					<tr>
 						<td style="background-color:chocolate">
-							<h3>Employees with VALE</h3>
+							<h3 class="text-center">Employees with VALE</h3>
 							<h2 class="text-center"><br>
 								<?php  Print $counter ?>
 							</h2>

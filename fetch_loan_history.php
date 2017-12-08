@@ -24,6 +24,7 @@ $output .= "<div class='col-md-12'>
 						<td>Action</td>
 						<td>Remarks</td>
 						<td>Date</td>
+						<td>Approved by</td>
 					</tr>";
 if(mysql_num_rows($historyQuery) > 0)
 {
@@ -45,6 +46,7 @@ if(mysql_num_rows($historyQuery) > 0)
 		
 		$output .= 	"	<td>".$row['remarks']."</td>
 						<td>".$row['date']."</td>
+						<td>Admin</td>
 					</tr>
 				";
 	}

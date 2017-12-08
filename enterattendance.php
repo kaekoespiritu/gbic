@@ -113,6 +113,9 @@
 					<td>H.D.</td>
 					<td>After break Time In</td>
 					<td>After break Time Out</td>
+					<td>N.S.</td>
+					<td>Night shift Time In</td>
+					<td>Night shift Time Out</td>
 					<td>Working Hours</td>
 					<td>Overtime</td>
 					<td>Undertime</td>

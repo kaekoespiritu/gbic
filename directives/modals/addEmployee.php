@@ -83,6 +83,24 @@
 									<input name="txt_addDateHired" type="text" size="10" style="width:150px" class="form-control" id="dtpkr_addEmployee" placeholder="mm-dd-yyyy" required>
 								</div>
 							</div>
+
+							<div class="row pull-down">
+								<div class="col-md-4">
+									<label for="emergency">Emergency contact:</label>	
+								</div>
+								<div class="col-md-8">									
+									<input name="text_emergency" type="text" class="form-control">
+								</div>
+							</div>
+
+							<div class="row pull-down">
+								<div class="col-md-4">
+									<label for="emergency" class="no-wrap">Character Reference:</label>
+								</div>
+								<div class="col-md-8">
+									<input name="text_emergency" type="text" class="form-control">
+								</div>
+							</div>
 						</div>
 
 						<div class="col-md-6">

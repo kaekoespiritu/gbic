@@ -49,43 +49,43 @@
 			<div class="sub-flipdown">
 				<a class="subflipbtn">Earnings</a>
 				<div class="sub-flipdown-menu">
-					<a href="reports_individual.php?type=Earnings&period=week&site=null&position=null">Individual</a>
-					<a>Overall</a>
+					<a href="reports_individual.php?type=Earnings&period=week&site=null&position=null">> Individual</a>
+					<a>> Overall</a>
 				</div>
 			</div>
 			<div class="sub-flipdown">
 				<a class="subflipbtn">Contributions</a>
 				<div class="sub-flipdown-menu">
-					<a href="reports_individual.php?type=Contributions&period=week&site=null&position=null">Individual</a>
-					<a>Overall</a>
+					<a href="reports_individual.php?type=Contributions&period=week&site=null&position=null">> Individual</a>
+					<a>> Overall</a>
 				</div>
 			</div>
 			<div class="sub-flipdown">
 				<a class="subflipbtn">Loans</a>
 				<div class="sub-flipdown-menu">
-					<a href="reports_individual.php?type=Loans&period=week&site=null&position=null">Individual</a>
-					<a>Overall</a>
+					<a href="reports_individual.php?type=Loans&period=week&site=null&position=null">> Individual</a>
+					<a>> Overall</a>
 				</div>
 			</div>
 			<div class="sub-flipdown">
 				<a class="subflipbtn">Attendance</a>
 				<div class="sub-flipdown-menu">
-					<a href="reports_individual.php?type=Attendance&period=week&site=null&position=null">Individual</a>
-					<a>Overall</a>
+					<a href="reports_individual.php?type=Attendance&period=week&site=null&position=null">> Individual</a>
+					<a>> Overall</a>
 				</div>
 			</div>
 			<div class="sub-flipdown">
 				<a class="subflipbtn">Payroll</a>
 				<div class="sub-flipdown-menu">
-					<a href="reports_individual.php?type=Payroll&period=week&site=null&position=null">Individual</a>
-					<a>Overall</a>
+					<a href="reports_individual.php?type=Payroll&period=week&site=null&position=null">> Individual</a>
+					<a>> Overall</a>
 				</div>
 			</div>
 			<div class="sub-flipdown">
 				<a class="subflipbtn">Payslip</a>
 				<div class="sub-flipdown-menu">
-					<a href="reports_individual.php?type=Payslip&period=week&site=null&position=null">Individual</a>
-					<a>Overall</a>
+					<a href="reports_individual.php?type=Payslip&period=week&site=null&position=null">> Individual</a>
+					<a>> Overall</a>
 				</div>
 			</div>
 		</div>

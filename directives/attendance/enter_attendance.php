@@ -441,6 +441,18 @@ function attendance ()
 					<td>
 						<input type='text' onblur='timeValidation(this)' class='timeout2 timepicker form-control input-sm' value='' name='timeout2[".$counter."]'>
 					</td> 
+					<!-- Night Shift Checkbox-->
+					<td>
+						<input type='checkbox' class='nightshiftChk' name='nightshift[".$counter."]' onclick='nightshift(\"". $row_employee['empid'] ."\")' disabled>
+					</td>
+					<!-- NIGHT SHIFT Time In -->
+					<td>
+						<input type='text' onblur='timeValidation(this)' class='timein2 timepicker form-control input-sm' value=''  name='timein2[".$counter."]'>
+					</td> 
+					<!-- NIGHT SHIFT Time Out-->
+					<td>
+						<input type='text' onblur='timeValidation(this)' class='timeout2 timepicker form-control input-sm' value='' name='timeout2[".$counter."]'>
+					</td> 
 					<!-- Working Hours -->
 					<td>
 						<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' disabled>
