@@ -114,8 +114,8 @@
 					<td>After break Time In</td>
 					<td>After break Time Out</td>
 					<td>N.S.</td>
-					<td>Night shift Time In</td>
-					<td>Night shift Time Out</td>
+					<td>Time In</td>
+					<td>Time Out</td>
 					<td>Working Hours</td>
 					<td>Overtime</td>
 					<td>Undertime</td>
@@ -170,16 +170,16 @@
 	}
 		// Position Filter 
 	function position() {
-		if(document.URL.match(/position=([0-9]+)/))
-		{
+		if(document.URL.match(/position=([0-9]+)/)) {
+
 			var arr = document.URL.match(/position=([0-9]+)/)
 			var positionUrl = arr[1];
-			if(positionUrl)
-			{
+			if(positionUrl) {
+
 				localStorage.setItem("counter", 0);
 			}
-			else if(localStorage.getItem('counter') > 2)
-			{
+			else if(localStorage.getItem('counter') > 2) {
+
 				localStorage.clear();
 			}
 		}
@@ -189,6 +189,73 @@
 		window.location.assign("enterattendance.php?site=<?php Print $site_name ?>&position="+positionReplaced);
 	}
 
+	function nightshift_ChkBox(id) {
+		var mainRow = document.getElementById(id);//gets the row of the user checked
+
+		if(mainRow.querySelector('.nightshiftChk').checked == true) {
+
+			mainRow.querySelector('.timein3').readOnly = false;
+			mainRow.querySelector('.timeout3').readOnly = false;
+
+			// disable halfday checkbox
+			mainRow.querySelector('.halfdayChk').disabled = true;
+
+			// delete values to prepare for the 3rd timein and timeout
+			mainRow.querySelector('.workinghours').value = "";
+			mainRow.querySelector('.overtime').value = "";
+			mainRow.querySelector('.undertime').value = "";
+			mainRow.querySelector('.nightdiff').value = "";
+			//for hidden rows
+			mainRow.querySelector('.workinghoursH').value = "";
+			mainRow.querySelector('.overtimeH').value = "";
+			mainRow.querySelector('.undertimeH').value = "";
+			mainRow.querySelector('.nightdiffH').value = "";
+
+			// If absent was initially placed, changed to success
+			if(mainRow.classList.contains('danger'))
+			{
+				mainRow.classList.remove('danger');
+			}
+			else 
+			{
+				mainRow.classList.remove('success');
+			}
+		}
+		else {
+
+			// enable halfday checkbox
+			mainRow.querySelector('.halfdayChk').disabled = false;
+
+			mainRow.querySelector('.timein3').readOnly = true;
+			mainRow.querySelector('.timeout3').readOnly = true;
+			mainRow.querySelector('.timein3').value = '';
+			mainRow.querySelector('.timeout3').value = '';
+			timeIn(id);//call function to revert the results to just 4 inputs
+		}
+
+
+		
+	}
 	</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

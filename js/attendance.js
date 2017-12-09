@@ -44,9 +44,5 @@ document.getElementById("attendance").setAttribute("style", "background-color: #
 	{
 		window.location.assign("print_all_employee.php");
 	}
-	
-	
-	
-	
 
 	fittext();
