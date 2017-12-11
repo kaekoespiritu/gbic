@@ -1,6 +1,7 @@
 <?php
 include_once('directives/db.php');
 include('directives/session.php');
+include('directives/admin_historical.php');
 date_default_timezone_set('Asia/Hong_Kong');
 
 //$date = strftime("%B %d, %Y");// Gets the current date
@@ -33,14 +34,15 @@ else
 
 
 $loanAmount = number_format($loanAmount, 2, '.', '');//for 2 decimal places
-$query = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time,action) VALUES('$empid', 
+$query = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time,action, admin) VALUES('$empid', 
 																'$loanType',
 																'$balance',
 																'$loanAmount',
 																'$reason',
 																'$date',
 																'$time',
-																'1')";
+																'1',
+																'$adminName')";
 mysql_query($query);
 
 $employee = "SELECT * FROM employee WHERE empid = '$empid'";

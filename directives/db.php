@@ -23,4 +23,5 @@ function numberExactFormat($number, $precision, $separator)//For number format
     }
     return $response;
 }
+
 ?>

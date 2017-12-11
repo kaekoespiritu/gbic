@@ -1,8 +1,10 @@
 <?php
 
-include_once('directives/db.php');
+include('directives/db.php');
 include('directives/session.php');
+include('directives/admin_historical.php');
 
+//employee History
 $empid = $_POST['empid'];
 $type = $_POST['type'];
 $history = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$type' ORDER BY date DESC, time DESC";
@@ -46,7 +48,7 @@ if(mysql_num_rows($historyQuery) > 0)
 		
 		$output .= 	"	<td>".$row['remarks']."</td>
 						<td>".$row['date']."</td>
-						<td>Admin</td>
+						<td>".$row['admin']."</td>
 					</tr>
 				";
 	}
