@@ -89,7 +89,7 @@
 									<label for="emergency">Emergency contact:</label>	
 								</div>
 								<div class="col-md-8">									
-									<input name="text_emergency" type="text" class="form-control">
+									<input name="txt_emergencyContact" type="text" class="form-control">
 								</div>
 							</div>
 
@@ -98,7 +98,7 @@
 									<label for="emergency" class="no-wrap">Character Reference:</label>
 								</div>
 								<div class="col-md-8">
-									<input name="text_emergency" type="text" class="form-control">
+									<input name="txt_characterReference" type="text" class="form-control">
 								</div>
 							</div>
 						</div>

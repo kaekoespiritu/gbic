@@ -25,6 +25,8 @@ include_once('directives/db.php');
 	$philhealth = $employee_info['philhealth'];
 	$pagibig = $employee_info['pagibig'];
 	$empid = $employee_info['empid'];
+	$emergency = $employee_info['emergency'];
+	$reference = $employee_info['reference'];
 	
 ?>
 <html>
@@ -145,7 +147,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 									<label for="emergency">Emergency contact:</label>	
 								</div>
 								<div class="col-md-8">									
-									<input name="text_emergency" type="text" class="form-control">
+									<input name="emergencyContact" type="text" placeholder="<?php Print $emergency?>"class="form-control">
 								</div>
 							</div>
 
@@ -154,7 +156,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 									<label for="emergency" class="no-wrap">Character Reference:</label>
 								</div>
 								<div class="col-md-8">
-									<input name="text_emergency" type="text" class="form-control">
+									<input name="characterReference" type="text" placeholder="<?php Print $reference?>" class="form-control">
 								</div>
 							</div>
 

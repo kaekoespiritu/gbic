@@ -3,14 +3,9 @@
 error_reporting(0);
 	include('directives/session.php');
 	include_once('directives/db.php');
+	include('directives/admin_historical.php');
 
 	$date = strftime("%B %d, %Y");//Get the current date
-	//Gets the admin who change the site and position
-	$user = $_SESSION['user_logged_in'];
-	$admin = "SELECT * FROM administrator WHERE username = '$user'";
-	$adminQuery = mysql_query($admin);
-	$adminArr = mysql_fetch_assoc($adminQuery);
-	$adminName = $adminArr['firstname']." ".$adminArr['lastname'];
 
 		$firstName = mysql_real_escape_string($_POST['txt_addFirstName']);
 		$lastName = mysql_real_escape_string($_POST['txt_addLastName']);
@@ -27,6 +22,9 @@ error_reporting(0);
 		$philhealth = mysql_real_escape_string($_POST['chkbox_addPhilHealth']);
 		$pagibig = mysql_real_escape_string($_POST['txt_addPagibig']);
 		$salary = mysql_real_escape_string($_POST['txt_addMonthlySalary']);
+		$emergencyContact = mysql_real_escape_string($_POST['txt_emergencyContact']);
+		$characterReference = mysql_real_escape_string($_POST['txt_characterReference']);
+		Print "<script>console.log('".$emergencyContact." || ".$characterReference."')</script>";
 		//debug
 
 		$firstName = ucwords($firstName);
@@ -301,7 +299,9 @@ error_reporting(0);
 												philhealth,
 												pagibig,
 												employment_status,
-												complete_doc) VALUES('$empid',
+												complete_doc,
+												reference,
+												emergency) VALUES('$empid',
 																	'$firstName',
 																	'$lastName',
 																	'$address',
@@ -318,7 +318,9 @@ error_reporting(0);
 																	'$philhealthContribution',
 																	'$pagibig',
 																	'$employment_status',
-																	'$complete_doc')");//adds values to employee table
+																	'$complete_doc',
+																	'$characterReference',
+																	'$emergencyContact')") or die(mysql_error());//adds values to employee table
 		//Set historical for Position
 		mysql_query("INSERT INTO position_history(empid, position, date, admin) VALUES('$empid', '$position', '$date', '$adminName')");	
 		//Set historical for Site

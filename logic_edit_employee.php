@@ -80,6 +80,16 @@
 		$pagibig = mysql_real_escape_string($_POST['pagibig']);
 		mysql_query("UPDATE employee SET pagibig = '$pagibig' WHERE empid = '$empid'");	
 	}
+	if($_POST['emergencyContact'] != null)
+	{
+		$characterReference = mysql_real_escape_string($_POST['emergencyContact']);
+		mysql_query("UPDATE employee SET emergency = '$characterReference' WHERE empid = '$empid'");	
+	}
+	if($_POST['characterReference'] != null)
+	{
+		$characterReference = mysql_real_escape_string($_POST['characterReference']);
+		mysql_query("UPDATE employee SET reference = '$characterReference' WHERE empid = '$empid'");	
+	}
 	//header('location: editEmployee.php?empid='.$empid);
 //employee document checker
 	$checker = "SELECT sss, philhealth, pagibig FROM employee WHERE empid = '$empid' AND employment_status = '1' ";
