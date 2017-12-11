@@ -1,7 +1,7 @@
 <?php
 
 
-	function updateQuery($timein1, $timeout1, $timein2, $timeout2, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate)
+	function updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate)
 	{
 		//Print "<script>alert('workinghrs ". $workinghrs ."')</script>";
 		//Print "<script>alert('".$attendance."')</script>";
@@ -14,6 +14,8 @@
 											  	timeout='".$timeout1."',
 											  	afterbreak_timein= '".$timein2."',
 											  	afterbreak_timeout='".$timeout2."',
+											  	nightshift_timein= '".$timein3."',
+											  	nightshift_timeout='".$timeout3."',
 											  	workhours='".$workinghrs."',
 											  	overtime='".$OtHrs."',
 											  	undertime='".$undertime."',
@@ -34,6 +36,8 @@
 											  	timeout='".$timeout1."',
 											  	afterbreak_timein= '".$timein2."',
 											  	afterbreak_timeout='".$timeout2."',
+											  	nightshift_timein= '".$timein3."',
+											  	nightshift_timeout='".$timeout3."',
 											  	workhours='".$workinghrs."',
 											  	overtime='".$OtHrs."',
 											  	undertime='".$undertime."',
@@ -57,6 +61,8 @@
 											  		timeout='".$timeout1."',
 											  		afterbreak_timein= '".$timein2."',
 											  		afterbreak_timeout='".$timeout2."',
+											  		nightshift_timein= '".$timein3."',
+											  		nightshift_timeout='".$timeout3."',
 												  	workhours='".$workinghrs."',
 												  	overtime='".$OtHrs."',
 												  	undertime='".$undertime."',
@@ -77,6 +83,8 @@
 											  		timeout='".$timeout1."',
 											  		afterbreak_timein= '".$timein2."',
 											  		afterbreak_timeout='".$timeout2."',
+											  		nightshift_timein= '".$timein3."',
+											  		nightshift_timeout='".$timeout3."',
 												  	workhours='".$workinghrs."',
 												  	overtime='".$OtHrs."',
 												  	undertime='".$undertime."',
@@ -93,7 +101,7 @@
 		return $AttQuery;
 	}
 
-	function newQuery($timein1, $timeout1, $timein2, $timeout2, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate)
+	function newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate)
 	{
 		if((!empty($timein) && !empty($timeout)) && $day == "Sunday")
 		{
@@ -103,6 +111,8 @@
 					  '".$timeout1."',
 					  '".$timein2."',
 					  '".$timeout2."',
+					  '".$timein3."',
+					  '".$timeout3."',
 					  '".$workinghrs."',
 					  '".$OtHrs."',
 					  '".$undertime."',
@@ -122,6 +132,8 @@
 					  '".$timeout1."',
 					  '".$timein2."',
 					  '".$timeout2."',
+					  '".$timein3."',
+					  '".$timeout3."',
 					  '".$workinghrs."',
 					  '".$OtHrs."',
 					  '".$undertime."',
@@ -143,6 +155,8 @@
 						  '".$timeout1."',
 						  '".$timein2."',
 						  '".$timeout2."',
+						  '".$timein3."',
+						  '".$timeout3."',
 						  '".$workinghrs."',
 						  '".$OtHrs."',
 						  '".$undertime."',
@@ -162,6 +176,8 @@
 						  '".$timeout1."',
 						  '".$timein2."',
 						  '".$timeout2."',
+						  '".$timein3."',
+					  	  '".$timeout3."',
 						  '".$workinghrs."',
 						  '".$OtHrs."',
 						  '".$undertime."',

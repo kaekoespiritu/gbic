@@ -121,7 +121,9 @@ if(!empty($dateRows))// Updating attendance
 			
 			$timein1 = $_POST['timein1'][$counter];
 			$timeout1 = $_POST['timeout1'][$counter];
-			if(!empty($_POST['timein2'][$counter]))
+
+			
+			if(!empty($_POST['timein2'][$counter]))//If employee took a halfday
 			{
 				$timein2 = $_POST['timein2'][$counter];
 				$timeout2 = $_POST['timeout2'][$counter];
@@ -130,6 +132,17 @@ if(!empty($dateRows))// Updating attendance
 			{
 				$timein2 = "";
 				$timeout2 = "";
+			}
+
+			if(!empty($_POST['timein3'][$counter]))// if employee has  night shift
+			{
+				$timein3 = $_POST['timein3'][$counter];
+				$timeout3 = $_POST['timeout3'][$counter];
+			}
+			else
+			{
+				$timein3 = "";
+				$timeout3 = "";
 			}
 			
 			 // Print "<script>alert('counter ". $counter ."')</script>";
@@ -170,7 +183,6 @@ if(!empty($dateRows))// Updating attendance
 				$OtHrs = mysql_real_escape_string($_POST['othrs'][$counter]);
 				$hasMins = strpos($OtHrs, ",");//Search the string if it has comma
 				$justMins = strpos($OtHrs, "mins");
-				//Print "<script>alert('yeah')</script>";
 				if($justMins == true && $hasMins == false)
 				{
 					//Print "<script>alert('yeah')</script>";
@@ -257,7 +269,7 @@ if(!empty($dateRows))// Updating attendance
 			$position = $employeeArr['position'];
 			
 			//Print "<script>alert('workinghrs ". $workinghrs ."')</script>";
-			$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
+			$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 			
 		}
 		else if($_POST['attendance'][$counter] == "ABSENT")// ABSENT
@@ -314,6 +326,8 @@ if(!empty($dateRows))// Updating attendance
 			$timeout1 = "";
 			$timein2 = "";
 			$timeout2 = "";
+			$timein3 = "";
+			$timeout3 = "";
 			$workinghrs = "";
 			$OtHrs = "";
 			$undertime = "";
@@ -330,7 +344,7 @@ if(!empty($dateRows))// Updating attendance
 			$position = $employeeArr['position'];
 			//Print "<script>alert('".$attendance."')</script>";
 			//require "directives/attendance/attendance_query.php";
-			$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
+			$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 		
 
 		}
@@ -342,6 +356,8 @@ if(!empty($dateRows))// Updating attendance
 			$timeout1 = "";
 			$timein2 = "";
 			$timeout2 = "";
+			$timein3 = "";
+			$timeout3 = "";
 			$workinghrs = "";
 			$OtHrs = "";
 			$undertime = "";
@@ -357,7 +373,7 @@ if(!empty($dateRows))// Updating attendance
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
 			//require "directives/attendance/attendance_query.php";
-			$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
+			$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 									  	
 		}
 
@@ -373,6 +389,8 @@ else// NEW attendance
 												timeout,
 												afterbreak_timein,
 												afterbreak_timeout,
+												nightshift_timein,
+												nightshift_timeout,
 												workhours,
 												overtime,
 												undertime,
@@ -397,7 +415,8 @@ else// NEW attendance
 			$empid = $_POST['empid'][$counter];
 			$timein1 = $_POST['timein1'][$counter];
 			$timeout1 = $_POST['timeout1'][$counter];
-			if(!empty($_POST['timein2'][$counter]))
+
+			if(!empty($_POST['timein2'][$counter]))//if employee took a halfday
 			{
 				$timein2 = $_POST['timein2'][$counter];
 				$timeout2 = $_POST['timeout2'][$counter];
@@ -406,6 +425,16 @@ else// NEW attendance
 			{
 				$timein2 = "";
 				$timeout2 = "";
+			}
+			if(!empty($_POST['timein3'][$counter]))// if employee has night shift
+			{
+				$timein3 = $_POST['timein3'][$counter];
+				$timeout3 = $_POST['timeout3'][$counter];
+			}
+			else
+			{
+				$timein3 = "";
+				$timeout3 = "";
 			}
 			
 			 // Print "<script>alert('counter ". $counter ."')</script>";
@@ -526,7 +555,7 @@ else// NEW attendance
 			$position = $employeeArr['position'];
 			
 			
-			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
+			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 			
 			//Print "<script>alert('yeah3')</script>";
 			
@@ -577,6 +606,8 @@ else// NEW attendance
 			$timeout1 = "";
 			$timein2 = "";
 			$timeout2 = "";
+			$timein3 = "";
+			$timeout3 = "";
 			$workinghrs = "";
 			$OtHrs = "";
 			$undertime = "";
@@ -592,7 +623,7 @@ else// NEW attendance
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
 			//require "directives/attendance/attendance_query.php";
-			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
+			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 			//Print "<script>alert('".$AttQuery."')</script>";
 			
 		}
@@ -604,6 +635,8 @@ else// NEW attendance
 			$timeout1 = "";
 			$timein2 = "";
 			$timeout2 = "";
+			$timein3 = "";
+			$timeout3 = "";
 			$workinghrs = "";
 			$OtHrs = "";
 			$undertime = "";
@@ -619,7 +652,7 @@ else// NEW attendance
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
 			//require "directives/attendance/attendance_query.php";
-			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
+			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 		
 		}
 		//Print "<script>alert('yeah')</script>";
