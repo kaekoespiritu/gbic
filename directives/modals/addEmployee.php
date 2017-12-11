@@ -186,7 +186,7 @@
 									</div>
 									
 									<div class="col-md-6 checkbox">
-										<input name="chkbox_addPhilHealth" type="checkbox" onclick="philhealthbox()" value="PhilHealth" id="philhealth">
+										<input name="chkbox_addPhilHealth" id="philhealthCheck" type="checkbox" onclick="philhealthbox()" value="PhilHealth" id="philhealth">
 										
 										<label style="font-weight: 700" for="philhealth">PhilHealth</label>
 										<div id="txt_philhealthAppear" style="display:none;" class="col-md-8 col-md-offset-2">
@@ -204,7 +204,7 @@
 								</div>
 
 								<div class="col-md-10 col-md-offset-1 pull-down text-center well well-sm">
-									* SSS and PhilHealth contributions are automatically computed based on employee's monthly salary.
+									* SSS contribution is automatically computed based on employee's monthly salary.
 								</div>
 							</div>
 						</div>
