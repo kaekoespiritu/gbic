@@ -150,7 +150,6 @@ $adminRole = $adminArr['role'];
 					<div class="panel-body">
 						<div class="col-md-5">
 							<a data-target="#addSite" data-toggle="modal" class="btn btn-success col-md-12 pull-down">ADD SITE</a>
-							<a class="btn btn-danger col-md-12 pull-down" onclick="siteRemove()">END CONTRACT</a>
 							<a class="btn btn-primary col-md-12 pull-down" data-toggle="modal" data-target="#siteHistory">SITE HISTORY</a>
 							<a class="btn btn-warning col-md-12 pull-down" data-target="#colaSettings" data-toggle="modal">SETTINGS FOR COLA</a>
 						</div>
@@ -165,7 +164,6 @@ $adminRole = $adminArr['role'];
 									{
 										Print '	<div class="alignlist">
 										<label>
-										<input type="checkbox" name="site[]" value="'.$siteRow['location'].'">
 										'.$siteRow['location'].'
 										</label>
 										</div>';
