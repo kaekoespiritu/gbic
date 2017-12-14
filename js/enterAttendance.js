@@ -1559,7 +1559,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 
 		//Invert time for easier computation of night diff
 			//before break
-			console.log('yuu: '+timeouthour3)
+			
 			if(timeinhour1 < 10)
 				timeinhour1 +=12;
 			else
@@ -1594,6 +1594,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			//console.log("timein1: "+timeinhour1+"// timeout1: "+timeouthour1+"// timein2: "+timeinhour2+"// timeout2: "+timeouthour2);
 			workinghours1 = timeouthour1 - timeinhour1;
 			workinghours2 = timeouthour2 - timeinhour2;
+			workinghours3 = timeouthour3 - timeinhour3;
 			
 			//Decrement workinghours if minutes is more than time out mins
 			if(timeinmin1 > timeoutmin1)
@@ -1605,7 +1606,12 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			{
 				workinghours2 = workinghours2 - 1;
 			}
-			workinghours = Math.abs(workinghours1) + Math.abs(workinghours2);
+			//Decrement workinghours if minutes is more than time out mins
+			if(timeinmin3 > timeoutmin3)
+			{
+				workinghours3 = workinghour3 - 1;
+			}
+			workinghours = Math.abs(workinghours1) + Math.abs(workinghours2) + Math.abs(workinghours3);
 			
 			
 			//alert(workinghours);
@@ -1743,22 +1749,22 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				if((timeinhour1 <= 10 && timeouthour1 >= 10) && timeouthour1 <= 12)// pos1 ~ 6
 				{
 					console.log('pos 1~6');
-					// if((timeinhour2 >= 12 && timeouthour2 <= 18) && (timeinhour3 >= 12 && timeouthour3 <= 18))// pos 1
-					// {
-					// 	console.log('pos 1');
-					// 	time1 = timeouthour1 - 10;
-					// 	time2 = timeinhour2 - timeouthour2;
-					// 	time3 = timeinhour3 - timeouthour3;
-					// 	nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
-					// }
-					// else if((timeinhour2 >= 12 && timeouthour2 <= 18) && (timeinhour3 <= 18 && timeouthour3 >= 18))// pos 2
-					// {
-					// 	console.log('pos 2');
-					// 	time1 = timeouthour1 - 10;
-					// 	time2 = timeinhour2 - timeouthour2;
-					// 	time3 = timeinhour3 - 18;
-					// 	nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
-					// }
+					if((timeinhour2 >= 12 && timeouthour2 <= 18) && (timeinhour3 >= 12 && timeouthour3 <= 18))// pos 1
+					{
+						console.log('pos 1');
+						time1 = timeouthour1 - 10;
+						time2 = timeinhour2 - timeouthour2;
+						time3 = timeinhour3 - timeouthour3;
+						nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
+					}
+					else if((timeinhour2 >= 12 && timeouthour2 <= 18) && (timeinhour3 <= 18 && timeouthour3 >= 18))// pos 2
+					{
+						console.log('pos 2');
+						time1 = timeouthour1 - 10;
+						time2 = timeinhour2 - timeouthour2;
+						time3 = timeinhour3 - 18;
+						nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
+					}
 					if((timeinhour2 >= 10 && timeouthour2 <= 18) && (timeinhour3 >= 12 && timeouthour3 <= 18))// pos 3
 					{
 						console.log('pos 3');
@@ -1775,19 +1781,19 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 						time3 = timeinhour3 - 18;
 						nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
 					}
-					// else if((timeinhour2 >= 12 && timeouthour2 <= 18) && timeinhour3 >= 18)// pos 5
-					// {
-					// 	console.log('pos 5');
-					// 	time1 = timeouthour1 - 10;
-					// 	time2 = timeinhour2 - timeouthour2;
-					// 	nightdiff = Math.abs(time1) + Math.abs(time2);
-					// }
-					// else// pos 6 -- 1st time is the only one inside nightdiff time
-					// {
-					// 	console.log('pos 6');
-					// 	time1 = timeouthour1 - 10;
-					// 	nightdiff = Math.abs(time1);
-					// }
+					else if((timeinhour2 >= 12 && timeouthour2 <= 18) && timeinhour3 >= 18)// pos 5
+					{
+						console.log('pos 5');
+						time1 = timeouthour1 - 10;
+						time2 = timeinhour2 - timeouthour2;
+						nightdiff = Math.abs(time1) + Math.abs(time2);
+					}
+					else// pos 6 -- 1st time is the only one inside nightdiff time
+					{
+						console.log('pos 6');
+						time1 = timeouthour1 - 10;
+						nightdiff = Math.abs(time1);
+					}
 
 				}
 				else if(timeinhour1 <= 10 && timeouthour1 >= 10)// pos7 ~ 8
@@ -1809,23 +1815,23 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 						nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
 					}
 				}
-				// else if(timeinhour2 <= 10 && timeouthour2 >= 10)// pos9 ~ 10
-				// {
-				// 	console.log('pos 9~10');
-				// 	if(timeinhour3 >= 12 && timeouthour3 <= 18) // pos 9
-				// 	{
-				// 		console.log('pos 9');
-				// 		time2 = timeouthour2 - 10;
-				// 		time3 = timeinhour3 - timeouthour3;
-				// 		nightdiff = Math.abs(time2) + Math.abs(time3);
-				// 	}
-				// 	else // pos 10
-				// 	{
-				// 		console.log('pos 10');
-				// 		time2 = timeouthour2 - 10;
-				// 		nightdiff = Math.abs(time2);
-				// 	}
-				// }
+				else if(timeinhour2 <= 10 && timeouthour2 >= 10)// pos9 ~ 10
+				{
+					console.log('pos 9~10');
+					if(timeinhour3 >= 12 && timeouthour3 <= 18) // pos 9
+					{
+						console.log('pos 9');
+						time2 = timeouthour2 - 10;
+						time3 = timeinhour3 - timeouthour3;
+						nightdiff = Math.abs(time2) + Math.abs(time3);
+					}
+					else // pos 10
+					{
+						console.log('pos 10');
+						time2 = timeouthour2 - 10;
+						nightdiff = Math.abs(time2);
+					}
+				}
 				else if((timeinhour2 <= 10 && timeouthour2 >= 10) && timeouthour2 >= 12)// pos 11 ~ 12
 				{
 					console.log('pos 11~12');
@@ -1844,12 +1850,12 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 						nightdiff = Math.abs(time2) + Math.abs(time3);
 					}
 				}
-				// else if(timeinhour3 <= 10 && timeouthour3 >= 10)// pos 13
-				// {
-				// 	console.log('pos 13');
-				// 	time3 = timeouthour3 - 10;
-				// 	nightdiff = Math.abs(time3);
-				// }
+				else if(timeinhour3 <= 10 && timeouthour3 >= 10)// pos 13
+				{
+					console.log('pos 13');
+					time3 = timeouthour3 - 10;
+					nightdiff = Math.abs(time3);
+				}
 				else if(timeinhour3 <= 10 && timeouthour3 <= 18)// pos 14
 				{
 					console.log('pos 14');

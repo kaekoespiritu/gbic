@@ -164,7 +164,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 							<input type='submit' class='btn btn-primary pull-down' value='Save Changes'>
 						</div>
 						<div class="col-md-1 pull-down">
-							<input type='submit' class='btn btn-danger pull-down' value='Terminate Employee'>
+							<input type='button' onclick="terminateEmployee('<?php Print $empid?>')" class='btn btn-danger pull-down' value='Terminate Employee'>
 						</div>
 				</div>
 
@@ -807,6 +807,13 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 	// 	}
 		
 	// }
+	function terminateEmployee(id) {
+
+		var con = confirm("Are you sure you want to terminate this employee?");
+		if(con) {
+			window.location.assign("logic_terminate_employee.php?empid="+id);
+		}
+	}
 	</script>
 
 

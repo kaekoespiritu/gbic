@@ -6,7 +6,7 @@ include_once('directives/db.php');
 include("pagination/employees_function.php");//For pagination
 if(!isset($_GET['site']) && !isset($_GET['position']))
 {
-	header("location:employee_sample.php?site=null&position=null");
+	header("location:employees.php?site=null&position=null");
 }
 $site_page = $_GET['site'];
 $position_page = $_GET['position'];
