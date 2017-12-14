@@ -151,6 +151,7 @@ $adminRole = $adminArr['role'];
 						<div class="col-md-5">
 							<a data-target="#addSite" data-toggle="modal" class="btn btn-success col-md-12 pull-down">ADD SITE</a>
 							<a class="btn btn-danger col-md-12 pull-down" onclick="siteRemove()">END CONTRACT</a>
+							<a class="btn btn-primary col-md-12 pull-down" data-toggle="modal" data-target="#siteHistory">SITE HISTORY</a>
 							<a class="btn btn-warning col-md-12 pull-down" data-target="#colaSettings" data-toggle="modal">SETTINGS FOR COLA</a>
 						</div>
 
@@ -186,6 +187,7 @@ $adminRole = $adminArr['role'];
 					<div class="panel-body">
 						<div class="col-md-5">
 							<a data-target="#addPosition" data-toggle="modal" class="btn btn-success col-md-12 pull-down">ADD POSITION</a>
+							<a data-target="#removePosition" data-toggle="modal" class="btn btn-danger col-md-12 pull-down">REMOVE POSITION</a>
 						</div>
 
 						<div class="col-md-7 text-left">
@@ -198,6 +200,7 @@ $adminRole = $adminArr['role'];
 									{
 										Print '	<div class="alignlist">
 										<label>
+										<input type="checkbox" name="site[]" value="'.$positionRow['position'].'">
 										'.$positionRow['position'].'
 										</label>
 										</div>';
@@ -210,6 +213,35 @@ $adminRole = $adminArr['role'];
 				</div>
 			</div>
 		</div>
+
+		<!-- Site History Modal -->
+		<div class="modal fade bs-example-modal-sm" role="dialog" id="siteHistory">
+			  <div class="modal-dialog" role="document">
+			  	<div class="modal-content">
+				  	<div class="modal-header">
+				  		<h4 class="modal-title col-md-11">View site history</h4>
+				        <button type="button" class="close col-md-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				    </div>
+				    <!-- form for adding POSITIONS -->
+				    <div class="modal-body">
+				    	<table class="table table-bordered">
+				    		<tr>
+				    			<td>Site Name</td>
+				    			<td>Start Date</td>
+				    			<td>End Date</td>
+				    			<td>Action</td>
+				    		</tr>
+				    		<tr>
+				    			<td>Muralla</td>
+				    			<td>Nov. 2016</td>
+				    			<td>On-going</td>
+				    			<td><a class="btn btn-danger" onclick="siteRemove()">END CONTRACT</a></td>
+				    		</tr>
+				    	</table>
+				    </div>
+			    </div>
+			  </div>
+			</div>
 
 
 <!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
