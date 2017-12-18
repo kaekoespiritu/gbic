@@ -2,12 +2,8 @@
 	include_once('directives/db.php');
 	include('directives/session.php');
 	
-	$siteNum = count($_POST['site']);
-	if($siteNum == 0)
-	{
-		Print "<script>alert('Please check the checkbox to choose a site to Archive.')</script>";
-		Print "<script>window.location.assign('options.php')</script>";
-	}
+	$date = strftime("%B %d, %Y");
+
 	//Print "<script>alert('".$siteNum."')</script>";
 	//Query for employees that is in the chosen site to remove
 	$primaryQuery = "UPDATE site SET active = 'pending' WHERE ";
@@ -17,33 +13,31 @@
 	$success = 0;//Counter if there is a successful query 
 	$withEmployee = "";//Display site with employees
 	$empExist = 0;//if Employee still exist in the chosen site
-	for($counter = 0; $counter < $siteNum; $counter++)
+	
+	$site = $_GET['site'];
+	$empChecker = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'";
+	$checkerQuery = mysql_query($empChecker);
+	if(mysql_num_rows($checkerQuery) == 0)
 	{
-		//Print "<script>alert('".$_POST['site'][$counter]."')</script>";
-		$site = $_POST['site'][$counter];
-		$empChecker = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'";
-		$checkerQuery = mysql_query($empChecker);
-		if(mysql_num_rows($checkerQuery) == 0)
+		$success++;
+		$removeSite = "UPDATE site SET active = '0', end = '$date' WHERE location = '$site'";
+		mysql_query($removeSite);
+		if($successArchive != "")
 		{
-			$success++;
-			$removeSite = "UPDATE site SET active = '0' WHERE location = '$site'";
-			mysql_query($removeSite);
-			if($successArchive != "")
-			{
 
-			}
-			$successArchive .= " [".$site."]"; 
 		}
-		else
-		{
-			if($secondaryQuery != "(")
-			{
-				$secondaryQuery .= " OR ";
-			}
-			$secondaryQuery .= "location = '$site'";
-			$withEmployee .= " [".$site."]"; 
-		}
+		$successArchive .= " [".$site."]"; 
 	}
+	else
+	{
+		if($secondaryQuery != "(")
+		{
+			$secondaryQuery .= " OR ";
+		}
+		$secondaryQuery .= "location = '$site'";
+		$withEmployee .= " [".$site."]"; 
+	}
+	
 	$secondaryQuery .= ")";
 
 	if($secondaryQuery == "()")//No employees in the site

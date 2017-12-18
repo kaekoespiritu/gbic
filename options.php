@@ -229,12 +229,28 @@ $adminRole = $adminArr['role'];
 				    			<td>End Date</td>
 				    			<td>Action</td>
 				    		</tr>
-				    		<tr>
-				    			<td>Muralla</td>
-				    			<td>Nov. 2016</td>
-				    			<td>On-going</td>
-				    			<td><a class="btn btn-danger" onclick="siteRemove()">END CONTRACT</a></td>
-				    		</tr>
+				    		<?php
+				    		$siteHist = "SELECT * FROM site ORDER BY end ASC";
+				    		$siteHistQuery = mysql_query($siteHist);
+				    		while($siteHistArr = mysql_fetch_assoc($siteHistQuery))
+				    		{
+				    			Print "
+				    				<tr>
+						    			<td>".$siteHistArr['location']."</td>
+						    			<td>".$siteHistArr['start']."</td>";
+						    	if($siteHistArr['end'] != null)
+						    		Print 	"<td>".$siteHistArr['end']."</td>
+						    				 <td>Contract Ended</td>
+						    		</tr>";
+						    	else
+						    		Print 	"<td>On-going</td>
+						    				<td><a class='btn btn-danger' onclick='siteRemove(\"".$siteHistArr['location']."\")'>END CONTRACT</a>
+						    			</td>";
+				    		}
+
+
+
+				    		?>
 				    	</table>
 				    </div>
 			    </div>
@@ -247,6 +263,12 @@ $adminRole = $adminArr['role'];
 <script rel="javascript" src="js/bootstrap.min.js"></script>
 <script rel="javascript" src="js/options.js"></script>
 <script>
+	function siteRemove(site) {
+		var a = confirm("Are you sure "+site+" contract ended?");
+		if(a){
+			window.location.assign("logic_options_removeSite.php?site="+site);
+		}
+	}
 	function addColaSubmit() {
 		document.getElementById('addColaForm').submit();
 	}
