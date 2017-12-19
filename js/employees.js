@@ -1,23 +1,78 @@
-
+function sssCheckboxFunc() {
+	var sss = document.getElementById('sssCheckbox');
+	var sssRow = document.getElementById('sss');
+	if(sss.checked == true)
+	{
+		console.log('checked');
+		sssbox();
+		sssRow.readOnly = false;
+		sssRow.placeholder = "";
+	}
+	else
+	{
+		console.log('unchecked');
+		sssRow.placeholder = "No document";
+		sssRow.readOnly = true;
+		sssRow.value = "";
+	}
+}
+function philhealthCheckboxFunc() {
+	var philhealth = document.getElementById('philhealthCheckbox');
+	var philhealthRow = document.getElementById('philhealth');
+	if(philhealth.checked == true)
+	{
+		philhealthRow.readOnly = false;
+		philhealthRow.required = true;
+		philhealthRow.placeholder = "";
+	}
+	else
+	{
+		philhealthRow.placeholder = "No document";
+		philhealthRow.readOnly = true;
+		philhealthRow.required = false;
+		philhealthRow.value = "";
+	}
+}
+function pagibigCheckboxFunc() {
+	var pagibig = document.getElementById('pagibigCheckbox');
+	var pagibigRow = document.getElementById('pagibig');
+	if(pagibig.checked == true)
+	{
+		pagibigRow.readOnly = false;
+		pagibigRow.required = true;
+		pagibigRow.placeholder = "";
+	}
+	else
+	{
+		pagibigRow.placeholder = "No document";
+		pagibigRow.readOnly = true;
+		pagibigRow.required = false;
+		pagibigRow.value = "";
+	}
+}
 
 function monthlySalary(salary){
 	var salary = document.getElementById('monthlysalary').value;
 	var dailyRate = document.getElementById('rate');
 	dailyRate.setAttribute('value',(salary/25).toFixed(2));
+	if(document.getElementById('sssCheckbox').checked)
+		sssbox();
 }
 
 function salaryDecimal(){
 	var salary = document.getElementById('monthlysalary');
-	var value = document.getElementById('monthlysalary').value;
+	var value = salary.value;
 	var decimal = parseInt(value).toFixed(2);
-	salary.value=decimal;
+	if(value != "")
+		salary.value = decimal;
 }
 
 function allowanceDecimal(){
 	var allowance = document.getElementById('allowance');
-	var value = document.getElementById('allowance').value;
+	var value = allowance.value;
 	var decimal = parseInt(value).toFixed(2);
-	allowance.value=decimal;
+	if(value != "")
+		allowance.value = decimal;
 }
 
 function pagibigDecimal(evt){
@@ -39,8 +94,6 @@ function pagibigDecimal(evt){
 
 /* AUTOMATED COMPUTATION FOR SSS BASED ON MONTHLY SALARY */
 function sssbox() {
-	if (document.getElementById('sss').checked) 
-	{
 		var monthly = document.getElementById('monthlysalary').value;
 		var sssContribution = 0;
 
@@ -138,29 +191,24 @@ function sssbox() {
 		sssContribution = 581.30;
 		
 		sssContribution = sssContribution.toFixed(2);
-		document.getElementById('txt_sss').value = sssContribution;
-		document.getElementById('txt_sssAppear').style.display = 'block';
-	} 
-	else 
-	{
-		document.getElementById('txt_sssAppear').style.display = 'none';
-	}
+		document.getElementById('sss').value = sssContribution;
+	
 }
 
 /* AUTOMATED PHILHEALTH COMPUTATION BASED ON MONTHLY SALARY */
-function philhealthbox() {
-	var philhealthCheck = document.getElementById('philhealthCheck');
-	if(philhealthCheck.checked) {
-			document.getElementById('txt_philhealth').readOnly = false;
-			document.getElementById('txt_philhealth').value = '';
-			document.getElementById('txt_philhealthAppear').style.display = 'block';
-		}
-		else {
-			document.getElementById('txt_philhealth').readOnly = true;
-			document.getElementById('txt_philhealth').value = '0.00';
-			document.getElementById('txt_philhealthAppear').style.display = 'none';
+// function philhealthbox() {
+// 	var philhealthCheck = document.getElementById('philhealthCheck');
+// 	if(philhealthCheck.checked) {
+// 			document.getElementById('txt_philhealth').readOnly = false;
+// 			document.getElementById('txt_philhealth').value = '';
+// 			document.getElementById('txt_philhealthAppear').style.display = 'block';
+// 		}
+// 		else {
+// 			document.getElementById('txt_philhealth').readOnly = true;
+// 			document.getElementById('txt_philhealth').value = '0.00';
+// 			document.getElementById('txt_philhealthAppear').style.display = 'none';
 
-		}
+// 		}
 	// if (document.getElementById('philhealth').checked) 
 	// {
 	// 	var ratePerDay = document.getElementById('rate').value;
@@ -261,7 +309,7 @@ function philhealthbox() {
 	// {
 	// 	document.getElementById('txt_philhealthAppear').style.display = 'none';
 	// }
-}
+// }
 
 /* DATE PICKER CONFIGURATIONS*/
 $( "#dtpkr_addEmployee" ).datepicker({
@@ -271,6 +319,7 @@ $( "#dtpkr_addEmployee" ).datepicker({
 	showAnim: 'blind',
 	defaultDate: new Date(),
 	yearRange: "-50:+0",
+	maxDate: (0),
 	beforeShow: function(){    
 	$(".ui-datepicker").css('font-size', 10) 
 	}
@@ -282,6 +331,7 @@ $( "#dtpkr_addDOB").datepicker({
 	showAnim: 'blind',
 	defaultDate: new Date(),
 	yearRange: "-70:+0",
+	maxDate: (0),
 	beforeShow: function(){    
 	$(".ui-datepicker").css('font-size', 10) 
 	}
@@ -350,6 +400,32 @@ function search(key) {
 	}
 	window.location.assign("employees.php?site=null&position=null&search="+localStorage.getItem("search"));
 }
+
+
+     function validatenumber(evt) {
+  		var theEvent = evt || window.event;
+ 		var key = theEvent.keyCode || theEvent.which;
+ 		key = String.fromCharCode( key );
+  		var regex = /[0-9]|\./;
+  		if( !regex.test(key) ) {
+   			 theEvent.returnValue = false;
+   		if(theEvent.preventDefault) 
+   			theEvent.preventDefault();
+ 		}
+	}
+	function validateletter(evt) {
+  		var theEvent = evt || window.event;
+ 		var key = theEvent.keyCode || theEvent.which;
+ 		key = String.fromCharCode( key );
+  		var regex = /^[a-zA-Z ]*$/;
+  		if( !regex.test(key) ) {
+   			 theEvent.returnValue = false;
+   		if(theEvent.preventDefault) 
+   			theEvent.preventDefault();
+  		}
+	}
+
+
 
 
 

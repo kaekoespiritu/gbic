@@ -38,7 +38,7 @@
 									<label for="address">Address</label>
 								</div>
 								<div class="col-md-9">
-									<input name="txt_addAddress" onkeypress="validateletter(event)" type="text" class="form-control" id="address" required>
+									<input name="txt_addAddress" type="text" class="form-control" id="address" required>
 								</div>
 							</div><br>
 
@@ -152,7 +152,7 @@
 									<label for="rate">Monthly Salary</label>
 								</div>
 								<div class="col-md-5">
-									<input name="txt_addMonthlySalary"  type="text" class="form-control" id="monthlysalary" onkeyup="monthlySalary()" onchange="salaryDecimal()" required>
+									<input name="txt_addMonthlySalary"  type="text" class="form-control" id="monthlysalary" onkeypress="validatenumber(event)" onkeyup="monthlySalary()" onchange="salaryDecimal()" required>
 								</div>
 							</div><br>
 
@@ -176,7 +176,38 @@
 
 							<div class="row">
 								<h4 class="modal-title"><br>Contributions</h4><hr>
+								<!-- //////////// -->
+
 								<div class="row">
+									<div class="col-md-5">
+										<label for="sss">SSS</label>
+									</div>
+									<div class="col-md-4">
+										<input type="checkbox" id="sssCheckbox" onchange="sssCheckboxFunc()">
+										<input name="txt_addSSS" type="text" placeholder="No document" class="form-control" id="sss" readonly>
+									</div>
+									<div class="col-md-5">
+										<label for="philhealth">Philhealth</label>
+									</div>
+									<div class="col-md-4">
+										<input type="checkbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()">
+										<input name="txt_addPhilhealth" type="text" placeholder="No document" class="form-control" id="philhealth" readonly>
+									</div>
+									<div class="col-md-5">
+										<label for="pagibig">Pag-IBIG</label>
+									</div>
+									<div class="col-md-4">
+										<input type="checkbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()">
+										<input name="txt_addPagibig" type="text" placeholder="No document" class="form-control" id="pagibig" readonly>
+									</div>
+
+									<div class="col-md-10 col-md-offset-1 pull-down text-center well well-sm">
+										* SSS contribution is automatically computed based on employee's monthly salary.
+									</div>
+								</div>
+
+								<!-- //////////// -->
+								<!-- <div class="row">
 									<div class="col-md-6 checkbox">
 										<input id="sss" name="chkbox_addSSS" type="checkbox" onclick="sssbox()" value="SSS" >
 										<label style="font-weight: 700" for="sss">SSS</label>
@@ -202,10 +233,10 @@
 								<div class="col-md-4">
 									<input name="txt_addPagibig" type="text" class="form-control" onchange="pagibigDecimal(event)" id="pagibig">
 								</div>
-
-								<div class="col-md-10 col-md-offset-1 pull-down text-center well well-sm">
+ -->
+								<!-- <div class="col-md-10 col-md-offset-1 pull-down text-center well well-sm">
 									* SSS contribution is automatically computed based on employee's monthly salary.
-								</div>
+								 </div> -->
 							</div>
 						</div>
 					</div>
@@ -222,32 +253,7 @@
 </div>
 
 
-<script type="javascript">
 
-     function validatenumber(evt) {
-  		var theEvent = evt || window.event;
- 		var key = theEvent.keyCode || theEvent.which;
- 		key = String.fromCharCode( key );
-  		var regex = /[0-9]|\./;
-  		if( !regex.test(key) ) {
-   			 theEvent.returnValue = false;
-   		if(theEvent.preventDefault) 
-   			theEvent.preventDefault();
- 		}
-	}
-	function validateletter(evt) {
-  		var theEvent = evt || window.event;
- 		var key = theEvent.keyCode || theEvent.which;
- 		key = String.fromCharCode( key );
-  		var regex = /^[a-zA-Z ]*$/;
-  		if( !regex.test(key) ) {
-   			 theEvent.returnValue = false;
-   		if(theEvent.preventDefault) 
-   			theEvent.preventDefault();
-  		}
-	}
-
-</script>
 
 
 
