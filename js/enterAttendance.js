@@ -1144,6 +1144,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 	// Verifies that time in and time out input fields have value
 	if(timeinhour1 && timeouthour1 && timeinhour2 && timeouthour2 && timeinhour3 && timeouthour3)
 	{
+		console.log('timein1: '+timeinhour1+' || timeout1: '+timeouthour1+' || timein2: '+timeinhour2+' || timeout2: '+timeouthour2+' || timein3: '+timeinhour3+' || timeout3: '+timeouthour3);
 		//alert("timein: "+timeinhour+"timeout: "+ timeouthour);
 		var workinghours;
 		var workingmins;
@@ -1154,6 +1155,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 		var workinghours3;
 		var workinghours3;
 
+		
 
 		// If time is 12AM
 		if(timeinhour1 == 0)
@@ -1544,18 +1546,8 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 	// NIGHT SHIFT (timeout-timein is negative)
 		else
 		{
-			console.log("nightshift");
-		// Night differential starts at 10pm - 6am
-			//console.log("Time in: " + timeinhour + ":" + timeinmin + " Time out: " + timeouthour + ":" + timeoutmin);
-			//console.log("Working hours: " + workinghours + " Working mins: " + workingmins);
-			// sets the attendance status to PRESENT
-			//row.querySelector('.attendance').value = "PRESENT";
-
-			//Invert the time to make the computation the same as the morning shift
-			// timeinhour1 -= 12;
-			// timeouthour1 += 12;
-			// timeinhour2 += 12;
-			// timeouthour2 += 12;
+			console.log("nightshift1");
+		console.log('timein1: '+timeinhour1+' || timeout1: '+timeouthour1+' || timein2: '+timeinhour2+' || timeout2: '+timeouthour2+' || timein3: '+timeinhour3+' || timeout3: '+timeouthour3);
 
 		//Invert time for easier computation of night diff
 			//before break
@@ -1564,6 +1556,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				timeinhour1 +=12;
 			else
 				timeinhour1 -=12;
+
 			if(timeouthour1 < 10)
 				timeouthour1 +=12;
 			else
@@ -1574,6 +1567,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			timeinhour2 +=12;
 			else
 				timeinhour2 -=12;
+
 			if(timeouthour2 < 10)
 				timeouthour2 +=12;
 			else
@@ -1583,13 +1577,27 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			timeinhour3 +=12;
 			else
 				timeinhour3 -=12;
+
 			if(timeouthour3 < 10)
 				timeouthour3 +=12;
 			else
 				timeouthour3 -=12;
 
-			
-			
+			// All 12pm will turn into 24
+			if(timeinhour1 == 0)
+				timeinhour1 = 24;
+			if(timeouthour1 == 0)
+				timeouthour1 = 24;
+
+			if(timeinhour2 == 0)
+				timeinhour2 = 24;
+			if(timeouthour2 == 0)
+				timeouthour2 = 24;
+
+			if(timeinhour3 == 0)
+				timeinhour3 = 24;
+			if(timeouthour3 == 0)
+				timeouthour3 = 24;
 			
 			//console.log("timein1: "+timeinhour1+"// timeout1: "+timeouthour1+"// timein2: "+timeinhour2+"// timeout2: "+timeouthour2);
 			workinghours1 = timeouthour1 - timeinhour1;
@@ -1745,7 +1753,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				(timeinhour3 <= 10 && timeouthour3 >= 10) ||// pos 13
 				(timeinhour3 <= 10 && timeouthour3 <= 18))// pos 14
 			{
-				console.log('timein1: '+timeinhour1+' || timeout1: '+timeouthour1+' || timein2: '+timeinhour2+' || timeout2: '+timeouthour2+' || timein3: '+timeinhour3+' || timeout3: '+timeouthour3);
+				//console.log('timein1: '+timeinhour1+' || timeout1: '+timeouthour1+' || timein2: '+timeinhour2+' || timeout2: '+timeouthour2+' || timein3: '+timeinhour3+' || timeout3: '+timeouthour3);
 				if((timeinhour1 <= 10 && timeouthour1 >= 10) && timeouthour1 <= 12)// pos1 ~ 6
 				{
 					console.log('pos 1~6');
