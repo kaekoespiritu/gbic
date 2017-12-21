@@ -78,6 +78,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 						{
 							if($payrollArr['sunday_hrs'] >= 8)
 							{
+								Print "<script>console.log('yow')</script>";
 								$ratePerDaySub = $payrollArr['num_days'] - 1;
 								$ratePerDaySub = abs($ratePerDaySub);
 							}
@@ -91,8 +92,8 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 						}
 						else
 						{
-							$ratePerDaySub = $payrollArr['num_days'];
-							$ratePerDayDisp = $payrollArr['num_days']." Day(s)";
+							$ratePerDaySub = $payrollArr['num_days'];//for computation
+							$ratePerDayDisp = $payrollArr['num_days']." Day(s)";// for display
 						}
 						$subTotalRatePerDay = $ratePerDaySub * numberExactFormat($empArr['rate'],2,'.');
 						$totalRatePerDay = $subTotalRatePerDay;//for the Subtotal of Earnings
@@ -203,7 +204,9 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					</tr>
 					<!-- Special Holiday Rate -->
 					<?php
-						$subTotalSpecialHolidayRate = $payrollArr['reg_holiday_num'] * $payrollArr['reg_holiday'];
+						$regHolidayDays = $empArr['rate'] * $payrollArr['reg_holiday_num'];
+						$subTotalSpecialHolidayRate = ($payrollArr['reg_holiday_num'] * $payrollArr['reg_holiday']) + $regHolidayDays;
+
 						$totalSpecialHolidayRate = $subTotalSpecialHolidayRate;//for the Subtotal of Earnings
 						$regHolNum = $payrollArr['reg_holiday_num']." Day(s)";
 						if($subTotalSpecialHolidayRate == 0)
@@ -212,17 +215,18 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 							$subTotalSpecialHolidayRate = numberExactFormat($subTotalSpecialHolidayRate, 2, '.');
 						if($regHolNum == 0)
 							$regHolNum = "--";
-					
+
 					?>
 					<tr>
 						<td>Regular Holiday</td>
-						<td><?php Print $payrollArr['reg_holiday']?></td>
+						<td><?php Print numberExactFormat($empArr['rate'] + $payrollArr['reg_holiday'], 2, '.') ?></td>
 						<td><?php Print $regHolNum?></td>
 						<td><?php Print $subTotalSpecialHolidayRate?></td>
 					</tr>
 					<!-- Regular Holiday Rate -->
 					<?php
-						$subTotalRegularHolidayRate = $payrollArr['spe_holiday_num'] * $payrollArr['spe_holiday'];
+						$speHolidayDays = $empArr['rate'] * $payrollArr['spe_holiday_num'];
+						$subTotalRegularHolidayRate = ($payrollArr['spe_holiday_num'] * $payrollArr['spe_holiday']) + $speHolidayDays;
 						$totalRegularHolidayRate = $subTotalRegularHolidayRate;//for the Subtotal of Earnings
 						$speHolNum = $payrollArr['spe_holiday_num']." Day(s)";
 						if($subTotalRegularHolidayRate == 0)
@@ -235,7 +239,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					?>
 					<tr>
 						<td>Special Holiday</td>
-						<td><?php Print $payrollArr['spe_holiday']?></td>
+						<td><?php Print  numberExactFormat($empArr['rate'] + $payrollArr['spe_holiday'], 2, '.')?></td>
 						<td><?php Print $speHolNum?></td>
 						<td><?php Print $subTotalRegularHolidayRate?></td>
 					</tr>

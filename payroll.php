@@ -265,10 +265,14 @@ if($holidayExist > 0)
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Over
+
 								$sunTimeIn = $dateRow['timein'];
 								$sunTimeOut = $dateRow['timeout'];
 								$ABsunTimeIn = $dateRow['afterbreak_timein'];
 								$ABsunTimeOut = $dateRow['afterbreak_timeout'];
+								$NSsunTimeIn = $dateRow['nightshift_timein'];
+								$NSsunTimeOut = $dateRow['nightshift_timeout'];
+
 								$sunWorkHrs = $dateRow['workhours'];//Get the workhours
 								$sunNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$sunOTHrs = $dateRow['overtime'];//Get the Overtime
@@ -294,10 +298,14 @@ if($holidayExist > 0)
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
 								//Print "<script>alert('".$totalOT."')</script>";
+
 								$monTimeIn = $dateRow['timein'];
 								$monTimeOut = $dateRow['timeout'];
 								$ABmonTimeIn = $dateRow['afterbreak_timein'];
 								$ABmonTimeOut = $dateRow['afterbreak_timeout'];
+								$NSmonTimeIn = $dateRow['nightshift_timein'];
+								$NSmonTimeOut = $dateRow['nightshift_timeout'];
+
 								$monWorkHrs = $dateRow['workhours'];//Get the workhours
 								$monNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$monOTHrs = $dateRow['overtime'];//Get the Overtime
@@ -324,10 +332,13 @@ if($holidayExist > 0)
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
 								//Print "<script>alert('".$totalOT."')</script>";
+
 								$tueTimeIn = $dateRow['timein'];
 								$tueTimeOut = $dateRow['timeout'];
 								$ABtueTimeIn = $dateRow['afterbreak_timein'];
 								$ABtueTimeOut = $dateRow['afterbreak_timeout'];
+								$NStueTimeIn = $dateRow['nightshift_timein'];
+								$NStueTimeOut = $dateRow['nightshift_timeout'];
 								
 								$tueWorkHrs = $dateRow['workhours'];//Get the workhours
 								$tueNDHrs = $dateRow['nightdiff'];//Get the night diff
@@ -356,10 +367,14 @@ if($holidayExist > 0)
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
 								//Print "<script>alert('".$totalOT."')</script>";
+
 								$wedTimeIn = $dateRow['timein'];
 								$wedTimeOut = $dateRow['timeout'];
 								$ABwedTimeIn = $dateRow['afterbreak_timein'];
 								$ABwedTimeOut = $dateRow['afterbreak_timeout'];
+								$NSwedTimeIn = $dateRow['nightshift_timein'];
+								$NSwedTimeOut = $dateRow['nightshift_timeout'];
+
 								$wedWorkHrs = $dateRow['workhours'];//Get the workhours
 								$wedNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$wedOTHrs = $dateRow['overtime'];//Get the Overtime
@@ -386,10 +401,14 @@ if($holidayExist > 0)
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
 								//Print "<script>alert('".$totalOT."')</script>";
+
 								$thuTimeIn = $dateRow['timein'];
 								$thuTimeOut = $dateRow['timeout'];
 								$ABthuTimeIn = $dateRow['afterbreak_timein'];
 								$ABthuTimeOut = $dateRow['afterbreak_timeout'];
+								$NSthuTimeIn = $dateRow['nightshift_timein'];
+								$NSthuTimeOut = $dateRow['nightshift_timeout'];
+
 								$thuWorkHrs = $dateRow['workhours'];//Get the workhours
 								$thuNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$thuOTHrs = $dateRow['overtime'];//Get the Overtime
@@ -416,10 +435,14 @@ if($holidayExist > 0)
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
 								//Print "<script>alert('".$totalOT."')</script>";
+
 								$friTimeIn = $dateRow['timein'];
 								$friTimeOut = $dateRow['timeout'];
 								$ABfriTimeIn = $dateRow['afterbreak_timein'];
 								$ABfriTimeOut = $dateRow['afterbreak_timeout'];
+								$NSfriTimeIn = $dateRow['nightshift_timein'];
+								$NSfriTimeOut = $dateRow['nightshift_timeout'];
+
 								$friWorkHrs = $dateRow['workhours'];//Get the workhours
 								$friNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$friOTHrs = $dateRow['overtime'];//Get the Overtime
@@ -445,10 +468,14 @@ if($holidayExist > 0)
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
 								//Print "<script>alert('".$totalOT."')</script>";
+
 								$satTimeIn = $dateRow['timein'];
 								$satTimeOut = $dateRow['timeout'];
 								$ABsatTimeIn = $dateRow['afterbreak_timein'];
 								$ABsatTimeOut = $dateRow['afterbreak_timeout'];
+								$NSsatTimeIn = $dateRow['nightshift_timein'];
+								$NSsatTimeOut = $dateRow['nightshift_timeout'];
+
 								$satWorkHrs = $dateRow['workhours'];//Get the workhours
 								$satNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$satOTHrs = $dateRow['overtime'];//Get the Overtime
@@ -468,6 +495,20 @@ if($holidayExist > 0)
 						}	
 						
 					}
+
+					$payrollRow = "2";//For payroll column if employee has NIGHTSHIFT which will trigger how much the column span needed
+					if(	isset($NSsatTimeIn) || 
+						isset($NSsunTimeIn) || 
+						isset($NSmonTimeIn) || 
+						isset($NStueTimeIn) || 
+						isset($NSwedTimeIn) || 
+						isset($NSthuTimeIn) || 
+						isset($NSfriTimeIn) || 
+						isset($nSsunTimeIn))
+					{
+						$payrollRow = "3";
+					}
+
 					$holMon = false; 
 					$holTue = false; 
 					$holWed = false; 
@@ -579,12 +620,12 @@ if($holidayExist > 0)
 							}
 							else
 							{
-								Print 	"<td colspan='2' rowspan='2' class='danger'> Holiday </td>";
+								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
 						}
 						else
 						{
-							Print 	"	<td colspan='2' rowspan='2' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' rowspan='".$payrollRow."' class='danger'> Absent </td>";
 						}
 						if(!$thuAbsent)
 						{
@@ -604,12 +645,12 @@ if($holidayExist > 0)
 							}
 							else
 							{
-								Print 	"<td colspan='2' rowspan='2' class='danger'> Holiday </td>";
+								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
 						}
 						else
 						{
-							Print 	"	<td colspan='2' rowspan='2' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' rowspan='".$payrollRow."' class='danger'> Absent </td>";
 						}
 						if(!$friAbsent)
 						{
@@ -629,12 +670,12 @@ if($holidayExist > 0)
 							}
 							else
 							{
-								Print 	"<td colspan='2' rowspan='2' class='danger'> Holiday </td>";
+								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
 						}
 						else
 						{
-							Print 	"	<td colspan='2' rowspan='2' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' rowspan='".$payrollRow."' class='danger'> Absent </td>";
 						}
 						if(!$satAbsent)
 						{
@@ -654,12 +695,12 @@ if($holidayExist > 0)
 							}
 							else
 							{
-								Print 	"<td colspan='2' rowspan='2' class='danger'> Holiday </td>";
+								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
 						}
 						else
 						{
-							Print 	"	<td colspan='2' rowspan='2' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' rowspan='".$payrollRow."' class='danger'> Absent </td>";
 						}
 						if(!$sunAbsent)
 						{
@@ -679,13 +720,13 @@ if($holidayExist > 0)
 							}
 							else
 							{
-								Print 	"<td colspan='2' rowspan='2' class='danger'> Day off </td>";
+								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Day off </td>";
 							}
 							
 						}
 						else
 						{
-							Print 	"	<td colspan='2' rowspan='2' class='danger'> Day off </td>";
+							Print 	"	<td colspan='2' rowspan='".$payrollRow."' class='danger'> Day off </td>";
 						}
 						if(!$monAbsent)
 						{
@@ -705,12 +746,12 @@ if($holidayExist > 0)
 							}
 							else
 							{
-								Print 	"<td colspan='2' rowspan='2' class='danger'> Holiday </td>";
+								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
 						}
 						else
 						{
-							Print 	"	<td colspan='2' rowspan='2' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' rowspan='".$payrollRow."' class='danger'> Absent </td>";
 						}
 						if(!$tueAbsent)
 						{
@@ -730,12 +771,12 @@ if($holidayExist > 0)
 							}
 							else
 							{
-								Print 	"<td colspan='2' rowspan='2' class='danger'> Holiday </td>";
+								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
 						}
 						else
 						{
-							Print 	"	<td colspan='2' rowspan='2' class='danger'> Absent </td>";
+							Print 	"	<td colspan='2' rowspan='".$payrollRow."' class='danger'> Absent </td>";
 						}
 
 						?>
@@ -836,6 +877,103 @@ if($holidayExist > 0)
 							else if (isset($tueTimeIn) && isset($tueTimeOut))
 							{
 								Print 	"	<td colspan='2'>Half Day</td>";
+							}
+						}
+
+						?>
+					</tr>
+					<tr><!--  -------------------- NIGHTSHIFT TIME IN AND TIME OUT -------------------- -->
+						<?php
+						if(!$wedAbsent)
+						{
+							//if there's nightshift
+							if(!empty($NSwedTimeIn) && !empty($NSwedTimeOut))
+							{
+								Print 	"	<td>Time In:<br>". trim($NSwedTimeIn) ."</td>
+								<td>Time Out:<br>". trim($NSwedTimeOut) ."</td>";
+							}
+							else if($payrollRow == '3')
+							{
+								Print 	"	<td colspan='2'></td>";
+							}
+						}
+						if(!$thuAbsent)
+						{
+							//if there's nightshift
+							if(!empty($NSthuTimeIn) && !empty($NSthuTimeOut))
+							{
+
+								Print 	"	<td>Time In:<br>". trim($NSthuTimeIn) ."</td>
+								<td>Time Out:<br>". trim($NSthuTimeOut) ."</td>";
+							}
+							else if($payrollRow == '3')
+							{
+								Print 	"	<td colspan='2'></td>";
+							}
+						}
+						if(!$friAbsent)
+						{
+							//if there's nightshift
+							if(!empty($NSfriTimeOut) && !empty($NSfriTimeIn))
+							{
+								Print 	"	<td>Time In:<br>". trim($NSfriTimeIn) ."</td>
+								<td>Time Out:<br>". trim($NSfriTimeOut) ."</td>";
+							}
+							else if($payrollRow == '3')
+							{
+								Print 	"	<td colspan='2'></td>";
+							}
+						}
+						if(!$satAbsent)
+						{
+							//if there's nightshift
+							if(!empty($NSsatTimeIn) && !empty($NSsatTimeOut))
+							{
+								Print 	"	<td>Time In:<br>". trim($NSsatTimeIn) ."</td>
+								<td>Time Out:<br>". trim($NSsatTimeOut) ."</td>";
+							}
+							else if($payrollRow == '3')
+							{
+								Print 	"	<td colspan='2'></td>";
+							}
+						}
+						if(!$sunAbsent)
+						{
+							//If Admin didnt input attendance on sunday
+							if(isset($sunTimeIn) && isset($sunTimeOut))
+							{
+							//if they have nightshift
+								if(!empty($NSsunTimeIn) && !empty($NSsunTimeOut))
+								{
+									Print 	"	<td>Time In:<br>". trim($NSsunTimeIn) ."</td>
+									<td>Time Out:<br>". trim($NSsunTimeOut) ."</td>";
+								}
+							}
+						}
+						if(!$monAbsent)
+						{
+							//if there's nightshift
+							if(!empty($NSmonTimeIn) && !empty($NSmonTimeOut))
+							{
+								Print 	"	<td>Time In:<br>". trim($NSmonTimeIn) ."</td>
+								<td>Time Out:<br>". trim($NSmonTimeOut) ."</td>";
+							}
+							else if($payrollRow == '3')
+							{
+								Print 	"	<td colspan='2'></td>";
+							}
+						}
+						if(!$tueAbsent)
+						{
+							//if there's nightshift
+							if(!empty($NStueTimeIn) && !empty($NStueTimeOut))
+							{
+								Print 	"	<td>Time In:<br>". trim($NStueTimeIn) ."</td>
+								<td>Time Out:<br>". trim($NStueTimeOut) ."</td>";
+							}
+							else if($payrollRow == '3')
+							{
+								Print 	"	<td colspan='2'></td>";
 							}
 						}
 

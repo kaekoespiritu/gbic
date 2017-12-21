@@ -92,6 +92,7 @@
 	$sunday_Att = 0;//Preset the sunday attendance to filter out the overal to the sunday
 	foreach($workHrs as $hrsCheck)
 	{
+
 		if($sundayBool)
 		{
 			if($hrsCheck < 8)
@@ -111,7 +112,9 @@
 		else
 		{
 			$overallWorkDays++;
+
 		}
+		Print "<script>console.log('1workdays: ".$overallWorkDays."')</script>";
 	}
 	//Print "<script>console.log('overallWorkDays: ".$overallWorkDays."')</script>";
 
@@ -183,7 +186,7 @@
 		$holidayNum = count($_POST['holidayDate']);//counts the number of holiday in that week
 		if($holidayNum == 1)//if there is only one Holiday in the week
 		{	
-			Print "<script>console.log('holiday 1')</script>";
+			//Print "<script>console.log('holiday 1')</script>";
 			$holidayName = $_POST['holidayName'][0];
 			$holidayType = $_POST['holidayType'][0];
 			$holidayDate = $_POST['holidayDate'][0];
@@ -199,6 +202,7 @@
 					//Print "<script>console.log('".$overallWorkDays."')</script>";
 					$overallWorkDays++;//increment workdays 
 					//Print "<script>console.log('".$overallWorkDays."')</script>";
+					Print "<script>console.log('2workdays: ".$overallWorkDays."')</script>";
 				}
 			}
 
@@ -224,88 +228,89 @@
 			for($count = 0; $count < $holidayNum; $count++)
 			{
 				$boolHoliday = true;//if employee did not appear to work the day before holiday
-				Print "<script>console.log('".$_POST['holidayType'][$count]." || ".$_POST['holidayDate'][$count]."')</script>";
 
-				Print "<script>console.log('holiday 2.1')</script>";
-				//Checker if employee is present the day before the holiday
-				$holidayStartingDate = $_POST['holidayDate'][$count];
-				$dayBefore = date('F j, Y', strtotime('-1 day', strtotime($holidayStartingDate)));
-				$dayBeforeChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayBefore'");
-				if(mysql_num_rows($dayBeforeChecker) > 0)
-				{
-					$sameDayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayStartingDate'");
-					if(mysql_num_rows($sameDayChecker) > 0)//check if employee attended on the day of holiday
-						$sameDayCheckerArr = mysql_fetch_assoc($sameDayChecker);
+				// //Checker if employee is present the day before the holiday
+				// $holidayStartingDate = $_POST['holidayDate'][$count];
+				// $dayBefore = date('F j, Y', strtotime('-1 day', strtotime($holidayStartingDate)));
+				// $dayBeforeChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayBefore'");
 
-					Print "<script>console.log('holiday 2.1.1')</script>";
-					$dayBeforeArr = mysql_fetch_assoc($dayBeforeChecker);
-					if($dayBeforeArr['attendance'] == '2')//2 if employee is present on the day before the holiday
-					{
-						if(mysql_num_rows($sameDayChecker) > 0)
-						{
-							if($sameDayCheckerArr['attendance'] == '2')
-							{
-								$overallWorkDays++;//increment workdays 
-							}
-						}
-						Print "<script>console.log('holiday 2.1.1.1')</script>";
-						$overallWorkDays++;//increment workdays 
-					}
-					else 
-					{
-						if(mysql_num_rows($sameDayChecker) > 0)
-						{
-							if($sameDayCheckerArr['attendance'] == '2')
-								$overallWorkDays++;//increment workdays 
-							else
-								$boolHoliday = false;
-						}
-						else
-						{
-							$boolHoliday = false;
-						}
+				// if(mysql_num_rows($dayBeforeChecker) > 0)
+				// {
+				// 	$sameDayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayStartingDate'");
+				// 	if(mysql_num_rows($sameDayChecker) > 0)//check if employee attended on the day of holiday
+				// 		$sameDayCheckerArr = mysql_fetch_assoc($sameDayChecker);
+
+				// 	$dayBeforeArr = mysql_fetch_assoc($dayBeforeChecker);
+				// 	if($dayBeforeArr['attendance'] == '2')//2 if employee is present on the day before the holiday
+				// 	{
+				// 		if(mysql_num_rows($sameDayChecker) > 0)
+				// 		{
+				// 			if($sameDayCheckerArr['attendance'] == '2')
+				// 			{
+				// 				$overallWorkDays++;//increment workdays 
+				// 				Print "<script>console.log('3workdays: ".$overallWorkDays."')</script>";
+				// 			}
+				// 		}
+				// 		// $overallWorkDays++;//increment workdays 
+				// 		Print "<script>console.log('4workdays: ".$overallWorkDays."')</script>";
+				// 	}
+				// 	else 
+				// 	{
+				// 		if(mysql_num_rows($sameDayChecker) > 0)
+				// 		{
+				// 			if($sameDayCheckerArr['attendance'] == '2')
+				// 				$overallWorkDays++;//increment workdays 
+				// 			else
+				// 				$boolHoliday = false;
+				// 		}
+				// 		else
+				// 		{
+				// 			$boolHoliday = false;
+				// 		}
+				// 		Print "<script>console.log('5workdays: ".$overallWorkDays."')</script>";
 						
-					}
-				}
-				else
-				{
-					if(mysql_num_rows($sameDayChecker) > 0)
-					{
-						$sameDayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayStartingDate'");
-						$sameDayCheckerArr = mysql_fetch_assoc($sameDayChecker);
-						Print "<script>console.log('asdad".$sameDayCheckerArr['attendance']."')</script>";
-						if($sameDayCheckerArr['attendance'] == '2')
-							$overallWorkDays++;//increment workdays 
-						else
-							$boolHoliday = false;
-					}
-					else
-					{
-						$boolHoliday = false;
-					}
-				}
+				// 	}
+				// }
+				// else
+				// {
+				// 	if(mysql_num_rows($sameDayChecker) > 0)
+				// 	{
+				// 		$sameDayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayStartingDate'");
+				// 		$sameDayCheckerArr = mysql_fetch_assoc($sameDayChecker);
+				// 		//Print "<script>console.log('asdad".$sameDayCheckerArr['attendance']."')</script>";
+				// 		if($sameDayCheckerArr['attendance'] == '2')
+				// 			$overallWorkDays++;//increment workdays 
+				// 		else
+				// 			$boolHoliday = false;
+				// 	}
+				// 	else
+				// 	{
+				// 		$boolHoliday = false;
+				// 	}
+				// 	Print "<script>console.log('6workdays: ".$overallWorkDays."')</script>";
+				// }
 				//Number kung pumasok sa date mismo
 				if($boolHoliday)
 				{
-					Print "<script>console.log('holiday 2.2')</script>";
+					//Print "<script>console.log('holiday 2.2')</script>";
 					$holidayName = $_POST['holidayName'][$count];
 					$holidayType = $_POST['holidayType'][$count];
 					$holidayDate = $_POST['holidayDate'][$count];
 					$holidayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayDate'") or die (mysql_error());
 					$holdayArr = mysql_fetch_assoc($holidayChecker);
-					Print "<script>console.log('".$holdayArr['attendance']."')</script>";
+					//Print "<script>console.log('".$holdayArr['attendance']."')</script>";
 					if($holdayArr['attendance'] == '2')
 					{
-						Print "<script>console.log('holiday 2.2.1')</script>";
+						//Print "<script>console.log('holiday 2.2.1')</script>";
 						if($holidayType == "special")//Special Holiday
 						{
-							Print "<script>console.log('holiday 2.2.1.1')</script>";
+							//Print "<script>console.log('holiday 2.2.1.1')</script>";
 							$addHoliday += $speHolidayInc;
 							$speHolNum++;
 						}
 						else//Regular Holiday
 						{
-							Print "<script>console.log('holiday 2.2.1.2')</script>";
+							//Print "<script>console.log('holiday 2.2.1.2')</script>";
 							$addHoliday += $regHolidayInc;
 							$regHolNum++;
 						}
@@ -391,7 +396,7 @@
 
 		if(mysql_num_rows($newValeQuery) > 0)
 		{
-			Print "<script>console.log('newValeAdded1')</script>";
+			//Print "<script>console.log('newValeAdded1')</script>";
 			$loanArr = mysql_fetch_assoc($newValeQuery);
 			//Loaned
 			$newValeBalance = $loanArr['balance'];
@@ -418,7 +423,7 @@
 		}
 		else//Employee has no newvale balance but added newvale in the payroll
 		{
-			 Print "<script>console.log('newValeAdded2')</script>";
+			// Print "<script>console.log('newValeAdded2')</script>";
 			$loanArr = mysql_fetch_assoc($newValeQuery);
 			//Deducted loan
 			$LoanAdded = $DeductedLoan;
@@ -666,41 +671,6 @@
 														'$loan_oldVale')";
 
 
-// Print "<script>console.log('empid: ".$empid."')</script>";
-// Print "<script>console.log('overallWorkDays: ".$overallWorkDays."')</script>";
-// Print "<script>console.log('OtRatePerHour: ".$OtRatePerHour."')</script>";
-// Print "<script>console.log('totalOT: ".$totalOT."')</script>";
-// Print "<script>console.log('compOT: ".$compOT."')</script>";
-// Print "<script>console.log('dailyAllowance: ".$dailyAllowance."')</script>";
-// Print "<script>console.log('compAllowance: ".$compAllowance."')</script>";
-// Print "<script>console.log('extraAllowance: ".$extraAllowance."')</script>";
-// Print "<script>console.log('cola: ".$cola."')</script>";
-// Print "<script>console.log('SundayRatePerHour: ".$SundayRatePerHour."')</script>";
-// Print "<script>console.log('sunWorkHrs: ".$sunWorkHrs."')</script>";
-// Print "<script>console.log('sunday_Att: ".$sunday_Att."')</script>";
-// Print "<script>console.log('NdRatePerHour: ".$NdRatePerHour."')</script>";
-// Print "<script>console.log('totalND: ".$totalND."')</script>";
-// Print "<script>console.log('compND: ".$compND."')</script>";
-// Print "<script>console.log('regHolidayInc: ".$regHolidayInc."')</script>";
-// Print "<script>console.log('speHolidayInc: ".$speHolidayInc."')</script>";
-// Print "<script>console.log('addHoliday: ".$addHoliday."')</script>";
-// Print "<script>console.log('speHolNum: ".$speHolNum."')</script>";
-// Print "<script>console.log('regHolNum: ".$regHolNum."')</script>";
-// Print "<script>console.log('tax: ".$tax."')</script>";
-// Print "<script>console.log('sss: ".$sss."')</script>";
-// Print "<script>console.log('pagibig: ".$pagibig."')</script>";
-// Print "<script>console.log('philhealth: ".$philhealth."')</script>";
-// Print "<script>console.log('date: ".$date."')</script>";
-// Print "<script>console.log('tools_paid: ".$tools_paid."')</script>";
-// Print "<script>console.log('outStandingBalance: ".$outStandingBalance."')</script>";
-// Print "<script>console.log('GrandTotal: ".$GrandTotal."')</script>";
-// Print "<script>console.log('date: ".$date."')</script>";
-// Print "<script>console.log('loan_sss: ".$loan_sss."')</script>";
-// Print "<script>console.log('loan_pagibig: ".$loan_pagibig."')</script>";
-// Print "<script>console.log('loan_newVale: ".$loan_newVale."')</script>";
-// Print "<script>console.log('loan_oldVale: ".$loan_oldVale."')</script>";
-
-
 	$updateQuery = "UPDATE payroll SET	
 									num_days = '$overallWorkDays',
 									overtime = '$OtRatePerHour',
@@ -733,7 +703,7 @@
 									loan_pagibig = '$loan_pagibig',
 									new_vale = '$loan_newVale',
 									old_vale = '$loan_oldVale' WHERE empid = '$empid' AND date = '$date'";
-	//Print "<script>console.log('".$query."')</script>";
+	
 	$mainChecker = mysql_query("SELECT * FROM payroll WHERE empid='$empid' AND date='$date'");
 	if(mysql_num_rows($mainChecker) == 0)
 	{
