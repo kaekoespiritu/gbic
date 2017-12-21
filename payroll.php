@@ -497,14 +497,14 @@ if($holidayExist > 0)
 					}
 
 					$payrollRow = "2";//For payroll column if employee has NIGHTSHIFT which will trigger how much the column span needed
-					if(	isset($NSsatTimeIn) || 
-						isset($NSsunTimeIn) || 
-						isset($NSmonTimeIn) || 
-						isset($NStueTimeIn) || 
-						isset($NSwedTimeIn) || 
-						isset($NSthuTimeIn) || 
-						isset($NSfriTimeIn) || 
-						isset($nSsunTimeIn))
+					if(	!empty($NSsatTimeIn) || 
+						!empty($NSsunTimeIn) || 
+						!empty($NSmonTimeIn) || 
+						!empty($NStueTimeIn) || 
+						!empty($NSwedTimeIn) || 
+						!empty($NSthuTimeIn) || 
+						!empty($NSfriTimeIn) || 
+						!empty($NSsunTimeIn))
 					{
 						$payrollRow = "3";
 					}
@@ -882,197 +882,202 @@ if($holidayExist > 0)
 
 						?>
 					</tr>
-					<tr><!--  -------------------- NIGHTSHIFT TIME IN AND TIME OUT -------------------- -->
+					<!--  -------------------- NIGHTSHIFT TIME IN AND TIME OUT -------------------- -->
 						<?php
-						if(!$wedAbsent)
+						Print "<script>console.log('lal2 ".$payrollRow."')</script>";
+						if($payrollRow != '2')// if employee has nightshift
 						{
-							//if there's nightshift
-							if(!empty($NSwedTimeIn) && !empty($NSwedTimeOut))
+							Print "<script>console.log('lala".$payrollRow."')</script>";
+							Print "<tr>";
+							if(!$wedAbsent)
 							{
-								Print 	"	<td>Time In:<br>". trim($NSwedTimeIn) ."</td>
-								<td>Time Out:<br>". trim($NSwedTimeOut) ."</td>";
-							}
-							else if($payrollRow == '3')
-							{
-								Print 	"	<td colspan='2'></td>";
-							}
-						}
-						if(!$thuAbsent)
-						{
-							//if there's nightshift
-							if(!empty($NSthuTimeIn) && !empty($NSthuTimeOut))
-							{
-
-								Print 	"	<td>Time In:<br>". trim($NSthuTimeIn) ."</td>
-								<td>Time Out:<br>". trim($NSthuTimeOut) ."</td>";
-							}
-							else if($payrollRow == '3')
-							{
-								Print 	"	<td colspan='2'></td>";
-							}
-						}
-						if(!$friAbsent)
-						{
-							//if there's nightshift
-							if(!empty($NSfriTimeOut) && !empty($NSfriTimeIn))
-							{
-								Print 	"	<td>Time In:<br>". trim($NSfriTimeIn) ."</td>
-								<td>Time Out:<br>". trim($NSfriTimeOut) ."</td>";
-							}
-							else if($payrollRow == '3')
-							{
-								Print 	"	<td colspan='2'></td>";
-							}
-						}
-						if(!$satAbsent)
-						{
-							//if there's nightshift
-							if(!empty($NSsatTimeIn) && !empty($NSsatTimeOut))
-							{
-								Print 	"	<td>Time In:<br>". trim($NSsatTimeIn) ."</td>
-								<td>Time Out:<br>". trim($NSsatTimeOut) ."</td>";
-							}
-							else if($payrollRow == '3')
-							{
-								Print 	"	<td colspan='2'></td>";
-							}
-						}
-						if(!$sunAbsent)
-						{
-							//If Admin didnt input attendance on sunday
-							if(isset($sunTimeIn) && isset($sunTimeOut))
-							{
-							//if they have nightshift
-								if(!empty($NSsunTimeIn) && !empty($NSsunTimeOut))
+								//if there's nightshift
+								if(!empty($NSwedTimeIn) && !empty($NSwedTimeOut))
 								{
-									Print 	"	<td>Time In:<br>". trim($NSsunTimeIn) ."</td>
-									<td>Time Out:<br>". trim($NSsunTimeOut) ."</td>";
+									Print 	"	<td>Time In:<br>". trim($NSwedTimeIn) ."</td>
+									<td>Time Out:<br>". trim($NSwedTimeOut) ."</td>";
+								}
+								else if($payrollRow == '3')
+								{
+									Print 	"	<td colspan='2'></td>";
 								}
 							}
-						}
-						if(!$monAbsent)
-						{
-							//if there's nightshift
-							if(!empty($NSmonTimeIn) && !empty($NSmonTimeOut))
+							if(!$thuAbsent)
 							{
-								Print 	"	<td>Time In:<br>". trim($NSmonTimeIn) ."</td>
-								<td>Time Out:<br>". trim($NSmonTimeOut) ."</td>";
+								//if there's nightshift
+								if(!empty($NSthuTimeIn) && !empty($NSthuTimeOut))
+								{
+
+									Print 	"	<td>Time In:<br>". trim($NSthuTimeIn) ."</td>
+									<td>Time Out:<br>". trim($NSthuTimeOut) ."</td>";
+								}
+								else if($payrollRow == '3')
+								{
+									Print 	"	<td colspan='2'></td>";
+								}
 							}
-							else if($payrollRow == '3')
+							if(!$friAbsent)
 							{
-								Print 	"	<td colspan='2'></td>";
+								//if there's nightshift
+								if(!empty($NSfriTimeOut) && !empty($NSfriTimeIn))
+								{
+									Print 	"	<td>Time In:<br>". trim($NSfriTimeIn) ."</td>
+									<td>Time Out:<br>". trim($NSfriTimeOut) ."</td>";
+								}
+								else if($payrollRow == '3')
+								{
+									Print 	"	<td colspan='2'></td>";
+								}
 							}
-						}
-						if(!$tueAbsent)
-						{
-							//if there's nightshift
-							if(!empty($NStueTimeIn) && !empty($NStueTimeOut))
+							if(!$satAbsent)
 							{
-								Print 	"	<td>Time In:<br>". trim($NStueTimeIn) ."</td>
-								<td>Time Out:<br>". trim($NStueTimeOut) ."</td>";
+								//if there's nightshift
+								if(!empty($NSsatTimeIn) && !empty($NSsatTimeOut))
+								{
+									Print 	"	<td>Time In:<br>". trim($NSsatTimeIn) ."</td>
+									<td>Time Out:<br>". trim($NSsatTimeOut) ."</td>";
+								}
+								else if($payrollRow == '3')
+								{
+									Print 	"	<td colspan='2'></td>";
+								}
 							}
-							else if($payrollRow == '3')
+							if(!$sunAbsent)
 							{
-								Print 	"	<td colspan='2'></td>";
+								//If Admin didnt input attendance on sunday
+								if(isset($sunTimeIn) && isset($sunTimeOut))
+								{
+								//if they have nightshift
+									if(!empty($NSsunTimeIn) && !empty($NSsunTimeOut))
+									{
+										Print 	"	<td>Time In:<br>". trim($NSsunTimeIn) ."</td>
+										<td>Time Out:<br>". trim($NSsunTimeOut) ."</td>";
+									}
+								}
 							}
+							if(!$monAbsent)
+							{
+								//if there's nightshift
+								if(!empty($NSmonTimeIn) && !empty($NSmonTimeOut))
+								{
+									Print 	"	<td>Time In:<br>". trim($NSmonTimeIn) ."</td>
+									<td>Time Out:<br>". trim($NSmonTimeOut) ."</td>";
+								}
+								else if($payrollRow == '3')
+								{
+									Print 	"	<td colspan='2'></td>";
+								}
+							}
+							if(!$tueAbsent)
+							{
+								//if there's nightshift
+								if(!empty($NStueTimeIn) && !empty($NStueTimeOut))
+								{
+									Print 	"	<td>Time In:<br>". trim($NStueTimeIn) ."</td>
+									<td>Time Out:<br>". trim($NStueTimeOut) ."</td>";
+								}
+								else if($payrollRow == '3')
+								{
+									Print 	"	<td colspan='2'></td>";
+								}
+							}
+							Print "</tr>";
 						}
 
-						?>
-					</tr>
-					<?php
-					if(	$holWed || $OtWed || $NdWed ||
-						$holThu || $OtThu || $NdThu ||
-						$holFri || $OtFri || $NdFri ||
-						$holSat || $OtSat || $NdSat ||
-						$holSun || $OtSun || $NdSun ||
-						$holMon || $OtMon || $NdMon ||
-						$holTue || $OtTue || $NdTue)
-					{
-						Print "	<tr>
-									<td class='nopadding' colspan='2'>
-										";
-						if($holWed)
-							Print 	 "	<span class='label block label-success'>Holiday</span>";
-						if($OtWed)
-							Print 	"	<span class='label block label-primary'>Overtime</span>";
-						if($NdWed)
-							Print 	"	<span class='label block label-warning'>Night Differential</span>";
-						Print "			
-									</td>
-									<td class='nopadding' colspan='2'>
-										";
-						if($holThu)
-							Print 	 "	<span class='label block label-success'>Holiday</span>";
-						if($OtThu)
-							Print 	"	<span class='label block label-primary'>Overtime</span>";
-						if($NdThu)
-							Print 	"	<span class='label block label-warning'>Night Differential</span>";
-						
+
+						if(	$holWed || $OtWed || $NdWed ||
+							$holThu || $OtThu || $NdThu ||
+							$holFri || $OtFri || $NdFri ||
+							$holSat || $OtSat || $NdSat ||
+							$holSun || $OtSun || $NdSun ||
+							$holMon || $OtMon || $NdMon ||
+							$holTue || $OtTue || $NdTue)
+						{
+							Print "	<tr>
+										<td class='nopadding' colspan='2'>
+											";
+							if($holWed)
+								Print 	 "	<span class='label block label-success'>Holiday</span>";
+							if($OtWed)
+								Print 	"	<span class='label block label-primary'>Overtime</span>";
+							if($NdWed)
+								Print 	"	<span class='label block label-warning'>Night Differential</span>";
 							Print "			
-									</td>
-									<td class='nopadding' colspan='2'>
-										";
-						
-						if($holFri)
-							Print 	 "	<span class='label block label-success'>Holiday</span>";
-						if($OtFri)
-							Print 	"	<span class='label block label-primary'>Overtime</span>";
-						if($NdFri)
-							Print 	"	<span class='label block label-warning'>Night Differential</span>";
-						
-							Print "		
-									</td>
-									<td class='nopadding' colspan='2'>
-										";
-						
-						if($holSat)
-							Print 	 "<span class='label block label-success'>Holiday</span>";
-						if($OtSat)
-							Print 	"<span class='label block label-primary'>Overtime</span>";
-						if($NdSat)
-							Print 	"<span class='label block label-warning'>Night Differential</span>";
+										</td>
+										<td class='nopadding' colspan='2'>
+											";
+							if($holThu)
+								Print 	 "	<span class='label block label-success'>Holiday</span>";
+							if($OtThu)
+								Print 	"	<span class='label block label-primary'>Overtime</span>";
+							if($NdThu)
+								Print 	"	<span class='label block label-warning'>Night Differential</span>";
+							
+								Print "			
+										</td>
+										<td class='nopadding' colspan='2'>
+											";
+							
+							if($holFri)
+								Print 	 "	<span class='label block label-success'>Holiday</span>";
+							if($OtFri)
+								Print 	"	<span class='label block label-primary'>Overtime</span>";
+							if($NdFri)
+								Print 	"	<span class='label block label-warning'>Night Differential</span>";
+							
+								Print "		
+										</td>
+										<td class='nopadding' colspan='2'>
+											";
+							
+							if($holSat)
+								Print 	 "<span class='label block label-success'>Holiday</span>";
+							if($OtSat)
+								Print 	"<span class='label block label-primary'>Overtime</span>";
+							if($NdSat)
+								Print 	"<span class='label block label-warning'>Night Differential</span>";
 
-							Print "		
-									</td>
-									<td class='nopadding' colspan='2'>
-									";
-						
-						if($holSun)
-							Print 	 "<span class='label block label-success'>Holiday</span>";
-						if($OtSun)
-							Print 	"<span class='label block label-primary'>Overtime</span>";
-						if($NdSun)
-							Print 	"<span class='label block label-warning'>Night Differential</span>";
-					
-							Print "		
-									</td>
-									<td class='nopadding' colspan='2'>
+								Print "		
+										</td>
+										<td class='nopadding' colspan='2'>
 										";
+							
+							if($holSun)
+								Print 	 "<span class='label block label-success'>Holiday</span>";
+							if($OtSun)
+								Print 	"<span class='label block label-primary'>Overtime</span>";
+							if($NdSun)
+								Print 	"<span class='label block label-warning'>Night Differential</span>";
 						
-						if($holMon)
-							Print 	"<span class='label block label-success'>Holiday</span>"; 
-						if($OtMon)
-							Print 	"<span class='label block label-primary'>Overtime</span>"; 
-						if($NdMon)
-							Print 	"<span class='label block label-warning'>Night Differential</span>"; 
-					
-							Print "		
-									</td>
-									<td class='nopadding' colspan='2'>
-										";
-					
-						if($holTue)
-							Print 	 "<span class='label block label-success'>Holiday</span>";
-						if($OtTue)
-							Print 	"<span class='label block label-primary'>Overtime</span>";
-						if($NdTue)
-							Print 	"<span class='label block label-warning'>Night Differential</span>";
-					
-							Print "		
-									</td>";
-						Print "</tr>";
-					}
-					?>
+								Print "		
+										</td>
+										<td class='nopadding' colspan='2'>
+											";
+							
+							if($holMon)
+								Print 	"<span class='label block label-success'>Holiday</span>"; 
+							if($OtMon)
+								Print 	"<span class='label block label-primary'>Overtime</span>"; 
+							if($NdMon)
+								Print 	"<span class='label block label-warning'>Night Differential</span>"; 
+						
+								Print "		
+										</td>
+										<td class='nopadding' colspan='2'>
+											";
+						
+							if($holTue)
+								Print 	 "<span class='label block label-success'>Holiday</span>";
+							if($OtTue)
+								Print 	"<span class='label block label-primary'>Overtime</span>";
+							if($NdTue)
+								Print 	"<span class='label block label-warning'>Night Differential</span>";
+						
+								Print "		
+										</td>";
+							Print "</tr>";
+						}
+						?>
 				
 
 		</table>
