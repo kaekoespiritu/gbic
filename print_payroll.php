@@ -4,16 +4,14 @@ include_once('directives/db.php');
 include_once 'modules/Classes/PHPExcel.php';
 include('directives/print_styles.php');//Styles for PHPexcel
 
-// --------------- SAMPLE DATA ------------------ //
-$location = "Muralla";//Sample data
-$startDate = "October 18, 2017";
-$endDate = "October 24, 2017";
-// --------------- SAMPLE DATA ------------------ //
+$location = $_GET['site'];//Sample data
+$endDate = $_GET['date'];
+$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
 
 
 // TIMEZONE
 date_default_timezone_set('Asia/Hong_Kong');
-$date = $startDate." ~ ".$endDate;
+$date = $startDate." - ".$endDate;
 $filename = $date." Payroll.xls";
 
 $sheet = new PHPExcel();

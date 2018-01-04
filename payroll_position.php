@@ -10,6 +10,16 @@ include('directives/db.php');
 include('directives/session.php');
   date_default_timezone_set('Asia/Hong_Kong');
   $site = $_GET['site'];//Change this to dynamic by getting data from PayrollSite.php
+
+
+//$date = date('F d, Y', time());
+
+// 1st sample date
+$date = "October 24, 2017";
+// 2nd sample date
+//$date = "October 31, 2017";
+
+$dayToday = date('l, F d, Y', time());
 ?>
 <html>
 <head>
@@ -21,7 +31,7 @@ include('directives/session.php');
 	<link rel="stylesheet" href="css/jquery-ui.css">
 	<link href="css/multiple-select.css" rel="stylesheet"/>
 </head>
-<body style="font-family: Quicksand;">
+<body style="font-family: Quicksand;" onload="printCheck()">
 
 <div class="container-fluid">
 
@@ -34,7 +44,10 @@ include('directives/session.php');
 		<ol class="breadcrumb text-left">
 			<li><a href="payroll_site.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a></li>
 			<li class="active">Position</li>
-			<button class="btn btn-primary pull-right">Print Payroll sheet</button>
+			<?php
+			Print '
+				<button class="btn btn-primary pull-right" id="printButton" onclick="printPayroll(\''.$date.'\',\''.$site.'\')">Print Payroll sheet</button>';
+			?>
 		</ol>
 	</div>
 	</div>
@@ -42,15 +55,7 @@ include('directives/session.php');
 	<div class="row">
 	<h2>Payroll for this week</h2>
 	<h3>Today is <?php 
-					date_default_timezone_set('Asia/Hong_Kong');
-					//$date = date('F d, Y', time());
 					
-					// 1st sample date
-					$date = "October 24, 2017";
-					// 2nd sample date
-					//$date = "October 31, 2017";
-
-					$dayToday = date('l, F d, Y', time());
 					echo $dayToday; ?></h3>
 	<h4>Open: Tuesday | Close: Wednesday</h4>
 	<h4>At site <?Print $site?></h4>
@@ -66,6 +71,8 @@ include('directives/session.php');
 
 			$position_box = "SELECT position FROM job_position WHERE active = '1'";
 			$position_box_query = mysql_query($position_box);
+
+			$payrollPrintBool = true;
 			while($row = mysql_fetch_assoc($position_box_query))
 			{
 
@@ -96,6 +103,10 @@ include('directives/session.php');
 				{
 					Print "<script>console.log('yow')</script>";
 					$positionBool = true;//site is finish with payroll
+				}
+				else
+				{
+					$payrollPrintBool = false;//Print function will be disabled
 				}
 
 				if($employee_num != 0)
@@ -138,6 +149,10 @@ include('directives/session.php');
 					}
 				}
 			}
+			if($payrollPrintBool)
+			{
+				Print "<input type='hidden' id='printBool' value='check'>";
+			}
 			?>
 		</div>
 	</div>
@@ -147,6 +162,36 @@ include('directives/session.php');
 <script src="js/jquery-ui.min.js"></script>
 <script rel="javascript" src="js/bootstrap.min.js"></script>
 <script>
-document.getElementById("payroll").setAttribute("style", "background-color: #10621e;");
+	function printCheck() {
+		var check = document.getElementById('printBool');
+		var printButton = document.getElementById('printButton').disabled
+		if(check) 
+			printButton.disabled = false;
+		else
+			printButton.disabled = true;
+
+	}
+
+	function printPayroll(date, site) {
+		window.location.assign("print_payroll.php?site="+site+"&date="+date);
+
+	}
+	document.getElementById("payroll").setAttribute("style", "background-color: #10621e;");
 </script>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
