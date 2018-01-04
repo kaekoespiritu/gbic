@@ -69,7 +69,6 @@
 //Computation for Sunday --------------------------------------------------------------
 		
 		$compSunday = $SundayRatePerHour * $sunWorkHrs;
-// Print "<script>console.log('sunWorkHrs: ".$sunWorkHrs."')</script>";
 	}
 	if(!empty($_POST['monWorkHrs']))
 	{
@@ -97,7 +96,7 @@
 		{
 			if($hrsCheck < 8)
 			{
-				$overallWorkDays = (($hrsCheck / 8) + $overallWorkDays);
+				$overallWorkDays = ($hrsCheck / 8) + $overallWorkDays;
 			}
 			else
 			{
@@ -107,7 +106,7 @@
 		}
 		else if($hrsCheck < 8)
 		{
-			$overallWorkDays = (($hrsCheck / 8) + $overallWorkDays);
+			$overallWorkDays = ($hrsCheck / 8) + $overallWorkDays;
 		}
 		else
 		{
@@ -116,20 +115,18 @@
 		}
 		Print "<script>console.log('1workdays: ".$overallWorkDays."')</script>";
 	}
-	//Print "<script>console.log('overallWorkDays: ".$overallWorkDays."')</script>";
 
 //Computation for OVER TIME -----------------------------------------------------------
 	$compOT = 0;
 	$totalOT = 0;
 	$OtRatePerHour = (($dailyRate + ($dailyRate * .25))/8);//Overtime Hourly Rate
-	$OtRatePerHour = numberExactFormat($OtRatePerHour, 2, '.');
+	// $OtRatePerHour = numberExactFormat($OtRatePerHour, 2, '.');
 	if(!empty($_POST['totalOverTime']))
 	{
 		$totalOT = $_POST['totalOverTime'];//Total Overtime by employee
 
 		$compOT = $totalOT * $OtRatePerHour;//Computed Overtime
 	}
-	//Print "<script>console.log('compOT: ".$compOT."')</script>";
 
 //Computation for Night Differential --------------------------------------------------
 	$compND = 0;
@@ -137,12 +134,10 @@
 	$totalND = 0;
 	if(!empty($_POST['totalNightDiff']))
 	{
-		//Print "<script>alert('Yow')</script>";
 		$totalND = $_POST['totalNightDiff'];
 
 		$compND = $totalND * $NdRatePerHour;//Computed Night Differential
 	}
-	// Print "<script>console.log('totalND: ".$totalND."')</script>";
 
 
 
@@ -229,67 +224,6 @@
 			{
 				$boolHoliday = true;//if employee did not appear to work the day before holiday
 
-				// //Checker if employee is present the day before the holiday
-				// $holidayStartingDate = $_POST['holidayDate'][$count];
-				// $dayBefore = date('F j, Y', strtotime('-1 day', strtotime($holidayStartingDate)));
-				// $dayBeforeChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayBefore'");
-
-				// if(mysql_num_rows($dayBeforeChecker) > 0)
-				// {
-				// 	$sameDayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayStartingDate'");
-				// 	if(mysql_num_rows($sameDayChecker) > 0)//check if employee attended on the day of holiday
-				// 		$sameDayCheckerArr = mysql_fetch_assoc($sameDayChecker);
-
-				// 	$dayBeforeArr = mysql_fetch_assoc($dayBeforeChecker);
-				// 	if($dayBeforeArr['attendance'] == '2')//2 if employee is present on the day before the holiday
-				// 	{
-				// 		if(mysql_num_rows($sameDayChecker) > 0)
-				// 		{
-				// 			if($sameDayCheckerArr['attendance'] == '2')
-				// 			{
-				// 				$overallWorkDays++;//increment workdays 
-				// 				Print "<script>console.log('3workdays: ".$overallWorkDays."')</script>";
-				// 			}
-				// 		}
-				// 		// $overallWorkDays++;//increment workdays 
-				// 		Print "<script>console.log('4workdays: ".$overallWorkDays."')</script>";
-				// 	}
-				// 	else 
-				// 	{
-				// 		if(mysql_num_rows($sameDayChecker) > 0)
-				// 		{
-				// 			if($sameDayCheckerArr['attendance'] == '2')
-				// 				$overallWorkDays++;//increment workdays 
-				// 			else
-				// 				$boolHoliday = false;
-				// 		}
-				// 		else
-				// 		{
-				// 			$boolHoliday = false;
-				// 		}
-				// 		Print "<script>console.log('5workdays: ".$overallWorkDays."')</script>";
-						
-				// 	}
-				// }
-				// else
-				// {
-				// 	if(mysql_num_rows($sameDayChecker) > 0)
-				// 	{
-				// 		$sameDayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayStartingDate'");
-				// 		$sameDayCheckerArr = mysql_fetch_assoc($sameDayChecker);
-				// 		//Print "<script>console.log('asdad".$sameDayCheckerArr['attendance']."')</script>";
-				// 		if($sameDayCheckerArr['attendance'] == '2')
-				// 			$overallWorkDays++;//increment workdays 
-				// 		else
-				// 			$boolHoliday = false;
-				// 	}
-				// 	else
-				// 	{
-				// 		$boolHoliday = false;
-				// 	}
-				// 	Print "<script>console.log('6workdays: ".$overallWorkDays."')</script>";
-				// }
-				//Number kung pumasok sa date mismo
 				if($boolHoliday)
 				{
 					//Print "<script>console.log('holiday 2.2')</script>";
@@ -301,16 +235,13 @@
 					//Print "<script>console.log('".$holdayArr['attendance']."')</script>";
 					if($holdayArr['attendance'] == '2')
 					{
-						//Print "<script>console.log('holiday 2.2.1')</script>";
 						if($holidayType == "special")//Special Holiday
 						{
-							//Print "<script>console.log('holiday 2.2.1.1')</script>";
 							$addHoliday += $speHolidayInc;
 							$speHolNum++;
 						}
 						else//Regular Holiday
 						{
-							//Print "<script>console.log('holiday 2.2.1.2')</script>";
 							$addHoliday += $regHolidayInc;
 							$regHolNum++;
 						}
@@ -369,19 +300,16 @@
 
 	if(!empty($_POST['sssDeduct']))//if SSS loan textbox in payroll has value
 	{
-		//Print "<script>console.log('sssDeduct')</script>";
 		loanQuery('SSS', $empid, $loan_sss);
 	}
 	if(!empty($_POST['pagibigDeduct']))//if Pagibig loan textbox in payroll has value
 	{
-		//Print "<script>console.log('pagibigDeduct')</script>";
 		loanQuery('PagIBIG', $empid, $loan_pagibig);
 	}
 
 	$loan_newVale = 0;//preset the newvale
 	if(!empty($_POST['newValeAdded']))//if newVale loan textbox in payroll has value
 	{
-		//Print "<script>console.log('newValeAdded')</script>";
 		//Check if there is an existing query for this loan to avoid duplication
 		$loanChecker = mysql_query("SELECT * FROM loans WHERE date='$date' AND empid='$empid' AND type='newVale'");
 		if(mysql_num_rows($loanChecker) > 0)
@@ -396,7 +324,6 @@
 
 		if(mysql_num_rows($newValeQuery) > 0)
 		{
-			//Print "<script>console.log('newValeAdded1')</script>";
 			$loanArr = mysql_fetch_assoc($newValeQuery);
 			//Loaned
 			$newValeBalance = $loanArr['balance'];
@@ -423,7 +350,6 @@
 		}
 		else//Employee has no newvale balance but added newvale in the payroll
 		{
-			// Print "<script>console.log('newValeAdded2')</script>";
 			$loanArr = mysql_fetch_assoc($newValeQuery);
 			//Deducted loan
 			$LoanAdded = $DeductedLoan;
@@ -462,7 +388,6 @@
 	}
 	if(!empty($_POST['oldValeDeduct']))//if SSS loan textbox in payroll has value
 	{
-		// Print "<script>console.log('oldValeDeduct')</script>";
 		loanQuery('oldVale', $empid, $loan_oldVale);
 	}
 	$compLoan = $loan_sss + $loan_pagibig + $loan_oldVale + $loan_newVale;
@@ -472,12 +397,10 @@
 	$outStandingBalance = 0;
 	if(!empty($_POST['toolname'][0]))
 	{
-		//Print "<script>console.log('lala: ".$_POST['toolname']."')</script>";
 		$toolNum = count($_POST['toolname']);
 		
 		$totalToolCost = 0;
 		$BoolTool = false; //Boolean to if there is more than 2 tools
-		// Print "<script>console.log('toolNum: ".$toolNum."')</script>";
 		if($toolNum > 1)
 		{
 			// Print "<script>console.log('More')</script>";
@@ -514,14 +437,8 @@
 		}
 		else if(!empty($_POST['toolprice'][0]) && !empty($_POST['toolname'][0]))
 		{
-			// Print "<script>console.log('One')</script>";
-			$BoolTool = true;//True to query the update 
 			$toolname = $_POST['toolname'][0];
 			$toolprice = $_POST['toolprice'][0];
-
-			//Print "<script>console.log('toolname: ".$toolname."')</script>";
-			//Print "<script>console.log('toolprice: ".$toolprice."')</script>";
-			//Print "<script>console.log('amountToPay: ".$_POST["amountToPay"]."')</script>";
 
 			if(!empty($_POST['previousPayable']))
 			{
@@ -587,21 +504,26 @@
 // --------------------------------- GRAND TOTAL -----------------------------------------
 
 //Grand Total Computation
-	$GrandTotal = ((($dailyRate * $overallWorkDays) + abs($compAllowance) + abs($compND) + abs($compOT) + abs($cola) + abs($addHoliday)) - abs($compDeductions) - abs($compLoan) - abs($tools_paid)); 
 
-	$ast = ($dailyRate * $overallWorkDays);
-	$bnd = abs($compAllowance) + abs($compND) + abs($compOT) + abs($cola) + abs($addHoliday) + abs($compSunday);
-	$crd = abs($compDeductions) + abs($compLoan) + abs($tools_paid);
-// Print "<script>console.log('1: ".$ast."')</script>";
-// Print "<script>console.log('2: ".$bnd."')</script>";
-// Print "<script>console.log('compAllowance: ".$compAllowance."')</script>";
-// Print "<script>console.log('compND: ".$compND."')</script>";
-// Print "<script>console.log('compOT: ".$compOT."')</script>";
-// Print "<script>console.log('cola: ".$cola."')</script>";
-// Print "<script>console.log('compSunday: ".$compSunday."')</script>";
-// Print "<script>console.log('addHoliday: ".$addHoliday."')</script>";
+	$totalRegularHolidayRate = ($regHolNum * $regHolidayInc) + ($dailyRate * $regHolNum);
+	$totalSpecialHolidayRate = ($speHolNum * $speHolidayInc) + ($dailyRate * $speHolNum);
+	$totalSundayRate = $SundayRatePerHour * $sunWorkHrs;
+	$totalNightDifferential = $NdRatePerHour * $totalND;
+	$totalAllowance = $overallWorkDays * $dailyAllowance;
+	$totalOvertime = $OtRatePerHour * $totalOT;
+	$totalRatePerDay = $overallWorkDays * $dailyRate;
+	$xAllowance = $extraAllowance;
 
-// Print "<script>console.log('3: ".$crd."')</script>";
+	$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $cola;
+
+	$contributions = $pagibig + $philhealth + $sss + $tax;
+
+	$totalLoans = $loan_pagibig + $loan_sss + $loan_oldVale + $loan_oldVale;
+
+	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($tools_paid);
+	$grandTotal = abs($grandTotal);
+
+
 
 
 	$query = "INSERT INTO payroll(	empid,
@@ -663,7 +585,7 @@
 														'$date',
 														'$tools_paid',
 														'$outStandingBalance',
-														'$GrandTotal',
+														'$grandTotal',
 														'$date',
 														'$loan_sss',
 														'$loan_pagibig',
@@ -698,7 +620,7 @@
 									tools = '$date',
 									tools_paid = '$tools_paid',
 									tools_outstanding = '$outStandingBalance',
-									total_salary = '$GrandTotal',
+									total_salary = '$grandTotal',
 									loan_sss = '$loan_sss',
 									loan_pagibig = '$loan_pagibig',
 									new_vale = '$loan_newVale',
@@ -714,21 +636,6 @@
 		mysql_query($updateQuery)or die(mysql_error());;
 	}
 	
-	
-
-	// //Nightdiff
-	// $_POST['wedNDHrs'];
-	// $_POST['thuNDHrs'];
-	// $_POST['friNDHrs'];
-	// $_POST['satNDHrs'];
-	// $_POST['sunNDHrs'];
-	// $_POST['monNDHrs'];
-	// $_POST['tueNDHrs'];
-
-	// //Allowance
-	// $_POST['allowance'];
-	// $_POST['OverallAllowance'];
-	// $_POST['extra_allowance'];
 
 	$url = "http://localhost/gbic/payroll_computation.php";
 

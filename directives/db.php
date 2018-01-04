@@ -12,6 +12,7 @@ function numberExactFormat($number, $precision, $separator)//For number format
 {
     $numberParts = explode($separator, $number);
     $response = number_format($numberParts[0]);
+
     if(count($numberParts)>1){
         $response .= $separator;
         $response .= substr($numberParts[1], 0, $precision);
