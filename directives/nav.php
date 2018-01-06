@@ -43,7 +43,7 @@
 	<div class="flipdown">
 		<a  class="reports flipbtn">
 			<img src="Images/tax.png" class="center-block">
-			<h6 class="text-center">REPORTS</h6>
+			<h6 class="text-center">REPORTS <span class="caret"></span></h6>
 		</a>
 		<div class="flipdown-menu">
 			<div class="sub-flipdown">
