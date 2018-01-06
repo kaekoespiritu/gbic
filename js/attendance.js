@@ -42,7 +42,7 @@ document.getElementById("attendance").setAttribute("style", "background-color: #
 	}
 	function printAll()
 	{
-		window.location.assign("print_all_employee.php");
+		window.location.assign("print_attendance.php");
 	}
 
 	fittext();
