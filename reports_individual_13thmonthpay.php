@@ -22,7 +22,7 @@
 		require_once("directives/nav.php");
 		?>
 
-		<h3 class="pull-down">13th Month Pay Report for Name, Position at Site</h3>
+		<h3 class="pull-down">13th Month Pay Report for [NAME], [POSITION] at [SITE]</h3>
 
 		<div class="pull-down">
 			<div class="col-md-4">
@@ -32,7 +32,7 @@
 				<table class="table table-bordered pull-down">
 				<tr>
 					<td colspan="2">
-						Name, Position at Site
+						[NAME], [POSITION] at [SITE]
 					</td>
 				</tr>
 				<tr>
@@ -69,7 +69,7 @@
 				<table class="table table-bordered pull-down">
 				<tr>
 					<td colspan="2">
-						Name, Position at Site
+						[NAME], [POSITION] at [SITE]
 					</td>
 				</tr>
 				<tr>
@@ -106,7 +106,7 @@
 				<table class="table table-bordered pull-down">
 				<tr>
 					<td colspan="2">
-						Name, Position at Site
+						[NAME], [POSITION] at [SITE]
 					</td>
 				</tr>
 				<tr>

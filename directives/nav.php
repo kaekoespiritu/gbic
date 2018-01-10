@@ -48,8 +48,8 @@
 		<div class="flipdown-menu">
 			<div class="sub-flipdown">
 				<div class="sub-flipdown-menu">
-					<a href="reports_individual.php?type=Earnings&period=week&site=null&position=null"> Individual</a>
-					<a href="reports_overall.php?type=Earnings&period=Weekly"> Overall</a>
+					<a href="reports_individual_earnings.php?type=Earnings&period=week&site=null&position=null"> Individual</a>
+					<a href="reports_overall_earnings.php?type=Earnings&period=Weekly"> Overall</a>
 				</div>
 				<a class="subflipbtn">Earnings</a>
 				

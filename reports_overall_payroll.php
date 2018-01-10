@@ -22,6 +22,8 @@
 		require_once("directives/nav.php");
 		?>
 
+		<h3 class="pull-down">Overall Payroll Report for [SITE]</h3>
+
 		<table class="table table-bordered pull-down">
 			<tr>
 				<td colspan="6">
