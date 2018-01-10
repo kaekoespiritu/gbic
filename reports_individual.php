@@ -1,45 +1,44 @@
 <!DOCTYPE html>
 <?php
-include('directives/session.php');
-include('directives/db.php');
-include("pagination/reports_individual_function.php");//For pagination
-if(isset($_GET['type']) && isset($_GET['period']))
-{
-	// Allow only these types
-	switch($_GET['type'])
+	include('directives/session.php');
+	include('directives/db.php');
+	include("pagination/reports_individual_function.php");//For pagination
+	if(isset($_GET['type']) && isset($_GET['period']))
 	{
-		case "Attendance": break;
-		case "Payroll": break;
-		case "Loans": break;
-		case "Payslip": break;
-		case "Contributions": break;
-		case "Earnings": break;
-		default: Print Print "<script>window.location.assign('index.php')</script>";
+		// Allow only these types
+		switch($_GET['type'])
+		{
+			case "Attendance": break;
+			case "Payroll": break;
+			case "Loans": break;
+			case "Payslip": break;
+			case "Contributions": break;
+			case "Earnings": break;
+			default: Print Print "<script>window.location.assign('index.php')</script>";
+		}
+		// Allow only these periods
+		switch($_GET['period'])
+		{
+			case "week": break;
+			case "month": break;
+			case "year": break;
+			default: Print Print "<script>window.location.assign('index.php')</script>";
+		}
 	}
-	// Allow only these periods
-	switch($_GET['period'])
+	else
 	{
-		case "week": break;
-		case "month": break;
-		case "year": break;
-		default: Print Print "<script>window.location.assign('index.php')</script>";
+		Print "<script>window.location.assign('index.php')</script>";
 	}
-}
-else
-{
-	Print "<script>window.location.assign('index.php')</script>";
-}
-if(!isset($_GET['site']) && !isset($_GET['position']))
-{
-	Print "<script>window.location.assign('index.php')</script>";
-}
-//for pagination
-$site_page = $_GET['site'];
-$position_page = $_GET['position'];
-$statement = "";
-$period = $_GET['period'];
-$reportType = $_GET['type'];
-
+	if(!isset($_GET['site']) && !isset($_GET['position']))
+	{
+		Print "<script>window.location.assign('index.php')</script>";
+	}
+	//for pagination
+	$site_page = $_GET['site'];
+	$position_page = $_GET['position'];
+	$statement = "";
+	$period = $_GET['period'];
+	$reportType = $_GET['type'];
 ?>
 <html>
 <head>
@@ -53,6 +52,7 @@ $reportType = $_GET['type'];
 	<link href="pagination/css/A_green.css" rel="stylesheet" type="text/css" />
 </head>
 <body style="font-family: Quicksand;">
+
 	<div class="container-fluid">
 
 		<?php
@@ -188,8 +188,11 @@ $reportType = $_GET['type'];
 									<td style='vertical-align: inherit'>".$empArr['position']."</td>
 									<td style='vertical-align: inherit'>".$empArr['site']."</td>
 									<td style='vertical-align: inherit'>
-										<button class='btn btn-default' onclick='printViewBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
-											Print / View
+										<button class='btn btn-default' onclick='viewPayrollBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
+											Payroll
+										</button>
+										<button class='btn btn-default' onclick='view13thmonthpayBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
+											13th Month Pay
 										</button>
 									</td>
 								</tr>
@@ -244,9 +247,13 @@ $reportType = $_GET['type'];
 			});
 		});
 
-		function printViewBtn(id, type) {
+		function viewPayrollBtn(id, type) {
+			window.location.assign("reports_individual_payroll.php");
+		}
 
-		}		
+		function view13thmonthpayBtn(id, type) {
+			window.location.assign("reports_individual_13thmonthpay.php");
+		}
 
 		function changePeriod(period, position, site, type) {
 
