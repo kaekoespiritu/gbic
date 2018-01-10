@@ -352,8 +352,8 @@ include('directives/session.php');
 					unset($_SESSION['completeAtt']);
 				}
 			?>
-</div>
-</div>
+		</div>
+	</div>
 <?php
 // Algorithm on getting the opening Day for the date picker
 	$payrollDay = "SELECT * FROM payroll_day";
