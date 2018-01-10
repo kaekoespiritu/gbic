@@ -22,18 +22,12 @@
 		require_once("directives/nav.php");
 		?>
 
-		<h3 class="pull-down">Payroll Report for Name, Position at Site</h3>
-
-		<div class="pull-down">
-			<button class="btn btn-default">
-				Print Payroll
-			</button>
-			<table class="table table-bordered pull-down">
+		<table class="table table-bordered pull-down">
 			<tr>
 				<td colspan="6">
-					Name, Position at Site (with/without requirements)
+					Site with requirements
 				</td>
-				<td colspan="18" rowspan="2" class="vertical-align">
+				<td colspan="21" rowspan="2" class="vertical-align">
 					PAYROLL
 				</td>
 			</tr>
@@ -43,6 +37,15 @@
 				</td>
 			</tr>
 			<tr>
+				<td>
+					#
+				</td>
+				<td>
+					Name
+				</td>
+				<td>
+					Position
+				</td>
 				<td>
 					Rate
 				</td>
@@ -189,9 +192,17 @@
 				<td>
 					1
 				</td>
+				<td>
+					1
+				</td>
+				<td>
+					1
+				</td>
+				<td>
+					1
+				</td>
 			</tr>
-			</table>
-		</div>
+		</table>
 
 	</div>
 

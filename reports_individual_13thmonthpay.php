@@ -22,106 +22,119 @@
 		require_once("directives/nav.php");
 		?>
 
-		<div class="col-md-4">
-			<table class="table table-bordered pull-down">
-			<tr>
-				<td colspan="2">
-					Name, Position at Site
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Week
-				</td>
-				<td>
-					13th Month
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Dec. 1 - 7
-				</td>
-				<td>
-					$$$
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Total
-				</td>
-				<td>
-					$$$
-				</td>
-			</tr>
-			</table>
-		</div>
+		<h3 class="pull-down">13th Month Pay Report for Name, Position at Site</h3>
 
-		<div class="col-md-4">
-			<table class="table table-bordered pull-down">
-			<tr>
-				<td colspan="2">
-					Name, Position at Site
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Month
-				</td>
-				<td>
-					13th Month
-				</td>
-			</tr>
-			<tr>
-				<td>
-					December
-				</td>
-				<td>
-					$$$
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Total
-				</td>
-				<td>
-					$$$
-				</td>
-			</tr>
-			</table>
-		</div>
+		<div class="pull-down">
+			<div class="col-md-4">
+				<button class="btn btn-default">
+					Print Weekly
+				</button>
+				<table class="table table-bordered pull-down">
+				<tr>
+					<td colspan="2">
+						Name, Position at Site
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Week
+					</td>
+					<td>
+						13th Month
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Dec. 1 - 7
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Total
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+				</table>
+			</div>
 
-		<div class="col-md-4">
-			<table class="table table-bordered pull-down">
-			<tr>
-				<td colspan="2">
-					Name, Position at Site
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Year
-				</td>
-				<td>
-					13th Month
-				</td>
-			</tr>
-			<tr>
-				<td>
-					2017
-				</td>
-				<td>
-					$$$
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Total
-				</td>
-				<td>
-					$$$
-				</td>
-			</tr>
-			</table>
+			<div class="col-md-4">
+				<button class="btn btn-default">
+					Print Monthly
+				</button>
+				<table class="table table-bordered pull-down">
+				<tr>
+					<td colspan="2">
+						Name, Position at Site
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Month
+					</td>
+					<td>
+						13th Month
+					</td>
+				</tr>
+				<tr>
+					<td>
+						December
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Total
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+				</table>
+			</div>
+
+			<div class="col-md-4">
+				<button class="btn btn-default">
+					Print Yearly
+				</button>
+				<table class="table table-bordered pull-down">
+				<tr>
+					<td colspan="2">
+						Name, Position at Site
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Year
+					</td>
+					<td>
+						13th Month
+					</td>
+				</tr>
+				<tr>
+					<td>
+						2017
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Total
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+				</table>
+			</div>
 		</div>
 
 	</div>
