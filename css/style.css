@@ -116,8 +116,8 @@ img.bg
 .flipdown-menu
 {
     display: none;
-    position: absolute;
     background-color: #fff;
+    position: absolute;
     left:0px;
     min-width: 183px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -130,7 +130,8 @@ img.bg
     color: black;
     padding: 12px 16px;
     text-decoration: none;
-    display: flex;
+    display: block;
+    width: inherit;
     text-align: left;
     font-family: QuickSandMed !important;
 }
@@ -151,9 +152,12 @@ img.bg
 }
 
 .sub-flipdown:hover .sub-flipdown-menu {
-  right: 100000px;
+  left: 100%;
+  top: initial;
   position: absolute;
+  display: block;
   background-color: #fff;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .sub-flipdown-menu:hover {
@@ -497,4 +501,9 @@ hr
 {
   text-decoration: none;
   color: black;
+}
+
+/* Vertically align in the middle */
+.table > tbody > tr > td {
+  vertical-align: middle;
 }
