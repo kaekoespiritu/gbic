@@ -56,37 +56,30 @@
 			</div>
 			<div class="sub-flipdown">
 				<div class="sub-flipdown-menu">
-					<a href="reports_individual.php?type=Contributions&period=week&site=null&position=null"> Individual</a>
-					<a> Overall</a>
+					<a href="reports_individual_contributions.php?type=Contributions&period=week&site=null&position=null"> Individual</a>
+					<a href="reports_overall_contributions.php?type=Earnings&period=Weekly"> Overall</a>
 				</div>
 				<a class="subflipbtn">Contributions</a>
 			</div>
 			<div class="sub-flipdown">
 				<div class="sub-flipdown-menu">
-					<a href="reports_individual.php?type=Loans&period=week&site=null&position=null"> Individual</a>
-					<a> Overall</a>
+					<a href="reports_individual_loans.php?type=Contributions&period=week&site=null&position=null"> Individual</a>
+					<a href="reports_overall_loans.php?type=Earnings&period=Weekly"> Overall</a>
 				</div>
 				<a class="subflipbtn">Loans</a>
 				
 			</div>
 			<div class="sub-flipdown">
 				<div class="sub-flipdown-menu">
-					<a href="reports_individual.php?type=Attendance&period=week&site=null&position=null"> Individual</a>
-					<a> Overall</a>
+					<a href="reports_individual_attendance.php?type=Attendance&period=week&site=null&position=null"> Individual</a>
+					<a href="reports_overall_attendance.php?type=Earnings&period=Weekly"> Overall</a>
 				</div>
 				<a class="subflipbtn">Attendance</a>
 			</div>
 			<div class="sub-flipdown">
 				<div class="sub-flipdown-menu">
-					<a href="reports_individual.php?type=Payroll&period=week&site=null&position=null"> Individual</a>
-					<a> Overall</a>
-				</div>
-				<a class="subflipbtn">Payroll</a>
-			</div>
-			<div class="sub-flipdown">
-				<div class="sub-flipdown-menu">
 					<a href="reports_individual.php?type=Payslip&period=week&site=null&position=null"> Individual</a>
-					<a> Overall</a>
+					<a href="reports_overall_payslip.php?type=Earnings&period=Weekly"> Overall</a>
 				</div>
 				<a class="subflipbtn">Payslip</a>
 			</div>
