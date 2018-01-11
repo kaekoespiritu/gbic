@@ -4,10 +4,8 @@ include_once('directives/db.php');
 include_once 'modules/Classes/PHPExcel.php';
 include('directives/print_styles.php');//Styles for PHPexcel
 
-// --------------- SAMPLE DATA ------------------ //
-$empid = "2017-5751856";//Sample data
-$loanType = "oldVale";
-// --------------- SAMPLE DATA ------------------ //
+$empid = $_POST['employee'];//empid
+$loanType = $_POST['type'];
 
 $employee = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1'";
 $empQuery = mysql_query($employee);
@@ -30,7 +28,7 @@ $activeSheet->mergeCells('A1:F1');//site name
 
 //----------------- Header Contents ---------------------//
 //Title Contents
-$activeSheet->setCellValue('A1', $employeeName."'s loan history");
+$activeSheet->setCellValue('A1', $employeeName."'s ".$loanType." history");
 
 //Header Contents
 $activeSheet->setCellValue('A2', 'Balance');

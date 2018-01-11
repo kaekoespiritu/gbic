@@ -16,7 +16,7 @@ $empArr = mysql_fetch_assoc($employeeQuery);
 $output = "";//this is the object that will be fetch to the loans_view.php
 
 $output .= "<div class='col-md-12'>
-					<h4 class='modal-title pull-down'>".$empArr['lastname'].", ".$empArr['firstname']."'s loan history</h4>
+					<h4 class='modal-title'>".$empArr['lastname'].", ".$empArr['firstname']."'s loan history</h4>
 				</div>
 				<div class='modal-body pull-down'>
 					<table class='table table-bordered'>
@@ -57,6 +57,15 @@ if(mysql_num_rows($historyQuery) > 0)
 $output .= "
 					</table>
 				</div>
+				</div>
+					<form method='POST' action='print_history_loans.php'>
+						<input type='hidden' name='employee' value='".$empid."'>
+						<input type='hidden' name='type' value='".$type."'>
+
+						<input type='submit' value='Print loan history' class='btn btn-success pull-up'>
+					</form>
+				</div>
+
 			";
 echo $output;
 

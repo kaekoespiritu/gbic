@@ -247,11 +247,11 @@ $adminRole = $adminArr['role'];
 						    				<td><a class='btn btn-danger' onclick='siteRemove(\"".$siteHistArr['location']."\")'>END CONTRACT</a>
 						    			</td>";
 				    		}
-
-
-
 				    		?>
 				    	</table>
+				    	<form method='POST' action='print_history_site.php'>
+							<input type='submit' value='Print site history' class='btn btn-success pull-up'>
+						</form>
 				    </div>
 			    </div>
 			  </div>
