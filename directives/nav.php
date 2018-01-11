@@ -78,8 +78,8 @@
 			</div>
 			<div class="sub-flipdown">
 				<div class="sub-flipdown-menu">
-					<a href="reports_individual.php?type=Payslip&period=week&site=null&position=null"> Individual</a>
-					<a href="reports_overall_payslip.php?type=Earnings&period=Weekly"> Overall</a>
+					<a href="reports_payslip_with.php?type=Payslip&period=week&site=null&position=null"> With Requirements</a>
+					<a href="reports_payslip_without.php?type=Earnings&period=Weekly"> Without Requirements</a>
 				</div>
 				<a class="subflipbtn">Payslip</a>
 			</div>
