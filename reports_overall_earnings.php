@@ -145,7 +145,7 @@ if(isset($_GET['search']))
 				/* If location is long, font-size to smaller */
 				if(strlen($row['location'])>=16)
 				{
-					Print '	<a href="reports_overall_contributions.php style="color: white !important; text-decoration: none !important;">
+					Print '	<a data-toggle="modal" data-target="#optionModal" style="color: white !important; text-decoration: none !important; cursor: pointer;">
 								<div class="sitebox">
 									<span class="smalltext">'
 										. $row['location'] .
@@ -159,7 +159,7 @@ if(isset($_GET['search']))
 				}
 				else
 				{
-					Print '	<a href="reports_overall_contributions.php" style="color: white !important; text-decoration: none !important;">
+					Print '	<a data-toggle="modal" data-target="#optionModal" style="color: white !important; text-decoration: none !important; cursor: pointer;">
 								<div class="sitebox">
 									<span class="autofit">'
 										. $row['location'] .
@@ -205,6 +205,24 @@ if(isset($_GET['search']))
 				echo "</div>";
 			?>
 		</div>
+	</div>
+
+	<div class="modal fade" id="optionModal">
+ 		<div class="modal-dialog">
+    		<div class="modal-content">
+      			<div class="modal-header">
+      				Select report type:
+      			</div>
+      			<div class="modal-body">
+      				<a class="btn btn-primary" href="reports_overall_payroll.php">
+      					Payroll
+      				</a>
+      				<a class="btn btn-primary" href="reports_overall_13thmonthpay.php">
+      					13th Month Pay
+      				</a>
+      			</div>
+      		</div>
+      	</div>
 	</div>
 
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->

@@ -188,11 +188,14 @@
 									<td style='vertical-align: inherit'>".$empArr['position']."</td>
 									<td style='vertical-align: inherit'>".$empArr['site']."</td>
 									<td style='vertical-align: inherit'>
-										<button class='btn btn-default' onclick='viewPayrollBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
-											Payroll
+										<button class='btn btn-default' onclick='viewPagIBIGBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
+											PagIBIG
 										</button>
-										<button class='btn btn-default' onclick='view13thmonthpayBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
-											13th Month Pay
+										<button class='btn btn-default' onclick='viewPhilHealthBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
+											PhilHealth
+										</button>
+										<button class='btn btn-default' onclick='viewSSSBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
+											SSS
 										</button>
 									</td>
 								</tr>
@@ -247,12 +250,16 @@
 			});
 		});
 
-		function viewPayrollBtn(id, type) {
-			window.location.assign("reports_individual_payroll.php");
+		function viewPagIBIGBtn(id, type){
+			window.location.assign("reports_individual_pagibig.php");
 		}
 
-		function view13thmonthpayBtn(id, type) {
-			window.location.assign("reports_individual_13thmonthpay.php");
+		function viewPhilHealthBtn(id, type){
+			window.location.assign("reports_individual_philhealth.php");
+		}
+
+		function viewSSSBtn(id, type){
+			window.location.assign("reports_individual_sss.php");
 		}
 
 		function changePeriod(period, position, site, type) {

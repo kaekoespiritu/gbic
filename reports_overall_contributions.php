@@ -1,51 +1,49 @@
 <!DOCTYPE html>
 <?php
-include('directives/session.php');
-include('directives/db.php');
-include("pagination/reports_individual_function.php");//For pagination
+	include('directives/session.php');
+	include('directives/db.php');
+	include("pagination/reports_individual_function.php");//For pagination
 
-if(isset($_GET['type']) && isset($_GET['period']))
-{
-	// Allow only these types
-	switch($_GET['type'])
+	if(isset($_GET['type']) && isset($_GET['period']))
 	{
-		case "Attendance": break;
-		case "Payroll": break;
-		case "Loans": break;
-		case "Payslip": break;
-		case "Contributions": break;
-		case "Earnings": break;
-		default: Print Print "<script>window.location.assign('index.php')</script>";
+		// Allow only these types
+		switch($_GET['type'])
+		{
+			case "Attendance": break;
+			case "Payroll": break;
+			case "Loans": break;
+			case "Payslip": break;
+			case "Contributions": break;
+			case "Earnings": break;
+			default: Print Print "<script>window.location.assign('index.php')</script>";
+		}
+		// Allow only these periods
+		switch($_GET['period'])
+		{
+			case "Weekly": break;
+			case "Monthly": break;
+			case "Yearly": break;
+			default: Print Print "<script>window.location.assign('index.php')</script>";
+		}
 	}
-	// Allow only these periods
-	switch($_GET['period'])
+	else
 	{
-		case "Weekly": break;
-		case "Monthly": break;
-		case "Yearly": break;
-		default: Print Print "<script>window.location.assign('index.php')</script>";
+		Print "<script>window.location.assign('index.php')</script>";
 	}
-}
-else
-{
-	Print "<script>window.location.assign('index.php')</script>";
-}
-//for pagination
-$statement = "";
-$period = $_GET['period'];
-$reportType = $_GET['type'];
+	//for pagination
+	$statement = "";
+	$period = $_GET['period'];
+	$reportType = $_GET['type'];
 
-//Search bar
-$search = "";
-if(isset($_GET['search']))
-{
-	if($_GET['search'] != "" || $_GET['search'] != null)
+	//Search bar
+	$search = "";
+	if(isset($_GET['search']))
 	{
-		$search = $_GET['search'];
+		if($_GET['search'] != "" || $_GET['search'] != null)
+		{
+			$search = $_GET['search'];
+		}
 	}
-}
-
-
 ?>
 <html>
 <head>
@@ -145,7 +143,7 @@ if(isset($_GET['search']))
 				/* If location is long, font-size to smaller */
 				if(strlen($row['location'])>=16)
 				{
-					Print '	<a data-toggle="modal" data-target="#optionModal" style="color: white !important; text-decoration: none !important;">
+					Print '	<a href="reports_overall_contributions.php style="color: white !important; text-decoration: none !important;">
 								<div class="sitebox">
 									<span class="smalltext">'
 										. $row['location'] .
@@ -159,7 +157,7 @@ if(isset($_GET['search']))
 				}
 				else
 				{
-					Print '	<a data-toggle="modal" data-target="#optionModal" style="color: white !important; text-decoration: none !important;">
+					Print '	<a href="reports_overall_contributions.php" style="color: white !important; text-decoration: none !important;">
 								<div class="sitebox">
 									<span class="autofit">'
 										. $row['location'] .
@@ -205,24 +203,6 @@ if(isset($_GET['search']))
 				echo "</div>";
 			?>
 		</div>
-	</div>
-
-	<div class="modal fade" id="optionModal">
- 		<div class="modal-dialog">
-    		<div class="modal-content">
-      			<div class="modal-header">
-      				Select report type:
-      			</div>
-      			<div class="modal-body">
-      				<a class="btn btn-primary" href="reports_overall_payroll.php">
-      					Payroll
-      				</a>
-      				<a class="btn btn-primary" href="reports_overall_13thmonthpay.php">
-      					13th Month Pay
-      				</a>
-      			</div>
-      		</div>
-      	</div>
 	</div>
 
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
