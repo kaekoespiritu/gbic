@@ -22,7 +22,7 @@
 		require_once("directives/nav.php");
 		?>
 
-		<h3 class="pull-down">Overall Contributions Report for employees at [SITE]</h3>
+		<h3 class="pull-down">Overall Contribution Report for employees at [SITE]</h3>
 		
 		<!--TODO: Make accordion style here to view WEEKLY/MONTHLY/YEARLY-->
 		<table class="table table-bordered pull-down">
