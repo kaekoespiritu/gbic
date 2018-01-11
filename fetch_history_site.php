@@ -21,7 +21,7 @@
 								<thead>
 									<tr>
 										<td>Date</td>
-										<td>Site</td>
+										<td>Transfered to</td>
 										<td>Admin</td>
 									</tr>
 								</thead>
@@ -29,6 +29,7 @@
 			";
 	$siteHist = "SELECT * FROM site_history WHERE empid = '$empid' ORDER BY date DESC";
 	$histQuery = mysql_query($siteHist);
+	$historyBool = false;//to display the printable
 	if(mysql_num_rows($histQuery) > 0)
 	{
 		while($row = mysql_fetch_assoc($histQuery))
@@ -40,7 +41,7 @@
 						</tr>
 						";
 		}
-
+		$historyBool = true;
 	}		
 	else 
 	{
@@ -52,6 +53,12 @@
 	$output .= "				</tbody>
 							</table>
 						</div>";
+	if($historyBool)
+		$output .= "	<form method='POST' action='print_history_employee_site.php'>
+							<input type='hidden' name='employee' value='".$empid."'>
+
+							<input type='submit' value='Print site history' class='btn btn-success pull-up'>
+						</form>";
 	echo $output;			
 ?>
 

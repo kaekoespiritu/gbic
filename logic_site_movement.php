@@ -3,7 +3,7 @@ include('directives/session.php');
 include('directives/db.php');
 
 $empNum = count($_POST['empid']);
-$s = $_GET['s'];
+$siteFrom = $_GET['s'];
 // Print "<script>console.log('".$empNum."')</script>";
 //for admin history
 $user = $_SESSION['user_logged_in'];
@@ -56,8 +56,9 @@ else
 		{
 			$empid = $empSite[$count];
 			$site = $newSite[$count];
+			$siteTransfer = $siteFrom." -> ".$newSite[$count];
 			mysql_query("UPDATE employee SET site = '$site' WHERE empid = '$empid'");
-			mysql_query("INSERT INTO site_history(empid, site, date, admin) VALUES('$empid', '$site', '$date', '$adminName')");
+			mysql_query("INSERT INTO site_history(empid, site, date, admin) VALUES('$empid', '$siteTransfer', '$date', '$adminName')");
 
 		}
 		Print "<script>alert('Successfully transfered employees.')</script>";
@@ -65,12 +66,14 @@ else
 	}
 	else
 	{
-		mysql_query("UPDATE employee SET site = '$siteNum' WHERE empid = '$empChange'");
+		$site = $siteNum;
+		$siteNum = $siteFrom." -> ".$siteNum;
+		mysql_query("UPDATE employee SET site = '$site' WHERE empid = '$empChange'");
 		mysql_query("INSERT INTO site_history(empid, site, date, admin) VALUES('$empChange', '$siteNum', '$date', '$adminName')");
 		Print "<script>alert('Successfully transfered employees.')</script>";
 	}
 }
-Print "<script>window.location.assign('site_movement.php?site=".$s."')</script>";
+Print "<script>window.location.assign('site_movement.php?site=".$siteFrom."')</script>";
 ?>
 
 

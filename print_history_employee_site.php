@@ -5,7 +5,7 @@ include_once 'modules/Classes/PHPExcel.php';
 include('directives/print_styles.php');//Styles for PHPexcel
 
 //Sample Data
-$empid = "2008-8128331";
+$empid = $_POST['employee'];
 
 
 // TIMEZONE
