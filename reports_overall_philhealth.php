@@ -22,189 +22,226 @@
 		require_once("directives/nav.php");
 		?>
 
-		<h3 class="pull-down">Overall Payroll Report for [SITE]</h3>
+		<h3 class="pull-down">Overall PhilHealth Contribution Report for employees at [SITE]</h3>
 
-		<table class="table table-bordered pull-down">
-			<tr>
-				<td colspan="6">
-					Site with requirements
-				</td>
-				<td colspan="21" rowspan="2" class="vertical-align">
-					PAYROLL
-				</td>
-			</tr>
-			<tr>
-				<td colspan="6">
-					Date covered: Start - End
-				</td>
-			</tr>
-			<tr>
-				<td>
-					#
-				</td>
-				<td>
-					Name
-				</td>
-				<td>
-					Position
-				</td>
-				<td>
-					Rate
-				</td>
-				<td>
-					# of days
-				</td>
-				<td>
-					O.T.
-				</td>
-				<td>
-					# of hours
-				</td>
-				<td>
-					Allow.
-				</td>
-				<td>
-					COLA
-				</td>
-				<td>
-					Sun
-				</td>
-				<td>
-					D
-				</td>
-				<td>
-					hrs
-				</td>
-				<td>
-					N.D.
-				</td>
-				<td>
-					#
-				</td>
-				<td>
-					Reg. Hol
-				</td>
-				<td>
-					#
-				</td>
-				<td>
-					Spe. Hol
-				</td>
-				<td>
-					#
-				</td>
-				<td>
-					X All.
-				</td>
-				<td>
-					SSS
-				</td>
-				<td>
-					Philhealth
-				</td>
-				<td>
-					PagIBIG
-				</td>
-				<td>
-					Old vale
-				</td>
-				<td>
-					vale
-				</td>
-				<td>
-					tools
-				</td>
-				<td>
-					Total Salary
-				</td>
-				<td>
-					Signature
-				</td>
-			</tr>
-			<tr>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					1
-				</td>
-			</tr>
-		</table>
+		<div class="col-md-4">
+			<button class="btn btn-default pull-down">
+				Print Weekly
+			</button>
+			<table class="table table-bordered pull-down">
+				<tr>
+					<td colspan="6">
+						Weekly PhilHealth Contribution of employees
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Week
+					</td>
+					<td>
+						Name
+					</td>
+					<td>
+						Position
+					</td>
+					<td>
+						Site
+					</td>
+					<td>
+						Employee
+					</td>
+					<td>
+						Employer
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Dec. 1 - 7
+					</td>
+					<td>
+						[NAME]
+					</td>
+					<td>
+						[POSITION]
+					</td>
+					<td>
+						[SITE]
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+				<tr>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						Total
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="col-md-4">
+			<button class="btn btn-default pull-down">
+				Print Monthly
+			</button>
+			<table class="table table-bordered pull-down">
+				<tr>
+					<td colspan="6">
+						Monthly PhilHealth Contribution of employees
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Month
+					</td>
+					<td>
+						Name
+					</td>
+					<td>
+						Position
+					</td>
+					<td>
+						Site
+					</td>
+					<td>
+						Employee
+					</td>
+					<td>
+						Employer
+					</td>
+				</tr>
+				<tr>
+					<td>
+						December
+					</td>
+					<td>
+						[NAME]
+					</td>
+					<td>
+						[POSITION]
+					</td>
+					<td>
+						[SITE]
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+				<tr>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						Total
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="col-md-4">
+			<button class="btn btn-default pull-down">
+				Print Yearly
+			</button>
+			<table class="table table-bordered pull-down">
+				<tr>
+					<td colspan="6">
+						Yearly PhilHealth Contribution of employees
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Year
+					</td>
+					<td>
+						Name
+					</td>
+					<td>
+						Position
+					</td>
+					<td>
+						Site
+					</td>
+					<td>
+						Employee
+					</td>
+					<td>
+						Employer
+					</td>
+				</tr>
+				<tr>
+					<td>
+						2017
+					</td>
+					<td>
+						[NAME]
+					</td>
+					<td>
+						[POSITION]
+					</td>
+					<td>
+						[SITE]
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+				<tr>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						Total
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+			</table>
+		</div>
 
 	</div>
 
