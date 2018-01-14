@@ -188,16 +188,16 @@
 									<td style='vertical-align: inherit'>".$empArr['position']."</td>
 									<td style='vertical-align: inherit'>".$empArr['site']."</td>
 									<td style='vertical-align: inherit'>
-										<button class='btn btn-default' onclick='viewPayrollBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
+										<button class='btn btn-default' onclick='viewSSSBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
 											SSS
 										</button>
-										<button class='btn btn-default' onclick='view13thmonthpayBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
+										<button class='btn btn-default' onclick='viewPagIBIGBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
 											PagIBIG
 										</button>
-										<button class='btn btn-default' onclick='view13thmonthpayBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
+										<button class='btn btn-default' onclick='viewOldValeBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
 											Old Vale
 										</button>
-										<button class='btn btn-default' onclick='view13thmonthpayBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
+										<button class='btn btn-default' onclick='viewNewValeBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
 											New Vale
 										</button>
 									</td>
