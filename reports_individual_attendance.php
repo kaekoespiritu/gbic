@@ -221,8 +221,6 @@
 
       				<!-- Add two calendars here -->
 
-
-
       				<a class="btn btn-primary" href="reports_individual_empattendance.php">
       					View
       				</a>

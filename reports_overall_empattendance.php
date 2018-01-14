@@ -22,7 +22,7 @@
 		require_once("directives/nav.php");
 		?>
 
-		<h3 class="pull-down">Weekly Attendance Report for [NAME], [POSITION] at [SITE]</h3>
+		<h3 class="pull-down">Weekly Attendance Report for [POSITION]s at [SITE]</h3>
 
 		<div class="pull-down">
 			<button class="btn btn-default">
@@ -30,11 +30,33 @@
 			</button>
 			<table class="table table-bordered pull-down">
 				<tr>
-					<td colspan="28">
+					<td colspan="3">
+						SITE: [SITE NAME]
+					</td>
+					<td rowspan="3" colspan="28">
 						Weekly Time Record of Employee
 					</td>
 				</tr>
 				<tr>
+					<td colspan="3">
+						[DATE]
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						With incomplete/complete requirements
+					</td>
+				</tr>
+				<tr>
+					<td rowspan="4">
+						#
+					</td>
+					<td rowspan="4">
+						Name of Worker
+					</td>
+					<td rowspan="4">
+						Position
+					</td>
 					<td colspan="7">
 						Wednesday
 					</td>
@@ -199,6 +221,15 @@
 					</td>
 				</tr>
 				<tr>
+					<td>
+						####
+					</td>
+					<td>
+						[NAME]
+					</td>
+					<td>
+						[POSITION]
+					</td>
 					<td>
 						#
 					</td>
