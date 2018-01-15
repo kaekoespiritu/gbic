@@ -74,7 +74,7 @@
 					Print "
 						<tr>
 						<tr>
-							<td colspan='24' style='background-color:grey'>
+							<td colspan='24' bgcolor='#AAB7B8'>
 								<strong>
 									Period: ".$startDate." - ".$payrollArr['date']."
 								</strong>
@@ -233,7 +233,7 @@
 			{
 				Print "	<tr>
 							<tr>
-								<td colspan='24' style='background-color:red'>
+								<td colspan='24' bgcolor='#E74C3C'>
 									No payroll record
 								</td>
 							</tr>
