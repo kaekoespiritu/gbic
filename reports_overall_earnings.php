@@ -145,7 +145,7 @@ if(isset($_GET['search']))
 				/* If location is long, font-size to smaller */
 				if(strlen($row['location'])>=16)
 				{
-					Print '	<a data-toggle="modal" data-target="#optionModal" style="color: white !important; text-decoration: none !important; cursor: pointer;">
+					Print '	<a data-toggle="modal" data-target="#optionModal" onclick="dataModalTransfer(\"'.$row['location'].'\")" style="color: white !important; text-decoration: none !important; cursor: pointer;">
 								<div class="sitebox">
 									<span class="smalltext">'
 										. $row['location'] .
@@ -159,7 +159,7 @@ if(isset($_GET['search']))
 				}
 				else
 				{
-					Print '	<a data-toggle="modal" data-target="#optionModal" style="color: white !important; text-decoration: none !important; cursor: pointer;">
+					Print '	<a data-toggle="modal" data-target="#optionModal" onclick="dataModalTransfer(\''.$row['location'].'\')" style="color: white !important; text-decoration: none !important; cursor: pointer;">
 								<div class="sitebox">
 									<span class="autofit">'
 										. $row['location'] .
@@ -214,10 +214,10 @@ if(isset($_GET['search']))
       				Select report type:
       			</div>
       			<div class="modal-body">
-      				<a class="btn btn-primary" href="reports_overall_payroll.php">
+      				<a class="btn btn-primary" id="payrollButton">
       					Payroll
       				</a>
-      				<a class="btn btn-primary" href="reports_overall_13thmonthpay.php">
+      				<a class="btn btn-primary" id="13thMonthButton">
       					13th Month Pay
       				</a>
       			</div>
@@ -230,6 +230,13 @@ if(isset($_GET['search']))
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script>
 		document.getElementById("reports").setAttribute("style", "background-color: #10621e;");
+
+		function dataModalTransfer(site) {
+			console.log(site);
+			document.getElementById("payrollButton").href = "reports_overall_payroll.php?site="+site;
+			document.getElementById("13thMonthButton").href = "reports_overall_13thmonthpay.php?site="+site;
+
+		}
 
 		function changePeriod(period, position, site, search, type) {
 
