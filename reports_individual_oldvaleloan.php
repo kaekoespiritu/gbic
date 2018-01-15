@@ -22,50 +22,36 @@
 		require_once("directives/nav.php");
 		?>
 
-		<h3 class="pull-down">Overall PhilHealth Contribution Report for employees at [SITE]</h3>
+		<h3 class="pull-down">Old Vale Report for [NAME], [POSITION] at [SITE]</h3>
 
 		<div class="col-md-4">
-			<button class="btn btn-default pull-down">
+			<div class="pull-down">
+			<button class="btn btn-default">
 				Print Weekly
 			</button>
 			<table class="table table-bordered pull-down">
 				<tr>
-					<td colspan="6">
-						Weekly PhilHealth Contribution of employees
+					<td colspan="4">
+						Date: [START] to [END]
 					</td>
 				</tr>
 				<tr>
 					<td>
-						Week
+						Date
 					</td>
 					<td>
-						Name
+						Loaned Amount
 					</td>
 					<td>
-						Position
+						Balance to Pay
 					</td>
 					<td>
-						Site
-					</td>
-					<td>
-						Employee
-					</td>
-					<td>
-						Employer
+						Approved By:
 					</td>
 				</tr>
 				<tr>
 					<td>
-						Dec. 1 - 7
-					</td>
-					<td>
-						[NAME]
-					</td>
-					<td>
-						[POSITION]
-					</td>
-					<td>
-						[SITE]
+						[DATE]
 					</td>
 					<td>
 						$$$
@@ -73,72 +59,42 @@
 					<td>
 						$$$
 					</td>
-				</tr>
-				<tr>
 					<td>
-						
-					</td>
-					<td>
-						
-					</td>
-					<td>
-						
-					</td>
-					<td>
-						
-					</td>
-					<td>
-						Total
-					</td>
-					<td>
-						$$$
+						[APPROVED BY]
 					</td>
 				</tr>
 			</table>
+			</div>
 		</div>
 
 		<div class="col-md-4">
-			<button class="btn btn-default pull-down">
+			<div class="pull-down">
+			<button class="btn btn-default">
 				Print Monthly
 			</button>
 			<table class="table table-bordered pull-down">
 				<tr>
-					<td colspan="6">
-						Monthly PhilHealth Contribution of employees
+					<td colspan="4">
+						Date: [START] to [END]
 					</td>
 				</tr>
 				<tr>
 					<td>
-						Month
+						Date
 					</td>
 					<td>
-						Name
+						Loaned Amount
 					</td>
 					<td>
-						Position
+						Balance to Pay
 					</td>
 					<td>
-						Site
-					</td>
-					<td>
-						Employee
-					</td>
-					<td>
-						Employer
+						Approved By:
 					</td>
 				</tr>
 				<tr>
 					<td>
-						December
-					</td>
-					<td>
-						[NAME]
-					</td>
-					<td>
-						[POSITION]
-					</td>
-					<td>
-						[SITE]
+						[DATE]
 					</td>
 					<td>
 						$$$
@@ -146,72 +102,42 @@
 					<td>
 						$$$
 					</td>
-				</tr>
-				<tr>
 					<td>
-						
-					</td>
-					<td>
-						
-					</td>
-					<td>
-						
-					</td>
-					<td>
-						
-					</td>
-					<td>
-						Total
-					</td>
-					<td>
-						$$$
+						[APPROVED BY]
 					</td>
 				</tr>
 			</table>
+			</div>
 		</div>
 
 		<div class="col-md-4">
-			<button class="btn btn-default pull-down">
+			<div class="pull-down">
+			<button class="btn btn-default">
 				Print Yearly
 			</button>
 			<table class="table table-bordered pull-down">
 				<tr>
-					<td colspan="6">
-						Yearly PhilHealth Contribution of employees
+					<td colspan="4">
+						Date: [START] to [END]
 					</td>
 				</tr>
 				<tr>
 					<td>
-						Year
+						Date
 					</td>
 					<td>
-						Name
+						Loaned Amount
 					</td>
 					<td>
-						Position
+						Balance to Pay
 					</td>
 					<td>
-						Site
-					</td>
-					<td>
-						Employee
-					</td>
-					<td>
-						Employer
+						Approved By:
 					</td>
 				</tr>
 				<tr>
 					<td>
-						2017
-					</td>
-					<td>
-						[NAME]
-					</td>
-					<td>
-						[POSITION]
-					</td>
-					<td>
-						[SITE]
+						[DATE]
 					</td>
 					<td>
 						$$$
@@ -219,28 +145,12 @@
 					<td>
 						$$$
 					</td>
-				</tr>
-				<tr>
 					<td>
-						
-					</td>
-					<td>
-						
-					</td>
-					<td>
-						
-					</td>
-					<td>
-						
-					</td>
-					<td>
-						Total
-					</td>
-					<td>
-						$$$
+						[APPROVED BY]
 					</td>
 				</tr>
 			</table>
+			</div>
 		</div>
 
 	</div>

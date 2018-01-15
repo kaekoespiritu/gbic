@@ -167,7 +167,7 @@
 							<th class='text-center'>Name</th>
 							<th class='text-center'>Position</th>
 							<th class='text-center'>Site</th>
-							<th class='text-center'>Actions</th>
+							<th class='text-center'>Has Requirements?</th>
 						</tr>
 						<?php
 						//Print "<script>alert('default')</script>";
@@ -188,14 +188,11 @@
 									<td style='vertical-align: inherit'>".$empArr['position']."</td>
 									<td style='vertical-align: inherit'>".$empArr['site']."</td>
 									<td style='vertical-align: inherit'>
-										<button class='btn btn-default' onclick='viewSSSBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
-											SSS
+										<button class='btn btn-default' data-toggle='modal' data-target='#selectPeriod'>
+											With
 										</button>
-										<button class='btn btn-default' onclick='viewPhilHealthBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
-											PhilHealth
-										</button>
-										<button class='btn btn-default' onclick='viewPagIBIGBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
-											PagIBIG
+										<button class='btn btn-default' data-toggle='modal' data-target='#selectPeriod'>
+											Without
 										</button>
 									</td>
 								</tr>
@@ -212,6 +209,24 @@
 				echo "</div>";
 			?>
 		</div>
+	</div>
+
+	<div class="modal fade" id="selectPeriod">
+ 		<div class="modal-dialog">
+    		<div class="modal-content">
+      			<div class="modal-header">
+      				Select period duration:
+      			</div>
+      			<div class="modal-body">
+
+      				<!-- Add two calendars here -->
+
+      				<a class="btn btn-primary" href="reports_individual_empattendance.php">
+      					View
+      				</a>
+      			</div>
+      		</div>
+      	</div>
 	</div>
 
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
@@ -250,16 +265,8 @@
 			});
 		});
 
-		function viewPagIBIGBtn(id, type){
-			window.location.assign("reports_individual_pagibig.php");
-		}
-
-		function viewPhilHealthBtn(id, type){
-			window.location.assign("reports_individual_philhealth.php");
-		}
-
-		function viewSSSBtn(id, type){
-			window.location.assign("reports_individual_sss.php");
+		function viewAttendanceBtn(id, type) {
+			window.location.assign("reports_individual_empattendance.php");
 		}
 
 		function changePeriod(period, position, site, type) {

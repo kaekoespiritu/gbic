@@ -22,16 +22,17 @@
 		require_once("directives/nav.php");
 		?>
 
-		<h3 class="pull-down">PagIBIG Contribution Report for Name, Position at Site</h3>
+		<h3 class="pull-down">PagIBIG Contributions Report for [NAME], [POSITION] at [SITE]</h3>
 
-		<div class="pull-down">
+		<div class="col-md-4">
+			<div class="pull-down">
 			<button class="btn btn-default">
-				Print Payroll
+				Print Weekly
 			</button>
 			<table class="table table-bordered pull-down">
 				<tr>
-					<td colspan="3">
-						Name, Position at Site (with/without requirements)
+					<td colspan="4">
+						[NAME], [POSITION] at [SITE] 
 					</td>
 				</tr>
 				<tr>
@@ -39,7 +40,10 @@
 						Week
 					</td>
 					<td colspan="2">
-						Pag-IBIG
+						PagIBIG
+					</td>
+					<td rowspan="2">
+						Total
 					</td>
 				</tr>
 				<tr>
@@ -60,19 +64,150 @@
 					<td>
 						$$$
 					</td>
+					<td>
+						$$$
+					</td>
 				</tr>
 				<tr>
 					<td>
-						Total
+						
 					</td>
 					<td>
-						$$$
+						
+					</td>
+					<td>
+						Grand Total
 					</td>
 					<td>
 						$$$
 					</td>
 				</tr>
 			</table>
+			</div>
+		</div>
+
+		<div class="col-md-4">
+			<div class="pull-down">
+			<button class="btn btn-default">
+				Print Monthly
+			</button>
+			<table class="table table-bordered pull-down">
+				<tr>
+					<td colspan="4">
+						[NAME], [POSITION] at [SITE] 
+					</td>
+				</tr>
+				<tr>
+					<td rowspan="2">
+						Month
+					</td>
+					<td colspan="2">
+						PagIBIG
+					</td>
+					<td rowspan="2">
+						Total
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Employee
+					</td>
+					<td>
+						Employer
+					</td>
+				</tr>
+				<tr>
+					<td>
+						December
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+				<tr>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						Grand Total
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+			</table>
+			</div>
+		</div>
+
+		<div class="col-md-4">
+			<div class="pull-down">
+			<button class="btn btn-default">
+				Print Yearly
+			</button>
+			<table class="table table-bordered pull-down">
+				<tr>
+					<td colspan="4">
+						[NAME], [POSITION] at [SITE] 
+					</td>
+				</tr>
+				<tr>
+					<td rowspan="2">
+						Year
+					</td>
+					<td colspan="2">
+						PagIBIG
+					</td>
+					<td rowspan="2">
+						Total
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Employee
+					</td>
+					<td>
+						Employer
+					</td>
+				</tr>
+				<tr>
+					<td>
+						2017
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+				<tr>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						Grand Total
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+			</table>
+			</div>
 		</div>
 
 	</div>

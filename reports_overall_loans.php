@@ -209,20 +209,17 @@
  		<div class="modal-dialog">
     		<div class="modal-content">
       			<div class="modal-header">
-      				Select report type:
+      				Select period type:
       			</div>
       			<div class="modal-body">
-      				<a class="btn btn-primary" href="reports_overall_sss.php">
-      					SSS
+      				<a class="btn btn-primary" href="reports_overall_allloans.php">
+      					Weekly
       				</a>
-      				<a class="btn btn-primary" href="reports_overall_philhealth.php">
-      					PhilHealth
+      				<a class="btn btn-primary" href="reports_overall_allloans.php">
+      					Monthly
       				</a>
-      				<a class="btn btn-primary" href="reports_overall_pagibig.php">
-      					PagIBIG
-      				</a>
-      				<a class="btn btn-primary" href="reports_overall_allcontributions.php">
-      					Overall
+      				<a class="btn btn-primary" href="reports_overall_allloans.php">
+      					Yearly
       				</a>
       			</div>
       		</div>

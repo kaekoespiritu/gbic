@@ -191,11 +191,14 @@
 										<button class='btn btn-default' onclick='viewSSSBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
 											SSS
 										</button>
-										<button class='btn btn-default' onclick='viewPhilHealthBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
-											PhilHealth
-										</button>
 										<button class='btn btn-default' onclick='viewPagIBIGBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
 											PagIBIG
+										</button>
+										<button class='btn btn-default' onclick='viewOldValeBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
+											Old Vale
+										</button>
+										<button class='btn btn-default' onclick='viewNewValeBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
+											New Vale
 										</button>
 									</td>
 								</tr>
@@ -250,16 +253,20 @@
 			});
 		});
 
-		function viewPagIBIGBtn(id, type){
-			window.location.assign("reports_individual_pagibig.php");
+		function viewSSSBtn(id, type) {
+			window.location.assign("reports_individual_sssloan.php");
 		}
 
-		function viewPhilHealthBtn(id, type){
-			window.location.assign("reports_individual_philhealth.php");
+		function viewPagIBIGBtn(id, type) {
+			window.location.assign("reports_individual_pagibigloan.php");
 		}
 
-		function viewSSSBtn(id, type){
-			window.location.assign("reports_individual_sss.php");
+		function viewOldValeBtn(id, type) {
+			window.location.assign("reports_individual_oldvaleloan.php");
+		}
+
+		function viewNewValeBtn(id, type) {
+			window.location.assign("reports_individual_newvaleloan.php");
 		}
 
 		function changePeriod(period, position, site, type) {

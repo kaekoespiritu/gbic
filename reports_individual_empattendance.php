@@ -22,226 +22,271 @@
 		require_once("directives/nav.php");
 		?>
 
-		<h3 class="pull-down">Overall PhilHealth Contribution Report for employees at [SITE]</h3>
+		<h3 class="pull-down">Weekly Attendance Report for [NAME], [POSITION] at [SITE]</h3>
 
-		<div class="col-md-4">
-			<button class="btn btn-default pull-down">
-				Print Weekly
+		<div class="pull-down">
+			<button class="btn btn-default">
+				Print Attendance
 			</button>
 			<table class="table table-bordered pull-down">
 				<tr>
-					<td colspan="6">
-						Weekly PhilHealth Contribution of employees
+					<td colspan="28">
+						Weekly Time Record of Employee
+					</td>
+				</tr>
+				<tr>
+					<td colspan="7">
+						Wednesday
+					</td>
+					<td colspan="7">
+						Thursday
+					</td>
+					<td colspan="7">
+						Friday
+					</td>
+					<td colspan="7">
+						Saturday
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4">
+						REGULAR DAY
+					</td>
+					<td colspan="2">
+						OVERTIME
+					</td>
+					<td rowspan="3">
+						REMARKS
+					</td>
+					<td colspan="4">
+						REGULAR DAY
+					</td>
+					<td colspan="2">
+						OVERTIME
+					</td>
+					<td rowspan="3">
+						REMARKS
+					</td>
+					<td colspan="4">
+						REGULAR DAY
+					</td>
+					<td colspan="2">
+						OVERTIME
+					</td>
+					<td rowspan="3">
+						REMARKS
+					</td>
+					<td colspan="4">
+						REGULAR DAY
+					</td>
+					<td colspan="2">
+						OVERTIME
+					</td>
+					<td rowspan="3">
+						REMARKS
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						AM
+					</td>
+					<td colspan="2">
+						PM
+					</td>
+					<td colspan="2">
+						OT Hours
+					</td>
+					<td colspan="2">
+						AM
+					</td>
+					<td colspan="2">
+						PM
+					</td>
+					<td colspan="2">
+						OT Hours
+					</td>
+					<td colspan="2">
+						AM
+					</td>
+					<td colspan="2">
+						PM
+					</td>
+					<td colspan="2">
+						OT Hours
+					</td>
+					<td colspan="2">
+						AM
+					</td>
+					<td colspan="2">
+						PM
+					</td>
+					<td colspan="2">
+						OT Hours
 					</td>
 				</tr>
 				<tr>
 					<td>
-						Week
+						In
 					</td>
 					<td>
-						Name
+						Out
 					</td>
 					<td>
-						Position
+						In
 					</td>
 					<td>
-						Site
+						Out
 					</td>
 					<td>
-						Employee
+						In
 					</td>
 					<td>
-						Employer
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
 					</td>
 				</tr>
 				<tr>
 					<td>
-						Dec. 1 - 7
+						#
 					</td>
 					<td>
-						[NAME]
+						#
 					</td>
 					<td>
-						[POSITION]
+						#
 					</td>
 					<td>
-						[SITE]
+						#
 					</td>
 					<td>
-						$$$
+						#
 					</td>
 					<td>
-						$$$
-					</td>
-				</tr>
-				<tr>
-					<td>
-						
+						#
 					</td>
 					<td>
-						
+						[REMARKS]
 					</td>
 					<td>
-						
+						#
 					</td>
 					<td>
-						
+						#
 					</td>
 					<td>
-						Total
+						#
 					</td>
 					<td>
-						$$$
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						[REMARKS]
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						[REMARKS]
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						[REMARKS]
 					</td>
 				</tr>
 			</table>
 		</div>
-
-		<div class="col-md-4">
-			<button class="btn btn-default pull-down">
-				Print Monthly
-			</button>
-			<table class="table table-bordered pull-down">
-				<tr>
-					<td colspan="6">
-						Monthly PhilHealth Contribution of employees
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Month
-					</td>
-					<td>
-						Name
-					</td>
-					<td>
-						Position
-					</td>
-					<td>
-						Site
-					</td>
-					<td>
-						Employee
-					</td>
-					<td>
-						Employer
-					</td>
-				</tr>
-				<tr>
-					<td>
-						December
-					</td>
-					<td>
-						[NAME]
-					</td>
-					<td>
-						[POSITION]
-					</td>
-					<td>
-						[SITE]
-					</td>
-					<td>
-						$$$
-					</td>
-					<td>
-						$$$
-					</td>
-				</tr>
-				<tr>
-					<td>
-						
-					</td>
-					<td>
-						
-					</td>
-					<td>
-						
-					</td>
-					<td>
-						
-					</td>
-					<td>
-						Total
-					</td>
-					<td>
-						$$$
-					</td>
-				</tr>
-			</table>
-		</div>
-
-		<div class="col-md-4">
-			<button class="btn btn-default pull-down">
-				Print Yearly
-			</button>
-			<table class="table table-bordered pull-down">
-				<tr>
-					<td colspan="6">
-						Yearly PhilHealth Contribution of employees
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Year
-					</td>
-					<td>
-						Name
-					</td>
-					<td>
-						Position
-					</td>
-					<td>
-						Site
-					</td>
-					<td>
-						Employee
-					</td>
-					<td>
-						Employer
-					</td>
-				</tr>
-				<tr>
-					<td>
-						2017
-					</td>
-					<td>
-						[NAME]
-					</td>
-					<td>
-						[POSITION]
-					</td>
-					<td>
-						[SITE]
-					</td>
-					<td>
-						$$$
-					</td>
-					<td>
-						$$$
-					</td>
-				</tr>
-				<tr>
-					<td>
-						
-					</td>
-					<td>
-						
-					</td>
-					<td>
-						
-					</td>
-					<td>
-						
-					</td>
-					<td>
-						Total
-					</td>
-					<td>
-						$$$
-					</td>
-				</tr>
-			</table>
-		</div>
+		
 
 	</div>
 
