@@ -191,7 +191,7 @@
 										<button class='btn btn-default' onclick='viewPayrollBtn(\"".$empArr['empid']."\", \"".$period."\")'>
 											Payroll
 										</button>
-										<button class='btn btn-default' onclick='view13thmonthpayBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
+										<button class='btn btn-default' onclick='view13thmonthpayBtn(\"".$empArr['empid']."\", \"".$period."\")'>
 											13th Month Pay
 										</button>
 									</td>
@@ -252,7 +252,7 @@
 		}
 
 		function view13thmonthpayBtn(id, type) {
-			window.location.assign("reports_individual_13thmonthpay.php");
+			window.location.assign("reports_individual_13thmonthpay.php?empid="+id+"&per="+type);
 		}
 
 		function changePeriod(period, position, site, type) {

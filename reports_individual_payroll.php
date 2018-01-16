@@ -90,6 +90,159 @@
 							</tr>
 							</tr>
 
+<<<<<<< HEAD
+						<tr>
+							<td>
+								Rate
+							</td>
+							<td>
+								# of days
+							</td>
+							<td>
+								O.T.
+							</td>
+							<td>
+								# of hours
+							</td>
+							<td>
+								Allow.
+							</td>
+							<td>
+								COLA
+							</td>
+							<td>
+								Sun
+							</td>
+							<td>
+								D
+							</td>
+							<td>
+								hrs
+							</td>
+							<td>
+								N.D.
+							</td>
+							<td>
+								#
+							</td>
+							<td>
+								Reg. Hol
+							</td>
+							<td>
+								#
+							</td>
+							<td>
+								Spe. Hol
+							</td>
+							<td>
+								#
+							</td>
+							<td>
+								X All.
+							</td>
+							<td>
+								SSS
+							</td>
+							<td>
+								Philhealth
+							</td>
+							<td>
+								PagIBIG
+							</td>
+							<td>
+								Old vale
+							</td>
+							<td>
+								vale
+							</td>
+							<td>
+								tools
+							</td>
+							<td colspan='2'>
+								Total Salary
+							</td>
+							
+						</tr>
+						<tr>
+							<td><!-- Rate -->
+								".$payrollArr['rate']."
+							</td>
+							<td><!-- # of days -->
+								".$payrollArr['num_days']."
+							</td>
+							<td><!-- OT -->
+								".$payrollArr['overtime']."
+							</td>
+							<td><!-- # of hours -->
+								".$payrollArr['ot_num']."
+							</td>
+							<td><!-- Allow -->
+								".$payrollArr['allow']."
+							</td>
+							<td><!-- COLA -->
+								".$payrollArr['cola']."
+							</td>
+							<td><!-- Sun -->
+								".$payrollArr['sunday_rate']."
+							</td>
+							<td><!-- D -->
+								".$payrollArr['sunday_att']."
+							</td>
+							<td><!-- hrs -->
+								".$payrollArr['sunday_hrs']."
+							</td>
+							<td><!-- ND -->
+								".$payrollArr['nightdiff_rate']."
+							</td>
+							<td><!-- # -->
+								".$payrollArr['nightdiff_num']."
+							</td>
+							<td><!-- Reg.hol -->
+								".$payrollArr['reg_holiday']."
+							</td>
+							<td><!-- # -->
+								".$payrollArr['reg_holiday_num']."
+							</td>
+							<td><!-- Spe. hol -->
+								".$payrollArr['spe_holiday']."
+							</td>
+							<td><!-- # -->
+								".$payrollArr['spe_holiday_num']."
+							</td>
+							<td><!-- X.All -->
+								".$payrollArr['x_allowance']."
+							</td>
+							<td><!-- SSS -->
+								".$payrollArr['sss']."
+							</td>
+							<td><!-- Philhealth -->
+								".$payrollArr['philhealth']."
+							</td>
+							<td><!-- Pagibig -->
+								".$payrollArr['pagibig']."
+							</td>
+							<td><!-- Old vale -->
+								".$payrollArr['old_vale']."
+							</td>
+							<td><!-- vale -->
+								".$payrollArr['new_vale']."
+							</td>
+							<td><!-- tools -->
+								".$payrollArr['tools_paid']."
+							</td>
+							<td><!-- Total Salary -->
+								".numberExactFormat($payrollArr['total_salary'],2,".")."
+							</td>
+						</tr>
+						<br>
+						";
+				}
+			}
+			else
+			{
+				Print "	<tr>
+=======
+>>>>>>> 113f319489220386f9e238ebbddce36c1eefb40c
 							<tr>
 								<td>
 									Rate

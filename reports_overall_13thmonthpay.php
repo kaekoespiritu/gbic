@@ -2,6 +2,17 @@
 <?php
 	include('directives/session.php');
 	include('directives/db.php');
+
+	//Checks if site in HTTP is altered by user manually
+	$site = $_GET['site'];
+	$siteChecker = "SELECT * FROM site WHERE location = '$site'";
+	$siteCheckerQuery = mysql_query($siteChecker);
+	if(mysql_num_rows($siteCheckerQuery) != 1)
+	{
+		header("location:reports_overall_earnings.php?type=Earnings&period=Weekly");
+	}
+
+
 ?>
 <html>
 <head>
@@ -22,6 +33,95 @@
 		require_once("directives/nav.php");
 		?>
 
+<<<<<<< HEAD
+		<h3 class="pull-down">Overall 13th Month Pay Report for <?php Print $site?></h3>
+		Filters:
+		
+		<select>
+			<option hidden>Requirements</option>
+			<option value='all'>All</option>
+			<option value='withReq'>W/ Requirements</option>
+			<option value='withOReq'>W/o Requirements</option>
+		</select>
+
+		<select>
+			<option hidden>Position</option>
+			<?php
+				$position = "SELECT * FROM job_position WHERE active='1'";
+				$positionQuery = mysql_query($position);
+				Print "<option value='all'>All</option>";
+				while($positionArr = mysql_fetch_assoc($positionQuery))
+				{
+					Print "<option value='".$positionArr['position']."'>".$positionArr['position']."</option>";
+				}
+
+			?>
+		</select>
+		<select>
+			<option hidden>Period</option>
+			<option value='week'>Weekly</option>
+			<option value='month'>Monthly</option>
+			<option value='year'>Yearly</option>
+		</select>
+
+		<?php
+		//Computation for 13th month pay
+
+		
+		?>
+		<div class="pull-down">
+			<div class="col-md-6 col-md-offset-3">
+				<button class="btn btn-default">
+					Print Weekly
+				</button>
+				<table class="table table-bordered pull-down">
+				
+				<tr>
+					<td>
+						Employee ID
+					</td>
+					<td>
+						Name
+					</td>
+					<td>
+						Position
+					</td>
+					<td>
+						Week
+					</td>
+					<td>
+						13th Month
+					</td>
+				</tr>
+				<tr>
+					<td>
+						[empid]
+					</td>
+					<td>
+						[NAME]
+					</td>
+					<td>
+						[position]
+					</td>
+					<td>
+						Dec. 1 - 7
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+				<tr>
+					<td colspan='3'>
+					</td>
+					<td>
+						Total
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+				</table>
+=======
 		<div class="col-md-10 col-md-offset-1">
 			<div class="row"><br>
 				<div class="row text-center">
@@ -170,9 +270,10 @@
 					</tr>
 					</table>
 				</div>
+>>>>>>> 113f319489220386f9e238ebbddce36c1eefb40c
 			</div>
-		</div>
 
+			
 	</div>
 
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
