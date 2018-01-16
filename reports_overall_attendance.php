@@ -143,7 +143,7 @@
 				/* If location is long, font-size to smaller */
 				if(strlen($row['location'])>=16)
 				{
-					Print '	<a href="reports_overall_empattendance.php" style="color: white !important; text-decoration: none !important; cursor: pointer;">
+					Print '	<a data-toggle="modal" data-target="#selectModal" style="color: white !important; text-decoration: none !important; cursor: pointer;">
 								<div class="sitebox">
 									<span class="smalltext">'
 										. $row['location'] .
@@ -157,7 +157,7 @@
 				}
 				else
 				{
-					Print '	<a href="reports_overall_empattendance.php" style="color: white !important; text-decoration: none !important; cursor: pointer;">
+					Print '	<a data-toggle="modal" data-target="#selectModal" style="color: white !important; text-decoration: none !important; cursor: pointer;">
 								<div class="sitebox">
 									<span class="autofit">'
 										. $row['location'] .
@@ -203,6 +203,24 @@
 				echo "</div>";
 			?>
 		</div>
+	</div>
+
+	<div class="modal fade" id="selectModal">
+ 		<div class="modal-dialog">
+    		<div class="modal-content">
+      			<div class="modal-header">
+      				Select report type:
+      			</div>
+      			<div class="modal-body">
+      				<a class="btn btn-primary" href="reports_overall_empattendance.php">
+      					With Requirements
+      				</a>
+      				<a class="btn btn-primary" href="reports_overall_empattendance.php">
+      					Without Requirements
+      				</a>
+      			</div>
+      		</div>
+      	</div>
 	</div>
 
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
