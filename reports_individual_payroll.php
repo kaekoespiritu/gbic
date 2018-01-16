@@ -222,7 +222,7 @@
 								".$payrollArr['tools_paid']."
 							</td>
 							<td><!-- Total Salary -->
-								".$payrollArr['total_salary']."
+								".numberExactFormat($payrollArr['total_salary'],2,".")."
 							</td>
 						</tr>
 						<br>
