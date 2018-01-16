@@ -22,7 +22,16 @@
 		require_once("directives/nav.php");
 		?>
 
-		<h3 class="pull-down">Overall PagIBIG Contribution Report for employees at [SITE]</h3>
+		<div class="col-md-10 col-md-offset-1">
+			<div class="row"><br>
+				<div class="row text-center">
+					<ol class="breadcrumb text-left">
+						<li><a href='reports_overall_contributions.php?type=Contributions&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Contribution</a></li>
+						<li>Overall PagIBIG Contribution Report for employees at [SITE]</li>
+					</ol>
+				</div>
+			</div>
+		</div>
 
 		<div class="col-md-4">
 			<button class="btn btn-default pull-down">
