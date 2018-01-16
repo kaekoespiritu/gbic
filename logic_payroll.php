@@ -527,6 +527,7 @@
 
 
 	$query = "INSERT INTO payroll(	empid,
+									rate,
 									num_days,
 									overtime,
 									ot_num,
@@ -559,6 +560,7 @@
 									loan_pagibig,
 									new_vale,
 									old_vale) VALUES(	'$empid',
+														'$dailyRate',
 														'$overallWorkDays',
 														'$OtRatePerHour',
 														'$totalOT',
@@ -594,6 +596,7 @@
 
 
 	$updateQuery = "UPDATE payroll SET	
+									rate = '$dailyRate',
 									num_days = '$overallWorkDays',
 									overtime = '$OtRatePerHour',
 									ot_num = '$totalOT',

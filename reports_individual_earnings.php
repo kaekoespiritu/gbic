@@ -188,7 +188,7 @@
 									<td style='vertical-align: inherit'>".$empArr['position']."</td>
 									<td style='vertical-align: inherit'>".$empArr['site']."</td>
 									<td style='vertical-align: inherit'>
-										<button class='btn btn-default' onclick='viewPayrollBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
+										<button class='btn btn-default' onclick='viewPayrollBtn(\"".$empArr['empid']."\", \"".$period."\")'>
 											Payroll
 										</button>
 										<button class='btn btn-default' onclick='view13thmonthpayBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
@@ -247,8 +247,8 @@
 			});
 		});
 
-		function viewPayrollBtn(id, type) {
-			window.location.assign("reports_individual_payroll.php");
+		function viewPayrollBtn(id, period) {
+			window.location.assign("reports_individual_payroll.php?empid="+id+"&period="+period);
 		}
 
 		function view13thmonthpayBtn(id, type) {
