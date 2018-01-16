@@ -34,7 +34,16 @@
 		require_once("directives/nav.php");
 		?>
 
-		<h3 class="pull-down">Overall Payroll Report for <?php Print $location?></h3>
+		<div class="col-md-10 col-md-offset-1">
+			<div class="row"><br>
+				<div class="row text-center">
+					<ol class="breadcrumb text-left">
+						<li><a href='reports_overall_earnings.php?type=Earnings&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Earnings</a></li>
+						<li>Overall Payroll Report for <?php Print $location?></li>
+					</ol>
+				</div>
+			</div>
+
 		Step 1: Requirements:
 		<select onchange="payrollRequirements(this.value)">
 			<?php 
@@ -338,6 +347,7 @@
 		
 
 	</div>
+</div>
 	<form id="dynamicForm" method="POST" action="reports_overall_payroll.php?req=<?php Print $req?>&site=<?php Print $location?>">
 		<input type="hidden" name="payrollDate" id="payrollDate">
 	</form>

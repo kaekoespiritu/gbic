@@ -22,145 +22,154 @@
 		require_once("directives/nav.php");
 		?>
 
-		<h3 class="pull-down">Overall 13th Month Pay Report for [POSITION]s at [SITE]</h3>
-
-		<div class="pull-down">
-			<div class="col-md-4">
-				<button class="btn btn-default">
-					Print Weekly
-				</button>
-				<table class="table table-bordered pull-down">
-				<tr>
-					<td colspan="3">
-						[POSITION]s at [SITE]
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Name
-					</td>
-					<td>
-						Week
-					</td>
-					<td>
-						13th Month
-					</td>
-				</tr>
-				<tr>
-					<td>
-						[NAME]
-					</td>
-					<td>
-						Dec. 1 - 7
-					</td>
-					<td>
-						$$$
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Total
-					</td>
-					<td>
-						$$$
-					</td>
-					<td>
-						$$$
-					</td>
-				</tr>
-				</table>
+		<div class="col-md-10 col-md-offset-1">
+			<div class="row"><br>
+				<div class="row text-center">
+					<ol class="breadcrumb text-left">
+						<li><a href='reports_overall_earnings.php?type=Earnings&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Earnings</a></li>
+						<li>Overall 13th Month Pay Report for [POSITION]s at [SITE]</li>
+					</ol>
+				</div>
 			</div>
 
-			<div class="col-md-4">
-				<button class="btn btn-default">
-					Print Monthly
-				</button>
-				<table class="table table-bordered pull-down">
-				<tr>
-					<td colspan="3">
-						[POSITION]s at [SITE]
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Name
-					</td>
-					<td>
-						Month
-					</td>
-					<td>
-						13th Month
-					</td>
-				</tr>
-				<tr>
-					<td>
-						[NAME]
-					</td>
-					<td>
-						December
-					</td>
-					<td>
-						$$$
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Total
-					</td>
-					<td>
-						$$$
-					</td>
-					<td>
-						$$$
-					</td>
-				</tr>
-				</table>
-			</div>
+			<div class="pull-down">
+				<div class="col-md-4">
+					<button class="btn btn-default">
+						Print Weekly
+					</button>
+					<table class="table table-bordered pull-down">
+					<tr>
+						<td colspan="3">
+							[POSITION]s at [SITE]
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Name
+						</td>
+						<td>
+							Week
+						</td>
+						<td>
+							13th Month
+						</td>
+					</tr>
+					<tr>
+						<td>
+							[NAME]
+						</td>
+						<td>
+							Dec. 1 - 7
+						</td>
+						<td>
+							$$$
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Total
+						</td>
+						<td>
+							$$$
+						</td>
+						<td>
+							$$$
+						</td>
+					</tr>
+					</table>
+				</div>
 
-			<div class="col-md-4">
-				<button class="btn btn-default">
-					Print Yearly
-				</button>
-				<table class="table table-bordered pull-down">
-				<tr>
-					<td colspan="3">
-						[POSITION]s at [SITE]
-					</td>
-				</tr>
-				<tr>
-					<td>
-						[NAME]
-					</td>
-					<td>
-						Year
-					</td>
-					<td>
-						13th Month
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Name goes here
-					</td>
-					<td>
-						2017
-					</td>
-					<td>
-						$$$
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Total
-					</td>
-					<td>
-						$$$
-					</td>
-					<td>
-						$$$
-					</td>
-				</tr>
-				</table>
+				<div class="col-md-4">
+					<button class="btn btn-default">
+						Print Monthly
+					</button>
+					<table class="table table-bordered pull-down">
+					<tr>
+						<td colspan="3">
+							[POSITION]s at [SITE]
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Name
+						</td>
+						<td>
+							Month
+						</td>
+						<td>
+							13th Month
+						</td>
+					</tr>
+					<tr>
+						<td>
+							[NAME]
+						</td>
+						<td>
+							December
+						</td>
+						<td>
+							$$$
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Total
+						</td>
+						<td>
+							$$$
+						</td>
+						<td>
+							$$$
+						</td>
+					</tr>
+					</table>
+				</div>
+
+				<div class="col-md-4">
+					<button class="btn btn-default">
+						Print Yearly
+					</button>
+					<table class="table table-bordered pull-down">
+					<tr>
+						<td colspan="3">
+							[POSITION]s at [SITE]
+						</td>
+					</tr>
+					<tr>
+						<td>
+							[NAME]
+						</td>
+						<td>
+							Year
+						</td>
+						<td>
+							13th Month
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Name goes here
+						</td>
+						<td>
+							2017
+						</td>
+						<td>
+							$$$
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Total
+						</td>
+						<td>
+							$$$
+						</td>
+						<td>
+							$$$
+						</td>
+					</tr>
+					</table>
+				</div>
 			</div>
 		</div>
 
