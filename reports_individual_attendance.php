@@ -118,40 +118,7 @@
 					</div>
 					<!-- END OF SITES DROPDOWN -->
 					<button type="button" class="btn btn-danger text-right" onclick="clearFilter()">Clear Filters</button>
-					View period:
-					<!-- CHANGE PERIOD VIEW -->
-					<div class="col-md-2 pull-right">
-						<?php
-							Print "<select class='form-control' onchange='changePeriod(this.value, \"".$position_page."\", \"".$site_page ."\", \"".$reportType ."\", \"".$period ."\")'>";
-						?>
-						<option hidden>Period</option>
-							<?php
-							$timePeriods = array("week", "month", "year");
-							foreach($timePeriods as $periods)
-							{
-								if($periods == $period)
-								{
-									if($periods == "week")
-										Print "<option value='".$periods."' selected>Weekly</option>";
-									else if($periods == "month")
-										Print "<option value='".$periods."' selected>Monthly</option>";
-									else if($periods == "year")
-										Print "<option value='".$periods."' selected>Yearly</option>";
-								}
-								else
-								{
-									if($periods == "week")
-										Print "<option value='".$periods."'>Weekly</option>";
-									else if($periods == "month")
-										Print "<option value='".$periods."'>Monthly</option>";
-									else if($periods == "year")
-										Print "<option value='".$periods."'>Yearly</option>";
-								}
-							}
-								
-							?>
-						</select>
-					</div>
+					
 				</div>
 				<!-- ACTION BUTTONS FOR FILTERS -->
 				<!-- END OF ACTION BUTTONS FOR FILTERS-->
