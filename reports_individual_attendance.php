@@ -167,7 +167,7 @@
 							<th class='text-center'>Name</th>
 							<th class='text-center'>Position</th>
 							<th class='text-center'>Site</th>
-							<th class='text-center'>Has Requirements?</th>
+							<th class='text-center'>Action</th>
 						</tr>
 						<?php
 						//Print "<script>alert('default')</script>";
@@ -188,12 +188,9 @@
 									<td style='vertical-align: inherit'>".$empArr['position']."</td>
 									<td style='vertical-align: inherit'>".$empArr['site']."</td>
 									<td style='vertical-align: inherit'>
-										<button class='btn btn-default' data-toggle='modal' data-target='#selectPeriod'>
-											With
-										</button>
-										<button class='btn btn-default' data-toggle='modal' data-target='#selectPeriod'>
-											Without
-										</button>
+										<a href='reports_individual_empattendance.php' class='btn btn-default'>
+											View Attendance
+										</a>
 									</td>
 								</tr>
 							";
@@ -264,10 +261,6 @@
 			  	}
 			});
 		});
-
-		function viewAttendanceBtn(id, type) {
-			window.location.assign("reports_individual_empattendance.php");
-		}
 
 		function changePeriod(period, position, site, type) {
 
