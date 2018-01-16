@@ -22,86 +22,95 @@
 		require_once("directives/nav.php");
 		?>
 
-		<h3 class="pull-down">Overall Loans Report for employees at [SITE]</h3>
+		<div class="col-md-10 col-md-offset-1">
+			<div class="row"><br>
+				<div class="row text-center">
+					<ol class="breadcrumb text-left">
+						<li><a href='reports_overall_earnings.php?type=Earnings&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Earnings</a></li>
+						<li>Overall Loans Report for employees at [SITE]</li>
+					</ol>
+				</div>
+			</div>
 
-		<div>
-			<button class="btn btn-default pull-down">
-				Print [PERIOD]
-			</button>
+			<div>
+				<button class="btn btn-default pull-down">
+					Print [PERIOD]
+				</button>
 
-			<table class="table table-bordered pull-down">
-				<tr>
-					<td colspan="3">
-						Period: Weekly/Monthly/Yearly
-					</td>
-					<td colspan="5" rowspan="2">
-						Loan Type Report
-					</td>
-					<td rowspan="3">
-						Balance
-					</td>
-				</tr>
-				<tr>
-					<td colspan="3">
-						Date: [START] to [END]
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Name
-					</td>
-					<td>
-						Site
-					</td>
-					<td>
-						Position
-					</td>
-					<td>
-						Date
-					</td>
-					<td>
-						SSS
-					</td>
-					<td>
-						PagIBIG
-					</td>
-					<td>
-						Old Vale
-					</td>
-					<td>
-						New Vale
-					</td>
-				</tr>
-				<tr>
-					<td>
-						[NAME]
-					</td>
-					<td>
-						[SITE]
-					</td>
-					<td>
-						[POSITION]
-					</td>
-					<td>
-						[DATE]
-					</td>
-					<td>
-						$$$
-					</td>
-					<td>
-						$$$
-					</td>
-					<td>
-						$$$
-					</td>
-					<td>
-						$$$
-					</td>
-					<td>
-						$$$
-					</td>
-				</tr>
-			</table>
+				<table class="table table-bordered pull-down">
+					<tr>
+						<td colspan="3">
+							Period: Weekly/Monthly/Yearly
+						</td>
+						<td colspan="5" rowspan="2">
+							Loan Type Report
+						</td>
+						<td rowspan="3">
+							Balance
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							Date: [START] to [END]
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Name
+						</td>
+						<td>
+							Site
+						</td>
+						<td>
+							Position
+						</td>
+						<td>
+							Date
+						</td>
+						<td>
+							SSS
+						</td>
+						<td>
+							PagIBIG
+						</td>
+						<td>
+							Old Vale
+						</td>
+						<td>
+							New Vale
+						</td>
+					</tr>
+					<tr>
+						<td>
+							[NAME]
+						</td>
+						<td>
+							[SITE]
+						</td>
+						<td>
+							[POSITION]
+						</td>
+						<td>
+							[DATE]
+						</td>
+						<td>
+							$$$
+						</td>
+						<td>
+							$$$
+						</td>
+						<td>
+							$$$
+						</td>
+						<td>
+							$$$
+						</td>
+						<td>
+							$$$
+						</td>
+					</tr>
+				</table>
+			</div>
 		</div>
 
 	</div>

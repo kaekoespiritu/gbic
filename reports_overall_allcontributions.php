@@ -22,389 +22,398 @@
 		require_once("directives/nav.php");
 		?>
 
-		<h3 class="pull-down">Overall Contribution Report for employees at [SITE]</h3>
-		
-		<!--TODO: Make accordion style here to view WEEKLY/MONTHLY/YEARLY-->
-		<table class="table table-bordered pull-down">
-			<button class="btn btn-default pulldown">
-				Print Weekly
-			</button>
-			<tr>
-				<td colspan="11">
-					Weekly Expenses
-				</td>	
-			</tr>
-			<tr>
-				<td rowspan="2">
-					Name
-				</td>
-				<td rowspan="2">
-					Position
-				</td>
-				<td rowspan="2">
-					Site
-				</td>
-				<td rowspan="2">
-					Salary
-				</td>
-				<td colspan="2">
-					SSS
-				</td>
-				<td colspan="2">
-					PagIBIG
-				</td>
-				<td colspan="2">
-					PhilHealth
-				</td>
-				<td rowspan="2">
-					Total
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Employee
-				</td>
-				<td>
-					Employer
-				</td>
-				<td>
-					Employee
-				</td>
-				<td>
-					Employer
-				</td>
-				<td>
-					Employee
-				</td>
-				<td>
-					Employer
-				</td>
-			</tr>
-			<tr>
-				<td>
-					[NAME]
-				</td>
-				<td>
-					[POSITION]
-				</td>
-				<td>
-					[SITE]
-				</td>
-				<td>
-					[SALARY]
-				</td>
-				<td>
-					$$$
-				</td>
-				<td>
-					$$$
-				</td>
-				<td>
-					$$$
-				</td>
-				<td>
-					$$$
-				</td>
-				<td>
-					$$$
-				</td>
-				<td>
-					$$$
-				</td>
-				<td>
-					$$$
-				</td>
-			</tr>
-			<tr>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					Grand Total
-				</td>
-				<td>
-					$$$
-				</td>
-			</tr>
-		</table>
+		<div class="col-md-10 col-md-offset-1">
+			<div class="row"><br>
+				<div class="row text-center">
+					<ol class="breadcrumb text-left">
+						<li><a href='reports_overall_earnings.php?type=Earnings&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Earnings</a></li>
+						<li>Overall Contribution Report for employees at [SITE]</li>
+					</ol>
+				</div>
+			</div>
 
-		<table class="table table-bordered pull-down">
-			<button class="btn btn-default pulldown">
-				Print Monthly
-			</button>
-			<tr>
-				<td colspan="11">
-					Monthly Expenses
-				</td>	
-			</tr>
-			<tr>
-				<td rowspan="2">
-					Name
-				</td>
-				<td rowspan="2">
-					Position
-				</td>
-				<td rowspan="2">
-					Site
-				</td>
-				<td rowspan="2">
-					Salary
-				</td>
-				<td colspan="2">
-					SSS
-				</td>
-				<td colspan="2">
-					PagIBIG
-				</td>
-				<td colspan="2">
-					PhilHealth
-				</td>
-				<td rowspan="2">
-					Total
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Employee
-				</td>
-				<td>
-					Employer
-				</td>
-				<td>
-					Employee
-				</td>
-				<td>
-					Employer
-				</td>
-				<td>
-					Employee
-				</td>
-				<td>
-					Employer
-				</td>
-			</tr>
-			<tr>
-				<td>
-					[NAME]
-				</td>
-				<td>
-					[POSITION]
-				</td>
-				<td>
-					[SITE]
-				</td>
-				<td>
-					[SALARY]
-				</td>
-				<td>
-					$$$
-				</td>
-				<td>
-					$$$
-				</td>
-				<td>
-					$$$
-				</td>
-				<td>
-					$$$
-				</td>
-				<td>
-					$$$
-				</td>
-				<td>
-					$$$
-				</td>
-				<td>
-					$$$
-				</td>
-			</tr>
-			<tr>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					Grand Total
-				</td>
-				<td>
-					$$$
-				</td>
-			</tr>
-		</table>
+			<!--TODO: Make accordion style here to view WEEKLY/MONTHLY/YEARLY-->
+			<table class="table table-bordered pull-down">
+				<button class="btn btn-default pulldown">
+					Print Weekly
+				</button>
+				<tr>
+					<td colspan="11">
+						Weekly Expenses
+					</td>	
+				</tr>
+				<tr>
+					<td rowspan="2">
+						Name
+					</td>
+					<td rowspan="2">
+						Position
+					</td>
+					<td rowspan="2">
+						Site
+					</td>
+					<td rowspan="2">
+						Salary
+					</td>
+					<td colspan="2">
+						SSS
+					</td>
+					<td colspan="2">
+						PagIBIG
+					</td>
+					<td colspan="2">
+						PhilHealth
+					</td>
+					<td rowspan="2">
+						Total
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Employee
+					</td>
+					<td>
+						Employer
+					</td>
+					<td>
+						Employee
+					</td>
+					<td>
+						Employer
+					</td>
+					<td>
+						Employee
+					</td>
+					<td>
+						Employer
+					</td>
+				</tr>
+				<tr>
+					<td>
+						[NAME]
+					</td>
+					<td>
+						[POSITION]
+					</td>
+					<td>
+						[SITE]
+					</td>
+					<td>
+						[SALARY]
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+				<tr>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						Grand Total
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+			</table>
 
-		<table class="table table-bordered pull-down">
-			<button class="btn btn-default pulldown">
-				Print Yearly
-			</button>
-			<tr>
-				<td colspan="11">
-					Yearly Expenses
-				</td>	
-			</tr>
-			<tr>
-				<td rowspan="2">
-					Name
-				</td>
-				<td rowspan="2">
-					Position
-				</td>
-				<td rowspan="2">
-					Site
-				</td>
-				<td rowspan="2">
-					Salary
-				</td>
-				<td colspan="2">
-					SSS
-				</td>
-				<td colspan="2">
-					PagIBIG
-				</td>
-				<td colspan="2">
-					PhilHealth
-				</td>
-				<td rowspan="2">
-					Total
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Employee
-				</td>
-				<td>
-					Employer
-				</td>
-				<td>
-					Employee
-				</td>
-				<td>
-					Employer
-				</td>
-				<td>
-					Employee
-				</td>
-				<td>
-					Employer
-				</td>
-			</tr>
-			<tr>
-				<td>
-					[NAME]
-				</td>
-				<td>
-					[POSITION]
-				</td>
-				<td>
-					[SITE]
-				</td>
-				<td>
-					[SALARY]
-				</td>
-				<td>
-					$$$
-				</td>
-				<td>
-					$$$
-				</td>
-				<td>
-					$$$
-				</td>
-				<td>
-					$$$
-				</td>
-				<td>
-					$$$
-				</td>
-				<td>
-					$$$
-				</td>
-				<td>
-					$$$
-				</td>
-			</tr>
-			<tr>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					Grand Total
-				</td>
-				<td>
-					$$$
-				</td>
-			</tr>
-		</table>
+			<table class="table table-bordered pull-down">
+				<button class="btn btn-default pulldown">
+					Print Monthly
+				</button>
+				<tr>
+					<td colspan="11">
+						Monthly Expenses
+					</td>	
+				</tr>
+				<tr>
+					<td rowspan="2">
+						Name
+					</td>
+					<td rowspan="2">
+						Position
+					</td>
+					<td rowspan="2">
+						Site
+					</td>
+					<td rowspan="2">
+						Salary
+					</td>
+					<td colspan="2">
+						SSS
+					</td>
+					<td colspan="2">
+						PagIBIG
+					</td>
+					<td colspan="2">
+						PhilHealth
+					</td>
+					<td rowspan="2">
+						Total
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Employee
+					</td>
+					<td>
+						Employer
+					</td>
+					<td>
+						Employee
+					</td>
+					<td>
+						Employer
+					</td>
+					<td>
+						Employee
+					</td>
+					<td>
+						Employer
+					</td>
+				</tr>
+				<tr>
+					<td>
+						[NAME]
+					</td>
+					<td>
+						[POSITION]
+					</td>
+					<td>
+						[SITE]
+					</td>
+					<td>
+						[SALARY]
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+				<tr>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						Grand Total
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+			</table>
+
+			<table class="table table-bordered pull-down">
+				<button class="btn btn-default pulldown">
+					Print Yearly
+				</button>
+				<tr>
+					<td colspan="11">
+						Yearly Expenses
+					</td>	
+				</tr>
+				<tr>
+					<td rowspan="2">
+						Name
+					</td>
+					<td rowspan="2">
+						Position
+					</td>
+					<td rowspan="2">
+						Site
+					</td>
+					<td rowspan="2">
+						Salary
+					</td>
+					<td colspan="2">
+						SSS
+					</td>
+					<td colspan="2">
+						PagIBIG
+					</td>
+					<td colspan="2">
+						PhilHealth
+					</td>
+					<td rowspan="2">
+						Total
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Employee
+					</td>
+					<td>
+						Employer
+					</td>
+					<td>
+						Employee
+					</td>
+					<td>
+						Employer
+					</td>
+					<td>
+						Employee
+					</td>
+					<td>
+						Employer
+					</td>
+				</tr>
+				<tr>
+					<td>
+						[NAME]
+					</td>
+					<td>
+						[POSITION]
+					</td>
+					<td>
+						[SITE]
+					</td>
+					<td>
+						[SALARY]
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+				<tr>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						Grand Total
+					</td>
+					<td>
+						$$$
+					</td>
+				</tr>
+			</table>
+		</div>
 
 	</div>
 

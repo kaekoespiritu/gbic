@@ -22,134 +22,143 @@
 		require_once("directives/nav.php");
 		?>
 
-		<h3 class="pull-down">Old Vale Report for [NAME], [POSITION] at [SITE]</h3>
-
-		<div class="col-md-4">
-			<div class="pull-down">
-			<button class="btn btn-default">
-				Print Weekly
-			</button>
-			<table class="table table-bordered pull-down">
-				<tr>
-					<td colspan="4">
-						Date: [START] to [END]
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Date
-					</td>
-					<td>
-						Loaned Amount
-					</td>
-					<td>
-						Balance to Pay
-					</td>
-					<td>
-						Approved By:
-					</td>
-				</tr>
-				<tr>
-					<td>
-						[DATE]
-					</td>
-					<td>
-						$$$
-					</td>
-					<td>
-						$$$
-					</td>
-					<td>
-						[APPROVED BY]
-					</td>
-				</tr>
-			</table>
+		<div class="col-md-10 col-md-offset-1">
+			<div class="row"><br>
+				<div class="row text-center">
+					<ol class="breadcrumb text-left">
+						<li><a href='reports_individual_loans.php?type=Loans&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Loans</a></li>
+						<li>Individual Old Vale Report for [NAME], [POSITION] at [SITE]</li>
+					</ol>
+				</div>
 			</div>
-		</div>
 
-		<div class="col-md-4">
-			<div class="pull-down">
-			<button class="btn btn-default">
-				Print Monthly
-			</button>
-			<table class="table table-bordered pull-down">
-				<tr>
-					<td colspan="4">
-						Date: [START] to [END]
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Date
-					</td>
-					<td>
-						Loaned Amount
-					</td>
-					<td>
-						Balance to Pay
-					</td>
-					<td>
-						Approved By:
-					</td>
-				</tr>
-				<tr>
-					<td>
-						[DATE]
-					</td>
-					<td>
-						$$$
-					</td>
-					<td>
-						$$$
-					</td>
-					<td>
-						[APPROVED BY]
-					</td>
-				</tr>
-			</table>
+			<div class="col-md-4">
+				<div class="pull-down">
+				<button class="btn btn-default">
+					Print Weekly
+				</button>
+				<table class="table table-bordered pull-down">
+					<tr>
+						<td colspan="4">
+							Date: [START] to [END]
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Date
+						</td>
+						<td>
+							Loaned Amount
+						</td>
+						<td>
+							Balance to Pay
+						</td>
+						<td>
+							Approved By:
+						</td>
+					</tr>
+					<tr>
+						<td>
+							[DATE]
+						</td>
+						<td>
+							$$$
+						</td>
+						<td>
+							$$$
+						</td>
+						<td>
+							[APPROVED BY]
+						</td>
+					</tr>
+				</table>
+				</div>
 			</div>
-		</div>
 
-		<div class="col-md-4">
-			<div class="pull-down">
-			<button class="btn btn-default">
-				Print Yearly
-			</button>
-			<table class="table table-bordered pull-down">
-				<tr>
-					<td colspan="4">
-						Date: [START] to [END]
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Date
-					</td>
-					<td>
-						Loaned Amount
-					</td>
-					<td>
-						Balance to Pay
-					</td>
-					<td>
-						Approved By:
-					</td>
-				</tr>
-				<tr>
-					<td>
-						[DATE]
-					</td>
-					<td>
-						$$$
-					</td>
-					<td>
-						$$$
-					</td>
-					<td>
-						[APPROVED BY]
-					</td>
-				</tr>
-			</table>
+			<div class="col-md-4">
+				<div class="pull-down">
+				<button class="btn btn-default">
+					Print Monthly
+				</button>
+				<table class="table table-bordered pull-down">
+					<tr>
+						<td colspan="4">
+							Date: [START] to [END]
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Date
+						</td>
+						<td>
+							Loaned Amount
+						</td>
+						<td>
+							Balance to Pay
+						</td>
+						<td>
+							Approved By:
+						</td>
+					</tr>
+					<tr>
+						<td>
+							[DATE]
+						</td>
+						<td>
+							$$$
+						</td>
+						<td>
+							$$$
+						</td>
+						<td>
+							[APPROVED BY]
+						</td>
+					</tr>
+				</table>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<div class="pull-down">
+				<button class="btn btn-default">
+					Print Yearly
+				</button>
+				<table class="table table-bordered pull-down">
+					<tr>
+						<td colspan="4">
+							Date: [START] to [END]
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Date
+						</td>
+						<td>
+							Loaned Amount
+						</td>
+						<td>
+							Balance to Pay
+						</td>
+						<td>
+							Approved By:
+						</td>
+					</tr>
+					<tr>
+						<td>
+							[DATE]
+						</td>
+						<td>
+							$$$
+						</td>
+						<td>
+							$$$
+						</td>
+						<td>
+							[APPROVED BY]
+						</td>
+					</tr>
+				</table>
+				</div>
 			</div>
 		</div>
 
