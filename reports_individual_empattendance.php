@@ -22,10 +22,19 @@
 		require_once("directives/nav.php");
 		?>
 
-		<h3 class="pull-down">Weekly Attendance Report for [NAME], [POSITION] at [SITE]</h3>
+		<div class="col-md-10 col-md-offset-1">
+			<div class="row"><br>
+				<div class="row text-center">
+					<ol class="breadcrumb text-left">
+						<li><a href='reports_individual_attendance.php' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Attendance</a></li>
+						<li>Individual Weekly Attendance Report for [NAME], [POSITION] at [SITE]</li>
+					</ol>
+				</div>
+			</div>
+		</div>
 
 		<div class="pull-down">
-			<button class="btn btn-default">
+			<button class="btn btn-default pull-down">
 				Print Attendance
 			</button>
 			<table class="table table-bordered pull-down">
