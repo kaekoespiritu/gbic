@@ -26,7 +26,7 @@
 			<div class="row"><br>
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
-						<li><a href='reports_individual_loans.php' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Loans</a></li>
+						<li><a href='reports_individual_loans.php?type=Loans&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Loans</a></li>
 						<li>Individual Old Vale Report for [NAME], [POSITION] at [SITE]</li>
 					</ol>
 				</div>
