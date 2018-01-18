@@ -69,7 +69,7 @@
 		?>
 
 
-<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-10 col-md-offset-1">
 			<div class="row"><br>
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">

@@ -40,7 +40,17 @@
 		require_once("directives/nav.php");
 		?>
 
-		<h3 class="pull-down">13th Month Pay Report for <?php Print $employeeInfo?></h3>
+		<div class="col-md-10 col-md-offset-1">
+			<div class="row"><br>
+				<div class="row text-center">
+					<ol class="breadcrumb text-left">
+						<li><a href='reports_individual_earnings.php?type=Earnings&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Earnings</a></li>
+						<li>Overall 13th Month Pay Report for <?php Print $employeeInfo?></li>
+					</ol>
+				</div>
+			</div>
+
+		
 		Period:
 		<select onchange="periodChange(this.value)">
 			<?php 
