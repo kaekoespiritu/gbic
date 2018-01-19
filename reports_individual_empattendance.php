@@ -26,7 +26,7 @@
 			<div class="row"><br>
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
-						<li><a href='reports_individual_attendance.php' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Attendance</a></li>
+						<li><a href='reports_individual_attendance.php?type=Attendance&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Attendance</a></li>
 						<li>Individual Weekly Attendance Report for [NAME], [POSITION] at [SITE]</li>
 					</ol>
 				</div>
