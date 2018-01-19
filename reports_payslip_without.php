@@ -212,7 +212,7 @@
 		});
 
 		function viewPayslipBtn(id, type){
-			window.location.assign("reports_payslip_with_emp.php");
+			window.location.assign("reports_payslip_without_emp.php");
 		}
 
 		function changePeriod(period, position, site, type) {
