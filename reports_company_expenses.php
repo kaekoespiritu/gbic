@@ -108,7 +108,7 @@ if(isset($_GET['search']))
 				/* If location is long, font-size to smaller */
 				if(strlen($row['location'])>=16)
 				{
-					Print '	<a href="reports_company_expenses_overall.php" onclick="dataModalTransfer(\"'.$row['location'].'\")" style="color: white !important; text-decoration: none !important; cursor: pointer;">
+					Print '	<a href="reports_company_expenses_overall.php?site='.$row['location'].'&period=week&position=all&req=all" onclick="dataModalTransfer(\"'.$row['location'].'\")" style="color: white !important; text-decoration: none !important; cursor: pointer;">
 								<div class="sitebox">
 									<span class="smalltext">'
 										. $row['location'] .
@@ -122,7 +122,7 @@ if(isset($_GET['search']))
 				}
 				else
 				{
-					Print '	<a href="reports_company_expenses_overall.php" onclick="dataModalTransfer(\''.$row['location'].'\')" style="color: white !important; text-decoration: none !important; cursor: pointer;">
+					Print '	<a href="reports_company_expenses_overall.php?site='.$row['location'].'&period=week&position=all&req=all" onclick="dataModalTransfer(\''.$row['location'].'\')" style="color: white !important; text-decoration: none !important; cursor: pointer;">
 								<div class="sitebox">
 									<span class="autofit">'
 										. $row['location'] .

@@ -3,10 +3,10 @@
 	include('directives/session.php');
 	include('directives/db.php');
 
-	// $site = $_GET['site'];
-	// $require = $_GET['req'];
-	// $position = $_GET['position'];
-	// $period = $_GET['period'];
+	$site = $_GET['site'];
+	$require = $_GET['req'];
+	$position = $_GET['position'];
+	$period = $_GET['period'];
 
 	// //Checks if site in HTTP is altered by user manually
 	// $siteChecker = "SELECT * FROM site WHERE location = '$site'";
@@ -72,8 +72,8 @@
 			<div class="row"><br>
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
-						<li><a href='reports_overall_earnings.php?type=Earnings&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Earnings</a></li>
-						<li>Overall 13th Month Pay Report for <?php Print $site?></li>
+						<li><a href='reports_company_expenses.php?type=Expenses&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Expenses</a></li>
+						<li>Overall Expense Report for <?php Print $site?></li>
 					</ol>
 				</div>
 			</div>
