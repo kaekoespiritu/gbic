@@ -70,7 +70,7 @@
 					<div class="form-group">
 						<input type="text" placeholder="Search" id="search_box" name="txt_search"  class="form-control" autocomplete="off">
 					</div>
-					<div id="search_result" class="report-search"></div>
+					
 				</div>
 			<!-- FOR LIVE SEARCH -->
 				<input type="hidden" id="report_type" value="<?php Print $reportType?>">
@@ -123,51 +123,12 @@
 				<!-- END OF ACTION BUTTONS FOR FILTERS-->
 			</div>
 
-			<!-- Table of employees -->
-			<div class="row">
-				<div class="col-md-10 col-md-offset-1">
-					<table class="table table-bordered table-condensed" style="background-color:white;">
-
-						<tr>
-							<th class='fixedWidth text-center'>Employee ID</th>
-							<th class='text-center'>Name</th>
-							<th class='text-center'>Position</th>
-							<th class='text-center'>Site</th>
-							<th class='text-center'>Actions</th>
-						</tr>
-						<?php
-						//Print "<script>alert('default')</script>";
-							$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
-					    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
-					    	$startpoint = ($page * $limit) - $limit;
-					        $statement = "employee WHERE employment_status = '1' ORDER BY site ASC, position ASC, lastname ASC";
-
-							$res=mysql_query("select * from {$statement} LIMIT {$startpoint} , {$limit}");
-
-						while($empArr = mysql_fetch_assoc($res))
-						{
-							Print "
-								
-								<tr>
-									<td style='vertical-align: inherit'>".$empArr['empid']."</td>
-									<td style='vertical-align: inherit'>".$empArr['lastname'].", ".$empArr['firstname']."</td>
-									<td style='vertical-align: inherit'>".$empArr['position']."</td>
-									<td style='vertical-align: inherit'>".$empArr['site']."</td>
-									<td style='vertical-align: inherit'>
-										<button class='btn btn-default' onclick='viewPayrollBtn(\"".$empArr['empid']."\", \"".$period."\")'>
-											Payroll
-										</button>
-										<button class='btn btn-default' onclick='view13thmonthpayBtn(\"".$empArr['empid']."\", \"".$period."\")'>
-											13th Month Pay
-										</button>
-									</td>
-								</tr>
-							";
-						}
-						?>
-					</table>
-				</div>
-			</div>
+			
+						<div id="search_result" class="" >
+							
+						</div>
+							
+						
 			<?php
 				echo "<div id='pagingg' >";
 				if($statement && $limit && $page && $site_page && $position_page && $reportType && $period)
@@ -185,14 +146,18 @@
 
 
 		$(document).ready(function(){
-			function load_data(search)
+			var period = $('#period').val();
+			load_data("",period);
+			function load_data(search, period)
 			{
 
 			  	$.ajax({
 			   		url:"livesearch_reports.php",
 			   		method:"POST",
 			   		data:{
-			   			search: search
+			   			search: search,
+			   			period:period
+
 			   		},
 			   		success:function(data)
 			   		{
@@ -202,14 +167,9 @@
 			}
 			$('#search_box').keyup(function(){
 			  	var search = $(this).val();
-			  	if(search != '')
-			  	{
-			   		load_data(search);
-			  	}
-			  	else
-			  	{
-			   		load_data();
-			  	}
+			  	
+			   		load_data(search, period);
+			  	
 			});
 		});
 
