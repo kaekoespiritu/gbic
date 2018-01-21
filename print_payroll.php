@@ -132,8 +132,6 @@ $activeSheet->getStyle('A3:AA3')->applyFromArray($border_all_medium);//Header
 $activeSheet->getStyle('A4:AA'.$rowCounter)->applyFromArray($border_all_thin);//Content
 $activeSheet->getStyle('V'.$grandTotalRow.':Z'.$grandTotalRow)->applyFromArray($border_allsides_medium);//Grand Total
 
-
-
 header('Content-Type: application/vnd.ms-excel');
 header('Content-Disposition: attachment; filename="'.$filename.'"');
 header('Cache-Control: max-age=0');
