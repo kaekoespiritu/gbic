@@ -26,7 +26,6 @@ if(isset($_POST["search"]))
     $limit = 20; //if you want to dispaly 10 records per page then you have to change here    
     $startpoint = ($page * $limit) - $limit;
 
-    
     if($site_page != "null")
     {
         if($position_page != "null")
