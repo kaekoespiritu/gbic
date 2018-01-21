@@ -33,69 +33,7 @@
 				</div>
 			</div>
 
-			<div class="col-md-4">
-				<div class="pull-down">
-				<button class="btn btn-default">
-					Print Weekly
-				</button>
-				<table class="table table-bordered pull-down">
-					<tr>
-						<td colspan="4">
-							[NAME], [POSITION] at [SITE] 
-						</td>
-					</tr>
-					<tr>
-						<td rowspan="2">
-							Week
-						</td>
-						<td colspan="2">
-							SSS
-						</td>
-						<td rowspan="2">
-							Total
-						</td>
-					</tr>
-					<tr>
-						<td>
-							Employee
-						</td>
-						<td>
-							Employer
-						</td>
-					</tr>
-					<tr>
-						<td>
-							Dec. 1-7
-						</td>
-						<td>
-							$$$
-						</td>
-						<td>
-							$$$
-						</td>
-						<td>
-							$$$
-						</td>
-					</tr>
-					<tr>
-						<td>
-							
-						</td>
-						<td>
-							
-						</td>
-						<td>
-							Grand Total
-						</td>
-						<td>
-							$$$
-						</td>
-					</tr>
-				</table>
-				</div>
-			</div>
-
-			<div class="col-md-4">
+			<div class="col-md-6">
 				<div class="pull-down">
 				<button class="btn btn-default">
 					Print Monthly
@@ -157,67 +95,6 @@
 				</div>
 			</div>
 
-			<div class="col-md-4">
-				<div class="pull-down">
-				<button class="btn btn-default">
-					Print Yearly
-				</button>
-				<table class="table table-bordered pull-down">
-					<tr>
-						<td colspan="4">
-							[NAME], [POSITION] at [SITE] 
-						</td>
-					</tr>
-					<tr>
-						<td rowspan="2">
-							Year
-						</td>
-						<td colspan="2">
-							SSS
-						</td>
-						<td rowspan="2">
-							Total
-						</td>
-					</tr>
-					<tr>
-						<td>
-							Employee
-						</td>
-						<td>
-							Employer
-						</td>
-					</tr>
-					<tr>
-						<td>
-							2017
-						</td>
-						<td>
-							$$$
-						</td>
-						<td>
-							$$$
-						</td>
-						<td>
-							$$$
-						</td>
-					</tr>
-					<tr>
-						<td>
-							
-						</td>
-						<td>
-							
-						</td>
-						<td>
-							Grand Total
-						</td>
-						<td>
-							$$$
-						</td>
-					</tr>
-				</table>
-				</div>
-			</div>
 		</div>
 
 	</div>

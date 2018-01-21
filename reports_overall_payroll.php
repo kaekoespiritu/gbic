@@ -234,21 +234,26 @@
 							$employee = "SELECT * FROM employee WHERE site = '$location' AND complete_doc = '0'ORDER BY lastname ASC, position ASC";
 						}
 
+					
+					$dataBool = true;//Boolean if there is data for the payroll
+					$employeeQuery = mysql_query($employee);
+					if(mysql_num_rows($employeeQuery) >= 1)
+					{
+						Print "<script>console.log('1')</script>";
+						$color = "#ECF0F1";//for alternating color
+						$rowNum = 1;
 						
-
-						$employeeQuery = mysql_query($employee);
-						if(mysql_num_rows($employeeQuery) >= 1)
+						while($employeeArr = mysql_fetch_assoc($employeeQuery))
 						{
-							$color = "#ECF0F1";//for alternating color
-							$rowNum = 1;
-							while($employeeArr = mysql_fetch_assoc($employeeQuery))
+							Print "<script>console.log('2')</script>";
+							$emplid = $employeeArr['empid'];
+							$payroll = "SELECT * FROM payroll WHERE date = '$date' AND empid='$emplid'";
+							$payrollQuery = mysql_query($payroll);
+							if(mysql_num_rows($payrollQuery) >= 1)
 							{
-								$emplid = $employeeArr['empid'];
-								$payroll = "SELECT * FROM payroll WHERE date = '$date' AND empid='$emplid'";
-								$payrollQuery = mysql_query($payroll);
-								if(mysql_num_rows($payrollQuery) >= 1)
-								{
-									$payrollArr = mysql_fetch_assoc($payrollQuery);
+								$dataBool = false;
+								Print "<script>console.log('3')</script>";
+								$payrollArr = mysql_fetch_assoc($payrollQuery);
 
 									$color = ($rowNum % 2 == 0 ? "#ECF0F1" : "#FDFEFE");//alternating color
 
@@ -334,24 +339,40 @@
 											</tr>';
 										
 										$rowNum++;//increment the row number
-								}
-								
 							}
-							Print '</table>';
+								
 						}
-						else
-						{
-							Print '	<tr>
-										<td colspan="27">
-											<h4>No Payroll data at the moment</h4>
-										</td>
-									</tr>';
-						}
+
+
+							
+					}
 						
-			}
-			else {
-				Print "<h4 class='pull-down-more'>Select Requirements and Date to view Payroll report.</h4>";
-			}
+					
+					else
+					{
+						$dataBool = false;
+						Print '	<tr>
+									<td colspan="27">
+										<h4>No Payroll data at the moment</h4>
+									</td>
+								</tr>';
+					}
+
+					if($dataBool)
+					{
+						Print '	<tr>
+									<td colspan="27">
+										<h4>No Payroll data at the moment</h4>
+									</td>
+								</tr>';
+					}
+					Print '</table>';
+					
+		}
+		else
+		{
+			Print "<h4 class='pull-down-more'>Select Requirements and Date to view Payroll report.</h4>";
+		}
 		?>
 		
 
