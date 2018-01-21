@@ -33,7 +33,24 @@
 				</div>
 			</div>
 
-			<div class="col-md-6">
+			<div class="col-md-10 col-md-offset-1">
+				Period:
+				<select onchange="periodChange(this.value)">
+					<?php 
+						if($period == "week")
+							Print "<option value='week' selected>Weekly</option>";
+						else
+							Print "<option value='week'>Weekly</option>";
+						if($period == "month")
+							Print "<option value='month'selected>Monthly</option>";
+						else
+							Print "<option value='month'>Monthly</option>";
+						if($period == "year")
+							Print "<option value='year' selected>Yearly</option>";
+						else
+							Print "<option value='year'>Yearly</option>";
+					?>
+				</select>
 				<div class="pull-down">
 				<button class="btn btn-default">
 					Print Monthly

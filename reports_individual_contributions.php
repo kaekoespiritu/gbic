@@ -75,9 +75,14 @@
 			<!-- FOR LIVE SEARCH -->
 				<input type="hidden" id="report_type" value="<?php Print $reportType?>">
 				<input type="hidden" id="period" value="<?php Print $period?>">
-				<input type="hidden" id="position" value="<?php Print $position_page?>">
+				<input type="hidden" id="position_page" value="<?php Print $position_page?>">
 				<input type="hidden" id="site" value="<?php Print $site_page?>">
-
+				<?php 
+					if(isset($_GET["page"]))
+						Print "<input type='hidden' id='page' value='".$_GET["page"]."'>";
+					else
+						Print "<input type='hidden' id='page' value='1'>";
+				?>
 
 
 				<!-- FILTER EMPLOYEE BY POSITION -->
@@ -120,11 +125,12 @@
 					<button type="button" class="btn btn-danger text-right" onclick="clearFilter()">Clear Filters</button>
 					
 				</div>
+
 				<!-- ACTION BUTTONS FOR FILTERS -->
 				<!-- END OF ACTION BUTTONS FOR FILTERS-->
 			</div>
-
-			<!-- Table of employees -->
+			<div id="search_result" class="col-md-9" style="margin-top: 15px"></div>
+			<!-- Table of employees
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
 					<table class="table table-bordered table-condensed" style="background-color:white;">
@@ -135,48 +141,48 @@
 							<th class='text-center'>Position</th>
 							<th class='text-center'>Site</th>
 							<th class='text-center'>Actions</th>
-						</tr>
+						</tr> -->
 						<?php
-						//Print "<script>alert('default')</script>";
-							$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
-					    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
-					    	$startpoint = ($page * $limit) - $limit;
-					        $statement = "employee WHERE employment_status = '1' ORDER BY site ASC, position ASC, lastname ASC";
+						// //Print "<script>alert('default')</script>";
+						// 	$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
+					 //    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
+					 //    	$startpoint = ($page * $limit) - $limit;
+					 //        $statement = "employee WHERE employment_status = '1' ORDER BY site ASC, position ASC, lastname ASC";
 
-							$res=mysql_query("select * from {$statement} LIMIT {$startpoint} , {$limit}");
+						// 	$res=mysql_query("select * from {$statement} LIMIT {$startpoint} , {$limit}");
 
-						while($empArr = mysql_fetch_assoc($res))
-						{
-							Print "
+						// while($empArr = mysql_fetch_assoc($res))
+						// {
+						// 	Print "
 								
-								<tr>
-									<td style='vertical-align: inherit'>".$empArr['empid']."</td>
-									<td style='vertical-align: inherit'>".$empArr['lastname'].", ".$empArr['firstname']."</td>
-									<td style='vertical-align: inherit'>".$empArr['position']."</td>
-									<td style='vertical-align: inherit'>".$empArr['site']."</td>
-									<td style='vertical-align: inherit'>
-										<button class='btn btn-default' onclick='viewSSSBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
-											SSS
-										</button>
-										<button class='btn btn-default' onclick='viewPhilHealthBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
-											PhilHealth
-										</button>
-										<button class='btn btn-default' onclick='viewPagIBIGBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
-											PagIBIG
-										</button>
-									</td>
-								</tr>
-							";
-						}
+						// 		<tr>
+						// 			<td style='vertical-align: inherit'>".$empArr['empid']."</td>
+						// 			<td style='vertical-align: inherit'>".$empArr['lastname'].", ".$empArr['firstname']."</td>
+						// 			<td style='vertical-align: inherit'>".$empArr['position']."</td>
+						// 			<td style='vertical-align: inherit'>".$empArr['site']."</td>
+						// 			<td style='vertical-align: inherit'>
+						// 				<button class='btn btn-default' onclick='viewSSSBtn(\"".$empArr['empid']."\")'>
+						// 					SSS
+						// 				</button>
+						// 				<button class='btn btn-default' onclick='viewPhilHealthBtn(\"".$empArr['empid']."\")'>
+						// 					PhilHealth
+						// 				</button>
+						// 				<button class='btn btn-default' onclick='viewPagIBIGBtn(\"".$empArr['empid']."\")'>
+						// 					PagIBIG
+						// 				</button>
+						// 			</td>
+						// 		</tr>
+						// 	";
+						// }
 						?>
-					</table>
+			<!-- 		</table>
 				</div>
-			</div>
+			</div> -->
 			<?php
-				echo "<div id='pagingg' >";
-				if($statement && $limit && $page && $site_page && $position_page && $reportType && $period)
-					echo pagination($statement,$limit,$page, $site_page, $position_page, $reportType, $period);
-				echo "</div>";
+				// echo "<div id='pagingg' >";
+				// if($statement && $limit && $page && $site_page && $position_page && $reportType && $period)
+				// 	echo pagination($statement,$limit,$page, $site_page, $position_page, $reportType, $period);
+				// echo "</div>";
 			?>
 		</div>
 	</div>
@@ -189,14 +195,31 @@
 
 
 		$(document).ready(function(){
-			function load_data(search)
+			var period = $('#period').val();
+			var site = $('#site').val();
+			var position = $('#position_page').val();
+			var report_type = $('#report_type').val();
+			var page = "";
+			if($('#page').length != 0)
+			{
+				page = $('#page').val();
+			}
+
+			load_data("",period,site, report_type, position, page);
+			function load_data(search, period, site, report_type, position, page)
 			{
 
 			  	$.ajax({
 			   		url:"livesearch_reports.php",
 			   		method:"POST",
 			   		data:{
-			   			search: search
+			   			search : search,
+			   			period : period,
+			   			site : site,
+			   			report_type : report_type,
+			   			position_page : position,
+			   			page : page
+
 			   		},
 			   		success:function(data)
 			   		{
@@ -206,27 +229,22 @@
 			}
 			$('#search_box').keyup(function(){
 			  	var search = $(this).val();
-			  	if(search != '')
-			  	{
-			   		load_data(search);
-			  	}
-			  	else
-			  	{
-			   		load_data();
-			  	}
+			  	
+			   		load_data(search, period, site, report_type, position, page);
+			  	
 			});
 		});
 
 		function viewPagIBIGBtn(id, type){
-			window.location.assign("reports_individual_pagibig.php");
+			window.location.assign("reports_individual_pagibig.php?empid="+id);
 		}
 
 		function viewPhilHealthBtn(id, type){
-			window.location.assign("reports_individual_philhealth.php");
+			window.location.assign("reports_individual_philhealth.php?empid="+id);
 		}
 
 		function viewSSSBtn(id, type){
-			window.location.assign("reports_individual_sss.php");
+			window.location.assign("reports_individual_sss.php?empid="+id);
 		}
 
 		function changePeriod(period, position, site, type) {

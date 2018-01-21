@@ -459,7 +459,7 @@ include_once('directives/db.php');
 		 function load_data(query)
 		 {
 		  $.ajax({
-		   url:"livesearch_rehire.php",
+		   url:"directives/livesearch_rehire.php",
 		   method:"POST",
 		   data:{
 		   		query:query
