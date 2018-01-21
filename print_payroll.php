@@ -123,14 +123,14 @@ $rowCounter++;//to give space for clearer data
 $grandTotalRow = $rowCounter + 1;
 
 //Grandtotal Merge cell
-$activeSheet->mergeCells('V'.$grandTotalRow.':Z'.$grandTotalRow);
+$activeSheet->mergeCells('Y'.$grandTotalRow.':Z'.$grandTotalRow);
 $GrandTotal = numberExactFormat($GrandTotal, 2, '.');
-$activeSheet->setCellValue('V'.$grandTotalRow, 'TOTAL COST:        '.$GrandTotal);
+$activeSheet->setCellValue('Y'.$grandTotalRow, 'TOTAL COST:        '.$GrandTotal);
 
 //Style for the Spreadsheet
 $activeSheet->getStyle('A3:AA3')->applyFromArray($border_all_medium);//Header 
 $activeSheet->getStyle('A4:AA'.$rowCounter)->applyFromArray($border_all_thin);//Content
-$activeSheet->getStyle('V'.$grandTotalRow.':Z'.$grandTotalRow)->applyFromArray($border_allsides_medium);//Grand Total
+$activeSheet->getStyle('Y'.$grandTotalRow.':Z'.$grandTotalRow)->applyFromArray($border_allsides_medium);//Grand Total
 
 
 

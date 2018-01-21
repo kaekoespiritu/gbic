@@ -104,10 +104,17 @@
 			?>
 		</select>
 
+		
+
 		<?php 
 
 		if(isset($_POST['payrollDate']))
 		{
+			Print '<div class="row pull-down">
+						<a class="btn btn-default" href="print_payroll.php?site='.$location.'&date='.$_POST['payrollDate'].'">
+							Print Payroll
+						</a>
+					</div>';
 			if($req == 'all')
 				$reqMessage = "All ".$location." employees";
 			else if($req == 'withReq')
@@ -230,7 +237,6 @@
 					$employeeQuery = mysql_query($employee);
 					if(mysql_num_rows($employeeQuery) >= 1)
 					{
-						Print "<script>console.log('".mysql_num_rows($employeeQuery)."')</script>";
 						$color = "#ECF0F1";//for alternating color
 						$rowNum = 1;
 						while($employeeArr = mysql_fetch_assoc($employeeQuery))
