@@ -195,8 +195,8 @@ if(isset($_GET['search']))
 
 		function dataModalTransfer(site) {
 			console.log(site);
-			document.getElementById("payrollButton").href = "reports_overall_payroll.php?req=all&site="+site;
-			document.getElementById("13thMonthButton").href = "reports_overall_13thmonthpay.php?position=all&period=week&req=all&site="+site;
+			document.getElementById("payrollButton").href = "reports_overall_payroll.php?req=null&site="+site;
+			document.getElementById("13thMonthButton").href = "reports_overall_13thmonthpay.php?position=all&period=week&req=null&site="+site;
 
 		}
 
