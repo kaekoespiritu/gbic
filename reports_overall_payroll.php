@@ -44,65 +44,69 @@
 				</div>
 			</div>
 
-		Step 1: Requirements:
-		<select onchange="payrollRequirements(this.value)">
-			<?php 
-			if($req == 'all')
-				Print "<option value='all' selected>All</option>";
-			else
-				Print "<option value='all'>All</option>";
-			if($req == 'withReq')
-				Print "<option value='withReq' selected>With Requirements</option>";
-			else
-				Print "<option value='withReq'>With Requirements</option>";
-			if($req == 'withOReq')
-				Print "<option value='withOReq' selected>W/o Requirements</option>";
-			else
-				Print "<option value='withOReq'>W/o Requirements</option>";
-			?>
-			
-			
-			
-		</select>
+		<div class="row">
+			<div class="col-md-3 col-md-offset-3">
+				<h4>Step 1: Select Requirements</h4>
+				<select onchange="payrollRequirements(this.value)" class="form-control">
+					<?php 
+					if($req == 'null')
+						Print "<option selected>-- All / With / Without --</option>";
+					if($req == 'all')
+						Print "<option value='all' selected>All</option>";
+					else
+						Print "<option value='all'>All</option>";
+					if($req == 'withReq')
+						Print "<option value='withReq' selected>With Requirements</option>";
+					else
+						Print "<option value='withReq'>With Requirements</option>";
+					if($req == 'withOReq')
+						Print "<option value='withOReq' selected>W/o Requirements</option>";
+					else
+						Print "<option value='withOReq'>W/o Requirements</option>";
 
+					?>
+				</select>
+			</div>
+			<div class="col-md-3">
+					<h4>Step 2: Select Payroll Dates</h4>
+					<select onchange="payrollDates(this.value)" class="form-control">
+						<option hidden>Select date</option>
+						<?php
+						$payrollDays = "SELECT DISTINCT date FROM Payroll ORDER BY date ASC";//gets non repeatable dates
+						$payrollDaysQuery = mysql_query($payrollDays);
 
-		Step 2: Payroll Dates:
-		<select onchange="payrollDates(this.value)">
-			<option hidden>Select date</option>
-			<?php
-			$payrollDays = "SELECT DISTINCT date FROM Payroll ORDER BY date ASC";//gets non repeatable dates
-			$payrollDaysQuery = mysql_query($payrollDays);
-
-			if(mysql_num_rows($payrollDaysQuery))
-			{
-				while($PdaysOptions = mysql_fetch_assoc($payrollDaysQuery))
-				{
-
-					$startDate = date('F j, Y', strtotime('-6 day', strtotime($PdaysOptions['date'])));
-
-					if(isset($_POST['payrollDate']))
-					{
-						if($_POST['payrollDate'] == $PdaysOptions['date'])
+						if(mysql_num_rows($payrollDaysQuery))
 						{
-							Print "<option value='".$PdaysOptions['date']."' selected>".$startDate." - ".$PdaysOptions['date']."</option>";
+							while($PdaysOptions = mysql_fetch_assoc($payrollDaysQuery))
+							{
+
+								$startDate = date('F j, Y', strtotime('-6 day', strtotime($PdaysOptions['date'])));
+
+								if(isset($_POST['payrollDate']))
+								{
+									if($_POST['payrollDate'] == $PdaysOptions['date'])
+									{
+										Print "<option value='".$PdaysOptions['date']."' selected>".$startDate." - ".$PdaysOptions['date']."</option>";
+									}
+									else
+									{
+										Print "<option value='".$PdaysOptions['date']."'>".$startDate." - ".$PdaysOptions['date']."</option>";
+									}
+								}
+								else
+								{
+									Print "<option value='".$PdaysOptions['date']."'>".$startDate." - ".$PdaysOptions['date']."</option>";
+								}
+							}
 						}
 						else
 						{
-							Print "<option value='".$PdaysOptions['date']."'>".$startDate." - ".$PdaysOptions['date']."</option>";
+							Print "<option>No payroll date</option>";
 						}
-					}
-					else
-					{
-						Print "<option value='".$PdaysOptions['date']."'>".$startDate." - ".$PdaysOptions['date']."</option>";
-					}
-				}
-			}
-			else
-			{
-				Print "<option>No payroll date</option>";
-			}
-			?>
-		</select>
+						?>
+					</select>
+			</div>
+    	</div>
 
 		
 
@@ -349,7 +353,7 @@
 		}
 		else
 		{
-			Print "<h4>Please select date</h4>";
+			Print "<h4 class='pull-down-more'>Select Requirements and Date to view Payroll report.</h4>";
 		}
 		?>
 		
