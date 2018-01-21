@@ -75,8 +75,15 @@
 			<!-- FOR LIVE SEARCH -->
 				<input type="hidden" id="report_type" value="<?php Print $reportType?>">
 				<input type="hidden" id="period" value="<?php Print $period?>">
-				<input type="hidden" id="position" value="<?php Print $position_page?>">
+				<input type="hidden" id="position_page" value="<?php Print $position_page?>">
 				<input type="hidden" id="site" value="<?php Print $site_page?>">
+				<?php 
+					if(isset($_GET["page"]))
+						Print "<input type='hidden' id='page' value='".$_GET["page"]."'>";
+					else
+						Print "<input type='hidden' id='page' value='1'>";
+				?>
+				
 
 
 
@@ -85,15 +92,18 @@
 					Filter by:
 					<!-- POSITION DROPDOWN -->
 					<div class="btn-group">
-						<select class="form-control" id="position" onchange="position()">
+						<select class="form-control" id="position" onchange="position(this.value)">
 							<option hidden>Position</option>
 							<?php 
 								$position = "SELECT * FROM job_position WHERE active = '1'";
 								$positionQuery = mysql_query($position);
 
 								while($positionArr = mysql_fetch_assoc($positionQuery))
-								{
-									Print "<option value='".$positionArr['position']."'>".$positionArr['position']."</option>";
+								{	
+									if($position_page == $positionArr['position'])
+										Print "<option value='".$positionArr['position']."' selected>".$positionArr['position']."</option>";
+									else
+										Print "<option value='".$positionArr['position']."'>".$positionArr['position']."</option>";
 								}
 
 							?>
@@ -102,7 +112,7 @@
 					<!-- END OF POSITION DROPDOWN -->
 					<!-- SITES DROPDOWN -->
 					<div class="btn-group">
-						<select class="form-control" id="site" onchange="site()">
+						<select class="form-control" id="site" onchange="site(this.value)">
 							<option hidden>Site</option>
 							<?php 
 								$site = "SELECT * FROM site WHERE active = '1'";
@@ -110,7 +120,10 @@
 
 								while($siteArr = mysql_fetch_assoc($siteQuery))
 								{
-									Print "<option value='".$siteArr['location']."'>".$siteArr['location']."</option>";
+									if($site_page == $siteArr['location'])
+										Print "<option value='".$siteArr['location']."' selected>".$siteArr['location']."</option>";
+									else
+										Print "<option value='".$siteArr['location']."'>".$siteArr['location']."</option>";
 								}
 
 							?>
@@ -126,13 +139,12 @@
 			<div id="search_result" class="col-md-9" style="margin-top: 15px">
 				
 			</div>
+
 							
 						
 			<?php
-				echo "<div id='pagingg' >";
-				if($statement && $limit && $page && $site_page && $position_page && $reportType && $period)
-					echo pagination($statement,$limit,$page, $site_page, $position_page, $reportType, $period);
-				echo "</div>";
+
+				
 			?>
 		</div>
 	</div>
@@ -146,16 +158,29 @@
 
 		$(document).ready(function(){
 			var period = $('#period').val();
-			load_data("",period);
-			function load_data(search, period)
+			var site = $('#site').val();
+			var position = $('#position_page').val();
+			var report_type = $('#report_type').val();
+			var page = "";
+			if($('#page').length != 0)
+			{
+				page = $('#page').val();
+			}
+
+			load_data("",period,site, report_type, position, page);
+			function load_data(search, period, site, report_type, position, page)
 			{
 
 			  	$.ajax({
 			   		url:"livesearch_reports.php",
 			   		method:"POST",
 			   		data:{
-			   			search: search,
-			   			period:period
+			   			search : search,
+			   			period : period,
+			   			site : site,
+			   			report_type : report_type,
+			   			position_page : position,
+			   			page : page
 
 			   		},
 			   		success:function(data)
@@ -167,7 +192,7 @@
 			$('#search_box').keyup(function(){
 			  	var search = $(this).val();
 			  	
-			   		load_data(search, period);
+			   		load_data(search, period, site, report_type, position, page);
 			  	
 			});
 		});
@@ -185,8 +210,16 @@
 			window.location.assign("reports_individual.php?site="+site+"&position="+position+"&type="+type+"&period="+period)
 		}
 
-		function searchBox(id) {
+		function position(pos) {
+			window.location.assign("reports_individual_earnings.php?type=<?php Print $reportType?>&period=week&site=<?php Print $site_page?>&position="+pos);
+		}
 
+		function site(loc) {
+			window.location.assign("reports_individual_earnings.php?type=<?php Print $reportType?>&period=week&site="+loc+"&position=<?php Print $position_page?>");
+		}
+
+		function clearFilter() {
+			window.location.assign("reports_individual_earnings.php?type=<?php Print $reportType?>&period=week&site=null&position=null");
 		}
 	</script>
 </body>

@@ -1,6 +1,16 @@
 <?php
 //fetch.php
 include_once('directives/db.php');
+include("pagination/reports_individual_function.php");//For pagination
+$site_page = $_POST['site'];
+$position_page = $_POST['position_page'];
+$reportType = $_POST['report_type'];
+
+$pageNum = $_POST['page'];
+
+
+Print "<script>console.log('pagenum: ".$_POST['page']."')</script>";
+
 
 Print "<!-- Table of employees -->
                     <table class='table table-bordered' style='background-color:white;''>
@@ -16,11 +26,42 @@ if(isset($_POST["search"]))
 {
         $search = mysql_real_escape_string($_POST["search"]);
         $period = mysql_real_escape_string($_POST["period"]);
-        $page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
+        $page = (int) (!isset($pageNum) ? 1 : $pageNum);
         $limit = 20; //if you want to dispaly 10 records per page then you have to change here
+                
         $startpoint = ($page * $limit) - $limit;
-        $statement = "employee WHERE (firstname LIKE '%".$search."%' 
+        if($site_page != "null")
+        {
+            if($position_page != "null")
+            {
+                $statement = "employee WHERE (firstname LIKE '%".$search."%' 
+            OR lastname LIKE '%".$search."%' OR empid LIKE '%".$search."%') AND position = '$position_page' AND site = '$site_page' AND employment_status = '1' ORDER BY site ASC, position ASC, lastname ASC";
+            }
+            else
+            {
+                $statement = "employee WHERE (firstname LIKE '%".$search."%' 
+            OR lastname LIKE '%".$search."%' OR empid LIKE '%".$search."%') AND site = '$site_page' AND employment_status = '1' ORDER BY site ASC, position ASC, lastname ASC";
+            }
+        }
+        else if($position_page != "null")
+        {
+            if($site_page != "null")
+            {
+                 $statement = "employee WHERE (firstname LIKE '%".$search."%' 
+            OR lastname LIKE '%".$search."%' OR empid LIKE '%".$search."%') AND position = '$position_page' AND site = '$site_page' AND employment_status = '1' ORDER BY site ASC, position ASC, lastname ASC";
+            }
+            else
+            {
+                 $statement = "employee WHERE (firstname LIKE '%".$search."%' 
+            OR lastname LIKE '%".$search."%' OR empid LIKE '%".$search."%') AND position = '$position_page'  AND employment_status = '1' ORDER BY site ASC, position ASC, lastname ASC";
+            }
+        }
+        else
+        {
+            $statement = "employee WHERE (firstname LIKE '%".$search."%' 
             OR lastname LIKE '%".$search."%' OR empid LIKE '%".$search."%') AND employment_status = '1' ORDER BY site ASC, position ASC, lastname ASC";
+        }
+        
 
         $res=mysql_query("select * from {$statement} LIMIT {$startpoint} , {$limit}");
 
@@ -45,67 +86,13 @@ if(isset($_POST["search"]))
             ";
         }
     
-    // else
-    // {   
-    //     echo '
-    //         <tr>
-    //             <td colspan="6">
-    //                 Employee Not Found...
-    //             </td>    
-    //         </tr>';
-    // }
+    
 }
 Print "              
                     </table>
             ";
-
-//----------
-// if(isset($_POST["search"]))
-// {
-//     if($_POST["search"] != '')
-//     {
-//         $search = mysql_real_escape_string($_POST["search"]);
-//         $query = "
-//         SELECT * FROM employee 
-//         WHERE (firstname LIKE '%".$search."%' 
-//         OR lastname LIKE '%".$search."%' OR empid LIKE '%".$search."%') AND employment_status = '1' ORDER BY lastname ASC LIMIT 5";
-//     }
-// }
-
-
-// if(isset($_POST["search"]))
-// {
-//     $result = mysql_query($query) or die (mysql_error());
-// }
-// if(!empty($result))
-// {
-//     if(mysql_num_rows($result) > 0)
-//     {
-//     $output = '';
-        
-//     while($row = mysql_fetch_assoc($result))
-//     {
-//         $output .= '
-//         <div class="searchResults text-left" id="'.$row['empid'].'" style="padding:0.5em">
-//         <a href="#"  onclick="searchBox(\''.$row['empid'].'\')">'.$row['lastname'].', '.$row['firstname'].'<cite>['.$row['position'].', '.$row['site'].']</cite></a>
-//         </div>
-//         ';
-//     }
-//     echo $output;
-//     }
-//     else
-//     {   
-//         echo '<div class="searchResults text-left" style="padding:0.5em">
-//          Employee Not Found...
-//         </div>';
-//     }
-// }
-// else
-//     {   
-//         echo '<div class="searchResults text-left" style="padding:0.5em">
-//          Employee Not Found...
-//         </div>';
-//     }
-
-
+echo "<div id='pagingg' >";
+                if($statement && $limit && $page && $site_page && $position_page && $reportType && $period)
+                    echo pagination($statement,$limit,$page, $site_page, $position_page, $reportType, $period);
+                echo "</div>";
 ?>
