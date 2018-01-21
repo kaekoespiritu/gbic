@@ -3,9 +3,7 @@
 include_once('directives/db.php');
 
 Print "<!-- Table of employees -->
-            <div class='row'>
-                <div class='col-md-10 col-md-offset-1'>
-                    <table class='table table-bordered table-condensed' style='background-color:white;''>
+                    <table class='table table-bordered' style='background-color:white;''>
 
                         <tr>
                             <th class='fixedWidth text-center'>Employee ID</th>
@@ -59,8 +57,6 @@ if(isset($_POST["search"]))
 }
 Print "              
                     </table>
-                </div>
-            </div>
             ";
 
 //----------

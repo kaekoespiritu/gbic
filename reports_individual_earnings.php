@@ -123,10 +123,9 @@
 				<!-- END OF ACTION BUTTONS FOR FILTERS-->
 			</div>
 
-			
-						<div id="search_result" class="" >
-							
-						</div>
+			<div id="search_result" class="col-md-9" style="margin-top: 15px">
+				
+			</div>
 							
 						
 			<?php
