@@ -69,45 +69,7 @@ if(isset($_GET['search']))
 			<div class="col-md-12 pull-down">
 				<h2>Overall <span id="period"></span> <?php Print $_GET['type']; ?> Report</h2>
 			</div>
-
-			<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
-			<div class="row">
-
-					<!-- CHANGE PERIOD VIEW -->
-					<div class="col-md-6 col-md-offset-3">
-						View period:
-						<?php
-							Print "<select class='form-control' onchange='changePeriod(this.value, ".$reportType ."\", \"".$period ."\")'>";
-						?>
-						<option hidden>Period</option>
-							<?php
-							$timePeriods = array("week", "month", "year");
-							foreach($timePeriods as $periods)
-							{
-								if($periods == $period)
-								{
-									if($periods == "week")
-										Print "<option value='".$periods."' selected>Weekly</option>";
-									else if($periods == "month")
-										Print "<option value='".$periods."' selected>Monthly</option>";
-									else if($periods == "year")
-										Print "<option value='".$periods."' selected>Yearly</option>";
-								}
-								else
-								{
-									if($periods == "week")
-										Print "<option value='".$periods."'>Weekly</option>";
-									else if($periods == "month")
-										Print "<option value='".$periods."'>Monthly</option>";
-									else if($periods == "year")
-										Print "<option value='".$periods."'>Yearly</option>";
-								}
-							}
-								
-							?>
-						</select>
-					</div>
-				</div>
+		</div>
 				<!-- ACTION BUTTONS FOR FILTERS -->
 				<!-- END OF ACTION BUTTONS FOR FILTERS-->
 			</div>
