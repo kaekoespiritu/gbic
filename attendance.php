@@ -218,25 +218,6 @@ include('directives/session.php');
 				<button class="btn btn-success col-md-pull-4" onclick="printAll()">
 					Print attendance sheet for all sites
 				</button>
-				<h4><br>--- OR ---<br><br></h4>
-				<!-- DROPDOWN checkbox for selected site -->
-				<form method = "post" action = "print_selected_site.php">
-					<div class="col-md-6">
-						<select multiple="multiple" class="text-left">
-							<?php
-							$site = "SELECT location FROM site WHERE active = '1'";
-							$site_query = mysql_query($site);
-							while($row_site = mysql_fetch_assoc($site_query))
-							{
-								Print '<option name="selectedSite[]" value="'. $row_site['location'] .'"> '. $row_site['location'] .'</option>';
-							}
-							?>
-						</select>
-					</div>
-					<div class="col-md-5">
-						<input type="submit" value = "Print site" name="checkbox_submit" class="btn btn-success">
-					</div>
-				</form>
 			</div>
 		</div>
 	</div>
