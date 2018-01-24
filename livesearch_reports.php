@@ -72,7 +72,7 @@ if(isset($_POST["search"]))
                     <td style='vertical-align: inherit'>".$empArr['site']."</td>
                     <td style='vertical-align: inherit'>";
 
-            if($reportType == "Earnings")
+            if($reportType == "Earnings")//for Earnings tab
             {
                 Print    " 
                             <button class='btn btn-default' onclick='viewPayrollBtn(\"".$empArr['empid']."\", \"".$period."\")'>
@@ -82,7 +82,7 @@ if(isset($_POST["search"]))
                                 13th Month Pay
                             </button>";
             }
-            else if($reportType == "Contributions")
+            else if($reportType == "Contributions")// for Contributions tab
             {
                 Print "<button class='btn btn-default' onclick='viewSSSBtn(\"".$empArr['empid']."\")'>
                                             SSS

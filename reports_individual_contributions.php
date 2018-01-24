@@ -236,15 +236,15 @@
 		});
 
 		function viewPagIBIGBtn(id, type){
-			window.location.assign("reports_individual_pagibig.php?empid="+id);
+			window.location.assign("reports_individual_pagibig.php?empid="+id+"&period=week");
 		}
 
 		function viewPhilHealthBtn(id, type){
-			window.location.assign("reports_individual_philhealth.php?empid="+id);
+			window.location.assign("reports_individual_philhealth.php?empid="+id+"&period=week");
 		}
 
 		function viewSSSBtn(id, type){
-			window.location.assign("reports_individual_sss.php?empid="+id);
+			window.location.assign("reports_individual_sss.php?empid="+id+"&period=week");
 		}
 
 		function changePeriod(period, position, site, type) {
