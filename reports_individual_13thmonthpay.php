@@ -82,7 +82,7 @@
 				 	case 'year': $printButton = "Yearly";break;
 				 }
 				?>
-				<button class="btn btn-default">
+				<button class="btn btn-default" id="printButton">
 					Print <?php Print $printButton?>
 				</button>
 				<table class="table table-bordered pull-down">
@@ -100,7 +100,7 @@
 					</td>
 				</tr>
 				<?php
-					
+					$oneThreeMonthBool = false;//for print button
 					if($period == "week")
 					{
 						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
@@ -171,7 +171,7 @@
 							$month = $dateExploded[0];
 							$year = $dateExploded[2];
 
-							if ($noRepeat != $month || $noRepeat == null)
+							if ($noRepeat != $month.$year  || $noRepeat == null)
 							{
 								$attMonth = "SELECT * FROM attendance WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' ORDER BY date ASC";
 								$attMonthQuery = mysql_query($attMonth);
@@ -209,7 +209,7 @@
 								$overallPayment += $thirteenthMonth;
 							}
 							
-							$noRepeat = $month;
+							$noRepeat = $month.$year;
 						}
 
 
