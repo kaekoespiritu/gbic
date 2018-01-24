@@ -83,6 +83,12 @@
 				</div>
 				<a class="subflipbtn">Payslip</a>
 			</div>
+			<div class="sub-flipdown">
+				<div class="sub-flipdown-menu">
+					<a href="reports_company_expenses.php?type=Expenses&period=Weekly">Overall</a>
+				</div>
+				<a class="subflipbtn">Company Expenses</a>
+			</div>
 		</div>
 	</div>
 	</div>
