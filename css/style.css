@@ -268,6 +268,9 @@ body
 {
   margin-bottom: 2em;
 }
+.overflow {
+overflow: auto;
+}
 /*==================*/
 
 
