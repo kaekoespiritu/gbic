@@ -26,7 +26,7 @@
 			<div class="row"><br>
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
-						<li><a href='reports_payslip_with.php?type=Payslip&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Payslip</a></li>
+						<li><a href='reports_payslip_individual.php?type=Payslip&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Payslip</a></li>
 						<li>Individual Payslip for [Name], [Position] at [Site]</li>
 					</ol>
 				</div>
@@ -34,9 +34,15 @@
 
 		<div class="pull-down">
 			
-				
+			<div class="form-inline">
+				<h4>Select period</h4>
+				<select class="form-control">
+					<option>Sample date</option>
+				</select>
+			</div>
+
 			<div class="col-md-6 col-md-offset-3">
-				<button class="btn btn-default">
+				<button class="btn btn-default pull-down">
 					Print Payslip
 				</button>
 				<table class="table table-bordered pull-down">

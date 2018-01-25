@@ -117,6 +117,15 @@
 						</select>
 					</div>
 					<!-- END OF SITES DROPDOWN -->
+					<div class="btn-group">
+						<select class="form-control">
+							<option hidden>Requirements</option>
+							<option>All</option>
+							<option>With</option>
+							<option>Without</option>
+						</select>
+					</div>
+					<button type="button" class="btn btn-success text-right" onclick="clearFilter()">Print All</button>
 					<button type="button" class="btn btn-danger text-right" onclick="clearFilter()">Clear Filters</button>
 					
 				</div>
@@ -212,7 +221,7 @@
 		});
 
 		function viewPayslipBtn(id, type){
-			window.location.assign("reports_payslip_with_emp.php");
+			window.location.assign("reports_payslip_individual_emp.php");
 		}
 
 		function changePeriod(period, position, site, type) {
