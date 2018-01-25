@@ -182,23 +182,50 @@
 									<div class="col-md-5">
 										<label for="sss">SSS</label>
 									</div>
-									<div class="col-md-4">
-										<input type="checkbox" id="sssCheckbox" onchange="sssCheckboxFunc()">
-										<input name="txt_addSSS" type="text" placeholder="No document" class="form-control" id="sss" readonly>
+									<div class="col-md-6">
+										<div class="col-md-12">
+											<input type="checkbox" id="sssCheckbox" onchange="sssCheckboxFunc()">
+										</div>
+										<div class="col-md-6">
+											EE:
+											<input name="txt_addSSS" type="text" placeholder="EE" class="form-control" id="sss" readonly>
+										</div>
+										<div class="col-md-6">
+											ER:
+											<input name="txt_addSSS" type="text" placeholder="ER" class="form-control" id="sss" readonly>
+										</div>
 									</div>
 									<div class="col-md-5">
 										<label for="philhealth">Philhealth</label>
 									</div>
-									<div class="col-md-4">
-										<input type="checkbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()">
-										<input name="txt_addPhilhealth" type="text" placeholder="No document" class="form-control" id="philhealth" readonly>
+									<div class="col-md-6">
+										<div class="col-md-12">
+											<input type="checkbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()">
+										</div>
+										<div class="col-md-6">
+											EE: 
+											<input name="txt_addPhilhealth" type="text" placeholder="EE" class="form-control" id="philhealth" readonly>
+										</div>
+										<div class="col-md-6">
+											ER:
+											<input name="txt_addPhilhealth" type="text" placeholder="ER" class="form-control" id="philhealth" readonly>
+										</div>
 									</div>
 									<div class="col-md-5">
 										<label for="pagibig">Pag-IBIG</label>
 									</div>
-									<div class="col-md-4">
-										<input type="checkbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()">
-										<input name="txt_addPagibig" type="text" placeholder="No document" class="form-control" id="pagibig" readonly>
+									<div class="col-md-6">
+										<div class="col-md-12">
+											<input type="checkbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()">
+										</div>
+										<div class="col-md-6">
+											EE:
+											<input name="txt_addPagibig" type="text" placeholder="EE" class="form-control" id="pagibig" readonly>
+										</div>
+										<div class="col-md-6">
+											ER:
+											<input name="txt_addPagibig" type="text" placeholder="ER" class="form-control" id="pagibig" readonly>
+										</div>
 									</div>
 
 									<div class="col-md-10 col-md-offset-1 pull-down text-center well well-sm">

@@ -259,37 +259,85 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 						<div class="col-md-5">
 							<label for="sss">SSS</label>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-6">
 							<?php
 							if($sss != 0)
-								Print  '<input type="checkbox" name="sssCheckbox" id="sssCheckbox" onchange="sssCheckboxFunc()" checked>
-										<input name="sss" type="text" placeholder="'.$sss.'" class="form-control" id="sss">';
+								Print  '
+										<div class="col-md-12">
+										<input type="checkbox" name="sssCheckbox" id="sssCheckbox" onchange="sssCheckboxFunc()" checked>
+										</div>
+										<div class="col-md-6">
+										EE:
+										<input name="sss" type="text" placeholder="'.$sss.'" class="form-control" id="sss">
+										</div>
+										<div class="col-md-6">
+										ER:
+										<input name="sss" type="text" placeholder="'.$sss.'" class="form-control" id="sss">
+										</div>';
 							else
-								Print  '<input type="checkbox" name="sssCheckbox" id="sssCheckbox" onchange="sssCheckboxFunc()">
-										<input name="sss" type="text" placeholder="No document" class="form-control" id="sss" readonly>';
+								Print  '
+										<div class="col-md-12">
+										<input type="checkbox" name="sssCheckbox" id="sssCheckbox" onchange="sssCheckboxFunc()">
+										</div>
+										<div class="col-md-6">
+										EE:
+										<input name="sss" type="text" placeholder="No document" class="form-control" id="sss" readonly>
+										</div>
+										<div class="col-md-6">
+										ER:
+										<input name="sss" type="text" placeholder="No document" class="form-control" id="sss" readonly>
+										</div>';
 							?>
 						</div>
 						<div class="col-md-5">
 							<label for="philhealth">Philhealth</label>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-6">
 							<?php
 							if($philhealth != 0)
-								Print '<input type="checkbox" name="philhealthCheckbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()" checked>
-										<input name="philhealth" placeholder="'.$philhealth.'" type="text" class="form-control" id="philhealth">';
+								Print '<div class="col-md-12">
+										<input type="checkbox" name="philhealthCheckbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()" checked>
+										</div>
+										<div class="col-md-6">
+										EE:
+										<input name="philhealth" placeholder="'.$philhealth.'" type="text" class="form-control" id="philhealth">
+										</div>
+										<div class="col-md-6">
+										ER:
+										<input name="philhealth" placeholder="'.$philhealth.'" type="text" class="form-control" id="philhealth">
+										</div>';
 							else
-								Print '<input type="checkbox" name="philhealthCheckbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()">
-									   <input name="philhealth" placeholder="No document" type="text" class="form-control" id="philhealth" readonly>';
+								Print '
+										<div class="col-md-12">
+										<input type="checkbox" name="philhealthCheckbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()">
+										</div>
+										<div class="col-md-6">
+										EE:
+									   <input name="philhealth" placeholder="No document" type="text" class="form-control" id="philhealth" readonly>
+									   </div>
+									   <div class="col-md-6">
+									   ER:
+									   <input name="philhealth" placeholder="No document" type="text" class="form-control" id="philhealth" readonly>
+									   </div>';
 							?>
 						</div>
 						<div class="col-md-5">
 							<label for="pagibig">Pag-IBIG</label>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-6">
 							<?php
 							if($pagibig != 0)
-								Print  '<input type="checkbox" name="pagibigCheckbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()" checked>
-										<input name="pagibig" placeholder="'.$pagibig.'" type="text" class="form-control" id="pagibig">';
+								Print  '<div class="col-md-12">
+										<input type="checkbox" name="pagibigCheckbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()" checked>
+										</div>
+										<div class="col-md-6">
+										EE:
+										<input name="pagibig" placeholder="'.$pagibig.'" type="text" class="form-control" id="pagibig">
+										</div>
+										<div class="col-md-6">
+										ER:
+										<input name="pagibig" placeholder="'.$pagibig.'" type="text" class="form-control" id="pagibig">
+										</div>';
 							else
 								Print  '<input type="checkbox" name="pagibigCheckbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()">
 										<input name="pagibig" placeholder="No document" type="text" class="form-control" id="pagibig" readonly>';
