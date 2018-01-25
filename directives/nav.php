@@ -77,11 +77,7 @@
 				<a class="subflipbtn">Attendance</a>
 			</div>
 			<div class="sub-flipdown">
-				<div class="sub-flipdown-menu">
-					<a href="reports_payslip_individual.php?type=Payslip&period=week&site=null&position=null"> Individual</a>
-					<a href="reports_payslip_overall.php?type=Payslip&period=week&site=null&position=null"> Overall</a>
-				</div>
-				<a class="subflipbtn">Payslip</a>
+				<a class="subflipbtn" href="reports_payslip_individual.php?type=Payslip&period=week&site=null&position=null">Payslip</a>
 			</div>
 			<div class="sub-flipdown">
 				<div class="sub-flipdown-menu">
