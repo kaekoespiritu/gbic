@@ -33,13 +33,14 @@
 			</div>
 		</div>
 
-		<div class="pull-down">
-			<button class="btn btn-default pull-down">
-				Print Attendance
-			</button>
+		<button class="btn btn-default pull-down">
+			Print Attendance
+		</button>
+
+		<div class="pull-down col-md-12 overflow">
 			<table class="table table-bordered pull-down">
 				<tr>
-					<td colspan="28">
+					<td colspan="49">
 						Weekly Time Record of Employee
 					</td>
 				</tr>
@@ -56,8 +57,44 @@
 					<td colspan="7">
 						Saturday
 					</td>
+					<td colspan="7">
+						Sunday
+					</td>
+					<td colspan="7">
+						Monday
+					</td>
+					<td colspan="7">
+						Tuesday
+					</td>
 				</tr>
 				<tr>
+					<td colspan="4">
+						REGULAR DAY
+					</td>
+					<td colspan="2">
+						OVERTIME
+					</td>
+					<td rowspan="3">
+						REMARKS
+					</td>
+					<td colspan="4">
+						REGULAR DAY
+					</td>
+					<td colspan="2">
+						OVERTIME
+					</td>
+					<td rowspan="3">
+						REMARKS
+					</td>
+					<td colspan="4">
+						REGULAR DAY
+					</td>
+					<td colspan="2">
+						OVERTIME
+					</td>
+					<td rowspan="3">
+						REMARKS
+					</td>
 					<td colspan="4">
 						REGULAR DAY
 					</td>
@@ -132,82 +169,226 @@
 					<td colspan="2">
 						OT Hours
 					</td>
-				</tr>
-				<tr>
-					<td>
-						In
+					<td colspan="2">
+						AM
 					</td>
-					<td>
-						Out
+					<td colspan="2">
+						PM
 					</td>
-					<td>
-						In
+					<td colspan="2">
+						OT Hours
 					</td>
-					<td>
-						Out
+					<td colspan="2">
+						AM
 					</td>
-					<td>
-						In
+					<td colspan="2">
+						PM
 					</td>
-					<td>
-						Out
+					<td colspan="2">
+						OT Hours
 					</td>
-					<td>
-						In
+					<td colspan="2">
+						AM
 					</td>
-					<td>
-						Out
+					<td colspan="2">
+						PM
 					</td>
-					<td>
-						In
-					</td>
-					<td>
-						Out
-					</td>
-					<td>
-						In
-					</td>
-					<td>
-						Out
-					</td>
-					<td>
-						In
-					</td>
-					<td>
-						Out
-					</td>
-					<td>
-						In
-					</td>
-					<td>
-						Out
-					</td>
-					<td>
-						In
-					</td>
-					<td>
-						Out
-					</td>
-					<td>
-						In
-					</td>
-					<td>
-						Out
-					</td>
-					<td>
-						In
-					</td>
-					<td>
-						Out
-					</td>
-					<td>
-						In
-					</td>
-					<td>
-						Out
+					<td colspan="2">
+						OT Hours
 					</td>
 				</tr>
 				<tr>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+					<td>
+						In
+					</td>
+					<td>
+						Out
+					</td>
+				</tr>
+				<tr>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						[REMARKS]
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						[REMARKS]
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						#
+					</td>
+					<td>
+						[REMARKS]
+					</td>
 					<td>
 						#
 					</td>
