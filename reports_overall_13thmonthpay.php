@@ -79,62 +79,64 @@
 				</div>
 			</div>
 
-		
-		Filters:
-		
-		<select onchange="requirementChange(this.value)">
-			<option hidden>Requirements</option>
-			<option value='all'>All</option>
-			<?php
-				if($require == 'withReq')
-					Print "<option value='withReq' selected>W/ Requirements</option>";
-				else
-					Print "<option value='withReq'>W/ Requirements</option>";
-				if($require == 'withOReq')
-					Print "<option value='withOReq' selected>W/o Requirements</option>";
-				else
-					Print "<option value='withOReq'>W/o Requirements</option>";
-			?>
-		</select>
-
-		<select onchange="positionChange(this.value)">
-			<option hidden>Position</option>
-			<?php
-				$pos = "SELECT * FROM job_position WHERE active='1'";
-				$posQuery = mysql_query($pos);
-				Print "<option value='all'>All</option>";
-				while($posArr = mysql_fetch_assoc($posQuery))
-				{
-					if($position == $posArr['position'])
-						Print "<option value='".$posArr['position']."' selected>".$posArr['position']."</option>";
+		<div class="form-inline">
+			Filters:
+			<select onchange="requirementChange(this.value)" class="form-control">
+				<option hidden>Requirements</option>
+				<option value='all'>All</option>
+				<?php
+					if($require == 'withReq')
+						Print "<option value='withReq' selected>W/ Requirements</option>";
 					else
-						Print "<option value='".$posArr['position']."'>".$posArr['position']."</option>";
-				}
+						Print "<option value='withReq'>W/ Requirements</option>";
+					if($require == 'withOReq')
+						Print "<option value='withOReq' selected>W/o Requirements</option>";
+					else
+						Print "<option value='withOReq'>W/o Requirements</option>";
+				?>
+			</select>
 
-			?>
-		</select>
-		<select onchange="periodChange(this.value)">
-			<option hidden>Period</option>
-			<?php
-				if($period == 'week')
-					Print "<option value='week' selected>Weekly</option>";
-				else
-					Print "<option value='week'>Weekly</option>";
-				if($period == 'month')
-					Print "<option value='month' selected>Monthly</option>";
-				else
-					Print "<option value='month'>Monthly</option>";
-				if($period == 'year')
-					Print "<option value='year' selected>Yearly</option>";
-				else
-					Print "<option value='year'>Yearly</option>";
-			?>
-		</select>
+			<select onchange="positionChange(this.value)" class="form-control">
+				<option hidden>Position</option>
+				<?php
+					$pos = "SELECT * FROM job_position WHERE active='1'";
+					$posQuery = mysql_query($pos);
+					Print "<option value='all'>All</option>";
+					while($posArr = mysql_fetch_assoc($posQuery))
+					{
+						if($position == $posArr['position'])
+							Print "<option value='".$posArr['position']."' selected>".$posArr['position']."</option>";
+						else
+							Print "<option value='".$posArr['position']."'>".$posArr['position']."</option>";
+					}
+
+				?>
+			</select>
+			<select onchange="periodChange(this.value)" class="form-control">
+				<option hidden>Period</option>
+				<?php
+					if($period == 'week')
+						Print "<option value='week' selected>Weekly</option>";
+					else
+						Print "<option value='week'>Weekly</option>";
+					if($period == 'month')
+						Print "<option value='month' selected>Monthly</option>";
+					else
+						Print "<option value='month'>Monthly</option>";
+					if($period == 'year')
+						Print "<option value='year' selected>Yearly</option>";
+					else
+						Print "<option value='year'>Yearly</option>";
+				?>
+			</select>
+		</div>
 	<?php
 	if($period == 'week')
 	{
-		Print "<br>Weeks:
-		<select onchange='weekDates(this.value)'>
+		Print "<br>
+		<div class='form-inline'>
+		Weeks:
+		<select onchange='weekDates(this.value)' class='form-control'>
 			<option hidden>Select date</option>";
 			
 			$payrollDays = "SELECT DISTINCT date FROM Payroll ORDER BY date ASC";//gets non repeatable dates
@@ -168,7 +170,7 @@
 			{
 				Print "<option>No payroll date</option>";
 			}
-			Print "</select>";	
+			Print "</select></div>";	
 	}
 		
 		?>
