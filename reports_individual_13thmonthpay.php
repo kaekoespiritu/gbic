@@ -51,7 +51,7 @@
 			</div>
 
 		<div class="form-inline">
-			<h4>Select period</h4>
+			<h4>Select view</h4>
 			<select onchange="periodChange(this.value)" class="form-control">
 				<?php 
 					if($period == "week")
@@ -67,6 +67,10 @@
 					else
 						Print "<option value='year'>Yearly</option>";
 				?>
+			</select>
+			<h4>Select period</h4>
+			<select class="form-control">
+				<option>Sample date</option>
 			</select>
 		</div>
 
