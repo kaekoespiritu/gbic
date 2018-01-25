@@ -31,9 +31,19 @@
 					</ol>
 				</div>
 			</div>
+
+			<div class="form-inline">
+				<h4>Select Period for Attendance viewing</h4>
+				<select class="form-control">
+						<option selected>Select date period</option>
+						<option>[DATE]</option>
+						<option>[DATE]</option>
+						<option>[DATE]</option>
+					</select>
+			</div>
 		</div>
 
-		<button class="btn btn-default">
+		<button class="btn btn-default pull-down">
 			Print Attendance
 		</button>
 
