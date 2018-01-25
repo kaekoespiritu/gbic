@@ -125,7 +125,7 @@
 							<option>Without</option>
 						</select>
 					</div>
-					<button type="button" class="btn btn-success text-right" onclick="clearFilter()">Print All</button>
+					<button type="button" class="btn btn-success text-right" data-toggle="modal" data-target="#optionModal">Print All</button>
 					<button type="button" class="btn btn-danger text-right" onclick="clearFilter()">Clear Filters</button>
 					
 				</div>
@@ -182,6 +182,27 @@
 				echo "</div>";
 			?>
 		</div>
+	</div>
+
+	<div class="modal fade" id="optionModal">
+ 		<div class="modal-dialog">
+    		<div class="modal-content">
+      			<div class="modal-header">
+      				Duration selection
+      			</div>
+      			<div class="modal-body">
+      				<div class="form-inline">
+      				<h4>Select period duration</h4>
+      				<select class='form-control'>
+      					<option>[Duration]</option>
+      				</select>
+      				</div>
+      				<button class='btn btn-default pull-down'>
+      					Print Payslips
+      				</button>
+      			</div>
+      		</div>
+      	</div>
 	</div>
 
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
