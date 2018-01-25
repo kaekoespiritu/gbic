@@ -30,6 +30,30 @@
 						<li>Individual Old Vale Report for [NAME], [POSITION] at [SITE]</li>
 					</ol>
 				</div>
+
+				<div class="form-inline">
+					<h4>Select view</h4>
+					<select onchange="periodChange(this.value)" class="form-control">
+						<?php 
+							if($period == "week")
+								Print "<option value='week' selected>Weekly</option>";
+							else
+								Print "<option value='week'>Weekly</option>";
+							if($period == "month")
+								Print "<option value='month'selected>Monthly</option>";
+							else
+								Print "<option value='month'>Monthly</option>";
+							if($period == "year")
+								Print "<option value='year' selected>Yearly</option>";
+							else
+								Print "<option value='year'>Yearly</option>";
+						?>
+					</select>
+					<h4>Select period</h4>
+					<select class="form-control">
+						<option>Sample date</option>
+					</select>
+				</div>
 			</div>
 
 			<div class="col-md-4">
