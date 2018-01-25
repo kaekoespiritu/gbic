@@ -215,7 +215,7 @@ include('directives/session.php');
 				</div>
 			</div>
 			<div class="col-md-4">
-				<button class="btn btn-success col-md-pull-4" onclick="printAll()">
+				<button class="btn btn-success col-md-pull-4 pull-down-more" onclick="printAll()">
 					Print attendance sheet for all sites
 				</button>
 			</div>
