@@ -49,6 +49,13 @@
 				</div>
 			</div>
 
+			<div class="form-inline">
+				<h4>Select period</h4>
+				<select class="form-control">
+					<option>Sample date</option>
+				</select>
+			</div>
+
 			<div class="pull-down">
 				<button class="btn btn-default" id="printButton">
 					Print Payroll
