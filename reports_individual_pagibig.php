@@ -2,6 +2,10 @@
 <?php
 	include('directives/session.php');
 	include('directives/db.php');
+
+	//middleware
+	include('directives/reports/middleware/reports_individual_contributions.php');
+		
 ?>
 <html>
 <head>
