@@ -147,15 +147,16 @@
 			var position = $('#position_page').val();
 			var report_type = $('#report_type').val();
 			var page = "";
+
 			if($('#page').length != 0)
 			{
 				page = $('#page').val();
 			}
 
 			load_data("",period,site, report_type, position, page);
+			
 			function load_data(search, period, site, report_type, position, page)
 			{
-
 			  	$.ajax({
 			   		url:"livesearch_reports.php",
 			   		method:"POST",
@@ -176,9 +177,7 @@
 			}
 			$('#search_box').keyup(function(){
 			  	var search = $(this).val();
-			  	
-			   		load_data(search, period, site, report_type, position, page);
-			  	
+			   	load_data(search, period, site, report_type, position, page);
 			});
 		});
 
