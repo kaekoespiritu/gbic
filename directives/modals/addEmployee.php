@@ -179,57 +179,82 @@
 								<!-- //////////// -->
 
 								<div class="row">
-									<div class="col-md-5">
-										<label for="sss">SSS</label>
-									</div>
-									<div class="col-md-6">
-										<div class="col-md-12">
+									<!-- SSS -->
+									<div class="col-md-12">
+										<div class="col-md-3">
 											<input type="checkbox" id="sssCheckbox" onchange="sssCheckboxFunc()">
+											<label for="sss">SSS</label>
 										</div>
-										<div class="col-md-6">
-											EE:
-											<input name="txt_addSSS" type="text" placeholder="EE" class="form-control" id="sss" readonly>
-										</div>
-										<div class="col-md-6">
-											ER:
-											<input name="txt_addSSS" type="text" placeholder="ER" class="form-control" id="sss" readonly>
+										<div class="col-md-9">
+											<!-- <div class="form-inline"> -->
+												<div class="row">
+													<div class="col-md-1">
+														<label for="sss_ee">EE:</label>
+													</div>
+													<div class="col-md-4">
+														<input name="txt_addSSS" type="text" placeholder="EE" class="form-control" id="sss" readonly>
+													</div>
+													<div class="col-md-1">
+														<label for="sss_er">ER:</label>
+													</div>
+													<div class="col-md-4">
+														<input name="txt_addSSS" type="text" placeholder="ER" class="form-control" id="sss_er" readonly>
+													</div>
+												</div>
+											<!-- </div> -->
 										</div>
 									</div>
-									<div class="col-md-5">
-										<label for="philhealth">Philhealth</label>
-									</div>
-									<div class="col-md-6">
-										<div class="col-md-12">
+
+									<!-- PhilHealth -->
+									<div class="col-md-12 pull-down">
+										<div class="col-md-3">
 											<input type="checkbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()">
+											<label for="philhealth" class="nowrap">Philhealth</label>
 										</div>
-										<div class="col-md-6">
-											EE: 
-											<input name="txt_addPhilhealth" type="text" placeholder="EE" class="form-control" id="philhealth" readonly>
-										</div>
-										<div class="col-md-6">
-											ER:
-											<input name="txt_addPhilhealth" type="text" placeholder="ER" class="form-control" id="philhealth" readonly>
+										<div class="col-md-9">
+											<div class="row">
+												<div class="col-md-1">
+													<label for="philhealth_ee">EE:</label>
+												</div>
+												<div class="col-md-4">
+													<input name="txt_addPhilhealth" type="text" placeholder="EE" class="form-control" id="philhealth" readonly>
+												</div>
+												<div class="col-md-1">
+													<label for="philhealth_er">ER:</label>
+												</div>
+												<div class="col-md-4">
+													<input name="txt_addPhilhealth" type="text" placeholder="ER" class="form-control" id="philhealth" readonly>
+												</div>
+											</div>
 										</div>
 									</div>
-									<div class="col-md-5">
-										<label for="pagibig">Pag-IBIG</label>
-									</div>
-									<div class="col-md-6">
-										<div class="col-md-12">
+
+									<!-- PagIBIG-->
+									<div class="col-md-12 pull-down">
+										<div class="col-md-3">
 											<input type="checkbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()">
+											<label for="pagibig" class="nowrap">Pagibig</label>
 										</div>
-										<div class="col-md-6">
-											EE:
-											<input name="txt_addPagibig" type="text" placeholder="EE" class="form-control" id="pagibig" readonly>
-										</div>
-										<div class="col-md-6">
-											ER:
-											<input name="txt_addPagibig" type="text" placeholder="ER" class="form-control" id="pagibig" readonly>
+										<div class="col-md-9">
+											<div class="row">
+												<div class="col-md-1">
+													<label for="pagibig_ee">EE:</label>
+												</div>
+												<div class="col-md-4">
+													<input name="txt_addPagibig" type="text" placeholder="EE" class="form-control" id="pagibig" readonly>
+												</div>
+												<div class="col-md-1">
+													<label for="pagibig_er">ER:</label>
+												</div>
+												<div class="col-md-4">
+													<input name="txt_addPagibig" type="text" placeholder="ER" class="form-control" id="pagibig" readonly>
+												</div>
+											</div>
 										</div>
 									</div>
 
 									<div class="col-md-10 col-md-offset-1 pull-down text-center well well-sm">
-										* SSS contribution is automatically computed based on employee's monthly salary.
+										Note: Check boxes if employee has document for<br>SSS / PhilHealth / Pagibig.
 									</div>
 								</div>
 
