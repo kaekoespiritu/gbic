@@ -256,36 +256,36 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 					<div class="row">
 						<h4 class="modal-title"><br>Contributions</h4><hr>
 						<!-- /////////////////////////// -->
-						<div class="col-md-5">
+						<div class="col-md-4">
 							<label for="sss">SSS</label>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-8">
 							<?php
 							if($sss != 0)
 								Print  '
 										<div class="col-md-12">
-										<input type="checkbox" name="sssCheckbox" id="sssCheckbox" onchange="sssCheckboxFunc()" checked>
+											<input type="checkbox" name="sssCheckbox" id="sssCheckbox" onchange="sssCheckboxFunc()" checked>
 										</div>
 										<div class="col-md-6">
-										EE:
-										<input name="sss" type="text" placeholder="'.$sss.'" class="form-control" id="sss">
+											EE:
+											<input name="sss" type="text" placeholder="'.$sss.'" class="form-control" id="sss">
 										</div>
 										<div class="col-md-6">
-										ER:
-										<input name="sss" type="text" placeholder="'.$sss.'" class="form-control" id="sss">
+											ER:
+											<input name="sss" type="text" placeholder="'.$sss.'" class="form-control" id="sss">
 										</div>';
 							else
 								Print  '
 										<div class="col-md-12">
-										<input type="checkbox" name="sssCheckbox" id="sssCheckbox" onchange="sssCheckboxFunc()">
+											<input type="checkbox" name="sssCheckbox" id="sssCheckbox" onchange="sssCheckboxFunc()">
 										</div>
 										<div class="col-md-6">
-										EE:
-										<input name="sss" type="text" placeholder="No document" class="form-control" id="sss" readonly>
+											EE:
+											<input name="sss" type="text" placeholder="No document" class="form-control" id="sss" readonly>
 										</div>
 										<div class="col-md-6">
-										ER:
-										<input name="sss" type="text" placeholder="No document" class="form-control" id="sss" readonly>
+											ER:
+											<input name="sss" type="text" placeholder="No document" class="form-control" id="sss" readonly>
 										</div>';
 							?>
 						</div>
