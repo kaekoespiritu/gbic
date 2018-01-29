@@ -192,13 +192,13 @@
 														<label for="sss_ee">EE:</label>
 													</div>
 													<div class="col-md-4">
-														<input name="txt_addSSS" type="text" placeholder="EE" class="form-control" id="sss" readonly>
+														<input name="txt_addSSSEE" type="text" placeholder="No document" class="form-control" id="sssEE" readonly>
 													</div>
 													<div class="col-md-1">
 														<label for="sss_er">ER:</label>
 													</div>
 													<div class="col-md-4">
-														<input name="txt_addSSS" type="text" placeholder="ER" class="form-control" id="sss_er" readonly>
+														<input name="txt_addSSSER" type="text" placeholder="No document" class="form-control" id="sssER" readonly>
 													</div>
 												</div>
 											<!-- </div> -->
@@ -217,13 +217,13 @@
 													<label for="philhealth_ee">EE:</label>
 												</div>
 												<div class="col-md-4">
-													<input name="txt_addPhilhealth" type="text" placeholder="EE" class="form-control" id="philhealth" readonly>
+													<input name="txt_addPhilhealthEE" type="text" placeholder="No document" class="form-control" id="philhealthEE" readonly>
 												</div>
 												<div class="col-md-1">
 													<label for="philhealth_er">ER:</label>
 												</div>
 												<div class="col-md-4">
-													<input name="txt_addPhilhealth" type="text" placeholder="ER" class="form-control" id="philhealth" readonly>
+													<input name="txt_addPhilhealthER" type="text" placeholder="No document" class="form-control" id="philhealthER" readonly>
 												</div>
 											</div>
 										</div>
@@ -241,13 +241,13 @@
 													<label for="pagibig_ee">EE:</label>
 												</div>
 												<div class="col-md-4">
-													<input name="txt_addPagibig" type="text" placeholder="EE" class="form-control" id="pagibig" readonly>
+													<input name="txt_addPagibigEE" type="text" placeholder="No document" class="form-control" id="pagibigEE" readonly>
 												</div>
 												<div class="col-md-1">
 													<label for="pagibig_er">ER:</label>
 												</div>
 												<div class="col-md-4">
-													<input name="txt_addPagibig" type="text" placeholder="ER" class="form-control" id="pagibig" readonly>
+													<input name="txt_addPagibigER" type="text" placeholder="No document" class="form-control" id="pagibigER" readonly>
 												</div>
 											</div>
 										</div>

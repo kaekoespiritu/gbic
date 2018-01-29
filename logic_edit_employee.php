@@ -67,59 +67,66 @@
 	}
 
 
-	$sss = mysql_real_escape_string($_POST['sss']);
-	if($_POST['sss'] != null)
+	$sssEE = mysql_real_escape_string($_POST['sssEE']);
+	$sssER = mysql_real_escape_string($_POST['sssER']);
+	if(isset($_POST['sssCheckbox']))
 	{
-		if(isset($_POST['sssCheckbox']))
+		if($_POST['sssEE'] != null || $_POST['sssER'] != null)
 		{
-			mysql_query("UPDATE employee SET sss = '$sss' WHERE empid = '$empid'") or die (mysql_error());	
+			if($_POST['sssEE'] != null && $_POST['sssER'] == null)
+			{
+				mysql_query("UPDATE employee SET sss = '$sssEE' WHERE empid = '$empid'") or die (mysql_error());	
+			}
+			
+			else if($_POST['sssEE'] == null && $_POST['sssER'] != null) 
+			{
+				mysql_query("UPDATE employee SET sss_er = '$sssER' WHERE empid = '$empid'") or die (mysql_error());
+			}
+			else 
+			{
+				mysql_query("UPDATE employee SET sss = '$sssEE', sss_er = '$sssER' WHERE empid = '$empid'") or die (mysql_error());	
+			}
 		}
-		else
-			mysql_query("UPDATE employee SET sss = '0' WHERE empid = '$empid'") or die (mysql_error());	
-	}
-	else if(isset($_POST['sssCheckbox'])){
-		if($sss != ""){
-			mysql_query("UPDATE employee SET sss = '$sss' WHERE empid = '$empid'") or die (mysql_error());	
-		}
+		
 	}
 	else
-		mysql_query("UPDATE employee SET sss = '0' WHERE empid = '$empid'") or die (mysql_error());	
+		mysql_query("UPDATE employee SET sss = '0', sss_er = '0' WHERE empid = '$empid'") or die (mysql_error());	
 
-	$philhealth = mysql_real_escape_string($_POST['philhealth']);
-	if($_POST['philhealth'] != null)
-	{	
-		if(isset($_POST['philhealthCheckbox']))
-			mysql_query("UPDATE employee SET philhealth = '$philhealth' WHERE empid = '$empid'") or die (mysql_error());	
-		else
-			mysql_query("UPDATE employee SET philhealth = '0' WHERE empid = '$empid'") or die (mysql_error());	
-	}
-	else if(isset($_POST['philhealthCheckbox'])){
-		if($philhealth != ""){
-			mysql_query("UPDATE employee SET philhealth = '$philhealth' WHERE empid = '$empid'") or die (mysql_error());	
+	$philhealthEE = mysql_real_escape_string($_POST['philhealthEE']);
+	$philhealthER = mysql_real_escape_string($_POST['philhealthER']);
+	if(isset($_POST['philhealthCheckbox']))
+	{
+		if($_POST['philhealthEE'] != null || $_POST['philhealthER'] != null)//if they inputted a value
+		{
+			if($_POST['philhealthEE'] != null && $_POST['philhealthER'] == null)
+					mysql_query("UPDATE employee SET philhealth = '$philhealthEE' WHERE empid = '$empid'") or die (mysql_error());	
+			else if($_POST['philhealthEE'] == null && $_POST['philhealthER'] != null)
+					mysql_query("UPDATE employee SET philhealth_er = '$philhealthER' WHERE empid = '$empid'") or die (mysql_error());	
+			else
+				mysql_query("UPDATE employee SET philhealth = '$philhealthEE' ,philhealth_er = '$philhealthER' WHERE empid = '$empid'") or die (mysql_error());	
 		}
+		//if not then dont do anything
 	}
 	else
-		mysql_query("UPDATE employee SET philhealth = '0' WHERE empid = '$empid'") or die (mysql_error());	
+		mysql_query("UPDATE employee SET philhealth = '0', philhealth_er = '0' WHERE empid = '$empid'") or die (mysql_error());	
 
-	$pagibig = mysql_real_escape_string($_POST['pagibig']);
-	if($_POST['pagibig'] != null)
+	$pagibigEE = mysql_real_escape_string($_POST['pagibigEE']);
+	$pagibigER = mysql_real_escape_string($_POST['pagibigER']);
+	if(isset($_POST['pagibigCheckbox']))
 	{
-		if(isset($_POST['pagibigCheckbox']))
+		if($_POST['pagibigEE'] != null || $_POST['pagibigER'] != null) 
 		{
-			mysql_query("UPDATE employee SET pagibig = '$pagibig' WHERE empid = '$empid'") or die (mysql_error());	
+			if($_POST['pagibigEE'] != null && $_POST['pagibigER'] == null)
+			mysql_query("UPDATE employee SET pagibig = '$pagibigEE' WHERE empid = '$empid'") or die (mysql_error());	
+			else if($_POST['pagibigEE'] == null && $_POST['pagibigER'] != null)
+				mysql_query("UPDATE employee SET pagibig_er = '$pagibigER' WHERE empid = '$empid'") or die (mysql_error());
+			else
+				mysql_query("UPDATE employee SET pagibig = '$pagibigEE', pagibig_er = '$pagibigER' WHERE empid = '$empid'") or die (mysql_error());	
 		}
-		else
-		{	
-			mysql_query("UPDATE employee SET pagibig = '0' WHERE empid = '$empid'") or die (mysql_error());	
-		}
-	}
-	else if(isset($_POST['pagibigCheckbox'])){
-		if($pagibig != ""){
-			mysql_query("UPDATE employee SET pagibig = '$pagibig' WHERE empid = '$empid'") or die (mysql_error());
-		}
+		//if not then dont do anything
 	}
 	else{
-		mysql_query("UPDATE employee SET pagibig = '0' WHERE empid = '$empid'") or die (mysql_error());	
+		mysql_query("UPDATE employee SET pagibig = '0', pagibig_er = '0' WHERE empid = '$empid'") or die (mysql_error());	
 	}
 
 

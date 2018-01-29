@@ -18,9 +18,12 @@ error_reporting(0);
 		$ratePerDay = mysql_real_escape_string($_POST['txt_addRatePerDay']);
 		$allowance = mysql_real_escape_string($_POST['txt_addAllowance']);
 		$site = mysql_real_escape_string($_POST['dd_site']);
-		$sss = mysql_real_escape_string($_POST['txt_addSSS']);
-		$philhealth = mysql_real_escape_string($_POST['txt_addPhilhealth']);
-		$pagibig = mysql_real_escape_string($_POST['txt_addPagibig']);
+		$sssEE = mysql_real_escape_string($_POST['txt_addSSSEE']);
+		$sssER = mysql_real_escape_string($_POST['txt_addSSSER']);
+		$philhealthEE = mysql_real_escape_string($_POST['txt_addPhilhealthEE']);
+		$philhealthER = mysql_real_escape_string($_POST['txt_addPhilhealthER']);
+		$pagibigEE = mysql_real_escape_string($_POST['txt_addPagibigEE']);
+		$pagibigER = mysql_real_escape_string($_POST['txt_addPagibigER']);
 		$salary = mysql_real_escape_string($_POST['txt_addMonthlySalary']);
 		$emergencyContact = mysql_real_escape_string($_POST['txt_emergencyContact']);
 		$characterReference = mysql_real_escape_string($_POST['txt_characterReference']);
@@ -78,27 +81,15 @@ error_reporting(0);
 		$monthlySalary = $ratePerDay * 25;//6days working days * 4 weeks
 		
 		//Contributions
-		if($sss == null)
-			$pagibig = 0;
-
-		if($philhealth == null)
-			$philhealth = 0;
-
-		if($pagibig == null)
-			$pagibig = 0;
-
-		if($sss && $philhealth && $pagibig)//checks if the employee has all the documents needed
-		{
+		if($sssEE && $philhealthEE && $pagibigEE)//checks if the employee has all the documents needed
 			$complete_doc = 1;
-		}
 		else
-		{
 			$complete_doc = 0;
-		}
+	
 
 		$employment_status = 1;//1 for active employee and 0 for resigned or inactive
 
-
+		// Print "<script>console.log('SSS: ".$sssEE." - ".$sssER." |Philhealth:  ".$philhealthEE." - ".$philhealthER." | PAGIBIG: ".$pagibigEE." - ".$pagibigER."')</script>";
 		mysql_query("INSERT INTO 	employee(	empid, 
 												firstname,
 												lastname,
@@ -113,8 +104,11 @@ error_reporting(0);
 												allowance,
 												site,
 												sss,
+												sss_er,
 												philhealth,
+												philhealth_er,
 												pagibig,
+												pagibig_er,
 												employment_status,
 												complete_doc,
 												reference,
@@ -131,14 +125,17 @@ error_reporting(0);
 																	'$ratePerDay',
 																	'$allowance',
 																	'$site',
-																	'$sss',
-																	'$philhealth',
-																	'$pagibig',
+																	'$sssEE',
+																	'$sssER',
+																	'$philhealthEE',
+																	'$philhealthER',
+																	'$pagibigEE',
+																	'$pagibigER',
 																	'$employment_status',
 																	'$complete_doc',
 																	'$characterReference',
 																	'$emergencyContact')") or die(mysql_error());//adds values to employee table
-		//Set historical for Position
+		// //Set historical for Position
 		mysql_query("INSERT INTO position_history(empid, position, date, admin) VALUES('$empid', '$position', '$date', '$adminName')");	
 		//Set historical for Site
 		mysql_query("INSERT INTO site_history(empid, site, date, admin) VALUES('$empid', '$site', '$date', '$adminName')");
