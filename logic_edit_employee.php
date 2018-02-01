@@ -145,15 +145,17 @@
 	$checker = "SELECT sss, philhealth, pagibig FROM employee WHERE empid = '$empid' AND employment_status = '1' ";
 	$checker_query = mysql_query($checker) or die (mysql_error());
 	$row = mysql_fetch_assoc($checker_query);
-	
-	if($row['sss'] == 0 && $row['philhealth'] == 0 && $row['pagibig'] == 0)
+	Print "<script>console.log('".$row['sss']." | ".$row['philhealth']." | ".$row['pagibig']."')</script>";
+	if($row['sss'] != 0 && $row['philhealth'] != 0 && $row['pagibig'] != 0 )
 	{	
-		$not_complete = "UPDATE employee SET complete_doc = '0'";
+		Print "<script>console.log('no')</script>";
+		$not_complete = "UPDATE employee SET complete_doc = '1' WHERE empid = '$empid'";
 		mysql_query($not_complete) or die (mysql_error());
 	}
 	else
 	{
-		$complete = "UPDATE employee SET complete_doc = '1'";
+		Print "<script>console.log('yes')</script>";
+		$complete = "UPDATE employee SET complete_doc = '0' WHERE empid = '$empid'";
 		mysql_query($complete) or die (mysql_error());
 	}
 	Print "<script>window.location.assign('editEmployee.php?empid=".$empid."')</script>";

@@ -158,6 +158,11 @@
 	if(!empty($_POST['philhealth']))
 		$philhealth = $_POST['philhealth'];
 
+	//employer contribution
+	$sssER = $empArr['sss_er'] / 4;
+	$pagibigER = $empArr['pagibig_er'] / 4;
+	$philhealthER = $empArr['philhealth_er'] / 4;
+
 	$compDeductions = $tax + $sss + $pagibig + $philhealth;
 	//Print "<script>console.log('compDeductions: ".$compDeductions."')</script>";
 
@@ -551,7 +556,10 @@
 									sss,
 									pagibig,
 									philhealth,
-									tools,
+									sss_er,
+									pagibig_er,
+									philhealth_er,
+									tools_er,
 									tools_paid,
 									tools_outstanding,
 									total_salary,
@@ -584,6 +592,9 @@
 														'$sss',
 														'$pagibig',
 														'$philhealth',
+														'$sssER',
+														'$pagibigER',
+														'$philhealthER',
 														'$date',
 														'$tools_paid',
 														'$outStandingBalance',
@@ -620,6 +631,9 @@
 									sss = '$sss',
 									pagibig = '$pagibig',
 									philhealth = '$philhealth',
+									sss_er = '$sssER',
+									pagibig_er = '$pagibigER',
+									philhealth_er = '$philhealthER',
 									tools = '$date',
 									tools_paid = '$tools_paid',
 									tools_outstanding = '$outStandingBalance',
