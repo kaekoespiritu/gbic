@@ -2,31 +2,7 @@
 include('directives/session.php');
 include_once('directives/db.php');
 include_once 'modules/Classes/PHPExcel.php';
-
-
-// Excel style
-$title_style = array(
-           		 	'alignment' => array(
-           		 		'horizontal' => 'center',
-           		 		'vertical' => 'center'
-           		 	),
-           		 	'font' => array(
-           		 		'style' => 'underline'
-           		 	)
-				);
-
-$border_style = array(	
-					'borders' => array(
-						'allborders' => array(
-                			'style' => 'thin',
-                			'color' => array('rgb' => '000000')
-                		)
-           		 	),
-           		 	'alignment' => array(
-           		 		'horizontal' => 'center',
-           		 		'vertical' => 'center'
-           		 	)
-				);
+include('directives/print_styles.php');
 
 // TIMEZONE
 date_default_timezone_set('Asia/Hong_Kong');
@@ -247,13 +223,13 @@ while($locationArr = mysql_fetch_assoc($locQuery))//looping for the Site
 			
 		if($siteSwitch == 1)
 		{
-			$activeSheet->getStyle("A4:AE7")->applyFromArray($border_style);
-			$activeSheet->getStyle("A4:AE".$rowCounter)->applyFromArray($border_style);
+			$activeSheet->getStyle("A4:AE7")->applyFromArray($border_all_thin);
+			$activeSheet->getStyle("A4:AE".$rowCounter)->applyFromArray($border_all_thin);
 		}	
 		else
 		{
-			$activeSheet->getStyle("A4:X7")->applyFromArray($border_style);
-			$activeSheet->getStyle("A4:X".$rowCounter)->applyFromArray($border_style);
+			$activeSheet->getStyle("A4:X7")->applyFromArray($border_all_thin);
+			$activeSheet->getStyle("A4:X".$rowCounter)->applyFromArray($border_all_thin);
 		}
 		$spreadSheetCounter++;//increment the number of spreadsheet			
 	}
