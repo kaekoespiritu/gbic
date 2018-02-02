@@ -26,7 +26,7 @@
 			<div class="row"><br>
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
-						<li><a href='reports_payslip_individual.php?type=Payslip&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Payslip</a></li>
+						<li><a href='reports_individual_earnings.php?type=Earnings&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Payroll</a></li>
 						<li>Individual Payslip for [Name], [Position] at [Site]</li>
 					</ol>
 				</div>
