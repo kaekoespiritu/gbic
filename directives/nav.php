@@ -80,10 +80,7 @@
 				<a class="subflipbtn" href="reports_payslip_individual.php?type=Payslip&period=week&site=null&position=null">Payslip</a>
 			</div>
 			<div class="sub-flipdown">
-				<div class="sub-flipdown-menu">
-					<a href="reports_company_expenses.php?type=Expenses&period=Weekly">Overall</a>
-				</div>
-				<a class="subflipbtn">Company Expenses</a>
+				<a class="subflipbtn" href="reports_company_expenses.php?type=Expenses&period=Weekly">Company Expenses</a>
 			</div>
 		</div>
 	</div>
