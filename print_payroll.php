@@ -132,7 +132,8 @@ $activeSheet->getStyle('A3:AA3')->applyFromArray($border_all_medium);//Header
 $activeSheet->getStyle('A4:AA'.$rowCounter)->applyFromArray($border_all_thin);//Content
 $activeSheet->getStyle('Y'.$grandTotalRow.':Z'.$grandTotalRow)->applyFromArray($border_allsides_medium);//Grand Total
 $activeSheet->getStyle('G1:AA2')->applyFromArray($align_center);//Centered header text
-$activeSheet->getColumnDimension('B')->setAutoSize(true);//Lengthen cell to fit text
+$activeSheet->getColumnDimension('B')->setAutoSize(true);//Lengthen cell to fit text for Employee name
+$activeSheet->getColumnDimension('Z')->setAutoSize(true);//Lengthen cell to fit text for Total Cost
 
 header('Content-Type: application/vnd.ms-excel');
 header('Content-Disposition: attachment; filename="'.$filename.'"');
