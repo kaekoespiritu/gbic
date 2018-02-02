@@ -60,6 +60,9 @@
 				<button class="btn btn-default" id="printButton">
 					Print Payroll
 				</button>
+				<a class="btn btn-default" id="printPayslip" href="reports_payslip_individual_emp.php">
+					Print Payslip
+				</a>
 				<table class="table table-bordered pull-down">
 				<tr>
 					<td colspan="6" rowspan="2">
