@@ -88,7 +88,9 @@
 			</div>
 
 			<div class="pull-down">
-				<?php Print "<a class='btn btn-default' id='printButton' href='print_individual_payroll.php?empid=".$empid."'>Print Payroll</a>";?>
+				
+				<button class='btn btn-default' id='printButton' onclick="printPayroll()">Print Payroll</button>
+				
 				<a class="btn btn-default" id="printPayslip" href="reports_payslip_individual_emp.php">
 					Print Payslip
 				</a>
@@ -126,6 +128,7 @@
 					{
 						$startDate = date('F j, Y', strtotime('-6 day', strtotime($payrollArr['date'])));
 						Print "
+							<input type='hidden' id='payrollDate' value='".$payrollArr['date']."'>
 							<tr>
 							<tr>
 								<td colspan='24' bgcolor='#AAB7B8'>
@@ -318,6 +321,11 @@
     		
 
 		});
+
+		function printPayroll() {
+			var payrollDate = document.getElementById('payrollDate').value;
+			window.location.assign("print_individual_payroll.php?empid=<?php Print $empid?>&date="+payrollDate);
+		}
 
 		function payrollDateChange(date) {
 			document.getElementById('dateChange').value = date;
