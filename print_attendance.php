@@ -100,7 +100,7 @@ while($locationArr = mysql_fetch_assoc($locQuery))//looping for the Site
 		//----------------- Contents ---------------------//
 		//Title Contents
 		$activeSheet->setCellValue('A1', 'Site: '. $siteLocation);//Site
-		$activeSheet->setCellValue('A2', "For the Period: ".$startDate." - ".$endDate);//Date
+		$activeSheet->setCellValue('A2', "Period: ".$startDate." - ".$endDate);//Date
 		$activeSheet->setCellValue('A3', 'Complete Requirements');//"Complete Requirements"
 		$activeSheet->setCellValue('D1', 'WEEKLY TIME RECORD OF EMPLOYEE');//"Weekly time record comployee"
 
@@ -221,15 +221,21 @@ while($locationArr = mysql_fetch_assoc($locQuery))//looping for the Site
 			}
 		}
 			
-		if($siteSwitch == 1)
+		if($siteSwitch == 1) // Wednesday, Thursday, Friday, Saturday
 		{
 			$activeSheet->getStyle("A4:AE7")->applyFromArray($border_all_thin);
 			$activeSheet->getStyle("A4:AE".$rowCounter)->applyFromArray($border_all_thin);
+			$activeSheet->getStyle("D1:AE3")->applyFromArray($align_center);
+			$activeSheet->getColumnDimension("B")->setAutoSize(true);
+			$activeSheet->getColumnDimension("C")->setAutoSize(true);
 		}	
-		else
+		else // Sunday, Monday, Tuesday
 		{
 			$activeSheet->getStyle("A4:X7")->applyFromArray($border_all_thin);
 			$activeSheet->getStyle("A4:X".$rowCounter)->applyFromArray($border_all_thin);
+			$activeSheet->getStyle("D1:X3")->applyFromArray($align_center);
+			$activeSheet->getColumnDimension("B")->setAutoSize(true);
+			$activeSheet->getColumnDimension("C")->setAutoSize(true);
 		}
 		$spreadSheetCounter++;//increment the number of spreadsheet			
 	}
