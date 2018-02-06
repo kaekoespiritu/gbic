@@ -189,8 +189,8 @@
 			});
 		});
 
-		function viewPayrollBtn(id, period) {
-			window.location.assign("reports_individual_payroll.php?empid="+id+"&period="+period);
+		function viewPayrollBtn(id) {
+			window.location.assign("reports_individual_payroll.php?empid="+id);
 		}
 
 		function view13thmonthpayBtn(id, type) {

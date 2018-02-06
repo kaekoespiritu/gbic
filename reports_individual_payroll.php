@@ -4,7 +4,6 @@
 	include('directives/db.php');
 
 	$empid = $_GET['empid'];
-	$period = $_GET['period'];
 
 	$employee = "SELECT * FROM employee WHERE empid = '$empid'";
 	$empQuery = mysql_query($employee);
@@ -51,8 +50,40 @@
 
 			<div class="form-inline">
 				<h4>Select period</h4>
-				<select class="form-control">
-					<option>Sample date</option>
+				<select class="form-control" onchange="payrollDateChange(this.value)">
+					<option hidden>Select date</option>
+					<?php
+						$payrollDates = "SELECT date FROM payroll WHERE empid = '$empid'";
+						$payrollDateQuery = mysql_query($payrollDates);
+
+						if(mysql_num_rows($payrollDateQuery))//check if there's payroll
+						{
+							while($payrollDateArr = mysql_fetch_assoc($payrollDateQuery))
+							{
+								$payrollEndDate = $payrollDateArr['date'];
+								$payrollStartDate = date('F j, Y', strtotime('-6 day', strtotime($payrollEndDate)));
+								if(isset($_POST['dateChange']))
+								{
+									if($_POST['dateChange'] == $payrollEndDate)
+									{
+										Print "<option value = '".$payrollEndDate."' selected>".$payrollStartDate." - ".$payrollEndDate."</option>";
+									}
+									else
+									{
+										Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
+									}
+								}
+								else
+								{
+									Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
+								}
+							}
+						}
+						else
+						{
+							Print "<option>No payroll date available</option>";
+						}
+					?>
 				</select>
 			</div>
 
@@ -77,8 +108,15 @@
 				</tr>
 				
 				<?php
-
-				$payroll = "SELECT * FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+				if(isset($_POST['dateChange']))//if admin chooses a date on the period dropdown
+				{
+					$chosenDate = $_POST['dateChange'];
+					$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$chosenDate' ORDER BY date ASC";
+				}
+				else//default
+				{
+					$payroll = "SELECT * FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+				}
 				$payrollQuery = mysql_query($payroll);
 				$printBool = false;//disable print button if there's no data retrieved
 				if(mysql_num_rows($payrollQuery))
@@ -261,7 +299,11 @@
 		</div>
 
 	</div>
+
 	<input type="hidden" id="printBool" value="<?php Print $printBool?>">
+	<form id="dateChangeForm" method="POST" action="reports_individual_payroll.php?empid=<?php Print $empid?>">
+		<input type="hidden" id="dateChange" name="dateChange">
+	</form>
 
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 	<script rel="javascript" src="js/jquery.min.js"></script>
@@ -276,6 +318,12 @@
     		
 
 		});
+
+		function payrollDateChange(date) {
+			document.getElementById('dateChange').value = date;
+			document.getElementById('dateChangeForm').submit();
+		}
+
 		document.getElementById("reports").setAttribute("style", "background-color: #10621e;");
     		
 	</script>
