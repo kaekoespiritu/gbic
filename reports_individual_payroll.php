@@ -57,9 +57,7 @@
 			</div>
 
 			<div class="pull-down">
-				<button class="btn btn-default" id="printButton">
-					Print Payroll
-				</button>
+				<?php Print "<a class='btn btn-default' id='printButton' href='print_individual_payroll.php?empid=".$empid."'>Print Payroll</a>";?>
 				<a class="btn btn-default" id="printPayslip" href="reports_payslip_individual_emp.php">
 					Print Payslip
 				</a>
@@ -68,7 +66,7 @@
 					<td colspan="6" rowspan="2">
 						<?php
 							if($empArr['complete_doc'] == 1)
-								Print "with Complete Requirements";
+								Print "With Complete Requirements";
 							else
 								Print "Without Requirements";
 						?>
