@@ -21,6 +21,7 @@
 							</div>
 							<div class="col-md-7 text-left" style="border-left-style: solid;">
 								<?php
+
 									$user = $_SESSION['user_logged_in'];
 
 									$admin = "SELECT * FROM administrator WHERE username = '$user'";
