@@ -5,7 +5,13 @@
 
 	//middleware
 	include('directives/reports/middleware/reports_individual_contributions.php');
-	
+
+	$empid = $_GET['empid'];
+
+	if(isset($_POST['date']))
+	{
+		Print "<script>console.log('".$_POST['date']."')</script>";
+	}
 ?>
 <html>
 <head>
@@ -26,19 +32,20 @@
 		require_once("directives/nav.php");
 		?>
 
+
 		<div class="col-md-10 col-md-offset-1">
 			<div class="row"><br>
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_individual_contributions.php?type=Contributions&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Contributions</a></li>
-						<li>Individual PhilHealth Contributions Report for <?php Print $breadcrumInfo?></li>
+						<li>Individual Philhealth Contributions Report for <?php Print $breadcrumInfo?></li>
 					</ol>
 				</div>
 			</div>
 
 			<div class="col-md-10 col-md-offset-1">
 				<div class="form-inline">
-					<h4>Select view</h4>
+					<h4>Select Period</h4>
 					<select onchange="periodChange(this.value)" class="form-control">
 						<?php 
 							if($period == "week")
@@ -55,13 +62,102 @@
 								Print "<option value='year'>Yearly</option>";
 						?>
 					</select>
-					<h4>Select period</h4>
-					<select class="form-control">
-						<option>Sample date</option>
+					<h4>Select <?php Print $period?></h4>
+					<select class="form-control" onchange="changeDate(this.value)">
+						<option hidden>Choose a <?php Print $period?></option>
+						<?php
+						$payrollDates = "SELECT date FROM payroll WHERE empid = '$empid'";
+						$payrollDQuery = mysql_query($payrollDates) or die(mysql_error());
+
+						if(mysql_num_rows($payrollDQuery) > 0)//check if there's payroll
+						{
+							while($payrollDateArr = mysql_fetch_assoc($payrollDQuery))
+							{
+								$monthNoRep = "";
+								$yearNoRep = "";
+								if($_GET['period'] == 'week')
+								{
+									$payrollEndDate = $payrollDateArr['date'];
+									$payrollStartDate = date('F j, Y', strtotime('-6 day', strtotime($payrollEndDate)));
+									if(isset($_POST['date']))
+									{
+										if($_POST['date'] == $payrollEndDate)
+										{
+											Print "<option value = '".$payrollEndDate."' selected>".$payrollStartDate." - ".$payrollEndDate."</option>";
+										}
+										else
+										{
+											Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
+										}
+									}
+									else
+									{
+										Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
+									}
+								}
+								else if($_GET['period'] == 'month')
+								{
+									$payrollArrDate = explode(" ", $payrollDateArr['date']);
+									$payrollMonth = $payrollArrDate[0];
+									$payrollYear = $payrollArrDate[2];
+
+									if($monthNoRep != $payrollMonth." ".$payrollYear)
+									{	
+										if(isset($_POST['date']))
+										{
+											if($_POST['date'] == $payrollMonth." ".$payrollYear)
+											{
+												Print "<option value = '".$payrollMonth." ".$payrollYear."' selected>".$payrollMonth." ".$payrollYear."</option>";
+											}
+											else
+											{
+												Print "<option value = '".$payrollMonth." ".$payrollYear."'>".$payrollMonth." ".$payrollYear."</option>";
+											}
+										}
+										else
+										{
+											Print "<option value = '".$payrollMonth." ".$payrollYear."'>".$payrollMonth." ".$payrollYear."</option>";
+										}
+									}
+									$monthNoRep = $payrollMonth." ".$payrollYear;
+								}
+								else if($_GET['period'] == 'year')
+								{
+									$payrollArrDate = explode(" ", $payrollDateArr['date']);
+									$payrollYear = $payrollArrDate[2];
+									$yearBef = $payrollYear -1;//gets the year before
+
+									if($yearNoRep != $payrollYear)
+									{	
+										if(isset($_POST['date']))
+										{
+											if($_POST['date'] == $payrollYear)
+											{
+												Print "<option value = '".$payrollYear."' selected>".$yearBef." - ".$payrollYear."</option>";
+											}
+											else
+											{
+												Print "<option value = '".$payrollYear."'>".$yearBef." - ".$payrollYear."</option>";
+											}
+										}
+										else
+										{
+											Print "<option value = '".$payrollYear."'>".$yearBef." - ".$payrollYear."</option>";
+										}
+										
+									}
+									$yearNoRep = $payrollYear;
+								}
+								
+							}
+						}
+						
+					
+						?>
 					</select>
 				</div>
 				<div class="pull-down">
-				<button class="btn btn-default" id="printSSS">
+				<button class="btn btn-default" id="printPhilhealth">
 					Print <?php Print $printButton?>
 				</button>
 				<table class="table table-bordered pull-down">
@@ -90,164 +186,68 @@
 						</td>
 					</tr>
 
-					<?php 
-
-					function sssTable($monthly)//SSS Table
-						{
-							$sssEmployer = 0;
-
-							if($monthly >= 1000 && $monthly <= 1249.9)
-								$sssEmployer = 83.70;
-							//1250 ~ 1749.9 = 54.50
-							else if($monthly >= 1250 && $monthly <= 1749.9)
-								$sssEmployer = 120.50;
-							//1750 ~ 2249.9 = 72.70
-							else if($monthly >= 1750 && $monthly <= 2249.9)
-								$sssEmployer = 157.30;
-							//2250 ~ 2749.9 = 90.80
-							else if($monthly >= 2250 && $monthly <= 2749.9)
-								$sssEmployer = 194.20;
-							//2750 ~ 3249.9 = 109.0
-							else if($monthly >= 2750 && $monthly <= 3249.9)
-								$sssEmployer = 231.00;
-							//3250 ~ 3749.9 = 127.20
-							else if($monthly >= 3250 && $monthly <= 3749.9)
-								$sssEmployer = 267.80;
-							//3750 ~ 4249.9 = 145.30
-							else if($monthly >= 3750 && $monthly <= 4249.9)
-								$sssEmployer = 304.70;
-							//4250 ~ 4749.9 = 163.50
-							else if($monthly >= 4250 && $monthly <= 4749.9)
-								$sssEmployer = 341.50;
-							//4750 ~ 5249.9 = 181.70
-							else if($monthly >= 4750 && $monthly <= 5249.9)
-								$sssEmployer = 378.30;
-							//5250 ~ 5749.9 = 199.80
-							else if($monthly >= 5250 && $monthly <= 5749.9)
-								$sssEmployer = 415.20;
-							//5750 ~ 6249.9 = 218.0
-							else if($monthly >= 5750 && $monthly <= 6249.9)
-								$sssEmployer = 452.00;
-							//6250 ~ 6749.9 = 236.20
-							else if($monthly >= 6250 && $monthly <= 6749.9)
-								$sssEmployer = 488.80;
-							//6750 ~ 7249.9 = 254.30
-							else if($monthly >= 6750 && $monthly <= 7249.9)
-								$sssEmployer = 525.70;
-							//7250 ~ 7749.9 = 272.50
-							else if($monthly >= 7250 && $monthly <= 7749.9)
-								$sssEmployer = 562.50;
-							//7750 ~ 8249.9 = 290.70
-							else if($monthly >= 7750 && $monthly <=  8249.9)
-								$sssEmployer = 599.30;
-							//8250 ~ 8749.9 = 308.80
-							else if($monthly >= 8250 && $monthly <= 8749.9)
-								$sssEmployer = 636.20;
-							//8750 ~ 9249.9 = 327.0
-							else if($monthly >= 8750 && $monthly <= 9249.9 )
-								$sssEmployer = 673.00;
-							//9250 ~ 9749.9 = 345.20
-							else if($monthly >= 9250 && $monthly <= 9749.9)
-								$sssEmployer = 709.80;
-							//9750 ~ 10249.9 = 363.30
-							else if($monthly >= 9750 && $monthly <= 10249.9)
-								$sssEmployer = 746.70;
-							//10250 ~ 10749.9 = 381.50
-							else if($monthly >= 10250 && $monthly <=  10749.9)
-								$sssEmployer = 783.50;
-							//10750 ~ 11249.9 = 399.70
-							else if($monthly >= 10750 && $monthly <= 11249.9)
-								$sssEmployer = 820.30;
-							//11250 ~ 11749.9 = 417.80
-							else if($monthly >= 11250 && $monthly <= 11749.9)
-								$sssEmployer = 857.20;
-							//11750 ~ 12249.9 = 436.0
-							else if($monthly >= 11750 && $monthly <= 12249.9)
-								$sssEmployer = 894.00;
-							//12250 ~ 12749.9 = 454.20
-							else if($monthly >= 12250 && $monthly <= 12749.9)
-								$sssEmployer = 930.80;
-							//12750 ~ 13249.9 = 472.30
-							else if($monthly >= 12750 && $monthly <= 13249.9)
-								$sssEmployer = 967.70;
-							//13250 ~ 13749.9 = 490.50
-							else if($monthly >= 13250 && $monthly <= 13749.9)
-								$sssEmployer = 1004.5;
-							//13750 ~ 14249.9 = 508.70
-							else if($monthly >= 13750 && $monthly <= 14249.9 )
-								$sssEmployer = 1041.30;
-							//14250 ~ 14749.9 = 526.80
-							else if($monthly >= 14250 && $monthly <= 14749.9)
-								$sssEmployer = 1070.20;
-							//14750 ~ 15249.9 = 545.0
-							else if($monthly >= 14750 && $monthly <= 15249.9 )
-								$sssEmployer = 1135.00;
-							//15250 ~ 15749.9 = 563.20
-							else if($monthly >= 15250 && $monthly <= 15749.9)
-								$sssEmployer = 1171.80;
-							//15750 ~ higher = 581.30
-							else if($monthly >= 15750)
-								$sssEmployer = 1208.70;
-
-							return $sssEmployer;
-						}
+					<?php
 
 					if($period == "week")
 					{
-						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+						if(isset($_POST['date']))
+						{
+							$changedPeriod = $_POST['date'];
+							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND date= '$changedPeriod' ORDER BY date ASC";
+						}
+						else
+							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+
 						$payrollDateQuery = mysql_query($payrollDate);
 
 						//weekly
-						$overallSSS = 0;
+						$overallPhilhealth = 0;
 
-						$sssBool = false;//if employee dont have sss contribution
+						$PhilhealthBool = false;//if employee dont have philhealth contribution
 
 						//Evaluates the attendance and compute the 13th monthpay
 						while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 						{
-							Print "<script>console.log('bool: ".$sssBool."')</script>";
 							//For the specfied week in first column
 							$endDate = $payDateArr['date'];
 							$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
-							Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
+							//Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
 
 							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$endDate' ORDER BY date ASC";
 							$payrollQuery = mysql_query($payroll);
 							if(mysql_num_rows($payrollQuery) > 0)
 							{
 								$payrollArr = mysql_fetch_assoc($payrollQuery);
-								if($payrollArr['sss'] != 0)
+								if($payrollArr['philhealth'] != 0)
 								{
-									$sssBool = true;
-									Print "<script>console.log('bool: ".$sssBool."')</script>";
+									$PhilhealthBool = true;
 									$monthly = $payrollArr['rate'] * 25;
 
-									$sssEmployer = sssTable($monthly);//Gets the value in the sss table
+									$PhilhealthEmployer = $payrollArr['philhealth_er'];//Gets the value in the philhealth table
 
-									Print "<script>console.log('".$sssEmployer."')</script>";
-									$sssContribution = $sssEmployer / 4;
+									$PhilhealthContribution = $PhilhealthEmployer;
 
-									$totalSSSContribution = $sssContribution + $payrollArr['sss'];
+									$totalPhilhealthContribution = $PhilhealthContribution + $payrollArr['philhealth'];
 									Print "
 											<tr>
 												<td>
 													".$startDate." - ".$endDate."
 												</td>
 												<td>
-													".numberExactFormat($payrollArr['sss'], 2, '.')."
+													".numberExactFormat($payrollArr['philhealth'], 2, '.')."
 												</td>
 												<td>
-													".numberExactFormat($sssContribution, 2, '.')."
+													".numberExactFormat($PhilhealthContribution, 2, '.')."
 												</td>
 												<td>
-													".numberExactFormat($totalSSSContribution, 2, '.')."
+													".numberExactFormat($totalPhilhealthContribution, 2, '.')."
 												</td>
 											</tr>";
 
-									$overallSSS += $totalSSSContribution;
+									$overallPhilhealth += $totalPhilhealthContribution;
 								}
 
-								if($sssBool)
+								if($PhilhealthBool)
 								{
 									Print "
 									<tr>
@@ -257,7 +257,7 @@
 											Grand Total
 										</td>
 										<td>
-											".numberExactFormat($overallSSS, 2, '.')."
+											".numberExactFormat($overallPhilhealth, 2, '.')."
 										</td>
 									</tr>";
 								}
@@ -265,7 +265,7 @@
 							}
 							else
 							{
-								$sssBool = true;
+								$PhilhealthBool = true;
 								Print "
 										<tr>
 											<td colspan='4'>
@@ -274,7 +274,7 @@
 										</tr>";
 							}
 
-							if(!$sssBool)
+							if(!$PhilhealthBool)
 							{
 								Print "
 										<tr>
@@ -288,14 +288,23 @@
 					}
 					else if($period == "month")
 					{
+						if(isset($_POST['date']))
+						{
+							$changedPeriod = explode(' ',$_POST['date']);
+							$monthPeriod = $changedPeriod[0];
+							$yearPeriod = $changedPeriod[1];
+							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY date ASC";
+						}
+						else
 						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+
 						$payrollDateQuery = mysql_query($payrollDate);
 
 						//monthly
-						$overallSSS = 0;
+						$overallPhilhealth = 0;
 
-						$sssBool = false;//if employee dont have sss contribution
-						//Evaluates the attendance and compute the sss contribution
+						$PhilhealthBool = false;//if employee dont have philhealth contribution
+						//Evaluates the attendance and compute the philhealth contribution
 						while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 						{
 							$dateExploded = explode(" ", $payDateArr['date']);
@@ -304,42 +313,41 @@
 
 							$payrollDay = $payDateArr['date'];
 
-							Print "<script>console.log('".$month." - ".$year."')</script>";
+							//Print "<script>console.log('".$month." - ".$year."')</script>";
 
 							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' ORDER BY date ASC";
 							$payrollQuery = mysql_query($payroll);
 							if(mysql_num_rows($payrollQuery) > 0)
 							{
-								$sssBool = true;
+								$PhilhealthBool = true;
 								$EEContribution = 0;
 								$ERContribution = 0;
-								$totalSSSContribution = 0;
+								$totalPhilhealthContribution = 0;
 
 								while($payrollArr = mysql_fetch_assoc($payrollQuery))
 								{
-									if($payrollArr['sss'] != 0)
+									if($payrollArr['philhealth'] != 0)
 									{
-										$sssBool = true;
-										Print "<script>console.log('yess')</script>";
+										$PhilhealthBool = true;
+
 										$monthly = $payrollArr['rate'] * 25;
 
-										$sssEmployer = sssTable($monthly);//Gets the value in the sss table
+										$PhilhealthEmployer = $payrollArr['philhealth_er'];//Gets the value in the philhealth table
 
-										//Print "<script>console.log('".$sssEmployer."')</script>";
-										$ERContribution += $sssEmployer / 4;
+										$ERContribution += $PhilhealthEmployer;
 
-										$totalSSSContribution = $ERContribution + $payrollArr['sss'];
+										$totalPhilhealthContribution = $ERContribution + $payrollArr['philhealth'];
 
-										$EEContribution += $payrollArr['sss'];
+										$EEContribution += $payrollArr['philhealth'];
 										
-										$overallSSS += $totalSSSContribution;
+										$overallPhilhealth += $totalPhilhealthContribution;
 									}
 									else
 									{
-										$sssBool = false;
+										$PhilhealthBool = false;
 									}
 								}
-								if($sssBool)
+								if($PhilhealthBool)
 								{
 									Print "
 											<tr>
@@ -353,7 +361,7 @@
 													".numberExactFormat($ERContribution, 2, '.')."
 												</td>
 												<td>
-													".numberExactFormat($totalSSSContribution, 2, '.')."
+													".numberExactFormat($totalPhilhealthContribution, 2, '.')."
 												</td>
 											</tr>";
 								}
@@ -364,7 +372,7 @@
 							}
 							else
 							{
-								$sssBool = true;
+								$PhilhealthBool = true;
 								Print "
 										<tr>
 											<td colspan='4'>
@@ -373,7 +381,7 @@
 										</tr>";
 							}
 
-							if(!$sssBool)
+							if(!$PhilhealthBool)
 							{
 								Print "
 										<tr>
@@ -384,7 +392,7 @@
 							}
 
 						}
-						if($sssBool)//only display when employee has sss
+						if($PhilhealthBool)//only display when employee has philhealth
 						{
 							Print "
 							<tr>
@@ -394,21 +402,27 @@
 									Grand Total
 								</td>
 								<td>
-									".numberExactFormat($overallSSS, 2, '.')."
+									".numberExactFormat($overallPhilhealth, 2, '.')."
 								</td>
 							</tr>";
 						}
 					}
 					else if($period = "year")
 					{
-						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+						if(isset($_POST['date']))
+						{
+							$changedPeriod = $_POST['date'];
+							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND date LIKE '%$changedPeriod' ORDER BY date ASC";
+						}
+						else
+							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
 						$payrollDateQuery = mysql_query($payrollDate);
 
 						//monthly
-						$overallSSS = 0;
+						$overallPhilhealth = 0;
 
-						$sssBool = false;//if employee dont have sss contribution
-						//Evaluates the attendance and compute the sss contribution
+						$PhilhealthBool = false;//if employee dont have philhealth contribution
+						//Evaluates the attendance and compute the philhealth contribution
 						while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 						{
 							$dateExploded = explode(" ", $payDateArr['date']);
@@ -417,42 +431,41 @@
 
 							$payrollDay = $payDateArr['date'];
 
-							Print "<script>console.log('".$year."')</script>";
+							//Print "<script>console.log('".$year."')</script>";
 
 							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '%$year' ORDER BY date ASC";
 							$payrollQuery = mysql_query($payroll);
 							if(mysql_num_rows($payrollQuery) > 0)
 							{
-								$sssBool = true;
+								$PhilhealthBool = true;
 								$EEContribution = 0;
 								$ERContribution = 0;
-								$totalSSSContribution = 0;
+								$totalPhilhealthContribution = 0;
 
 								while($payrollArr = mysql_fetch_assoc($payrollQuery))
 								{
-									if($payrollArr['sss'] != 0)
+									if($payrollArr['philhealth'] != 0)
 									{
-										$sssBool = true;
-										Print "<script>console.log('yess')</script>";
+										$PhilhealthBool = true;
+
 										$monthly = $payrollArr['rate'] * 25;
 
-										$sssEmployer = sssTable($monthly);//Gets the value in the sss table
+										$PhilhealthEmployer = $payrollArr['rate'];//Gets the value in the philhealth table
 
-										//Print "<script>console.log('".$sssEmployer."')</script>";
-										$ERContribution += $sssEmployer / 4;
+										$ERContribution += $PhilhealthEmployer;
 
-										$totalSSSContribution = $ERContribution + $payrollArr['sss'];
+										$totalPhilhealthContribution = $ERContribution + $payrollArr['philhealth'];
 
-										$EEContribution += $payrollArr['sss'];
+										$EEContribution += $payrollArr['philhealth'];
 										
-										$overallSSS += $totalSSSContribution;
+										$overallPhilhealth += $totalPhilhealthContribution;
 									}
 									else
 									{
-										$sssBool = false;
+										$PhilhealthBool = false;
 									}
 								}
-								if($sssBool)
+								if($PhilhealthBool)
 								{
 									Print "
 											<tr>
@@ -466,7 +479,7 @@
 													".numberExactFormat($ERContribution, 2, '.')."
 												</td>
 												<td>
-													".numberExactFormat($totalSSSContribution, 2, '.')."
+													".numberExactFormat($totalPhilhealthContribution, 2, '.')."
 												</td>
 											</tr>";
 								}
@@ -477,7 +490,7 @@
 							}
 							else
 							{
-								$sssBool = true;
+								$PhilhealthBool = true;
 								Print "
 										<tr>
 											<td colspan='4'>
@@ -486,7 +499,7 @@
 										</tr>";
 							}
 
-							if(!$sssBool)
+							if(!$PhilhealthBool)
 							{
 								Print "
 										<tr>
@@ -497,7 +510,7 @@
 							}
 
 						}
-						if($sssBool)//only display when employee has sss
+						if($PhilhealthBool)//only display when employee has philhealth
 						{
 							Print "
 							<tr>
@@ -507,7 +520,7 @@
 									Grand Total
 								</td>
 								<td>
-									".numberExactFormat($overallSSS, 2, '.')."
+									".numberExactFormat($overallPhilhealth, 2, '.')."
 								</td>
 							</tr>";
 						}
@@ -518,15 +531,39 @@
 				</table>
 				</div>
 			</div>
+
 		</div>
 
 	</div>
-
+	<input type="hidden" id="printButton" value="<?php Print $PhilhealthBool?>">
+	<form id="changeDateForm" method="post" action="reports_individual_philhealth.php?empid=<?php Print $empid?>&period=<?php Print $period?>">
+		<input type="hidden" name="date">
+		<input type="hidden" name="numLen">
+	</form>
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 	<script rel="javascript" src="js/jquery.min.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script>
 		document.getElementById("reports").setAttribute("style", "background-color: #10621e;");
+
+		function changeDate(date) {
+			var period = date.split(' ');
+			var numLen = period.length;
+			document.getElementsByName('date')[0].value = date;
+			document.getElementsByName('numLen')[0].value = numLen;
+			document.getElementById('changeDateForm').submit();
+		}
+
+		function periodChange(period) {
+			window.location.assign("reports_individual_philhealth.php?empid=<?php Print $empid?>&period="+period);
+
+		}
+		//Disables the button if there's no data
+		$(document).ready(function(){
+			if($("#printButton").val() == 0) {
+			    $("#printPhilhealth").attr("disabled", "disabled");
+			}
+		});
 	</script>
 </body>
 </html>
