@@ -88,9 +88,9 @@
 			</div>
 
 			<div class="pull-down">
-				<button class="btn btn-default" id="printButton">
-					Print Payroll
-				</button>
+				
+				<button class='btn btn-default' id='printButton' onclick="printPayroll()">Print Payroll</button>
+				
 				<a class="btn btn-default" id="printPayslip" href="reports_payslip_individual_emp.php">
 					Print Payslip
 				</a>
@@ -99,7 +99,7 @@
 					<td colspan="6" rowspan="2">
 						<?php
 							if($empArr['complete_doc'] == 1)
-								Print "with Complete Requirements";
+								Print "With Complete Requirements";
 							else
 								Print "Without Requirements";
 						?>
@@ -128,6 +128,7 @@
 					{
 						$startDate = date('F j, Y', strtotime('-6 day', strtotime($payrollArr['date'])));
 						Print "
+							<input type='hidden' id='payrollDate' value='".$payrollArr['date']."'>
 							<tr>
 							<tr>
 								<td colspan='24' bgcolor='#AAB7B8'>
@@ -320,6 +321,11 @@
     		
 
 		});
+
+		function printPayroll() {
+			var payrollDate = document.getElementById('payrollDate').value;
+			window.location.assign("print_individual_payroll.php?empid=<?php Print $empid?>&date="+payrollDate);
+		}
 
 		function payrollDateChange(date) {
 			document.getElementById('dateChange').value = date;
