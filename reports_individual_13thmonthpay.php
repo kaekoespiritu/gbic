@@ -46,6 +46,12 @@
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_individual_earnings.php?type=Earnings&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Earnings</a></li>
 						<li>Individual 13th Month Pay Report for <?php Print $employeeInfo?></li>
+						<button class='btn btn-success pull-right' data-toggle="modal" data-target="#give13thmonthpay">
+							Give 13th Month Pay
+						</button>
+						<button class='btn btn-danger pull-right' data-toggle="modal" data-target="#13thmonthhistory">
+							13th Month Pay History
+						</button>
 					</ol>
 				</div>
 			</div>
@@ -294,6 +300,115 @@
 
 		</div>
 
+	</div>
+
+	<!-- Modals -->
+	<div class="modal fade" id="give13thmonthpay">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Name of Employee's 13th Month Pay</h4>
+	      </div>
+	      <div class="modal-body">
+	        <table class='table table-bordered'>
+	        	<tr>
+	        		<td>
+	        			From - To Date
+	        		</td>
+	        		<td>
+	        			Amount
+	        		</td>
+	        	</tr>
+	        	<tr>
+	        		<td>
+	        			Date to Date
+	        		</td>
+	        		<td>
+	        			$$$
+	        		</td>
+	        	</tr>
+	        </table>
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#enter13thmonthpay">Give 13th Month Pay</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div class="modal fade" id="enter13thmonthpay">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="row">
+		      	<div class="col-md-6">
+		      		<h4>13th Month Pay Amount:</h4>
+		      			<b>$$$</b>
+		      	</div>
+		      	<div class="col-md-6">
+		      		<h4>Amount to Give:</h4> <input type="number"><br>
+		        	<input type="checkbox"> Copy overall amount
+		      	</div>
+	      	</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary">Save Changes</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div class="modal fade" id="13thmonthhistory">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Name of Employee's 13th Month Pay History</h4>
+	      </div>
+	      <div class="modal-body">
+	        <table class='table table-bordered'>
+	        	<tr>
+	        		<td>
+	        			From Date
+	        		</td>
+	        		<td>
+	        			To Date
+	        		</td>
+	        		<td>
+	        			13th Month Pay Amount
+	        		</td>
+	        		<td>
+	        			Amount given
+	        		</td>
+	        	</tr>
+	        	<tr>
+	        		<td>
+	        			DATE
+	        		</td>
+	        		<td>
+	        			DATE
+	        		</td>
+	        		<td>
+	        			$$$
+	        		</td>
+	        		<td>
+	        			$$$
+	        		</td>
+	        	</tr>
+	        </table>
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-primary">Print</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
