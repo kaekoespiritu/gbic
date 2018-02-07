@@ -107,18 +107,21 @@
 					</select>
 			</div>
     	</div>
+    </div>
 
 
 			<?php 
 
 				if(isset($_POST['payrollDate'])) {
 					Print '<div class="row pull-down">
+					<div class="col-md-12 pull-down">
 								<a class="btn btn-default" href="print_payroll.php?site='.$location.'&date='.$_POST['payrollDate'].'">
 									Print Payroll
 								</a>
 								<a class="btn btn-default">
 									Print Payslips
 								</a>
+								</div>
 							</div>';
 					if($req == 'all')
 						$reqMessage = "All ".$location." employees";
@@ -379,7 +382,6 @@
 			}
 			?>
 			</div>
-		</div>
 
 	</div>
 </div>
