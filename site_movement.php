@@ -199,7 +199,7 @@ $location = $_GET['site'];
 				    </div>
 				    <div class="modal-body">
 			     	<select class="form-control input-sm" onchange="groupChange(this)">
-			     		<option hidden>Position</option>
+			     		<option hidden>Site location</option>
 						<?php
 							$site = "SELECT * FROM site WHERE active = '1'";
 							$siteQuery = mysql_query($site);
