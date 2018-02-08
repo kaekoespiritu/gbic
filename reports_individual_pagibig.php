@@ -39,6 +39,9 @@
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_individual_contributions.php?type=Contributions&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Contributions</a></li>
 						<li>Individual Pagibig Contributions Report for <?php Print $breadcrumInfo?></li>
+						<button class='btn btn-primary pull-right'>
+							Print Pagibig Contribution
+						</button>
 					</ol>
 				</div>
 			</div>
