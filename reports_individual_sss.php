@@ -252,33 +252,8 @@
 
 									$overallSSS += $totalSSSContribution;
 								}
-
-								// if($sssBool)
-								// {
-								// 	Print "
-								// 	<tr>
-								// 		<td colspan='2'>
-								// 		</td>
-								// 		<td>
-								// 			Grand Total
-								// 		</td>
-								// 		<td>
-								// 			".numberExactFormat($overallSSS, 2, '.')."
-								// 		</td>
-								// 	</tr>";
-								// }
 								
 							}
-							// else
-							// {
-							// 	$sssBool = true;
-							// 	Print "
-							// 			<tr>
-							// 				<td colspan='4'>
-							// 				 	No Report data as of the moment
-							// 				</td>
-							// 			</tr>";
-							// }
 
 
 						}
