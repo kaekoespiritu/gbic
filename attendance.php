@@ -241,33 +241,61 @@ include('directives/session.php');
 				{
 					Print '<div class="row">';
 				}
+				$employees = "SELECT * FROM employee WHERE site = '$site' AND employment_status = '1'";
+				$empCheckerQuery = mysql_query($employees);
+				
+				$siteBool = false;
 
-				//Check if overall attendance for a certain site is done
-				$attendanceChecker = "SELECT * FROM attendance WHERE date = '$date' AND site = '$site'";
-				$attendanceQuery = mysql_query($attendanceChecker);
-				if($attendanceQuery)
+				$empNum = mysql_num_rows($empCheckerQuery);// gets the number of employees in the query
+				$count = 1;// counter for number of loops
+				$checkerBuilder = "";
+				if($empNum != 0)
 				{
-					$attNum = mysql_num_rows($attendanceQuery);
-					if($attNum == 0)
+					$siteBool = true;
+					$checkerBuilder = " AND (";
+					while($empArr = mysql_fetch_assoc($empCheckerQuery))
 					{
-						$attendanceStatus = 0;
+						$employeeId = $empArr['empid'];
+						$checkerBuilder .= " empid = '".$employeeId."' ";
+
+						if($empNum != $count)
+							$checkerBuilder .= " OR ";
+
+						$count++;
 					}
-					else
+					$checkerBuilder .= ")";
+				}
+		
+				if($siteBool)//if site has employees
+				{
+					//Check if overall attendance for a certain site is done
+					$attendanceChecker = "SELECT * FROM attendance WHERE date = '$date' $checkerBuilder";
+					$attendanceQuery = mysql_query($attendanceChecker);
+					if($attendanceQuery)
 					{
-						$checker = null;
-						while($attRow = mysql_fetch_assoc($attendanceQuery))
+						$attNum = mysql_num_rows($attendanceQuery);
+						if($attNum == 0)
 						{
-							if($attRow['attendance'] != 0)//0 is for no input
-							{
-								$checker++;//counter
-							}
+							$attendanceStatus = 0;
 						}
-						if($checker == $attNum)//check if number of attendance and the counter are the same
+						else
 						{
-							$attendanceStatus = 1;//Trigger for completing the attendance for the site
+							$checker = null;
+							while($attRow = mysql_fetch_assoc($attendanceQuery))
+							{
+								if($attRow['attendance'] != 0)//0 is for no input
+								{
+									$checker++;//counter
+								}
+							}
+							if($checker == $attNum)//check if number of attendance and the counter are the same
+							{
+								$attendanceStatus = 1;//Trigger for completing the attendance for the site
+							}
 						}
 					}
 				}
+					
 				
 
 				$site_num = $row['location'];

@@ -110,30 +110,31 @@
 				/* If location is long, font-size to smaller */
 				if(strlen($row['location'])>=16)
 				{
-					Print '	<a data-toggle="modal" data-target="#optionModal" style="color: white !important; text-decoration: none !important; cursor: pointer;">
-								<div class="sitebox">
-									<span class="smalltext">'
+					Print "		<a data-toggle='modal' data-target='#optionModal' onclick='siteContribution(\"".$row['location']."\")' style='color: white !important; text-decoration: none !important; cursor: pointer;'>
+								<div class='sitebox'>
+									<span class='smalltext'>"
 										. $row['location'] .
-									'</span>
+									"</span>
 									<br>
-									<span class="checkmark" name="site" value="'.$attendanceStatus.'"></span>
+									<span class='checkmark' name='site' value='".$attendanceStatus."'></span>
 									<br>
-									<span>Employees: '. $employee_num .'</span>
+									<span>Employees: ". $employee_num ."</span>
 								</div>
-							';
+							";
 				}
 				else
 				{
-					Print '	<a data-toggle="modal" data-target="#optionModal" style="color: white !important; text-decoration: none !important; cursor: pointer;">
-								<div class="sitebox">
-									<span class="autofit">'
+					Print "		<a data-toggle='modal' data-target='#optionModal' onclick='siteContribution(\"".$row['location']."\")' style='color: white !important; text-decoration: none !important; cursor: pointer;'>
+								<div class='sitebox'>
+									<span class='autofit'>"
 										. $row['location'] .
-									'<br>
-									<span class="checkmark" name="site" value="'.$attendanceStatus.'"></span>
-									<br>Employees: '. $employee_num .'
-									</span>
+									"</span>
+									<br>
+									<span class='checkmark' name='site' value='".$attendanceStatus."'></span>
+									<br>
+									<span>Employees: ". $employee_num ."</span>
 								</div>
-							</a>';
+							";
 				}
 				$counter++;
 				if($counter == 5)
@@ -179,16 +180,16 @@
       				Select report type:
       			</div>
       			<div class="modal-body">
-      				<a class="btn btn-primary" href="reports_overall_sss.php">
+      				<a class="btn btn-primary" id="SssModal">
       					SSS
       				</a>
-      				<a class="btn btn-primary" href="reports_overall_philhealth.php">
+      				<a class="btn btn-primary" id="PhilhealthModal">
       					PhilHealth
       				</a>
-      				<a class="btn btn-primary" href="reports_overall_pagibig.php">
+      				<a class="btn btn-primary" id="PagibigModal">
       					PagIBIG
       				</a>
-      				<a class="btn btn-primary" href="reports_overall_allcontributions.php">
+      				<a class="btn btn-primary" id="OverallModal">
       					Overall
       				</a>
       			</div>
@@ -203,10 +204,15 @@
 		document.getElementById("reports").setAttribute("style", "background-color: #10621e;");
 
 		function changePeriod(period, position, site, search, type) {
-
-			window.location.assign("reports_overall.php?&type="+type+"&period="+period);
+			window.location.assign("reports_overall_contributions.php?&type="+type+"&period="+period);
 			document.getElementById('period').innerHTML = period;
+		}
 
+		function siteContribution(site) {
+			document.getElementById('SssModal').href = "reports_overall_sss.php?site="+site+"&period=week";
+			document.getElementById('PhilhealthModal').href = "reports_overall_philhealth.php?site="+site+"&period=week";
+			document.getElementById('PagibigModal').href = "reports_overall_pagibig.php?site="+site+"&period=week";
+			document.getElementById('OverallModal').href = "reports_overall_sss.php?site="+site+"&period=week";
 		}
 	</script>
 </body>

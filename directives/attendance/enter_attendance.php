@@ -34,7 +34,33 @@ function attendance ()
 	}
 	$employees_query = mysql_query($employees);
 
-	$dateChecker = "SELECT date FROM attendance WHERE date = '$date' AND site = '$site'";
+	$empCheckerQuery = mysql_query($employees);
+
+	
+	$empNum = mysql_num_rows($empCheckerQuery);// gets the number of employees in the query
+	$count = 1;// counter for number of loops
+	$checkerBuilder = "";
+	if($empNum != 0)
+	{
+		$checkerBuilder = " AND (";
+		while($empArr = mysql_fetch_assoc($empCheckerQuery))
+		{
+			
+			$employeeId = $empArr['empid'];
+			$checkerBuilder .= " empid = '".$employeeId."' ";
+
+			if($empNum != $count)
+				$checkerBuilder .= " OR ";
+
+			$count++;
+		}
+		$checkerBuilder .= ")";
+	}
+		
+	//Print "<script>console.log('".$checkerBuilder."')</script>";
+
+	$dateChecker = "SELECT date FROM attendance WHERE date = '$date' $checkerBuilder";
+	Print "<script>console.log('".$dateChecker."')</script>";
 	$dateCheckerQuery = mysql_query($dateChecker);
 
 	if($dateCheckerQuery)//Checks if there is already an attendance made for that specific date

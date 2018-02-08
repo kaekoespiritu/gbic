@@ -80,6 +80,7 @@ include('directives/session.php');
 				$attendanceStatus = 0;
 				foreach($days as $checkDay)
 				{
+					Print "<script>console.log('".$attendanceStatus."')</script>";
 					$day = date('l', strtotime($checkDay));//Gets the Day in the week of the date
 					
 					$holidayChecker = "SELECT * FROM holiday WHERE date = '$checkDay'";
@@ -96,29 +97,57 @@ include('directives/session.php');
 					}
 					else
 					{
-						//Check if overall attendance for a certain site is done
-						$attendanceChecker = "SELECT * FROM attendance WHERE date = '$checkDay' AND site = '$site'";
-						$attendanceQuery = mysql_query($attendanceChecker);
-						if($attendanceQuery)
+
+						$employees = "SELECT * FROM employee WHERE site = '$site' AND employment_status = '1'";
+						$empCheckerQuery = mysql_query($employees);
+						
+						$siteCheckerBool = false;
+
+						$empNum = mysql_num_rows($empCheckerQuery);// gets the number of employees in the query
+						$count = 1;// counter for number of loops
+						$checkerBuilder = "";
+						if($empNum != 0)
 						{
-							$attNum = mysql_num_rows($attendanceQuery);
-							if($attNum == 0)
+							$siteCheckerBool = true;
+							$checkerBuilder = " AND (";
+							while($empArr = mysql_fetch_assoc($empCheckerQuery))
 							{
-								$attendanceStatus = 0;
+								$employeeId = $empArr['empid'];
+								$checkerBuilder .= " empid = '".$employeeId."' ";
+
+								if($empNum != $count)
+									$checkerBuilder .= " OR ";
+
+								$count++;
 							}
-							else
+							$checkerBuilder .= ")";
+						}
+						if($siteCheckerBool)//if site has employees
+						{
+							//Check if overall attendance for a certain site is done
+							$attendanceChecker = "SELECT * FROM attendance WHERE date = '$checkDay' $checkerBuilder";
+							$attendanceQuery = mysql_query($attendanceChecker);
+							if($attendanceQuery)
 							{
-								$checker = null;
-								while($attRow = mysql_fetch_assoc($attendanceQuery))
+								$attNum = mysql_num_rows($attendanceQuery);
+								if($attNum == 0)
 								{
-									if($attRow['attendance'] != 0)//0 is for no input
-									{
-										$checker++;//counter
-									}
+									$attendanceStatus = 0;
 								}
-								if($checker == $attNum)//check if number of attendance and the counter are the same
+								else
 								{
-									++$attendanceStatus;//Trigger for completing the attendance for the site
+									$checker = null;
+									while($attRow = mysql_fetch_assoc($attendanceQuery))
+									{
+										if($attRow['attendance'] != 0)//0 is for no input
+										{
+											$checker++;//counter
+										}
+									}
+									if($checker == $attNum)//check if number of attendance and the counter are the same
+									{
+										++$attendanceStatus;//Trigger for completing the attendance for the site
+									}
 								}
 							}
 						}
@@ -158,7 +187,7 @@ include('directives/session.php');
 				
 				if($employee_num == $siteEmpNum)
 				{
-					Print "<script>console.log('".$employee_num." == ".$siteEmpNum."')</script>";
+					//Print "<script>console.log('".$employee_num." == ".$siteEmpNum."')</script>";
 					$siteBool = true;//site is finish with payroll
 				}
 

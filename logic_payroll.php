@@ -559,7 +559,7 @@
 									sss_er,
 									pagibig_er,
 									philhealth_er,
-									tools_er,
+									tools,
 									tools_paid,
 									tools_outstanding,
 									total_salary,

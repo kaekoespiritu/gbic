@@ -17,13 +17,14 @@ $date = strftime("%B %d, %Y");//Get the current date
 
 if(isset($_POST['groupChange']))//group site movement
 {
+	$siteHist = $siteFrom." -> ".$_POST['groupChange'];
 	$site = $_POST['groupChange'];
 	$empNum = count($_POST['chkbox_chosen']);
 	for($counter = 0; $counter < $empNum; $counter++)
 	{
 		$empid = $_POST['chkbox_chosen'][$counter];
 		mysql_query("UPDATE employee SET site = '$site' WHERE empid = '$empid'");
-		mysql_query("INSERT INTO site_history(empid, site, date, admin) VALUES(	'$empid', '$site', '$date', '$adminName')");
+		mysql_query("INSERT INTO site_history(empid, site, date, admin) VALUES(	'$empid', '$siteHist', '$date', '$adminName')");
 	}
 	Print "<script>alert('Successfully transfered employees.')</script>";
 	
