@@ -155,8 +155,6 @@
 								
 							}
 						}
-						
-					
 						?>
 					</select>
 				</div>
@@ -218,12 +216,6 @@
 									$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid'ORDER BY date ASC";
 
 								$payrollDateQuery = mysql_query($payrollDate);
-
-								//weekly
-								
-
-								
-
 								
 								while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 								{
@@ -339,10 +331,6 @@
 
 								$payrollDateQuery = mysql_query($payrollDate);
 
-								//monthly
-								
-
-								
 								//Evaluates the attendance and compute the sss contribution
 								while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 								{
@@ -411,37 +399,34 @@
 														</td>
 													</tr>";
 										}
-										
-
-										
-										
 									}
 								}
 							}
-							if($sssBool)//only display when employee has sss
-							{
-								Print "
-								<tr>
-									<td colspan='4'>
-									</td>
-									<td>
-										Grand Total
-									</td>
-									<td>
-										".numberExactFormat($overallSSS, 2, '.')."
-									</td>
-								</tr>";
-							}
-							if(!$sssBool)
-							{
-								Print "
-										<tr>
-											<td colspan='4'>
-											 	No Report data as of the moment
-											</td>
-										</tr>";
-							}
 						}
+						if($sssBool)//only display when employee has sss
+						{
+							Print "
+							<tr>
+								<td colspan='4'>
+								</td>
+								<td>
+									Grand Total
+								</td>
+								<td>
+									".numberExactFormat($overallSSS, 2, '.')."
+								</td>
+							</tr>";
+						}
+						if(!$sssBool)
+						{
+							Print "
+									<tr>
+										<td colspan='6'>
+										 	No Report data as of the moment
+										</td>
+									</tr>";
+						}
+				
 					}
 					else if($period = "year")
 					{
@@ -533,10 +518,6 @@
 														</td>
 													</tr>";
 										}
-										
-
-										
-										
 									}
 								}
 							}
