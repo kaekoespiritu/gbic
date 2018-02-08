@@ -5,8 +5,10 @@
 	{
 		//Print "<script>alert('workinghrs ". $workinghrs ."')</script>";
 		//Print "<script>alert('".$attendance."')</script>";
+		Print "<script>console.log('1.0')</script>";
 		if((!empty($timein) && !empty($timeout)) && $day == "Sunday")
 		{
+			Print "<script>console.log('1.1')</script>";
 			//Print "<script>alert('1')</script>";
 			$AttQuery = "UPDATE attendance SET 	empid='".$empid."',
 											  	position= '".$position."',
@@ -29,6 +31,7 @@
 		}
 		else if((empty($timein) && empty($timeout)) && $day == "Sunday")
 		{
+			Print "<script>console.log('1.2')</script>";
 			//Print "<script>alert('2')</script>";
 			$AttQuery = "UPDATE attendance SET 	empid='".$empid."',
 											  	position= '".$position."',
@@ -51,9 +54,11 @@
 		}
 		else
 		{
+			Print "<script>console.log('2.0')</script>";
 			//Print "<script>alert('3')</script>";
 			if(!empty($holidayDate))
 			{
+				Print "<script>console.log('2.1')</script>";
 				//Print "<script>alert('4')</script>";
 				$AttQuery = "UPDATE attendance SET 	empid='".$empid."',
 												  	position= '".$position."',
@@ -76,6 +81,7 @@
 			}
 			else
 			{
+				Print "<script>console.log('2.2')</script>";
 				//Print "<script>alert('5')</script>";
 				$AttQuery = "UPDATE attendance SET 	empid='".$empid."',
 												  	position= '".$position."',

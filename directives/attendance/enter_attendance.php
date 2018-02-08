@@ -60,7 +60,7 @@ function attendance ()
 	//Print "<script>console.log('".$checkerBuilder."')</script>";
 
 	$dateChecker = "SELECT date FROM attendance WHERE date = '$date' $checkerBuilder";
-	Print "<script>console.log('".$dateChecker."')</script>";
+	// Print "<script>console.log('".$dateChecker."')</script>";
 	$dateCheckerQuery = mysql_query($dateChecker);
 
 	if($dateCheckerQuery)//Checks if there is already an attendance made for that specific date
