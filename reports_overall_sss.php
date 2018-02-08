@@ -157,17 +157,11 @@
 						}
 						?>
 					</select>
-					<h4>Select Requirements Type</h4>
-					<select class='form-control'>
-						<option>All</option>
-						<option>With Requirements</option>
-						<option>Without Requirements</option>
-					</select>
+					
+					
 				</div>
 				<div class="pull-down">
-				<button class="btn btn-default" id="printSSS">
-					Print <?php Print $printButton?>
-				</button>
+				
 				<table class="table table-bordered pull-down">
 					<tr>
 						<td colspan="7">
