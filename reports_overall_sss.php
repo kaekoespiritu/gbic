@@ -38,7 +38,7 @@
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_overall_contributions.php?type=Contributions&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Contributions</a></li>
-						<li>Individual SSS Contributions Report for <?php Print $breadcrumInfo?></li>
+						<li>Overall SSS Contributions Report for <?php Print $breadcrumInfo?></li>
 						<button class='btn btn-primary pull-right'>
 							Print SSS Contributions
 						</button>
@@ -156,6 +156,12 @@
 							}
 						}
 						?>
+					</select>
+					<h4>Select Requirements Type</h4>
+					<select class='form-control'>
+						<option>All</option>
+						<option>With Requirements</option>
+						<option>Without Requirements</option>
 					</select>
 				</div>
 				<div class="pull-down">
