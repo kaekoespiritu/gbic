@@ -28,6 +28,9 @@
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_overall_contributions.php?type=Contributions&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Contribution</a></li>
 						<li>Overall PagIBIG Contribution Report for employees at [SITE]</li>
+						<button class='btn btn-primary pull-right'>
+							Print PagIBIG Contributions
+						</button>
 					</ol>
 				</div>
 			</div>
