@@ -70,7 +70,7 @@
 			<div class="col-md-3">
 					<h4>Step 2: Select Payroll Dates</h4>
 					<select onchange="payrollDates(this.value)" class="form-control" id="step2" disabled>
-						<option selected>Select date</option>
+						<option hidden>Select date</option>
 						<?php
 						$payrollDays = "SELECT DISTINCT date FROM Payroll ORDER BY date ASC";//gets non repeatable dates
 						$payrollDaysQuery = mysql_query($payrollDays);
