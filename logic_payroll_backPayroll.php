@@ -5,9 +5,9 @@
 
 	$empid = $_GET['e'];
 	  //1st sample date
-	   $date = "October 24, 2017";
+	   //$date = "October 24, 2017";
 	  //2nd sample date
-	  //$date = "October 31, 2017";
+	  $date = "October 31, 2017";
 
 	$employee = "SELECT * FROM employee WHERE empid = '$empid'";
 	$empQuery = mysql_query($employee);
