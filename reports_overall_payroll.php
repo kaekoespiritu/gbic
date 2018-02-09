@@ -378,7 +378,7 @@
 			}
 			else
 			{
-				Print "<h4 class='pull-down-more'>Select Requirements and Date to view Payroll report.</h4>";
+				Print "<h4 class='pull-down-more col-md-12'>Select Requirements and Date to view Payroll report.</h4>";
 			}
 			?>
 			</div>
