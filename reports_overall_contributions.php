@@ -213,7 +213,7 @@
 			document.getElementById('SssModal').href = "reports_overall_sss.php?site="+site+"&period=week";
 			document.getElementById('PhilhealthModal').href = "reports_overall_philhealth.php?site="+site+"&period=week";
 			document.getElementById('PagibigModal').href = "reports_overall_pagibig.php?site="+site+"&period=week";
-			document.getElementById('OverallModal').href = "reports_overall_sss.php?site="+site+"&period=week";
+			document.getElementById('OverallModal').href = "reports_overall_allcontributions.php?site="+site+"&period=week";
 		}
 	</script>
 </body>

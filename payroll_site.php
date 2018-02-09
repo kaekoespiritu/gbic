@@ -8,7 +8,7 @@ include('directives/session.php');
   //1st sample date
    $date = "October 24, 2017";
   //2nd sample date
-  //$date = "October 31, 2017";
+  // $date = "October 31, 2017";
 ?>
 <html>
 <head>
@@ -80,7 +80,7 @@ include('directives/session.php');
 				$attendanceStatus = 0;
 				foreach($days as $checkDay)
 				{
-					Print "<script>console.log('".$attendanceStatus."')</script>";
+					//Print "<script>console.log('".$attendanceStatus."')</script>";
 					$day = date('l', strtotime($checkDay));//Gets the Day in the week of the date
 					
 					$holidayChecker = "SELECT * FROM holiday WHERE date = '$checkDay'";
@@ -122,6 +122,7 @@ include('directives/session.php');
 							}
 							$checkerBuilder .= ")";
 						}
+						
 						if($siteCheckerBool)//if site has employees
 						{
 							//Check if overall attendance for a certain site is done
@@ -152,7 +153,6 @@ include('directives/session.php');
 							}
 						}
 					}
-					
 				}
 				//Print "<script>console.log('".$attendanceStatus."')</script>";
 				$weekComplete = false; // boolean to check if attendance is complete for the whole week
@@ -184,7 +184,7 @@ include('directives/session.php');
 				$checkerQuery = mysql_query($siteChecker) or die(mysql_error());
 
 				$siteEmpNum = mysql_num_rows($checkerQuery); // gets the number of emp that has finished payroll
-				
+				Print "<script>console.log('".$siteChecker."')</script>";
 				if($employee_num == $siteEmpNum)
 				{
 					//Print "<script>console.log('".$employee_num." == ".$siteEmpNum."')</script>";
@@ -198,6 +198,7 @@ include('directives/session.php');
 					{
 						if(!$weekComplete)
 						{
+							Print "<script>console.log('1: ".$row['location']."')</script>";
 							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important; pointer-events:none; cursor:not-allowed;" disabled>
 									<div class="sitebox" style="background-color:grey !important; ">
 										<span class="smalltext">'
@@ -211,6 +212,7 @@ include('directives/session.php');
 						}
 						else
 						{
+							Print "<script>console.log('2-".$siteBool.": ".$row['location']."')</script>";
 							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important; ">
 									<div class="sitebox" >
 										<span class="smalltext">'
@@ -228,8 +230,10 @@ include('directives/session.php');
 					}
 					else
 					{
+						
 						if(!$weekComplete)
 						{
+							Print "<script>console.log('1: ".$row['location']."')</script>";
 							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important;  text-decoration: none !important; pointer-events:none; cursor:not-allowed;" disabled> 
 									<div class="sitebox" style="background-color:grey !important; ">
 										<span class="autofit">'
@@ -242,6 +246,7 @@ include('directives/session.php');
 						}
 						else
 						{
+							Print "<script>console.log('2-".$siteBool.": ".$row['location']."')</script>";
 							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
 									<div class="sitebox">
 									

@@ -40,7 +40,7 @@
 						<li><a href='reports_individual_contributions.php?type=Contributions&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Contributions</a></li>
 						<li>Individual Philhealth Contributions Report for <?php Print $breadcrumInfo?></li>
 						<button class='btn btn-primary pull-right'>
-							Print PhilHealth Contribution
+							Print Philhealth Contribution
 						</button>
 					</ol>
 				</div>
@@ -206,11 +206,12 @@
 						//weekly
 						$overallPhilhealth = 0;
 
-						$PhilhealthBool = false;//if employee dont have philhealth contribution
+						$philhealthBool = false;//if employee dont have Philhealth contribution
 
 						//Evaluates the attendance and compute the 13th monthpay
 						while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 						{
+							//Print "<script>console.log('bool: ".$philhealthBool."')</script>";
 							//For the specfied week in first column
 							$endDate = $payDateArr['date'];
 							$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
@@ -223,14 +224,16 @@
 								$payrollArr = mysql_fetch_assoc($payrollQuery);
 								if($payrollArr['philhealth'] != 0)
 								{
-									$PhilhealthBool = true;
+									$philhealthBool = true;
+									//Print "<script>console.log('bool: ".$philhealthBool."')</script>";
 									$monthly = $payrollArr['rate'] * 25;
 
-									$PhilhealthEmployer = $payrollArr['philhealth_er'];//Gets the value in the philhealth table
+									$philhealthEmployer = $payrollArr['philhealth_er'];//Gets the value in the Philhealth table
 
-									$PhilhealthContribution = $PhilhealthEmployer;
+									//Print "<script>console.log('".$philhealthEmployer."')</script>";
+									$philhealthContribution = $philhealthEmployer;
 
-									$totalPhilhealthContribution = $PhilhealthContribution + $payrollArr['philhealth'];
+									$totalPhilhealthContribution = $philhealthContribution + $payrollArr['philhealth'];
 									Print "
 											<tr>
 												<td>
@@ -240,7 +243,7 @@
 													".numberExactFormat($payrollArr['philhealth'], 2, '.')."
 												</td>
 												<td>
-													".numberExactFormat($PhilhealthContribution, 2, '.')."
+													".numberExactFormat($philhealthContribution, 2, '.')."
 												</td>
 												<td>
 													".numberExactFormat($totalPhilhealthContribution, 2, '.')."
@@ -250,43 +253,33 @@
 									$overallPhilhealth += $totalPhilhealthContribution;
 								}
 
-								if($PhilhealthBool)
-								{
-									Print "
-									<tr>
-										<td colspan='2'>
-										</td>
-										<td>
-											Grand Total
-										</td>
-										<td>
-											".numberExactFormat($overallPhilhealth, 2, '.')."
-										</td>
-									</tr>";
-								}
 								
 							}
-							else
-							{
-								$PhilhealthBool = true;
-								Print "
-										<tr>
-											<td colspan='4'>
-											 	No Report data as of the moment
-											</td>
-										</tr>";
-							}
 
-							if(!$PhilhealthBool)
-							{
-								Print "
-										<tr>
-											<td colspan='4'>
-											 	No Report data as of the moment
-											</td>
-										</tr>";
-							}
 
+						}
+						if($philhealthBool)
+						{
+							Print "
+							<tr>
+								<td colspan='2'>
+								</td>
+								<td>
+									Grand Total
+								</td>
+								<td>
+									".numberExactFormat($overallPhilhealth, 2, '.')."
+								</td>
+							</tr>";
+						}
+						if(!$philhealthBool)
+						{
+							Print "
+									<tr>
+										<td colspan='4'>
+										 	No Report data as of the moment
+										</td>
+									</tr>";
 						}
 					}
 					else if($period == "month")
@@ -303,10 +296,12 @@
 
 						$payrollDateQuery = mysql_query($payrollDate);
 
-						//monthly
+						//gets the overall philhealth total
 						$overallPhilhealth = 0;
 
-						$PhilhealthBool = false;//if employee dont have philhealth contribution
+						$philhealthBool = false;//if employee dont have philhealth contribution
+
+						$monthNoRepeat = "";
 						//Evaluates the attendance and compute the philhealth contribution
 						while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 						{
@@ -322,36 +317,42 @@
 							$payrollQuery = mysql_query($payroll);
 							if(mysql_num_rows($payrollQuery) > 0)
 							{
-								$PhilhealthBool = true;
+								$philhealthBool = true;
 								$EEContribution = 0;
 								$ERContribution = 0;
 								$totalPhilhealthContribution = 0;
 
-								while($payrollArr = mysql_fetch_assoc($payrollQuery))
+								//prevent from repeating the same month
+								if($monthNoRepeat != $month.$year)
 								{
-									if($payrollArr['philhealth'] != 0)
+									while($payrollArr = mysql_fetch_assoc($payrollQuery))
 									{
-										$PhilhealthBool = true;
+										if($payrollArr['philhealth'] != 0)
+										{
+											$philhealthBool = true;
+											//Print "<script>console.log('yess')</script>";
+											$monthly = $payrollArr['rate'] * 25;
 
-										$monthly = $payrollArr['rate'] * 25;
+											$philhealthEmployer = $payrollArr['philhealth_er'];//Gets the value in the philhealth table
 
-										$PhilhealthEmployer = $payrollArr['philhealth_er'];//Gets the value in the philhealth table
+											//Print "<script>console.log('".$philhealthEmployer."')</script>";
+											$ERContribution += $philhealthEmployer;
+											$EEContribution += $payrollArr['philhealth'];
 
-										$ERContribution += $PhilhealthEmployer;
+											$totalPhilhealthContribution = $ERContribution + $EEContribution;
+											$overallPhilhealth += $philhealthEmployer + $payrollArr['philhealth'];
 
-										$totalPhilhealthContribution = $ERContribution + $payrollArr['philhealth'];
-
-										$EEContribution += $payrollArr['philhealth'];
-										
-										$overallPhilhealth += $totalPhilhealthContribution;
-									}
-									else
-									{
-										$PhilhealthBool = false;
+										}
+										else
+										{
+											$philhealthBool = false;
+										}
 									}
 								}
-								if($PhilhealthBool)
+								if($philhealthBool)
 								{
+									if($monthNoRepeat != $month.$year)
+									{
 									Print "
 											<tr>
 												<td>
@@ -367,15 +368,16 @@
 													".numberExactFormat($totalPhilhealthContribution, 2, '.')."
 												</td>
 											</tr>";
+									}
 								}
-								
 
-								
+								$monthNoRepeat = $month.$year;
+
 								
 							}
 							else
 							{
-								$PhilhealthBool = true;
+								$philhealthBool = true;
 								Print "
 										<tr>
 											<td colspan='4'>
@@ -384,7 +386,7 @@
 										</tr>";
 							}
 
-							if(!$PhilhealthBool)
+							if(!$philhealthBool)
 							{
 								Print "
 										<tr>
@@ -395,7 +397,7 @@
 							}
 
 						}
-						if($PhilhealthBool)//only display when employee has philhealth
+						if($philhealthBool)//only display when employee has philhealth
 						{
 							Print "
 							<tr>
@@ -414,62 +416,73 @@
 					{
 						if(isset($_POST['date']))
 						{
-							$changedPeriod = $_POST['date'];
-							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND date LIKE '%$changedPeriod' ORDER BY date ASC";
+							$changedPeriod = explode(' ',$_POST['date']);
+							$yearPeriod = $changedPeriod[0];
+							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND date LIKE '%$yearPeriod' ORDER BY date ASC";
 						}
 						else
-							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+
 						$payrollDateQuery = mysql_query($payrollDate);
 
-						//monthly
+						//gets the overall philhealth total
 						$overallPhilhealth = 0;
 
-						$PhilhealthBool = false;//if employee dont have philhealth contribution
+						$philhealthBool = false;//if employee dont have philhealth contribution
+
+						$yearNoRepeat = "";
 						//Evaluates the attendance and compute the philhealth contribution
 						while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 						{
 							$dateExploded = explode(" ", $payDateArr['date']);
 							$year = $dateExploded[2];// gets the year
-							$yearBefore = $year - 1;
 
 							$payrollDay = $payDateArr['date'];
 
-							//Print "<script>console.log('".$year."')</script>";
+							//Print "<script>console.log('".$month." - ".$year."')</script>";
 
 							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '%$year' ORDER BY date ASC";
 							$payrollQuery = mysql_query($payroll);
 							if(mysql_num_rows($payrollQuery) > 0)
 							{
-								$PhilhealthBool = true;
+								$philhealthBool = true;
 								$EEContribution = 0;
 								$ERContribution = 0;
 								$totalPhilhealthContribution = 0;
 
-								while($payrollArr = mysql_fetch_assoc($payrollQuery))
+								//prevent from repeating the same month
+								if($yearNoRepeat != $year)
 								{
-									if($payrollArr['philhealth'] != 0)
+									while($payrollArr = mysql_fetch_assoc($payrollQuery))
 									{
-										$PhilhealthBool = true;
+										if($payrollArr['philhealth'] != 0)
+										{
+											$philhealthBool = true;
+											//Print "<script>console.log('yess')</script>";
+											$monthly = $payrollArr['rate'] * 25;
 
-										$monthly = $payrollArr['rate'] * 25;
+											$philhealthEmployer = $payrollArr['philhealth_er'];//Gets the value in the philhealth table
 
-										$PhilhealthEmployer = $payrollArr['rate'];//Gets the value in the philhealth table
+											//Print "<script>console.log('".$philhealthEmployer."')</script>";
+											$ERContribution += $philhealthEmployer;
+											$EEContribution += $payrollArr['philhealth'];
 
-										$ERContribution += $PhilhealthEmployer;
+											$totalPhilhealthContribution = $ERContribution + $EEContribution;
+											$overallPhilhealth += $philhealthEmployer + $payrollArr['philhealth'];
 
-										$totalPhilhealthContribution = $ERContribution + $payrollArr['philhealth'];
-
-										$EEContribution += $payrollArr['philhealth'];
-										
-										$overallPhilhealth += $totalPhilhealthContribution;
-									}
-									else
-									{
-										$PhilhealthBool = false;
+										}
+										else
+										{
+											$philhealthBool = false;
+										}
 									}
 								}
-								if($PhilhealthBool)
+								if($philhealthBool)
 								{
+									if($yearNoRepeat != $year)
+									{
+										$yearBefore = $year - 1;
+
 									Print "
 											<tr>
 												<td>
@@ -485,15 +498,16 @@
 													".numberExactFormat($totalPhilhealthContribution, 2, '.')."
 												</td>
 											</tr>";
+									}
 								}
-								
 
-								
+								$yearNoRepeat = $year;
+
 								
 							}
 							else
 							{
-								$PhilhealthBool = true;
+								$philhealthBool = true;
 								Print "
 										<tr>
 											<td colspan='4'>
@@ -502,7 +516,7 @@
 										</tr>";
 							}
 
-							if(!$PhilhealthBool)
+							if(!$philhealthBool)
 							{
 								Print "
 										<tr>
@@ -513,7 +527,7 @@
 							}
 
 						}
-						if($PhilhealthBool)//only display when employee has philhealth
+						if($philhealthBool)//only display when employee has philhealth
 						{
 							Print "
 							<tr>
@@ -538,7 +552,7 @@
 		</div>
 
 	</div>
-	<input type="hidden" id="printButton" value="<?php Print $PhilhealthBool?>">
+	<input type="hidden" id="printButton" value="<?php Print $philhealthBool?>">
 	<form id="changeDateForm" method="post" action="reports_individual_philhealth.php?empid=<?php Print $empid?>&period=<?php Print $period?>">
 		<input type="hidden" name="date">
 		<input type="hidden" name="numLen">

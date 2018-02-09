@@ -206,14 +206,16 @@
 						//weekly
 						$overallPagibig = 0;
 
-						$PagibigBool = false;//if employee dont have Pagibig contribution
+						$pagibigBool = false;//if employee dont have Pagibig contribution
 
 						//Evaluates the attendance and compute the 13th monthpay
 						while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 						{
+							//Print "<script>console.log('bool: ".$pagibigBool."')</script>";
 							//For the specfied week in first column
 							$endDate = $payDateArr['date'];
 							$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
+							//Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
 
 							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$endDate' ORDER BY date ASC";
 							$payrollQuery = mysql_query($payroll);
@@ -222,14 +224,16 @@
 								$payrollArr = mysql_fetch_assoc($payrollQuery);
 								if($payrollArr['pagibig'] != 0)
 								{
-									$PagibigBool = true;
+									$pagibigBool = true;
+									//Print "<script>console.log('bool: ".$pagibigBool."')</script>";
 									$monthly = $payrollArr['rate'] * 25;
 
-									$PagibigEmployer = $payrollArr['pagibig_er'];//Gets the value in the Pagibig table
+									$pagibigEmployer = $payrollArr['pagibig_er'];//Gets the value in the Pagibig table
 
-									$PagibigContribution = $PagibigEmployer;
+									//Print "<script>console.log('".$pagibigEmployer."')</script>";
+									$pagibigContribution = $pagibigEmployer;
 
-									$totalPagibigContribution = $PagibigContribution + $payrollArr['pagibig'];
+									$totalPagibigContribution = $pagibigContribution + $payrollArr['pagibig'];
 									Print "
 											<tr>
 												<td>
@@ -239,7 +243,7 @@
 													".numberExactFormat($payrollArr['pagibig'], 2, '.')."
 												</td>
 												<td>
-													".numberExactFormat($PagibigContribution, 2, '.')."
+													".numberExactFormat($pagibigContribution, 2, '.')."
 												</td>
 												<td>
 													".numberExactFormat($totalPagibigContribution, 2, '.')."
@@ -248,44 +252,33 @@
 
 									$overallPagibig += $totalPagibigContribution;
 								}
-
-								if($PagibigBool)
-								{
-									Print "
-									<tr>
-										<td colspan='2'>
-										</td>
-										<td>
-											Grand Total
-										</td>
-										<td>
-											".numberExactFormat($overallPagibig, 2, '.')."
-										</td>
-									</tr>";
-								}
 								
 							}
-							else
-							{
-								$PagibigBool = true;
-								Print "
-										<tr>
-											<td colspan='4'>
-											 	No Report data as of the moment
-											</td>
-										</tr>";
-							}
 
-							if(!$PagibigBool)
-							{
-								Print "
-										<tr>
-											<td colspan='4'>
-											 	No Report data as of the moment
-											</td>
-										</tr>";
-							}
 
+						}
+						if($pagibigBool)
+						{
+							Print "
+							<tr>
+								<td colspan='2'>
+								</td>
+								<td>
+									Grand Total
+								</td>
+								<td>
+									".numberExactFormat($overallPagibig, 2, '.')."
+								</td>
+							</tr>";
+						}
+						if(!$pagibigBool)
+						{
+							Print "
+									<tr>
+										<td colspan='4'>
+										 	No Report data as of the moment
+										</td>
+									</tr>";
 						}
 					}
 					else if($period == "month")
@@ -302,11 +295,13 @@
 
 						$payrollDateQuery = mysql_query($payrollDate);
 
-						//monthly
+						//gets the overall pagibig total
 						$overallPagibig = 0;
 
-						$PagibigBool = false;//if employee dont have Pagibig contribution
-						//Evaluates the attendance and compute the Pagibig contribution
+						$pagibigBool = false;//if employee dont have pagibig contribution
+
+						$monthNoRepeat = "";
+						//Evaluates the attendance and compute the pagibig contribution
 						while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 						{
 							$dateExploded = explode(" ", $payDateArr['date']);
@@ -315,39 +310,48 @@
 
 							$payrollDay = $payDateArr['date'];
 
+							//Print "<script>console.log('".$month." - ".$year."')</script>";
+
 							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' ORDER BY date ASC";
 							$payrollQuery = mysql_query($payroll);
 							if(mysql_num_rows($payrollQuery) > 0)
 							{
-								$PagibigBool = true;
+								$pagibigBool = true;
 								$EEContribution = 0;
 								$ERContribution = 0;
 								$totalPagibigContribution = 0;
 
-								while($payrollArr = mysql_fetch_assoc($payrollQuery))
+								//prevent from repeating the same month
+								if($monthNoRepeat != $month.$year)
 								{
-									if($payrollArr['pagibig'] != 0)
+									while($payrollArr = mysql_fetch_assoc($payrollQuery))
 									{
-										$PagibigBool = true;
-										$monthly = $payrollArr['rate'] * 25;
+										if($payrollArr['pagibig'] != 0)
+										{
+											$pagibigBool = true;
+											//Print "<script>console.log('yess')</script>";
+											$monthly = $payrollArr['rate'] * 25;
 
-										$PagibigEmployer = $payrollArr['pagibig_er'];//Gets the value in the Pagibig table
+											$pagibigEmployer = $payrollArr['pagibig_er'];//Gets the value in the pagibig table
 
-										$ERContribution += $PagibigEmployer;
+											//Print "<script>console.log('".$pagibigEmployer."')</script>";
+											$ERContribution += $pagibigEmployer;
+											$EEContribution += $payrollArr['pagibig'];
 
-										$totalPagibigContribution = $ERContribution + $payrollArr['pagibig'];
+											$totalPagibigContribution = $ERContribution + $EEContribution;
+											$overallPagibig += $pagibigEmployer + $payrollArr['pagibig'];
 
-										$EEContribution += $payrollArr['pagibig'];
-										
-										$overallPagibig += $totalPagibigContribution;
-									}
-									else
-									{
-										$PagibigBool = false;
+										}
+										else
+										{
+											$pagibigBool = false;
+										}
 									}
 								}
-								if($PagibigBool)
+								if($pagibigBool)
 								{
+									if($monthNoRepeat != $month.$year)
+									{
 									Print "
 											<tr>
 												<td>
@@ -363,15 +367,16 @@
 													".numberExactFormat($totalPagibigContribution, 2, '.')."
 												</td>
 											</tr>";
+									}
 								}
-								
 
-								
+								$monthNoRepeat = $month.$year;
+
 								
 							}
 							else
 							{
-								$PagibigBool = true;
+								$pagibigBool = true;
 								Print "
 										<tr>
 											<td colspan='4'>
@@ -380,7 +385,7 @@
 										</tr>";
 							}
 
-							if(!$PagibigBool)
+							if(!$pagibigBool)
 							{
 								Print "
 										<tr>
@@ -391,7 +396,7 @@
 							}
 
 						}
-						if($PagibigBool)//only display when employee has Pagibig
+						if($pagibigBool)//only display when employee has pagibig
 						{
 							Print "
 							<tr>
@@ -410,60 +415,73 @@
 					{
 						if(isset($_POST['date']))
 						{
-							$changedPeriod = $_POST['date'];
-							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND date LIKE '%$changedPeriod' ORDER BY date ASC";
+							$changedPeriod = explode(' ',$_POST['date']);
+							$yearPeriod = $changedPeriod[0];
+							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND date LIKE '%$yearPeriod' ORDER BY date ASC";
 						}
 						else
-							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+
 						$payrollDateQuery = mysql_query($payrollDate);
 
-						//monthly
+						//gets the overall pagibig total
 						$overallPagibig = 0;
 
-						$PagibigBool = false;//if employee dont have Pagibig contribution
-						//Evaluates the attendance and compute the Pagibig contribution
+						$pagibigBool = false;//if employee dont have pagibig contribution
+
+						$yearNoRepeat = "";
+						//Evaluates the attendance and compute the pagibig contribution
 						while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 						{
 							$dateExploded = explode(" ", $payDateArr['date']);
 							$year = $dateExploded[2];// gets the year
-							$yearBefore = $year - 1;
 
 							$payrollDay = $payDateArr['date'];
 
+							//Print "<script>console.log('".$month." - ".$year."')</script>";
 
 							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '%$year' ORDER BY date ASC";
 							$payrollQuery = mysql_query($payroll);
 							if(mysql_num_rows($payrollQuery) > 0)
 							{
-								$PagibigBool = true;
+								$pagibigBool = true;
 								$EEContribution = 0;
 								$ERContribution = 0;
 								$totalPagibigContribution = 0;
 
-								while($payrollArr = mysql_fetch_assoc($payrollQuery))
+								//prevent from repeating the same month
+								if($yearNoRepeat != $year)
 								{
-									if($payrollArr['pagibig'] != 0)
+									while($payrollArr = mysql_fetch_assoc($payrollQuery))
 									{
-										$PagibigBool = true;
-										$monthly = $payrollArr['rate'] * 25;
+										if($payrollArr['pagibig'] != 0)
+										{
+											$pagibigBool = true;
+											//Print "<script>console.log('yess')</script>";
+											$monthly = $payrollArr['rate'] * 25;
 
-										$PagibigEmployer = $payrollArr['rate'];//Gets the value in the Pagibig table
+											$pagibigEmployer = $payrollArr['pagibig_er'];//Gets the value in the Pagibig table
 
-										$ERContribution += $PagibigEmployer;
+											//Print "<script>console.log('".$pagibigEmployer."')</script>";
+											$ERContribution += $pagibigEmployer;
+											$EEContribution += $payrollArr['pagibig'];
 
-										$totalPagibigContribution = $ERContribution + $payrollArr['pagibig'];
+											$totalPagibigContribution = $ERContribution + $EEContribution;
+											$overallPagibig += $pagibigEmployer + $payrollArr['pagibig'];
 
-										$EEContribution += $payrollArr['pagibig'];
-										
-										$overallPagibig += $totalPagibigContribution;
-									}
-									else
-									{
-										$PagibigBool = false;
+										}
+										else
+										{
+											$pagibigBool = false;
+										}
 									}
 								}
-								if($PagibigBool)
+								if($pagibigBool)
 								{
+									if($yearNoRepeat != $year)
+									{
+										$yearBefore = $year - 1;
+
 									Print "
 											<tr>
 												<td>
@@ -479,15 +497,16 @@
 													".numberExactFormat($totalPagibigContribution, 2, '.')."
 												</td>
 											</tr>";
+									}
 								}
-								
 
-								
+								$yearNoRepeat = $year;
+
 								
 							}
 							else
 							{
-								$PagibigBool = true;
+								$pagibigBool = true;
 								Print "
 										<tr>
 											<td colspan='4'>
@@ -496,7 +515,7 @@
 										</tr>";
 							}
 
-							if(!$PagibigBool)
+							if(!$pagibigBool)
 							{
 								Print "
 										<tr>
@@ -507,7 +526,7 @@
 							}
 
 						}
-						if($PagibigBool)//only display when employee has Pagibig
+						if($pagibigBool)//only display when employee has Pagibig
 						{
 							Print "
 							<tr>
@@ -532,7 +551,7 @@
 		</div>
 
 	</div>
-	<input type="hidden" id="printButton" value="<?php Print $PagibigBool?>">
+	<input type="hidden" id="printButton" value="<?php Print $pagibigBool?>">
 	<form id="changeDateForm" method="post" action="reports_individual_pagibig.php?empid=<?php Print $empid?>&period=<?php Print $period?>">
 		<input type="hidden" name="date">
 		<input type="hidden" name="numLen">
