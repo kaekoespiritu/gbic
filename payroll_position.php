@@ -15,9 +15,9 @@ include('directives/session.php');
 //$date = date('F d, Y', time());
 
 // 1st sample date
-//$date = "October 24, 2017";
+$date = "October 24, 2017";
 // 2nd sample date
-$date = "October 31, 2017";
+//$date = "October 31, 2017";
 
 $dayToday = date('l, F d, Y', time());
 ?>
