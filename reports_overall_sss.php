@@ -48,228 +48,379 @@
 
 			<div class="col-md-10 col-md-offset-1">
 				<div class="form-inline">
-					<h4>Select Period</h4>
-					<select onchange="periodChange(this.value)" class="form-control">
-						<?php 
-							if($period == "week")
-								Print "<option value='week' selected>Weekly</option>";
-							else
-								Print "<option value='week'>Weekly</option>";
-							if($period == "month")
-								Print "<option value='month'selected>Monthly</option>";
-							else
-								Print "<option value='month'>Monthly</option>";
-							if($period == "year")
-								Print "<option value='year' selected>Yearly</option>";
-							else
-								Print "<option value='year'>Yearly</option>";
-						?>
-					</select>
-					<h4>Select <?php Print $period?></h4>
-					<select class="form-control" onchange="changeDate(this.value)">
-						<option hidden>Choose a <?php Print $period?></option>
-						<?php
-						$payrollDates = "SELECT DISTINCT date FROM payroll";
-						$payrollDQuery = mysql_query($payrollDates) or die(mysql_error());
+					<div class="col-md-6">
+						<h4>Step 1: Select a period type</h4>
+						<select onchange="periodChange(this.value)" class="form-control">
+							<?php 
+								if($period == "week")
+									Print "<option value='week' selected>Weekly</option>";
+								else
+									Print "<option value='week'>Weekly</option>";
+								if($period == "month")
+									Print "<option value='month'selected>Monthly</option>";
+								else
+									Print "<option value='month'>Monthly</option>";
+								if($period == "year")
+									Print "<option value='year' selected>Yearly</option>";
+								else
+									Print "<option value='year'>Yearly</option>";
+							?>
+						</select>
+					</div>
+					<div class="col-md-6">
+						<h4>Step 2: Select duration in <?php Print $period?></h4>
+						<select class="form-control" onchange="changeDate(this.value)">
+							<option hidden>Choose a <?php Print $period?></option>
+							<?php
+							$payrollDates = "SELECT DISTINCT date FROM payroll";
+							$payrollDQuery = mysql_query($payrollDates) or die(mysql_error());
 
-						if(mysql_num_rows($payrollDQuery) > 0)//check if there's payroll
-						{
-							$monthNoRep = "";
-							$yearNoRep = "";
-							while($payrollDateArr = mysql_fetch_assoc($payrollDQuery))
+							if(mysql_num_rows($payrollDQuery) > 0)//check if there's payroll
 							{
-								
-								if($_GET['period'] == 'week')
+								$monthNoRep = "";
+								$yearNoRep = "";
+								while($payrollDateArr = mysql_fetch_assoc($payrollDQuery))
 								{
-									$payrollEndDate = $payrollDateArr['date'];
-									$payrollStartDate = date('F j, Y', strtotime('-6 day', strtotime($payrollEndDate)));
-									if(isset($_POST['date']))
+									
+									if($_GET['period'] == 'week')
 									{
-										if($_POST['date'] == $payrollEndDate)
+										$payrollEndDate = $payrollDateArr['date'];
+										$payrollStartDate = date('F j, Y', strtotime('-6 day', strtotime($payrollEndDate)));
+										if(isset($_POST['date']))
 										{
-											Print "<option value = '".$payrollEndDate."' selected>".$payrollStartDate." - ".$payrollEndDate."</option>";
+											if($_POST['date'] == $payrollEndDate)
+											{
+												Print "<option value = '".$payrollEndDate."' selected>".$payrollStartDate." - ".$payrollEndDate."</option>";
+											}
+											else
+											{
+												Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
+											}
 										}
 										else
 										{
 											Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
 										}
 									}
-									else
+									else if($_GET['period'] == 'month')
 									{
-										Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
-									}
-								}
-								else if($_GET['period'] == 'month')
-								{
-									$payrollArrDate = explode(" ", $payrollDateArr['date']);
-									$payrollMonth = $payrollArrDate[0];
-									$payrollYear = $payrollArrDate[2];
+										$payrollArrDate = explode(" ", $payrollDateArr['date']);
+										$payrollMonth = $payrollArrDate[0];
+										$payrollYear = $payrollArrDate[2];
 
-									if($monthNoRep != $payrollMonth." ".$payrollYear)
-									{	
-										if(isset($_POST['date']))
-										{
-											if($_POST['date'] == $payrollMonth." ".$payrollYear)
+										if($monthNoRep != $payrollMonth." ".$payrollYear)
+										{	
+											if(isset($_POST['date']))
 											{
-												Print "<option value = '".$payrollMonth." ".$payrollYear."' selected>".$payrollMonth." ".$payrollYear."</option>";
+												if($_POST['date'] == $payrollMonth." ".$payrollYear)
+												{
+													Print "<option value = '".$payrollMonth." ".$payrollYear."' selected>".$payrollMonth." ".$payrollYear."</option>";
+												}
+												else
+												{
+													Print "<option value = '".$payrollMonth." ".$payrollYear."'>".$payrollMonth." ".$payrollYear."</option>";
+												}
 											}
 											else
 											{
 												Print "<option value = '".$payrollMonth." ".$payrollYear."'>".$payrollMonth." ".$payrollYear."</option>";
 											}
 										}
-										else
-										{
-											Print "<option value = '".$payrollMonth." ".$payrollYear."'>".$payrollMonth." ".$payrollYear."</option>";
-										}
+										$monthNoRep = $payrollMonth." ".$payrollYear;
 									}
-									$monthNoRep = $payrollMonth." ".$payrollYear;
-								}
-								else if($_GET['period'] == 'year')
-								{
-									$payrollArrDate = explode(" ", $payrollDateArr['date']);
-									$payrollYear = $payrollArrDate[2];
-									$yearBef = $payrollYear -1;//gets the year before
+									else if($_GET['period'] == 'year')
+									{
+										$payrollArrDate = explode(" ", $payrollDateArr['date']);
+										$payrollYear = $payrollArrDate[2];
+										$yearBef = $payrollYear -1;//gets the year before
 
-									if($yearNoRep != $payrollYear)
-									{	
-										if(isset($_POST['date']))
-										{
-											if($_POST['date'] == $payrollYear)
+										if($yearNoRep != $payrollYear)
+										{	
+											if(isset($_POST['date']))
 											{
-												Print "<option value = '".$payrollYear."' selected>".$yearBef." - ".$payrollYear."</option>";
+												if($_POST['date'] == $payrollYear)
+												{
+													Print "<option value = '".$payrollYear."' selected>".$yearBef." - ".$payrollYear."</option>";
+												}
+												else
+												{
+													Print "<option value = '".$payrollYear."'>".$yearBef." - ".$payrollYear."</option>";
+												}
 											}
 											else
 											{
 												Print "<option value = '".$payrollYear."'>".$yearBef." - ".$payrollYear."</option>";
 											}
+											
 										}
-										else
-										{
-											Print "<option value = '".$payrollYear."'>".$yearBef." - ".$payrollYear."</option>";
-										}
-										
+										$yearNoRep = $payrollYear;
 									}
-									$yearNoRep = $payrollYear;
+									
 								}
-								
 							}
-						}
-						?>
-					</select>
+							?>
+						</select>
+					</div>
 					
 					
 				</div>
-				<div class="pull-down">
+				<div class="col-md-12 pull-down">
 				
-				<table class="table table-bordered pull-down">
-					<tr>
-						<td colspan="7">
-							 <?php Print $breadcrumInfo?> SSS Contribution of employees for  <?php Print $site?>
-						</td>
-					</tr>
-					<tr>
-						<td rowspan="2">
-							<?php Print substr($printButton,0,-2)//removes the "ly" in weekly, monthly, yearly?>
-						</td>
-						<td rowspan="2">
-							Name
-						</td>
-						<td rowspan="2">
-							Position
-						</td>
-						<td colspan="2">
-							SSS
-						</td>
-						<td rowspan="2">
-							Total
-						</td>
+					<table class="table table-bordered pull-down">
 						<tr>
-							<td>
-								Employee
-							</td>
-							<td>
-								Employer
+							<td colspan="7">
+								 <?php Print $breadcrumInfo?> SSS Contribution of employees for  <?php Print $site?>
 							</td>
 						</tr>
-					</tr>
+						<tr>
+							<td rowspan="2">
+								<?php Print substr($printButton,0,-2)//removes the "ly" in weekly, monthly, yearly?>
+							</td>
+							<td rowspan="2">
+								Name
+							</td>
+							<td rowspan="2">
+								Position
+							</td>
+							<td colspan="2">
+								SSS
+							</td>
+							<td rowspan="2">
+								Total
+							</td>
+							<tr>
+								<td>
+									Employee
+								</td>
+								<td>
+									Employer
+								</td>
+							</tr>
+						</tr>
 
-					<?php
+						<?php
 
-					if($period == "week")
-					{
-						$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'";
-						$empQuery = mysql_query($employee) or die (mysql_error());
-						$sssBool = false;//if employee dont have sss contribution
-						if(mysql_num_rows($empQuery))//there's employee in the site
+						if($period == "week")
 						{
-							$overallSSS = 0;
-							while($empArr = mysql_fetch_assoc($empQuery))
+							$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'";
+							$empQuery = mysql_query($employee) or die (mysql_error());
+							$sssBool = false;//if employee dont have sss contribution
+							if(mysql_num_rows($empQuery))//there's employee in the site
 							{
-								$empid = $empArr['empid'];
-								if(isset($_POST['date']))
+								$overallSSS = 0;
+								while($empArr = mysql_fetch_assoc($empQuery))
 								{
-									$changedPeriod = $_POST['date'];
-									$payrollDate = "SELECT DISTINCT date FROM payroll WHERE date= '$changedPeriod' AND empid = '$empid' ORDER BY date ASC";
-								}
-								else
-									$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid'ORDER BY date ASC";
-
-								$payrollDateQuery = mysql_query($payrollDate);
-								
-								while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
-								{
-									
-									//For the specfied week in first column
-									$endDate = $payDateArr['date'];
-									$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
-									//Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
-
-									$payroll = "SELECT * FROM payroll WHERE date = '$endDate' AND empid = '$empid' ORDER BY date ASC";
-									$payrollQuery = mysql_query($payroll);
-									if(mysql_num_rows($payrollQuery) > 0)
+									$empid = $empArr['empid'];
+									if(isset($_POST['date']))
 									{
-										$payrollArr = mysql_fetch_assoc($payrollQuery);
-										if($payrollArr['sss'] != 0)
+										$changedPeriod = $_POST['date'];
+										$payrollDate = "SELECT DISTINCT date FROM payroll WHERE date= '$changedPeriod' AND empid = '$empid' ORDER BY date ASC";
+									}
+									else
+										$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid'ORDER BY date ASC";
+
+									$payrollDateQuery = mysql_query($payrollDate);
+									
+									while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
+									{
+										
+										//For the specfied week in first column
+										$endDate = $payDateArr['date'];
+										$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
+										//Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
+
+										$payroll = "SELECT * FROM payroll WHERE date = '$endDate' AND empid = '$empid' ORDER BY date ASC";
+										$payrollQuery = mysql_query($payroll);
+										if(mysql_num_rows($payrollQuery) > 0)
 										{
-											$sssBool = true;
-											//Print "<script>console.log('bool: ".$sssBool."')</script>";
-											$monthly = $payrollArr['rate'] * 25;
+											$payrollArr = mysql_fetch_assoc($payrollQuery);
+											if($payrollArr['sss'] != 0)
+											{
+												$sssBool = true;
+												//Print "<script>console.log('bool: ".$sssBool."')</script>";
+												$monthly = $payrollArr['rate'] * 25;
 
-											$sssEmployer = $payrollArr['sss_er'];//Gets the value in the sss table
+												$sssEmployer = $payrollArr['sss_er'];//Gets the value in the sss table
 
-											//Print "<script>console.log('".$sssEmployer."')</script>";
-											$sssContribution = $sssEmployer;
+												//Print "<script>console.log('".$sssEmployer."')</script>";
+												$sssContribution = $sssEmployer;
 
-											$totalSSSContribution = $sssContribution + $payrollArr['sss'];
-											Print "
-													<tr>
-														<td>
-															".$startDate." - ".$endDate."
-														</td>
-														<td>
-															".$empArr['lastname'].", ".$empArr['firstname']."
-														</td>
-														<td>
-															".$empArr['position']."
-														</td>
-														<td>
-															".numberExactFormat($payrollArr['sss'], 2, '.')."
-														</td>
-														<td>
-															".numberExactFormat($sssContribution, 2, '.')."
-														</td>
-														<td>
-															".numberExactFormat($totalSSSContribution, 2, '.')."
-														</td>
-													</tr>";
+												$totalSSSContribution = $sssContribution + $payrollArr['sss'];
+												Print "
+														<tr>
+															<td>
+																".$startDate." - ".$endDate."
+															</td>
+															<td>
+																".$empArr['lastname'].", ".$empArr['firstname']."
+															</td>
+															<td>
+																".$empArr['position']."
+															</td>
+															<td>
+																".numberExactFormat($payrollArr['sss'], 2, '.')."
+															</td>
+															<td>
+																".numberExactFormat($sssContribution, 2, '.')."
+															</td>
+															<td>
+																".numberExactFormat($totalSSSContribution, 2, '.')."
+															</td>
+														</tr>";
 
-											$overallSSS += $totalSSSContribution;
+												$overallSSS += $totalSSSContribution;
+											}
 										}
 									}
 								}
+								if($sssBool)
+								{
+									Print "
+									<tr>
+										<td colspan='4'>
+										</td>
+										<td>
+											Grand Total
+										</td>
+										<td>
+											".numberExactFormat($overallSSS, 2, '.')."
+										</td>
+									</tr>";
+								}
+								if(!$sssBool)
+								{
+									Print "
+											<tr>
+												<td colspan='6'>
+												 	No Report data as of the moment
+												</td>
+											</tr>";
+								}
 							}
-							if($sssBool)
+							else
+							{
+								Print "
+											<tr>
+												<td colspan='6'>
+												 	No Report data as of the moment
+												</td>
+											</tr>";
+							}
+						}
+						else if($period == "month")
+						{
+							$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'";
+							$empQuery = mysql_query($employee) or die (mysql_error());
+							$sssBool = false;//if employee dont have sss contribution
+							$overallSSS = 0;
+							if(mysql_num_rows($empQuery))//there's employee in the site
+							{
+								
+								$sssBool = false;//if employee dont have sss contribution
+								if(isset($_POST['date']))
+								{
+									$changedPeriod = explode(' ',$_POST['date']);
+									$monthPeriod = $changedPeriod[0];
+									$yearPeriod = $changedPeriod[1];
+									$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY date ASC";
+								}
+								else
+								{
+									$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY date ASC";
+								}
+								while($empArr = mysql_fetch_assoc($empQuery))
+								{
+									$empid = $empArr['empid'];
+
+									$payrollDateQuery = mysql_query($payrollDate);
+
+									$monthNoRepeat = "";
+
+									$sssBool = true;
+									$EEContribution = 0;
+									$ERContribution = 0;
+									$totalSSSContribution = 0;
+									//Evaluates the attendance and compute the sss contribution
+									while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
+									{
+										//Print "<script>console.log('".$payrollDate."')</script>";
+										$dateExploded = explode(" ", $payDateArr['date']);
+										$month = $dateExploded[0];//gets the month
+										$year = $dateExploded[2];// gets the year
+
+										$payrollDay = $payDateArr['date'];
+
+										//Print "<script>console.log('".$month." - ".$year."')</script>";
+
+										$payroll = "SELECT * FROM payroll WHERE (date LIKE '$month%' AND date LIKE '%$year') AND empid = '$empid' ORDER BY date ASC";
+										$payrollQuery = mysql_query($payroll);
+										if(mysql_num_rows($payrollQuery) > 0)
+										{
+											
+
+											while($payrollArr = mysql_fetch_assoc($payrollQuery))
+											{
+												if($payrollArr['sss'] != 0)
+												{
+													$sssBool = true;
+													//Print "<script>console.log('yess')</script>";
+													$monthly = $payrollArr['rate'] * 25;
+
+													$sssEmployer = $payrollArr['sss_er'];//Gets the value in the sss table
+
+													//Print "<script>console.log('".$sssEmployer."')</script>";
+													$ERContribution += $sssEmployer;
+
+													$totalSSSContribution = $ERContribution + $payrollArr['sss'];
+
+													$EEContribution += $payrollArr['sss'];
+													
+													
+												}
+												else
+												{
+													$sssBool = false;
+												}
+											}
+											if($sssBool)
+											{
+												if($monthNoRepeat != $month.$year)
+												{
+													$totalSSSContribution = $ERContribution+$EEContribution;
+													$overallSSS += $totalSSSContribution;
+
+													Print "
+															<tr>
+																<td>
+																	".$month." ".$year."
+																</td>
+																<td>
+																	".$empArr['lastname'].", ".$empArr['firstname']."
+																</td>
+																<td>
+																	".$empArr['position']."
+																</td>
+																<td>
+																	".numberExactFormat($EEContribution, 2, '.')."
+																</td>
+																<td>
+																	".numberExactFormat($ERContribution, 2, '.')."
+																</td>
+																<td>
+																	".numberExactFormat($totalSSSContribution, 2, '.')."
+																</td>
+															</tr>";
+
+												}
+												
+											}
+										}
+
+										$monthNoRepeat = $month.$year;
+									}
+								}
+							}
+							if($sssBool)//only display when employee has sss
 							{
 								Print "
 								<tr>
@@ -292,297 +443,150 @@
 											</td>
 										</tr>";
 							}
+					
 						}
-						else
+						else if($period = "year")
 						{
-							Print "
+							$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'";
+							$empQuery = mysql_query($employee) or die (mysql_error());
+							$sssBool = false;//if employee dont have sss contribution
+							$overallSSS = 0;
+							if(mysql_num_rows($empQuery))//there's employee in the site
+							{
+								
+								$sssBool = false;//if employee dont have sss contribution
+								if(isset($_POST['date']))
+								{
+									$changedPeriod = explode(' ',$_POST['date']);
+									$monthPeriod = $changedPeriod[0];
+									$payrollDate = "SELECT DISTINCT date FROM payroll WHERE  date LIKE '%$yearPeriod' ORDER BY date ASC";
+								}
+								else
+								{
+									$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY date ASC";
+								}
+								while($empArr = mysql_fetch_assoc($empQuery))
+								{
+									$empid = $empArr['empid'];
+
+									$payrollDateQuery = mysql_query($payrollDate);
+
+									$yearNoRepeat = "";
+
+									$sssBool = true;
+									$EEContribution = 0;
+									$ERContribution = 0;
+									$totalSSSContribution = 0;
+									//Evaluates the attendance and compute the sss contribution
+									while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
+									{
+										//Print "<script>console.log('".$payrollDate."')</script>";
+										$dateExploded = explode(" ", $payDateArr['date']);
+										$year = $dateExploded[2];// gets the year
+
+										$payrollDay = $payDateArr['date'];
+
+										//Print "<script>console.log('".$month." - ".$year."')</script>";
+
+										$payroll = "SELECT * FROM payroll WHERE date LIKE '%$year' AND empid = '$empid' ORDER BY date ASC";
+										$payrollQuery = mysql_query($payroll);
+										if(mysql_num_rows($payrollQuery) > 0)
+										{
+											
+
+											while($payrollArr = mysql_fetch_assoc($payrollQuery))
+											{
+												if($payrollArr['sss'] != 0)
+												{
+													$sssBool = true;
+													//Print "<script>console.log('yess')</script>";
+													$monthly = $payrollArr['rate'] * 25;
+
+													$sssEmployer = $payrollArr['sss_er'];//Gets the value in the sss table
+
+													//Print "<script>console.log('".$sssEmployer."')</script>";
+													$ERContribution += $sssEmployer;
+
+													$totalSSSContribution = $ERContribution + $payrollArr['sss'];
+
+													$EEContribution += $payrollArr['sss'];
+													
+													
+												}
+												else
+												{
+													$sssBool = false;
+												}
+											}
+											if($sssBool)
+											{
+												if($yearNoRepeat != $year)
+												{
+													$totalSSSContribution = $ERContribution+$EEContribution;
+													$overallSSS += $totalSSSContribution;
+
+													$yearBefore = $year - 1;
+													Print "
+															<tr>
+																<td>
+																	".$yearBefore." - ".$year."
+																</td>
+																<td>
+																	".$empArr['lastname'].", ".$empArr['firstname']."
+																</td>
+																<td>
+																	".$empArr['position']."
+																</td>
+																<td>
+																	".numberExactFormat($EEContribution, 2, '.')."
+																</td>
+																<td>
+																	".numberExactFormat($ERContribution, 2, '.')."
+																</td>
+																<td>
+																	".numberExactFormat($totalSSSContribution, 2, '.')."
+																</td>
+															</tr>";
+
+												}
+												
+											}
+										}
+
+										$yearNoRepeat = $year;
+									}
+								}
+							}
+							if($sssBool)//only display when employee has sss
+							{
+								Print "
+								<tr>
+									<td colspan='4'>
+									</td>
+									<td>
+										Grand Total
+									</td>
+									<td>
+										".numberExactFormat($overallSSS, 2, '.')."
+									</td>
+								</tr>";
+							}
+							if(!$sssBool)
+							{
+								Print "
 										<tr>
 											<td colspan='6'>
 											 	No Report data as of the moment
 											</td>
 										</tr>";
-						}
-					}
-					else if($period == "month")
-					{
-						$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'";
-						$empQuery = mysql_query($employee) or die (mysql_error());
-						$sssBool = false;//if employee dont have sss contribution
-						$overallSSS = 0;
-						if(mysql_num_rows($empQuery))//there's employee in the site
-						{
-							
-							$sssBool = false;//if employee dont have sss contribution
-							if(isset($_POST['date']))
-							{
-								$changedPeriod = explode(' ',$_POST['date']);
-								$monthPeriod = $changedPeriod[0];
-								$yearPeriod = $changedPeriod[1];
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY date ASC";
 							}
-							else
-							{
-								$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY date ASC";
-							}
-							while($empArr = mysql_fetch_assoc($empQuery))
-							{
-								$empid = $empArr['empid'];
-
-								$payrollDateQuery = mysql_query($payrollDate);
-
-								$monthNoRepeat = "";
-
-								$sssBool = true;
-								$EEContribution = 0;
-								$ERContribution = 0;
-								$totalSSSContribution = 0;
-								//Evaluates the attendance and compute the sss contribution
-								while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
-								{
-									//Print "<script>console.log('".$payrollDate."')</script>";
-									$dateExploded = explode(" ", $payDateArr['date']);
-									$month = $dateExploded[0];//gets the month
-									$year = $dateExploded[2];// gets the year
-
-									$payrollDay = $payDateArr['date'];
-
-									//Print "<script>console.log('".$month." - ".$year."')</script>";
-
-									$payroll = "SELECT * FROM payroll WHERE (date LIKE '$month%' AND date LIKE '%$year') AND empid = '$empid' ORDER BY date ASC";
-									$payrollQuery = mysql_query($payroll);
-									if(mysql_num_rows($payrollQuery) > 0)
-									{
-										
-
-										while($payrollArr = mysql_fetch_assoc($payrollQuery))
-										{
-											if($payrollArr['sss'] != 0)
-											{
-												$sssBool = true;
-												//Print "<script>console.log('yess')</script>";
-												$monthly = $payrollArr['rate'] * 25;
-
-												$sssEmployer = $payrollArr['sss_er'];//Gets the value in the sss table
-
-												//Print "<script>console.log('".$sssEmployer."')</script>";
-												$ERContribution += $sssEmployer;
-
-												$totalSSSContribution = $ERContribution + $payrollArr['sss'];
-
-												$EEContribution += $payrollArr['sss'];
-												
-												
-											}
-											else
-											{
-												$sssBool = false;
-											}
-										}
-										if($sssBool)
-										{
-											if($monthNoRepeat != $month.$year)
-											{
-												$totalSSSContribution = $ERContribution+$EEContribution;
-												$overallSSS += $totalSSSContribution;
-
-												Print "
-														<tr>
-															<td>
-																".$month." ".$year."
-															</td>
-															<td>
-																".$empArr['lastname'].", ".$empArr['firstname']."
-															</td>
-															<td>
-																".$empArr['position']."
-															</td>
-															<td>
-																".numberExactFormat($EEContribution, 2, '.')."
-															</td>
-															<td>
-																".numberExactFormat($ERContribution, 2, '.')."
-															</td>
-															<td>
-																".numberExactFormat($totalSSSContribution, 2, '.')."
-															</td>
-														</tr>";
-
-											}
-											
-										}
-									}
-
-									$monthNoRepeat = $month.$year;
-								}
-							}
-						}
-						if($sssBool)//only display when employee has sss
-						{
-							Print "
-							<tr>
-								<td colspan='4'>
-								</td>
-								<td>
-									Grand Total
-								</td>
-								<td>
-									".numberExactFormat($overallSSS, 2, '.')."
-								</td>
-							</tr>";
-						}
-						if(!$sssBool)
-						{
-							Print "
-									<tr>
-										<td colspan='6'>
-										 	No Report data as of the moment
-										</td>
-									</tr>";
-						}
-				
-					}
-					else if($period = "year")
-					{
-						$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'";
-						$empQuery = mysql_query($employee) or die (mysql_error());
-						$sssBool = false;//if employee dont have sss contribution
-						$overallSSS = 0;
-						if(mysql_num_rows($empQuery))//there's employee in the site
-						{
-							
-							$sssBool = false;//if employee dont have sss contribution
-							if(isset($_POST['date']))
-							{
-								$changedPeriod = explode(' ',$_POST['date']);
-								$monthPeriod = $changedPeriod[0];
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE  date LIKE '%$yearPeriod' ORDER BY date ASC";
-							}
-							else
-							{
-								$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY date ASC";
-							}
-							while($empArr = mysql_fetch_assoc($empQuery))
-							{
-								$empid = $empArr['empid'];
-
-								$payrollDateQuery = mysql_query($payrollDate);
-
-								$yearNoRepeat = "";
-
-								$sssBool = true;
-								$EEContribution = 0;
-								$ERContribution = 0;
-								$totalSSSContribution = 0;
-								//Evaluates the attendance and compute the sss contribution
-								while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
-								{
-									//Print "<script>console.log('".$payrollDate."')</script>";
-									$dateExploded = explode(" ", $payDateArr['date']);
-									$year = $dateExploded[2];// gets the year
-
-									$payrollDay = $payDateArr['date'];
-
-									//Print "<script>console.log('".$month." - ".$year."')</script>";
-
-									$payroll = "SELECT * FROM payroll WHERE date LIKE '%$year' AND empid = '$empid' ORDER BY date ASC";
-									$payrollQuery = mysql_query($payroll);
-									if(mysql_num_rows($payrollQuery) > 0)
-									{
-										
-
-										while($payrollArr = mysql_fetch_assoc($payrollQuery))
-										{
-											if($payrollArr['sss'] != 0)
-											{
-												$sssBool = true;
-												//Print "<script>console.log('yess')</script>";
-												$monthly = $payrollArr['rate'] * 25;
-
-												$sssEmployer = $payrollArr['sss_er'];//Gets the value in the sss table
-
-												//Print "<script>console.log('".$sssEmployer."')</script>";
-												$ERContribution += $sssEmployer;
-
-												$totalSSSContribution = $ERContribution + $payrollArr['sss'];
-
-												$EEContribution += $payrollArr['sss'];
-												
-												
-											}
-											else
-											{
-												$sssBool = false;
-											}
-										}
-										if($sssBool)
-										{
-											if($yearNoRepeat != $year)
-											{
-												$totalSSSContribution = $ERContribution+$EEContribution;
-												$overallSSS += $totalSSSContribution;
-
-												$yearBefore = $year - 1;
-												Print "
-														<tr>
-															<td>
-																".$yearBefore." - ".$year."
-															</td>
-															<td>
-																".$empArr['lastname'].", ".$empArr['firstname']."
-															</td>
-															<td>
-																".$empArr['position']."
-															</td>
-															<td>
-																".numberExactFormat($EEContribution, 2, '.')."
-															</td>
-															<td>
-																".numberExactFormat($ERContribution, 2, '.')."
-															</td>
-															<td>
-																".numberExactFormat($totalSSSContribution, 2, '.')."
-															</td>
-														</tr>";
-
-											}
-											
-										}
-									}
-
-									$yearNoRepeat = $year;
-								}
-							}
-						}
-						if($sssBool)//only display when employee has sss
-						{
-							Print "
-							<tr>
-								<td colspan='4'>
-								</td>
-								<td>
-									Grand Total
-								</td>
-								<td>
-									".numberExactFormat($overallSSS, 2, '.')."
-								</td>
-							</tr>";
-						}
-						if(!$sssBool)
-						{
-							Print "
-									<tr>
-										<td colspan='6'>
-										 	No Report data as of the moment
-										</td>
-									</tr>";
-						}
-				
-					}
 					
+						}
+						
 
-					?>
-					
-				</table>
+						?>
+						
+					</table>
 				</div>
 			</div>
 
