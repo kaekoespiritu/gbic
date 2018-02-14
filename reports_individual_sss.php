@@ -39,7 +39,7 @@
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_individual_contributions.php?type=Contributions&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Contributions</a></li>
 						<li>Individual SSS Contributions Report for <?php Print $breadcrumInfo?></li>
-						<button class='btn btn-primary pull-right'>
+						<button class='btn btn-primary pull-right' onclick="printSSSContribution()">
 							Print SSS Contribution
 						</button>
 					</ol>
@@ -576,8 +576,13 @@
 
 		function periodChange(period) {
 			window.location.assign("reports_individual_sss.php?empid=<?php Print $empid?>&period="+period);
-
 		}
+
+		
+		function printSSSContribution(){
+			window.location.assign("print_individual_contribution.php");
+		}
+		
 		//Disables the button if there's no data
 		$(document).ready(function(){
 			if($("#printButton").val() == 0) {
