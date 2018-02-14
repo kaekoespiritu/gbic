@@ -176,23 +176,24 @@
 	<div class="modal fade" id="optionModal">
  		<div class="modal-dialog">
     		<div class="modal-content">
-      			<div class="modal-header">
-      				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        			<h4 class="modal-title">Select contribution type:</h4>
-      			</div>
       			<div class="modal-body">
-      				<a class="btn btn-primary" id="SssModal">
-      					SSS
+      				<a class="btn btn-default" id="SssModal">
+      					<img src="Images/sss.png" class="center-image">
+      					<h5>SSS</h5>
       				</a>
-      				<a class="btn btn-primary" id="PhilhealthModal">
-      					PhilHealth
+      				<a class="btn btn-default" id="PhilhealthModal">
+      					<img src="Images/ph_logo.png" class="center-image">
+      					<h5>PhilHealth</h5>
       				</a>
-      				<a class="btn btn-primary" id="PagibigModal">
-      					PagIBIG
+      				<a class="btn btn-default" id="PagibigModal">
+      					<img src="Images/Pag-IBIG.svg.png" class="center-image">
+      					<h5>PagIBIG</h5>
       				</a>
-      				<a class="btn btn-primary" id="OverallModal">
-      					Overall
+      				<a class="btn btn-default" id="OverallModal">
+      					<img src="Images/contributions-overall.png" class="center-image">
+      					<h5>Overall</h5>
       				</a>
+      				<h4 class="text-center pull-down">Click on the options above to view overall contributions for site.</h4>
       			</div>
       		</div>
       	</div>
