@@ -3,6 +3,8 @@
 	include('directives/session.php');
 	include('directives/db.php');
 
+	$dateToday = strftime("%B %d, %Y");
+
 	$empid = $_GET['empid'];
 	$period = $_GET['per'];
 	$employeeChecker = "SELECT * FROM employee WHERE empid = '$empid'";
@@ -74,10 +76,7 @@
 						Print "<option value='year'>Yearly</option>";
 				?>
 			</select>
-			<h4>Select period</h4>
-			<select class="form-control">
-				<option>Sample date</option>
-			</select>
+			
 		</div>
 
 		<div class="pull-down">
@@ -112,20 +111,72 @@
 				</tr>
 				<?php
 					$oneThreeMonthBool = false;//for print button
+					$thirteenthBool = true;// boolean for giving the "from to" date in the 13th month
+					$remainderBool = false; // boolean for displaying the remainder once
+
+					//Check if employee have already received past 13th month pay
+					$thirteenthChecker = "SELECT * FROM thirteenth_pay WHERE empid = '$empid' ORDER BY from_date DESC LIMIT 1";
+					$thirteenthCheckQuery = mysql_query($thirteenthChecker) or die (mysql_error());
+					$pastThirteenthDate = "";
+					$thirteenthRemainder = 0;
+
+
+					if(mysql_num_rows($thirteenthCheckQuery) == 1)
+					{
+						$thirteenthCheckArr = mysql_fetch_assoc($thirteenthCheckQuery);
+						$pastThirteenthDate = "AND date <= '".$thirteenthCheckArr['to_date']."'";
+						$thirteenthRemainder = $thirteenthCheckArr['amount'] - $thirteenthCheckArr['received'];
+						$thirteenthRemainder = abs($thirteenthRemainder);// makes the value absolute
+
+						// display in the duration of 13th month pay of employee
+						$pastToDateThirteenthPay = $thirteenthCheckArr['to_date'];
+						$thirteenthBool = false;
+						$remainderBool = true;// displays the remainder
+					}
+
 					if($period == "week")
 					{
-						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+						
+
+						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' $pastThirteenthDate ORDER BY date ASC";
 						$payrollQuery = mysql_query($payrollDate);
 						$dateLength = mysql_num_rows($payrollQuery);
 
-						//weekly
-						$overallPayment = 0;
+						//adds the 13th month pay remainder if there is
+						$overallPayment = ($thirteenthRemainder != 0 ? $overallPayment = $overallPayment : 0);
+
+						if($remainderBool)
+						{
+							if($thirteenthRemainder != 0)
+							{
+								Print "
+								<tr>
+									<td>
+										13th Month Pay remaining balance
+									</td>
+									<td>
+										".numberExactFormat($thirteenthRemainder, 2, '.')."
+									</td>
+								</tr>";
+
+								$remainderBool = false;
+
+							}
+							
+						}
+
 						//Evaluates the attendance and compute the 13th monthpay
 						while($payDateArr = mysql_fetch_assoc($payrollQuery))
 						{
+							Print "<script>console.log('".$payDateArr['date']."')</script>";
+							if($thirteenthBool)
+							{
+								$pastToDateThirteenthPay = date('F j, Y', strtotime('-6 day', strtotime($payDateArr['date'])));
+								$thirteenthBool = false;
+							}
 							$endDate = $payDateArr['date'];
 							$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
-							Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
+							//Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
 							$attendance = "SELECT * FROM attendance WHERE empid = '$empid' AND date BETWEEN '$startDate' AND '$endDate' ORDER BY date ASC";
 							$attQuery = mysql_query($attendance);
 
@@ -135,7 +186,7 @@
 							{
 								$date = $attArr['date'];
 
-								Print "<script>console.log('".$date."')</script>";
+								//Print "<script>console.log('".$date."')</script>";
 								$workHrs = $attArr['workhours'];
 
 								$holidayChecker = "SELECT * FROM holiday WHERE date = '$date'";
@@ -152,15 +203,16 @@
 									}
 								}
 							}
-							Print "<script>console.log('".$daysAttended."')</script>";
+							//Print "<script>console.log('".$daysAttended."')</script>";
 							$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
+
 							Print "
 									<tr>
 										<td>
 											".$startDate." - ".$endDate."
 										</td>
 										<td>
-											".$thirteenthMonth."
+											".numberExactFormat($thirteenthMonth, 2, '.')."
 										</td>
 									</tr>";
 
@@ -169,12 +221,33 @@
 					}
 					else if($period == "month")
 					{
-						$attendance = "SELECT DISTINCT date FROM attendance WHERE empid = '$empid' ORDER BY date ASC";
+						$attendance = "SELECT DISTINCT date FROM attendance WHERE empid = '$empid' $pastThirteenthDate ORDER BY date ASC";
 						$attQuery = mysql_query($attendance);
 
 						$daysAttended = 0;//counter for days attended
 						$noRepeat = null;
-						$overallPayment = 0;
+						//adds the 13th month pay remainder if there is
+						$overallPayment = ($thirteenthRemainder != 0 ? $overallPayment = $overallPayment : 0);
+
+						if($remainderBool)
+						{
+							if($thirteenthRemainder != 0)
+							{
+								Print "
+								<tr>
+									<td>
+										13th Month Pay remaining balance
+									</td>
+									<td>
+										".numberExactFormat($thirteenthRemainder, 2, '.')."
+									</td>
+								</tr>";
+
+								$remainderBool = false;
+
+							}
+							
+						}
 						//Computes 13th monthpay per month
 						while($attDate = mysql_fetch_assoc($attQuery))
 						{
@@ -227,12 +300,33 @@
 					}
 					else if($period == "year")
 					{
-						$attendance = "SELECT DISTINCT date FROM attendance WHERE empid = '$empid' ORDER BY date ASC";
+						$attendance = "SELECT DISTINCT date FROM attendance WHERE empid = '$empid' $pastThirteenthDate ORDER BY date ASC";
 						$attQuery = mysql_query($attendance);
 
 						$daysAttended = 0;//counter for days attended
 						$noRepeat = null;
-						$overallPayment = 0;
+						//adds the 13th month pay remainder if there is
+						$overallPayment = ($thirteenthRemainder != 0 ? $overallPayment = $overallPayment : 0);
+
+						if($remainderBool)
+						{
+							if($thirteenthRemainder != 0)
+							{
+								Print "
+								<tr>
+									<td>
+										13th Month Pay remaining balance
+									</td>
+									<td>
+										".numberExactFormat($thirteenthRemainder, 2, '.')."
+									</td>
+								</tr>";
+
+								$remainderBool = false;
+
+							}
+							
+						}
 						//Computes 13th monthpay per month
 						while($attDate = mysql_fetch_assoc($attQuery))
 						{
@@ -308,7 +402,7 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="myModalLabel">Name of Employee's 13th Month Pay</h4>
+	        <h4 class="modal-title" id="myModalLabel"><?php Print $empArr['lastname'].", ".$empArr['firstname']?>'s 13th Month Pay</h4>
 	      </div>
 	      <div class="modal-body">
 	        <table class='table table-bordered'>
@@ -322,17 +416,17 @@
 	        	</tr>
 	        	<tr>
 	        		<td>
-	        			Date to Date
+	        			<?php Print $pastToDateThirteenthPay." - ".$dateToday?>
 	        		</td>
 	        		<td>
-	        			$$$
+	        			<?php Print numberExactFormat($overallPayment, 2, '.')?>
 	        		</td>
 	        	</tr>
 	        </table>
+
 	      </div>
 	      <div class="modal-footer">
 	      	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#enter13thmonthpay">Give 13th Month Pay</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	      </div>
 	    </div>
 	  </div>
@@ -348,17 +442,16 @@
 	      	<div class="row">
 		      	<div class="col-md-6">
 		      		<h4>13th Month Pay Amount:</h4>
-		      			<b>$$$</b>
+		      			<b><?php Print numberExactFormat($overallPayment, 2, '.')?></b>
 		      	</div>
 		      	<div class="col-md-6">
-		      		<h4>Amount to Give:</h4> <input type="number"><br>
-		        	<input type="checkbox"> Copy overall amount
+		      		<h4>Amount to Give:</h4> <input type="number" id="amountToGive"><br>
+		        	<input type="checkbox" onclick="copyAmount(<?php Print $overallPayment?>)"> Copy overall amount
 		      	</div>
 	      	</div>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-primary">Save Changes</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" onclick="give13thPay()">Give 13th Monthpay</button>
 	      </div>
 	    </div>
 	  </div>
@@ -369,7 +462,7 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="myModalLabel">Name of Employee's 13th Month Pay History</h4>
+	        <h4 class="modal-title" id="myModalLabel"><?php Print $empArr['lastname'].", ".$empArr['firstname']?>'s 13th Month Pay History</h4>
 	      </div>
 	      <div class="modal-body">
 	        <table class='table table-bordered'>
@@ -387,20 +480,43 @@
 	        			Amount given
 	        		</td>
 	        	</tr>
-	        	<tr>
-	        		<td>
-	        			DATE
-	        		</td>
-	        		<td>
-	        			DATE
-	        		</td>
-	        		<td>
-	        			$$$
-	        		</td>
-	        		<td>
-	        			$$$
-	        		</td>
-	        	</tr>
+	        	<?php
+	        		$thirteenthHist = "SELECT * FROM thirteenth_pay WHERE empid = '$empid' ORDER BY from_date ASC";
+	        		$thirteenthHistQuery = mysql_query($thirteenthHist) or die(mysql_error()) ;
+	        		if(mysql_num_rows($thirteenthHistQuery) != 0)
+	        		{
+	        			while($histRow = mysql_fetch_assoc($thirteenthHistQuery))
+	        			{
+	        				Print "
+		        				<tr>
+					        		<td>
+					        			".$histRow['from_date']."
+					        		</td>
+					        		<td>
+					        			".$histRow['to_date']."
+					        		</td>
+					        		<td>
+					        			".$histRow['amount']."
+					        		</td>
+					        		<td>
+					        			".$histRow['received']."
+					        		</td>
+					        	</tr>
+		        				";
+	        			}
+	        			
+	        		}
+	        		else
+	        		{
+	        			Print "
+	        				<tr>
+				        		<td colspan='4'>
+				        			No 13th Month pay history as of the moment.
+				        		</td>
+				        	</tr>";
+	        		}
+
+	        	?>
 	        </table>
 	      </div>
 	      <div class="modal-footer">
@@ -411,12 +527,38 @@
 	  </div>
 	</div>
 
+	<input type="hidden" id="overallPayment" value="<?php Print $overallPayment?>">
+	<input type="hidden" id="fromDate" value="<?php Print $pastToDateThirteenthPay?>">
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 	<script rel="javascript" src="js/jquery.min.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script>
 		document.getElementById("reports").setAttribute("style", "background-color: #10621e;");
 
+		function copyAmount(amount) {
+			amount = String(amount);
+			var splitThirteenth = amount.split('.');
+			var thirteenth = splitThirteenth[0]+"."+splitThirteenth[1].substring(0,2);
+			document.getElementById("amountToGive").value = thirteenth;
+		}
+
+		function give13thPay() {
+			var amount = document.getElementById("amountToGive").value;
+			var thirteenth = document.getElementById("overallPayment").value;
+			var fromDate = document.getElementById("fromDate").value;
+			var splitThirteenth = thirteenth.split('.');
+			thirteenth = splitThirteenth[0]+"."+splitThirteenth[1].substring(0,2);
+			alert(thirteenth);
+			var a = confirm("Are you sure you want to give this employee's 13th month pay?")
+			if(a) 
+			{
+				if(thirteenth > amount)
+					alert("Please input proper amount.");
+				else
+					window.location.assign("logic_reports_individual_13thmonth.php?empid=<?php Print $empid?>&amount="+amount+"&pay="+thirteenth+"&fromDate="+fromDate)
+				//	window.location.assign("");
+			}
+		}
 		function periodChange(period) {
 			window.location.assign('reports_individual_13thmonthpay.php?empid=<?php Print $empid?>&per='+period);
 		}
