@@ -48,116 +48,120 @@
 
 			<div class="col-md-10 col-md-offset-1">
 				<div class="form-inline">
-					<h4>Select Period</h4>
-					<select onchange="periodChange(this.value)" class="form-control">
-						<?php 
-							if($period == "week")
-								Print "<option value='week' selected>Weekly</option>";
-							else
-								Print "<option value='week'>Weekly</option>";
-							if($period == "month")
-								Print "<option value='month'selected>Monthly</option>";
-							else
-								Print "<option value='month'>Monthly</option>";
-							if($period == "year")
-								Print "<option value='year' selected>Yearly</option>";
-							else
-								Print "<option value='year'>Yearly</option>";
-						?>
-					</select>
-					<h4>Select <?php Print $period?></h4>
-					<select class="form-control" onchange="changeDate(this.value)">
-						<option hidden>Choose a <?php Print $period?></option>
-						<?php
-						$payrollDates = "SELECT date FROM payroll WHERE empid = '$empid'";
-						$payrollDQuery = mysql_query($payrollDates) or die(mysql_error());
+					<div class="col-md-6">
+						<h4>Step 1: Select a period type</h4>
+						<select onchange="periodChange(this.value)" class="form-control">
+							<?php 
+								if($period == "week")
+									Print "<option value='week' selected>Weekly</option>";
+								else
+									Print "<option value='week'>Weekly</option>";
+								if($period == "month")
+									Print "<option value='month'selected>Monthly</option>";
+								else
+									Print "<option value='month'>Monthly</option>";
+								if($period == "year")
+									Print "<option value='year' selected>Yearly</option>";
+								else
+									Print "<option value='year'>Yearly</option>";
+							?>
+						</select>
+					</div>
+					<div class="col-md-6">
+						<h4>Step 2: Select duration in <?php Print $period?></h4>
+						<select class="form-control" onchange="changeDate(this.value)">
+							<option hidden>Choose a <?php Print $period?></option>
+							<?php
+							$payrollDates = "SELECT date FROM payroll WHERE empid = '$empid'";
+							$payrollDQuery = mysql_query($payrollDates) or die(mysql_error());
 
-						if(mysql_num_rows($payrollDQuery) > 0)//check if there's payroll
-						{
-							while($payrollDateArr = mysql_fetch_assoc($payrollDQuery))
+							if(mysql_num_rows($payrollDQuery) > 0)//check if there's payroll
 							{
-								$monthNoRep = "";
-								$yearNoRep = "";
-								if($_GET['period'] == 'week')
+								while($payrollDateArr = mysql_fetch_assoc($payrollDQuery))
 								{
-									$payrollEndDate = $payrollDateArr['date'];
-									$payrollStartDate = date('F j, Y', strtotime('-6 day', strtotime($payrollEndDate)));
-									if(isset($_POST['date']))
+									$monthNoRep = "";
+									$yearNoRep = "";
+									if($_GET['period'] == 'week')
 									{
-										if($_POST['date'] == $payrollEndDate)
+										$payrollEndDate = $payrollDateArr['date'];
+										$payrollStartDate = date('F j, Y', strtotime('-6 day', strtotime($payrollEndDate)));
+										if(isset($_POST['date']))
 										{
-											Print "<option value = '".$payrollEndDate."' selected>".$payrollStartDate." - ".$payrollEndDate."</option>";
+											if($_POST['date'] == $payrollEndDate)
+											{
+												Print "<option value = '".$payrollEndDate."' selected>".$payrollStartDate." - ".$payrollEndDate."</option>";
+											}
+											else
+											{
+												Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
+											}
 										}
 										else
 										{
 											Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
 										}
 									}
-									else
+									else if($_GET['period'] == 'month')
 									{
-										Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
-									}
-								}
-								else if($_GET['period'] == 'month')
-								{
-									$payrollArrDate = explode(" ", $payrollDateArr['date']);
-									$payrollMonth = $payrollArrDate[0];
-									$payrollYear = $payrollArrDate[2];
+										$payrollArrDate = explode(" ", $payrollDateArr['date']);
+										$payrollMonth = $payrollArrDate[0];
+										$payrollYear = $payrollArrDate[2];
 
-									if($monthNoRep != $payrollMonth." ".$payrollYear)
-									{	
-										if(isset($_POST['date']))
-										{
-											if($_POST['date'] == $payrollMonth." ".$payrollYear)
+										if($monthNoRep != $payrollMonth." ".$payrollYear)
+										{	
+											if(isset($_POST['date']))
 											{
-												Print "<option value = '".$payrollMonth." ".$payrollYear."' selected>".$payrollMonth." ".$payrollYear."</option>";
+												if($_POST['date'] == $payrollMonth." ".$payrollYear)
+												{
+													Print "<option value = '".$payrollMonth." ".$payrollYear."' selected>".$payrollMonth." ".$payrollYear."</option>";
+												}
+												else
+												{
+													Print "<option value = '".$payrollMonth." ".$payrollYear."'>".$payrollMonth." ".$payrollYear."</option>";
+												}
 											}
 											else
 											{
 												Print "<option value = '".$payrollMonth." ".$payrollYear."'>".$payrollMonth." ".$payrollYear."</option>";
 											}
 										}
-										else
-										{
-											Print "<option value = '".$payrollMonth." ".$payrollYear."'>".$payrollMonth." ".$payrollYear."</option>";
-										}
+										$monthNoRep = $payrollMonth." ".$payrollYear;
 									}
-									$monthNoRep = $payrollMonth." ".$payrollYear;
-								}
-								else if($_GET['period'] == 'year')
-								{
-									$payrollArrDate = explode(" ", $payrollDateArr['date']);
-									$payrollYear = $payrollArrDate[2];
-									$yearBef = $payrollYear -1;//gets the year before
+									else if($_GET['period'] == 'year')
+									{
+										$payrollArrDate = explode(" ", $payrollDateArr['date']);
+										$payrollYear = $payrollArrDate[2];
+										$yearBef = $payrollYear -1;//gets the year before
 
-									if($yearNoRep != $payrollYear)
-									{	
-										if(isset($_POST['date']))
-										{
-											if($_POST['date'] == $payrollYear)
+										if($yearNoRep != $payrollYear)
+										{	
+											if(isset($_POST['date']))
 											{
-												Print "<option value = '".$payrollYear."' selected>".$yearBef." - ".$payrollYear."</option>";
+												if($_POST['date'] == $payrollYear)
+												{
+													Print "<option value = '".$payrollYear."' selected>".$yearBef." - ".$payrollYear."</option>";
+												}
+												else
+												{
+													Print "<option value = '".$payrollYear."'>".$yearBef." - ".$payrollYear."</option>";
+												}
 											}
 											else
 											{
 												Print "<option value = '".$payrollYear."'>".$yearBef." - ".$payrollYear."</option>";
 											}
+											
 										}
-										else
-										{
-											Print "<option value = '".$payrollYear."'>".$yearBef." - ".$payrollYear."</option>";
-										}
-										
+										$yearNoRep = $payrollYear;
 									}
-									$yearNoRep = $payrollYear;
+									
 								}
-								
 							}
-						}
+							
 						
-					
-						?>
-					</select>
+							?>
+						</select>
+					</div>
 				</div>
 				<div class="pull-down">
 				<button class="btn btn-default" id="printSSS">
