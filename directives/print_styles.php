@@ -64,4 +64,20 @@ $align_center = array(
                   'vertical' => 'center'
                 )
         );
+
+$align_right = array(
+          'alignment' => array(
+                  'horizontal' => 'right',
+                  'vertical' => 'center'
+                )
+        );
+
+$border_thin = array(  
+          'borders' => array(
+            'allborders' => array(
+                      'style' => 'thin',
+                      'color' => array('rgb' => '000000')
+                    )
+                )
+        );
 ?>
