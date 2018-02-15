@@ -20,7 +20,7 @@ $activeSheet = $sheet -> createSheet(0);
 // Merge cells
 $activeSheet->mergeCells('A1:D1'); // Header
 $activeSheet->mergeCells('A2:A3'); // Period
-$activeSheet->mergeCells('B2:C2'); // SSS Header
+$activeSheet->mergeCells('B2:C2'); // Contribution Type Header
 $activeSheet->mergeCells('D2:D3'); // Total
 
 // Header
@@ -32,10 +32,13 @@ $activeSheet->setCellValue('B3', 'Employee');
 $activeSheet->setCellValue('C3', 'Employer');
 
 // Style
+// ---  Centering text
 $activeSheet->getStyle('A2')->applyFromArray($align_center); // Centered Period text
 $activeSheet->getStyle('D2')->applyFromArray($align_center); // Centered Total text
 $activeSheet->getStyle('B2')->applyFromArray($align_center); // Centered header 
 $activeSheet->getStyle('A1')->applyFromArray($align_center); // Centered header text
+// --- Changing cell width
+
 
 //----------------- Body ---------------------//
 
