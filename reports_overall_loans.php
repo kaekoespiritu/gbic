@@ -180,13 +180,16 @@
       			</div>
       			<div class="modal-body">
       				<a class="btn btn-primary" href="reports_overall_allloans.php">
-      					Weekly
+      					SSS
       				</a>
       				<a class="btn btn-primary" href="reports_overall_allloans.php">
-      					Monthly
+      					Pag-ibig
       				</a>
       				<a class="btn btn-primary" href="reports_overall_allloans.php">
-      					Yearly
+      					Old Vale
+      				</a>
+      				<a class="btn btn-primary" href="reports_overall_allloans.php">
+      					New Vale
       				</a>
       			</div>
       		</div>
