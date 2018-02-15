@@ -50,6 +50,11 @@ img.bg
   height: 40px !important;
   width: 40px !important;
 }
+.center-image
+{
+  height: 100px !important;
+  width: 100px !important;
+}
 
 /* THIS CENTERS THE NAVBAR ELEMENTS */
 @media (min-width: 768) {
