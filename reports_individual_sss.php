@@ -49,7 +49,7 @@
 			<div class="col-md-10 col-md-offset-1">
 				<div class="form-inline">
 					<div class="col-md-6">
-						<h4>Step 1: Select a period type</h4>
+						<h4>Select Period</h4>
 						<select onchange="periodChange(this.value)" class="form-control">
 							<?php 
 								if($period == "week")
@@ -68,12 +68,22 @@
 						</select>
 					</div>
 					<div class="col-md-6">
-						<h4>Step 2: Select duration in <?php Print $period?></h4>
+						<h4>Select <?php Print $period?></h4>
 						<select class="form-control" onchange="changeDate(this.value)">
 							<option hidden>Choose a <?php Print $period?></option>
+
 							<?php
 							$payrollDates = "SELECT date FROM payroll WHERE empid = '$empid'";
 							$payrollDQuery = mysql_query($payrollDates) or die(mysql_error());
+							if(isset($_POST['date']))
+							{
+								if($_POST['date'] == 'all')
+									Print "<option value='all' selected>All</option>";
+								else
+									Print "<option value='all'>All</option>";
+							}
+							else
+									Print "<option value='all'>All</option>";
 
 							if(mysql_num_rows($payrollDQuery) > 0)//check if there's payroll
 							{
@@ -199,8 +209,13 @@
 					{
 						if(isset($_POST['date']))
 						{
-							$changedPeriod = $_POST['date'];
-							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND date= '$changedPeriod' ORDER BY date ASC";
+							if($_POST['date'] != 'all')
+							{
+								$changedPeriod = $_POST['date'];
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND date= '$changedPeriod' ORDER BY date ASC";
+							}
+							else
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
 						}
 						else
 							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
@@ -289,10 +304,18 @@
 					{
 						if(isset($_POST['date']))
 						{
-							$changedPeriod = explode(' ',$_POST['date']);
-							$monthPeriod = $changedPeriod[0];
-							$yearPeriod = $changedPeriod[1];
-							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY date ASC";
+							if($_POST['date'] != 'all')
+							{
+								$changedPeriod = explode(' ',$_POST['date']);
+								$monthPeriod = $changedPeriod[0];
+								$yearPeriod = $changedPeriod[1];
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY date ASC";
+							}
+							else
+							{
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+							}
+
 						}
 						else
 						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
@@ -419,9 +442,14 @@
 					{
 						if(isset($_POST['date']))
 						{
-							$changedPeriod = explode(' ',$_POST['date']);
-							$yearPeriod = $changedPeriod[0];
-							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND date LIKE '%$yearPeriod' ORDER BY date ASC";
+							if($_POST['date'] != 'all')
+							{
+								$changedPeriod = explode(' ',$_POST['date']);
+								$yearPeriod = $changedPeriod[0];
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND date LIKE '%$yearPeriod' ORDER BY date ASC";
+							}
+							else
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
 						}
 						else
 						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";

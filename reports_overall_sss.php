@@ -49,7 +49,7 @@
 			<div class="col-md-10 col-md-offset-1">
 				<div class="form-inline">
 					<div class="col-md-6">
-						<h4>Step 1: Select a period type</h4>
+						<h4>Select Period</h4>
 						<select onchange="periodChange(this.value)" class="form-control">
 							<?php 
 								if($period == "week")
@@ -68,7 +68,7 @@
 						</select>
 					</div>
 					<div class="col-md-6">
-						<h4>Step 2: Select duration in <?php Print $period?></h4>
+						<h4>Select <?php Print $period?></h4>
 						<select class="form-control" onchange="changeDate(this.value)">
 							<option hidden>Choose a <?php Print $period?></option>
 							<?php
