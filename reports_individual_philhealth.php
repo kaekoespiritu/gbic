@@ -39,7 +39,7 @@
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_individual_contributions.php?type=Contributions&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Contributions</a></li>
 						<li>Individual Philhealth Contributions Report for <?php Print $breadcrumInfo?></li>
-						<button class='btn btn-primary pull-right'>
+						<button class='btn btn-primary pull-right' onclick="printPhilHealthContribution()">
 							Print Philhealth Contribution
 						</button>
 					</ol>
@@ -50,7 +50,7 @@
 				<div class="form-inline">
 					<div class="col-md-6">
 						<h4>Select Period</h4>
-						<select onchange="periodChange(this.value)" class="form-control">
+						<select onchange="periodChange(this.value)" class="form-control" id="period">
 							<?php 
 								if($period == "week")
 									Print "<option value='week' selected>Weekly</option>";
@@ -607,8 +607,13 @@
 
 		function periodChange(period) {
 			window.location.assign("reports_individual_philhealth.php?empid=<?php Print $empid?>&period="+period);
-
 		}
+
+		function printPhilHealthContribution() {
+			var period = document.getElementById('period').value;
+			window.location.assign("print_individual_contribution.php?empid=<?php Print $empid ?>&period="+period+"&contribution=PhilHealth");
+		}
+
 		//Disables the button if there's no data
 		$(document).ready(function(){
 			if($("#printButton").val() == 0) {

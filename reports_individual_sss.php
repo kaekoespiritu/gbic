@@ -50,7 +50,7 @@
 				<div class="form-inline">
 					<div class="col-md-6">
 						<h4>Select Period</h4>
-						<select onchange="periodChange(this.value)" class="form-control">
+						<select onchange="periodChange(this.value)" class="form-control" id="period">
 							<?php 
 								if($period == "week")
 									Print "<option value='week' selected>Weekly</option>";
@@ -608,7 +608,8 @@
 
 		
 		function printSSSContribution(){
-			window.location.assign("print_individual_contribution.php");
+			var period = document.getElementById('period').value;
+			window.location.assign("print_individual_contribution.php?empid=<?php Print $empid ?>&period="+period+"&contribution=SSS");
 		}
 		
 		//Disables the button if there's no data

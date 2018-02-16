@@ -112,7 +112,7 @@ $rowCounter++;//to give space for clearer data
 $activeSheet->getStyle('A3:W3')->applyFromArray($border_all_medium);//Header 
 $activeSheet->getStyle('A4:W'.$rowCounter)->applyFromArray($border_all_thin);//Content
 $activeSheet->getStyle('G1:W2')->applyFromArray($align_center);//Centered header text
-$activeSheet->getStyle('A2')->applyFromArray($align_center);//Centered period text
+$activeSheet->getStyle('A')->applyFromArray($align_center);//Centered period text
 $activeSheet->getColumnDimension('W')->setAutoSize(true);//Lengthen total salary
 
 header('Content-Type: application/vnd.ms-excel');

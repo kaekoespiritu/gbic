@@ -75,6 +75,9 @@
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_overall_earnings.php?type=Earnings&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Earnings</a></li>
 						<li>Overall 13th Month Pay Report for <?php Print $site?></li>
+						<a class="btn btn-primary pull-right" href="reports_overall_13thmonthpay_deduction.php?req='+req+'&site=<?php Print $site?>&period=<?php Print $period?>&position=<?php Print $position?>">
+							Give 13th Month Pay
+						</a>
 					</ol>
 				</div>
 			</div>
@@ -631,6 +634,7 @@
 		function positionChange(position) {
 			window.location.assign("reports_overall_13thmonthpay.php?req=<?php Print $require?>&site=<?php Print $site?>&period=<?php Print $period?>&position="+position);
 		}
+
 		function weekDates(date) {
 			document.getElementsByName('chosenDate')[0].value = date;
 			document.getElementById('dynamicForm').submit();

@@ -39,7 +39,7 @@
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_overall_contributions.php?type=Contributions&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Contributions</a></li>
 						<li>Overall SSS Contributions Report for <?php Print $breadcrumInfo?></li>
-						<button class='btn btn-primary pull-right'>
+						<button class='btn btn-primary pull-right' onclick="printSSSContributions()">
 							Print SSS Contributions
 						</button>
 					</ol>
@@ -616,6 +616,11 @@
 			window.location.assign("reports_overall_sss.php?site=<?php Print $site?>&period="+period);
 
 		}
+
+		function printSSSContributions() {
+			window.location.assign("print_overall_contribution.php");
+		}
+
 		//Disables the button if there's no data
 		$(document).ready(function(){
 			if($("#printButton").val() == 0) {
