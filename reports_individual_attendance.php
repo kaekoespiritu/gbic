@@ -6,16 +6,9 @@
 	if(isset($_GET['type']) && isset($_GET['period']))
 	{
 		// Allow only these types
-		switch($_GET['type'])
-		{
-			case "Attendance": break;
-			case "Payroll": break;
-			case "Loans": break;
-			case "Payslip": break;
-			case "Contributions": break;
-			case "Earnings": break;
-			default: Print Print "<script>window.location.assign('index.php')</script>";
-		}
+		if($_GET['type'] != "Attendance")
+			Print "<script>window.location.assign('index.php')</script>";
+		
 		// Allow only these periods
 		switch($_GET['period'])
 		{
@@ -70,13 +63,18 @@
 					<div class="form-group">
 						<input type="text" placeholder="Search" id="search_box" name="txt_search"  class="form-control" autocomplete="off">
 					</div>
-					<div id="search_result" class="report-search"></div>
 				</div>
 			<!-- FOR LIVE SEARCH -->
 				<input type="hidden" id="report_type" value="<?php Print $reportType?>">
 				<input type="hidden" id="period" value="<?php Print $period?>">
-				<input type="hidden" id="position" value="<?php Print $position_page?>">
+				<input type="hidden" id="position_page" value="<?php Print $position_page?>">
 				<input type="hidden" id="site" value="<?php Print $site_page?>">
+				<?php 
+					if(isset($_GET["page"]))
+						Print "<input type='hidden' id='page' value='".$_GET["page"]."'>";
+					else
+						Print "<input type='hidden' id='page' value='1'>";
+				?>
 
 
 
@@ -124,48 +122,8 @@
 				<!-- END OF ACTION BUTTONS FOR FILTERS-->
 			</div>
 
-			<!-- Table of employees -->
-			<div class="row">
-				<div class="col-md-10 col-md-offset-1">
-					<table class="table table-bordered table-condensed" style="background-color:white;">
+			<div id="search_result" class="col-md-9" style="margin-top: 15px"></div>
 
-						<tr>
-							<th class='fixedWidth text-center'>Employee ID</th>
-							<th class='text-center'>Name</th>
-							<th class='text-center'>Position</th>
-							<th class='text-center'>Site</th>
-							<th class='text-center'>Action</th>
-						</tr>
-						<?php
-						//Print "<script>alert('default')</script>";
-							$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
-					    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
-					    	$startpoint = ($page * $limit) - $limit;
-					        $statement = "employee WHERE employment_status = '1' ORDER BY site ASC, position ASC, lastname ASC";
-
-							$res=mysql_query("select * from {$statement} LIMIT {$startpoint} , {$limit}");
-
-						while($empArr = mysql_fetch_assoc($res))
-						{
-							Print "
-								
-								<tr>
-									<td style='vertical-align: inherit'>".$empArr['empid']."</td>
-									<td style='vertical-align: inherit'>".$empArr['lastname'].", ".$empArr['firstname']."</td>
-									<td style='vertical-align: inherit'>".$empArr['position']."</td>
-									<td style='vertical-align: inherit'>".$empArr['site']."</td>
-									<td style='vertical-align: inherit'>
-										<a href='reports_individual_empattendance.php' class='btn btn-default'>
-											View Attendance
-										</a>
-									</td>
-								</tr>
-							";
-						}
-						?>
-					</table>
-				</div>
-			</div>
 			<?php
 				echo "<div id='pagingg' >";
 				if($statement && $limit && $page && $site_page && $position_page && $reportType && $period)
@@ -193,6 +151,8 @@
       	</div>
 	</div>
 
+
+	
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 	<script rel="javascript" src="js/jquery.min.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
@@ -200,15 +160,33 @@
 		document.getElementById("reports").setAttribute("style", "background-color: #10621e;");
 
 
+		
 		$(document).ready(function(){
-			function load_data(search)
+			var period = $('#period').val();
+			var site = $('#site').val();
+			var position = $('#position_page').val();
+			var report_type = $('#report_type').val();
+			var page = "";
+			if($('#page').length != 0)
+			{
+				page = $('#page').val();
+			}
+
+			load_data("",period,site, report_type, position, page);
+			function load_data(search, period, site, report_type, position, page)
 			{
 
 			  	$.ajax({
 			   		url:"livesearch_reports.php",
 			   		method:"POST",
 			   		data:{
-			   			search: search
+			   			search : search,
+			   			period : period,
+			   			site : site,
+			   			report_type : report_type,
+			   			position_page : position,
+			   			page : page
+
 			   		},
 			   		success:function(data)
 			   		{
@@ -218,14 +196,9 @@
 			}
 			$('#search_box').keyup(function(){
 			  	var search = $(this).val();
-			  	if(search != '')
-			  	{
-			   		load_data(search);
-			  	}
-			  	else
-			  	{
-			   		load_data();
-			  	}
+			  	
+			   		load_data(search, period, site, report_type, position, page);
+			  	
 			});
 		});
 

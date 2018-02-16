@@ -6,16 +6,9 @@
 	if(isset($_GET['type']) && isset($_GET['period']))
 	{
 		// Allow only these types
-		switch($_GET['type'])
-		{
-			case "Attendance": break;
-			case "Payroll": break;
-			case "Loans": break;
-			case "Payslip": break;
-			case "Contributions": break;
-			case "Earnings": break;
-			default: Print Print "<script>window.location.assign('index.php')</script>";
-		}
+		if($_GET['type'] != "Earnings")
+			Print "<script>window.location.assign('index.php')</script>";
+		
 		// Allow only these periods
 		switch($_GET['period'])
 		{

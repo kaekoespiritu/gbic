@@ -285,7 +285,8 @@
 								$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
 								Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
 
-								$attendance = "SELECT * FROM attendance WHERE empid = '$empid' AND date BETWEEN '$startDate' AND '$endDate' ORDER BY date ASC";
+								
+								$attendance = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY date ASC";
 								$attQuery = mysql_query($attendance);
 
 								$daysAttended = 0;//counter for days attended
