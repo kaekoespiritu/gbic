@@ -93,30 +93,30 @@
 				/* If location is long, font-size to smaller */
 				if(strlen($row['location'])>=16)
 				{
-					Print '	<a data-toggle="modal" data-target="#optionModal" style="color: white !important; text-decoration: none !important; cursor: pointer;">
-								<div class="sitebox">
-									<span class="smalltext">'
+					Print "	<a data-toggle='modal' data-target='#optionModal' style='color: white !important; text-decoration: none !important; cursor: pointer;' onclick='chosenSite(\"".$row['location']."\")'>
+								<div class='sitebox'>
+									<span class='smalltext' >"
 										. $row['location'] .
-									'</span>
+									"</span>
 									<br>
 									
 									<br>
-									<span>Employees: '. $employee_num .'</span>
+									<span>Employees: ". $employee_num ."</span>
 								</div>
-							';
+							";
 				}
 				else
 				{
-					Print '	<a data-toggle="modal" data-target="#optionModal" style="color: white !important; text-decoration: none !important; cursor: pointer;">
-								<div class="sitebox">
-									<span class="autofit">'
+					Print "	<a data-toggle='modal' data-target='#optionModal' style='color: white !important; text-decoration: none !important; cursor: pointer;' onclick='chosenSite(\"".$row['location']."\")>
+								<div class='sitebox'>
+									<span class='autofit siteName'>"
 										. $row['location'] .
-									'<br>
+									"<br>
 									
-									<br>Employees: '. $employee_num .'
+									<br>Employees: ". $employee_num ."
 									</span>
 								</div>
-							</a>';
+							</a>";
 				}
 				$counter++;
 				if($counter == 5)
