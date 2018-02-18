@@ -72,7 +72,7 @@
 			<div class="sub-flipdown">
 				<div class="sub-flipdown-menu">
 					<a href="reports_individual_attendance.php?type=Attendance&period=week&site=null&position=null"> Individual</a>
-					<a href="reports_overall_attendance.php?type=Attendance&period=Weekly"> Overall</a>
+					<a href="reports_overall_attendance.php?type=Attendance&period=Weekly"> Overall Vale</a>
 				</div>
 				<a class="subflipbtn">Attendance</a>
 			</div>

@@ -185,20 +185,8 @@
 			});
 		});
 
-		function viewSSSBtn(id, type) {
-			window.location.assign("reports_individual_sssloan.php");
-		}
-
-		function viewPagIBIGBtn(id, type) {
-			window.location.assign("reports_individual_pagibigloan.php");
-		}
-
-		function viewOldValeBtn(id, type) {
-			window.location.assign("reports_individual_oldvaleloan.php");
-		}
-
-		function viewNewValeBtn(id, type) {
-			window.location.assign("reports_individual_newvaleloan.php");
+		function viewBtn(id, type) {
+			window.location.assign("reports_individual_loans_employee.php?empid="+id+"&type="+type);
 		}
 
 		function changePeriod(period, position, site, type) {

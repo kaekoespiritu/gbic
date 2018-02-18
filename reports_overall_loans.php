@@ -60,30 +60,20 @@
 			<div class="col-md-12 pull-down">
 				<h2>Overall <span id="period"></span> <?php Print $_GET['type']; ?> Report</h2>
 			</div>
-
-			<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
-			<div class="row">
-
-					
-				</div>
-				<!-- ACTION BUTTONS FOR FILTERS -->
-				<!-- END OF ACTION BUTTONS FOR FILTERS-->
-			</div>
+		</div>
 
 			<!-- Table of employees -->
-			<div class="row pull-down">
+		<div class="row pull-down">
 				<h3>Sites</h3>
 
 		<div class="col-md-9 col-md-offset-3">
 			<?php
-			$attCounter = 0;//Attendance Completion Checker
 			$counter = 0;//Counter for the While loop
 
 			$site_box = "SELECT location FROM site WHERE active = '1'";
 			$site_box_query = mysql_query($site_box);
 			while($row = mysql_fetch_assoc($site_box_query))
 			{
-				$attendanceStatus = 0;
 				$site = $row['location'];
 				if($counter == 0)
 				{
@@ -109,7 +99,7 @@
 										. $row['location'] .
 									'</span>
 									<br>
-									<span class="checkmark" name="site" value="'.$attendanceStatus.'"></span>
+									
 									<br>
 									<span>Employees: '. $employee_num .'</span>
 								</div>
@@ -122,7 +112,7 @@
 									<span class="autofit">'
 										. $row['location'] .
 									'<br>
-									<span class="checkmark" name="site" value="'.$attendanceStatus.'"></span>
+									
 									<br>Employees: '. $employee_num .'
 									</span>
 								</div>
@@ -135,35 +125,11 @@
 					$counter = 0;
 				}
 				
-				// Counter for completed attendance each site
-				if($attendanceStatus == 1)
-				{
-					$attCounter++;
-				}
+				
 			}
-				//Attendance Completion Checker
-				$siteChecker = "SELECT * FROM site WHERE active = '1'";
-				$siteQuery = mysql_query($siteChecker);
-				$siteNum = mysql_num_rows($siteQuery);
-				if($siteNum == $attCounter)
-				{
-					$_SESSION['completeAtt'] = true;
-				}
-				else
-				{
-					unset($_SESSION['completeAtt']);
-				}
+				
 			?>
-		</div>
-			</div>
-			<?php
-				echo "<div id='pagingg' >";
-				if($statement && $limit && $page && $site_page && $position_page && $reportType && $period)
-					echo pagination($statement,$limit,$page, $site_page, $position_page, $search, $reportType, $period);
-				echo "</div>";
-			?>
-		</div>
-	</div>
+		
 
 	<div class="modal fade" id="optionModal">
  		<div class="modal-dialog">
@@ -172,12 +138,6 @@
       				Select period type:
       			</div>
       			<div class="modal-body">
-      				<a class="btn btn-primary" href="reports_overall_allloans.php">
-      					SSS
-      				</a>
-      				<a class="btn btn-primary" href="reports_overall_allloans.php">
-      					Pag-ibig
-      				</a>
       				<a class="btn btn-primary" href="reports_overall_allloans.php">
       					Old Vale
       				</a>

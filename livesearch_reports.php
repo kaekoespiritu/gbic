@@ -96,16 +96,16 @@ if(isset($_POST["search"]))
             }
             else if($reportType == "Loans")// for Contributions tab
             {
-                Print " <button class='btn btn-default' onclick='viewSSSBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
+                Print " <button class='btn btn-default' onclick='viewBtn(\"".$empArr['empid']."\",\"sss\")'>
                             SSS
                         </button>
-                        <button class='btn btn-default' onclick='viewPagIBIGBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
+                        <button class='btn btn-default' onclick='viewBtn(\"".$empArr['empid']."\",\"pagibig\")'>
                             PagIBIG
                         </button>
-                        <button class='btn btn-default' onclick='viewOldValeBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
+                        <button class='btn btn-default' onclick='viewBtn(\"".$empArr['empid']."\", \"oldvale\")'>
                             Old Vale
                         </button>
-                        <button class='btn btn-default' onclick='viewNewValeBtn(\"".$empArr['empid']."\", \"".$reportType."\", \"".$period."\")'>
+                        <button class='btn btn-default' onclick='viewBtn(\"".$empArr['empid']."\", \"newvale\")'>
                             New Vale
                         </button>";
             }
