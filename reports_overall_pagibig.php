@@ -39,7 +39,7 @@
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_overall_contributions.php?type=Contributions&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Contributions</a></li>
 						<li>Overall Pagibig Contributions Report for <?php Print $breadcrumInfo?></li>
-						<button class='btn btn-primary pull-right'>
+						<button class='btn btn-primary pull-right' onclick="printPagIbigContributions()">
 							Print Pagibig Contributions
 						</button>
 					</ol>
@@ -69,7 +69,7 @@
 					</div>
 					<div class="col-md-6">
 						<h4>Select <?php Print $period?></h4>
-						<select class="form-control" onchange="changeDate(this.value)">
+						<select class="form-control" onchange="changeDate(this.value)" id="period">
 							<option hidden>Choose a <?php Print $period?></option>
 							<?php
 							$payrollDates = "SELECT DISTINCT date FROM payroll";
@@ -614,8 +614,12 @@
 
 		function periodChange(period) {
 			window.location.assign("reports_overall_pagibig.php?site=<?php Print $site?>&period="+period);
-
 		}
+
+		function printPagIbigContributions(){
+			window.location.assign("print_overall_contribution.php?site=<?php Print $site ?>&period="+period+"&contribution=PagIbig");
+		}
+
 		//Disables the button if there's no data
 		$(document).ready(function(){
 			if($("#printButton").val() == 0) {

@@ -50,7 +50,7 @@
 				<div class="form-inline">
 					<div class="col-md-6">
 						<h4>Select Period</h4>
-						<select onchange="periodChange(this.value)" class="form-control">
+						<select onchange="periodChange(this.value)" class="form-control" id="period">
 							<?php 
 								if($period == "week")
 									Print "<option value='week' selected>Weekly</option>";
@@ -169,7 +169,7 @@
 					<table class="table table-bordered pull-down">
 						<tr>
 							<td colspan="7">
-								 <?php Print $breadcrumInfo?> SSS Contribution of employees for  <?php Print $site?>
+								 Overall SSS Contribution of employees for  <?php Print $site?>
 							</td>
 						</tr>
 						<tr>
@@ -618,7 +618,8 @@
 		}
 
 		function printSSSContributions() {
-			window.location.assign("print_overall_contribution.php");
+			var period = document.getElementById('period').value;
+			window.location.assign("print_overall_contribution.php?site=<?php Print $site ?>&period="+period+"&contribution=SSS");
 		}
 
 		//Disables the button if there's no data
