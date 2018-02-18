@@ -155,7 +155,9 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 	$activeSheet->setCellValue('C'.$rowCounter, $employeePosition);//Name of worker
 
 	//WEDNESDAY
-	$attendance = "SELECT * FROM attendance WHERE empid = '$empid' AND date BETWEEN '$startDate' AND '$endDate' ORDER BY date ASC";
+	
+
+	$attendance = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY date ASC";
 	$attendanceQuery = mysql_query($attendance) or die (mysql_error());
 
 	$wedAbsent = false;

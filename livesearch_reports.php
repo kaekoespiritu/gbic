@@ -2,6 +2,7 @@
 //fetch.php
 include_once('directives/db.php');
 include("pagination/reports_individual_function.php");//For pagination
+
 $site_page = $_POST['site'];
 $position_page = $_POST['position_page'];
 $reportType = $_POST['report_type'];
@@ -92,6 +93,29 @@ if(isset($_POST["search"]))
                         <button class='btn btn-default' onclick='viewPagIBIGBtn(\"".$empArr['empid']."\")'>
                             PagIBIG
                         </button>";
+            }
+            else if($reportType == "Loans")// for Contributions tab
+            {
+                Print " <button class='btn btn-default' onclick='viewBtn(\"".$empArr['empid']."\",\"sss\")'>
+                            SSS
+                        </button>
+                        <button class='btn btn-default' onclick='viewBtn(\"".$empArr['empid']."\",\"pagibig\")'>
+                            PagIBIG
+                        </button>
+                        <button class='btn btn-default' onclick='viewBtn(\"".$empArr['empid']."\", \"oldvale\")'>
+                            Old Vale
+                        </button>
+                        <button class='btn btn-default' onclick='viewBtn(\"".$empArr['empid']."\", \"newvale\")'>
+                            New Vale
+                        </button>";
+            }
+            else if($reportType == "Attendance")// for Contributions tab
+            {
+                Print "
+                        <a href='reports_individual_empattendance.php?empid=".$empArr['empid']."' class='btn btn-default'>
+                                            View Attendance
+                                        </a>
+                        ";
             }
             Print   " </td>
                 </tr>

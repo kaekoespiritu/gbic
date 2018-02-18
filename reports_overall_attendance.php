@@ -7,23 +7,16 @@
 	if(isset($_GET['type']) && isset($_GET['period']))
 	{
 		// Allow only these types
-		switch($_GET['type'])
-		{
-			case "Attendance": break;
-			case "Payroll": break;
-			case "Loans": break;
-			case "Payslip": break;
-			case "Contributions": break;
-			case "Earnings": break;
-			default: Print Print "<script>window.location.assign('index.php')</script>";
-		}
+		if($_GET['type'] != "Attendance")
+			Print "<script>window.location.assign('index.php')</script>";
+
 		// Allow only these periods
 		switch($_GET['period'])
 		{
 			case "Weekly": break;
 			case "Monthly": break;
 			case "Yearly": break;
-			default: Print Print "<script>window.location.assign('index.php')</script>";
+			default: Print "<script>window.location.assign('index.php')</script>";
 		}
 	}
 	else
@@ -110,7 +103,7 @@
 				/* If location is long, font-size to smaller */
 				if(strlen($row['location'])>=16)
 				{
-					Print '	<a href="reports_overall_empattendance.php" style="color: white !important; text-decoration: none !important; cursor: pointer;">
+					Print '	<a href="reports_overall_empattendance.php?site='.$row['location'].'" style="color: white !important; text-decoration: none !important; cursor: pointer;">
 								<div class="sitebox">
 									<span class="smalltext">'
 										. $row['location'] .
@@ -124,7 +117,7 @@
 				}
 				else
 				{
-					Print '	<a href="reports_overall_empattendance.php" style="color: white !important; text-decoration: none !important; cursor: pointer;">
+					Print '	<a href="reports_overall_empattendance.php?site='.$row['location'].'&position=null&req=null" style="color: white !important; text-decoration: none !important; cursor: pointer;">
 								<div class="sitebox">
 									<span class="autofit">'
 										. $row['location'] .
