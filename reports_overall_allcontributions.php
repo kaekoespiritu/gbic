@@ -39,7 +39,7 @@
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_overall_contributions.php?type=Contributions&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Contributions</a></li>
 						<li>Overall Contributions Report for <?php Print $breadcrumInfo?></li>
-						<button class='btn btn-primary pull-right'>
+						<button class='btn btn-primary pull-right' onclick='printAllContributions()'>
 							Print Overall Contributions
 						</button>
 					</ol>
@@ -50,7 +50,7 @@
 				<div class="form-inline">
 					<div class="col-md-6">
 						<h4>Step 1: Select a period type</h4>
-						<select onchange="periodChange(this.value)" class="form-control">
+						<select onchange="periodChange(this.value)" class="form-control" id='period'>
 							<?php 
 								if($period == "week")
 									Print "<option value='week' selected>Weekly</option>";
@@ -859,8 +859,14 @@
 
 		function periodChange(period) {
 			window.location.assign("reports_overall_allcontributions.php?site=<?php Print $site?>&period="+period);
-
 		}
+
+		function printAllContributions() {
+			var period = document.getElementById('period').value;
+			window.location.assign("print_overall_contributions.php?site=<?php Print $site ?>&period="+period+"&contribution=All");
+		}
+
+
 		//Disables the button if there's no data
 		$(document).ready(function(){
 			if($("#printButton").val() == 0) {
