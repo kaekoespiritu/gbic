@@ -863,7 +863,7 @@
 
 		function printAllContributions() {
 			var period = document.getElementById('period').value;
-			window.location.assign("print_overall_contributions.php?site=<?php Print $site ?>&period="+period+"&contribution=All");
+			window.location.assign("print_overall_contribution.php?site=<?php Print $site ?>&period="+period+"&contribution=All");
 		}
 
 
