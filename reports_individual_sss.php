@@ -300,10 +300,12 @@
 									</tr>";
 						}
 					}
-					else if($period == "month")
+					else if($period == "month")//**UNTIL HERE**//
 					{
+						// If a duration is selected...
 						if(isset($_POST['date']))
 						{
+							// If duration selected was "ALL"
 							if($_POST['date'] != 'all')
 							{
 								$changedPeriod = explode(' ',$_POST['date']);
@@ -311,12 +313,14 @@
 								$yearPeriod = $changedPeriod[1];
 								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY date ASC";
 							}
+							// If a specific duration was selected
 							else
 							{
 								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
 							}
 
 						}
+						// If no duration was selected...
 						else
 						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
 
@@ -328,6 +332,7 @@
 						$sssBool = false;//if employee dont have sss contribution
 
 						$monthNoRepeat = "";
+
 						//Evaluates the attendance and compute the sss contribution
 						while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 						{
@@ -341,6 +346,7 @@
 
 							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' ORDER BY date ASC";
 							$payrollQuery = mysql_query($payroll);
+
 							if(mysql_num_rows($payrollQuery) > 0)
 							{
 								$sssBool = true;
@@ -437,8 +443,8 @@
 								</td>
 							</tr>";
 						}
-					}
-					else if($period = "year")
+					} //**UNTIL HERE**//
+					else if($period == "year")
 					{
 						if(isset($_POST['date']))
 						{
