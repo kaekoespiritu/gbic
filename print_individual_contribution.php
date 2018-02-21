@@ -54,9 +54,8 @@ $activeSheet->getColumnDimension('A')->setAutoSize(true); // Lengthen period
 $contributions = "SELECT * FROM payroll WHERE empid = '$empid' ORDER BY date DESC";
 $contributionsQuery = mysql_query($contributions) or die (mysql_error());
 $rowCounter = 4; // Start for the data in the row of excel
-$GrandTotal = 0;
-$totalEmployee = 0;
-$totalEmployer = 0;
+$monthlyRowCounter = 4;
+$GrandTotal = $totalEmployee = $totalEmployer = $monthlyCounter = 0;
 
 $activeSheet->setCellValue('A1', $lastname.', '.$firstname.' '.$position.' at '.$site);
 
@@ -64,40 +63,81 @@ while($contributionsArr = mysql_fetch_assoc($contributionsQuery)){
 
 	$endDate = $contributionsArr['date'];
 	$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
-	
-	switch($contributionType) {
-		case 'SSS':
-			$totalEmployee += $contributionsArr['sss'];
-			$totalEmployer += $contributionsArr['sss_er'];
-			
-			$activeSheet->setCellValue('A'.$rowCounter, $startDate.' - '.$endDate); // Period
-			$activeSheet->setCellValue('B'.$rowCounter, $contributionsArr['sss']); // Employee
-			$activeSheet->setCellValue('C'.$rowCounter, $contributionsArr['sss_er']); // Employer
-			$activeSheet->setCellValue('D'.$rowCounter, $contributionsArr['sss'] + $contributionsArr['sss_er']); // Total
-		break;
-		case 'PhilHealth':
-			$totalEmployee += $contributionsArr['philhealth'];
-			$totalEmployer += $contributionsArr['philhealth_er'];
-			
-			$activeSheet->setCellValue('A'.$rowCounter, $startDate.' - '.$endDate); // Period
-			$activeSheet->setCellValue('B'.$rowCounter, $contributionsArr['philhealth']); // Employee
-			$activeSheet->setCellValue('C'.$rowCounter, $contributionsArr['philhealth_er']); // Employer
-			$activeSheet->setCellValue('D'.$rowCounter, $contributionsArr['philhealth'] + $contributionsArr['philhealth_er']); // Total
-		break;
-		case 'PagIbig':
-			$totalEmployee += $contributionsArr['pagibig'];
-			$totalEmployer += $contributionsArr['pagibig_er'];
-			
-			$activeSheet->setCellValue('A'.$rowCounter, $startDate.' - '.$endDate); // Period
-			$activeSheet->setCellValue('B'.$rowCounter, $contributionsArr['pagibig']); // Employee
-			$activeSheet->setCellValue('C'.$rowCounter, $contributionsArr['pagibig_er']); // Employer
-			$activeSheet->setCellValue('D'.$rowCounter, $contributionsArr['pagibig'] + $contributionsArr['pagibig_er']); // Total
-		break;
+
+	$date = explode(" ", $endDate); // STRING
+	$month = $date[0]; // STRING
+	$monthYear = [$date[0], $date[2]]; // ARRAY
+	$monthAndYear = implode(" ", $monthYear); // STRING
+
+	$arraySize = mysql_num_rows($contributionsQuery);
+
+	if($period==='week') {
+		switch($contributionType) {
+			case 'SSS':
+				$totalEmployee += $contributionsArr['sss'];
+				$totalEmployer += $contributionsArr['sss_er'];
+				
+				$activeSheet->setCellValue('A'.$rowCounter, $startDate.' - '.$endDate); // Period
+				$activeSheet->setCellValue('B'.$rowCounter, $contributionsArr['sss']); // Employee
+				$activeSheet->setCellValue('C'.$rowCounter, $contributionsArr['sss_er']); // Employer
+				$activeSheet->setCellValue('D'.$rowCounter, $contributionsArr['sss'] + $contributionsArr['sss_er']); // Total
+			break;
+			case 'PhilHealth':
+				$totalEmployee += $contributionsArr['philhealth'];
+				$totalEmployer += $contributionsArr['philhealth_er'];
+				
+				$activeSheet->setCellValue('A'.$rowCounter, $startDate.' - '.$endDate); // Period
+				$activeSheet->setCellValue('B'.$rowCounter, $contributionsArr['philhealth']); // Employee
+				$activeSheet->setCellValue('C'.$rowCounter, $contributionsArr['philhealth_er']); // Employer
+				$activeSheet->setCellValue('D'.$rowCounter, $contributionsArr['philhealth'] + $contributionsArr['philhealth_er']); // Total
+			break;
+			case 'PagIbig':
+				$totalEmployee += $contributionsArr['pagibig'];
+				$totalEmployer += $contributionsArr['pagibig_er'];
+				
+				$activeSheet->setCellValue('A'.$rowCounter, $startDate.' - '.$endDate); // Period
+				$activeSheet->setCellValue('B'.$rowCounter, $contributionsArr['pagibig']); // Employee
+				$activeSheet->setCellValue('C'.$rowCounter, $contributionsArr['pagibig_er']); // Employer
+				$activeSheet->setCellValue('D'.$rowCounter, $contributionsArr['pagibig'] + $contributionsArr['pagibig_er']); // Total
+			break;
+		}
+	}
+
+	if($period==='month') {
+		switch($contributionType){
+			case 'SSS':
+				$totalEmployee += $contributionsArr['sss'];
+				$totalEmployer += $contributionsArr['sss_er'];
+				
+				if(stripos($monthAndYear,$month)===0 || $monthlyCounter === $arraySize){
+					$activeSheet->setCellValue('A'.$monthlyRowCounter, $monthAndYear);
+					$activeSheet->setCellValue('B'.$monthlyRowCounter, $totalEmployee);
+					$activeSheet->setCellValue('C'.$monthlyRowCounter, $totalEmployer);
+					$activeSheet->setCellValue('D'.$monthlyRowCounter, $totalEmployee + $totalEmployer);
+					$monthlyRowCounter++;
+				}
+				$monthlyCounter++;
+				break;
+			case 'PhilHealth':
+				$totalEmployee += $contributionsArr['philhealth'];
+				$totalEmployer += $contributionsArr['philhealth_er'];
+				break;
+			case 'PagIbig':
+				$totalEmployee += $contributionsArr['pagibig'];
+				$totalEmployer += $contributionsArr['pagibig_er'];
+				break;
+		}
+	}
+
+	if($period==='year') {
+
 	}
 
 	$rowCounter++;
 
 }
+
+//echo "<script>console.log('".$month." ".$monthAndYear." ".stripos($monthAndYear,$month)." Monthly Counter: " .$monthlyCounter. " Array Size: ".$arraySize."');</script>";
 
 $GrandTotal = $totalEmployee + $totalEmployer;
 $activeSheet->mergeCells('A'.$rowCounter.':C'.$rowCounter);
