@@ -60,20 +60,27 @@
 			<div class="col-md-12 pull-down">
 				<h2>Overall <span id="period"></span> <?php Print $_GET['type']; ?> Report</h2>
 			</div>
+				<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
+			<div class="row">			
+			</div>
+				<!-- ACTION BUTTONS FOR FILTERS -->
+				<!-- END OF ACTION BUTTONS FOR FILTERS-->
 		</div>
 
 			<!-- Table of employees -->
-		<div class="row pull-down">
+			<div class="row pull-down">
 				<h3>Sites</h3>
 
 		<div class="col-md-9 col-md-offset-3">
 			<?php
+			$attCounter = 0;//Attendance Completion Checker
 			$counter = 0;//Counter for the While loop
 
 			$site_box = "SELECT location FROM site WHERE active = '1'";
 			$site_box_query = mysql_query($site_box);
 			while($row = mysql_fetch_assoc($site_box_query))
 			{
+				$attendanceStatus = 0;
 				$site = $row['location'];
 				if($counter == 0)
 				{
@@ -93,30 +100,30 @@
 				/* If location is long, font-size to smaller */
 				if(strlen($row['location'])>=16)
 				{
-					Print "	<a data-toggle='modal' data-target='#optionModal' style='color: white !important; text-decoration: none !important; cursor: pointer;' onclick='chosenSite(\"".$row['location']."\")'>
-								<div class='sitebox'>
-									<span class='smalltext' >"
+					Print '	<a  style="color: white !important; text-decoration: none !important; cursor: pointer;" onclick="chosenSite(\''.$row['location'].'\')">
+								<div class="sitebox">
+									<span class="smalltext">'
 										. $row['location'] .
-									"</span>
+									'</span>
 									<br>
-									
+									<span class="checkmark" name="site" value="'.$attendanceStatus.'"></span>
 									<br>
-									<span>Employees: ". $employee_num ."</span>
+									<span>Employees: '. $employee_num .'</span>
 								</div>
-							";
+							';
 				}
 				else
 				{
-					Print "	<a data-toggle='modal' data-target='#optionModal' style='color: white !important; text-decoration: none !important; cursor: pointer;' onclick='chosenSite(\"".$row['location']."\")>
-								<div class='sitebox'>
-									<span class='autofit siteName'>"
+					Print '	<a  style="color: white !important; text-decoration: none !important; cursor: pointer;" onclick="chosenSite(\''.$row['location'].'\')">
+								<div class="sitebox">
+									<span class="autofit">'
 										. $row['location'] .
-									"<br>
-									
-									<br>Employees: ". $employee_num ."
+									'<br>
+									<span class="checkmark" name="site" value="'.$attendanceStatus.'"></span>
+									<br>Employees: '. $employee_num .'
 									</span>
 								</div>
-							</a>";
+							</a>';
 				}
 				$counter++;
 				if($counter == 5)
@@ -125,29 +132,31 @@
 					$counter = 0;
 				}
 				
-				
+				// Counter for completed attendance each site
+				if($attendanceStatus == 1)
+				{
+					$attCounter++;
+				}
 			}
-				
+				//Attendance Completion Checker
+				$siteChecker = "SELECT * FROM site WHERE active = '1'";
+				$siteQuery = mysql_query($siteChecker);
+				$siteNum = mysql_num_rows($siteQuery);
+				if($siteNum == $attCounter)
+				{
+					$_SESSION['completeAtt'] = true;
+				}
+				else
+				{
+					unset($_SESSION['completeAtt']);
+				}
 			?>
-		
-
-	<div class="modal fade" id="optionModal">
- 		<div class="modal-dialog">
-    		<div class="modal-content">
-      			<div class="modal-header">
-      				Select period type:
-      			</div>
-      			<div class="modal-body">
-      				<a class="btn btn-primary" href="reports_overall_allloans.php">
-      					Old Vale
-      				</a>
-      				<a class="btn btn-primary" href="reports_overall_allloans.php">
-      					New Vale
-      				</a>
-      			</div>
-      		</div>
-      	</div>
+		</div>
 	</div>
+</div>
+</div>
+
+	
 
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 	<script rel="javascript" src="js/jquery.min.js"></script>
@@ -159,6 +168,11 @@
 
 			window.location.assign("reports_overall.php?&type="+type+"&period="+period);
 			document.getElementById('period').innerHTML = period;
+
+		}
+
+		function chosenSite(site) {
+			window.location.assign("reports_overall_allloans.php?site="+site);
 
 		}
 	</script>

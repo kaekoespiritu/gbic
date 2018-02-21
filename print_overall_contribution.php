@@ -14,7 +14,7 @@ $filename = "Overall ".$contributionType." Contributions for ".$site.".xls";
 $sheet = new PHPExcel();
 
 $activeSheet = $sheet -> createSheet(0);
-
+// Print "<script>console.log('yow')</script>";
 // * ======= Styling table ======= * //
 	// Merge cells
 	$activeSheet->mergeCells('A1:F1'); // Header
@@ -48,7 +48,7 @@ $activeSheet = $sheet -> createSheet(0);
 	$activeSheet->getColumnDimension('C')->setAutoSize(true); // Lengthen Position
 	
 	// Styling borders
-	$activeSheet->getStyle('A:F')->applyFromArray($border_all_thin);
+	// $activeSheet->getStyle('A:F')->applyFromArray($border_all_thin);
 
 // * ======= Data Feeding ======= * //
 // Get contribution details for selected site
@@ -71,7 +71,7 @@ $employeelist = "
 	ORDER BY payroll.date DESC, employee.empid";
 
 $employeelistQuery = mysql_query($employeelist) or die (mysql_error());
-
+// Print "<script>console.log('num: ".mysql_num_rows($employeelistQuery)."')</script>";
 $rowCounter = 4; // Start for the data in the row of excel
 
 $GrandTotalSSS = $GrandTotalPhilHealth = $GrandTotalPagIBIG = $totalEmployeeSSS = $totalEmployerSSS = $totalEmployeePhilHealth = $totalEmployerPhilHealth = $totalEmployeePagIBIG = $totalEmployerPagIBIG = 0;

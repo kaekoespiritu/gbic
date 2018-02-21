@@ -89,7 +89,6 @@
 					$history = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$type' ORDER BY date ASC, time ASC";
 					$historyQuery = mysql_query($history);
 
-					
 					if(mysql_num_rows($historyQuery) > 0)
 					{
 						while($row = mysql_fetch_assoc($historyQuery))
