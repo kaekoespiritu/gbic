@@ -56,18 +56,17 @@ $contributionsQuery = mysql_query($contributions) or die (mysql_error());
 $rowCounter = 4; // Start for the data in the row of excel
 $monthlyRowCounter = 4;
 $GrandTotal = $totalEmployee = $totalEmployer = $monthlyCounter = 0;
+$monthNoRep = "";
 
 $activeSheet->setCellValue('A1', $lastname.', '.$firstname.' '.$position.' at '.$site);
+
+$contributionBool = false;
+$ERContribution = $EEContribution = $totalSSSContribution = $overallSSS = 0;
 
 while($contributionsArr = mysql_fetch_assoc($contributionsQuery)){
 
 	$endDate = $contributionsArr['date'];
 	$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
-
-	$date = explode(" ", $endDate); // STRING
-	$month = $date[0]; // STRING
-	$monthYear = [$date[0], $date[2]]; // ARRAY
-	$monthAndYear = implode(" ", $monthYear); // STRING
 
 	$arraySize = mysql_num_rows($contributionsQuery);
 
@@ -101,43 +100,170 @@ while($contributionsArr = mysql_fetch_assoc($contributionsQuery)){
 				$activeSheet->setCellValue('D'.$rowCounter, $contributionsArr['pagibig'] + $contributionsArr['pagibig_er']); // Total
 			break;
 		}
+		$rowCounter++;
 	}
 
-	if($period==='month') {
-		switch($contributionType){
-			case 'SSS':
-				$totalEmployee += $contributionsArr['sss'];
-				$totalEmployer += $contributionsArr['sss_er'];
-				
-				if(stripos($monthAndYear,$month)===0 || $monthlyCounter === $arraySize){
-					$activeSheet->setCellValue('A'.$monthlyRowCounter, $monthAndYear);
-					$activeSheet->setCellValue('B'.$monthlyRowCounter, $totalEmployee);
-					$activeSheet->setCellValue('C'.$monthlyRowCounter, $totalEmployer);
-					$activeSheet->setCellValue('D'.$monthlyRowCounter, $totalEmployee + $totalEmployer);
-					$monthlyRowCounter++;
+	
+}
+
+	if($period == "month") {
+
+		$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+
+		$payrollDateQuery = mysql_query($payrollDate);
+
+		$contributionBool = false;
+
+		//Evaluates the attendance and compute the sss contribution
+		while($payDateArr = mysql_fetch_assoc($payrollDateQuery)) {
+			$dateExploded = explode(" ", $payDateArr['date']);
+			$month = $dateExploded[0];//gets the month
+			$year = $dateExploded[2];// gets the year
+
+			$payrollDay = $payDateArr['date'];
+
+			//Print "<script>console.log('".$month." - ".$year."')</script>";
+
+			$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' ORDER BY date ASC";
+			$payrollQuery = mysql_query($payroll);
+			
+			if(mysql_num_rows($payrollQuery) > 0) {
+				$contributionBool = true;
+				$EEContribution = 0;
+				$ERContribution = 0;
+				$totalSSSContribution = 0;
+
+				//prevent from repeating the same month
+				if($monthNoRep != $month.$year) {
+					while($payrollArr = mysql_fetch_assoc($payrollQuery)) {
+						if($contributionType === 'SSS') {
+							if($payrollArr['sss'] != 0) {
+								$contributionBool = true;
+								$totalEmployee += $payrollArr['sss'];
+								$totalEmployer += $payrollArr['sss_er'];
+							}
+						}
+
+						elseif($contributionType === 'PhilHealth') {
+							if($payrollArr['philhealth'] != 0) {
+								$contributionBool = true;
+								$totalEmployee += $payrollArr['philhealth'];
+								$totalEmployer += $payrollArr['philhealth_er'];
+							}
+						}
+
+						elseif($contributionType === 'PagIbig') {
+							if($payrollArr['pagibig'] != 0) {
+								$contributionBool = true;
+								$totalEmployee += $payrollArr['pagibig'];
+								$totalEmployer += $payrollArr['pagibig_er'];
+							}
+						}
+						else {
+							$contributionBool = false;
+						}
+					}
 				}
-				$monthlyCounter++;
-				break;
-			case 'PhilHealth':
-				$totalEmployee += $contributionsArr['philhealth'];
-				$totalEmployer += $contributionsArr['philhealth_er'];
-				break;
-			case 'PagIbig':
-				$totalEmployee += $contributionsArr['pagibig'];
-				$totalEmployer += $contributionsArr['pagibig_er'];
-				break;
+
+				if($contributionBool) {
+					if($monthNoRep != $month.$year) {
+
+					$activeSheet->setCellValue('A'.$rowCounter, $month.' '.$year); // Period
+					$activeSheet->setCellValue('B'.$rowCounter, $totalEmployee); // Employee
+					$activeSheet->setCellValue('C'.$rowCounter, $totalEmployer); // Employer
+					$activeSheet->setCellValue('D'.$rowCounter, $totalEmployee + $totalEmployer); // Total
+					$rowCounter++;
+
+					}
+				}
+
+				$monthNoRep = $month.$year;
+			}
+			else {
+				$contributionBool = true;
+			}
+
 		}
 	}
 
-	if($period==='year') {
+	if($period == "year") {
+		
+		$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
 
-	}
+		$payrollDateQuery = mysql_query($payrollDate);
 
-	$rowCounter++;
+		//gets the overall sss total
+		$overallSSS = 0;
 
-}
+		$contributionBool = false;//if employee dont have sss contribution
 
-//echo "<script>console.log('".$month." ".$monthAndYear." ".stripos($monthAndYear,$month)." Monthly Counter: " .$monthlyCounter. " Array Size: ".$arraySize."');</script>";
+		$yearNoRepeat = "";
+		//Evaluates the attendance and compute the sss contribution
+		while($payDateArr = mysql_fetch_assoc($payrollDateQuery)) {
+			$dateExploded = explode(" ", $payDateArr['date']);
+			$year = $dateExploded[2];// gets the year
+			$payrollDay = $payDateArr['date'];
+
+			$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '%$year' ORDER BY date ASC";
+			$payrollQuery = mysql_query($payroll);
+			if(mysql_num_rows($payrollQuery) > 0) {
+				$contributionBool = true;
+
+				//prevent from repeating the same month
+				if($yearNoRepeat != $year) {
+					while($payrollArr = mysql_fetch_assoc($payrollQuery)) {
+						if($contributionType === 'SSS') {
+							if($payrollArr['sss'] != 0) {
+								$contributionBool = true;
+								$totalEmployee += $payrollArr['sss'];
+								$totalEmployer += $payrollArr['sss_er'];
+							}
+						}
+
+						elseif($contributionType === 'PhilHealth') {
+							if($payrollArr['philhealth'] != 0) {
+								$contributionBool = true;
+								$totalEmployee += $payrollArr['philhealth'];
+								$totalEmployer += $payrollArr['philhealth_er'];
+							}
+						}
+
+						elseif($contributionType === 'PagIbig') {
+							if($payrollArr['pagibig'] != 0) {
+								$contributionBool = true;
+								$totalEmployee += $payrollArr['pagibig'];
+								$totalEmployer += $payrollArr['pagibig_er'];
+							}
+						}
+						else {
+							$contributionBool = false;
+						}
+					}
+				}
+				if($contributionBool) {
+					if($yearNoRepeat != $year) {
+						$yearBefore = $year - 1;
+
+					$activeSheet->setCellValue('A'.$rowCounter, $yearBefore ." - ".$year); // Period
+					$activeSheet->setCellValue('B'.$rowCounter, $totalEmployee); // Employee
+					$activeSheet->setCellValue('C'.$rowCounter, $totalEmployer); // Employer
+					$activeSheet->setCellValue('D'.$rowCounter, $totalEmployee + $totalEmployer); // Total
+					$rowCounter++;
+
+					}
+				}
+
+				$yearNoRepeat = $year;
+
+				
+			}
+			else {
+				$contributionBool = true;
+			}
+
+		}
+
+	} 
 
 $GrandTotal = $totalEmployee + $totalEmployer;
 $activeSheet->mergeCells('A'.$rowCounter.':C'.$rowCounter);
