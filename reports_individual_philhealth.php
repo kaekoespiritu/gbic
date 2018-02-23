@@ -88,10 +88,11 @@
 
 							if(mysql_num_rows($payrollDQuery) > 0)//check if there's payroll
 							{
+								$monthNoRep = "";
+								$yearNoRep = "";
 								while($payrollDateArr = mysql_fetch_assoc($payrollDQuery))
 								{
-									$monthNoRep = "";
-									$yearNoRep = "";
+									
 									if($_GET['period'] == 'week')
 									{
 										$payrollEndDate = $payrollDateArr['date'];

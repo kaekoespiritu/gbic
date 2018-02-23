@@ -172,7 +172,7 @@
 		}
 
 		function chosenSite(site) {
-			window.location.assign("reports_overall_allloans.php?site="+site);
+			window.location.assign("reports_overall_allloans.php?site="+site+"&period=all");
 
 		}
 	</script>
