@@ -86,7 +86,7 @@
 						</td>
 					</tr>
 					<?php
-					$history = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$type' ORDER BY date ASC, time ASC";
+					$history = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$type' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC, time ASC";
 					$historyQuery = mysql_query($history);
 
 					if(mysql_num_rows($historyQuery) > 0)
@@ -99,17 +99,17 @@
 							{
 								Print 	"
 										<td>Loaned</td>
-										<td> +".number_format($row['amount'], 2, '.', ',')."</td>
+										<td> +".numberExactFormat($row['amount'], 2, '.', true)."</td>
 										";
 							}
 							else
 							{
-								$output .= "
+								Print "
 											<td>Paid</td>
-											<td> -".number_format($row['amount'], 2, '.', ',')."</td>
+											<td> -".numberExactFormat($row['amount'], 2, '.', true)."</td>
 											";
 							}
-							Print 		"<td>".number_format($row['balance'], 2, '.', ',')."</td>";
+							Print 		"<td>".numberExactFormat($row['balance'], 2, '.', true)."</td>";
 							
 							
 							Print 	"	<td>".$row['remarks']."</td>
@@ -117,7 +117,16 @@
 									</tr>
 									";
 						}
-						
+					}
+					else
+					{
+						Print 	"	
+									<tr>
+										<td colspan='6'>
+											No ".$loanType." loan as of the moment. 
+										</td>
+									</tr>
+									";
 					}
 					
 					?>

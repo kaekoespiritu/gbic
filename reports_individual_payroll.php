@@ -113,11 +113,11 @@
 				if(isset($_POST['dateChange']))//if admin chooses a date on the period dropdown
 				{
 					$chosenDate = $_POST['dateChange'];
-					$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$chosenDate' ORDER BY date ASC";
+					$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$chosenDate' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 				}
 				else//default
 				{
-					$payroll = "SELECT * FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+					$payroll = "SELECT * FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 				}
 				$payrollQuery = mysql_query($payroll);
 				$printBool = false;//disable print button if there's no data retrieved
@@ -278,7 +278,7 @@
 								".$payrollArr['tools_paid']."
 							</td>
 							<td><!-- Total Salary -->
-								".numberExactFormat($payrollArr['total_salary'],2,".")."
+								".numberExactFormat($payrollArr['total_salary'],2,".", true)."
 							</td>
 						</tr>
 						<br>

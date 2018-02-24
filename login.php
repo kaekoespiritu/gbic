@@ -4,7 +4,10 @@
 session_start();
 include_once("directives/db.php");
 
-
+if(isset($_SESSION['user_logged_in']))
+{
+	header('location: index.php');
+}
 ?>
 <html>
 	<head>

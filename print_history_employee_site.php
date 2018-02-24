@@ -37,7 +37,7 @@ $activeSheet->setCellValue('C2', 'Admin');
 
 
 	
-$siteHist = "SELECT * FROM site_history WHERE empid = '$empid' ORDER BY date DESC";
+$siteHist = "SELECT * FROM site_history WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
 $histQuery = mysql_query($siteHist);
 
 $rowCounter = 3;

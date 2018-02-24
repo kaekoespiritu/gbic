@@ -75,7 +75,7 @@
 					<?php
 						$payDateBool = true;//boolean for displaying the present date
 
-						$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY date DESC";
+						$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC";
 						$payDateQuery = mysql_query($payrollDate);
 
 						if(mysql_num_rows($payDateQuery) != 0)
@@ -534,19 +534,19 @@
 							// 		$closePayroll = $_POST['date'];
 							// 		$openPayroll = date('F j, Y', strtotime('-6 day', strtotime($closePayroll)));
 
-							// 		$attendance = "SELECT * FROM attendance WHERE empid = '$empid' AND date >= '$openPayroll' AND date <= '$closePayroll' ORDER BY date ASC";
+							// 		$attendance = "SELECT * FROM attendance WHERE empid = '$empid' AND date >= '$openPayroll' AND date <= '$closePayroll' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							// 	}
 							// 	else//Default
-							// 		$attendance = "SELECT * FROM attendance WHERE empid = '$empid' AND date <= '$onProcessDate' ORDER BY date ASC";
+							// 		$attendance = "SELECT * FROM attendance WHERE empid = '$empid' AND date <= '$onProcessDate' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							
 							// }
 							// else//Default
 							// {
-							// 	$attendance = "SELECT * FROM attendance WHERE empid = '$empid' AND date <= '$onProcessDate' ORDER BY date ASC";
+							// 	$attendance = "SELECT * FROM attendance WHERE empid = '$empid' AND date <= '$onProcessDate' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							// }
 
 
-							$attendance = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$openPayroll', '%M %e, %Y') AND STR_TO_DATE('$closePayroll', '%M %e, %Y')) ORDER BY date ASC";
+							$attendance = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$openPayroll', '%M %e, %Y') AND STR_TO_DATE('$closePayroll', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 
 							//Print '<script>console.log('.$attendance.')</script>';
 							$attendanceQuery = mysql_query($attendance);

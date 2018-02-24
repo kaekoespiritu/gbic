@@ -109,7 +109,7 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 	$activeSheet->setCellValue('X'.$rowCounter, $payrollArr['new_vale']);//vale
 	$activeSheet->setCellValue('Y'.$rowCounter, $payrollArr['tools_paid']);//tools
 
-	$totalSalary = numberExactFormat($payrollArr['total_salary'], 2, '.');
+	$totalSalary = numberExactFormat($payrollArr['total_salary'], 2, '.', true);
 	$activeSheet->setCellValue('Z'.$rowCounter, $totalSalary);//Total Salary
 
 	$GrandTotal += $payrollArr['total_salary'];// Gets the overall total salary
@@ -124,7 +124,7 @@ $grandTotalRow = $rowCounter + 1;
 
 //Grandtotal Merge cell
 $activeSheet->mergeCells('Y'.$grandTotalRow.':Z'.$grandTotalRow);
-$GrandTotal = numberExactFormat($GrandTotal, 2, '.');
+$GrandTotal = numberExactFormat($GrandTotal, 2, '.', true);
 $activeSheet->setCellValue('Y'.$grandTotalRow, 'TOTAL COST:        '.$GrandTotal);
 
 //Style for the Spreadsheet

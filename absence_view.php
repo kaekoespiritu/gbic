@@ -62,10 +62,10 @@ $empRow = mysql_fetch_assoc($employeeQuery);
 					<?php
 					$empid = $empRow['empid'];
 
-					$sss = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' ORDER BY date DESC LIMIT 1";
-					$pagibig = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' ORDER BY date DESC LIMIT 1";
-					$newVale = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'newVale' ORDER BY date DESC LIMIT 1";
-					$oldVale = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY date DESC LIMIT 1";
+					$sss = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
+					$pagibig = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
+					$newVale = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'newVale' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
+					$oldVale = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
 					$sssQuery = mysql_query($sss);
 					$pagibigQuery = mysql_query($pagibig);
 					$newValeQuery = mysql_query($newVale);

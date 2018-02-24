@@ -120,7 +120,6 @@
 	$compOT = 0;
 	$totalOT = 0;
 	$OtRatePerHour = (($dailyRate + ($dailyRate * .25))/8);//Overtime Hourly Rate
-	// $OtRatePerHour = numberExactFormat($OtRatePerHour, 2, '.');
 	if(!empty($_POST['totalOverTime']))
 	{
 		$totalOT = $_POST['totalOverTime'];//Total Overtime by employee
@@ -283,7 +282,7 @@
 		}
 
 
-		$Loan = "SELECT * FROM loans WHERE type='$loanType' AND empid='$empid' ORDER BY date DESC, time DESC LIMIT 1";
+		$Loan = "SELECT * FROM loans WHERE type='$loanType' AND empid='$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
 		$Query = mysql_query($Loan);
 		$loanArr = mysql_fetch_assoc($Query);
 		$LoanBalance = $DeductedLoan - $loanArr['balance'];
@@ -322,7 +321,7 @@
 			mysql_query("DELETE FROM loans WHERE date='$date' AND empid='$empid' AND type='newVale'");
 		}
 
-		$Loan = "SELECT * FROM loans WHERE type='newVale' AND empid='$empid' ORDER BY date DESC, time DESC LIMIT 1";
+		$Loan = "SELECT * FROM loans WHERE type='newVale' AND empid='$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
 		$newValeQuery = mysql_query($Loan);
 		$DeductedLoan = $_POST['newValeAdded'];
 		$remarks = $_POST['newValeRemarks'];
@@ -340,7 +339,7 @@
 			$Update1 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
 							VALUES('$empid', 'newVale', '$LoanAdded', '$LoanAdded', '$remarks', '$date', '$time', '1')";
 			
-			$loanCheck = "SELECT * FROM loans WHERE type='newVale' AND empid='$empid' ORDER BY date DESC, time DESC LIMIT 1";
+			$loanCheck = "SELECT * FROM loans WHERE type='newVale' AND empid='$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
 
 			mysql_query($Update1);
 
@@ -362,7 +361,7 @@
 			$Update1 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
 							VALUES('$empid', 'newVale', '$DeductedLoan', '$DeductedLoan', '$remarks', '$date', '$time', '1')";
 
-			$loanCheck = "SELECT * FROM loans WHERE type='newVale' AND empid='$empid' ORDER BY date DESC, time DESC LIMIT 1";
+			$loanCheck = "SELECT * FROM loans WHERE type='newVale' AND empid='$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
 			mysql_query($Update1);
 
 			$time = date('H:i:s', strtotime('+1 seconds'));//Adds 1 seconds to the time

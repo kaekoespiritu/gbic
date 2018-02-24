@@ -317,7 +317,7 @@ if(!empty($dateRows))// Updating attendance
 		{
 			$empid = $_POST['empid'][$counter];
 			//Make Algorithm that will check if this employee is AWOL
-			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY date DESC LIMIT 7";
+			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 7";
 			$AwolQuery = mysql_query($Awol) or die(mysql_error());
 			$AwolCounter = 0;
 			$start = null;
@@ -608,7 +608,7 @@ else// NEW attendance
 
 
 			//Make Algorithm that will check if this employee is AWOL
-			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY date DESC LIMIT 7";
+			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 7";
 			$AwolQuery = mysql_query($Awol) or die(mysql_error());
 			$AwolCounter = 0;
 			$start = null;

@@ -246,7 +246,7 @@ else {
 			payroll.pagibig_er
 		FROM `payroll` INNER JOIN employee ON payroll.empid=employee.empid
 		WHERE employee.site = '$site' $contributionQuery
-		ORDER BY payroll.date DESC, employee.empid";
+		ORDER BY STR_TO_DATE(payroll.date, '%M %e, %Y') DESC, employee.empid";
 
 	$employeelistQuery = mysql_query($employeelist) or die (mysql_error());
 

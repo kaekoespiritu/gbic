@@ -306,19 +306,19 @@
 								if(isset($_POST['date']))
 								{
 									if($_POST['date'] == "all")
-										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY date DESC, time DESC LIMIT 1";
+										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC, time DESC LIMIT 1";
 
 									else if($_POST['numLen'] == 3)//weekly
-										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY date DESC, time DESC LIMIT 1";
+										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC, time DESC LIMIT 1";
 
 									else if($_POST['numLen'] == 2)//monthly
-										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND (date LIKE '$month%' AND date LIKE '%$year') ORDER BY date DESC, time DESC LIMIT 1";
+										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND (date LIKE '$month%' AND date LIKE '%$year') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC, time DESC LIMIT 1";
 
 									else if($_POST['numLen'] == 1)//yearly
-										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND date LIKE '%$year' ORDER BY date DESC, time DESC LIMIT 1";
+										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC, time DESC LIMIT 1";
 								}
 								else
-									$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY date DESC, time DESC LIMIT 1";
+									$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC, time DESC LIMIT 1";
 								
 								
 								$loanCheckQuery = mysql_query($loanChecker) or die (mysql_error());
@@ -348,7 +348,7 @@
 											</td>";
 								if($sssLoan['balance'] != 0)
 									Print	"<td>
-												".$sssLoan['balance']."
+												".numberExactFormat($sssLoan['balance'], 2, '.', true)."
 											</td>";
 								else
 									Print	"<td>
@@ -356,7 +356,7 @@
 											</td>";	
 								if($pagibigLoan['balance'] != 0)
 									Print	"<td>
-												".$pagibigLoan['balance']."
+												".numberExactFormat($pagibigLoan['balance'], 2, '.', true)."
 											</td>";
 								else
 									Print	"<td>
@@ -364,7 +364,7 @@
 											</td>";	
 								if($oldValeLoan['balance'] != 0)
 									Print	"<td>
-												".$oldValeLoan['balance']."
+												".numberExactFormat($oldValeLoan['balance'], 2, '.', true)."
 											</td>";
 								else
 									Print	"<td>
@@ -372,7 +372,7 @@
 											</td>";	
 								if($newValeLoan['balance'] != 0)
 									Print	"<td>
-												".$newValeLoan['balance']."
+												".numberExactFormat($newValeLoan['balance'], 2, '.', true)."
 											</td>";
 								else
 									Print	"<td>
@@ -402,16 +402,16 @@
 									Total Overall Loans
 								</td>
 								<td>
-									".numberExactFormat($sssGrandTotal, 2, '.')."
+									".numberExactFormat($sssGrandTotal, 2, '.', true)."
 								</td>
 								<td>
-									".numberExactFormat($PagibigGrandTotal, 2, '.')."
+									".numberExactFormat($PagibigGrandTotal, 2, '.', true)."
 								</td>
 								<td>
-									".numberExactFormat($oldValeGrandTotal, 2, '.')."
+									".numberExactFormat($oldValeGrandTotal, 2, '.', true)."
 								</td>
 								<td>
-									".numberExactFormat($newValeGrandTotal, 2, '.')."
+									".numberExactFormat($newValeGrandTotal, 2, '.', true)."
 								</td>
 							</tr>
 								";
@@ -422,7 +422,7 @@
 									Grand Total Government Loans
 								</td>
 								<td colspan = '2'>
-									".numberExactFormat($govGrandtotal, 2, '.')."
+									".numberExactFormat($govGrandtotal, 2, '.', true)."
 								</td>
 								<td colspan = '2'>
 								</td>
@@ -437,7 +437,7 @@
 								<td colspan = '2'>
 								</td>
 								<td colspan = '2'>
-									".numberExactFormat($companyGrandtotal, 2, '.')."
+									".numberExactFormat($companyGrandtotal, 2, '.', true)."
 								</td>
 							</tr>
 								";

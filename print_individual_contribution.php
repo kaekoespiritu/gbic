@@ -51,7 +51,7 @@ $activeSheet->getColumnDimension('A')->setAutoSize(true); // Lengthen period
 
 // Contents
 // Get contribution details for selected employee
-$contributions = "SELECT * FROM payroll WHERE empid = '$empid' ORDER BY date DESC";
+$contributions = "SELECT * FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
 $contributionsQuery = mysql_query($contributions) or die (mysql_error());
 $rowCounter = 4; // Start for the data in the row of excel
 $monthlyRowCounter = 4;
@@ -108,7 +108,7 @@ while($contributionsArr = mysql_fetch_assoc($contributionsQuery)){
 
 	if($period == "month") {
 
-		$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+		$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 
 		$payrollDateQuery = mysql_query($payrollDate);
 
@@ -124,7 +124,7 @@ while($contributionsArr = mysql_fetch_assoc($contributionsQuery)){
 
 			//Print "<script>console.log('".$month." - ".$year."')</script>";
 
-			$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' ORDER BY date ASC";
+			$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 			$payrollQuery = mysql_query($payroll);
 			
 			if(mysql_num_rows($payrollQuery) > 0) {
@@ -188,7 +188,7 @@ while($contributionsArr = mysql_fetch_assoc($contributionsQuery)){
 
 	if($period == "year") {
 		
-		$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+		$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 
 		$payrollDateQuery = mysql_query($payrollDate);
 
@@ -204,7 +204,7 @@ while($contributionsArr = mysql_fetch_assoc($contributionsQuery)){
 			$year = $dateExploded[2];// gets the year
 			$payrollDay = $payDateArr['date'];
 
-			$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '%$year' ORDER BY date ASC";
+			$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 			$payrollQuery = mysql_query($payroll);
 			if(mysql_num_rows($payrollQuery) > 0) {
 				$contributionBool = true;

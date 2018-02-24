@@ -135,7 +135,7 @@ else if($loanType == "newVale")
 					<td>History</td>
 				</tr>
 				<?php 
-					$loans = "SELECT DISTINCT * FROM loans WHERE type = '$loanType'  GROUP BY empid ORDER BY date DESC, time DESC";
+					$loans = "SELECT DISTINCT * FROM loans WHERE type = '$loanType'  GROUP BY empid ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC";
 					$loansQuery = mysql_query($loans) or die (mysql_error());
 					if(mysql_num_rows($loansQuery) > 0)
 					{
@@ -180,7 +180,7 @@ else if($loanType == "newVale")
 							$empArr = mysql_fetch_assoc($employeeQuery);
 							//Print "<script>alert(".mysql_num_rows($employeeQuery).")</script>";
 							//Check if employee has already fully paid his/her loan
-							$checker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY date DESC, time DESC LIMIT 1";
+							$checker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
 							$checkerQuery = mysql_query($checker);
 							$checkerArr = mysql_fetch_assoc($checkerQuery);
 

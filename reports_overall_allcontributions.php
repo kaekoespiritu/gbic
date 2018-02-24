@@ -231,11 +231,11 @@
 								if(isset($_POST['date']))
 								{
 									$changedPeriod = $_POST['date'];
-									$payrollDate = "SELECT DISTINCT date FROM payroll WHERE date= '$changedPeriod' AND empid = '$empid' ORDER BY date ASC";
+									$payrollDate = "SELECT DISTINCT date FROM payroll WHERE date= '$changedPeriod' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 								}
 								else
 								{
-									$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid'ORDER BY date ASC";
+									$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid'ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 								}
 
 								$payrollDateQuery = mysql_query($payrollDate);
@@ -248,7 +248,7 @@
 									$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
 									//Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
 
-									$payroll = "SELECT * FROM payroll WHERE date = '$endDate' AND empid = '$empid' ORDER BY date ASC";
+									$payroll = "SELECT * FROM payroll WHERE date = '$endDate' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 									$payrollQuery = mysql_query($payroll);
 									if(mysql_num_rows($payrollQuery) > 0)
 									{
@@ -317,10 +317,10 @@
 										//SSS
 										if($sssBool)
 											Print		"<td>
-															".numberExactFormat($payrollArr['sss'], 2, '.')."
+															".numberExactFormat($payrollArr['sss'], 2, '.', true)."
 														</td>
 														<td>
-															".numberExactFormat($sssContribution, 2, '.')."
+															".numberExactFormat($sssContribution, 2, '.', true)."
 														</td>";
 										else
 											Print 		"<td colspan='2'>
@@ -330,10 +330,10 @@
 										//Pagibig
 										if($pagibigBool)				
 											Print		"<td>
-															".numberExactFormat($payrollArr['pagibig'], 2, '.')."
+															".numberExactFormat($payrollArr['pagibig'], 2, '.', true)."
 														</td>
 														<td>
-															".numberExactFormat($pagibigContribution, 2, '.')."
+															".numberExactFormat($pagibigContribution, 2, '.', true)."
 														</td>";
 										else
 											Print 		"<td colspan='2'>
@@ -343,10 +343,10 @@
 										if($philhealthBool)
 										//Philhealth
 											Print		"<td>
-															".numberExactFormat($payrollArr['philhealth'], 2, '.')."
+															".numberExactFormat($payrollArr['philhealth'], 2, '.', true)."
 														</td>
 														<td>
-															".numberExactFormat($philhealthContribution, 2, '.')."
+															".numberExactFormat($philhealthContribution, 2, '.', true)."
 														</td>";
 										else
 											Print 		"<td colspan='2'>
@@ -354,7 +354,7 @@
 														</td>";
 										
 										Print 		"<td>
-														".numberExactFormat($totalOverallContribution, 2, '.')."
+														".numberExactFormat($totalOverallContribution, 2, '.', true)."
 													</td>
 												</tr>";
 
@@ -373,7 +373,7 @@
 									Grand Total
 								</td>
 								<td>
-									".numberExactFormat($overallContributions, 2, '.')."
+									".numberExactFormat($overallContributions, 2, '.', true)."
 								</td>
 							</tr>";
 						}
@@ -404,11 +404,11 @@
 								$changedPeriod = explode(' ',$_POST['date']);
 								$monthPeriod = $changedPeriod[0];
 								$yearPeriod = $changedPeriod[1];
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY date ASC";
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							}
 							else
 							{
-								$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY date ASC";
+								$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							}
 							while($empArr = mysql_fetch_assoc($empQuery))
 							{
@@ -454,7 +454,7 @@
 
 									Print "<script>console.log('".$month." - ".$year."')</script>";
 
-									$payroll = "SELECT * FROM payroll WHERE (date LIKE '$month%' AND date LIKE '%$year') AND empid = '$empid' ORDER BY date ASC";
+									$payroll = "SELECT * FROM payroll WHERE (date LIKE '$month%' AND date LIKE '%$year') AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 									$payrollQuery = mysql_query($payroll);
 									if(mysql_num_rows($payrollQuery) > 0)
 									{
@@ -536,10 +536,10 @@
 												//SSS
 												if($sssBool)
 													Print		"<td>
-																	".numberExactFormat($sssEEContribution, 2, '.')."
+																	".numberExactFormat($sssEEContribution, 2, '.', true)."
 																</td>
 																<td>
-																	".numberExactFormat($sssERContribution, 2, '.')."
+																	".numberExactFormat($sssERContribution, 2, '.', true)."
 																</td>";
 												else
 													Print 		"<td colspan='2'>
@@ -549,10 +549,10 @@
 												//Pagibig
 												if($pagibigBool)				
 													Print		"<td>
-																	".numberExactFormat($pagibigEEContribution, 2, '.')."
+																	".numberExactFormat($pagibigEEContribution, 2, '.', true)."
 																</td>
 																<td>
-																	".numberExactFormat($pagibigERContribution, 2, '.')."
+																	".numberExactFormat($pagibigERContribution, 2, '.', true)."
 																</td>";
 												else
 													Print 		"<td colspan='2'>
@@ -562,10 +562,10 @@
 												if($philhealthBool)
 												//Philhealth
 													Print		"<td>
-																	".numberExactFormat($philhealthEEContribution, 2, '.')."
+																	".numberExactFormat($philhealthEEContribution, 2, '.', true)."
 																</td>
 																<td>
-																	".numberExactFormat($philhealthERContribution, 2, '.')."
+																	".numberExactFormat($philhealthERContribution, 2, '.', true)."
 																</td>";
 												else
 													Print 		"<td colspan='2'>
@@ -573,7 +573,7 @@
 																</td>";
 												
 												Print 		"<td>
-																".numberExactFormat($subTotalContribution, 2, '.')."
+																".numberExactFormat($subTotalContribution, 2, '.', true)."
 															</td>
 														</tr>";
 
@@ -596,7 +596,7 @@
 									Grand Total
 								</td>
 								<td>
-									".numberExactFormat($totalContribution, 2, '.')."
+									".numberExactFormat($totalContribution, 2, '.', true)."
 								</td>
 							</tr>";
 						}
@@ -625,11 +625,11 @@
 							{
 								$changedPeriod = explode(' ',$_POST['date']);
 								$monthPeriod = $changedPeriod[0];
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY date ASC";
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							}
 							else
 							{
-								$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY date ASC";
+								$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							}
 							while($empArr = mysql_fetch_assoc($empQuery))
 							{
@@ -672,7 +672,7 @@
 
 									$payrollDay = $payDateArr['date'];
 
-									$payroll = "SELECT * FROM payroll WHERE  date LIKE '%$year' AND empid = '$empid' ORDER BY date ASC";
+									$payroll = "SELECT * FROM payroll WHERE  date LIKE '%$year' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 									$payrollQuery = mysql_query($payroll);
 									if(mysql_num_rows($payrollQuery) > 0)
 									{
@@ -752,10 +752,10 @@
 												//SSS
 												if($sssBool)
 													Print		"<td>
-																	".numberExactFormat($sssEEContribution, 2, '.')."
+																	".numberExactFormat($sssEEContribution, 2, '.', true)."
 																</td>
 																<td>
-																	".numberExactFormat($sssERContribution, 2, '.')."
+																	".numberExactFormat($sssERContribution, 2, '.', true)."
 																</td>";
 												else
 													Print 		"<td colspan='2'>
@@ -765,10 +765,10 @@
 												//Pagibig
 												if($pagibigBool)				
 													Print		"<td>
-																	".numberExactFormat($pagibigEEContribution, 2, '.')."
+																	".numberExactFormat($pagibigEEContribution, 2, '.', true)."
 																</td>
 																<td>
-																	".numberExactFormat($pagibigERContribution, 2, '.')."
+																	".numberExactFormat($pagibigERContribution, 2, '.', true)."
 																</td>";
 												else
 													Print 		"<td colspan='2'>
@@ -778,10 +778,10 @@
 												if($philhealthBool)
 												//Philhealth
 													Print		"<td>
-																	".numberExactFormat($philhealthEEContribution, 2, '.')."
+																	".numberExactFormat($philhealthEEContribution, 2, '.', true)."
 																</td>
 																<td>
-																	".numberExactFormat($philhealthERContribution, 2, '.')."
+																	".numberExactFormat($philhealthERContribution, 2, '.', true)."
 																</td>";
 												else
 													Print 		"<td colspan='2'>
@@ -789,7 +789,7 @@
 																</td>";
 												
 												Print 		"<td>
-																".numberExactFormat($subTotalContribution, 2, '.')."
+																".numberExactFormat($subTotalContribution, 2, '.', true)."
 															</td>
 														</tr>";
 
@@ -812,7 +812,7 @@
 									Grand Total
 								</td>
 								<td>
-									".numberExactFormat($totalContribution, 2, '.')."
+									".numberExactFormat($totalContribution, 2, '.', true)."
 								</td>
 							</tr>";
 						}

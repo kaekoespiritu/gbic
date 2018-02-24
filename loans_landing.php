@@ -89,7 +89,7 @@ require_once("directives/modals/addLoan.php");
 				{
 					$empid = $row['empid'];
 
-					$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND amount > 0 ORDER BY date DESC, time DESC LIMIT 1");
+					$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND amount > 0 ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1");
 					if(mysql_num_rows($checkerQuery) != 0)
 					{
 						$checkRow = mysql_fetch_assoc($checkerQuery);

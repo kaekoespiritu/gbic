@@ -115,7 +115,7 @@
 					$remainderBool = false; // boolean for displaying the remainder once
 
 					//Check if employee have already received past 13th month pay
-					$thirteenthChecker = "SELECT * FROM thirteenth_pay WHERE empid = '$empid' ORDER BY from_date DESC LIMIT 1";
+					$thirteenthChecker = "SELECT * FROM thirteenth_pay WHERE empid = '$empid' ORDER BY STR_TO_DATE(from_date, '%M %e, %Y ') DESC LIMIT 1";
 					$thirteenthCheckQuery = mysql_query($thirteenthChecker) or die (mysql_error());
 					$pastThirteenthDate = "";
 					$thirteenthRemainder = 0;
@@ -138,7 +138,7 @@
 					{
 						
 
-						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' $pastThirteenthDate ORDER BY date ASC";
+						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 						$payrollQuery = mysql_query($payrollDate);
 						$dateLength = mysql_num_rows($payrollQuery);
 
@@ -155,7 +155,7 @@
 										13th Month Pay remaining balance
 									</td>
 									<td>
-										".numberExactFormat($thirteenthRemainder, 2, '.')."
+										".numberExactFormat($thirteenthRemainder, 2, '.', true)."
 									</td>
 								</tr>";
 
@@ -178,7 +178,7 @@
 							$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
 							//Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
 
-							$attendance = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY date ASC";
+							$attendance = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 							$attQuery = mysql_query($attendance);
 
 							$daysAttended = 0;//counter for days attended
@@ -213,7 +213,7 @@
 											".$startDate." - ".$endDate."
 										</td>
 										<td>
-											".numberExactFormat($thirteenthMonth, 2, '.')."
+											".numberExactFormat($thirteenthMonth, 2, '.', true)."
 										</td>
 									</tr>";
 
@@ -222,7 +222,7 @@
 					}
 					else if($period == "month")
 					{
-						$attendance = "SELECT DISTINCT date FROM attendance WHERE empid = '$empid' $pastThirteenthDate ORDER BY date ASC";
+						$attendance = "SELECT DISTINCT date FROM attendance WHERE empid = '$empid' $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 						$attQuery = mysql_query($attendance);
 
 						$daysAttended = 0;//counter for days attended
@@ -240,7 +240,7 @@
 										13th Month Pay remaining balance
 									</td>
 									<td>
-										".numberExactFormat($thirteenthRemainder, 2, '.')."
+										".numberExactFormat($thirteenthRemainder, 2, '.', true)."
 									</td>
 								</tr>";
 
@@ -258,7 +258,7 @@
 
 							if ($noRepeat != $month.$year  || $noRepeat == null)
 							{
-								$attMonth = "SELECT * FROM attendance WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' ORDER BY date ASC";
+								$attMonth = "SELECT * FROM attendance WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 								$attMonthQuery = mysql_query($attMonth);
 								//Computes 13th month per day of the month
 								while($attArr = mysql_fetch_assoc($attMonthQuery))
@@ -288,7 +288,7 @@
 												".$month." ".$year."
 											</td>
 											<td>
-												".numberExactFormat($thirteenthMonth, 2, '.')."
+												".numberExactFormat($thirteenthMonth, 2, '.', true)."
 											</td>
 										</tr>";
 								$overallPayment += $thirteenthMonth;
@@ -301,7 +301,7 @@
 					}
 					else if($period == "year")
 					{
-						$attendance = "SELECT DISTINCT date FROM attendance WHERE empid = '$empid' $pastThirteenthDate ORDER BY date ASC";
+						$attendance = "SELECT DISTINCT date FROM attendance WHERE empid = '$empid' $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 						$attQuery = mysql_query($attendance);
 
 						$daysAttended = 0;//counter for days attended
@@ -319,7 +319,7 @@
 										13th Month Pay remaining balance
 									</td>
 									<td>
-										".numberExactFormat($thirteenthRemainder, 2, '.')."
+										".numberExactFormat($thirteenthRemainder, 2, '.', true)."
 									</td>
 								</tr>";
 
@@ -336,7 +336,7 @@
 
 							if ($noRepeat != $year || $noRepeat == null)
 							{
-								$attYear = "SELECT * FROM attendance WHERE empid = '$empid' AND date LIKE '%$year' ORDER BY date ASC";
+								$attYear = "SELECT * FROM attendance WHERE empid = '$empid' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 								$attYearQuery = mysql_query($attYear);
 								//Computes 13th month per day of the month
 								while($attArr = mysql_fetch_assoc($attYearQuery))
@@ -367,7 +367,7 @@
 												".$yearBefore." - ".$year."
 											</td>
 											<td>
-												".numberExactFormat($thirteenthMonth, 2, '.')."
+												".numberExactFormat($thirteenthMonth, 2, '.', true)."
 											</td>
 										</tr>";
 								$overallPayment += $thirteenthMonth;
@@ -387,7 +387,7 @@
 						Total
 					</td>
 					<td>
-						<?php Print numberExactFormat($overallPayment, 2, '.')?>
+						<?php Print numberExactFormat($overallPayment, 2, '.', true)?>
 					</td>
 				</tr>
 				</table>
@@ -420,7 +420,7 @@
 	        			<?php Print $pastToDateThirteenthPay." - ".$dateToday?>
 	        		</td>
 	        		<td>
-	        			<?php Print numberExactFormat($overallPayment, 2, '.')?>
+	        			<?php Print numberExactFormat($overallPayment, 2, '.', true)?>
 	        		</td>
 	        	</tr>
 	        </table>
@@ -443,7 +443,7 @@
 	      	<div class="row">
 		      	<div class="col-md-6">
 		      		<h4>13th Month Pay Amount:</h4>
-		      			<b><?php Print numberExactFormat($overallPayment, 2, '.')?></b>
+		      			<b><?php Print numberExactFormat($overallPayment, 2, '.', true)?></b>
 		      	</div>
 		      	<div class="col-md-6">
 		      		<h4>Amount to Give:</h4> <input type="number" id="amountToGive"><br>
@@ -482,7 +482,7 @@
 	        		</td>
 	        	</tr>
 	        	<?php
-	        		$thirteenthHist = "SELECT * FROM thirteenth_pay WHERE empid = '$empid' ORDER BY from_date ASC";
+	        		$thirteenthHist = "SELECT * FROM thirteenth_pay WHERE empid = '$empid' ORDER BY STR_TO_DATE(from_date, '%M %e, %Y') ASC";
 	        		$thirteenthHistQuery = mysql_query($thirteenthHist) or die(mysql_error()) ;
 	        		if(mysql_num_rows($thirteenthHistQuery) != 0)
 	        		{

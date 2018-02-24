@@ -4,48 +4,6 @@ include('directives/session.php');
 include('directives/db.php');
 include("pagination/reports_individual_function.php");//For pagination
 
-if(isset($_GET['type']) && isset($_GET['period']))
-{
-	// Allow only these types
-	switch($_GET['type'])
-	{
-		case "Attendance": break;
-		case "Payroll": break;
-		case "Loans": break;
-		case "Payslip": break;
-		case "Contributions": break;
-		case "Earnings": break;
-		case "Expenses": break;
-		default: Print Print "<script>window.location.assign('index.php')</script>";
-	}
-	// Allow only these periods
-	switch($_GET['period'])
-	{
-		case "Weekly": break;
-		case "Monthly": break;
-		case "Yearly": break;
-		default: Print Print "<script>window.location.assign('index.php')</script>";
-	}
-}
-else
-{
-	Print "<script>window.location.assign('index.php')</script>";
-}
-//for pagination
-$statement = "";
-$period = $_GET['period'];
-$reportType = $_GET['type'];
-
-//Search bar
-$search = "";
-if(isset($_GET['search']))
-{
-	if($_GET['search'] != "" || $_GET['search'] != null)
-	{
-		$search = $_GET['search'];
-	}
-}
-
 
 ?>
 <html>
@@ -71,8 +29,6 @@ if(isset($_GET['search']))
 				<h2>Overall <span id="period"></span> <?php Print $_GET['type']; ?> Report</h2>
 			</div>
 		</div>
-				<!-- ACTION BUTTONS FOR FILTERS -->
-				<!-- END OF ACTION BUTTONS FOR FILTERS-->
 			</div>
 
 			<!-- Table of employees -->
@@ -159,16 +115,7 @@ if(isset($_GET['search']))
 					unset($_SESSION['completeAtt']);
 				}
 			?>
-		</div>
-			</div>
-			<?php
-				echo "<div id='pagingg' >";
-				if($statement && $limit && $page && $site_page && $position_page && $reportType && $period)
-					echo pagination($statement,$limit,$page, $site_page, $position_page, $search, $reportType, $period);
-				echo "</div>";
-			?>
-		</div>
-	</div>
+		
 
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 	<script rel="javascript" src="js/jquery.min.js"></script>

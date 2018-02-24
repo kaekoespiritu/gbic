@@ -88,9 +88,9 @@ if($holidayExist > 0)
 					$deductionPhilhealth = $empArr['philhealth']/4;
 					
 			//2 decimal places
-					$deductionSSS =  numberExactFormat($deductionSSS, 2, '.');
-					$deductionPagibig = numberExactFormat($deductionPagibig, 2, '.');
-					$deductionPhilhealth = numberExactFormat($deductionPhilhealth, 2, '.');
+					$deductionSSS =  numberExactFormat($deductionSSS, 2, '.', true);
+					$deductionPagibig = numberExactFormat($deductionPagibig, 2, '.', true);
+					$deductionPhilhealth = numberExactFormat($deductionPhilhealth, 2, '.', true);
 			//Change to no value string if the employee has no document
 					if($deductionSSS == 0)
 					{
@@ -179,8 +179,8 @@ if($holidayExist > 0)
 				<table class="table-bordered table-condensed" style="background-color:white;">
 					<?php
 				//Sample query for debugging purposes
-					$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY date DESC LIMIT 7";
-				//$payrollDate = "SELECT * FROM attendance WHERE empid = '2017-0000011' ORDER BY date DESC LIMIT 7";
+					$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 7";
+				//$payrollDate = "SELECT * FROM attendance WHERE empid = '2017-0000011' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC LIMIT 7";
 					$payrollQuery = mysql_query($payrollDate);
 					//Boolean for the conditions not to repeat just incase the employee does't attend sundays
 					$monBool = true;
@@ -226,7 +226,7 @@ if($holidayExist > 0)
 					{
 						$holDateChecker = $dateRow['date'];
 						//Holiday Checker
-						$holiday = "SELECT * FROM holiday WHERE date = '$holDateChecker' ORDER BY date DESC";
+						$holiday = "SELECT * FROM holiday WHERE date = '$holDateChecker' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
 						$holidayQuery = mysql_query($holiday);
 						$holidayExist = mysql_num_rows($holidayQuery);
 						//Print "<script>console.log('".$holidayExist."')</script>";
@@ -1162,11 +1162,11 @@ if($holidayExist > 0)
 						// }
 					// }
 					
-					$getSSS = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' ORDER BY date DESC, time DESC LIMIT 1";
-					$getPAGIBIG = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' ORDER BY date DESC, time DESC LIMIT 1";
+					$getSSS = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
+					$getPAGIBIG = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
 					
-					$getOldVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY date DESC, time DESC  LIMIT 1";
-					$getNewVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'newVale' ORDER BY date DESC, time DESC  LIMIT 1";
+					$getOldVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC  LIMIT 1";
+					$getNewVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'newVale' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC  LIMIT 1";
 							//Query
 					$sssQuery = mysql_query($getSSS);
 					$pagibigQuery = mysql_query($getPAGIBIG);
@@ -1423,7 +1423,7 @@ if($holidayExist > 0)
 							//Outstanding payable
 							
 							//gets the previous payroll result
-							$previousPayable = "SELECT * FROM payroll WHERE empid = '$empid' AND date != '$date' ORDER BY date DESC LIMIT 1";
+							$previousPayable = "SELECT * FROM payroll WHERE empid = '$empid' AND date != '$date' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
 							$payableQuery = mysql_query($previousPayable);
 
 							$outstanding = null;//pre set outstanding payable

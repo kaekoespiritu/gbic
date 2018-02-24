@@ -101,7 +101,7 @@ $rowCounter = 4; //start for the data in the row of excel
 	$activeSheet->setCellValue('U'.$rowCounter, $payrollArr['new_vale']);//vale
 	$activeSheet->setCellValue('V'.$rowCounter, $payrollArr['tools_paid']);//tools
 
-	$totalSalary = numberExactFormat($payrollArr['total_salary'], 2, '.');
+	$totalSalary = numberExactFormat($payrollArr['total_salary'], 2, '.', true);
 	$activeSheet->setCellValue('W'.$rowCounter, $totalSalary);//Total Salary
 
 	$rowCounter++; //Row counter

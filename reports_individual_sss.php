@@ -213,13 +213,13 @@
 							if($_POST['date'] != 'all')
 							{
 								$changedPeriod = $_POST['date'];
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND date= '$changedPeriod' ORDER BY date ASC";
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND date= '$changedPeriod' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							}
 							else
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 						}
 						else
-							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 
 						$payrollDateQuery = mysql_query($payrollDate);
 
@@ -237,7 +237,7 @@
 							$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
 							//Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
 
-							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$endDate' ORDER BY date ASC";
+							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$endDate' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							$payrollQuery = mysql_query($payroll);
 							if(mysql_num_rows($payrollQuery) > 0)
 							{
@@ -260,13 +260,13 @@
 													".$startDate." - ".$endDate."
 												</td>
 												<td>
-													".numberExactFormat($payrollArr['sss'], 2, '.')."
+													".numberExactFormat($payrollArr['sss'], 2, '.', true)."
 												</td>
 												<td>
-													".numberExactFormat($sssContribution, 2, '.')."
+													".numberExactFormat($sssContribution, 2, '.', true)."
 												</td>
 												<td>
-													".numberExactFormat($totalSSSContribution, 2, '.')."
+													".numberExactFormat($totalSSSContribution, 2, '.', true)."
 												</td>
 											</tr>";
 
@@ -287,7 +287,7 @@
 									Grand Total
 								</td>
 								<td>
-									".numberExactFormat($overallSSS, 2, '.')."
+									".numberExactFormat($overallSSS, 2, '.', true)."
 								</td>
 							</tr>";
 						}
@@ -312,18 +312,18 @@
 								$changedPeriod = explode(' ',$_POST['date']);
 								$monthPeriod = $changedPeriod[0];
 								$yearPeriod = $changedPeriod[1];
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY date ASC";
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							}
 							// If a specific duration was selected
 							else
 							{
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							}
 
 						}
 						// If no duration was selected...
 						else
-						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 
 						$payrollDateQuery = mysql_query($payrollDate);
 
@@ -345,7 +345,7 @@
 
 							//Print "<script>console.log('".$month." - ".$year."')</script>";
 
-							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' ORDER BY date ASC";
+							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							$payrollQuery = mysql_query($payroll);
 
 							if(mysql_num_rows($payrollQuery) > 0)
@@ -392,13 +392,13 @@
 													".$month." ".$year."
 												</td>
 												<td>
-													".numberExactFormat($EEContribution, 2, '.')."
+													".numberExactFormat($EEContribution, 2, '.', true)."
 												</td>
 												<td>
-													".numberExactFormat($ERContribution, 2, '.')."
+													".numberExactFormat($ERContribution, 2, '.', true)."
 												</td>
 												<td>
-													".numberExactFormat($totalSSSContribution, 2, '.')."
+													".numberExactFormat($totalSSSContribution, 2, '.', true)."
 												</td>
 											</tr>";
 									}
@@ -440,7 +440,7 @@
 									Grand Total
 								</td>
 								<td>
-									".numberExactFormat($overallSSS, 2, '.')."
+									".numberExactFormat($overallSSS, 2, '.', true)."
 								</td>
 							</tr>";
 						}
@@ -453,13 +453,13 @@
 							{
 								$changedPeriod = explode(' ',$_POST['date']);
 								$yearPeriod = $changedPeriod[0];
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND date LIKE '%$yearPeriod' ORDER BY date ASC";
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND date LIKE '%$yearPeriod' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							}
 							else
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 						}
 						else
-						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 
 						$payrollDateQuery = mysql_query($payrollDate);
 
@@ -479,7 +479,7 @@
 
 							//Print "<script>console.log('".$month." - ".$year."')</script>";
 
-							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '%$year' ORDER BY date ASC";
+							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							$payrollQuery = mysql_query($payroll);
 							if(mysql_num_rows($payrollQuery) > 0)
 							{
@@ -527,13 +527,13 @@
 													".$yearBefore." - ".$year."
 												</td>
 												<td>
-													".numberExactFormat($EEContribution, 2, '.')."
+													".numberExactFormat($EEContribution, 2, '.', true)."
 												</td>
 												<td>
-													".numberExactFormat($ERContribution, 2, '.')."
+													".numberExactFormat($ERContribution, 2, '.', true)."
 												</td>
 												<td>
-													".numberExactFormat($totalSSSContribution, 2, '.')."
+													".numberExactFormat($totalSSSContribution, 2, '.', true)."
 												</td>
 											</tr>";
 									}
@@ -575,7 +575,7 @@
 									Grand Total
 								</td>
 								<td>
-									".numberExactFormat($overallSSS, 2, '.')."
+									".numberExactFormat($overallSSS, 2, '.', true)."
 								</td>
 							</tr>";
 						}

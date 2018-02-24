@@ -8,41 +8,41 @@
 	$position = $_GET['position'];
 	$period = $_GET['period'];
 
-	// //Checks if site in HTTP is altered by user manually
-	// $siteChecker = "SELECT * FROM site WHERE location = '$site'";
-	// //Checks if position in HTTP is altered by user manually 
-	// $positionChecker = "SELECT * FROM job_position WHERE position = '$position'";
-	// $siteCheckerQuery = mysql_query($siteChecker);
-	// $positionCheckerQuery = mysql_query($positionChecker);
-	// if(mysql_num_rows($siteCheckerQuery) == 0)
-	// {
-	// 	header("location:reports_overall_earnings.php?type=Earnings&period=Weekly");
-	// }
-	// if($position != 'all')
-	// {
-	// 	if(mysql_num_rows($positionCheckerQuery) == 0)
-	// 	{
-	// 		header("location:reports_overall_earnings.php?type=Earnings&period=Weekly");
-	// 	}
-	// }
+	//Checks if site in HTTP is altered by user manually
+	$siteChecker = "SELECT * FROM site WHERE location = '$site'";
+	//Checks if position in HTTP is altered by user manually 
+	$positionChecker = "SELECT * FROM job_position WHERE position = '$position'";
+
+	$siteCheckerQuery = mysql_query($siteChecker);
+	$positionCheckerQuery = mysql_query($positionChecker);
+	if(mysql_num_rows($siteCheckerQuery) == 0)
+	{
+		header("location:reports_company_expenses.php?type=Expenses&period=Weekly");
+	}
+	if($position != 'all')
+	{
+		if(mysql_num_rows($positionCheckerQuery) == 0)
+		{
+			header("location:reports_company_expenses.php?type=Expenses&period=Weekly");
+		}
+	}
 		
 	
-	// // Checks if requirement in HTTP is altered by user manually 
-	// switch($require) {
-	// 	case "null":break;
-	// 	case "all":break;
-	// 	case "withReq":break;
-	// 	case "withOReq":break;
-	// 	default: header("location:reports_overall_earnings.php?type=Earnings&period=Weekly");;
-	// }
-	// //Checks if period in HTTP is altered by user manually 
-	// switch($period) {
-	// 	case "null":break;
-	// 	case "week":break;
-	// 	case "month":break;
-	// 	case "year":break;
-	// 	default: header("location:reports_overall_earnings.php?type=Earnings&period=Weekly");;
-	// }
+	// Checks if requirement in HTTP is altered by user manually 
+	switch($require) {
+		case "null":break;
+		case "all":break;
+		case "withReq":break;
+		case "withOReq":break;
+		default: header("location:reports_company_expenses.php?type=Expenses&period=Weekly");;
+	}
+	//Checks if period in HTTP is altered by user manually 
+	switch($period) {
+		case "week": $periodDisplay = "Weekly";break;
+		case "month": $periodDisplay = "Monthly";break;
+		case "year": $periodDisplay = "Yearly";break;
+		default: header("location:reports_company_expenses.php?type=Expenses&period=Weekly");;
+	}
 
 
 
@@ -78,12 +78,12 @@
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_company_expenses.php?type=Expenses&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Expenses</a></li>
-						<li>Overall Company Expense Report for [PERIOD]</li>
+						<li>Overall Company Expense Report for <?php Print $site?></li>
 					</ol>
 				</div>
 			</div>
 			<div class="form-inline">
-				<h4>Select view</h4>
+				<h4>Select Period</h4>
 				<select onchange="periodChange(this.value)" class="form-control">
 					<?php 
 						if($period == "week")
@@ -100,15 +100,124 @@
 							Print "<option value='year'>Yearly</option>";
 					?>
 				</select>
-				<h4>Select period</h4>
-				<select class="form-control">
-					<option>Sample date</option>
+				<h4>Select <?php Print $period?></h4>
+					<select class="form-control" onchange="changeDate(this.value)">
+						<option hidden>Choose a <?php Print $period?></option>
+					<?php
+						
+
+							
+							$payrollDates = "SELECT DISTINCT date FROM payroll";
+							$payrollDQuery = mysql_query($payrollDates) or die(mysql_error());
+							
+							if(mysql_num_rows($payrollDQuery) > 0)//check if there's payroll
+							{
+								$monthNoRep = "";
+								$yearNoRep = "";
+								while($payrollDateArr = mysql_fetch_assoc($payrollDQuery))
+								{
+									
+									if($_GET['period'] == 'week')
+									{
+										$payrollEndDate = $payrollDateArr['date'];
+										$payrollStartDate = date('F j, Y', strtotime('-6 day', strtotime($payrollEndDate)));
+										if(isset($_POST['date']))
+										{
+											if($_POST['date'] == $payrollEndDate)
+											{
+												Print "<option value = '".$payrollEndDate."' selected>".$payrollStartDate." - ".$payrollEndDate."</option>";
+											}
+											else
+											{
+												Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
+											}
+										}
+										else
+										{
+											Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
+										}
+									}
+									else if($_GET['period'] == 'month')
+									{
+										$payrollArrDate = explode(" ", $payrollDateArr['date']);
+										$payrollMonth = $payrollArrDate[0];
+										$payrollYear = $payrollArrDate[2];
+
+										if($monthNoRep != $payrollMonth." ".$payrollYear)
+										{	
+											if(isset($_POST['date']))
+											{
+												if($_POST['date'] == $payrollMonth." ".$payrollYear)
+												{
+													Print "<option value = '".$payrollMonth." ".$payrollYear."' selected>".$payrollMonth." ".$payrollYear."</option>";
+												}
+												else
+												{
+													Print "<option value = '".$payrollMonth." ".$payrollYear."'>".$payrollMonth." ".$payrollYear."</option>";
+												}
+											}
+											else
+											{
+												Print "<option value = '".$payrollMonth." ".$payrollYear."'>".$payrollMonth." ".$payrollYear."</option>";
+											}
+										}
+										$monthNoRep = $payrollMonth." ".$payrollYear;
+									}
+									else if($_GET['period'] == 'year')
+									{
+										$payrollArrDate = explode(" ", $payrollDateArr['date']);
+										$payrollYear = $payrollArrDate[2];
+										$yearBef = $payrollYear -1;//gets the year before
+
+										if($yearNoRep != $payrollYear)
+										{	
+											if(isset($_POST['date']))
+											{
+												if($_POST['date'] == $payrollYear)
+												{
+													Print "<option value = '".$payrollYear."' selected>".$yearBef." - ".$payrollYear."</option>";
+												}
+												else
+												{
+													Print "<option value = '".$payrollYear."'>".$yearBef." - ".$payrollYear."</option>";
+												}
+											}
+											else
+											{
+												Print "<option value = '".$payrollYear."'>".$yearBef." - ".$payrollYear."</option>";
+											}
+											
+										}
+										$yearNoRep = $payrollYear;
+									}
+									
+								}
+							}
+					
+					?>
+				</select>
+				<h5>Filter:</h5>
+				<h4>Position</h4>
+				<select onchange="periodChange(this.value)" class="form-control">
+					<option hidden>position</option>
+					<?php 
+						$position_dd = "SELECT * FROM job_position WHERE active = '1'";
+						$posQuery = mysql_query($position_dd);
+
+						while($posArr = mysql_fetch_assoc($posQuery))
+						{
+							if($position == $posArr['position'])
+								Print "<option value = '".$posArr['position']."' selected>".$posArr['position']."</option>";
+							else
+								Print "<option value = '".$posArr['position']."'>".$posArr['position']."</option>";
+						}
+					?>
 				</select>
 			</div>
 		</div>
 
 		<button class="btn btn-default pull-down">
-					Print Weekly Expense Report
+					Print <?php Print $periodDisplay?> Expense Report
 		</button>
 
 		<table class='table table-bordered pull-down'>

@@ -75,7 +75,7 @@
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_overall_earnings.php?type=Earnings&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Earnings</a></li>
 						<li>Overall 13th Month Pay Report for <?php Print $site?></li>
-						<a class="btn btn-primary pull-right" href="reports_overall_13thmonthpay_deduction.php?req='+req+'&site=<?php Print $site?>&period=<?php Print $period?>&position=<?php Print $position?>">
+						<a class="btn btn-primary pull-right" href="reports_overall_13thmonthpay_deduction.php?site=<?php Print $site?>&period=<?php Print $period?>&position=<?php Print $position?>">
 							Give 13th Month Pay
 						</a>
 					</ol>
@@ -142,7 +142,7 @@
 		<select onchange='weekDates(this.value)' class='form-control'>
 			<option hidden>Select date</option>";
 			
-			$payrollDays = "SELECT DISTINCT date FROM Payroll ORDER BY date ASC";//gets non repeatable dates
+			$payrollDays = "SELECT DISTINCT date FROM Payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";//gets non repeatable dates
 			$payrollDaysQuery = mysql_query($payrollDays);
 
 			if(mysql_num_rows($payrollDaysQuery))
@@ -289,7 +289,7 @@
 								Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
 
 								
-								$attendance = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY date ASC";
+								$attendance = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 								$attQuery = mysql_query($attendance);
 
 								$daysAttended = 0;//counter for days attended
@@ -332,7 +332,7 @@
 												".$startDate." - ".$endDate."
 											</td>
 											<td>
-												".numberExactFormat($thirteenthMonth, 2, '.')."
+												".numberExactFormat($thirteenthMonth, 2, '.', true)."
 											</td>
 										</tr>";
 
@@ -359,7 +359,7 @@
 							Grand Total
 						</td>
 						<td>
-							".numberExactFormat($overallPayment, 2, '.')."
+							".numberExactFormat($overallPayment, 2, '.', true)."
 						</td>
 					</tr>
 					</table>";
@@ -401,7 +401,7 @@
 				while($empArr = mysql_fetch_assoc($employeeQuery))
 				{
 					$empid = $empArr['empid'];
-					$attendance = "SELECT DISTINCT date FROM attendance WHERE empid = '$empid' ORDER BY date ASC";
+					$attendance = "SELECT DISTINCT date FROM attendance WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 					$attQuery = mysql_query($attendance);
 
 					$daysAttended = 0;//counter for days attended
@@ -416,7 +416,7 @@
 
 						if ($noRepeat != $month || $noRepeat == null)
 						{
-							$attMonth = "SELECT * FROM attendance WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' ORDER BY date ASC";
+							$attMonth = "SELECT * FROM attendance WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							$attMonthQuery = mysql_query($attMonth);
 							//Computes 13th month per day of the month
 							while($attArr = mysql_fetch_assoc($attMonthQuery))
@@ -455,7 +455,7 @@
 											".$month." ".$year."
 										</td>
 										<td>
-											".numberExactFormat($thirteenthMonth, 2, '.')."
+											".numberExactFormat($thirteenthMonth, 2, '.', true)."
 										</td>
 									</tr>";
 							$overallPayment += $thirteenthMonth;
@@ -482,7 +482,7 @@
 							Grand Total
 						</td>
 						<td>
-							".numberExactFormat($overallPayment, 2, '.')."
+							".numberExactFormat($overallPayment, 2, '.', true)."
 						</td>
 					</tr>
 					</table>";
@@ -523,7 +523,7 @@
 				while($empArr = mysql_fetch_assoc($employeeQuery))
 				{
 					$empid = $empArr['empid'];
-					$attendance = "SELECT DISTINCT date FROM attendance WHERE empid = '$empid' ORDER BY date ASC";
+					$attendance = "SELECT DISTINCT date FROM attendance WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 					$attQuery = mysql_query($attendance);
 
 					$daysAttended = 0;//counter for days attended
@@ -537,7 +537,7 @@
 
 						if ($noRepeat != $year || $noRepeat == null)
 						{
-							$attYear = "SELECT * FROM attendance WHERE empid = '$empid' AND date LIKE '%$year' ORDER BY date ASC";
+							$attYear = "SELECT * FROM attendance WHERE empid = '$empid' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							$attYearQuery = mysql_query($attYear);
 							//Computes 13th month per day of the month
 							while($attArr = mysql_fetch_assoc($attYearQuery))
@@ -577,7 +577,7 @@
 											".$yearBefore." - ".$year."
 										</td>
 										<td>
-											".numberExactFormat($thirteenthMonth, 2, '.')."
+											".numberExactFormat($thirteenthMonth, 2, '.', true)."
 										</td>
 									</tr>";
 							$overallPayment += $thirteenthMonth;
@@ -604,7 +604,7 @@
 								Grand Total
 							</td>
 							<td>
-								".numberExactFormat($overallPayment, 2, '.')."
+								".numberExactFormat($overallPayment, 2, '.', true)."
 							</td>
 						</tr>
 						</table>";

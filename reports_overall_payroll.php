@@ -72,7 +72,7 @@
 					<select onchange="payrollDates(this.value)" class="form-control" id="step2" disabled>
 						<option hidden>Select date</option>
 						<?php
-						$payrollDays = "SELECT DISTINCT date FROM Payroll ORDER BY date ASC";//gets non repeatable dates
+						$payrollDays = "SELECT DISTINCT date FROM Payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";//gets non repeatable dates
 						$payrollDaysQuery = mysql_query($payrollDays);
 
 						if(mysql_num_rows($payrollDaysQuery))
@@ -341,7 +341,7 @@
 														'.$payrollArr['tools_paid'].'
 													</td>
 													<td><!-- Total Salary -->
-														'.numberExactFormat($payrollArr['total_salary'],2,".").'
+														'.numberExactFormat($payrollArr['total_salary'],2,".", true).'
 													</td>
 												</tr>';
 											
