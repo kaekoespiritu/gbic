@@ -64,101 +64,107 @@
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_overall_attendance.php?type=Attendance&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Attendance</a></li>
 						<li>Overall Weekly Attendance Report for <?php Print $site?></li>
+						<button class="btn btn-primary pull-right">
+							Print Attendance
+						</button>
 					</ol>
 				</div>
 			</div>
 
 			<div class="form-inline">
-				<h4>Select Period for Attendance viewing</h4>
-				<select class="form-control" onchange="periodChange(this.value)">
-					<option hidden>Select date period</option>
-					<?php
-						$payDateBool = true;//boolean for displaying the present date
+				<div class="col-md-4">
+					<h4>Step 1: Select Period</h4>
+					<select class="form-control" onchange="periodChange(this.value)">
+						<option hidden>Select date period</option>
+						<?php
+							$payDateBool = true;//boolean for displaying the present date
 
-						$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY date DESC";
-						$payDateQuery = mysql_query($payrollDate);
+							$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY date DESC";
+							$payDateQuery = mysql_query($payrollDate);
 
-						if(mysql_num_rows($payDateQuery) != 0)
-						{
-							while($payDateArr = mysql_fetch_assoc($payDateQuery))
+							if(mysql_num_rows($payDateQuery) != 0)
 							{
-								if($payDateBool)
+								while($payDateArr = mysql_fetch_assoc($payDateQuery))
 								{
-									$onProcessDate = date('F j, Y', strtotime('+1 day', strtotime($payDateArr['date'])));
-									if(isset($_POST['date']))
-										if($_POST['date'] == "onProcess")
-											Print "<option value='onProcess' selected>".$onProcessDate." - Present</option>";
+									if($payDateBool)
+									{
+										$onProcessDate = date('F j, Y', strtotime('+1 day', strtotime($payDateArr['date'])));
+										if(isset($_POST['date']))
+											if($_POST['date'] == "onProcess")
+												Print "<option value='onProcess' selected>".$onProcessDate." - Present</option>";
+											else
+												Print "<option value='onProcess'>".$onProcessDate." - Present</option>";
 										else
 											Print "<option value='onProcess'>".$onProcessDate." - Present</option>";
+										$payDateBool = false;
+									}
+									$startDate = date('F j, Y', strtotime('-6 day', strtotime($payDateArr['date'])));
+									$endDate = $payDateArr['date'];
+
+									if(isset($_POST['date']))
+										if($_POST['date'] == $endDate)
+											Print "<option value='".$endDate."' selected>".$startDate." - ".$endDate."</option>";
+										else
+											Print "<option value='".$endDate."'>".$startDate." - ".$endDate."</option>";
 									else
-										Print "<option value='onProcess'>".$onProcessDate." - Present</option>";
-									$payDateBool = false;
+										Print "<option value='".$endDate."'>".$startDate." - ".$endDate."</option>";	
+
 								}
-								$startDate = date('F j, Y', strtotime('-6 day', strtotime($payDateArr['date'])));
-								$endDate = $payDateArr['date'];
-
-								if(isset($_POST['date']))
-									if($_POST['date'] == $endDate)
-										Print "<option value='".$endDate."' selected>".$startDate." - ".$endDate."</option>";
-									else
-										Print "<option value='".$endDate."'>".$startDate." - ".$endDate."</option>";
-								else
-									Print "<option value='".$endDate."'>".$startDate." - ".$endDate."</option>";	
-
 							}
-						}
 
-					?>
-				</select>
-				<h4>Requirements</h4>
-				<select onchange="requirementChange(this.value)" class="form-control">
-					<option hidden>Select Requirements</option>
-					<?php
-						if($require == 'all')
-							Print "<option value='all' selected>All</option>";
-						else
-							Print "<option value='all'>All</option>";
-						if($require == 'withReq')
-							Print "<option value='withReq' selected>W/ Requirements</option>";
-						else
-							Print "<option value='withReq'>W/ Requirements</option>";
-						if($require == 'withOReq')
-							Print "<option value='withOReq' selected>W/o Requirements</option>";
-						else
-							Print "<option value='withOReq'>W/o Requirements</option>";
-					?>
-				</select>
+						?>
+					</select>
+				</div>
 
-				
-				<h4>Position</h4>
-				<select class="form-control" onchange="positionChange(this.value)">
-					<option hidden>Select Position</option>
-					<?php
-						$pos = "SELECT position FROM job_position WHERE active = '1'";
-						$pos_query = mysql_query($pos);
-
-						while($row_position = mysql_fetch_assoc($pos_query))
-						{
-							$pos = mysql_real_escape_string($row_position['position']);
-							if($pos == $_GET['position'])
-							{
-								Print '<option value="'. $pos .'" selected="selected">'. $pos .'</option>';
-							}
+				<div class="col-md-3">
+					<h4>Step 2: Select Requirements</h4>
+					<select onchange="requirementChange(this.value)" class="form-control">
+						<option hidden>Select Requirements</option>
+						<?php
+							if($require == 'all')
+								Print "<option value='all' selected>All</option>";
 							else
+								Print "<option value='all'>All</option>";
+							if($require == 'withReq')
+								Print "<option value='withReq' selected>W/ Requirements</option>";
+							else
+								Print "<option value='withReq'>W/ Requirements</option>";
+							if($require == 'withOReq')
+								Print "<option value='withOReq' selected>W/o Requirements</option>";
+							else
+								Print "<option value='withOReq'>W/o Requirements</option>";
+						?>
+					</select>
+				</div>
+
+				<div class="col-md-3">
+					<h4>Step 3: Select Position</h4>
+					<select class="form-control" onchange="positionChange(this.value)">
+						<option hidden>Select Position</option>
+						<?php
+							$pos = "SELECT position FROM job_position WHERE active = '1'";
+							$pos_query = mysql_query($pos);
+
+							while($row_position = mysql_fetch_assoc($pos_query))
 							{
-								Print '<option value="'. $pos .'">'. $pos .'</option>';
+								$pos = mysql_real_escape_string($row_position['position']);
+								if($pos == $_GET['position'])
+								{
+									Print '<option value="'. $pos .'" selected="selected">'. $pos .'</option>';
+								}
+								else
+								{
+									Print '<option value="'. $pos .'">'. $pos .'</option>';
+								}
 							}
-						}
-					?>
-				</select>
+						?>
+					</select>
+				</div>
 
 			</div>
-			<a type="button" class="btn btn-danger" href="reports_overall_empattendance.php?site=<?php Print $site ?>&position=null&req=null">Clear Filter</a>
-		</div>
 
-		<button class="btn btn-default pull-down">
-			Print Attendance
-		</button>
+			<a type="button" class="btn btn-danger pull-down" href="reports_overall_empattendance.php?site=<?php Print $site ?>&position=null&req=null">Clear Filter</a>
+		</div>
 
 		<div class="pull-down col-md-12 overflow">
 			<table class="table table-bordered pull-down">

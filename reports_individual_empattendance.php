@@ -47,12 +47,15 @@
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_overall_attendance.php?type=Attendance&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Attendance</a></li>
 						<li>Individual Weekly Attendance Report for <?php Print $empArr['lastname'].", ".$empArr['firstname']?></li>
+						<button class="btn btn-primary pull-right">
+							Print Attendance
+						</button>
 					</ol>
 				</div>
 			</div>
 
 			<div class="form-inline">
-				<h4>Select Period for Attendance viewing</h4>
+				<h4>Select Period</h4>
 				<select class="form-control" onchange="periodChange(this.value)">
 					<option hidden>Select date period</option>
 					<?php
@@ -98,10 +101,6 @@
 			</div>
 			
 		</div>
-
-		<button class="btn btn-default pull-down">
-			Print Attendance
-		</button>
 
 		<div class="pull-down col-md-12 overflow">
 			<table class="table table-bordered pull-down">
