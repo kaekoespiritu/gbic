@@ -89,9 +89,9 @@
 
 			<div class="pull-down">
 				
-				<button class='btn btn-default' id='printButton' onclick="printPayroll()">Print Payroll</button>
+				<button class='btn btn-primary' id='printButton' onclick="printPayroll()">Print Payroll</button>
 				
-				<a class="btn btn-default" id="printPayslip" href="reports_payslip_individual_emp.php">
+				<a class="btn btn-primary" id="printPayslip" href="reports_payslip_individual_emp.php">
 					Print Payslip
 				</a>
 				<table class="table table-bordered pull-down">

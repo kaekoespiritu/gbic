@@ -174,11 +174,8 @@
 						</select>
 					</div>
 				</div>
-				<div class="pull-down">
-				<button class="btn btn-default" id="printSSS">
-					Print <?php Print $printButton?>
-				</button>
-				<table class="table table-bordered pull-down">
+				<div class="pull-down-even-more">
+				<table class="table table-bordered">
 					<tr>
 						<td colspan="4">
 							 <?php Print $breadcrumInfo?>
@@ -588,7 +585,13 @@
 			</div>
 
 		</div>
+		<?php
+			$postDate = "";
+			if(isset($_POST['date']))
+				$postDate = $_POST['date'];
 
+		?>
+		<input type="hidden" id="postDate" value="<?php Print $postDate?>">
 	</div>
 	<input type="hidden" id="printButton" value="<?php Print $sssBool?>">
 	<form id="changeDateForm" method="post" action="reports_individual_sss.php?empid=<?php Print $empid?>&period=<?php Print $period?>">
@@ -613,10 +616,12 @@
 			window.location.assign("reports_individual_sss.php?empid=<?php Print $empid?>&period="+period);
 		}
 
-		
+
+
 		function printSSSContribution(){
 			var period = document.getElementById('period').value;
-			window.location.assign("print_individual_contribution.php?empid=<?php Print $empid ?>&period="+period+"&contribution=SSS");
+			var date = document.getElementById('postDate').value;
+			window.location.assign("print_individual_contribution.php?empid=<?php Print $empid ?>&period="+period+"&date="+date+"&contribution=SSS");
 		}
 		
 		//Disables the button if there's no data

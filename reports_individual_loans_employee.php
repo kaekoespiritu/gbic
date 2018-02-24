@@ -55,15 +55,15 @@
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_individual_loans.php?type=Loans&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Loans</a></li>
 						<li>Individual <?php Print $loanType ?> Loan Report for <?php Print $empArr['lastname'].", ".$empArr['firstname']." | ".$empArr['position']." at ".$empArr['site']?></li>
+						<button class="btn btn-primary pull-right">
+							Print <?php Print $loanType ?>
+						</button>
 					</ol>
 				</div>
 			</div>
 
 			<div class="col-md-12">
 				<div class="pull-down">
-				<button class="btn btn-default">
-					Print <?php Print $loanType ?>
-				</button>
 				<table class="table table-bordered pull-down">
 					<tr>
 						<td>

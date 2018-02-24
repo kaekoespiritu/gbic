@@ -75,7 +75,11 @@
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_overall_earnings.php?type=Earnings&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Earnings</a></li>
 						<li>Overall 13th Month Pay Report for <?php Print $site?></li>
+<<<<<<< HEAD
 						<a class="btn btn-primary pull-right" href="reports_overall_13thmonthpay_deduction.php?site=<?php Print $site?>&period=<?php Print $period?>&position=<?php Print $position?>">
+=======
+						<a class="btn btn-success pull-right" href="reports_overall_13thmonthpay_deduction.php?req='+req+'&site=<?php Print $site?>&period=<?php Print $period?>&position=<?php Print $position?>">
+>>>>>>> dde179aeb72da96ce8af1efe0e8aaf10f5fdf51e
 							Give 13th Month Pay
 						</a>
 					</ol>
@@ -242,7 +246,7 @@
 		{
 			Print "	<div class='pull-down'>
 						<div class='col-md-10 col-md-offset-1'>
-							<button class='btn btn-default'>
+							<button class='btn btn-primary'>
 								Print ".$printButton."
 							</button>
 							<table class='table table-bordered pull-down'>
@@ -368,7 +372,7 @@
 			{
 				Print "	<div class='pull-down'>
 						<div class='col-md-10 col-md-offset-1'>
-							<button class='btn btn-default'>
+							<button class='btn btn-primary'>
 								Print ".$printButton."
 							</button>
 							<table class='table table-bordered pull-down'>
@@ -491,7 +495,7 @@
 			{
 				Print "	<div class='pull-down'>
 						<div class='col-md-10 col-md-offset-1'>
-							<button class='btn btn-default'>
+							<button class='btn btn-primary'>
 								Print ".$printButton."
 							</button>
 							<table class='table table-bordered pull-down'>

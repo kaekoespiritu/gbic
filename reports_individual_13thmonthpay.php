@@ -92,7 +92,7 @@
 				 	case 'year': $printButton = "Yearly";break;
 				 }
 				?>
-				<button class="btn btn-default" id="printButton">
+				<button class="btn btn-primary" id="printButton">
 					Print <?php Print $printButton?>
 				</button>
 				<table class="table table-bordered pull-down">

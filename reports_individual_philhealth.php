@@ -175,11 +175,8 @@
 						</select>
 					</div>
 				</div>
-				<div class="pull-down">
-				<button class="btn btn-default" id="printPhilhealth">
-					Print <?php Print $printButton?>
-				</button>
-				<table class="table table-bordered pull-down">
+				<div class="pull-down-even-more">
+				<table class="table table-bordered">
 					<tr>
 						<td colspan="4">
 							 <?php Print $breadcrumInfo?>
@@ -585,7 +582,13 @@
 			</div>
 
 		</div>
+		<?php
+			$postDate = "";
+			if(isset($_POST['date']))
+				$postDate = $_POST['date'];
 
+		?>
+		<input type="hidden" id="postDate" value="<?php Print $postDate?>">
 	</div>
 	<input type="hidden" id="printButton" value="<?php Print $philhealthBool?>">
 	<form id="changeDateForm" method="post" action="reports_individual_philhealth.php?empid=<?php Print $empid?>&period=<?php Print $period?>">
@@ -612,7 +615,8 @@
 
 		function printPhilHealthContribution() {
 			var period = document.getElementById('period').value;
-			window.location.assign("print_individual_contribution.php?empid=<?php Print $empid ?>&period="+period+"&contribution=PhilHealth");
+			var date = document.getElementById('postDate').value;
+			window.location.assign("print_individual_contribution.php?empid=<?php Print $empid ?>&period="+period+"&date="+date+"&contribution=PhilHealth");
 		}
 
 		//Disables the button if there's no data
