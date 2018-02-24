@@ -175,11 +175,8 @@
 						</select>
 					</div>
 				</div>
-				<div class="pull-down">
-				<button class="btn btn-default" id="printPhilhealth">
-					Print <?php Print $printButton?>
-				</button>
-				<table class="table table-bordered pull-down">
+				<div class="pull-down-even-more">
+				<table class="table table-bordered">
 					<tr>
 						<td colspan="4">
 							 <?php Print $breadcrumInfo?>
