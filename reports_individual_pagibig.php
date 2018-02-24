@@ -577,7 +577,13 @@
 			</div>
 
 		</div>
+		<?php
+			$postDate = "";
+			if(isset($_POST['date']))
+				$postDate = $_POST['date'];
 
+		?>
+		<input type="hidden" id="postDate" value="<?php Print $postDate?>">
 	</div>
 	<input type="hidden" id="printButton" value="<?php Print $pagibigBool?>">
 	<form id="changeDateForm" method="post" action="reports_individual_pagibig.php?empid=<?php Print $empid?>&period=<?php Print $period?>">
@@ -604,7 +610,8 @@
 
 		function printPagIbigContribution() {
 			var period = document.getElementById('period').value;
-			window.location.assign("print_individual_contribution.php?empid=<?php Print $empid ?>&period="+period+"&contribution=PagIbig");
+			var date = document.getElementById('postDate').value;
+			window.location.assign("print_individual_contribution.php?empid=<?php Print $empid ?>&period="+period+"&date="+date+"&contribution=PagIbig");
 		}
 		//Disables the button if there's no data
 		$(document).ready(function(){
