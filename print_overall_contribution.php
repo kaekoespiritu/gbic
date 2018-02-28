@@ -201,30 +201,6 @@ if($contributionType == 'All') {
 }
 else {
 	// * ======= Data Feeding ======= * //
-<<<<<<< Updated upstream
-	// Get contribution details for selected site
-	$contributionQuery = " AND payroll.".strtolower($contributionType)." != 0 ";
-	$employeelist = "
-		SELECT
-			employee.empid,
-			employee.lastname,
-			employee.firstname,
-			employee.position,
-			payroll.date,
-			payroll.sss,
-			payroll.sss_er,
-			payroll.philhealth,
-			payroll.philhealth_er,
-			payroll.pagibig,
-			payroll.pagibig_er
-		FROM `payroll` INNER JOIN employee ON payroll.empid=employee.empid
-		WHERE employee.site = '$site' $contributionQuery
-		ORDER BY STR_TO_DATE(payroll.date, '%M %e, %Y') DESC, employee.empid";
-
-	$employeelistQuery = mysql_query($employeelist) or die (mysql_error());
-
-	$rowCounter = 4; // Start for the data in the row of excel
-=======
 		// Get contribution details for selected site
 		$contributionQuery = " AND payroll.".strtolower($contributionType)." != 0 ";
 		$employeelist = "
@@ -242,7 +218,7 @@ else {
 				payroll.pagibig_er
 			FROM `payroll` INNER JOIN employee ON payroll.empid=employee.empid
 			WHERE employee.site = '$site' $contributionQuery
-			ORDER BY payroll.date DESC, employee.empid";
+			ORDER BY STR_TO_DATE(payroll.date, '%M %e, %Y') DESC, employee.empid";
 
 		$employeelistQuery = mysql_query($employeelist) or die (mysql_error());
 
@@ -292,7 +268,6 @@ else {
 			}
 
 			$rowCounter++;
->>>>>>> Stashed changes
 
 
 		}
