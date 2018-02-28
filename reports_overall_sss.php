@@ -591,7 +591,13 @@
 			</div>
 
 		</div>
+		<?php
+			$postDate = "";
+			if(isset($_POST['date']))
+				$postDate = $_POST['date'];
 
+		?>
+		<input type="hidden" id="postDate" value="<?php Print $postDate?>">
 	</div>
 	<input type="hidden" id="printButton" value="<?php Print $sssBool?>">
 	<form id="changeDateForm" method="post" action="reports_overall_sss.php?site=<?php Print $site?>&period=<?php Print $period?>">
@@ -619,7 +625,8 @@
 
 		function printSSSContributions() {
 			var period = document.getElementById('period').value;
-			window.location.assign("print_overall_contribution.php?site=<?php Print $site ?>&period="+period+"&contribution=SSS");
+			var date = document.getElementById('postDate').value;
+			window.location.assign("print_overall_contribution.php?site=<?php Print $site ?>&period="+period+"&date="+date+"contribution=SSS");
 		}
 
 		//Disables the button if there's no data

@@ -592,7 +592,13 @@
 			</div>
 
 		</div>
+		<?php
+			$postDate = "";
+			if(isset($_POST['date']))
+				$postDate = $_POST['date'];
 
+		?>
+		<input type="hidden" id="postDate" value="<?php Print $postDate?>">
 	</div>
 	<input type="hidden" id="printButton" value="<?php Print $PhilhealthBool?>">
 	<form id="changeDateForm" method="post" action="reports_overall_philhealth.php?site=<?php Print $site?>&period=<?php Print $period?>">
@@ -618,7 +624,9 @@
 		}
 
 		function printPhilHealthContributions(){
-			window.location.assign("print_overall_contribution.php?site=<?php Print $site ?>&period="+period+"&contribution=PhilHealth");
+			var period = document.getElementById('period').value;
+			var date = document.getElementById('postDate').value;
+			window.location.assign("print_overall_contribution.php?site=<?php Print $site ?>&period="+period+"&date="+date+"&contribution=PhilHealth");
 		}
 
 		//Disables the button if there's no data
