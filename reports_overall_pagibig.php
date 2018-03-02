@@ -70,8 +70,19 @@
 					<div class="col-md-6">
 						<h4>Select <?php Print $period?></h4>
 						<select class="form-control" onchange="changeDate(this.value)" id="period">
-							<option hidden>Choose a <?php Print $period?></option>
+							
 							<?php
+
+							if(isset($_POST['date']))
+							{
+								if($_POST['date'] == 'all')
+									Print "<option value = 'all' selected>All</option>";
+								else
+									Print "<option value = 'all'>All</option>";
+							}
+							else
+									Print "<option value = 'all'>All</option>";
+
 							$payrollDates = "SELECT DISTINCT date FROM payroll";
 							$payrollDQuery = mysql_query($payrollDates) or die(mysql_error());
 
@@ -214,7 +225,12 @@
 								if(isset($_POST['date']))
 								{
 									$changedPeriod = $_POST['date'];
-									$payrollDate = "SELECT DISTINCT date FROM payroll WHERE date= '$changedPeriod' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+									if($changedPeriod == 'all'){
+										$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid'ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+									}
+									else {
+										$payrollDate = "SELECT DISTINCT date FROM payroll WHERE date= '$changedPeriod' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+									}
 								}
 								else
 									$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid'ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
@@ -319,10 +335,15 @@
 							$PagibigBool = false;//if employee dont have Pagibig contribution
 							if(isset($_POST['date']))
 							{
-								$changedPeriod = explode(' ',$_POST['date']);
-								$monthPeriod = $changedPeriod[0];
-								$yearPeriod = $changedPeriod[1];
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+								if($_POST['date'] == 'all'){
+									$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+								}
+								else {
+									$changedPeriod = explode(' ',$_POST['date']);
+									$monthPeriod = $changedPeriod[0];
+									$yearPeriod = $changedPeriod[1];
+									$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+								}
 							}
 							else
 							{
@@ -457,9 +478,14 @@
 							$PagibigBool = false;//if employee dont have Pagibig contribution
 							if(isset($_POST['date']))
 							{
-								$changedPeriod = explode(' ',$_POST['date']);
-								$monthPeriod = $changedPeriod[0];
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE  date LIKE '%$yearPeriod' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+								if($_POST['date'] == 'all'){
+									$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+								}
+								else {
+									$changedPeriod = explode(' ',$_POST['date']);
+									$yearPeriod = $changedPeriod[0];
+									$payrollDate = "SELECT DISTINCT date FROM payroll WHERE  date LIKE '%$yearPeriod' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+								}
 							}
 							else
 							{
