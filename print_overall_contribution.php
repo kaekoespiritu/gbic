@@ -14,7 +14,7 @@ $sheet = new PHPExcel();
 $activeSheet = $sheet -> createSheet(0);
 
 // * ======= Styling tables ======= * //
-	if($contributionType == "All") {
+	if($contributionType == "all") {
 		// * ======= Styling table Overall ======= * //
 			$filename = "Overall Contributions for ".$site.".xls";
 			// Merge cells
@@ -106,7 +106,7 @@ $activeSheet = $sheet -> createSheet(0);
 
 
 // * ======= Data feeding ======= * //
-if($contributionType == 'All') {
+if($contributionType == 'all') {
 	// * ======= Data Feeding Overall  ======= * //
 		// Get contribution details for selected site
 		$employeelist = "
@@ -124,16 +124,16 @@ if($contributionType == 'All') {
 				payroll.pagibig_er
 			FROM `payroll` INNER JOIN employee ON payroll.empid=employee.empid
 			WHERE employee.site = '$site'
-			ORDER BY payroll.date DESC, employee.empid";
+			ORDER BY STR_TO_DATE(payroll.date, '%M %e, %Y') DESC, employee.empid";
 
 		switch($period) {
 			case 'week':
-				if($date != 'All') {
+				if($date != 'all' && $contributionType != 'all') {
 					$changedPeriod = $date;
-					$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND date= '$changedPeriod' ORDER BY date ASC";
+					$payrollDate = "SELECT DISTINCT date FROM payroll WHERE date= '$changedPeriod' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 				}
 				else {
-					$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY date ASC";
+					$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 				}
 			break;
 			case 'month':
@@ -202,7 +202,8 @@ if($contributionType == 'All') {
 else {
 	// * ======= Data Feeding ======= * //
 		// Get contribution details for selected site
-		$contributionQuery = " AND payroll.".strtolower($contributionType)." != 0 ";
+		$contributionQuery = " AND payroll.".strtolower($contributionType)." != 0 ";	
+		
 		$employeelist = "
 			SELECT
 				employee.empid,
@@ -261,9 +262,6 @@ else {
 					$activeSheet->setCellValue('F'.$rowCounter, $employeelistArr['pagibig'] + $employeelistArr['pagibig_er']); // Total
 					$totalEmployeePagIBIG += $employeelistArr['pagibig'];
 					$totalEmployerPagIBIG += $employeelistArr['pagibig_er'];
-				break;
-				case 'Overall':
-
 				break;
 			}
 
