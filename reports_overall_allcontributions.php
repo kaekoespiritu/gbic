@@ -69,9 +69,19 @@
 					</div>
 					<div class="col-md-6">
 						<h4>Step 2: Select duration in <?php Print $period?></h4>
-						<select class="form-control" onchange="changeDate(this.value)">
-							<option hidden>Choose a <?php Print $period?></option>
+						<select class="form-control" onchange="changeDate(this.value)" id="date">
+							
 							<?php
+							if(isset($_POST['date']))
+							{
+								if($_POST['date'] == 'all')
+									Print "<option value = 'all' selected>All</option>";
+								else
+									Print "<option value = 'all'>All</option>";
+							}
+							else
+									Print "<option value = 'all'>All</option>";
+
 							$payrollDates = "SELECT DISTINCT date FROM payroll";
 							$payrollDQuery = mysql_query($payrollDates) or die(mysql_error());
 
@@ -231,12 +241,19 @@
 								if(isset($_POST['date']))
 								{
 									$changedPeriod = $_POST['date'];
-									$payrollDate = "SELECT DISTINCT date FROM payroll WHERE date= '$changedPeriod' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+									if($changedPeriod == 'all'){
+										$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+									}
+									else {
+										$payrollDate = "SELECT DISTINCT date FROM payroll WHERE date= '$changedPeriod' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+									}
 								}
 								else
 								{
-									$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid'ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+									$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 								}
+
+
 
 								$payrollDateQuery = mysql_query($payrollDate);
 								
@@ -388,7 +405,6 @@
 						}
 					}
 						
-					
 					else if($period == "month")
 					{
 						$employee = "SELECT * FROM employee WHERE site = '$site'";
@@ -863,7 +879,7 @@
 
 		function printAllContributions() {
 			var period = document.getElementById('period').value;
-			window.location.assign("print_overall_contribution.php?site=<?php Print $site ?>&period="+period+"&contribution=All");
+			window.location.assign("print_overall_contribution.php?site=<?php Print $site ?>&period="+period+"&date="+date+"&contribution=all");
 		}
 
 

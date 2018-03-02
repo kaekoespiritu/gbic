@@ -626,7 +626,7 @@
 		function printSSSContributions() {
 			var period = document.getElementById('period').value;
 			var date = document.getElementById('postDate').value;
-			window.location.assign("print_overall_contribution.php?site=<?php Print $site ?>&period="+period+"&date="+date+"contribution=SSS");
+			window.location.assign("print_overall_contribution.php?site=<?php Print $site ?>&period="+period+"&date="+date+"&contribution=SSS");
 		}
 
 		//Disables the button if there's no data
