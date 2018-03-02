@@ -9,9 +9,9 @@ if(!isset($_GET['site']) && !isset($_GET['position']))
 
 $site = $_GET['site'];
 $position = $_GET['position'];
-// $date = strftime("%B %d, %Y"); 
+$date = strftime("%B %d, %Y"); 
   //1st sample date
-    $date = "October 24, 2017";
+    // $date = "October 24, 2017";
   //2nd sample date
   //$date = "October 31, 2017";
 ?>

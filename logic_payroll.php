@@ -4,9 +4,9 @@
 	//Print "<script>console.log('".$overtimeRate1."')</script>";
 	$time = strftime("%X");//TIME
 
-	//$date = strftime("%B %d, %Y");
+	$date = strftime("%B %d, %Y");
 	  //1st sample date
-	   $date = "October 24, 2017";
+	   // $date = "October 24, 2017";
 	  //2nd sample date
 	  //$date = "October 31, 2017";
 	
@@ -271,7 +271,7 @@
 //*query to loans table the deduction
 	function loanQuery($loanType , $empid, $DeductedLoan) //function for loans query
 	{
-		$date = "October 24, 2017";
+		
 		$time = strftime("%X");//TIME
 
 		//Check if there is an existing query for this loan to avoid duplication

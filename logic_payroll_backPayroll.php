@@ -4,8 +4,9 @@
 	require_once('directives/db.php');
 
 	$empid = $_GET['e'];
+	$date = strftime("%B %d, %Y");
 	  //1st sample date
-	   $date = "October 24, 2017";
+	   // $date = "October 24, 2017";
 	  //2nd sample date
 	  //$date = "October 31, 2017";
 
