@@ -1,6 +1,36 @@
 <!DOCTYPE html>
 <?php
-include('directives/session.php');
+	include('directives/session.php');
+	include('directives/db.php');
+
+	$date = strftime("%B %d, %Y");//Current date
+
+	if(isset($_POST['password']))
+	{
+		$password = mysql_real_escape_string($_POST['password']);
+		$username = $_SESSION['user_logged_in'];
+
+		$admin = "SELECT * FROM administrator WHERE username = '$username' AND password = '$password'";
+		$adminQuery = mysql_query($admin);
+
+		if(mysql_num_rows($adminQuery) != 0)
+			header("location: payroll_site.php");
+		else
+			Print "<script>alert('You have entered a wrong password.')</script>";
+
+	}
+
+	//Checks if the current date is the closed payroll
+	$day = date('l', strtotime($date));
+	// Print "<script>console.log('".$day."')</script>";
+	$payrollCheck = "SELECT * FROM payroll_day";
+	$payrollDayQuery = mysql_query($payrollCheck) or die(mysql_error());
+	$payrollArr = mysql_fetch_assoc($payrollDayQuery);
+
+	if($payrollArr['close'] == $day)
+		$head = "Enter password to access payroll";
+	else
+		$head = "Payroll is currently disabled and can be only accessed on ".$payrollArr['close']."(Closed payroll)";
 ?>
 <html>
 <head>
@@ -25,12 +55,31 @@ include('directives/session.php');
 	<div class="jumbotron pull-down">
 	<div class="row pull-down">
 		<div class="col-md-8 col-md-offset-2 pull-down text-center">
-				<h2>Only authorized personnel may access the payroll.<br>
-				Please enter the system password to continue.</h2>
+				<h2><?php Print $head?></h2>
 				</div>
 				<div class="col-md-4 col-md-offset-4 pull-down">
-				<input type="password" class="form-control" id="payrollpass" placeholder="Password">
-				<a class="btn btn-primary pull-down" href="payroll_site.php">Submit</a>
+				<form action="" method="post">
+					<?php
+						//Checks if the current date is the closed payroll
+						$day = date('l', strtotime($date));
+						// Print "<script>console.log('".$day."')</script>";
+						$payrollCheck = "SELECT * FROM payroll_day";
+						$payrollDayQuery = mysql_query($payrollCheck) or die(mysql_error());
+						$payrollArr = mysql_fetch_assoc($payrollDayQuery);
+
+						if($payrollArr['close'] == $day)
+							Print '
+								<input type="password" class="form-control" id="payrollpass" name="password" placeholder="Password">
+								<input type="submit" value="Submit" class="btn btn-primary pull-down" >
+								';
+						else
+							Print '
+								<input type="password" class="form-control" id="payrollpass" name="password" placeholder="Password" readonly>
+								<input type="submit" value="Submit" class="btn btn-primary pull-down" disabled>
+								';
+					?>
+					
+				</form>
 				</div>
 			</div>
 		</div>
@@ -46,3 +95,4 @@ include('directives/session.php');
 	</div>
 </body>
 </html>
+
