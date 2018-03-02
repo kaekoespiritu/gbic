@@ -4,8 +4,7 @@ include('directives/session.php');
 include('directives/admin_historical.php');
 date_default_timezone_set('Asia/Hong_Kong');
 
-//$date = strftime("%B %d, %Y");// Gets the current date
-$date = "October 22, 2017";
+$date = strftime("%B %d, %Y");// Gets the current date
 
 $empid = $_POST['empid'];
 $loanType = $_POST['loanType'];
