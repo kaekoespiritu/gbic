@@ -16,63 +16,105 @@
 								<ul class="list-unstyled text-left">
 									<li>
 										<label>
-											<input type="checkbox">
-											View Payroll
+											<input type="checkbox" disabled>
+											Employees Tab
+										</label>
+										<ul style="list-style: none;">
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access to list of employees
+												</label>
+											</li>
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access to list of loan applications
+												</label>
+											</li>
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access to list of absence notifications
+												</label>
+											</li>
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access to list of site management
+												</label>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox" disabled>
+											Attendance Access
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox">
-											Manage AWOL employees
+											<input type="checkbox" disabled>
+											Payroll Access
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox">
-											Adding of employees
+											<input type="checkbox" disabled>
+											Reports
 										</label>
+										<ul style="list-style: none;">
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access Earnings
+												</label>
+											</li>
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access Contributions
+												</label>
+											</li>
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access Loans
+												</label>
+											</li>
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access Attendance
+												</label>
+											</li>
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access Company Expenses
+												</label>
+											</li>
+										</ul>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox">
-											Editing details of employees
+											<input type="checkbox" disabled>
+											Options
 										</label>
-									</li>
-									<li>
-										<label>
-											<input type="checkbox">
-											Managing site movement
-										</label>
-									</li>
-									<li>
-										<label>
-											<input type="checkbox">
-											Adding of sites
-										</label>
-									</li>
-									<li>
-										<label>
-											<input type="checkbox">
-											Adding of positions
-										</label>
-									</li>
-									<li>
-										<label>
-											<input type="checkbox">
-											Viewing or reports
-										</label>
-									</li>
-									<li>
-										<label>
-											<input type="checkbox">
-											Managing loans application
-										</label>
-									</li>
-									<li>
-										<label>
-											<input type="checkbox">
-											Changing open/close payroll
-										</label>
+										<ul style="list-style: none;">
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access to site management
+												</label>
+											</li>
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access to position management
+												</label>
+											</li>
+										</ul>
 									</li>
 								</ul>
 							</div>
