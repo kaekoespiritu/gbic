@@ -1,6 +1,6 @@
 <!-- MODAL for new account -->
 		<div class="modal fade" id="newAccount" role="dialog">
-			<div class="modal-dialog" id='modalsize'>
+			<div class="modal-dialog modal-lg" id='modalsize'>
 				<div class="modal-content">
 					<div class="modal-header">
 						<div class="col-md-12">
@@ -65,70 +65,112 @@
 									<li>
 										<label>
 											<input type="checkbox" disabled>
-											View Payroll
+											Employees Tab
+										</label>
+										<ul style="list-style: none;">
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access to list of employees
+												</label>
+											</li>
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access to list of loan applications
+												</label>
+											</li>
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access to list of absence notifications
+												</label>
+											</li>
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access to list of site management
+												</label>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<label>
+											<input type="checkbox" disabled>
+											Attendance Access
 										</label>
 									</li>
 									<li>
 										<label>
 											<input type="checkbox" disabled>
-											Manage AWOL employees
+											Payroll Access
 										</label>
 									</li>
 									<li>
 										<label>
 											<input type="checkbox" disabled>
-											Adding of employees
+											Reports
 										</label>
+										<ul style="list-style: none;">
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access Earnings
+												</label>
+											</li>
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access Contributions
+												</label>
+											</li>
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access Loans
+												</label>
+											</li>
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access Attendance
+												</label>
+											</li>
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access Company Expenses
+												</label>
+											</li>
+										</ul>
 									</li>
 									<li>
 										<label>
 											<input type="checkbox" disabled>
-											Editing details of employees
+											Options
 										</label>
-									</li>
-									<li>
-										<label>
-											<input type="checkbox" disabled>
-											Managing site movement
-										</label>
-									</li>
-									<li>
-										<label>
-											<input type="checkbox" disabled>
-											Adding of sites
-										</label>
-									</li>
-									<li>
-										<label>
-											<input type="checkbox" disabled>
-											Adding of positions
-										</label>
-									</li>
-									<li>
-										<label>
-											<input type="checkbox" disabled>
-											Viewing or reports
-										</label>
-									</li>
-									<li>
-										<label>
-											<input type="checkbox" disabled>
-											Managing loans application
-										</label>
-									</li>
-									<li>
-										<label>
-											<input type="checkbox" disabled>
-											Changing open/close payroll
-										</label>
+										<ul style="list-style: none;">
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access to site management
+												</label>
+											</li>
+											<li>
+												<label>
+													<input type="checkbox" disabled>
+													Access to position management
+												</label>
+											</li>
+										</ul>
 									</li>
 								</ul>
 							</div>
 							<input id="newAccount_submit" type="submit" style="display: none">
 						</form>
 					</div>
-					<div class="modal-footer pull-down">
-						<button class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<div class="modal-footer pul class="list-unstyled"l-down">
+						<button class="btn btn-defaul class="list-unstyled"t" data-dismiss="modal">Cancel</button>
 						<button class="btn btn-primary" onclick="newAccountFunction()" id="addAccountSubmit" disabled>Save Changes</button>
 					</div>
 					</div>
