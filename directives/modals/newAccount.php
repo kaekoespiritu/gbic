@@ -48,7 +48,7 @@
 								Choose account role:
 								<div class="radio">
 									<label>
-										<input type="radio" name="n_role[]" value="Employee" checked onchange="hideRestrictions()">
+										<input type="radio" name="n_role[]" value="Employee" onchange="hideRestrictions()">
 										Employee
 									</label>
 									<label>
@@ -64,31 +64,31 @@
 								<ul class="list-unstyled">
 									<li>
 										<label>
-											<input type="checkbox" disabled>
+											<input type="checkbox" id="restrictEmployeesTab" onchange="restrictEmployees(this.value)" disabled>
 											Employees Tab
 										</label>
 										<ul style="list-style: none;">
 											<li>
 												<label>
-													<input type="checkbox" disabled>
+													<input type="checkbox" name="res_listOfEmployees" disabled>
 													Access to list of employees
 												</label>
 											</li>
 											<li>
 												<label>
-													<input type="checkbox" disabled>
+													<input type="checkbox" name="res_listOfLoanApp" disabled>
 													Access to list of loan applications
 												</label>
 											</li>
 											<li>
 												<label>
-													<input type="checkbox" disabled>
+													<input type="checkbox" name="res_listOfAbsence" disabled>
 													Access to list of absence notifications
 												</label>
 											</li>
 											<li>
 												<label>
-													<input type="checkbox" disabled>
+													<input type="checkbox" name="res_listOfSiteManage" disabled>
 													Access to list of site management
 												</label>
 											</li>
@@ -96,49 +96,49 @@
 									</li>
 									<li>
 										<label>
-											<input type="checkbox" disabled>
+											<input type="checkbox" name="res_Attedance" disabled>
 											Attendance Access
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox" disabled>
+											<input type="checkbox" name="res_Payroll" disabled>
 											Payroll Access
 										</label>
 									</li>
 									<li>
 										<label>
-											<input type="checkbox" disabled>
+											<input type="checkbox" name="res_Reports" onchange="restrictReports()" disabled>
 											Reports
 										</label>
 										<ul style="list-style: none;">
 											<li>
 												<label>
-													<input type="checkbox" disabled>
+													<input type="checkbox" name="res_EarningsReport" disabled>
 													Access Earnings
 												</label>
 											</li>
 											<li>
 												<label>
-													<input type="checkbox" disabled>
+													<input type="checkbox" name="res_ContributionsReport" disabled>
 													Access Contributions
 												</label>
 											</li>
 											<li>
 												<label>
-													<input type="checkbox" disabled>
+													<input type="checkbox" name="res_LoansReport" disabled>
 													Access Loans
 												</label>
 											</li>
 											<li>
 												<label>
-													<input type="checkbox" disabled>
+													<input type="checkbox" name="res_AttendanceReport" disabled>
 													Access Attendance
 												</label>
 											</li>
 											<li>
 												<label>
-													<input type="checkbox" disabled>
+													<input type="checkbox" name="res_CompanyExpensesReport" disabled>
 													Access Company Expenses
 												</label>
 											</li>
@@ -146,19 +146,19 @@
 									</li>
 									<li>
 										<label>
-											<input type="checkbox" disabled>
+											<input type="checkbox" name="res_Options" onchange="restrictOptions()" disabled>
 											Options
 										</label>
 										<ul style="list-style: none;">
 											<li>
 												<label>
-													<input type="checkbox" disabled>
+													<input type="checkbox" name="res_SiteManage" disabled>
 													Access to site management
 												</label>
 											</li>
 											<li>
 												<label>
-													<input type="checkbox" disabled>
+													<input type="checkbox" name="res_PositionManage" disabled>
 													Access to position management
 												</label>
 											</li>

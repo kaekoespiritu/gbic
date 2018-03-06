@@ -27,7 +27,7 @@
 												<h4>
 													".$AcctRow['lastname'].", ".$AcctRow['firstname']."
 												</h4>
-												<button class='btn btn-default' data-toggle='modal' data-target='#setRestrictions'>
+												<button class='btn btn-default' data-toggle='modal' data-target='#setRestrictions' onclick='editRestrictions(\"".$AcctRow['username']."\")'>
 													Set Restrictions
 												</button>
 												<button class='btn btn-danger' onclick='removeAccount(\"".$AcctRow['username']."\")''>

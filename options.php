@@ -344,6 +344,21 @@ $adminRole = $adminArr['role'];
 			}
 		});
 	}
+
+	function editRestrictions(user) {
+		$.ajax({
+			url:"fetch_edit_restrictions.php",
+			method:"POST",
+			data:{
+				username: user
+			},
+			success:function(data)
+			{
+				 $('#restrictionsData').html(data);
+			}
+		});
+	}
+
 </script>
 
 </div>

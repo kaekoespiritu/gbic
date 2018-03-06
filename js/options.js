@@ -101,6 +101,8 @@
 				
 				for(var i = 0; i < checkboxlength; i++){
 					checkbox[i].disabled = true;
+					checkbox[i].checked = true;
+
 				}
 
 			}
@@ -109,6 +111,7 @@
 				// If previously selected admin revert changes
 				for(var i = 0; i < checkboxlength; i++){
 					checkbox[i].disabled = false;
+					checkbox[i].checked = false;
 				}
 			}
 		}
@@ -162,3 +165,130 @@
 				}
 			});
 		}
+
+		//Restrictions
+
+		function restrictEmployees() {
+
+			var employeeTab = document.getElementById('restrictEmployeesTab');
+
+			if(employeeTab.checked == true){
+				document.getElementsByName('res_listOfEmployees')[0].checked = true;
+				document.getElementsByName('res_listOfLoanApp')[0].checked = true;
+				document.getElementsByName('res_listOfAbsence')[0].checked = true;
+				document.getElementsByName('res_listOfSiteManage')[0].checked = true;
+			}
+			else{
+				document.getElementsByName('res_listOfEmployees')[0].checked = false;
+				document.getElementsByName('res_listOfLoanApp')[0].checked = false;
+				document.getElementsByName('res_listOfAbsence')[0].checked = false;
+				document.getElementsByName('res_listOfSiteManage')[0].checked = false;
+			}
+
+		}
+
+		function restrictReports() {
+
+			var reportsTab = document.getElementsByName('res_Reports')[0];
+
+			if(reportsTab.checked == true){
+				document.getElementsByName('res_EarningsReport')[0].checked = true;
+				document.getElementsByName('res_ContributionsReport')[0].checked = true;
+				document.getElementsByName('res_LoansReport')[0].checked = true;
+				document.getElementsByName('res_AttendanceReport')[0].checked = true;
+				document.getElementsByName('res_CompanyExpensesReport')[0].checked = true;
+			}
+			else{
+				document.getElementsByName('res_EarningsReport')[0].checked = false;
+				document.getElementsByName('res_ContributionsReport')[0].checked = false;
+				document.getElementsByName('res_LoansReport')[0].checked = false;
+				document.getElementsByName('res_AttendanceReport')[0].checked = false;
+				document.getElementsByName('res_CompanyExpensesReport')[0].checked = false;
+			}
+		}
+
+		function restrictOptions() {
+
+			var optionsTab = document.getElementsByName('res_Options')[0];
+
+			if(optionsTab.checked == true){
+				document.getElementsByName('res_SiteManage')[0].checked = true;
+				document.getElementsByName('res_PositionManage')[0].checked = true;
+			}
+			else{
+				document.getElementsByName('res_SiteManage')[0].checked = false;
+				document.getElementsByName('res_PositionManage')[0].checked = false;
+			}
+		}
+
+		//Edit Restrictions
+
+		function restrictEmployeesEdit() {
+
+			var employeeTab = document.getElementById('restrictEmployeesTabEdit');
+
+			if(employeeTab.checked == true){
+				document.getElementsByName('res_listOfEmployeesEdit')[0].checked = true;
+				document.getElementsByName('res_listOfLoanAppEdit')[0].checked = true;
+				document.getElementsByName('res_listOfAbsenceEdit')[0].checked = true;
+				document.getElementsByName('res_listOfSiteManageEdit')[0].checked = true;
+			}
+			else{
+				document.getElementsByName('res_listOfEmployeesEdit')[0].checked = false;
+				document.getElementsByName('res_listOfLoanAppEdit')[0].checked = false;
+				document.getElementsByName('res_listOfAbsenceEdit')[0].checked = false;
+				document.getElementsByName('res_listOfSiteManageEdit')[0].checked = false;
+			}
+
+		}
+
+		function restrictReportsEdit() {
+
+			var reportsTab = document.getElementsByName('res_ReportsEdit')[0];
+
+			if(reportsTab.checked == true){
+				document.getElementsByName('res_EarningsReportEdit')[0].checked = true;
+				document.getElementsByName('res_ContributionsReportEdit')[0].checked = true;
+				document.getElementsByName('res_LoansReportEdit')[0].checked = true;
+				document.getElementsByName('res_AttendanceReportEdit')[0].checked = true;
+				document.getElementsByName('res_CompanyExpensesReportEdit')[0].checked = true;
+			}
+			else{
+				document.getElementsByName('res_EarningsReportEdit')[0].checked = false;
+				document.getElementsByName('res_ContributionsReportEdit')[0].checked = false;
+				document.getElementsByName('res_LoansReportEdit')[0].checked = false;
+				document.getElementsByName('res_AttendanceReportEdit')[0].checked = false;
+				document.getElementsByName('res_CompanyExpensesReportEdit')[0].checked = false;
+			}
+		}
+
+		function restrictOptionsEdit() {
+
+			var optionsTab = document.getElementsByName('res_OptionsEdit')[0];
+
+			if(optionsTab.checked == true){
+				document.getElementsByName('res_SiteManageEdit')[0].checked = true;
+				document.getElementsByName('res_PositionManageEdit')[0].checked = true;
+			}
+			else{
+				document.getElementsByName('res_SiteManageEdit')[0].checked = false;
+				document.getElementsByName('res_PositionManageEditEdit')[0].checked = false;
+			}
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
