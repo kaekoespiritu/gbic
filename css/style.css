@@ -456,10 +456,10 @@ hr
   margin-right: 15px;
 }
 
-.disabletotally:hover
+.disabletotally
 {
   pointer-events: none;
-  cursor: not-allowed;
+  opacity: 0.4;
 }
 
 .nopadding
