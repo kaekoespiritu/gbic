@@ -34,7 +34,7 @@ if(isset($_SESSION['user_logged_in']))
 					<div class="modal-body">
 						<label>
 							Username:
-							<input type="text" class="form-control" id="forgotPassUsername" name="forgot_username">
+							<input type="text" class="form-control" id="forgotPassUsername" name="forgot_username" autocomplete="off">
 						</label>
 					</div>
 					<div class="modal-footer">
@@ -93,7 +93,7 @@ if(isset($_SESSION['user_logged_in']))
 						<div class="form-group">
 							<label for="username" class="control-label col-md-3 login-text">Username</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="username">
+								<input type="text" class="form-control" name="username" autocomplete="off">
 							</div>
 						</div>
 
@@ -103,7 +103,7 @@ if(isset($_SESSION['user_logged_in']))
 						<div class="form-group">
 							<label for="password" class="control-label col-md-3 login-text">Password</label>
 							<div class="col-md-9">
-								<input type="password" class="form-control" name="password">
+								<input type="password" class="form-control" name="password" autocomplete="off">
 							</div>
 						</div>
 

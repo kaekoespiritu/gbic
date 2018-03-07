@@ -47,8 +47,26 @@
 
 	if($adminRestriction['role'] == "Employee")
 	{
+		$ListOfEmployees = "disabletotally";// 1
+		$listOfLoanApplications = "disabletotally";// 2
+		$listOfAbsenceNotification = "disabletotally";// 3  
+		$listOfSiteManagement = "disabletotally";// 4  	   
+		$attendanceAccess = "disabletotally";// 5 			   
+		$payrollAccess = "disabletotally";// 6 				   
+		$earningsReport = "disabletotally";// 7 			   
+		$contributionsReport = "disabletotally";// 8 		   
+		$loansReport = "disabletotally";// 9 				   
+		$attendanceReport = "disabletotally";// 10 			   
+		$companyExpensesReport = "disabletotally";// 11 	   
+		$siteManagement = "disabletotally";// 12	           
+		$positionManagement = "disabletotally";// 13	
+		//Main tabs
+		$employeesTab = "";
+		$reportsTab = "";
 		for($count = 0; $count < $resCount; $count++)
 		{
+			
+			Print "<script>console.log('count: ".$restrictions[$count]."')</script>";
 			switch($restrictions[$count])
 			{
 				case "1": $ListOfEmployees = ""; break;
@@ -69,12 +87,26 @@
 
 		if($ListOfEmployees != "" && $listOfLoanApplications != "" && $listOfAbsenceNotification != "" && $listOfSiteManagement != "")
 		{
-			$employeesTab = "";//Disable the whole employees tab if employee dont have access in it
+			$employeesTab = "disabletotally";//Disable the whole employees tab if employee dont have access in it
 		}
 		if($earningsReport != "" && $contributionsReport != "" && $loansReport != "" && $attendanceReport != "" && $companyExpensesReport != "")
 		{
-			$reportsTab = "";//Disable the whole employees tab if employee dont have access in it
+			$reportsTab = "disabletotally";//Disable the whole employees tab if employee dont have access in it
 		}
+
+		Print "<script>console.log('ListOfEmployees: ".$ListOfEmployees."')</script>";
+		Print "<script>console.log('listOfLoanApplications: ".$listOfLoanApplications."')</script>";
+		Print "<script>console.log('listOfAbsenceNotification: ".$listOfAbsenceNotification."')</script>";
+		Print "<script>console.log('listOfSiteManagement: ".$listOfSiteManagement."')</script>";
+		Print "<script>console.log('attendanceAccess: ".$attendanceAccess."')</script>";
+		Print "<script>console.log('payrollAccess: ".$payrollAccess."')</script>";
+		Print "<script>console.log('earningsReport: ".$earningsReport."')</script>";
+		Print "<script>console.log('contributionsReport: ".$contributionsReport."')</script>";
+		Print "<script>console.log('loansReport: ".$loansReport."')</script>";
+		Print "<script>console.log('attendanceReport: ".$attendanceReport."')</script>";
+		Print "<script>console.log('companyExpensesReport: ".$companyExpensesReport."')</script>";
+		Print "<script>console.log('employeesTab: ".$ListOfEmployees."')</script>";
+		Print "<script>console.log('reportsTab: ".$ListOfEmployees."')</script>";
 	}
 	
 
@@ -108,7 +140,7 @@
 	<!-- ATTENDANCE BUTTON -->
 	<div id="attendance" class="col-md-1 navibutton">
 	<div class="flipdown">
-		<a href="attendance.php" class="<?php Print $attendanceAccess?>>
+		<a href="attendance.php" class="<?php Print $attendanceAccess?>">
 			<img src="Images/attendance.png" class="center-block">
 			<h6 class="text-center">ATTENDANCE</h6>
 		</a>
