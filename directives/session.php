@@ -10,14 +10,33 @@ if(!isset($_SESSION['user_logged_in']))
 
 function restrictions($page) 
 {
+	################ LEGEND ################
+	########################################
+	#									   #
+	#	1 - List of employees			   #
+	#	2 - list of loan applications	   #
+	#	3 - list of absence notification   #
+	#	4 - list of site management  	   #	
+	#	5 - attendance access 			   #
+	#	6 - payroll access 				   #
+	#	7 - earnings report 			   #
+	#	8 - contributions report 		   #
+	#	9 - loans report 				   #
+	#	10 - attendance report 			   #
+	#	11 - company expenses report 	   #
+	#	12 - site management	           #
+	#	13 - position management	       #
+	#									   #
+	########################################
+	
 	$pageNumber = $page; // page number restriction
 	$admin = $_SESSION['user_logged_in'];//gets the logged in admin
-	$restrictCheck = "SELECT restrictions FROM adminsitrator WHERE username = '$admin'";
+	$restrictCheck = "SELECT restrictions FROM administrator WHERE username = '$admin'";
 	$restrictQuery = mysql_query($restrictCheck);
 
 	$adminRestriction = mysql_fetch_assoc($restrictQuery);
 
-	$restrictions = explode(" " ,$adminRestriction['restrictions']);
+	$restrictions = explode("-" ,$adminRestriction['restrictions']);
 
 	$restrictBool = true;//if boolean is false then employee is restricted from the module
 
