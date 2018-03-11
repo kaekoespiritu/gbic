@@ -55,8 +55,8 @@
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_individual_loans.php?type=Loans&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Loans</a></li>
 						<li>Individual <?php Print $loanType ?> Loan Report for <?php Print $empArr['lastname'].", ".$empArr['firstname']." | ".$empArr['position']." at ".$empArr['site']?></li>
-						<button class="btn btn-primary pull-right">
-							Print <?php Print $loanType ?>
+						<button class="btn btn-primary pull-right" onclick="excelPrint('<?php Print $type ?>','<?php Print $empid ?>')">
+							Print <?php Print $empArr['firstname']." ".$empArr['lastname']."'s ".$loanType ?> Report
 						</button>
 					</ol>
 				</div>
@@ -143,6 +143,10 @@
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script>
 		document.getElementById("reports").setAttribute("style", "background-color: #10621e;");
+
+		function excelPrint(type, id) {
+			window.location.assign("print_individual_loan.php?empid="+id+"&type="+type);
+		}
 	</script>
 </body>
 </html>

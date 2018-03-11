@@ -93,20 +93,6 @@
 		{
 			$reportsTab = "disabletotally";//Disable the whole employees tab if employee dont have access in it
 		}
-
-		Print "<script>console.log('ListOfEmployees: ".$ListOfEmployees."')</script>";
-		Print "<script>console.log('listOfLoanApplications: ".$listOfLoanApplications."')</script>";
-		Print "<script>console.log('listOfAbsenceNotification: ".$listOfAbsenceNotification."')</script>";
-		Print "<script>console.log('listOfSiteManagement: ".$listOfSiteManagement."')</script>";
-		Print "<script>console.log('attendanceAccess: ".$attendanceAccess."')</script>";
-		Print "<script>console.log('payrollAccess: ".$payrollAccess."')</script>";
-		Print "<script>console.log('earningsReport: ".$earningsReport."')</script>";
-		Print "<script>console.log('contributionsReport: ".$contributionsReport."')</script>";
-		Print "<script>console.log('loansReport: ".$loansReport."')</script>";
-		Print "<script>console.log('attendanceReport: ".$attendanceReport."')</script>";
-		Print "<script>console.log('companyExpensesReport: ".$companyExpensesReport."')</script>";
-		Print "<script>console.log('employeesTab: ".$ListOfEmployees."')</script>";
-		Print "<script>console.log('reportsTab: ".$ListOfEmployees."')</script>";
 	}
 	
 
