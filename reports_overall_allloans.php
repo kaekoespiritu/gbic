@@ -2,17 +2,14 @@
 <?php
 	include('directives/session.php');
 	include('directives/db.php');
-
 	$site = $_GET['site'];
 	$period = $_GET['period'];
-
 //Middleware
 	//site Checker 
 	$siteCheck = "SELECT * FROM site WHERE location = '$site'";
 	$siteQuery = mysql_query($siteCheck);
 	if(mysql_num_rows($siteQuery) == 0)
 		header("location: index.php");
-
 	//period Checker
 	switch($period)
 	{
@@ -22,9 +19,7 @@
 		case "year": $periodDisplay = "Yearly"; break;
 		default: header("location: index.php");
 	}
-
 	$loansBool = false;//boolean for post all
-
 	if(isset($_POST['date']))
 	{
 		if($_POST['date'] == "all")
@@ -64,7 +59,7 @@
 
 			<div>
 
-				<div class="col-md-4 col-md-push-4">
+				<div class="col-md-6">
 						<h4>Select Period</h4>
 						<select onchange="periodChange(this.value)" class="form-control" id="period">
 							<?php 
@@ -86,8 +81,7 @@
 									Print "<option value='year'>Yearly</option>";
 							?>
 						</select>
-				</div>
-
+					</div>
 					<?php
 					if($period != "all") 
 					{
@@ -95,7 +89,6 @@
 									<h4>Select <?php Print $period?></h4>
 									<select class="form-control" onchange="changeDate(this.value)">
 										<option hidden>Choose a '.$period.'</option>';
-
 							
 							$payrollDates = "SELECT DISTINCT date FROM payroll";
 							$payrollDQuery = mysql_query($payrollDates) or die(mysql_error());
@@ -108,7 +101,6 @@
 							}
 							else
 									Print "<option value='all'>All</option>";
-
 							if(mysql_num_rows($payrollDQuery) > 0)//check if there's payroll
 							{
 								$monthNoRep = "";
@@ -141,7 +133,6 @@
 										$payrollArrDate = explode(" ", $payrollDateArr['date']);
 										$payrollMonth = $payrollArrDate[0];
 										$payrollYear = $payrollArrDate[2];
-
 										if($monthNoRep != $payrollMonth." ".$payrollYear)
 										{	
 											if(isset($_POST['date']))
@@ -167,7 +158,6 @@
 										$payrollArrDate = explode(" ", $payrollDateArr['date']);
 										$payrollYear = $payrollArrDate[2];
 										$yearBef = $payrollYear -1;//gets the year before
-
 										if($yearNoRep != $payrollYear)
 										{	
 											if(isset($_POST['date']))
@@ -200,214 +190,130 @@
 								</div>';
 					}
 					?>
+				<button class="btn btn-default pull-down">
+					Print <?php Print $periodDisplay?>
+				</button>
 
-				<div class="col-md-12">
-					<button class="btn btn-primary pull-down">
-						Print <?php Print $periodDisplay?>
-					</button>
-				</div>
-
-				<div class="col-md-12">
-					<table class="table table-bordered pull-down">
-						<tr>
-							<?php 
-							if(!isset($_POST['date']) || $loansBool)
-								Print "	<td colspan='3'>
-											Period: All
-										</td>";
-							else
-								Print "	<td colspan='3'>
-											Period: ".$periodDisplay."
-										</td>";
-							?>
-							
-							<td colspan="5" rowspan="2">
-								Loan Type Report
-							</td>
-						</tr>
-						<tr>
-							<?php 
-							if(isset($_POST['date']))
+				<table class="table table-bordered pull-down">
+					<tr>
+						<?php 
+						if(!isset($_POST['date']) || $loansBool)
+							Print "	<td colspan='3'>
+										Period: All
+									</td>";
+						else
+							Print "	<td colspan='3'>
+										Period: ".$periodDisplay."
+									</td>";
+						?>
+						
+						<td colspan="5" rowspan="2">
+							Loan Type Report
+						</td>
+					</tr>
+					<tr>
+						<?php 
+						if(isset($_POST['date']))
+						{
+							if($_POST['date'] == "all")
+							{}
+							else if($_POST['numLen'] == 3)//Weekly
 							{
-								if($_POST['date'] == "all")
-								{}
-								else if($_POST['numLen'] == 3)//Weekly
-								{
-									$startDate = date('F j, Y', strtotime('-6 day', strtotime($_POST['date'])));
-									$endDate = $_POST['date'];
-									Print "	<td colspan='3'>
-												Date: ".$startDate." - ".$endDate."
-											</td>";
-								}
-								else if($_POST['numLen'] == 2)//Monthly
-								{
-									$dateSplit = explode(' ', $_POST['date']);
-									$month = $dateSplit[0];
-									$year = $dateSplit[1];
-									Print "	<td colspan='3'>
-												Date: ".$month." ".$year."
-											</td>";
-								}
-								else if($_POST['numLen'] == 1)//Yearly
-								{
-									$year = $_POST['date'];
-									Print "	<td colspan='3'>
-												Date: ".$year."
-											</td>";
-								}
-
+								$startDate = date('F j, Y', strtotime('-6 day', strtotime($_POST['date'])));
+								$endDate = $_POST['date'];
+								Print "	<td colspan='3'>
+											Date: ".$startDate." - ".$endDate."
+										</td>";
 							}
-							
-							?>
-							
-						</tr>
-						<tr>
-							<td>
-								Name
-							</td>
-							<td>
-								Site
-							</td>
-							<td>
-								Position
-							</td>
-							<td>
-								SSS
-							</td>
-							<td>
-								PagIBIG
-							</td>
-							<td>
-								Old Vale
-							</td>
-							<td>
-								New Vale
-							</td>
-						</tr>
-						<?php
-							$employee = "SELECT * FROM employee WHERE site = '$site' AND employment_status = '1' ORDER BY lastname ASC, position ASC";
-
-							$empQuery = mysql_query($employee) or die (mysql_error());
-
-							$sssGrandTotal = 0;
-							$PagibigGrandTotal = 0;
-							$newValeGrandTotal = 0;
-							$oldValeGrandTotal = 0;
-							
-							
-							while($empArr = mysql_fetch_assoc($empQuery))
+							else if($_POST['numLen'] == 2)//Monthly
 							{
-								$empid = $empArr['empid'];
-								//check if employee has past loans
-								for($counter = 0; $counter <= 3 ;$counter++)
+								$dateSplit = explode(' ', $_POST['date']);
+								$month = $dateSplit[0];
+								$year = $dateSplit[1];
+								Print "	<td colspan='3'>
+											Date: ".$month." ".$year."
+										</td>";
+							}
+							else if($_POST['numLen'] == 1)//Yearly
+							{
+								$year = $_POST['date'];
+								Print "	<td colspan='3'>
+											Date: ".$year."
+										</td>";
+							}
+						}
+						
+						?>
+						
+					</tr>
+					<tr>
+						<td>
+							Name
+						</td>
+						<td>
+							Site
+						</td>
+						<td>
+							Position
+						</td>
+						<td>
+							SSS
+						</td>
+						<td>
+							PagIBIG
+						</td>
+						<td>
+							Old Vale
+						</td>
+						<td>
+							New Vale
+						</td>
+					</tr>
+					<?php
+						$employee = "SELECT * FROM employee WHERE site = '$site' AND employment_status = '1' ORDER BY lastname ASC, position ASC";
+						$empQuery = mysql_query($employee) or die (mysql_error());
+						$sssGrandTotal = 0;
+						$PagibigGrandTotal = 0;
+						$newValeGrandTotal = 0;
+						$oldValeGrandTotal = 0;
+						
+						
+						while($empArr = mysql_fetch_assoc($empQuery))
+						{
+							$empid = $empArr['empid'];
+							//check if employee has past loans
+							for($counter = 0; $counter <= 3 ;$counter++)
+							{
+								switch($counter) 
 								{
-<<<<<<< HEAD
+									case 0: $loanType = 'PagIBIG';break;
+									case 1: $loanType = 'SSS';break;
+									case 2: $loanType = 'NewVale';break;
+									case 3: $loanType = 'OldVale';break;
+								}
+								if(isset($_POST['date']))
+								{
 									if($_POST['date'] == "all")
-										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC, time DESC LIMIT 1";
-
+										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY date DESC, time DESC LIMIT 1";
 									else if($_POST['numLen'] == 3)//weekly
-										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC, time DESC LIMIT 1";
-
+										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY date DESC, time DESC LIMIT 1";
 									else if($_POST['numLen'] == 2)//monthly
-										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND (date LIKE '$month%' AND date LIKE '%$year') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC, time DESC LIMIT 1";
-
+										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND (date LIKE '$month%' AND date LIKE '%$year') ORDER BY date DESC, time DESC LIMIT 1";
 									else if($_POST['numLen'] == 1)//yearly
-										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC, time DESC LIMIT 1";
+										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND date LIKE '%$year' ORDER BY date DESC, time DESC LIMIT 1";
 								}
 								else
-									$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC, time DESC LIMIT 1";
+									$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY date DESC, time DESC LIMIT 1";
 								
 								
 								$loanCheckQuery = mysql_query($loanChecker) or die (mysql_error());
 								switch($counter) 
-=======
-									switch($counter) 
-									{
-										case 0: $loanType = 'PagIBIG';break;
-										case 1: $loanType = 'SSS';break;
-										case 2: $loanType = 'NewVale';break;
-										case 3: $loanType = 'OldVale';break;
-									}
-									if(isset($_POST['date']))
-									{
-										if($_POST['date'] == "all")
-											$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY date DESC, time DESC LIMIT 1";
-
-										else if($_POST['numLen'] == 3)//weekly
-											$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY date DESC, time DESC LIMIT 1";
-
-										else if($_POST['numLen'] == 2)//monthly
-											$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND (date LIKE '$month%' AND date LIKE '%$year') ORDER BY date DESC, time DESC LIMIT 1";
-
-										else if($_POST['numLen'] == 1)//yearly
-											$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND date LIKE '%$year' ORDER BY date DESC, time DESC LIMIT 1";
-									}
-									else
-										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY date DESC, time DESC LIMIT 1";
-									
-									
-									$loanCheckQuery = mysql_query($loanChecker) or die (mysql_error());
-									switch($counter) 
-									{
-										case 0: $pagibigLoan = mysql_fetch_assoc($loanCheckQuery);break;
-										case 1: $sssLoan = mysql_fetch_assoc($loanCheckQuery);break;
-										case 2: $newValeLoan = mysql_fetch_assoc($loanCheckQuery);break;
-										case 3: $oldValeLoan = mysql_fetch_assoc($loanCheckQuery);break;
-									}
-								}
-								if(	$pagibigLoan['balance'] != 0 || 
-									$sssLoan['balance'] != 0 || 
-									$newValeLoan['balance'] != 0 || 
-									$oldValeLoan['balance'] != 0)
->>>>>>> dde179aeb72da96ce8af1efe0e8aaf10f5fdf51e
 								{
-									Print "
-											<tr>
-												<td>
-													".$empArr['lastname'].", ".$empArr['firstname']."
-												</td>
-												<td>
-													".$empArr['site']."
-												</td>
-												<td>
-													".$empArr['position']."
-												</td>";
-									if($sssLoan['balance'] != 0)
-										Print	"<td>
-													".$sssLoan['balance']."
-												</td>";
-									else
-										Print	"<td>
-													N/A
-												</td>";	
-									if($pagibigLoan['balance'] != 0)
-										Print	"<td>
-													".$pagibigLoan['balance']."
-												</td>";
-									else
-										Print	"<td>
-													N/A
-												</td>";	
-									if($oldValeLoan['balance'] != 0)
-										Print	"<td>
-													".$oldValeLoan['balance']."
-												</td>";
-									else
-										Print	"<td>
-													N/A
-												</td>";	
-									if($newValeLoan['balance'] != 0)
-										Print	"<td>
-													".$newValeLoan['balance']."
-												</td>";
-									else
-										Print	"<td>
-													N/A
-												</td>";	
-								
-
+									case 0: $pagibigLoan = mysql_fetch_assoc($loanCheckQuery);break;
+									case 1: $sssLoan = mysql_fetch_assoc($loanCheckQuery);break;
+									case 2: $newValeLoan = mysql_fetch_assoc($loanCheckQuery);break;
+									case 3: $oldValeLoan = mysql_fetch_assoc($loanCheckQuery);break;
 								}
-<<<<<<< HEAD
 							}
 							if(	$pagibigLoan['balance'] != 0 || 
 								$sssLoan['balance'] != 0 || 
@@ -427,7 +333,7 @@
 											</td>";
 								if($sssLoan['balance'] != 0)
 									Print	"<td>
-												".numberExactFormat($sssLoan['balance'], 2, '.', true)."
+												".$sssLoan['balance']."
 											</td>";
 								else
 									Print	"<td>
@@ -435,7 +341,7 @@
 											</td>";	
 								if($pagibigLoan['balance'] != 0)
 									Print	"<td>
-												".numberExactFormat($pagibigLoan['balance'], 2, '.', true)."
+												".$pagibigLoan['balance']."
 											</td>";
 								else
 									Print	"<td>
@@ -443,7 +349,7 @@
 											</td>";	
 								if($oldValeLoan['balance'] != 0)
 									Print	"<td>
-												".numberExactFormat($oldValeLoan['balance'], 2, '.', true)."
+												".$oldValeLoan['balance']."
 											</td>";
 								else
 									Print	"<td>
@@ -451,26 +357,15 @@
 											</td>";	
 								if($newValeLoan['balance'] != 0)
 									Print	"<td>
-												".numberExactFormat($newValeLoan['balance'], 2, '.', true)."
+												".$newValeLoan['balance']."
 											</td>";
 								else
 									Print	"<td>
 												N/A
 											</td>";	
 							
-=======
-								
->>>>>>> dde179aeb72da96ce8af1efe0e8aaf10f5fdf51e
-
-								
-								$sssGrandTotal += $sssLoan['balance'];
-								$PagibigGrandTotal += $pagibigLoan['balance'];
-								$newValeGrandTotal += $newValeLoan['balance'];
-								$oldValeGrandTotal += $oldValeLoan['balance'];
 							}
 							
-
-<<<<<<< HEAD
 							
 							$sssGrandTotal += $sssLoan['balance'];
 							$PagibigGrandTotal += $pagibigLoan['balance'];
@@ -478,7 +373,6 @@
 							$oldValeGrandTotal += $oldValeLoan['balance'];
 						}
 						
-
 						if(	$sssGrandTotal != 0 || 
 							$PagibigGrandTotal != 0 || 
 							$newValeGrandTotal != 0 || 
@@ -490,16 +384,16 @@
 									Total Overall Loans
 								</td>
 								<td>
-									".numberExactFormat($sssGrandTotal, 2, '.', true)."
+									".numberExactFormat($sssGrandTotal, 2, '.')."
 								</td>
 								<td>
-									".numberExactFormat($PagibigGrandTotal, 2, '.', true)."
+									".numberExactFormat($PagibigGrandTotal, 2, '.')."
 								</td>
 								<td>
-									".numberExactFormat($oldValeGrandTotal, 2, '.', true)."
+									".numberExactFormat($oldValeGrandTotal, 2, '.')."
 								</td>
 								<td>
-									".numberExactFormat($newValeGrandTotal, 2, '.', true)."
+									".numberExactFormat($newValeGrandTotal, 2, '.')."
 								</td>
 							</tr>
 								";
@@ -510,7 +404,7 @@
 									Grand Total Government Loans
 								</td>
 								<td colspan = '2'>
-									".numberExactFormat($govGrandtotal, 2, '.', true)."
+									".numberExactFormat($govGrandtotal, 2, '.')."
 								</td>
 								<td colspan = '2'>
 								</td>
@@ -525,80 +419,24 @@
 								<td colspan = '2'>
 								</td>
 								<td colspan = '2'>
-									".numberExactFormat($companyGrandtotal, 2, '.', true)."
+									".numberExactFormat($companyGrandtotal, 2, '.')."
 								</td>
 							</tr>
 								";
 						}
 						else
 						{
-=======
-							if(	$sssGrandTotal != 0 || 
-								$PagibigGrandTotal != 0 || 
-								$newValeGrandTotal != 0 || 
-								$oldValeGrandTotal != 0)
-							{
->>>>>>> dde179aeb72da96ce8af1efe0e8aaf10f5fdf51e
 							Print "
-								<tr>
-									<td colspan = '3'>
-										Total Overall Loans
-									</td>
-									<td>
-										".numberExactFormat($sssGrandTotal, 2, '.')."
-									</td>
-									<td>
-										".numberExactFormat($PagibigGrandTotal, 2, '.')."
-									</td>
-									<td>
-										".numberExactFormat($oldValeGrandTotal, 2, '.')."
-									</td>
-									<td>
-										".numberExactFormat($newValeGrandTotal, 2, '.')."
-									</td>
-								</tr>
-									";
-							$govGrandtotal = $sssGrandTotal + $PagibigGrandTotal;
-							Print "
-								<tr>
-									<td colspan = '3'>
-										Grand Total Government Loans
-									</td>
-									<td colspan = '2'>
-										".numberExactFormat($govGrandtotal, 2, '.')."
-									</td>
-									<td colspan = '2'>
-									</td>
-								</tr>
-									";
-							$companyGrandtotal = $newValeGrandTotal + $oldValeGrandTotal;
-							Print "
-								<tr>
-									<td colspan = '3'>
-										Grand Total Government Loans
-									</td>
-									<td colspan = '2'>
-									</td>
-									<td colspan = '2'>
-										".numberExactFormat($companyGrandtotal, 2, '.')."
-									</td>
-								</tr>
-									";
-							}
-							else
-							{
-								Print "
-								<tr>
-									<td colspan = '7'>
-										No loans report as of the moment.
-									</td>
-								</tr>
-									";
-							}
-						?>
-						
-					</table>
-				</div>
+							<tr>
+								<td colspan = '7'>
+									No loans report as of the moment.
+								</td>
+							</tr>
+								";
+						}
+					?>
+					
+				</table>
 			</div>
 		</div>
 
@@ -612,7 +450,6 @@
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script>
 		document.getElementById("reports").setAttribute("style", "background-color: #10621e;");
-
 		function periodChange(period) {
 			window.location.assign("reports_overall_allloans.php?site=<?php Print $site?>&period="+period);
 		}
