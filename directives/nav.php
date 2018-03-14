@@ -18,14 +18,14 @@
 	#									   #
 	########################################
 
-	$adminLoggedIn = $_SESSION['user_logged_in'];//gets the logged in admin
+	$adminLoggedIn = $_SESSION['user_logged_in'];//gets the logged in user
 
 	$restrictCheck = "SELECT * FROM administrator WHERE username = '$adminLoggedIn'";
 	$restrictQuery = mysql_query($restrictCheck) or die(mysql_error());
 
 	$adminRestriction = mysql_fetch_assoc($restrictQuery);
-	$restrictions = explode("-" ,$adminRestriction['restrictions']);
-	$resCount = count($restrictions);
+	$restrictions = explode("-" ,$adminRestriction['restrictions']);// separates string of restriction code
+	$resCount = count($restrictions);//counts elements in array starting from 1
 
 	//Preset variables
 	$ListOfEmployees = "";// 1
@@ -41,6 +41,7 @@
 	$companyExpensesReport = "";// 11 	   
 	$siteManagement = "";// 12	           
 	$positionManagement = "";// 13	
+
 	//Main tabs
 	$employeesTab = "";
 	$reportsTab = "";
@@ -56,13 +57,15 @@
 		$earningsReport = "disabletotally";// 7 			   
 		$contributionsReport = "disabletotally";// 8 		   
 		$loansReport = "disabletotally";// 9 				   
-		$attendanceReport = "disabletotally";// 10 			   
+		$attendanceReport = "disabletota1lly";// 10 			   
 		$companyExpensesReport = "disabletotally";// 11 	   
 		$siteManagement = "disabletotally";// 12	           
 		$positionManagement = "disabletotally";// 13	
+		
 		//Main tabs
 		$employeesTab = "";
 		$reportsTab = "";
+
 		for($count = 0; $count < $resCount; $count++)
 		{
 			
@@ -142,38 +145,38 @@
 	<!-- REPORTS BUTTON -->
 	<div id="reports" class="col-md-1 navibutton">
 	<div class="flipdown">
-		<a  class="reports flipbtn <?php Print $ListOfEmployees?>">
+		<a  class="reports flipbtn <?php Print $reportsTab?>">
 			<img src="Images/tax.png" class="center-block">
 			<h6 class="text-center">REPORTS <span class="caret"></span></h6>
 		</a>
 		<div class="flipdown-menu">
 			<div class="sub-flipdown">
 				<div class="sub-flipdown-menu">
-					<a href="reports_individual_earnings.php?type=Earnings&period=week&site=null&position=null" > Individual</a>
-					<a href="reports_overall_earnings.php?type=Earnings&period=Weekly"> Overall</a>
+					<a href="reports_individual_earnings.php?type=Earnings&period=week&site=null&position=null" class="<?php Print $earningsReport?>"> Individual</a>
+					<a href="reports_overall_earnings.php?type=Earnings&period=Weekly" class="<?php Print $earningsReport?>"> Overall</a>
 				</div>
 				<a class="subflipbtn <?php Print $earningsReport?>">Earnings</a>
 				
 			</div>
 			<div class="sub-flipdown">
 				<div class="sub-flipdown-menu">
-					<a href="reports_individual_contributions.php?type=Contributions&period=week&site=null&position=null"> Individual</a>
-					<a href="reports_overall_contributions.php?type=Contributions&period=Weekly"> Overall</a>
+					<a href="reports_individual_contributions.php?type=Contributions&period=week&site=null&position=null" class="<?php Print $contributionsReport?>"> Individual</a>
+					<a href="reports_overall_contributions.php?type=Contributions&period=Weekly" class="<?php Print $contributionsReport?>"> Overall</a>
 				</div>
 				<a class="subflipbtn <?php Print $contributionsReport?>">Contributions</a>
 			</div>
 			<div class="sub-flipdown">
 				<div class="sub-flipdown-menu">
-					<a href="reports_individual_loans.php?type=Loans&period=week&site=null&position=null"> Individual</a>
-					<a href="reports_overall_loans.php?type=Loans&period=Weekly"> Overall</a>
+					<a href="reports_individual_loans.php?type=Loans&period=week&site=null&position=null" class="<?php Print $loansReport?>"> Individual</a>
+					<a href="reports_overall_loans.php?type=Loans&period=Weekly" class="<?php Print $loansReport?>"> Overall</a>
 				</div>
 				<a class="subflipbtn <?php Print $loansReport?>">Loans</a>
 				
 			</div>
 			<div class="sub-flipdown">
 				<div class="sub-flipdown-menu">
-					<a href="reports_individual_attendance.php?type=Attendance&period=week&site=null&position=null"> Individual</a>
-					<a href="reports_overall_attendance.php?type=Attendance&period=Weekly"> Overall</a>
+					<a href="reports_individual_attendance.php?type=Attendance&period=week&site=null&position=null" class="<?php Print $attendanceReport?>"> Individual</a>
+					<a href="reports_overall_attendance.php?type=Attendance&period=Weekly" class="<?php Print $attendanceReport?>"> Overall</a>
 				</div>
 				<a class="subflipbtn <?php Print $attendanceReport?>">Attendance</a>
 			</div>
