@@ -67,7 +67,7 @@
 											Security Question:
 											<!-- TODO: CHANGE DROPDOWN TO RADIO BUTTON -->
 											<div class="">
-											<select class="form-control" name="securityQuestion">
+											<select class="form-control fixed-width" name="securityQuestion">
 												<option value="" hidden>-- Choose security question --</option>
 												<?php Print $secretQuestions ?>
 											</select>

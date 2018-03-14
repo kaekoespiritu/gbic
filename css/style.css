@@ -280,6 +280,11 @@ body
 .overflow {
 overflow: auto;
 }
+.fixed-width {
+  width: 300px !important;
+}
+
+
 /*==================*/
 
 
