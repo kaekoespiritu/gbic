@@ -165,16 +165,17 @@ if(isset($_GET['search']))
 	<div class="modal fade" id="optionModal">
  		<div class="modal-dialog">
     		<div class="modal-content">
-      			<div class="modal-header">
-      				Select report type:
-      			</div>
       			<div class="modal-body">
-      				<a class="btn btn-primary" id="payrollButton">
-      					Payroll
+      				<a class="btn btn-default" id="payrollButton">
+      					<img src="Images/payroll.png" class="center-image">
+      					<h5>Payroll</h5>
       				</a>
-      				<a class="btn btn-primary" id="13thMonthButton">
-      					13th Month Pay
+      				<a class="btn btn-default" id="13thMonthButton">
+      					<img src="Images/13thmonthpay.png" class="center-image">
+      					<h5>13th Month Pay</h5>
       				</a>
+      				<h4 class="text-center pull-down">Click on the options above to view payroll options for SITE.</h4>
+      				<!-- TODO: Change site to sitename when selected -->
       			</div>
       		</div>
       	</div>

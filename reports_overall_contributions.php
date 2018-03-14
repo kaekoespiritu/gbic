@@ -186,7 +186,8 @@
       					<img src="Images/contributions-overall.png" class="center-image">
       					<h5>Overall</h5>
       				</a>
-      				<h4 class="text-center pull-down">Click on the options above to view overall contributions for site.</h4>
+      				<h4 class="text-center pull-down">Click on the options above to view overall contributions for SITE.</h4>
+      				<!-- TODO: Change site to sitename when selected -->
       			</div>
       		</div>
       	</div>
