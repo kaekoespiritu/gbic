@@ -46,6 +46,13 @@
 	$employeesTab = "";
 	$reportsTab = "";
 
+	//Change opening and closing payroll
+	$openNclosingPayroll = "";
+
+	//optionsTab
+	$manageEmployee = "";
+	$addNewAccountAdmin = "";
+
 	if($adminRestriction['role'] == "Employee")
 	{
 		$ListOfEmployees = "disabletotally";// 1
@@ -57,11 +64,18 @@
 		$earningsReport = "disabletotally";// 7 			   
 		$contributionsReport = "disabletotally";// 8 		   
 		$loansReport = "disabletotally";// 9 				   
-		$attendanceReport = "disabletota1lly";// 10 			   
+		$attendanceReport = "disabletotally";// 10 			   
 		$companyExpensesReport = "disabletotally";// 11 	   
 		$siteManagement = "disabletotally";// 12	           
 		$positionManagement = "disabletotally";// 13	
 		
+		//Change opening and closing payroll
+		$openNclosingPayroll = "disabletotally";
+
+		//optionsTab
+		$manageEmployee = "disabletotally";
+		$addNewAccountAdmin = "disabletotally";
+
 		//Main tabs
 		$employeesTab = "";
 		$reportsTab = "";
@@ -96,6 +110,8 @@
 		{
 			$reportsTab = "disabletotally";//Disable the whole employees tab if employee dont have access in it
 		}
+
+
 	}
 	
 

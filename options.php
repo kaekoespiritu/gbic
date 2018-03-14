@@ -42,7 +42,7 @@ $adminRole = $adminArr['role'];
 		<!-- Open/Close payroll options-->
 		<div class="col-md-10 col-md-offset-1 pull-down">
 
-			<div class="col-md-6">
+			<div class="col-md-6 <?php Print $openNclosingPayroll ?>">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Change opening and closing payroll</h3>
@@ -122,11 +122,11 @@ $adminRole = $adminArr['role'];
 							<button type="button" class="btn btn-default col-md-12" data-toggle="modal" data-target="#accountOptions"><span class="glyphicon glyphicon-user"></span> Options</button>
 						</div>
 						<!-- Only visible on admin side -->
-						<div class="col-md-12 margin-separator">
+						<div class="col-md-12 margin-separator <?php Print $addNewAccountAdmin ?>">
 							<button type="button" class="btn btn-default col-md-12" data-toggle="modal" data-target="#newAccount"><span class="glyphicon glyphicon-plus"></span> Add new account</button>
 						</div>
 						<!-- Only visible on admin side -->
-						<div class="col-md-12 margin-separator">
+						<div class="col-md-12 margin-separator <?php Print $manageEmployee ?>">
 							<button type="button" class="btn btn-default col-md-12" data-toggle="modal" data-target="#manageAccount"><span class="glyphicon glyphicon-cog"></span> Manage employees</button>
 						</div>
 					</div>
@@ -140,7 +140,7 @@ $adminRole = $adminArr['role'];
 
 
 		<div class="col-md-10 col-md-offset-1">
-			<div class="col-md-6">
+			<div class="col-md-6 <?php Print $siteManagement?>">
 
 				<!-- Site management -->
 				<div class="panel panel-default">
@@ -177,7 +177,7 @@ $adminRole = $adminArr['role'];
 			</div>
 
 			<!-- Position Management -->
-			<div class="col-md-6">
+			<div class="col-md-6 <?php Print $positionManagement?>">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">Position management</h3>
