@@ -333,7 +333,7 @@
 											</td>";
 								if($sssLoan['balance'] != 0)
 									Print	"<td>
-												".$sssLoan['balance']."
+												".numberExactFormat($sssLoan['balance'], 2, '.', true)."
 											</td>";
 								else
 									Print	"<td>
@@ -341,7 +341,7 @@
 											</td>";	
 								if($pagibigLoan['balance'] != 0)
 									Print	"<td>
-												".$pagibigLoan['balance']."
+												".numberExactFormat($pagibigLoan['balance'], 2, '.', true)."
 											</td>";
 								else
 									Print	"<td>
@@ -349,7 +349,7 @@
 											</td>";	
 								if($oldValeLoan['balance'] != 0)
 									Print	"<td>
-												".$oldValeLoan['balance']."
+												".numberExactFormat($oldValeLoan['balance'], 2, '.', true)."
 											</td>";
 								else
 									Print	"<td>
@@ -357,7 +357,7 @@
 											</td>";	
 								if($newValeLoan['balance'] != 0)
 									Print	"<td>
-												".$newValeLoan['balance']."
+												".numberExactFormat($newValeLoan['balance'], 2, '.', true)."
 											</td>";
 								else
 									Print	"<td>
@@ -384,16 +384,16 @@
 									Total Overall Loans
 								</td>
 								<td>
-									".numberExactFormat($sssGrandTotal, 2, '.')."
+									".numberExactFormat($sssGrandTotal, 2, '.', true)."
 								</td>
 								<td>
-									".numberExactFormat($PagibigGrandTotal, 2, '.')."
+									".numberExactFormat($PagibigGrandTotal, 2, '.', true)."
 								</td>
 								<td>
-									".numberExactFormat($oldValeGrandTotal, 2, '.')."
+									".numberExactFormat($oldValeGrandTotal, 2, '.', true)."
 								</td>
 								<td>
-									".numberExactFormat($newValeGrandTotal, 2, '.')."
+									".numberExactFormat($newValeGrandTotal, 2, '.', true)."
 								</td>
 							</tr>
 								";
@@ -404,7 +404,7 @@
 									Grand Total Government Loans
 								</td>
 								<td colspan = '2'>
-									".numberExactFormat($govGrandtotal, 2, '.')."
+									".numberExactFormat($govGrandtotal, 2, '.', true)."
 								</td>
 								<td colspan = '2'>
 								</td>
@@ -419,7 +419,7 @@
 								<td colspan = '2'>
 								</td>
 								<td colspan = '2'>
-									".numberExactFormat($companyGrandtotal, 2, '.')."
+									".numberExactFormat($companyGrandtotal, 2, '.', true)."
 								</td>
 							</tr>
 								";

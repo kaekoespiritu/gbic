@@ -42,6 +42,17 @@
 						<button class='btn btn-primary pull-right' onclick='printAllContributions()'>
 							Print Overall Contributions
 						</button>
+
+						<!-- Shortcut button for other reports -->
+						<button class='btn btn-danger pull-right' onclick="SSSshortcut()">
+							SSS
+						</button>
+						<button class='btn btn-danger pull-right' onclick="PagibigShortcut()">
+							Pagibig
+						</button>
+						<button class='btn btn-danger pull-right' onclick="PhilhealthShortcut()">
+							Philhealth
+						</button>
 					</ol>
 				</div>
 			</div>
@@ -882,6 +893,16 @@
 			window.location.assign("print_overall_contribution.php?site=<?php Print $site ?>&period="+period+"&date="+date+"&contribution=all");
 		}
 
+		function PagibigShortcut(){
+			window.location.assign("reports_overall_pagibig.php?site=<?php Print $site?>&period=week");
+		}
+
+		function SSSshortcut(){
+			window.location.assign("reports_overall_sss.php?site=<?php Print $site?>&period=week");
+		}
+		function PhilhealthShortcut(){
+			window.location.assign("reports_overall_philhealth.php?site=<?php Print $site?>&period=week");
+		}
 
 		//Disables the button if there's no data
 		$(document).ready(function(){

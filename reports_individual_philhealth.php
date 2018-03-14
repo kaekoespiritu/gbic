@@ -42,6 +42,13 @@
 						<button class='btn btn-primary pull-right' onclick="printPhilHealthContribution()">
 							Print Philhealth Contribution
 						</button>
+						<!-- Shortcut button for other reports -->
+						<button class='btn btn-danger pull-right' onclick="SSSshortcut()">
+							SSS
+						</button>
+						<button class='btn btn-danger pull-right' onclick="PagibigShortcut()">
+							Pagibig
+						</button>
 					</ol>
 				</div>
 			</div>
@@ -617,6 +624,14 @@
 			var period = document.getElementById('period').value;
 			var date = document.getElementById('postDate').value;
 			window.location.assign("print_individual_contribution.php?empid=<?php Print $empid ?>&period="+period+"&date="+date+"&contribution=PhilHealth");
+		}
+
+		function SSSshortcut(){
+			window.location.assign("reports_individual_sss.php?empid=<?php Print $empid?>&period=week");
+		}
+
+		function PagibigShortcut(){
+			window.location.assign("reports_individual_pagibig.php?empid=<?php Print $empid?>&period=week");
 		}
 
 		//Disables the button if there's no data

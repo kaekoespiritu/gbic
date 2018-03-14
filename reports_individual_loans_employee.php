@@ -19,12 +19,17 @@
 		if(mysql_num_rows($empQuery) == 0)
 			header("location: index.php");
 
+		//disble button if chosen
+		$sssDisable = "";
+		$pagibigDisable = "";
+		$newValeDisable = "";
+		$oldValeDisable = "";
 		switch($type)
 		{
-			case "sss": $loanType = "SSS" ;break;
-			case "pagibig": $loanType = "PagIbig" ;break;
-			case "oldvale": $loanType = "Old Vale" ;break;
-			case "newvale": $loanType = "New Vale" ;break;
+			case "sss": $loanType = "SSS"; $sssDisable = "disabletotally"; break;
+			case "pagibig": $loanType = "PagIbig"; $pagibigDisable = "disabletotally";break;
+			case "oldvale": $loanType = "Old Vale"; $oldValeDisable = "disabletotally";break;
+			case "newvale": $loanType = "New Vale"; $newValeDisable = "disabletotally";break;
 			default: header("location: index.php");
 		}
 	}
@@ -57,6 +62,20 @@
 						<li>Individual <?php Print $loanType ?> Loan Report for <?php Print $empArr['lastname'].", ".$empArr['firstname']." | ".$empArr['position']." at ".$empArr['site']?></li>
 						<button class="btn btn-primary pull-right" onclick="excelPrint('<?php Print $type ?>','<?php Print $empid ?>')">
 							Print <?php Print $empArr['firstname']." ".$empArr['lastname']."'s ".$loanType ?> Report
+						</button>
+
+						<!-- Shortcut button for other reports -->
+						<button class='btn btn-danger pull-right <?php Print $sssDisable?>' onclick="NextLoanReport('sss')">
+							SSS
+						</button>
+						<button class='btn btn-danger pull-right <?php Print $pagibigDisable?>' onclick="NextLoanReport('pagibig')">
+							Pagibig
+						</button>
+						<button class='btn btn-danger pull-right <?php Print $newValeDisable?>' onclick="NextLoanReport('newvale')">
+							New Vale
+						</button>
+						<button class='btn btn-danger pull-right <?php Print $oldValeDisable?>' onclick="NextLoanReport('oldvale')">
+							Old Vale
 						</button>
 					</ol>
 				</div>
@@ -143,6 +162,11 @@
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script>
 		document.getElementById("reports").setAttribute("style", "background-color: #10621e;");
+
+		function NextLoanReport(type){
+			window.location.assign("reports_individual_loans_employee.php?empid=<?php Print $empid?>&type="+type);
+		}
+
 
 		function excelPrint(type, id) {
 			window.location.assign("print_individual_loan.php?empid="+id+"&type="+type);
