@@ -79,13 +79,10 @@
 						<?php
 							$payDateBool = true;//boolean for displaying the present date
 
-<<<<<<< HEAD
+
 						$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC";
 						$payDateQuery = mysql_query($payrollDate);
-=======
-							$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY date DESC";
-							$payDateQuery = mysql_query($payrollDate);
->>>>>>> dde179aeb72da96ce8af1efe0e8aaf10f5fdf51e
+
 
 							if(mysql_num_rows($payDateQuery) != 0)
 							{

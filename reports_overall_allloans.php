@@ -27,6 +27,13 @@
 			$loansBool = true;
 		}
 	}
+
+	// for the printable
+	$date = "all";
+	if(isset($_POST['date']))
+		$date = $_POST['date'];
+
+
 ?>
 <html>
 <head>
@@ -190,7 +197,7 @@
 								</div>';
 					}
 					?>
-				<button class="btn btn-default pull-down">
+				<button class="btn btn-default pull-down" onclick="PrintLoans()">
 					Print <?php Print $periodDisplay?>
 				</button>
 
@@ -208,7 +215,7 @@
 						?>
 						
 						<td colspan="5" rowspan="2">
-							Loan Type Report
+							<?php Print $site ?> Loan Report
 						</td>
 					</tr>
 					<tr>
@@ -278,6 +285,7 @@
 						$oldValeGrandTotal = 0;
 						
 						
+						
 						while($empArr = mysql_fetch_assoc($empQuery))
 						{
 							$empid = $empArr['empid'];
@@ -293,6 +301,7 @@
 								}
 								if(isset($_POST['date']))
 								{
+
 									if($_POST['date'] == "all")
 										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY date DESC, time DESC LIMIT 1";
 									else if($_POST['numLen'] == 3)//weekly
@@ -414,7 +423,7 @@
 						Print "
 							<tr>
 								<td colspan = '3'>
-									Grand Total Government Loans
+									Grand Total Company Loans
 								</td>
 								<td colspan = '2'>
 								</td>
@@ -459,6 +468,9 @@
 			document.getElementsByName('date')[0].value = date;
 			document.getElementsByName('numLen')[0].value = numLen;
 			document.getElementById('changeDateForm').submit();
+		}
+		function PrintLoans() {
+			window.location.assign("print_overall_loan.php?site=<?php Print $site?>&period=<?php Print $period?>&date=<?php Print $date?>");
 		}
 	</script>
 </body>

@@ -19,8 +19,10 @@
 		header("location:index.php");
 	}
 
-	
-	
+	//For printable
+	$dateChosen = "onProcess";
+	if(isset($_POST['date']))
+		$dateChosen = $_POST['date'];
 ?>
 <html>
 <head>
@@ -45,9 +47,9 @@
 			<div class="row"><br>
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
-						<li><a href='reports_overall_attendance.php?type=Attendance&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Attendance</a></li>
+						<li><a href='reports_individual_attendance.php?type=Attendance&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Attendance</a></li>
 						<li>Individual Weekly Attendance Report for <?php Print $empArr['lastname'].", ".$empArr['firstname']?></li>
-						<button class="btn btn-primary pull-right">
+						<button class="btn btn-primary pull-right" onclick="PrintAttendance()">
 							Print Attendance
 						</button>
 					</ol>
@@ -61,7 +63,7 @@
 					<?php
 						$payDateBool = true;//boolean for displaying the present date
 
-						$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
+						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE STR_TO_DATE(date, '%M %e, %Y') > (SELECT datehired FROM employee WHERE empid = '$empid')ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
 						$payDateQuery = mysql_query($payrollDate);
 
 						if(mysql_num_rows($payDateQuery) != 0)
@@ -1031,19 +1033,6 @@
 								</tr>
 								";
 							$rowCounter++;//increments the row
-					// 	}
-					// }
-					// else
-					// {
-					// 	Print 	"<tr>
-					// 				<td colspan='52'  style='background-color:#F44336'>
-					// 					<b>No records as of the moment.</b>
-					// 				</td>
-					// 			</tr>";
-					// }
-					
-
-
 
 				?>
 			</table>
@@ -1064,6 +1053,10 @@
 		function periodChange(date) {
 			document.getElementById('changedDate').value = date;
 			document.getElementById('dynamicForm').submit();
+		}
+
+		function PrintAttendance() {
+			window.location.assign("print_individual_attendance.php?empid=<?php Print $empid?>&date=<?php Print $dateChosen?>");
 		}
 
 	</script>
