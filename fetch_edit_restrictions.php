@@ -224,7 +224,7 @@ else//admin role is Employee
 					</li>
 					<li>
 						<label>
-							<input type="checkbox" name="res_ReportsEdit" onchange="restrictReports()" '.$reportsTab.'>
+							<input type="checkbox" name="res_ReportsEdit" onchange="restrictReportsEdit()" '.$reportsTab.'>
 							Reports
 						</label>
 						<ul style="list-style: none;">
@@ -265,6 +265,7 @@ else//admin role is Employee
 							<input type="checkbox" name="res_OptionsEdit" onchange="restrictOptionsEdit()" '.$optionsTab.'>
 							Options
 						</label>
+						<ul style="list-style: none;">
 							<li>
 								<label>
 									<input type="checkbox" name="res_SiteManageEdit" '.$SiteManage.'>

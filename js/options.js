@@ -272,7 +272,7 @@
 			}
 			else{
 				document.getElementsByName('res_SiteManageEdit')[0].checked = false;
-				document.getElementsByName('res_PositionManageEditEdit')[0].checked = false;
+				document.getElementsByName('res_PositionManageEdit')[0].checked = false;
 			}
 		}
 
