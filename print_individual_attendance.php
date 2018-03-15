@@ -396,7 +396,7 @@ if($pageSwitch == 1)
 		if($thuBoolHD)
 		{
 			$activeSheet->mergeCells('M'.$rowCounter.':P'.$rowCounter);//Wednesday
-			$activeSheet->setCellValue('P'.$rowCounter, 'H A L F  D A Y');
+			$activeSheet->setCellValue('M'.$rowCounter, 'H A L F  D A Y');
 		}
 		else
 		{
@@ -413,7 +413,7 @@ if($pageSwitch == 1)
 	if($friBool)//FRIDAY
 	{
 		$activeSheet->mergeCells('R'.$rowCounter.':W'.$rowCounter);//Wednesday
-		$activeSheet->setCellValue('W'.$rowCounter, 'A B S E N T');
+		$activeSheet->setCellValue('R'.$rowCounter, 'A B S E N T');
 	}
 	else
 	{

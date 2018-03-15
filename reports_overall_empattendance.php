@@ -38,6 +38,9 @@
 		default: header("location:index.php");;
 	}
 	
+	$dateChosen = "onProcess";
+	if(isset($_POST['date']))
+		$dateChosen = $_POST['date'];
 ?>
 <html>
 <head>
@@ -64,7 +67,7 @@
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_overall_attendance.php?type=Attendance&period=Weekly' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Attendance</a></li>
 						<li>Overall Weekly Attendance Report for <?php Print $site?></li>
-						<button class="btn btn-primary pull-right">
+						<button class="btn btn-primary pull-right" id="printButton" onclick="PrintAttendance()">
 							Print Attendance
 						</button>
 					</ol>
@@ -73,7 +76,7 @@
 
 			<div class="form-inline">
 				<div class="col-md-4">
-					<h4>Step 1: Select Period</h4>
+					<h4>Select Period</h4>
 					<select class="form-control" onchange="periodChange(this.value)">
 						<option hidden>Select date period</option>
 						<?php
@@ -119,7 +122,7 @@
 				</div>
 
 				<div class="col-md-3">
-					<h4>Step 2: Select Requirements</h4>
+					<h4>Select Requirements</h4>
 					<select onchange="requirementChange(this.value)" class="form-control">
 						<option hidden>Select Requirements</option>
 						<?php
@@ -140,7 +143,7 @@
 				</div>
 
 				<div class="col-md-3">
-					<h4>Step 3: Select Position</h4>
+					<h4>Select Position</h4>
 					<select class="form-control" onchange="positionChange(this.value)">
 						<option hidden>Select Position</option>
 						<?php
@@ -511,6 +514,8 @@
 				</tr>
 
 				<?php
+					$attendanceBool = true;//Disable print if there's no attendance available
+
 					$addQuery = "";
 					if($require == "withReq")
 						$addQuery = " AND complete_doc = '1' ";
@@ -1118,6 +1123,7 @@
 					}
 					else
 					{
+						$attendanceBool = false;
 						Print 	"<tr>
 									<td colspan='52'  style='background-color:#F44336'>
 										<b>No records as of the moment.</b>
@@ -1137,6 +1143,7 @@
 
 	<form id="dynamicForm" method="POST" action="reports_overall_empattendance.php?site=<?php Print $site?>&position=<?php Print $position?>&req=<?php Print $require?>">
 		<input type="hidden" name="date" id="changedDate">
+		<input type="hidden" name="print" value="<?php Print $attendanceBool?>" id="printSwitch">
 	</form>
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 	<script rel="javascript" src="js/jquery.min.js"></script>
@@ -1157,6 +1164,16 @@
 			document.getElementById('dynamicForm').submit();
 		}
 
+		function PrintAttendance() {
+			window.location.assign("print_overall_attendance.php?site=<?php Print $site?>&position=<?php Print $position?>&req=<?php Print $require?>&date=<?php Print $dateChosen?>");
+		}
+
+		$( document ).ready(function() {
+		    if($('#printSwitch').val() == '1')
+		    	$('#printButton').removeClass("disabletotally");
+		    else
+		    	$('#printButton').addClass("disabletotally");
+		});
 	</script>
 </body>
 </html>
