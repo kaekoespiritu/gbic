@@ -159,16 +159,16 @@ else
 		<div class="modal-content">
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-md-4">
-						<a id="attendanceLink" class="btn btn-primary btn-lg col-md-12">
+					<div class="col-md-4 <?php Print $attendanceAccess?>">
+						<a id="attendanceLink" class="btn btn-primary btn-lg col-md-12 <?php Print $attendanceAccess?>">
 						<img src="Images/attendance.png" class="center-block">Attendance</a>
 					</div>
-					<div class="col-md-4">
-						<a id="employeesLink" class="btn btn-primary btn-lg col-md-12">
+					<div class="col-md-4  <?php Print $employeesTab?>">
+						<a id="employeesLink" class="btn btn-primary btn-lg col-md-12  <?php Print $employeesTab?>">
 						<img src="Images/engineer.png" class="center-block"> Employees</a>
 					</div>
-					<div class="col-md-4">
-						<a id="reportsLink" class="btn btn-primary btn-lg col-md-12">
+					<div class="col-md-4 <?php Print $reportsTab?>">
+						<a id="reportsLink" class="btn btn-primary btn-lg col-md-12 <?php Print $reportsTab?>">
 						<img src="Images/tax.png" class="center-block">Reports</a>
 					</div>
 					<div class="pull-down col-md-12">

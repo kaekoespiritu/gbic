@@ -128,7 +128,7 @@
 	</a>
 	</div>
 	<!-- EMPLOYEES BUTTON -->
-	<div id="employees" class="col-md-1 navibutton">
+	<div id="employees" class="col-md-1 navibutton <?php Print $employeesTab?>">
 	<div class="flipdown">
 		<a href="employees.php?site=null&position=null" class="flipbtn <?php Print $employeesTab?>">
 			<img src="Images/engineer.png" class="center-block">
@@ -143,7 +143,7 @@
 	</div>
 	</div>
 	<!-- ATTENDANCE BUTTON -->
-	<div id="attendance" class="col-md-1 navibutton">
+	<div id="attendance" class="col-md-1 navibutton <?php Print $attendanceAccess?>">
 	<div class="flipdown">
 		<a href="attendance.php" class="<?php Print $attendanceAccess?>">
 			<img src="Images/attendance.png" class="center-block">
@@ -152,14 +152,14 @@
 	</div>
 	</div>
 	<!-- PAYROLL BUTTON -->
-	<div id="payroll" class="col-md-1 navibutton">
-	<a href="payroll_login.php" class="payroll <?php Print $payrollAccess?>">
+	<div id="payroll" class="col-md-1 navibutton <?php Print $payrollAccess ?>">
+	<a href="payroll_login.php" class="payroll <?php Print $payrollAccess ?>">
 		<img src="Images/cash-pay.png" class="center-block">
 		<h6 class="text-center">PAYROLL</h6>
 	</a>
 	</div>
 	<!-- REPORTS BUTTON -->
-	<div id="reports" class="col-md-1 navibutton">
+	<div id="reports" class="col-md-1 navibutton <?php Print $reportsTab?>">
 	<div class="flipdown">
 		<a  class="reports flipbtn <?php Print $reportsTab?>">
 			<img src="Images/tax.png" class="center-block">
