@@ -87,10 +87,10 @@
 								if($_POST['date'] == 'all')
 									Print "<option value = 'all' selected>All</option>";
 								else
-									Print "<option value = 'all'>All</option>";
+									Print "<option value = 'all' selected>All</option>";
 							}
 							else
-									Print "<option value = 'all'>All</option>";
+									Print "<option value = 'all' selected>All</option>";
 
 							$payrollDates = "SELECT DISTINCT date FROM payroll";
 							$payrollDQuery = mysql_query($payrollDates) or die(mysql_error());
@@ -633,6 +633,8 @@
 			$postDate = "";
 			if(isset($_POST['date']))
 				$postDate = $_POST['date'];
+			else
+				$postDate = "all";
 
 		?>
 		<input type="hidden" id="postDate" value="<?php Print $postDate?>">

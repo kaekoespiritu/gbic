@@ -651,8 +651,8 @@
 							if(isset($_POST['date']))
 							{
 								$changedPeriod = explode(' ',$_POST['date']);
-								$monthPeriod = $changedPeriod[0];
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+								$yearPeriod = $changedPeriod[0];
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							}
 							else
 							{
