@@ -25,8 +25,8 @@ $activeSheet = $sheet -> createSheet(0);
 
 //Merge cells
 $activeSheet->mergeCells('A1:F1');//Requirements field
-$activeSheet->mergeCells('A2:W2');//Period
-$activeSheet->mergeCells('G1:W1');//"PAYROLL"
+$activeSheet->mergeCells('A2:F2');//Period
+$activeSheet->mergeCells('G1:Z2');//"PAYROLL"
 
 //----------------- Header Contents ---------------------//
 //Title Contents
@@ -35,32 +35,34 @@ if($siteArr['complete_doc'] === 1)
 else
 	$activeSheet->setCellValue('A1', 'Without Requirements');
 $activeSheet->setCellValue('A2', 'Period: '.$startDate." - ".$endDate);
-$activeSheet->setCellValue('G1', 'PAYROLL');
+$activeSheet->setCellValue('G1', 'P A Y R O L L');
 
 //Header Contents
-$activeSheet->setCellValue('A3', 'Rate');
-$activeSheet->setCellValue('B3', '# of days');
-$activeSheet->setCellValue('C3', 'O.T.');
-$activeSheet->setCellValue('D3', '# of hours');
-$activeSheet->setCellValue('E3', 'Allow.');
-$activeSheet->setCellValue('F3', 'COLA');
-$activeSheet->setCellValue('G3', 'Sun');
-$activeSheet->setCellValue('H3', 'D');
-$activeSheet->setCellValue('I3', 'hrs');
-$activeSheet->setCellValue('J3', 'N.D');
-$activeSheet->setCellValue('K3', '#');
-$activeSheet->setCellValue('L3', 'Reg. Hol');
-$activeSheet->setCellValue('M3', '#');
-$activeSheet->setCellValue('N3', 'Spe. Hol');
-$activeSheet->setCellValue('O3', '#');
-$activeSheet->setCellValue('P3', 'X All.');
-$activeSheet->setCellValue('Q3', 'SSS');
-$activeSheet->setCellValue('R3', 'Philhealth');
-$activeSheet->setCellValue('S3', 'Pagibig');
-$activeSheet->setCellValue('T3', 'Old vale');
-$activeSheet->setCellValue('U3', 'Vale');
-$activeSheet->setCellValue('V3', 'Tools');
-$activeSheet->setCellValue('W3', 'Total Salary');
+$activeSheet->setCellValue('B3', 'Name');
+$activeSheet->setCellValue('C3', 'Position');
+$activeSheet->setCellValue('D3', 'Rate');
+$activeSheet->setCellValue('E3', '# of days');
+$activeSheet->setCellValue('F3', 'O.T.');
+$activeSheet->setCellValue('G3', '# of hours');
+$activeSheet->setCellValue('H3', 'Allow.');
+$activeSheet->setCellValue('I3', 'COLA');
+$activeSheet->setCellValue('J3', 'Sun');
+$activeSheet->setCellValue('K3', 'D');
+$activeSheet->setCellValue('L3', 'hrs');
+$activeSheet->setCellValue('M3', 'N.D');
+$activeSheet->setCellValue('N3', '#');
+$activeSheet->setCellValue('O3', 'Reg. Hol');
+$activeSheet->setCellValue('P3', '#');
+$activeSheet->setCellValue('Q3', 'Spe. Hol');
+$activeSheet->setCellValue('R3', '#');
+$activeSheet->setCellValue('S3', 'X All.');
+$activeSheet->setCellValue('T3', 'SSS');
+$activeSheet->setCellValue('U3', 'Philhealth');
+$activeSheet->setCellValue('V3', 'Pagibig');
+$activeSheet->setCellValue('W3', 'Old vale');
+$activeSheet->setCellValue('X3', 'Vale');
+$activeSheet->setCellValue('Y3', 'Tools');
+$activeSheet->setCellValue('Z3', 'Total Salary');
 
 //----------------- Body ---------------------//
 
@@ -77,43 +79,70 @@ $rowCounter = 4; //start for the data in the row of excel
 	//Sunday
 	$sundayBool = (!empty($payrollArr['sunday_hrs']) ? true : false);// employee didn't attend sunday
 
-	$activeSheet->setCellValue('A'.$rowCounter, $siteArr['rate']);//Rate
-	$activeSheet->setCellValue('B'.$rowCounter, $payrollArr['num_days']);//ofDays
-	$activeSheet->setCellValue('C'.$rowCounter, $payrollArr['overtime']);//O.T.
-	$activeSheet->setCellValue('D'.$rowCounter, $payrollArr['ot_num']);//#ofHrs
-	$activeSheet->setCellValue('E'.$rowCounter, $payrollArr['allow']);//Allow.
-	$activeSheet->setCellValue('F'.$rowCounter, $payrollArr['cola']);//cola
-	$activeSheet->setCellValue('G'.$rowCounter, $payrollArr['sunday_rate']);//Sun
+	$activeSheet->setCellValue('A'.$rowCounter, '1');//#
+	$activeSheet->setCellValue('B'.$rowCounter, $employeeName);// Name
+	$activeSheet->setCellValue('C'.$rowCounter, $siteArr['position']);//Position
+
+	$activeSheet->setCellValue('D'.$rowCounter, $payrollArr['rate']);//Rate
+	$activeSheet->setCellValue('E'.$rowCounter, $payrollArr['num_days']);//ofDays
+	$activeSheet->setCellValue('F'.$rowCounter, $payrollArr['overtime']);//O.T.
+	$activeSheet->setCellValue('G'.$rowCounter, $payrollArr['ot_num']);//#ofHrs
+	$activeSheet->setCellValue('H'.$rowCounter, $payrollArr['allow']);//Allow.
+	$activeSheet->setCellValue('I'.$rowCounter, $payrollArr['cola']);//cola
+	$activeSheet->setCellValue('J'.$rowCounter, $payrollArr['sunday_rate']);//Sun
 	if($sundayBool)
-		$activeSheet->setCellValue('H'.$rowCounter, '1');//D
-	$activeSheet->setCellValue('I'.$rowCounter, $payrollArr['sunday_hrs']);//hrs
-	$activeSheet->setCellValue('J'.$rowCounter, $payrollArr['nightdiff_rate']);//N.D
-	$activeSheet->setCellValue('K'.$rowCounter, $payrollArr['nightdiff_num']);//#
-	$activeSheet->setCellValue('L'.$rowCounter, $payrollArr['reg_holiday']);//Reg.Hol
-	$activeSheet->setCellValue('M'.$rowCounter, $payrollArr['reg_holiday_num']);//#
-	$activeSheet->setCellValue('N'.$rowCounter, $payrollArr['spe_holiday']);//Spe.Hol
-	$activeSheet->setCellValue('O'.$rowCounter, $payrollArr['spe_holiday']);//#
-	$activeSheet->setCellValue('P'.$rowCounter, $payrollArr['x_allowance']);//X All.
-	$activeSheet->setCellValue('Q'.$rowCounter, $payrollArr['sss']);//SSS
-	$activeSheet->setCellValue('R'.$rowCounter, $payrollArr['philhealth']);//Philhealth
-	$activeSheet->setCellValue('S'.$rowCounter, $payrollArr['pagibig']);//Pagibig
-	$activeSheet->setCellValue('T'.$rowCounter, $payrollArr['old_vale']);//old vale
-	$activeSheet->setCellValue('U'.$rowCounter, $payrollArr['new_vale']);//vale
-	$activeSheet->setCellValue('V'.$rowCounter, $payrollArr['tools_paid']);//tools
+		$activeSheet->setCellValue('K'.$rowCounter, '1');//D
+	$activeSheet->setCellValue('L'.$rowCounter, $payrollArr['sunday_hrs']);//hrs
+	$activeSheet->setCellValue('M'.$rowCounter, $payrollArr['nightdiff_rate']);//N.D
+	$activeSheet->setCellValue('N'.$rowCounter, $payrollArr['nightdiff_num']);//#
+	$activeSheet->setCellValue('O'.$rowCounter, $payrollArr['reg_holiday']);//Reg.Hol
+	$activeSheet->setCellValue('P'.$rowCounter, $payrollArr['reg_holiday_num']);//#
+	$activeSheet->setCellValue('Q'.$rowCounter, $payrollArr['spe_holiday']);//Spe.Hol
+	$activeSheet->setCellValue('R'.$rowCounter, $payrollArr['spe_holiday_num']);//#
+	$activeSheet->setCellValue('S'.$rowCounter, $payrollArr['x_allowance']);//X All.
+	$activeSheet->setCellValue('T'.$rowCounter, $payrollArr['sss']);//SSS
+	$activeSheet->setCellValue('U'.$rowCounter, $payrollArr['philhealth']);//Philhealth
+	$activeSheet->setCellValue('V'.$rowCounter, $payrollArr['pagibig']);//Pagibig
+	$activeSheet->setCellValue('W'.$rowCounter, $payrollArr['old_vale']);//old vale
+	$activeSheet->setCellValue('X'.$rowCounter, $payrollArr['new_vale']);//vale
+	$activeSheet->setCellValue('Y'.$rowCounter, $payrollArr['tools_paid']);//tools
 
 	$totalSalary = numberExactFormat($payrollArr['total_salary'], 2, '.', true);
-	$activeSheet->setCellValue('W'.$rowCounter, $totalSalary);//Total Salary
+	$activeSheet->setCellValue('Z'.$rowCounter, $totalSalary);//Total Salary
 
 	$rowCounter++; //Row counter
 
-$rowCounter++;//to give space for clearer data
-
 //Style for the Spreadsheet
-$activeSheet->getStyle('A3:W3')->applyFromArray($border_all_medium);//Header 
-$activeSheet->getStyle('A4:W'.$rowCounter)->applyFromArray($border_all_thin);//Content
-$activeSheet->getStyle('G1:W2')->applyFromArray($align_center);//Centered header text
+$activeSheet->getStyle('A1:Z3')->applyFromArray($border_all_medium);//Header 
+$activeSheet->getStyle('A4:Z'.$rowCounter)->applyFromArray($border_all_thin);//Content
+$activeSheet->getStyle('G1:Z2')->applyFromArray($align_center);//Centered header text
 $activeSheet->getStyle('A')->applyFromArray($align_center);//Centered period text
-$activeSheet->getColumnDimension('W')->setAutoSize(true);//Lengthen total salary
+
+$activeSheet->getColumnDimension('A')->setAutoSize(true);
+$activeSheet->getColumnDimension('B')->setAutoSize(true);
+$activeSheet->getColumnDimension('C')->setAutoSize(true);
+$activeSheet->getColumnDimension('D')->setAutoSize(true);
+$activeSheet->getColumnDimension('E')->setAutoSize(true);
+$activeSheet->getColumnDimension('F')->setAutoSize(true);
+$activeSheet->getColumnDimension('G')->setAutoSize(true);
+$activeSheet->getColumnDimension('H')->setAutoSize(true);
+$activeSheet->getColumnDimension('I')->setAutoSize(true);
+$activeSheet->getColumnDimension('J')->setAutoSize(true);
+$activeSheet->getColumnDimension('K')->setAutoSize(true);
+$activeSheet->getColumnDimension('L')->setAutoSize(true);
+$activeSheet->getColumnDimension('M')->setAutoSize(true);
+$activeSheet->getColumnDimension('N')->setAutoSize(true);
+$activeSheet->getColumnDimension('O')->setAutoSize(true);
+$activeSheet->getColumnDimension('P')->setAutoSize(true);
+$activeSheet->getColumnDimension('Q')->setAutoSize(true);
+$activeSheet->getColumnDimension('R')->setAutoSize(true);
+$activeSheet->getColumnDimension('S')->setAutoSize(true);
+$activeSheet->getColumnDimension('T')->setAutoSize(true);
+$activeSheet->getColumnDimension('U')->setAutoSize(true);
+$activeSheet->getColumnDimension('V')->setAutoSize(true);
+$activeSheet->getColumnDimension('W')->setAutoSize(true);
+$activeSheet->getColumnDimension('X')->setAutoSize(true);
+$activeSheet->getColumnDimension('Y')->setAutoSize(true);
 
 header('Content-Type: application/vnd.ms-excel');
 header('Content-Disposition: attachment; filename="'.$filename.'"');

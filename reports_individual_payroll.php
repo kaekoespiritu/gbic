@@ -94,199 +94,202 @@
 				<a class="btn btn-primary" id="printPayslip" href="reports_payslip_individual_emp.php">
 					Print Payslip
 				</a>
-				<table class="table table-bordered pull-down">
-				<tr>
-					<td colspan="6" rowspan="2">
-						<?php
+				<?php
+				if(isset($_POST['dateChange']))//if admin chooses a date on the period dropdown
+				{
+					Print "
+						<table class='table table-bordered pull-down'>
+						<tr>
+							<td colspan='6' rowspan='2'>";
+						
 							if($empArr['complete_doc'] == 1)
 								Print "With Complete Requirements";
 							else
 								Print "Without Requirements";
-						?>
-					</td>
-					<td colspan="18" rowspan="2" class="vertical-align">
-						PAYROLL
-					</td>
-				</tr>
+						
+					Print "	</td>
+								<td colspan='18' rowspan='2' class='vertical-align'>
+									PAYROLL
+								</td>
+							</tr>";
+							
 				
-				<?php
-				if(isset($_POST['dateChange']))//if admin chooses a date on the period dropdown
-				{
+					Print "<script>console.log('".$_POST['dateChange']."')</script>";
 					$chosenDate = $_POST['dateChange'];
 					$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$chosenDate' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
-				}
-				else//default
-				{
-					$payroll = "SELECT * FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
-				}
-				$payrollQuery = mysql_query($payroll);
-				$printBool = false;//disable print button if there's no data retrieved
-				if(mysql_num_rows($payrollQuery))
-				{
-					$printBool = true;
-					while($payrollArr = mysql_fetch_assoc($payrollQuery))
+				// }
+				// else//default
+				// {
+				// 	$payroll = "SELECT * FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+				// }
+					$payrollQuery = mysql_query($payroll);
+					$printBool = false;//disable print button if there's no data retrieved
+					if(mysql_num_rows($payrollQuery))
 					{
-						$startDate = date('F j, Y', strtotime('-6 day', strtotime($payrollArr['date'])));
-						Print "
-							<input type='hidden' id='payrollDate' value='".$payrollArr['date']."'>
+						$printBool = true;
+						while($payrollArr = mysql_fetch_assoc($payrollQuery))
+						{
+							$startDate = date('F j, Y', strtotime('-6 day', strtotime($payrollArr['date'])));
+							Print "
+								<input type='hidden' id='payrollDate' value='".$payrollArr['date']."'>
+								<tr>
+								<tr>
+									<td colspan='24' bgcolor='#AAB7B8'>
+										<strong>
+											Period: ".$startDate." - ".$payrollArr['date']."
+										</strong>
+									</td>
+								</tr>
+								</tr>
 							<tr>
+								<td>
+									Rate
+								</td>
+								<td>
+									# of days
+								</td>
+								<td>
+									O.T.
+								</td>
+								<td>
+									# of hours
+								</td>
+								<td>
+									Allow.
+								</td>
+								<td>
+									COLA
+								</td>
+								<td>
+									Sun
+								</td>
+								<td>
+									D
+								</td>
+								<td>
+									hrs
+								</td>
+								<td>
+									N.D.
+								</td>
+								<td>
+									#
+								</td>
+								<td>
+									Reg. Hol
+								</td>
+								<td>
+									#
+								</td>
+								<td>
+									Spe. Hol
+								</td>
+								<td>
+									#
+								</td>
+								<td>
+									X All.
+								</td>
+								<td>
+									SSS
+								</td>
+								<td>
+									Philhealth
+								</td>
+								<td>
+									PagIBIG
+								</td>
+								<td>
+									Old vale
+								</td>
+								<td>
+									vale
+								</td>
+								<td>
+									tools
+								</td>
+								<td colspan='2'>
+									Total Salary
+								</td>
+								
+							</tr>
 							<tr>
-								<td colspan='24' bgcolor='#AAB7B8'>
-									<strong>
-										Period: ".$startDate." - ".$payrollArr['date']."
-									</strong>
+								<td><!-- Rate -->
+									".$payrollArr['rate']."
+								</td>
+								<td><!-- # of days -->
+									".$payrollArr['num_days']."
+								</td>
+								<td><!-- OT -->
+									".$payrollArr['overtime']."
+								</td>
+								<td><!-- # of hours -->
+									".$payrollArr['ot_num']."
+								</td>
+								<td><!-- Allow -->
+									".$payrollArr['allow']."
+								</td>
+								<td><!-- COLA -->
+									".$payrollArr['cola']."
+								</td>
+								<td><!-- Sun -->
+									".$payrollArr['sunday_rate']."
+								</td>
+								<td><!-- D -->
+									".$payrollArr['sunday_att']."
+								</td>
+								<td><!-- hrs -->
+									".$payrollArr['sunday_hrs']."
+								</td>
+								<td><!-- ND -->
+									".$payrollArr['nightdiff_rate']."
+								</td>
+								<td><!-- # -->
+									".$payrollArr['nightdiff_num']."
+								</td>
+								<td><!-- Reg.hol -->
+									".$payrollArr['reg_holiday']."
+								</td>
+								<td><!-- # -->
+									".$payrollArr['reg_holiday_num']."
+								</td>
+								<td><!-- Spe. hol -->
+									".$payrollArr['spe_holiday']."
+								</td>
+								<td><!-- # -->
+									".$payrollArr['spe_holiday_num']."
+								</td>
+								<td><!-- X.All -->
+									".$payrollArr['x_allowance']."
+								</td>
+								<td><!-- SSS -->
+									".$payrollArr['sss']."
+								</td>
+								<td><!-- Philhealth -->
+									".$payrollArr['philhealth']."
+								</td>
+								<td><!-- Pagibig -->
+									".$payrollArr['pagibig']."
+								</td>
+								<td><!-- Old vale -->
+									".$payrollArr['old_vale']."
+								</td>
+								<td><!-- vale -->
+									".$payrollArr['new_vale']."
+								</td>
+								<td><!-- tools -->
+									".$payrollArr['tools_paid']."
+								</td>
+								<td><!-- Total Salary -->
+									".numberExactFormat($payrollArr['total_salary'],2,".", true)."
 								</td>
 							</tr>
-							</tr>
-						<tr>
-							<td>
-								Rate
-							</td>
-							<td>
-								# of days
-							</td>
-							<td>
-								O.T.
-							</td>
-							<td>
-								# of hours
-							</td>
-							<td>
-								Allow.
-							</td>
-							<td>
-								COLA
-							</td>
-							<td>
-								Sun
-							</td>
-							<td>
-								D
-							</td>
-							<td>
-								hrs
-							</td>
-							<td>
-								N.D.
-							</td>
-							<td>
-								#
-							</td>
-							<td>
-								Reg. Hol
-							</td>
-							<td>
-								#
-							</td>
-							<td>
-								Spe. Hol
-							</td>
-							<td>
-								#
-							</td>
-							<td>
-								X All.
-							</td>
-							<td>
-								SSS
-							</td>
-							<td>
-								Philhealth
-							</td>
-							<td>
-								PagIBIG
-							</td>
-							<td>
-								Old vale
-							</td>
-							<td>
-								vale
-							</td>
-							<td>
-								tools
-							</td>
-							<td colspan='2'>
-								Total Salary
-							</td>
-							
-						</tr>
-						<tr>
-							<td><!-- Rate -->
-								".$payrollArr['rate']."
-							</td>
-							<td><!-- # of days -->
-								".$payrollArr['num_days']."
-							</td>
-							<td><!-- OT -->
-								".$payrollArr['overtime']."
-							</td>
-							<td><!-- # of hours -->
-								".$payrollArr['ot_num']."
-							</td>
-							<td><!-- Allow -->
-								".$payrollArr['allow']."
-							</td>
-							<td><!-- COLA -->
-								".$payrollArr['cola']."
-							</td>
-							<td><!-- Sun -->
-								".$payrollArr['sunday_rate']."
-							</td>
-							<td><!-- D -->
-								".$payrollArr['sunday_att']."
-							</td>
-							<td><!-- hrs -->
-								".$payrollArr['sunday_hrs']."
-							</td>
-							<td><!-- ND -->
-								".$payrollArr['nightdiff_rate']."
-							</td>
-							<td><!-- # -->
-								".$payrollArr['nightdiff_num']."
-							</td>
-							<td><!-- Reg.hol -->
-								".$payrollArr['reg_holiday']."
-							</td>
-							<td><!-- # -->
-								".$payrollArr['reg_holiday_num']."
-							</td>
-							<td><!-- Spe. hol -->
-								".$payrollArr['spe_holiday']."
-							</td>
-							<td><!-- # -->
-								".$payrollArr['spe_holiday_num']."
-							</td>
-							<td><!-- X.All -->
-								".$payrollArr['x_allowance']."
-							</td>
-							<td><!-- SSS -->
-								".$payrollArr['sss']."
-							</td>
-							<td><!-- Philhealth -->
-								".$payrollArr['philhealth']."
-							</td>
-							<td><!-- Pagibig -->
-								".$payrollArr['pagibig']."
-							</td>
-							<td><!-- Old vale -->
-								".$payrollArr['old_vale']."
-							</td>
-							<td><!-- vale -->
-								".$payrollArr['new_vale']."
-							</td>
-							<td><!-- tools -->
-								".$payrollArr['tools_paid']."
-							</td>
-							<td><!-- Total Salary -->
-								".numberExactFormat($payrollArr['total_salary'],2,".", true)."
-							</td>
-						</tr>
-						<br>
-						";
-				}
-			}
-				else
-				{
+							<br>
+							";
+						}
+					}
+					else
+					{
 					Print "	<tr>
 								<tr>
 									<td colspan='24' bgcolor='#E74C3C'>
@@ -294,6 +297,7 @@
 									</td>
 								</tr>
 							</tr>";
+					}
 				}
 				?>
 				
