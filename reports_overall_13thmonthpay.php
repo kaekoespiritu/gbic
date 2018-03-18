@@ -84,7 +84,8 @@
 			</div>
 
 		<div class="form-inline">
-			Filters:
+			<div class="col-md-6">
+			<h4>Filters:</h4>
 			<select onchange="requirementChange(this.value)" class="form-control">
 				<option hidden>Requirements</option>
 				<option value='all'>All</option>
@@ -134,12 +135,13 @@
 				?>
 			</select>
 		</div>
+		
 	<?php
 	if($period == 'week')
 	{
-		Print "<br>
-		<div class='form-inline'>
-		Weeks:
+		Print "
+		<div class='col-md-6'>
+		<h4>Weeks:</h4>
 		<select onchange='weekDates(this.value)' class='form-control'>
 			<option hidden>Select date</option>";
 			
@@ -241,9 +243,9 @@
 						
 		if(isset($_POST['chosenDate']))
 		{
-			Print "	<div class='pull-down'>
+			Print "	<div>
 						<div class='col-md-10 col-md-offset-1'>
-							<button class='btn btn-primary'>
+							<button class='btn btn-primary pull-down'>
 								Print ".$printButton."
 							</button>
 							<table class='table table-bordered pull-down'>
