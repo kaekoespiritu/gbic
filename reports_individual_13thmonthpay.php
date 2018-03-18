@@ -92,7 +92,7 @@
 				 	case 'year': $printButton = "Yearly";break;
 				 }
 				?>
-				<button class="btn btn-primary" id="printButton">
+				<button class="btn btn-primary" id="printButton" onclick="Print13thMonth()">
 					Print <?php Print $printButton?>
 				</button>
 				<table class="table table-bordered pull-down">
@@ -114,6 +114,8 @@
 					$thirteenthBool = true;// boolean for giving the "from to" date in the 13th month
 					$remainderBool = false; // boolean for displaying the remainder once
 
+					$printBool = false;//printable disabled
+
 					//Check if employee have already received past 13th month pay
 					$thirteenthChecker = "SELECT * FROM thirteenth_pay WHERE empid = '$empid' ORDER BY STR_TO_DATE(from_date, '%M %e, %Y ') DESC LIMIT 1";
 					$thirteenthCheckQuery = mysql_query($thirteenthChecker) or die (mysql_error());
@@ -123,6 +125,7 @@
 
 					if(mysql_num_rows($thirteenthCheckQuery) == 1)
 					{
+
 						$thirteenthCheckArr = mysql_fetch_assoc($thirteenthCheckQuery);
 						$pastThirteenthDate = "AND date <= '".$thirteenthCheckArr['to_date']."'";
 						$thirteenthRemainder = $thirteenthCheckArr['amount'] - $thirteenthCheckArr['received'];
@@ -132,6 +135,8 @@
 						$pastToDateThirteenthPay = $thirteenthCheckArr['to_date'];
 						$thirteenthBool = false;
 						$remainderBool = true;// displays the remainder
+
+						Print "<script>console.log('pastToDateThirteenthPay: ".$pastToDateThirteenthPay."')</script>";
 					}
 
 					if($period == "week")
@@ -149,6 +154,7 @@
 						{
 							if($thirteenthRemainder != 0)
 							{
+								$printBool = true;//enable printable
 								Print "
 								<tr>
 									<td>
@@ -168,11 +174,12 @@
 						//Evaluates the attendance and compute the 13th monthpay
 						while($payDateArr = mysql_fetch_assoc($payrollQuery))
 						{
-							Print "<script>console.log('".$payDateArr['date']."')</script>";
 							if($thirteenthBool)
 							{
+
 								$pastToDateThirteenthPay = date('F j, Y', strtotime('-6 day', strtotime($payDateArr['date'])));
 								$thirteenthBool = false;
+								Print "<script>console.log('pastToDateThirteenthPay: ".$pastToDateThirteenthPay."')</script>";
 							}
 							$endDate = $payDateArr['date'];
 							$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
@@ -207,6 +214,7 @@
 							//Print "<script>console.log('".$daysAttended."')</script>";
 							$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
 
+							$printBool = true;//enable printable
 							Print "
 									<tr>
 										<td>
@@ -234,6 +242,7 @@
 						{
 							if($thirteenthRemainder != 0)
 							{
+								$printBool = true;//enable printable
 								Print "
 								<tr>
 									<td>
@@ -252,6 +261,13 @@
 						//Computes 13th monthpay per month
 						while($attDate = mysql_fetch_assoc($attQuery))
 						{
+							if($thirteenthBool)
+							{
+
+								$pastToDateThirteenthPay = $attDate['date'];
+								$thirteenthBool = false;
+								Print "<script>console.log('pastToDateThirteenthPay: ".$pastToDateThirteenthPay."')</script>";
+							}
 							$dateExploded = explode(" ", $attDate['date']);
 							$month = $dateExploded[0];
 							$year = $dateExploded[2];
@@ -282,6 +298,7 @@
 									}
 								}
 								$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
+								$printBool = true;//enable printable
 								Print "
 										<tr>
 											<td>
@@ -313,6 +330,7 @@
 						{
 							if($thirteenthRemainder != 0)
 							{
+								$printBool = true;//enable printable
 								Print "
 								<tr>
 									<td>
@@ -331,6 +349,13 @@
 						//Computes 13th monthpay per month
 						while($attDate = mysql_fetch_assoc($attQuery))
 						{
+							if($thirteenthBool)
+							{
+
+								$pastToDateThirteenthPay = $attDate['date'];
+								$thirteenthBool = false;
+								Print "<script>console.log('pastToDateThirteenthPay: ".$pastToDateThirteenthPay."')</script>";
+							}
 							$dateExploded = explode(" ", $attDate['date']);
 							$year = $dateExploded[2];
 
@@ -361,6 +386,7 @@
 								}
 								$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
 								$yearBefore = $year - 1;
+								$printBool = true;//enable printable
 								Print "
 										<tr>
 											<td>
@@ -484,8 +510,11 @@
 	        	<?php
 	        		$thirteenthHist = "SELECT * FROM thirteenth_pay WHERE empid = '$empid' ORDER BY STR_TO_DATE(from_date, '%M %e, %Y') ASC";
 	        		$thirteenthHistQuery = mysql_query($thirteenthHist) or die(mysql_error()) ;
+
+	        		$histBool = false;//historical print disabled
 	        		if(mysql_num_rows($thirteenthHistQuery) != 0)
 	        		{
+	        			$histBool = true;//historical print enabled
 	        			while($histRow = mysql_fetch_assoc($thirteenthHistQuery))
 	        			{
 	        				Print "
@@ -521,12 +550,16 @@
 	        </table>
 	      </div>
 	      <div class="modal-footer">
-	      	<button type="button" class="btn btn-primary">Print</button>
+	      	<button type="button" class="btn btn-primary" id="historyButton" onclick="printHistory()">Print</button>
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
+
+	<!-- Historical printable -->
+	<input type="hidden" id="HistoricalPrint" value="<?php Print $histBool?>">
+	<input type="hidden" id="Print" value="<?php Print $printBool?>">
 
 	<input type="hidden" id="overallPayment" value="<?php Print $overallPayment?>">
 	<input type="hidden" id="fromDate" value="<?php Print $pastToDateThirteenthPay?>">
@@ -534,6 +567,20 @@
 	<script rel="javascript" src="js/jquery.min.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script>
+		$( document ).ready(function() {
+		   	if($('#HistoricalPrint').val() == 1)
+		   		$('#printButton').addClass('disabletotally');
+		   	else
+		   		$('#printButton').removeClass('disabletotally');
+
+		   	if($('#Print').val() == 1)
+		   		$('#historyButton').addClass('disabletotally');
+		   	else
+		   		$('#historyButton').removeClass('disabletotally');
+
+
+		});
+
 		document.getElementById("reports").setAttribute("style", "background-color: #10621e;");
 
 		function copyAmount(amount) {
@@ -549,19 +596,29 @@
 			var fromDate = document.getElementById("fromDate").value;
 			var splitThirteenth = thirteenth.split('.');
 			thirteenth = splitThirteenth[0]+"."+splitThirteenth[1].substring(0,2);
-			alert(thirteenth);
 			var a = confirm("Are you sure you want to give this employee's 13th month pay?")
 			if(a) 
 			{
-				if(thirteenth > amount)
+				if(thirteenth > amount || amount == 0 || thirteenth == 0)
 					alert("Please input proper amount.");
 				else
-					window.location.assign("logic_reports_individual_13thmonth.php?empid=<?php Print $empid?>&amount="+amount+"&pay="+thirteenth+"&fromDate="+fromDate)
+				{
+					console.log(amount+" = "+thirteenth+" = "+fromDate);
+					window.location.assign("logic_reports_individual_13thmonth.php?empid=<?php Print $empid?>&amount="+amount+"&pay="+thirteenth+"&fromDate="+fromDate);
+				}
 				//	window.location.assign("");
 			}
 		}
 		function periodChange(period) {
 			window.location.assign('reports_individual_13thmonthpay.php?empid=<?php Print $empid?>&per='+period);
+		}
+
+		function Print13thMonth() {
+			window.location.assign('print_individual_13thmonth.php?empid=<?php Print $empid?>&per=<?php Print $period?>');
+		}
+
+		function printHistory() {
+			window.location.assign('print_individual_historical_13thmonth.php?empid=<?php Print $empid?>');
 		}
 	</script>
 </body>

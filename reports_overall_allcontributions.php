@@ -428,10 +428,18 @@
 							$contBool = false;//if employee dont have sss contribution
 							if(isset($_POST['date']))
 							{
-								$changedPeriod = explode(' ',$_POST['date']);
-								$monthPeriod = $changedPeriod[0];
-								$yearPeriod = $changedPeriod[1];
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+								if($_POST['date'] != "all")
+								{
+									$changedPeriod = explode(' ',$_POST['date']);
+									$monthPeriod = $changedPeriod[0];
+									$yearPeriod = $changedPeriod[1];
+									$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+								}
+								else
+								{
+									$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+								}
+									
 							}
 							else
 							{
@@ -479,7 +487,7 @@
 
 									$payrollDay = $payDateArr['date'];
 
-									Print "<script>console.log('".$month." - ".$year."')</script>";
+									Print "<script>console.log('".$month." ".$year."')</script>";
 
 									$payroll = "SELECT * FROM payroll WHERE (date LIKE '$month%' AND date LIKE '%$year') AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 									$payrollQuery = mysql_query($payroll);
@@ -604,6 +612,8 @@
 															</td>
 														</tr>";
 
+												$totalContribution += $subTotalContribution;
+
 											}
 											
 										}
@@ -650,9 +660,16 @@
 							$contBool = false;//if employee dont have sss contribution
 							if(isset($_POST['date']))
 							{
-								$changedPeriod = explode(' ',$_POST['date']);
-								$yearPeriod = $changedPeriod[0];
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+								if($_POST['date'] != "all")
+								{
+									$changedPeriod = explode(' ',$_POST['date']);
+									$yearPeriod = $changedPeriod[0];
+									$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+								}
+								else
+								{
+									$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+								}
 							}
 							else
 							{
@@ -820,6 +837,8 @@
 															</td>
 														</tr>";
 
+												$totalContribution += $subTotalContribution;
+
 											}
 											
 										}
@@ -865,9 +884,15 @@
 		</div>
 
 	</div>
+	<?php
+		//date for the printable
+		$datePassed = "all"; 
+		if(isset($_POST['date']))
+			$datePassed = $_POST['date'];
+	?>
 	<input type="hidden" id="printButton" value="<?php Print $contBool?>">
 	<form id="changeDateForm" method="post" action="reports_overall_allcontributions.php?site=<?php Print $site?>&period=<?php Print $period?>">
-		<input type="hidden" name="date">
+		<input type="hidden" name="date" value="all">
 		<input type="hidden" name="numLen">
 	</form>
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
@@ -890,7 +915,7 @@
 
 		function printAllContributions() {
 			var period = document.getElementById('period').value;
-			window.location.assign("print_overall_contribution.php?site=<?php Print $site ?>&period="+period+"&date="+date+"&contribution=all");
+			window.location.assign("print_overall_contribution.php?site=<?php Print $site ?>&period="+period+"&date=<?php Print $datePassed ?>&contribution=all");
 		}
 
 		function PagibigShortcut(){

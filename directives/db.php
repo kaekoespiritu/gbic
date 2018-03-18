@@ -11,11 +11,13 @@ $database = "GBIC";
 function numberExactFormat($number, $precision, $separator, $thousand)//For number format
 {
     $numberParts = explode($separator, $number);
+
     if($thousand)
         $response = number_format($numberParts[0]);
     else
         $response = $numberParts[0];
-    if(count($numberParts)>1){
+    
+    if(count($numberParts) > 1){
         $response .= $separator;
         $response .= substr($numberParts[1], 0, $precision);
     }
