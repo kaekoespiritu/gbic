@@ -7,11 +7,6 @@
 	include('directives/reports/middleware/reports_overall_contributions.php');
 
 	$site = $_GET['site'];
-
-	if(isset($_POST['date']))
-	{
-		Print "<script>console.log('".$_POST['date']."')</script>";
-	}
 ?>
 <html>
 <head>
@@ -61,7 +56,7 @@
 				<div class="form-inline">
 					<div class="col-md-6">
 						<h4>Select Period </h4>
-						<select onchange="periodChange(this.value)" class="form-control">
+						<select onchange="periodChange(this.value)" class="form-control" id="period">
 							<?php 
 								if($period == "week")
 									Print "<option value='week' selected>Weekly</option>";
@@ -255,7 +250,6 @@
 									//For the specfied week in first column
 									$endDate = $payDateArr['date'];
 									$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
-									//Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
 
 									$payroll = "SELECT * FROM payroll WHERE date = '$endDate' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 									$payrollQuery = mysql_query($payroll);
@@ -265,12 +259,10 @@
 										if($payrollArr['philhealth'] != 0)
 										{
 											$PhilhealthBool = true;
-											//Print "<script>console.log('bool: ".$PhilhealthBool."')</script>";
 											$monthly = $payrollArr['rate'] * 25;
 
 											$PhilhealthEmployer = $payrollArr['philhealth_er'];//Gets the value in the philhealth table
 
-											//Print "<script>console.log('".$PhilhealthEmployer."')</script>";
 											$PhilhealthContribution = $PhilhealthEmployer;
 
 											$totalPhilhealthContribution = $PhilhealthContribution + $payrollArr['philhealth'];
@@ -376,14 +368,11 @@
 								//Evaluates the attendance and compute the Philhealth contribution
 								while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 								{
-									//Print "<script>console.log('".$payrollDate."')</script>";
 									$dateExploded = explode(" ", $payDateArr['date']);
 									$month = $dateExploded[0];//gets the month
 									$year = $dateExploded[2];// gets the year
 
 									$payrollDay = $payDateArr['date'];
-
-									//Print "<script>console.log('".$month." - ".$year."')</script>";
 
 									$payroll = "SELECT * FROM payroll WHERE (date LIKE '$month%' AND date LIKE '%$year') AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 									$payrollQuery = mysql_query($payroll);
@@ -396,12 +385,10 @@
 											if($payrollArr['philhealth'] != 0)
 											{
 												$PhilhealthBool = true;
-												//Print "<script>console.log('yess')</script>";
 												$monthly = $payrollArr['rate'] * 25;
 
 												$PhilhealthEmployer = $payrollArr['philhealth_er'];//Gets the value in the Philhealth table
 
-												//Print "<script>console.log('".$PhilhealthEmployer."')</script>";
 												$ERContribution += $PhilhealthEmployer;
 
 												$totalPhilhealthContribution = $ERContribution + $payrollArr['philhealth'];
@@ -518,13 +505,10 @@
 								//Evaluates the attendance and compute the Philhealth contribution
 								while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 								{
-									//Print "<script>console.log('".$payrollDate."')</script>";
 									$dateExploded = explode(" ", $payDateArr['date']);
 									$year = $dateExploded[2];// gets the year
 
 									$payrollDay = $payDateArr['date'];
-
-									//Print "<script>console.log('".$month." - ".$year."')</script>";
 
 									$payroll = "SELECT * FROM payroll WHERE date LIKE '%$year' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 									$payrollQuery = mysql_query($payroll);
@@ -537,12 +521,10 @@
 											if($payrollArr['philhealth'] != 0)
 											{
 												$PhilhealthBool = true;
-												//Print "<script>console.log('yess')</script>";
 												$monthly = $payrollArr['rate'] * 25;
 
 												$PhilhealthEmployer = $payrollArr['philhealth_er'];//Gets the value in the Philhealth table
 
-												//Print "<script>console.log('".$PhilhealthEmployer."')</script>";
 												$ERContribution += $PhilhealthEmployer;
 
 												$totalPhilhealthContribution = $ERContribution + $payrollArr['philhealth'];

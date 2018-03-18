@@ -21,6 +21,8 @@ $sheet = new PHPExcel();
 
 $activeSheet = $sheet -> createSheet(0);
 
+$rowCounter = 4; // Start for the data in the row of excel
+
 // * ======= Styling tables ======= * //
 	if($contributionType == "all") {
 		// * ======= Styling table Overall ======= * //
@@ -332,12 +334,14 @@ if($contributionType == 'all')
 
 					// Print "<script>console.log('".$month." ".$year."')</script>";
 
+
 					$payroll = "SELECT * FROM payroll WHERE (date LIKE '$month%' AND date LIKE '%$year') AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 					$payrollQuery = mysql_query($payroll);
 					if(mysql_num_rows($payrollQuery) > 0)
 					{
 						//Boolean to know if employee has sss/philhealth/contribution
 						
+
 
 						
 						while($payrollArr = mysql_fetch_assoc($payrollQuery))
@@ -350,7 +354,9 @@ if($contributionType == 'all')
 								$contBool = true;
 								$sssBool = true;
 
+
 								$sssEmployer = $payrollArr['sss_er'];//Gets the value in the sss table
+
 
 								//Print "<script>console.log('".$sssEmployer."')</script>";
 								$sssERContribution += $sssEmployer;
@@ -365,16 +371,19 @@ if($contributionType == 'all')
 								$contBool = true;
 								$pagibigBool = true;
 
+
 								$pagibigEmployer = $payrollArr['pagibig_er'];//Gets the value in the sss table
 
 								$pagibigERContribution += $pagibigEmployer;
 								$pagibigEEContribution += $payrollArr['pagibig'];
+
 
 								$pagibigContribution = $pagibigERContribution + $pagibigEEContribution;
 
 								
 								
 								
+
 							}
 							if($payrollArr['philhealth'] != 0)
 							{
@@ -405,6 +414,7 @@ if($contributionType == 'all')
 								//SSS
 								if($sssBool)
 								{
+
 									$activeSheet->setCellValue('D'.$rowCounter, numberExactFormat($sssEEContribution, 2, '.', true));
 									$activeSheet->setCellValue('E'.$rowCounter, numberExactFormat($sssERContribution, 2, '.', true));
 								}
@@ -413,6 +423,7 @@ if($contributionType == 'all')
 									$activeSheet->mergeCells('D'.$rowCounter.':E'.$rowCounter); 
 									$activeSheet->setCellValue('D'.$rowCounter, 'No Document');		
 								}
+
 
 								//Pagibig
 								if($pagibigBool)		
@@ -448,7 +459,9 @@ if($contributionType == 'all')
 						}
 					}
 
+
 					$monthNoRepeat = $month.$year;
+
 				}
 			}
 		}
@@ -465,6 +478,7 @@ if($contributionType == 'all')
 			$activeSheet->setCellValue('A'.$rowCounter, 'No Report data as of the moment');
 		}
 
+
 	}
 	else if($period = "year")
 	{
@@ -479,6 +493,7 @@ if($contributionType == 'all')
 			if(isset($_POST['date']))
 			{
 				if($_POST['date'] != "all")
+
 				{
 					$changedPeriod = explode(' ',$_POST['date']);
 					$yearPeriod = $changedPeriod[0];
@@ -573,6 +588,7 @@ if($contributionType == 'all')
 							}
 							if($payrollArr['philhealth'] != 0)
 							{
+
 								$contBool = true;
 								$philhealthBool = true;
 
@@ -856,6 +872,7 @@ else {
 
 						$monthNoRepeat = $month.$year;
 					}
+
 				}
 			}
 		}
@@ -886,6 +903,7 @@ else {
 				{
 					$empid = $empArr['empid'];
 
+
 					$payrollDateQuery = mysql_query($payrollDate);
 
 					$yearNoRepeat = "";
@@ -898,7 +916,9 @@ else {
 						$dateExploded = explode(" ", $payDateArr['date']);
 						$year = $dateExploded[2];// gets the year
 
+
 						$payrollDay = $payDateArr['date'];
+
 
 						$payroll = "SELECT * FROM payroll WHERE date LIKE '%$year' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 						$payrollQuery = mysql_query($payroll);
@@ -926,9 +946,11 @@ else {
 								if($yearNoRepeat != $year)
 								{
 
+
 									$yearBefore = $year - 1;
 									
 									$activeSheet->setCellValue('A'.$rowCounter, $yearBefore.' - '.$year); // Period
+
 
 									$activeSheet->setCellValue('B'.$rowCounter, $empArr['lastname'].", ".$empArr['firstname']); // Name
 									$activeSheet->setCellValue('C'.$rowCounter, $empArr['position']); // Position
@@ -946,6 +968,7 @@ else {
 								
 							}
 						}
+
 
 						$yearNoRepeat = $year;
 					}
