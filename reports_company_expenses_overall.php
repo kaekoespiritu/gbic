@@ -235,11 +235,14 @@
 		</div>
 
 		<?php
+		$printDate = "";
 		if(isset($_POST['date']))
 		{
+			$printDate = $_POST['date'];//for printable
+
 			Print "<script>console.log('".$_POST['date']."')</script>";
 			Print "
-				<button class='btn btn-default pull-down'>
+				<button class='btn btn-default pull-down' onclick='printReport()'>
 					Print ".$periodDisplay." Expense Report
 				</button>
 				";
@@ -352,7 +355,7 @@
 						$month = $numChecker[0];
 						$year = $numChecker[1];
 
-						$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year'";
+						$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND (date LIKE '$month%' AND date LIKE '%$year')";
 
 					}
 					else if($countChecker == 1)//Yearly
@@ -539,6 +542,10 @@
 
 		function clearFilter() {
 			window.location.assign("reports_company_expenses_overall.php?site=<?php Print $site?>&period=<?php Print $period?>&position=all&req=all");
+		}
+
+		function printReport(){
+			window.location.assign("print_company_expenses.php?site=<?php Print $site?>&period=<?php Print $period?>&position=<?php Print $position?>&req=<?php Print $require?>&date=<?php Print $printDate?>");
 		}
 
 	</script>

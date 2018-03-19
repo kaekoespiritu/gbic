@@ -127,7 +127,7 @@
 					{
 
 						$thirteenthCheckArr = mysql_fetch_assoc($thirteenthCheckQuery);
-						$pastThirteenthDate = "AND date <= '".$thirteenthCheckArr['to_date']."'";
+						$pastThirteenthDate = "AND STR_TO_DATE(date, '%M %e, %Y ') <= STR_TO_DATE(".$thirteenthCheckArr['to_date'].", '%M %e, %Y ')";
 						$thirteenthRemainder = $thirteenthCheckArr['amount'] - $thirteenthCheckArr['received'];
 						$thirteenthRemainder = abs($thirteenthRemainder);// makes the value absolute
 
@@ -148,7 +148,7 @@
 						$dateLength = mysql_num_rows($payrollQuery);
 
 						//adds the 13th month pay remainder if there is
-						$overallPayment = ($thirteenthRemainder != 0 ? $overallPayment = $overallPayment : 0);
+						$overallPayment = ($thirteenthRemainder != 0 ? $thirteenthRemainder : 0);
 
 						if($remainderBool)
 						{

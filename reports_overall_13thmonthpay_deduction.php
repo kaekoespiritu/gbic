@@ -3,10 +3,8 @@
 	include('directives/session.php');
 	include('directives/db.php');
 
-	
 	$site = $_GET['site'];
 	$position = $_GET['position'];
-	$period = $_GET['period'];
 
 	$dateToday = strftime("%B %d, %Y");//date today
 
@@ -38,7 +36,7 @@
 			<div class="row"><br>
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
-						<li><a href="reports_overall_13thmonthpay.php?position=all&period=week&req=null&site=<?php Print $site ?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Back to table</a></li>
+						<li><a href="reports_overall_13thmonthpay.php?position=all&req=all&site=<?php Print $site ?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Back to table</a></li>
 						<li>Overall 13th Month Pay Report for <?php Print $site?></li>
 						<button class="btn btn-primary pull-right" onclick="submitForm()">
 							Give 13th Month Pay
@@ -86,7 +84,7 @@
 							
 							// previous 13th Month pay checker
 							//Gets the most previous 13th month pay given date
-							$onetriChecker = "SELECT * FROM thirteenth_pay WHERE empid = '$empid' ORDER BY STR_TO_DATE(to_date, '%M %e, %Y')DESC LIMIT 1";
+							$onetriChecker = "SELECT * FROM thirteenth_pay WHERE empid = '$empid' ORDER BY STR_TO_DATE(to_date, '%M %e, %Y') DESC LIMIT 1";
 							$onetriQuery = mysql_query($onetriChecker);
 							if(mysql_num_rows($onetriQuery) != 0)
 							{
