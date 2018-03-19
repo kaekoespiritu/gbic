@@ -192,14 +192,39 @@ require_once("directives/modals/addLoan.php");
 				parent.classList.add('has-error');
 			}
 
-			console.log(object);
-			console.log(object.parentElement);
-			console.log(object.value);
-			console.log(typeof object.value)
-
 		}
 
-		// TODO
+		function validateOption(element) {
+			var object = document.getElementById(element);
+
+			// If it has an entry, change state to green
+			var parent = object.parentElement;
+
+			if(object.value != '') {
+				parent.classList.add('has-success');
+				parent.classList.remove('has-error');
+			}
+			else {
+				parent.classList.remove('has-success');
+				parent.classList.add('has-error');
+			}
+		}
+
+		function validateReason(element) {
+			var object = document.getElementById(element);
+
+			// If it has an entry, change state to green
+			var parent = object.parentElement;
+
+			if(object.value != '') {
+				parent.classList.add('has-success');
+				parent.classList.remove('has-error');
+			}
+			else {
+				parent.classList.remove('has-success');
+				parent.classList.add('has-error');
+			}
+		}
 
 		function sendToModal(id){
 			var parent = document.getElementById(id);
