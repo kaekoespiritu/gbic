@@ -58,7 +58,7 @@
 									<label for="loanType">Loan Type</label>
 								</div>
 								<div class="form-group col-md-4">
-									<select class="form-control" name="loanType" required id="loanType" onchange="validate(this)">
+									<select class="form-control" name="loanType" required id="loanType" onchange="validateOption('loanType')">
 										<option selected disabled>Loan type</option>
 										<option value="SSS">SSS</option>
 										<option value="PagIBIG">PagIBIG</option>
@@ -67,13 +67,13 @@
 									</select>
 								</div>
 								<div class="col-md-5">
-									<input type="text" class="form-control" required name="loanAmount" id="loanAmount" placeholder="Amount of loan" onchange="validate(this)">
+									<input type="number" class="form-control" required name="loanAmount" id="loanAmount" placeholder="Amount of loan" onchange="validateLoanAmount('loanAmount')">
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="col-md-offset-1">
-									<textarea class="form-control" rows="2" required id="reason" name="reason" placeholder="Reason for getting a loan" onchange="validate(this)"></textarea>
+									<textarea class="form-control" rows="2" required id="reason" name="reason" placeholder="Reason for getting a loan" onchange="validateReason('reason')"></textarea>
 								</div><br>
 							</div>
 						</div>

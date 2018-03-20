@@ -103,7 +103,7 @@
 							<td colspan='6' rowspan='2'>";
 						
 							if($empArr['complete_doc'] == 1)
-								Print "With Complete Requirements";
+								Print "Complete Requirements";
 							else
 								Print "Without Requirements";
 						
@@ -321,6 +321,7 @@
     		var bool = $('#printBool').val();
     		if(bool != 1) {
     			$('#printButton').attr('disabled','disabled');
+    			$('#printPayslip').attr('disabled','disabled');
     		}
     		
 

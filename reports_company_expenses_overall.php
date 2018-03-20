@@ -82,155 +82,169 @@
 					</ol>
 				</div>
 			</div>
+
 			<div class="form-inline">
-				<h4>Select Period</h4>
-				<select onchange="periodChange(this.value)" class="form-control">
-					<?php 
-						if($period == "week")
-							Print "<option value='week' selected>Weekly</option>";
-						else
-							Print "<option value='week'>Weekly</option>";
-						if($period == "month")
-							Print "<option value='month'selected>Monthly</option>";
-						else
-							Print "<option value='month'>Monthly</option>";
-						if($period == "year")
-							Print "<option value='year' selected>Yearly</option>";
-						else
-							Print "<option value='year'>Yearly</option>";
-					?>
-				</select>
-				<h4>Select <?php Print $period?></h4>
+				<div class="col-md-3">
+					<h4>Select Period</h4>
+					<select onchange="periodChange(this.value)" class="form-control">
+						<?php 
+							if($period == "week")
+								Print "<option value='week' selected>Weekly</option>";
+							else
+								Print "<option value='week'>Weekly</option>";
+							if($period == "month")
+								Print "<option value='month'selected>Monthly</option>";
+							else
+								Print "<option value='month'>Monthly</option>";
+							if($period == "year")
+								Print "<option value='year' selected>Yearly</option>";
+							else
+								Print "<option value='year'>Yearly</option>";
+						?>
+					</select>
+				</div>
+
+				<div class="col-md-3">
+					<h4>Select <?php Print $period?></h4>
 					<select class="form-control" onchange="changeDate(this.value)">
 						<option hidden>Choose a <?php Print $period?></option>
-					<?php
-						
+						<?php
+							
 
-							
-							$payrollDates = "SELECT DISTINCT date FROM payroll";
-							$payrollDQuery = mysql_query($payrollDates) or die(mysql_error());
-							
-							if(mysql_num_rows($payrollDQuery) > 0)//check if there's payroll
-							{
-								$monthNoRep = "";
-								$yearNoRep = "";
-								while($payrollDateArr = mysql_fetch_assoc($payrollDQuery))
+								
+								$payrollDates = "SELECT DISTINCT date FROM payroll";
+								$payrollDQuery = mysql_query($payrollDates) or die(mysql_error());
+								
+								if(mysql_num_rows($payrollDQuery) > 0)//check if there's payroll
 								{
-									
-									if($_GET['period'] == 'week')
+									$monthNoRep = "";
+									$yearNoRep = "";
+									while($payrollDateArr = mysql_fetch_assoc($payrollDQuery))
 									{
-										$payrollEndDate = $payrollDateArr['date'];
-										$payrollStartDate = date('F j, Y', strtotime('-6 day', strtotime($payrollEndDate)));
-										if(isset($_POST['date']))
+										
+										if($_GET['period'] == 'week')
 										{
-											if($_POST['date'] == $payrollEndDate)
+											$payrollEndDate = $payrollDateArr['date'];
+											$payrollStartDate = date('F j, Y', strtotime('-6 day', strtotime($payrollEndDate)));
+											if(isset($_POST['date']))
 											{
-												Print "<option value = '".$payrollEndDate."' selected>".$payrollStartDate." - ".$payrollEndDate."</option>";
+												if($_POST['date'] == $payrollEndDate)
+												{
+													Print "<option value = '".$payrollEndDate."' selected>".$payrollStartDate." - ".$payrollEndDate."</option>";
+												}
+												else
+												{
+													Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
+												}
 											}
 											else
 											{
 												Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
 											}
 										}
-										else
+										else if($_GET['period'] == 'month')
 										{
-											Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
-										}
-									}
-									else if($_GET['period'] == 'month')
-									{
-										$payrollArrDate = explode(" ", $payrollDateArr['date']);
-										$payrollMonth = $payrollArrDate[0];
-										$payrollYear = $payrollArrDate[2];
+											$payrollArrDate = explode(" ", $payrollDateArr['date']);
+											$payrollMonth = $payrollArrDate[0];
+											$payrollYear = $payrollArrDate[2];
 
-										if($monthNoRep != $payrollMonth." ".$payrollYear)
-										{	
-											if(isset($_POST['date']))
-											{
-												if($_POST['date'] == $payrollMonth." ".$payrollYear)
+											if($monthNoRep != $payrollMonth." ".$payrollYear)
+											{	
+												if(isset($_POST['date']))
 												{
-													Print "<option value = '".$payrollMonth." ".$payrollYear."' selected>".$payrollMonth." ".$payrollYear."</option>";
+													if($_POST['date'] == $payrollMonth." ".$payrollYear)
+													{
+														Print "<option value = '".$payrollMonth." ".$payrollYear."' selected>".$payrollMonth." ".$payrollYear."</option>";
+													}
+													else
+													{
+														Print "<option value = '".$payrollMonth." ".$payrollYear."'>".$payrollMonth." ".$payrollYear."</option>";
+													}
 												}
 												else
 												{
 													Print "<option value = '".$payrollMonth." ".$payrollYear."'>".$payrollMonth." ".$payrollYear."</option>";
 												}
 											}
-											else
-											{
-												Print "<option value = '".$payrollMonth." ".$payrollYear."'>".$payrollMonth." ".$payrollYear."</option>";
-											}
+											$monthNoRep = $payrollMonth." ".$payrollYear;
 										}
-										$monthNoRep = $payrollMonth." ".$payrollYear;
-									}
-									else if($_GET['period'] == 'year')
-									{
-										$payrollArrDate = explode(" ", $payrollDateArr['date']);
-										$payrollYear = $payrollArrDate[2];
-										$yearBef = $payrollYear -1;//gets the year before
+										else if($_GET['period'] == 'year')
+										{
+											$payrollArrDate = explode(" ", $payrollDateArr['date']);
+											$payrollYear = $payrollArrDate[2];
+											$yearBef = $payrollYear -1;//gets the year before
 
-										if($yearNoRep != $payrollYear)
-										{	
-											if(isset($_POST['date']))
-											{
-												if($_POST['date'] == $payrollYear)
+											if($yearNoRep != $payrollYear)
+											{	
+												if(isset($_POST['date']))
 												{
-													Print "<option value = '".$payrollYear."' selected>".$yearBef." - ".$payrollYear."</option>";
+													if($_POST['date'] == $payrollYear)
+													{
+														Print "<option value = '".$payrollYear."' selected>".$yearBef." - ".$payrollYear."</option>";
+													}
+													else
+													{
+														Print "<option value = '".$payrollYear."'>".$yearBef." - ".$payrollYear."</option>";
+													}
 												}
 												else
 												{
 													Print "<option value = '".$payrollYear."'>".$yearBef." - ".$payrollYear."</option>";
 												}
+												
 											}
-											else
-											{
-												Print "<option value = '".$payrollYear."'>".$yearBef." - ".$payrollYear."</option>";
-											}
-											
+											$yearNoRep = $payrollYear;
 										}
-										$yearNoRep = $payrollYear;
+										
 									}
-									
 								}
-							}
-					
-					?>
-				</select>
-				<h5>Filter:</h5>
-				<h4>Position</h4>
-				<select onchange="positionChange(this.value)" class="form-control">
-					<option hidden>position</option>
-					<?php 
-						$position_dd = "SELECT * FROM job_position WHERE active = '1'";
-						$posQuery = mysql_query($position_dd);
+						
+						?>
+					</select>
+				</div>
 
-						while($posArr = mysql_fetch_assoc($posQuery))
-						{
-							if($position == $posArr['position'])
-								Print "<option value = '".$posArr['position']."' selected>".$posArr['position']."</option>";
+				<div class="col-md-2">
+					<h4>Filter:</h4>
+					<select onchange="positionChange(this.value)" class="form-control">
+						<option hidden>Position</option>
+						<?php 
+							$position_dd = "SELECT * FROM job_position WHERE active = '1'";
+							$posQuery = mysql_query($position_dd);
+
+							while($posArr = mysql_fetch_assoc($posQuery))
+							{
+								if($position == $posArr['position'])
+									Print "<option value = '".$posArr['position']."' selected>".$posArr['position']."</option>";
+								else
+									Print "<option value = '".$posArr['position']."'>".$posArr['position']."</option>";
+							}
+						?>
+					</select>
+				</div>
+
+				<div class="col-md-2">
+					<h4>Requirement</h4>
+					<select onchange="requirementChange(this.value)" class="form-control">
+						<?php 
+							if($require == "all")
+								Print "<option value='all' selected>All</option>";
 							else
-								Print "<option value = '".$posArr['position']."'>".$posArr['position']."</option>";
-						}
-					?>
-				</select>
-				<h4>Requirement</h4>
-				<select onchange="requirementChange(this.value)" class="form-control">
-					<?php 
-						if($require == "all")
-							Print "<option value='all' selected>All</option>";
-						else
-							Print "<option value='all'>All</option>";
-						if($require == "withReq")
-							Print "<option value='withReq'selected>W/ Requirements</option>";
-						else
-							Print "<option value='withReq'>W/ Requirements</option>";
-						if($require == "withOReq")
-							Print "<option value='withOReq' selected>W/o Requirements</option>";
-						else
-							Print "<option value='withOReq'>W/o Requirements</option>";
-					?>
-				</select>
-				<button type="button" class="btn btn-danger" onclick="clearFilter()">Clear Filters</button>
+								Print "<option value='all'>All</option>";
+							if($require == "withReq")
+								Print "<option value='withReq'selected>W/ Requirements</option>";
+							else
+								Print "<option value='withReq'>W/ Requirements</option>";
+							if($require == "withOReq")
+								Print "<option value='withOReq' selected>W/o Requirements</option>";
+							else
+								Print "<option value='withOReq'>W/o Requirements</option>";
+						?>
+					</select>
+				</div>
+				<div class="col-md-1">
+					<button type="button" class="btn btn-danger pull-down" onclick="clearFilter()">Clear Filters</button>
+				</div>
+			</div>
 			</div>
 		</div>
 

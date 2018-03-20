@@ -69,7 +69,8 @@
 			</div>
 
 		<div class="form-inline">
-			Filters:
+			<div class="col-md-6">
+			<h4>Filters:</h4>
 			<select onchange="requirementChange(this.value)" class="form-control">
 				<option hidden>Requirements</option>
 				<option value='all'>All</option>
@@ -104,12 +105,14 @@
 			<a class="btn btn-danger" href="reports_overall_13thmonthpay.php?position=all&req=all&site=<?php Print $site?>">Clear Filters</a>
 		</div>
 
+
 		<!-- <div class='pull-down'> -->
 		<div class='col-md-10 col-md-offset-1'>
 			<button class='btn btn-primary' onclick="print13thMonth()">
 				Print 13th Month pay report
 			</button>
 			<table class='table table-bordered pull-down'>
+
 			
 			<tr>
 				<td colspan='5'>
@@ -134,7 +137,6 @@
 				</td>
 			</tr>
 	<?php
-	//=======================================
 	//Filters
 		$appendQuery = "";
 		if($position != "all")
@@ -183,9 +185,11 @@
 					$thirteenthBool = false;
 					$remainderBool = true;// displays the remainder
 				}
+
 					
 
 				$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
+
 				
 				$payrollQuery = mysql_query($payrollDate) or die(mysql_error());
 				$dateLength = mysql_num_rows($payrollQuery);

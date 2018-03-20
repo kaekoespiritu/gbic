@@ -176,20 +176,54 @@ require_once("directives/modals/addLoan.php");
 		 });
 		});
 
-		function validate(element) {
+		function validateLoanAmount(element) {
+			var object = document.getElementById(element);
+
 			// If it has an entry, change state to green
-			var parent = element.parentElement;
+			var parent = object.parentElement;
 
 			// If left empty, change state to red
-			if(element.value == "") {
-				parent.classList.remove('has-success');
-				parent.classList.add('has-error');
-			}
-			else {
+			if(object.value > 0) {
 				parent.classList.add('has-success');
 				parent.classList.remove('has-error');
 			}
+			else {
+				parent.classList.remove('has-success');
+				parent.classList.add('has-error');
+			}
 
+		}
+
+		function validateOption(element) {
+			var object = document.getElementById(element);
+
+			// If it has an entry, change state to green
+			var parent = object.parentElement;
+
+			if(object.value != '') {
+				parent.classList.add('has-success');
+				parent.classList.remove('has-error');
+			}
+			else {
+				parent.classList.remove('has-success');
+				parent.classList.add('has-error');
+			}
+		}
+
+		function validateReason(element) {
+			var object = document.getElementById(element);
+
+			// If it has an entry, change state to green
+			var parent = object.parentElement;
+
+			if(object.value != '') {
+				parent.classList.add('has-success');
+				parent.classList.remove('has-error');
+			}
+			else {
+				parent.classList.remove('has-success');
+				parent.classList.add('has-error');
+			}
 		}
 
 		function sendToModal(id){
