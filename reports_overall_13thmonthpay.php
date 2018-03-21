@@ -69,7 +69,7 @@
 			</div>
 
 		<div class="form-inline">
-			<div class="col-md-6">
+			<div class="col-md-6 col-md-offset-3">
 			<h4>Filters:</h4>
 			<select onchange="requirementChange(this.value)" class="form-control">
 				<option hidden>Requirements</option>
@@ -108,7 +108,7 @@
 
 		<!-- <div class='pull-down'> -->
 		<div class='col-md-10 col-md-offset-1'>
-			<button class='btn btn-primary' onclick="print13thMonth()">
+			<button class='btn btn-primary pull-down' onclick="print13thMonth()">
 				Print 13th Month pay report
 			</button>
 			<table class='table table-bordered pull-down'>
