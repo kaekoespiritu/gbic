@@ -186,7 +186,7 @@ else
 			<div class="modal-content">
 				<div class="modal-body">
 					<h4>
-					Absence Notice: There are <span id="awolNumber"></span> employees that have accumulated 7 days of absences and are now pending for AWOL.
+					Absence Notice: There are <span id="awolNumber"></span> employee(s) that have accumulated 7 days of absences and are now pending for AWOL.
 					</h4>
 					<br/>
 					<h5><i>Click anywhere to close this notification.</i></h5>
