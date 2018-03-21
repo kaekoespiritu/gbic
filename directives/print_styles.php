@@ -57,6 +57,28 @@ $border_allsides_medium = array(
                 )
         );
 
+$border_buttom_left_thin = array(  
+          'borders' => array(
+            'bottom' => array(
+                      'style' => 'medium',
+                      'color' => array('rgb' => '000000')
+                    ),
+            'left' => array(
+                      'style' => 'medium',
+                      'color' => array('rgb' => '000000')
+                    )
+                )
+          );
+
+
+$border_buttom_thin = array(  
+          'borders' => array(
+            'bottom' => array(
+                      'style' => 'medium',
+                      'color' => array('rgb' => '000000')
+                    )
+                )
+          );
 
 $align_center = array(  
           'alignment' => array(
@@ -71,11 +93,33 @@ $align_right = array(
                   'vertical' => 'center'
                 )
         );
+$align_left = array(
+          'alignment' => array(
+                  'horizontal' => 'left',
+                  'vertical' => 'center'
+                )
+        );
+
+$font_bold = array(
+          'font' => array(
+                  'bold' => true
+                )
+        );
 
 $border_thin = array(  
           'borders' => array(
             'allborders' => array(
                       'style' => 'thin',
+                      'color' => array('rgb' => '000000')
+                    )
+                )
+        );
+
+
+$border_top_double = array(  
+          'borders' => array(
+            'top' => array(
+                      'style' => 'double',
                       'color' => array('rgb' => '000000')
                     )
                 )

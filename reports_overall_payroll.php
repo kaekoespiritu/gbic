@@ -47,7 +47,7 @@
 		<div class="row">
 			<div class="col-md-3 col-md-offset-3">
 				<h4>Step 1: Select Requirements</h4>
-				<select onchange="payrollRequirements(this.value);" class="form-control" id="step1">
+				<select onchange="payrollRequirements(this.value)" class="form-control" id="step1">
 					<?php 
 					if($req == 'null')
 						Print "<option selected>-- All / With / Without --</option>";
@@ -118,7 +118,7 @@
 								<a class="btn btn-default" href="print_payroll.php?site='.$location.'&date='.$_POST['payrollDate'].'">
 									Print Payroll
 								</a>
-								<a class="btn btn-default">
+								<a class="btn btn-default" onclick="printPayslips()">
 									Print Payslips
 								</a>
 								</div>
@@ -412,6 +412,13 @@
 			if(step1 !== '-- All / With / Without --') {
 				document.getElementById('step2').disabled = false;
 			}
+		}
+
+		function printPayslips() {
+			var req = document.getElementById('step1').value;
+			var date = document.getElementById('step2').value;
+
+			window.location.assign("print_overall_payslip.php?req="+req+"&date="+date+"&site=<?php Print $location?>");
 		}
 	</script>
 </body>

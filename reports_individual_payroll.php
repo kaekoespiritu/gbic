@@ -50,7 +50,7 @@
 
 			<div class="form-inline">
 				<h4>Select period</h4>
-				<select class="form-control" onchange="payrollDateChange(this.value)">
+				<select class="form-control" id="dd_payrollDate" onchange="payrollDateChange(this.value)">
 					<option hidden>Select date</option>
 					<?php
 						$payrollDates = "SELECT date FROM payroll WHERE empid = '$empid'";
@@ -91,9 +91,9 @@
 				
 				<button class='btn btn-primary' id='printButton' onclick="printPayroll()">Print Payroll</button>
 				
-				<a class="btn btn-primary" id="printPayslip" href="reports_payslip_individual_emp.php">
+				<button class="btn btn-primary" id="printPayslip" onclick="printPayslip()">
 					Print Payslip
-				</a>
+				</button>
 				<?php
 				if(isset($_POST['dateChange']))//if admin chooses a date on the period dropdown
 				{
@@ -330,6 +330,11 @@
 		function printPayroll() {
 			var payrollDate = document.getElementById('payrollDate').value;
 			window.location.assign("print_individual_payroll.php?empid=<?php Print $empid?>&date="+payrollDate);
+		}
+
+		function printPayslip() {
+			var payrollDate = document.getElementById('dd_payrollDate').value;
+			window.location.assign("print_individual_payslip.php?empid=<?php Print $empid?>&date="+payrollDate);
 		}
 
 		function payrollDateChange(date) {
