@@ -316,6 +316,10 @@ overflow: auto;
   margin-left: 89px;
 }
 
+.reports-table {
+  margin-left: -35px;
+}
+
 .checkbox
 {
   margin-top: 0px !important;
