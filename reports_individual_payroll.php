@@ -43,7 +43,7 @@
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_individual_earnings.php?type=Earnings&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Earnings</a></li>
-						<li>Individual Payroll Report for <?php Print $empArr['firstname']." ".$empArr['lastname']." | ".$empArr['position']." at ". $empArr['site']?></li>
+						<li>Payroll Report for <?php Print $empArr['firstname']." ".$empArr['lastname']." | ".$empArr['position']." at ". $empArr['site']?></li>
 					</ol>
 				</div>
 			</div>
@@ -98,7 +98,7 @@
 				if(isset($_POST['dateChange']))//if admin chooses a date on the period dropdown
 				{
 					Print "
-						<table class='table table-bordered pull-down'>
+						<table class='table table-bordered pull-down reports-table'>
 						<tr>
 							<td colspan='6' rowspan='2'>";
 						

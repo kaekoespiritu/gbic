@@ -47,7 +47,7 @@
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_individual_earnings.php?type=Earnings&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Earnings</a></li>
-						<li>Individual 13th Month Pay Report for <?php Print $employeeInfo?></li>
+						<li>13th Month Pay Report for <?php Print $employeeInfo?></li>
 						<button class='btn btn-success pull-right' data-toggle="modal" data-target="#give13thmonthpay">
 							Give 13th Month Pay
 						</button>
