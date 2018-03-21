@@ -4,7 +4,6 @@ include_once('directives/db.php');
 include_once 'modules/Classes/PHPExcel.php';
 include('directives/print_styles.php');//Styles for PHPexcel
 
-$empid = $_GET['empid'];
 $date = $_GET['date'];
 $site = $_GET['site'];
 $require = $_GET['req'];
@@ -121,172 +120,245 @@ $totalStyleCounter = 16;
 $headerStyleCounter1 = 1;
 $headerStyleCounter2 = 2;
 
+$rowIncrement = 17;// increment by 17 inpreparation for the new horizontal data
 
-$employee = "SELECT * FROM exployee WHERE site = '$site' AND employment_status = '1'";
-$empQuery = mysql_query($employee);
+$employee = "SELECT * FROM employee WHERE site = '$site' AND employment_status = '1'";
+$employeeQuery = mysql_query($employee) or die(mysql_error());
 
-$horizontalCounter = 1;//counter for horizontal display
-while($empArr = mysql_fetch_assoc($empQuery))
+$rowNum = mysql_num_rows($employeeQuery);
+$rowCount = $rowNum / 5;
+$countExplode = explode('.', $rowCount);
+$loopCount = ($rowCount != 0 ? $countExplode[0] : 1);//gets only the whole number if zero then set to 1 for one loop
+
+$endCounter = 5;//end Query
+$startCounter = 0;// start query
+// Print "<script>console.log('".$loopCount."')</script>";
+
+$cellArray = 	array(
+					array('A','B','C','D'),//1st payslip column
+					array('F','G','H','I'),//2nd payslip column
+					array('K','L','M','N'),//3rd payslip column
+					array('P','Q','R','S'),//4th payslip column
+					array('U','V','W','X'),//5th payslip column
+				);
+// $empCounter = 1;
+for($count = 0; $count <= $loopCount; $count++)
 {
-	//////////// Array index reference ///////////
-	//											//
-	//		0 - Name 							//
-	//		1 - Rate 							//
-	//		2 - Num Attendance 					//
-	//		3 - Rate SubTotal 					//
-	//		4 - OT 								//
-	//		5 - OTNum  							//
-	//		6 - OT SubTotal 					//
-	//		7 - Cola 							//
-	//		8 - Cola SubTotal 					//
-	//		9 - Sunday  						//
-	//		10 - Sunday Num 					//
-	//		11 - Sunday SubTotal 				//
-	//		12 - NightDiff 						//
-	//		13 - Night diff Num 				//
-	//		14 - NightDiff SubTotal 			//
-	//		15 - Regular Holiday 				//
-	//		16 - Regular Holiday Num 			//
-	//		17 - Regular Holiday SubTotal 		//
-	//		18 - Special Holiday 				//
-	//		19 - Special Holiday Num 			// 
-	//		20 - Special Holiday SubTotal 		//
-	//		21 - SSS  							//
-	//		22 - Philhealth  					//
-	//		23 - Pagibig  						//
-	//		24 - Extra Allowance  				//
-	//		25 - Old Vale  						//
-	//		26 - New Vale  						//
-	//		27 - Tools  						//
-	//		28 - Total  						//
-	//											//
-	//////////////////////////////////////////////
-
+	$emp = "SELECT * FROM employee WHERE site = '$site' AND employment_status = '1' LIMIT {$startCounter}, {$endCounter}";
 	
+	$empQuery = mysql_query($emp) or die(mysql_error());
+	if(mysql_num_rows($empQuery) != 0)
+	{
 
-	//Merge cells
-	$activeSheet->mergeCells('A'.$dateMergeCounter.':D'.$dateMergeCounter);// Date
-	$activeSheet->mergeCells('A'.$nameMergeCounter.':D'.$nameMergeCounter);// Name
+		$counter = 0;//counter for loop for horizontal display
+		while($empRow = mysql_fetch_assoc($empQuery))//horizontal display
+		{
+			// Print "<script>console.log('".$empCounter."')</script>";
+			// $empCounter++;	
+			$cellA = $cellArray[$counter][0];
+			$cellB = $cellArray[$counter][1];
+			$cellC = $cellArray[$counter][2];
+			$cellD = $cellArray[$counter][3];
+			
+			//Merge cells
+			$activeSheet->mergeCells($cellA.$dateMergeCounter.':'.$cellD.$dateMergeCounter);// Date
+			$activeSheet->mergeCells($cellA.$nameMergeCounter.':'.$cellD.$nameMergeCounter);// Name
 
-	$activeSheet->mergeCells('C'.$totalMergeCounter.':D'.$totalMergeCounter);// Total
+			$activeSheet->mergeCells($cellC.$totalMergeCounter.':'.$cellD.$totalMergeCounter);// Total
 
-	$activeSheet->setCellValue('A'.$dateCoveredRowCounter, 'Date Covered: '.$dateCovered);
-	$activeSheet->setCellValue('A'.$nameCoveredRowCounter, $empArr['lastname'].", ".$empArr['firstname']);
+			$activeSheet->setCellValue($cellA.$dateCoveredRowCounter, 'Date Covered: '.$dateCovered);
+			$activeSheet->setCellValue($cellA.$nameRowCounter, $empRow['lastname'].", ".$empRow['firstname']);
 
-	$activeSheet->setCellValue('A'.$rateRowCounter, 'Rate');
-	$activeSheet->setCellValue('A'.$overtimeRowCounter, 'OT');
-	$activeSheet->setCellValue('A'.$colaRowCounter, 'cola');
-	$activeSheet->setCellValue('A'.$sundayRowCounter, 'Sun');
-	$activeSheet->setCellValue('A'.$nightDiffRowCounter, 'N.D');
-	$activeSheet->setCellValue('A'.$regHolRowCounter, 'Reg. Hol');
-	$activeSheet->setCellValue('A'.$speHolRowCounter, 'Spe. Hol');
-	$activeSheet->setCellValue('A'.$sssRowCounter, 'SSS');
-	$activeSheet->setCellValue('A'.$philhealthRowCounter, 'PhilHealth');
-	$activeSheet->setCellValue('A'.$pagibigRowCounter, 'Pag-IBIG');
-	$activeSheet->setCellValue('A'.$oldValeRowCounter, 'Old vale');
-	$activeSheet->setCellValue('A'.$newValeRowCounter, 'vale');
-	$activeSheet->setCellValue('A'.$toolsRowCounter, 'tools');
+			$activeSheet->setCellValue($cellA.$rateRowCounter, 'Rate');
+			$activeSheet->setCellValue($cellA.$overtimeRowCounter, 'OT');
+			$activeSheet->setCellValue($cellA.$colaRowCounter, 'cola');
+			$activeSheet->setCellValue($cellA.$sundayRowCounter, 'Sun');
+			$activeSheet->setCellValue($cellA.$nightDiffRowCounter, 'N.D');
+			$activeSheet->setCellValue($cellA.$regHolRowCounter, 'Reg. Hol');
+			$activeSheet->setCellValue($cellA.$speHolRowCounter, 'Spe. Hol');
+			$activeSheet->setCellValue($cellA.$sssRowCounter, 'SSS');
+			$activeSheet->setCellValue($cellA.$philhealthRowCounter, 'PhilHealth');
+			$activeSheet->setCellValue($cellA.$pagibigRowCounter, 'Pag-IBIG');
+			$activeSheet->setCellValue($cellA.$oldValeRowCounter, 'Old vale');
+			$activeSheet->setCellValue($cellA.$newValeRowCounter, 'vale');
+			$activeSheet->setCellValue($cellA.$toolsRowCounter, 'tools');
 
-	$activeSheet->setCellValue('C'.$extraAllowanceRowCounter, 'X. All.');
+			$activeSheet->setCellValue($cellC.$extraAllowanceRowCounter, 'X. All.');
+
+			//------------ Style for the Spreadsheet ------------//
+			$activeSheet->getStyle($cellA.$borderStyleCounter1.':'.$cellD.$borderStyleCounter2)->applyFromArray($border_allsides_medium); 
+
+			//extra Allowance
+			$activeSheet->getStyle($cellC.$allowanceStyleCounter)->applyFromArray($border_buttom_left_thin);
+			$activeSheet->getStyle($cellD.$allowanceStyleCounter)->applyFromArray($border_buttom_thin);
+
+			//Total
+			$activeSheet->getStyle($cellC.$totalStyleCounter.':'.$cellD.$totalStyleCounter)->applyFromArray($border_top_double);
+
+			//Header
+			$activeSheet->getStyle($cellA.$headerStyleCounter1.':'.$cellA.$headerStyleCounter2)->applyFromArray($align_left);
+			$activeSheet->getStyle($cellA.$headerStyleCounter2)->applyFromArray($font_bold);
+			
+
+			//------------ Date for the Spreadsheet ------------//
+
+			$empid = $empRow['empid'];
+			$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$date'";
+			$payrollQuery = mysql_query($payroll);
+
+			$payrollArr = mysql_fetch_assoc($payrollQuery);
+
+			//Rate
+			$activeSheet->setCellValue($cellB.$rateDataCounter, $payrollArr['rate']);
+			$activeSheet->setCellValue($cellC.$rateDataCounter, 'x '.$payrollArr['num_days']);
+
+			$rateSubTotal = $payrollArr['rate'] * $payrollArr['num_days'];
+			$activeSheet->setCellValue($cellD.$rateDataCounter, $rateSubTotal);
+
+			//Overtime
+			$activeSheet->setCellValue($cellB.$overtimeDataCounter, $payrollArr['overtime']);
+			$activeSheet->setCellValue($cellC.$overtimeDataCounter, 'x '.$payrollArr['ot_num']);
+
+			$OTSubTotal = $payrollArr['ot_num'] * $payrollArr['overtime'];
+			$activeSheet->setCellValue($cellD.$overtimeDataCounter, $OTSubTotal);
+
+			//Cola
+			$activeSheet->setCellValue($cellB.$colaDataCounter, $payrollArr['cola']);
+			$activeSheet->setCellValue($cellC.$colaDataCounter, 'x '.$payrollArr['num_days']);
+
+			$colaSubTotal = $payrollArr['cola'] * $payrollArr['num_days'];
+			$activeSheet->setCellValue($cellD.$colaDataCounter, $colaSubTotal);
+
+			//Sunday
+			$activeSheet->setCellValue($cellB.$sundayDataCounter, $payrollArr['sunday_rate']);
+			$activeSheet->setCellValue($cellC.$sundayDataCounter, 'x '.$payrollArr['sunday_hrs']);
+
+			$sundaySubTotal = $payrollArr['sunday_hrs'] * $payrollArr['sunday_rate'];
+			$activeSheet->setCellValue($cellD.$sundayDataCounter, $sundaySubTotal);
+
+			//Night differential
+			$activeSheet->setCellValue($cellB.$NDDataCounter, $payrollArr['nightdiff_rate']);
+			$activeSheet->setCellValue($cellC.$NDDataCounter, 'x '.$payrollArr['nightdiff_num']);
+
+			$NDSubTotal = $payrollArr['nightdiff_num'] * $payrollArr['nightdiff_rate'];
+			$activeSheet->setCellValue($cellD.$NDDataCounter, $NDSubTotal);
+
+			//Regular Holiday
+			$activeSheet->setCellValue($cellB.$regHolDataCounter, $payrollArr['reg_holiday']);
+			$activeSheet->setCellValue($cellC.$regHolDataCounter, 'x '.$payrollArr['reg_holiday_num']);
+
+			$regHolSubTotal = $payrollArr['reg_holiday_num'] * $payrollArr['reg_holiday'];
+			$activeSheet->setCellValue($cellD.$regHolDataCounter, $regHolSubTotal);
+
+			//Special Holiday
+			$activeSheet->setCellValue($cellB.$speHolDataCounter, $payrollArr['spe_holiday']);
+			$activeSheet->setCellValue($cellC.$speHolDataCounter, 'x '.$payrollArr['spe_holiday_num']);
+
+			$speHolSubTotal = $payrollArr['spe_holiday_num'] * $payrollArr['spe_holiday'];
+			$activeSheet->setCellValue($cellD.$speHolDataCounter, $speHolSubTotal);
+
+			//Contribution
+			$activeSheet->setCellValue($cellB.$sssDataCounter, $payrollArr['sss']);
+			$activeSheet->setCellValue($cellB.$philhealthDataCounter, $payrollArr['philhealth']);
+			$activeSheet->setCellValue($cellB.$pagibigDataCounter, $payrollArr['pagibig']);
+
+			//Allowance
+			$activeSheet->setCellValue($cellD.$allowanceDataCounter, $payrollArr['x_allowance']);
+
+			//Vale
+			$activeSheet->setCellValue($cellB.$oldValeDataCounter, $payrollArr['old_vale']);
+			$activeSheet->setCellValue($cellB.$newValeDataCounter, $payrollArr['new_vale']);
+
+			//Tools
+			$activeSheet->setCellValue($cellB.$toolsDataCounter , $payrollArr['tools_paid']);
+
+			//Total
+			$activeSheet->setCellValue($cellC.$totalDataCounter, $payrollArr['total_salary']);
+
+			$counter++;//Increment counter for horizontal inputs
+			
+		}
+
+		//------------ Increment Row Number ------------//
+		//------ Counter for merged cells ------//
+		$dateMergeCounter += $rowIncrement;
+		$nameMergeCounter += $rowIncrement;
+		$totalMergeCounter += $rowIncrement;
+
+		//------ Counter for header cells ------//
+		$dateCoveredRowCounter += $rowIncrement;
+		$nameRowCounter += $rowIncrement;
+		$rateRowCounter += $rowIncrement;
+		$overtimeRowCounter += $rowIncrement;
+		$colaRowCounter += $rowIncrement;
+		$sundayRowCounter += $rowIncrement;
+		$nightDiffRowCounter += $rowIncrement;
+		$regHolRowCounter += $rowIncrement;
+		$speHolRowCounter += $rowIncrement;
+		$sssRowCounter += $rowIncrement;
+		$philhealthRowCounter += $rowIncrement;
+		$pagibigRowCounter += $rowIncrement;
+		$oldValeRowCounter += $rowIncrement;
+		$newValeRowCounter += $rowIncrement;
+		$toolsRowCounter += $rowIncrement;
+		$extraAllowanceRowCounter += $rowIncrement;
+
+		//------ Counter for date ------//
+		$rateDataCounter += $rowIncrement;
+		$overtimeDataCounter += $rowIncrement;
+		$colaDataCounter += $rowIncrement;
+		$sundayDataCounter += $rowIncrement;
+		$NDDataCounter += $rowIncrement;
+		$regHolDataCounter += $rowIncrement;
+		$speHolDataCounter += $rowIncrement;
+
+		$sssDataCounter += $rowIncrement;
+		$philhealthDataCounter += $rowIncrement;
+		$pagibigDataCounter += $rowIncrement;
+
+		$allowanceDataCounter += $rowIncrement;
+		$oldValeDataCounter += $rowIncrement;
+		$newValeDataCounter += $rowIncrement;
+
+		$toolsDataCounter += $rowIncrement;
+		$totalDataCounter+= $rowIncrement;
+
+		//------ Counter Style ------//
+		//Border
+		$borderStyleCounter1 += $rowIncrement;
+		$borderStyleCounter2 += $rowIncrement;
+		//Extra Allowance
+		$allowanceStyleCounter += $rowIncrement;
+		//Total
+		$totalStyleCounter += $rowIncrement; 
+		//Header
+		$headerStyleCounter1 += $rowIncrement;
+		$headerStyleCounter2 += $rowIncrement;
+
+		$startCounter += 5;//increment to next batch of employees
+	}
+		
+}
 
 	//----------------- Body Contents ---------------------//
-
-	$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$date'";
-	$payrollQuery = mysql_query($payroll);
-
-	$payrollArr = mysql_fetch_assoc($payrollQuery);
-
-	//Rate
-	$activeSheet->setCellValue('B'.$rateDataCounter, $payrollArr['rate']);
-	$activeSheet->setCellValue('C'.$rateDataCounter, 'x '.$payrollArr['num_days']);
-
-	$rateSubTotal = $payrollArr['rate'] * $payrollArr['num_days'];
-	$activeSheet->setCellValue('D'.$rateDataCounter, $rateSubTotal);
-
-	//Overtime
-	$activeSheet->setCellValue('B'.$overtimeDataCounter, $payrollArr['overtime']);
-	$activeSheet->setCellValue('C'.$overtimeDataCounter, 'x '.$payrollArr['ot_num']);
-
-	$OTSubTotal = $payrollArr['ot_num'] * $payrollArr['overtime'];
-	$activeSheet->setCellValue('D'.$overtimeDataCounter, $OTSubTotal);
-
-	//Cola
-	$activeSheet->setCellValue('B'.$colaDataCounter, $payrollArr['cola']);
-	$activeSheet->setCellValue('C'.$colaDataCounter, 'x '.$payrollArr['num_days']);
-
-	$colaSubTotal = $payrollArr['cola'] * $payrollArr['num_days'];
-	$activeSheet->setCellValue('D'.$colaDataCounter, $colaSubTotal);
-
-	//Sunday
-	$activeSheet->setCellValue('B'.$sundayDataCounter, $payrollArr['sunday_rate']);
-	$activeSheet->setCellValue('C'.$sundayDataCounter, 'x '.$payrollArr['sunday_hrs']);
-
-	$sundaySubTotal = $payrollArr['sunday_hrs'] * $payrollArr['sunday_rate'];
-	$activeSheet->setCellValue('D'.$sundayDataCounter, $sundaySubTotal);
-
-	//Night differential
-	$activeSheet->setCellValue('B'.$NDDataCounter, $payrollArr['nightdiff_rate']);
-	$activeSheet->setCellValue('C'.$NDDataCounter, 'x '.$payrollArr['nightdiff_num']);
-
-	$NDSubTotal = $payrollArr['nightdiff_num'] * $payrollArr['nightdiff_rate'];
-	$activeSheet->setCellValue('D'.$NDDataCounter, $NDSubTotal);
-
-	//Regular Holiday
-	$activeSheet->setCellValue('B'.$regHolDataCounter, $payrollArr['reg_holiday']);
-	$activeSheet->setCellValue('C'.$regHolDataCounter, 'x '.$payrollArr['reg_holiday_num']);
-
-	$regHolSubTotal = $payrollArr['reg_holiday_num'] * $payrollArr['reg_holiday'];
-	$activeSheet->setCellValue('D'.$regHolDataCounter, $regHolSubTotal);
-
-	//Special Holiday
-	$activeSheet->setCellValue('B'.$speHolDataCounter, $payrollArr['spe_holiday']);
-	$activeSheet->setCellValue('C'.$speHolDataCounter, 'x '.$payrollArr['spe_holiday_num']);
-
-	$speHolSubTotal = $payrollArr['spe_holiday_num'] * $payrollArr['spe_holiday'];
-	$activeSheet->setCellValue('D'.$speHolDataCounter, $speHolSubTotal);
-
-	//Contribution
-	$activeSheet->setCellValue('B'.$sssDataCounter, $payrollArr['sss']);
-	$activeSheet->setCellValue('B'.$philhealthDataCounter, $payrollArr['philhealth']);
-	$activeSheet->setCellValue('B'.$pagibigDataCounter, $payrollArr['pagibig']);
-
-	//Allowance
-	$activeSheet->setCellValue('D'.$allowanceDataCounter, $payrollArr['x_allowance']);
-
-	//Vale
-	$activeSheet->setCellValue('B'.$oldValeDataCounter, $payrollArr['old_vale']);
-	$activeSheet->setCellValue('B'.$newValeDataCounter, $payrollArr['new_vale']);
-
-	//Tools
-	$activeSheet->setCellValue('B'.$toolsDataCounter , $payrollArr['tools_paid']);
-
-	//Total
-	$activeSheet->setCellValue('C'.$totalDataCounter, $payrollArr['total_salary']);
-
-
-
-
-	//------------ Style for the Spreadsheet ------------
-	$activeSheet->getStyle('A'.$borderStyleCounter1.':D'.$borderStyleCounter2)->applyFromArray($border_allsides_medium); 
-
-	//extra Allowance
-	$activeSheet->getStyle('C'.$allowanceStyleCounter)->applyFromArray($border_buttom_left_thin);
-	$activeSheet->getStyle('D'.$allowanceStyleCounter)->applyFromArray($border_buttom_thin);
-
-	//Total
-	$activeSheet->getStyle('C'.$totalStyleCounter.':D'.$totalStyleCounter)->applyFromArray($border_top_double);
-
-	//Header
-	$activeSheet->getStyle('A'.$headerStyleCounter1.':A'.$headerStyleCounter2)->applyFromArray($align_left);
-	$activeSheet->getStyle('A'.$headerStyleCounter2)->applyFromArray($font_bold);
-
-}
 
 
 $activeSheet->getColumnDimension('A')->setAutoSize(true);
 $activeSheet->getColumnDimension('B')->setAutoSize(true);
 $activeSheet->getColumnDimension('C')->setAutoSize(true);
 $activeSheet->getColumnDimension('D')->setAutoSize(true);
+$activeSheet->getColumnDimension('F')->setAutoSize(true);
+$activeSheet->getColumnDimension('G')->setAutoSize(true);
+$activeSheet->getColumnDimension('H')->setAutoSize(true);
+$activeSheet->getColumnDimension('I')->setAutoSize(true);
+$activeSheet->getColumnDimension('K')->setAutoSize(true);
+$activeSheet->getColumnDimension('L')->setAutoSize(true);
+$activeSheet->getColumnDimension('M')->setAutoSize(true);
+$activeSheet->getColumnDimension('N')->setAutoSize(true);
+$activeSheet->getColumnDimension('P')->setAutoSize(true);
+$activeSheet->getColumnDimension('Q')->setAutoSize(true);
+$activeSheet->getColumnDimension('R')->setAutoSize(true);
+$activeSheet->getColumnDimension('S')->setAutoSize(true);
 
 header('Content-Type: application/vnd.ms-excel');
 header('Content-Disposition: attachment; filename="'.$filename.'"');
