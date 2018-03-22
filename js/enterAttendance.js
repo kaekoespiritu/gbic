@@ -1115,6 +1115,8 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			//console.log('yea');
 			row.querySelector('.timein2').placeholder = "";
 			row.querySelector('.timeout2').placeholder = "";
+			row.querySelector('.timein3').placeholder = "";
+			row.querySelector('.timeout3').placeholder = "";
 		}
 		//console.log('yow');
 		//for hidden rows
