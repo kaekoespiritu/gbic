@@ -27,7 +27,6 @@ if(isset($_POST['groupChange']))//group site movement
 		mysql_query("INSERT INTO site_history(empid, site, date, admin) VALUES(	'$empid', '$siteHist', '$date', '$adminName')");
 	}
 	Print "<script>alert('Successfully transfered employees.')</script>";
-	
 }
 else
 {

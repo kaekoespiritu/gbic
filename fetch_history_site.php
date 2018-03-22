@@ -27,7 +27,7 @@
 								</thead>
 								<tbody>
 			";
-	$siteHist = "SELECT * FROM site_history WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
+	$siteHist = "SELECT * FROM site_history WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 	$histQuery = mysql_query($siteHist);
 	$historyBool = false;//to display the printable
 	if(mysql_num_rows($histQuery) > 0)

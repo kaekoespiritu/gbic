@@ -109,11 +109,11 @@ $location = $_GET['site'];
 							if(isset($_GET['position']))
 							{
 								$pos = $_GET['position'];
-								$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site='$location' AND position = '$pos'";
+								$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site='$location' AND position = '$pos' ORDER BY lastname ASC, firstname ASC";
 							}
 							else
 							{
-								$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site='$location'";
+								$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site='$location' ORDER BY lastname ASC, firstname ASC";
 							}
 						}
 						else//this is to display pending employees or idle employees with no site
@@ -194,11 +194,11 @@ $location = $_GET['site'];
 			  <div class="modal-dialog modal-sm" role="document">
 			  	<div class="modal-content">
 				  	<div class="modal-header">
-				  		<h4 class="modal-title col-md-11">Change to new site</h4>
+				  		<h4 class="modal-title col-md-11">Transfer to new site</h4>
 				        <button type="button" class="close col-md-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				    </div>
 				    <div class="modal-body">
-			     	<select class="form-control input-sm" onchange="groupChange(this)">
+			     	<select class="form-control input-sm" id="dd_groupChange" onchange="groupChange(this)">
 			     		<option hidden>Site location</option>
 						<?php
 							$site = "SELECT * FROM site WHERE active = '1'";
@@ -206,15 +206,19 @@ $location = $_GET['site'];
 							
 							while($siteRow = mysql_fetch_assoc($siteQuery))
 							{
+								$siteLocation = $siteRow['location'];
+								$emp = "SELECT COUNT(empid) AS empNum FROM employee WHERE site = '$siteLocation' AND employment_status = '1'";
+								$employeeQuery = mysql_query($emp);
+								$empNum = mysql_fetch_assoc($employeeQuery);
 								if($siteRow['location'] != $location)
-									Print "<option value='".$siteRow['location']."'>".$siteRow['location']."</option>";
+									Print "<option value='".$siteRow['location']."'>".$siteRow['location']."[".$empNum['empNum']."]</option>";
 							}
 						?> 
 					</select>
 			     	</div>
 			     	<div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary" onclick="saveForm()">Save changes</button>
+				        <button type="button" class="btn btn-primary" onclick="saveFormGroup()">Save changes</button>
 				      </div>
 			    </div>
 			  </div>
@@ -266,6 +270,20 @@ $location = $_GET['site'];
 				var positionReplaced = position.replace(/\s/g , "+");
 				localStorage.setItem("glob_position", positionReplaced);
 				window.location.assign("site_movement.php?position="+positionReplaced+"&site=<?php Print $location?>");
+			}
+
+			function saveFormGroup(){
+				if(document.getElementById('dd_groupChange').value != "Site location")
+				{
+					var a = confirm("Are you sure you want to change the site of those employees?");
+					if(a == true)
+					{
+						document.getElementById("siteMovementForm").submit();
+					}
+				}
+				else
+					alert("Please select a site.");
+					
 			}
 
 			function saveForm(){

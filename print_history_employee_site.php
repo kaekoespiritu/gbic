@@ -37,20 +37,20 @@ $activeSheet->setCellValue('C2', 'Admin');
 
 
 	
-$siteHist = "SELECT * FROM site_history WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
+$siteHist = "SELECT * FROM site_history WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 $histQuery = mysql_query($siteHist);
 
 $rowCounter = 3;
 if(mysql_num_rows($histQuery) > 0)
 {
-	
 	while($row = mysql_fetch_assoc($histQuery))
 	{
 		$activeSheet->setCellValue('A'.$rowCounter, $row['date']);
 		$activeSheet->setCellValue('B'.$rowCounter, $row['site']);
 		$activeSheet->setCellValue('C'.$rowCounter, $row['admin']);
-	}
 
+		$rowCounter++;
+	}
 }		
 else 
 {
@@ -64,7 +64,9 @@ $activeSheet->getStyle('A2:C2')->applyFromArray($border_all_medium);//Header
 $activeSheet->getStyle('A1')->applyFromArray($align_center);//Header 
 $activeSheet->getStyle('A2:C'.$rowCounter)->applyFromArray($border_all_thin);//Content
 
-
+$activeSheet->getColumnDimension('A')->setAutoSize(true);
+$activeSheet->getColumnDimension('B')->setAutoSize(true);
+$activeSheet->getColumnDimension('C')->setAutoSize(true);
 
 
 header('Content-Type: application/vnd.ms-excel');
