@@ -1565,22 +1565,22 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				timeouthour1 -=12;
 
 			//after break
-			if(timeinhour2 < 10)
+			if(timeinhour2 < 12)
 			timeinhour2 +=12;
 			else
 				timeinhour2 -=12;
 
-			if(timeouthour2 < 10)
+			if(timeouthour2 < 12)
 				timeouthour2 +=12;
 			else
 				timeouthour2 -=12;
 			//night shift
-			if(timeinhour3 < 10)
+			if(timeinhour3 < 12)
 			timeinhour3 +=12;
 			else
 				timeinhour3 -=12;
 
-			if(timeouthour3 < 10)
+			if(timeouthour3 < 12)
 				timeouthour3 +=12;
 			else
 				timeouthour3 -=12;
