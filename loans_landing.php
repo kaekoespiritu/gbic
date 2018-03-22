@@ -77,36 +77,42 @@ require_once("directives/modals/addLoan.php");
 			if($type == 'oldVale')//Employees with old vale
 			$empVale = "SELECT DISTINCT empid FROM loans WHERE type = 'oldVale'";
 
-			$empValeQuery = mysql_query($empVale);
+			$empValeQuery = mysql_query($empVale)or die(mysql_error());
 			$ValeNum = mysql_num_rows($empValeQuery);
 			$counter = 0;//Counter for the employees with vale
 			$newValeComputation = 0;
 			$oldValeComputation = 0;
 			if(!empty($ValeNum))
 			{
-				
 				while($row = mysql_fetch_assoc($empValeQuery))
 				{
 					$empid = $row['empid'];
 
-					$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND amount > 0 ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1");
+					if($type == 'empVale')//Employees with vale
+						$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' OR type = 'newVale' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1") or die(mysql_error());
+					else if($type == 'newVale')//Employees with new vale
+						$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND type = 'newVale' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1") or die(mysql_error());
+					else if($type == 'oldVale')//Employees with old vale
+						$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1")or die(mysql_error());
+
 					if(mysql_num_rows($checkerQuery) != 0)
 					{
+						
 						$checkRow = mysql_fetch_assoc($checkerQuery);
 						if($type == 'empVale')//Employees with vale
-						$counter++;
-						if($type == 'newVale')//Company cost to newvale
-						$newValeComputation += $checkRow['balance'];
-						if($type == 'oldVale')//Company cost to oldvale
-						$oldValeComputation += $checkRow['balance'];
+							$counter++;
+						else if($type == 'newVale')//Company cost to newvale
+							$newValeComputation += $checkRow['balance'];
+						else if($type == 'oldVale')//Company cost to oldvale
+							$oldValeComputation += $checkRow['balance'];
 					}
 				}
 			}
 			if($type == 'empVale')//Employees with vale
 				$output = $counter;
-			if($type == 'newVale')//Company cost to newvale
+			else if($type == 'newVale')//Company cost to newvale
 				$output = $newValeComputation;
-			if($type == 'oldVale')//Company cost to oldvale
+			else if($type == 'oldVale')//Company cost to oldvale
 				$output = $oldValeComputation;
 			return $output;
 		}
