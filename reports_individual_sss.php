@@ -38,7 +38,7 @@
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_individual_contributions.php?type=Contributions&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Contributions</a></li>
-						<li>Individual SSS Contributions Report for <?php Print $breadcrumInfo?></li>
+						<li>SSS Contributions Report for <?php Print $breadcrumInfo?></li>
 						<button class='btn btn-primary pull-right' onclick="printSSSContribution()">
 							Print SSS Contribution
 						</button>

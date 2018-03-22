@@ -159,17 +159,13 @@ else
 		<div class="modal-content">
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-md-4 <?php Print $attendanceAccess?>">
+					<div class="col-md-6 <?php Print $attendanceAccess?>">
 						<a id="attendanceLink" class="btn btn-primary btn-lg col-md-12 <?php Print $attendanceAccess?>">
 						<img src="Images/attendance.png" class="center-block">Attendance</a>
 					</div>
-					<div class="col-md-4  <?php Print $employeesTab?>">
+					<div class="col-md-6  <?php Print $employeesTab?>">
 						<a id="employeesLink" class="btn btn-primary btn-lg col-md-12  <?php Print $employeesTab?>">
 						<img src="Images/engineer.png" class="center-block"> Employees</a>
-					</div>
-					<div class="col-md-4 <?php Print $reportsTab?>">
-						<a id="reportsLink" class="btn btn-primary btn-lg col-md-12 <?php Print $reportsTab?>">
-						<img src="Images/tax.png" class="center-block">Reports</a>
 					</div>
 					<div class="pull-down col-md-12">
 						<h4 class="text-center">Click on the options above to view details for <span id="addSiteName"></span>.</h4>
@@ -186,7 +182,7 @@ else
 			<div class="modal-content">
 				<div class="modal-body">
 					<h4>
-					Absence Notice: There are <span id="awolNumber"></span> employees that have accumulated 7 days of absences and are now pending for AWOL.
+					Absence Notice: There are <span id="awolNumber"></span> employee(s) that have accumulated 7 days of absences and are now pending for AWOL.
 					</h4>
 					<br/>
 					<h5><i>Click anywhere to close this notification.</i></h5>

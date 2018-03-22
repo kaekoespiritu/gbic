@@ -310,6 +310,16 @@ overflow: auto;
 
 
 /* OTHERS */
+
+.search-results-table {
+  margin-top: 15px !important;
+  margin-left: 89px;
+}
+
+.reports-table {
+  margin-left: -35px;
+}
+
 .checkbox
 {
   margin-top: 0px !important;

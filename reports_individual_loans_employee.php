@@ -59,9 +59,10 @@
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_individual_loans.php?type=Loans&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Loans</a></li>
-						<li>Individual <?php Print $loanType ?> Loan Report for <?php Print $empArr['lastname'].", ".$empArr['firstname']." | ".$empArr['position']." at ".$empArr['site']?></li>
+						<li><?php Print $loanType ?> Loan Report for <?php Print $empArr['lastname'].", ".$empArr['firstname']." | ".$empArr['position']." at ".$empArr['site']?></li>
+
 						<button class="btn btn-primary pull-right" onclick="excelPrint('<?php Print $type ?>','<?php Print $empid ?>')">
-							Print <?php Print $empArr['firstname']." ".$empArr['lastname']."'s ".$loanType ?> Report
+							Print <?php Print $loanType ?> Report
 						</button>
 
 						<!-- Shortcut button for other reports -->
