@@ -175,7 +175,7 @@ function attendance ()
 									</td>
 								<!-- AFTER BREAK Time In -->
 									<td>
-										<input type='text' onblur='timeValidation(this.)' placeholder='ABSENT' class='timein2 timepicker form-control input-sm' value='' name='timein2[".$counter."]'>
+										<input type='text' onblur='timeValidation(this)' placeholder='ABSENT' class='timein2 timepicker form-control input-sm' value='' name='timein2[".$counter."]'>
 									</td> 
 								<!-- AFTER BREAK Time Out-->
 									<td>
