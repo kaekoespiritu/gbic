@@ -44,6 +44,7 @@ if(!empty($result))
       <input type="hidden" class="toModalSite" value="'.$row['site'].'">
       <input type="hidden" class="toModalMonthly" value="'.$row['salary'].'">
       <input type="hidden" class="toModalRate" value="'.$row['rate'].'">
+      <input type="hidden" class="toModalAllowance" value="'.$row['allowance'].'">
       <input type="hidden" class="toModalCivilStatus" value="'.$row['civilstatus'].'">
       <input type="hidden" class="toModalSss" value="'.$row['sss'].'">
       <input type="hidden" class="toModalPagibig" value="'.$row['pagibig'].'">

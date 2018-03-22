@@ -265,6 +265,10 @@ include('directives/session.php');
 					}
 					$checkerBuilder .= ")";
 				}
+				else
+				{
+					$attendanceStatus = 1;//Trigger for completing the attendance for the site
+				}
 		
 				if($siteBool)//if site has employees
 				{

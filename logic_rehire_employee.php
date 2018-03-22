@@ -1,10 +1,12 @@
 	
 <?php
-error_reporting(0);
+// error_reporting(0);
 	include('directives/session.php');
 	include_once('directives/db.php');
 	include('directives/admin_historical.php');
 
+	$firstname = mysql_real_escape_string($_POST['txt_addFirstName']);
+	$lastname = mysql_real_escape_string($_POST['txt_addLastName']);
 
 	$empid = mysql_real_escape_string($_POST['empid']);
 	$address = mysql_real_escape_string($_POST['txt_addAddress']);
@@ -28,9 +30,7 @@ error_reporting(0);
 	$characterReference = mysql_real_escape_string($_POST['txt_characterReference']);
 	//debug
 
-	$firstName = ucwords($firstName);
-	$lastName = ucwords($lastName);
-
+	$date = strftime("%B %d, %Y");//date today
 	$yearHired = substr($dateHired, -4); //get the year 
 
 	$monthlySalary = $ratePerDay * 25;//6days working days * 4 weeks
@@ -50,7 +50,7 @@ error_reporting(0);
 
 	$employee = "SELECT * FROM employee WHERE empid = '$empid'";
 	$empQuery = mysql_query($employee);
-	$empArr = mysql_fetch_assoc($employeeQuery);
+	$empArr = mysql_fetch_assoc($empQuery);
 
 
 	//Set historical for Position
@@ -82,7 +82,7 @@ error_reporting(0);
 											emergency = '$emergencyContact' WHERE empid = '$empid'") or die(mysql_error());//adds values to employee table
 	
 
-	Print "<script>alert('You successfully rehired ".$empArr['lastname'].", ".$empArr['firstname'].".')</script>";
+	Print "<script>alert('You successfully rehired ".$lastname.", ".$firstname.".')</script>";
 	Print "<script>window.location.assign('employees.php?site=null&position=null')</script>";
 
 

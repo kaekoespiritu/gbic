@@ -320,9 +320,8 @@ if(!empty($dateRows))// Updating attendance
 			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 7";
 			$AwolQuery = mysql_query($Awol) or die(mysql_error());
 			$AwolCounter = 0;
-			$start = null;
-			$end = $date;
 			$absentCounter = 0;
+			$loopCounter = 0;
 			while($AwolChecker = mysql_fetch_assoc($AwolQuery))
 			{
 				if($AwolChecker['attendance'] == 1)
@@ -330,8 +329,12 @@ if(!empty($dateRows))// Updating attendance
 					//Print "<script>alert('".$AwolCounter."')</script>";
 					$AwolCounter++;
 				}
-				if($AwolCounter >= 7)
+				if($loopCounter == 0)
+					$end = $AwolChecker['date'];
+				if($loopCounter == 6)
 					$start = $AwolChecker['date'];
+
+				$loopCounter++;
 
 			}
 			if($AwolCounter >= 7)
@@ -350,14 +353,15 @@ if(!empty($dateRows))// Updating attendance
 														'Pending')";
 					mysql_query($AwolPending) or die(mysql_error());
 				}
-				//update employment status of employee to 3 = pending
-				$empAwolPending = "UPDATE employee SET employment_status = '2' WHERE empid = '$empid'";
-				mysql_query($empAwolPending) or die(mysql_error());//update employment status of employee to 3 = pending
-				
 				$emp = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1'";
 				$empQuery = mysql_query($emp) or die(mysql_error());
 				$empArr = mysql_fetch_assoc($empQuery);
 				Print "<script>alert('[".$empArr['lastname'].", ".$empArr['firstname']."] has already accumulated 7 Absences and is now pending for AWOL. Go to Employees tab > Absence Notification')</script>";
+
+				//update employment status of employee to 2 = pending
+				$empAwolPending = "UPDATE employee SET employment_status = '2' WHERE empid = '$empid'";
+				mysql_query($empAwolPending) or die(mysql_error());//update employment status of employee to 3 = pending
+				
 			}
 
 

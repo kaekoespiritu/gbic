@@ -29,6 +29,7 @@ include_once('directives/db.php');
 					<li class="active">Absence Notifications</li>
 					<a href="" class="btn btn-success pull-right" data-toggle="modal" data-target="#rehireEmployee"> Rehire Employee</a>
 				</ol>
+
 			</div>	
 		</div>
 
@@ -46,7 +47,6 @@ include_once('directives/db.php');
 							<input placeholder="Search for an old employee" id="search_text" class="form-control">
 							<div id="search_result"></div>
 						</div>
-						<button class="btn btn-primary" data-toggle="modal" data-target="#oldEmployee">Rehire Employee</button>
 					</div>
 			    </div>
 			</div>
@@ -144,7 +144,7 @@ include_once('directives/db.php');
 											<label for="emergency">Emergency contact:</label>	
 										</div>
 										<div class="col-md-8">									
-											<input name="txt_emergencyContact" id="emergencyContact" type="text" class="form-control" required>
+											<input name="txt_emergencyContact" id="emergencyContact" type="text" class="form-control" >
 										</div>
 									</div>
 
@@ -153,7 +153,7 @@ include_once('directives/db.php');
 											<label for="emergency" class="no-wrap">Character Reference:</label>
 										</div>
 										<div class="col-md-8">
-											<input name="txt_characterReference" id="characterRef" type="text" class="form-control" required>
+											<input name="txt_characterReference" id="characterRef" type="text" class="form-control">
 										</div>
 									</div>
 								</div>
@@ -393,6 +393,7 @@ include_once('directives/db.php');
 			var site = parent.querySelector('.toModalSite').value;
 			var monthly = parent.querySelector('.toModalMonthly').value;
 			var rate = parent.querySelector('.toModalRate').value;
+			var allowance = parent.querySelector('.toModalAllowance').value;
 			
 			//Government Documents
 			var sss = parent.querySelector('.toModalSss').value;
@@ -453,13 +454,14 @@ include_once('directives/db.php');
 			document.getElementById('characterRef').value = reference;
 			document.getElementById('monthlysalary').value = accounting.formatNumber(monthly, 2, ",");
 			document.getElementById('rate').value = accounting.formatNumber(rate, 2, ",");
+			document.getElementById('allowance').value = accounting.formatNumber(allowance, 2, ",");
 		}
 
 		$(document).ready(function(){
 		 function load_data(query)
 		 {
 		  $.ajax({
-		   url:"directives/livesearch_rehire.php",
+		   url:"livesearch_rehire.php",
 		   method:"POST",
 		   data:{
 		   		query:query
