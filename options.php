@@ -37,6 +37,7 @@ $adminRole = $adminArr['role'];
 		require_once("directives/modals/modifyCola.php");
 		require_once("directives/modals/addCola.php");
 		require_once("directives/modals/addPosition.php");
+		require_once("directives/modals/removePosition.php");
 		?>
 
 		<!-- Open/Close payroll options-->
