@@ -876,7 +876,8 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			if(workingmins >= 60)
 			{
 				workinghours++;
-				Math.abs(workingmins) -= 60;
+				workingmins -= 60;
+				workingmins = Math.abs(workingmins);
 			}
 			
 
@@ -1622,7 +1623,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			//Decrement workinghours if minutes is more than time out mins
 			if(timeinmin3 > timeoutmin3)
 			{
-				workinghours3 = workinghour3 - 1;
+				workinghours3 = workinghours3 - 1;
 			}
 			workinghours = Math.abs(workinghours1) + Math.abs(workinghours2) + Math.abs(workinghours3);
 			
@@ -1677,7 +1678,8 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			if(workingmins >= 60)
 			{
 				workinghours++;
-				Math.abs(workingmins) -= 60;
+				workingmins -= 60;
+				workingmins = Math.abs(workingmins);
 			}
 			
 
@@ -1902,93 +1904,6 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				row.querySelector('.nightdiffH').value = "";
 			}
 
-			
-			// //alert("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
-			// if((timeinhour1 <= 10 && timeouthour1 <= 18) || (timeinhour2 <= 10 && timeouthour2 <= 18))//night diff needs reconfiguration
-			// {
-			// 	//console.log("nightdiff");
-			// 	var NDin;
-			// 	var NDout;
-			// 	var workhrs;
-			// 	//Possibility 2: if 10pm is in after lunch
-			// 	if(timeinhour2 < 10)
-			// 	{
-			// 		//console.log("possibility 2");
-			// 		NDin = timeinhour2 - 10;
-			// 		NDout = 0;
-			// 		if(timeouthour2 >= 18)
-			// 		{
-			// 			NDout = timeouthour2 - 18;
-			// 		}
-			// 		//console.log("NDout : "+ NDout);
-			// 		workhrs = timeinhour2 - timeouthour2;
-			// 		nightdiff = Math.abs(NDin) - Math.abs(workhrs);
-			// 		//console.log("nightdiff : "+ nightdiff);
-			// 		nightdiff += NDout;
-			// 		// console.log("ND: "+nightdiff);
-			// 	}
-			// 	//Possibility 1: if 10pm is in before lunch
-			// 	else if(timeinhour1 <= 10)
-			// 	{
-			// 		if(timeouthour1 >= 18)//If timein encapsulated all of the night diff
-			// 		{
-			// 			//console.log("possibility 1-1");
-
-			// 			NDin = timeinhour1 - 10;
-			// 			NDout = timeouthour1 - 18;
-			// 			workhrs = timeinhour1 - timeouthour1;
-			// 			nightdiff = (Math.abs(NDin) + Math.abs(NDout1)) - Math.abs(workhrs);
-			// 		}
-			// 		else//the normal night diff
-			// 		{
-			// 			//console.log("possibility 1-2");
-
-			// 			workhrs1 = timeinhour1 - timeouthour1;
-			// 			NDin1 = timeinhour1 - 10;
-			// 			nightdiff1 = Math.abs(NDin1) - Math.abs(workhrs1);
-			// 			// console.log("ND1: "+nightdiff1);
-			// 			// console.log(timeouthour2);
-			// 			NDin2 = timeinhour2 - 10;
-			// 			if(timeouthour2 <=18)
-			// 			{
-			// 				//console.log("possibility 1-2-1");
-			// 				NDout2 = timeouthour2 - 10;
-			// 			}
-			// 			else
-			// 			{
-			// 				//console.log("possibility 1-2-2");
-			// 				NDout2 = 8;
-			// 			}
-			// 			nightdiff2 = Math.abs(NDin2) - Math.abs(NDout2);
-			// 			// console.log("NDout2: "+NDout2);
-			// 			// console.log("ND2: "+nightdiff2);
-			// 			nightdiff = nightdiff1 + nightdiff2;
-						
-			// 			nightdiff = Math.abs(nightdiff);
-			// 		}
-					
-			// 	}
-					
-				
-			// 	if(Number.isInteger(nightdiff))
-			// 	{
-			// 	   	nightdiff = Math.abs(nightdiff);		
-			// 	}
-			// }
-		
-			
-			// if(nightdiff != "")
-			// {
-				
-			// 	row.querySelector('.nightdiff').value = nightdiff + " hrs";
-			// 	row.querySelector('.nightdiffH').value = nightdiff + " hrs";
-			// }
-			// else
-			// {
-				
-			// 	row.querySelector('.nightdiff').value = "";
-			// 	row.querySelector('.nightdiffH').value = "";
-			// }
 			
 			// If absent was initially placed, changed to success
 			if(row.classList.contains('danger'))
