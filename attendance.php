@@ -314,30 +314,55 @@ include('directives/session.php');
 				/* If location is long, font-size to smaller */
 				if(strlen($row['location'])>=16)
 				{
-					Print '	<a href="enterattendance.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
-								<div class="sitebox">
-									<span class="smalltext">'
-										. $row['location'] .
-									'</span>
-									<br>
-									<span class="checkmark" name="site" value="'.$attendanceStatus.'"></span>
-									<br>
-									<span>Employees: '. $employee_num .'</span>
-								</div>
-							</a>';
+					if($employee_num != 0)
+						Print '	<a href="enterattendance.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
+									<div class="sitebox">
+										<span class="smalltext">'
+											. $row['location'] .
+										'</span>
+										<br>
+										<span class="checkmark" name="site" value="'.$attendanceStatus.'"></span>
+										<br>
+										<span>Employees: '. $employee_num .'</span>
+									</div>
+								</a>';
+					else
+						Print '	<a href="enterattendance.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important; pointer-events:none; cursor:not-allowed;" disabled>
+									<div class="sitebox" style="background-color:grey !important; ">
+										<span class="smalltext">'
+											. $row['location'] .
+										'</span>
+										<br>
+										<span class="glyphicon glyphicon-ban-circle"></span>
+										<br>
+										<span>Employees: '. $employee_num .'</span>
+									</div>
+								</a>';
 				}
 				else
 				{
-					Print '	<a href="enterattendance.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
-								<div class="sitebox">
-									<span class="autofit">'
-										. $row['location'] .
-									'<br>
-									<span class="checkmark" name="site" value="'.$attendanceStatus.'"></span>
-									<br>Employees: '. $employee_num .'
-									</span>
-								</div>
-							</a>';
+					if($employee_num != 0)
+						Print '	<a href="enterattendance.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
+									<div class="sitebox">
+										<span class="autofit">'
+											. $row['location'] .
+										'<br>
+										<span class="checkmark" name="site" value="'.$attendanceStatus.'"></span>
+										<br>Employees: '. $employee_num .'
+										</span>
+									</div>
+								</a>';
+					else
+						Print '	<a href="enterattendance.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important; pointer-events:none; cursor:not-allowed;">
+									<div class="sitebox" style="background-color:grey !important; ">
+										<span class="autofit">'
+											. $row['location'] .
+										'<br>
+										<span class="glyphicon glyphicon-ban-circle"></span>
+										<br>Employees: '. $employee_num .'
+										</span>
+									</div>
+								</a>';
 				}
 				$counter++;
 				if($counter == 5)
