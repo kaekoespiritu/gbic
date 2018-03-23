@@ -45,7 +45,7 @@ include_once('directives/db.php');
 						<h4>To rehire an employee, search for their name below:</h4>
 						<div class="form-group col-md-10 col-md-offset-1" style="float:none">
 							<input placeholder="Search for an old employee" id="search_text" class="form-control">
-							<div id="search_result"></div>
+							<div id="search_result" class="searchresult-rehire-employee"></div>
 						</div>
 					</div>
 			    </div>
