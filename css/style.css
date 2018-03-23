@@ -407,6 +407,12 @@ hr
   margin-top: -3.3em;
 }
 
+.searchresult-rehire-employee {
+  margin-top: unset !important;
+  margin-left: -56% !important;
+
+}
+
 /* Options page */
 .sitelist
 {
