@@ -185,7 +185,8 @@ $adminRole = $adminArr['role'];
 					<div class="panel-body">
 						<div class="col-md-5">
 							<a data-target="#addPosition" data-toggle="modal" class="btn btn-success col-md-12 pull-down">ADD POSITION</a>
-							<a data-target="#removePosition" data-toggle="modal" class="btn btn-danger col-md-12 pull-down">REMOVE POSITION</a>
+							<a data-target="#removePosition" data-toggle="modal" class="btn btn-danger col-md-12 pull-down disabletotally" id="removePositionButton" onclick="removeSite()">REMOVE POSITION</a>
+							<!-- <a class="btn btn-danger col-md-12 pull-down disabletotally"  onclick="removeSite()">REMOVE POSITION</a> -->
 						</div>
 
 						<div class="col-md-7 text-left">
@@ -198,7 +199,7 @@ $adminRole = $adminArr['role'];
 									{
 										Print '	<div class="alignlist">
 										<label>
-										<input type="checkbox" name="site[]" value="'.$positionRow['position'].'">
+										<input type="checkbox" name="position[]" onclick="trackCheckbox()" value="'.$positionRow['position'].'">
 										'.$positionRow['position'].'
 										</label>
 										</div>';
@@ -263,12 +264,54 @@ $adminRole = $adminArr['role'];
 <script rel="javascript" src="js/bootstrap.min.js"></script>
 <script rel="javascript" src="js/options.js"></script>
 <script>
-	function siteRemove(site) {
-		var a = confirm("Are you sure "+site+" contract ended?");
-		if(a){
-			window.location.assign("logic_options_removeSite.php?site="+site);
+
+	function trackCheckbox(){
+		var position = document.getElementsByName('position[]');
+		var loopNum = position.length;
+
+		var data = "";
+
+		var bool = false;
+		for(var counter = 0; counter < loopNum; counter++) {
+			if(position[counter].checked == true){
+				bool = true;//enable the remove position button
+			}
 		}
+		if(bool)
+			document.getElementById('removePositionButton').classList.remove("disabletotally");
+		else
+			document.getElementById('removePositionButton').classList.add("disabletotally");
 	}
+
+	function removeSite() {
+		var position = document.getElementsByName('position[]');
+		var loopNum = position.length;
+
+		var positions = "";
+		for(var counter = 0; counter < loopNum; counter++) {
+			if(position[counter].checked == true){
+				if(positions != "") {
+					positions += "+";
+				}
+				positions += position[counter].value;
+
+			}
+		}
+
+		$.ajax({
+			url:"fetch_options_remove_position.php",
+			method:"POST",
+			data:{
+				job: positions
+			},
+			success:function(data)
+			{
+				$('#removePositionDiv').html(data);
+			}
+		});
+
+	}
+	
 	function addColaSubmit() {
 		document.getElementById('addColaForm').submit();
 	}
