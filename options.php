@@ -70,7 +70,7 @@ $adminRole = $adminArr['role'];
 							<td>
 								<?php
 								//For the system to know what day is the default
-									Print "<select class='form-control' name='openPayroll' onchange='setPayroll(\"".$openingPayroll."\", \"open\")' id='open'>";
+									Print "<select class='form-control' name='openPayroll' id='open'>";
 									
 									foreach($WeekDays as $dayOfWeek)
 									{
@@ -85,7 +85,7 @@ $adminRole = $adminArr['role'];
 							<td>
 								<?php
 								//For the system to know what day is the default
-									Print "<select class='form-control' name='closePayroll' onchange='setPayroll(\"".$closingPayroll."\", \"close\")' id='close'>";
+									Print "<select class='form-control' name='closePayroll' id='close'>";
 									
 									foreach($WeekDays as $daysOfWeek)
 									{
@@ -100,7 +100,7 @@ $adminRole = $adminArr['role'];
 						</tr>
 					</table>
 				</form>
-				<button class="btn btn-primary marginbottom" data-toggle="modal" data-target="#secureChanges">Save changes</button>
+				<button class="btn btn-primary marginbottom" id="setPayrollDate">Save changes</button>
 				</div>
 			</div>
 
@@ -358,6 +358,48 @@ $adminRole = $adminArr['role'];
 			}
 		});
 	}
+
+	$('#setPayrollDate').click(function() {
+		var open = $('#open').val();
+		var close = $('#close').val();
+		
+		var modalBool = true;// Boolean for modal
+		function getDayIndex(day) {
+			switch(day){
+				case "Monday": output = 0; break;
+				case "Tuesday": output = 1; break;
+				case "Wednesday": output = 2; break;
+				case "Thursday": output = 3; break;
+				case "Friday": output = 4; break;
+				case "Saturday": output = 5; break;
+				case "Sunday": output = 6; break;
+			}
+			return output;
+		}
+		open = getDayIndex(open);
+		close = getDayIndex(close);
+		
+		console.log(open);
+		console.log(close);
+		var indexCheck = open - close;
+		if(modalBool || (open == 0 && close == 6) ||(open == 6 && close == 0)){
+			 $('#secureChanges').modal('show');
+		}
+		else if(close == open){
+			alert("Error. Please select two different days.");
+			modalBool = false;
+		}
+		else if(Math.abs(indexCheck) != 1){
+			alert("You have selected an invalid date range. Please select dates that are adjacent. Like Monday-Tuesday.");
+			modalBool = false;
+		}
+			
+			
+	});
+	
+
+			
+			
 
 </script>
 

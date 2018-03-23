@@ -9,84 +9,60 @@
 
 
 		// Open and close payroll
-		function setPayroll(day, cond) {
-			// Get value of open and close dropdown
-			var open = document.getElementById('open');
-			var close = document.getElementById('close');
-			var openIndex = open.selectedIndex;
-			var closeIndex = close.selectedIndex;
+		// function setPayrollDate() {
 
-			// selectedIndex = 0-6
-			// options[#].text = days of week
+		// 	function dayIdentifier(day) {
+		// 		var output;
+		// 		switch(day){
+		// 			case 0: output = "Monday"; break;
+		// 			case 1: output = "Tuesday"; break;
+		// 			case 2: output = "Wednesday"; break;
+		// 			case 3: output = "Thursday"; break;
+		// 			case 4: output = "Friday"; break;
+		// 			case 5: output = "Saturday"; break;
+		// 			case 6: output = "Sunday"; break;
+		// 		}
+		// 		return output;
+		// 	}
+		// 	// Get value of open and close dropdown
+		// 	var open = document.getElementById('open').selectedIndex;
+		// 	var close = document.getElementById('close').selectedIndex;
 
-			/* 
-			0 - Monday 
-			1 - Tuesday
-			2 - Wednesday
-			3 - Thursday
-			4 - Friday
-			5 - Saturday
-			6 - Sunday
-			*/
+		// 	var modalBool = true;// Boolean for modal
 
-			// If open is set, be sure that close is only +/- 1 away from selection
-			// Prompt an error for selecting a close payroll that exceeds said limit
-			// Static open, close will determine the validity of duration
-			// Can be more or less than make a new variable
+			 
+		// 	0 - Monday 
+		// 	1 - Tuesday
+		// 	2 - Wednesday
+		// 	3 - Thursday
+		// 	4 - Friday
+		// 	5 - Saturday
+		// 	6 - Sunday
+			
 
-			if(closeIndex==0 && openIndex==0){
-				// Reset value to Monday
-				for(var i = 0; i < open.options.length; i++){
-					if(open.options[i].value==closeIndex){
-						open.options[closeIndex-closeIndex].selected = true;
-					}
-				}
-			}
-			//For open Payroll
-			if(cond == "open") {
-				if((closeIndex > 0) && (closeIndex > openIndex+1) || (closeIndex > 0) && (closeIndex < openIndex - 1)){
-					alert("You have selected an invalid date range. Please select dates that are adjacent. Like Monday-Tuesday.");
-					// Reset value to Monday
+		// 	// If open is set, be sure that close is only +/- 1 away from selection
+		// 	// Prompt an error for selecting a close payroll that exceeds said limit
+		// 	// Static open, close will determine the validity of duration
+		// 	// Can be more or less than make a new variable
 
-					for(var i = 0; i < open.options.length; i++){
-						if(open.options[i].value == day){
-							open.options[i].selected = true;
-						}
-					}
-				}
-				if(closeIndex == openIndex){
-					alert("Error. Please select two different days. Open payroll will be reset to "+day+".");
-					// Reset value to Monday
-					for(var a = 0; a < open.options.length; a++){
-						if(open.options[a].value == day){
-							open.options[a].selected = true;
-						}
-					}
-				}
-			}
-			// For close payroll
-			else if(cond == "close"){
-				if((closeIndex > 0) && (closeIndex > openIndex+1) || (closeIndex > 0) && (closeIndex < openIndex - 1)){
-					alert("You have selected an invalid date range. Please select dates that are adjacent. Like Monday-Tuesday.");
-					// Reset value to Monday
+		// 	var indexCheck = open - close;
 
-					for(var i = 0; i < close.options.length; i++){
-						if(close.options[i].value == day){
-							close.options[i].selected = true;
-						}
-					}
-				}
-				if(closeIndex == openIndex){
-					alert("Error. Please select two different days. Close payroll will be reset to "+day+".");
-					// Reset value to Monday
-					for(var a = 0; a < close.options.length; a++){
-						if(close.options[a].value == day){
-							close.options[a].selected = true;
-						}
-					}
-				}
-			}
-		}
+		// 	if(close == open){
+		// 		alert("Error. Please select two different days.");
+		// 		modalBool = false;
+		// 	}
+		// 	if(indexCheck != 1){
+		// 		alert("You have selected an invalid date range. Please select dates that are adjacent. Like Monday-Tuesday.");
+		// 		modalBool = false;
+		// 	}
+		// 	console.log(modalBool);
+		// 	if(modalBool){
+		// 		document.querySelector('#secureChanges').showModal();
+		// 	}
+
+
+			
+		// }
 
 		function hideRestrictions() {
 			var admin = document.getElementById('adminradio');
