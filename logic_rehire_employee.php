@@ -67,7 +67,7 @@
 											contactnum = '$contactNum',
 											dob = '$dob',
 											civilstatus = '$civilStatus',
-											datehired = '$dateHired',
+											datehired = '$date',
 											position = '$position',
 											salary = '$salary',
 											rate = '$ratePerDay',

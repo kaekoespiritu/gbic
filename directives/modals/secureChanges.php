@@ -8,7 +8,7 @@
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">Save changes by entering your password:</p>
-						<input type="text" id="newAddVale" class="form-control" placeholder="Enter your password" onkeypress="validatenumber(event)"><br>
+						<input type="password" id="newAddVale" class="form-control" placeholder="Enter your password"><br>
 					</div>
 				</div>
 			</div>

@@ -13,7 +13,7 @@ $date = $_GET['date'];
 //Checks if site in HTTP is altered by user manually
 $siteChecker = "SELECT * FROM site WHERE location = '$site'";
 //Checks if position in HTTP is altered by user manually 
-$positionChecker = "SELECT * FROM job_position WHERE position = '$position'";
+$positionChecker = "SELECT * FROM job_position WHERE position = '$position' AND active = '1'";
 $siteCheckerQuery = mysql_query($siteChecker);
 $positionCheckerQuery = mysql_query($positionChecker);
 if(mysql_num_rows($siteCheckerQuery) == 0)

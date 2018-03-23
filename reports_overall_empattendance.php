@@ -20,7 +20,7 @@
 	$position = $_GET['position'];
 	$require = $_GET['req'];
 
-	$positionChecker = "SELECT * FROM job_position WHERE position = '$position'";
+	$positionChecker = "SELECT * FROM job_position WHERE position = '$position' AND active = '1'";
 	$posCheckQuery = mysql_query($positionChecker);
 	if(mysql_num_rows($posCheckQuery) == 0)
 	{
