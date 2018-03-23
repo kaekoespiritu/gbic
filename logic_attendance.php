@@ -637,13 +637,15 @@ else// NEW attendance
 														'$start',
 														'$end',
 														'Pending')";
-				$empAwolPending = "UPDATE employee SET employment_status = '2' WHERE empid = '$empid'";
-				mysql_query($empAwolPending) or die(mysql_error());//update employment status of employee to 2 = pending
 				mysql_query($AwolPending) or die(mysql_error());//insert AWOL pending to awol_employees
 				$emp = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1'";
 				$empQuery = mysql_query($emp) or die(mysql_error());
 				$empArr = mysql_fetch_assoc($empQuery);
 				Print "<script>alert('[".$empArr['lastname'].", ".$empArr['firstname']."] has already accumulated 7 Absences and is now pending for AWOL. Go to Employees tab > Absence Notification')</script>";
+
+				
+				$empAwolPending = "UPDATE employee SET employment_status = '2' WHERE empid = '$empid'";
+				mysql_query($empAwolPending) or die(mysql_error());//update employment status of employee to 2 = pending
 			}
 
 			//Print "<script>alert('absent')</script>";
