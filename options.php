@@ -49,7 +49,7 @@ $adminRole = $adminArr['role'];
 				</div>
 
 				<!-- Week table with checkbox and dropdown -->
-				<form method="post" action="logic_options_payroll.php">
+				
 					<table class="table" style="margin-bottom: 10px">
 						<tr>
 							<td>Open</td>
@@ -99,7 +99,6 @@ $adminRole = $adminArr['role'];
 							</td>
 						</tr>
 					</table>
-				</form>
 				<button class="btn btn-primary marginbottom" id="setPayrollDate">Save changes</button>
 				</div>
 			</div>
@@ -362,8 +361,7 @@ $adminRole = $adminArr['role'];
 	$('#setPayrollDate').click(function() {
 		var open = $('#open').val();
 		var close = $('#close').val();
-		
-		var modalBool = true;// Boolean for modal
+
 		function getDayIndex(day) {
 			switch(day){
 				case "Monday": output = 0; break;
@@ -376,26 +374,29 @@ $adminRole = $adminArr['role'];
 			}
 			return output;
 		}
-		open = getDayIndex(open);
-		close = getDayIndex(close);
+		openIndex = getDayIndex(open);
+		closeIndex = getDayIndex(close);
 		
-		console.log(open);
-		console.log(close);
-		var indexCheck = open - close;
-		if(modalBool || (open == 0 && close == 6) ||(open == 6 && close == 0)){
-			 $('#secureChanges').modal('show');
+		var indexCheck = openIndex - closeIndex;
+		if(Math.abs(indexCheck) == 1 || (openIndex == 0 && closeIndex == 6) || (openIndex == 6 && closeIndex == 0)){
+			$('#openPay').val(open);
+			$('#closePay').val(close);
+			$('#secureChanges').modal('show');
+			
 		}
-		else if(close == open){
+		else if(closeIndex == openIndex){
 			alert("Error. Please select two different days.");
-			modalBool = false;
 		}
 		else if(Math.abs(indexCheck) != 1){
 			alert("You have selected an invalid date range. Please select dates that are adjacent. Like Monday-Tuesday.");
-			modalBool = false;
 		}
 			
 			
 	});
+
+	function submitPayroll() {
+		document.getElementById('payrollForm').submit();
+	}
 	
 
 			
