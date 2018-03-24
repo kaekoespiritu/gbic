@@ -31,11 +31,12 @@ if (!count($array)) return null;
 end($array); 
 return $array[key($array)]; 
 } 
-Print "<script>console.log('1')</script>";
+// Print "<script>console.log('1')</script>";
 // Holiday
 if(isset($_SESSION['holidayDate']))
 {
-	Print "<script>console.log('2')</script>";
+	// Print "<script>console.log('2')</script>";
+
 	if($_SESSION['holidayDate'] == $date)
 	{
 		$holidayName = $_SESSION['holidayName'];
@@ -75,7 +76,7 @@ $empNum = mysql_num_rows($siteQuery);
 $count = 0;
 for($count; $count <= $empNum; $count++)
 {
-	Print "<script>console.log('4')</script>";
+	// Print "<script>console.log('4')</script>";
 	if((!empty($_POST['timein1'][$count]) && 
 		!empty($_POST['timeout1'][$count])) && 
 		((empty($_POST['timein2'][$count]) && empty($_POST['timeout2'][$count])) || (!empty($_POST['timein2'][$count]) && !empty($_POST['timeout2'][$count]))) 
@@ -92,8 +93,8 @@ if($count == $empNum +1)
 	Print "<script>alert('You have not inputted any values.');
 			window.location.assign('enterattendance.php?site=".$location."')</script>";
 }
-Print "<script>console.log('5')</script>";
-Print "<script>console.log('".$location."')</script>";
+// Print "<script>console.log('5')</script>";
+// Print "<script>console.log('".$location."')</script>";
 
 $employees = "SELECT * FROM employee WHERE site = '$location' AND employment_status = '1'";
 $empCheckerQuery = mysql_query($employees);
@@ -122,11 +123,11 @@ if($empNum != 0)
 if($siteBool)
 {
 	$dateChecker = "SELECT * FROM attendance WHERE date = '$date' $checkerBuilder";
-	Print "<script>console.log('".$dateChecker."')</script>";
+	// Print "<script>console.log('".$dateChecker."')</script>";
 	$checkerQuery = mysql_query($dateChecker) or die(mysql_error());
 	if($checkerQuery)
 	{
-		Print "<script>console.log('6')</script>";
+		// Print "<script>console.log('6')</script>";
 		$dateRows = mysql_num_rows($checkerQuery);
 	}
 	else 
@@ -141,26 +142,29 @@ else
 
 if(!empty($dateRows))// Updating attendance
 {
-	Print "<script>console.log('7')</script>";
+	// Print "<script>console.log('7')</script>";
 	$AttQuery = "";
 	for($counter = 0; $counter < $empNum; $counter++)
 	{
-		Print "<script>console.log('8')</script>";
+		// Print "<script>console.log('timein1: ".$counter."')</script>";
+		// Print "<script>console.log('timein1: ".$_POST['timein1'][$counter]."')</script>";
+		// Print "<script>console.log('timeout1: ".$_POST['timeout1'][$counter]."')</script>";
+		// Print "<script>console.log('8')</script>";
 		//Print "<script>alert('4')</script>";
 		if($AttQuery != "")
 		{
 			$AttQuery .= ",";
 		}
-		if((!empty($_POST['timein1'][$counter]) && !empty($_POST['timeout1'][$counter]) && 
-			(!empty($_POST['timein2'][$counter]) && !empty($_POST['timeout2'][$counter])) || (empty($_POST['timein2'][$counter]) && empty($_POST['timeout2'][$counter]))) && $_POST['attendance'][$counter] == "PRESENT")
+		if(((!empty($_POST['timein1'][$counter]) && !empty($_POST['timeout1'][$counter])) && 
+			(!empty($_POST['timein2'][$counter]) && !empty($_POST['timeout2'][$counter]))) || (empty($_POST['timein2'][$counter] && empty($_POST['timeout2'][$counter]))) && $_POST['attendance'][$counter] == "PRESENT")
 		{	
-			Print "<script>console.log('9')</script>";
-			//Print "<script>alert('present')</script>";
+			Print "<script>console.log('present')</script>";
 			$empid = $_POST['empid'][$counter];
 			
 			$timein1 = $_POST['timein1'][$counter];
 			$timeout1 = $_POST['timeout1'][$counter];
-
+			// Print "<script>console.log('timein1: ".$timein1."')</script>";
+			// Print "<script>console.log('timeout1: ".$timeout1."')</script>";
 			
 			if(!empty($_POST['timein2'][$counter]))//If employee took a halfday
 			{
@@ -306,15 +310,16 @@ if(!empty($dateRows))// Updating attendance
 			$employeeQuery = mysql_query($employee) or die(mysql_error());
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
-			Print "<script>console.log('10')</script>";
+			// Print "<script>console.log('10')</script>";
 
 			//Print "<script>alert('workinghrs ". $workinghrs ."')</script>";
 			$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
-			Print "<script>console.log(".$AttQuery.")</script>";
+			Print "<script>console.log('yow: ".$AttQuery."')</script>";
 			
 		}
 		else if($_POST['attendance'][$counter] == "ABSENT")// ABSENT
 		{
+			Print "<script>console.log('absent')</script>";
 			$empid = $_POST['empid'][$counter];
 			//Make Algorithm that will check if this employee is AWOL
 			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 7";
@@ -395,6 +400,7 @@ if(!empty($dateRows))// Updating attendance
 		}
 		else if(empty($_POST['attendance'][$counter]))// NO INPUT
 		{
+			Print "<script>console.log('no input')</script>";
 			//Print "<script>alert('no input')</script>";
 			$empid = $_POST['empid'][$counter];
 			$timein1 = "";

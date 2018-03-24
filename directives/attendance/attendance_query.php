@@ -3,6 +3,7 @@
 
 	function updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate)
 	{
+
 		//Print "<script>alert('workinghrs ". $workinghrs ."')</script>";
 		//Print "<script>alert('".$attendance."')</script>";
 		Print "<script>console.log('1.0')</script>";
@@ -82,6 +83,7 @@
 			else
 			{
 				Print "<script>console.log('2.2')</script>";
+
 				//Print "<script>alert('5')</script>";
 				$AttQuery = "UPDATE attendance SET 	empid='".$empid."',
 												  	position= '".$position."',
@@ -101,6 +103,7 @@
 												  	site='".$location."',
 												  	sunday='0',
 												  	holiday='0' WHERE date = '$date' AND empid = '$empid'";
+				// Print "<script>console.log('".$AttQuery."')</script>";
 			}
 		}
 		//Print "<script>alert('".$AttQuery."')</script>";
