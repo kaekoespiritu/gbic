@@ -509,7 +509,8 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			{
 				if(timeinmin1 > timeoutmin1)
 				{
-					workingmins = timeinmin1 - timeoutmin1;
+					var time_temp = 60 - timeinmin1;
+					workingmins = time_temp - timeoutmin1;
 				}
 				if(timeoutmin1 > timeinmin1)
 				{
@@ -524,7 +525,8 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			{
 				if(timeinmin1 > timeoutmin1)
 				{
-					workingmins1 = timeinmin1 - timeoutmin1;
+					var time_temp = 60 - timeinmin1;
+					workingmins1 = time_temp - timeoutmin1;
 				}
 				if(timeoutmin1 > timeinmin1)
 				{
@@ -537,7 +539,8 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				//After break
 				if(timeinmin2 > timeoutmin2)
 				{
-					workingmins2 = timeinmin2 - timeoutmin2;
+					var time_temp = 60 - timeinmin2;
+					workingmins2 = time_temp - timeoutmin2;
 				}
 				if(timeoutmin2 > timeinmin2)
 				{
@@ -566,8 +569,16 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		// WORKING HOURS
 			if(workinghours <= 5)//HALF DAY
 			{
-				row.querySelector('.workinghours').value = workinghours + " hrs/HALFDAY";
-				row.querySelector('.workinghoursH').value = workinghours + " hrs/HALFDAY";
+				if(workingmins == 0)
+				{
+					row.querySelector('.workinghours').value = workinghours + " hrs";
+					row.querySelector('.workinghoursH').value = workinghours + " hrs";
+				}
+				else
+				{
+					row.querySelector('.workinghours').value = workinghours + " hrs, " + workingmins + " mins";
+					row.querySelector('.workinghoursH').value = workinghours + " hrs, " +  + workingmins + " mins";
+				}
 			}
 			else if(workingmins == 0)
 			{
@@ -620,7 +631,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			}
 			else if(workinghours < 8)
 			{
-				undertime = Math.abs(workinghours - 8);
+				
 				if(workinghours == 7)
 				{
 					row.querySelector('.undertime').value = workingmins + " mins";
@@ -628,8 +639,11 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				}
 				else
 				{
-					row.querySelector('.undertime').value = undertime + " hrs, " + workingmins + " mins";
-					row.querySelector('.undertimeH').value = undertime + " hrs, " + workingmins + " mins";
+					var Uworkinghour = workinghours + 1;
+					var Uworkingmins = 60 - workingmins;
+					Uworkinghour = Math.abs(Uworkinghour - 8);
+					row.querySelector('.undertime').value = Uworkinghour + " hrs, " + Uworkingmins + " mins";
+					row.querySelector('.undertimeH').value = Uworkinghour + " hrs, " + Uworkingmins + " mins";
 				}
 				
 			}
@@ -803,30 +817,30 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			// timeouthour1 += 12;
 			// timeinhour2 += 12;
 			// timeouthour2 += 12;
-
-			if(timeinhour1 < 10)
+// console.log("timein1: "+timeinhour1+"// timeout1: "+timeouthour1+"// timein2: "+timeinhour2+"// timeout2: "+timeouthour2);
+			if(timeinhour1 < 12)
 				timeinhour1 +=12;
 			else
 				timeinhour1 -=12;
-			if(timeouthour1 < 10)
+			if(timeouthour1 < 12)
 				timeouthour1 +=12;
 			else
 				timeouthour1 -=12;
 			//If employee chooses halfday
 			if(timeinhour2 != "HD")//Night diff
 			{
-				if(timeinhour2 < 10)
+				if(timeinhour2 < 12)
 				timeinhour2 +=12;
 				else
 					timeinhour2 -=12;
-				if(timeouthour2 < 10)
+				if(timeouthour2 < 12)
 					timeouthour2 +=12;
 				else
 					timeouthour2 -=12;
 			}
 			
 			
-			//console.log("timein1: "+timeinhour1+"// timeout1: "+timeouthour1+"// timein2: "+timeinhour2+"// timeout2: "+timeouthour2);
+			
 			workinghours1 = timeouthour1 - timeinhour1;
 			if(timeinhour2 != "HD")//Night diff
 			{
@@ -861,7 +875,8 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			//Computing minutes
 			if(timeinmin1 > timeoutmin1)
 			{
-				workingmins1 = timeinmin1 - timeoutmin1;
+				var time_temp = 60 - timeinmin1;
+				workingmins1 = time_temp + timeoutmin1;
 			}
 			if(timeoutmin1 > timeinmin1)
 			{
@@ -878,7 +893,8 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				//After break
 				if(timeinmin2 > timeoutmin2)
 				{
-					workingmins2 = timeinmin2 - timeoutmin2;
+					var time_temp = 60 - timeinmin2;
+					workingmins2 = time_temp + timeoutmin2;
 				}
 				if(timeoutmin2 > timeinmin2)
 				{
@@ -895,6 +911,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			{
 				workingmins = workingmins1;
 			}
+
 			if(workingmins >= 60)
 			{
 				workinghours++;
@@ -908,8 +925,17 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		// WORKING HOURS
 			if(workinghours <= 5)//HALF DAY
 			{
-				row.querySelector('.workinghours').value = workinghours + " hrs/HALFDAY";
-				row.querySelector('.workinghoursH').value = workinghours + " hrs/HALFDAY";
+				if(workingmins == 0)
+				{
+					row.querySelector('.workinghours').value = workinghours + " hrs";
+					row.querySelector('.workinghoursH').value = workinghours + " hrs";
+				}
+				else
+				{
+					row.querySelector('.workinghours').value = workinghours + " hrs, " + workingmins + " mins";
+					row.querySelector('.workinghoursH').value = workinghours + " hrs, " +  + workingmins + " mins";
+				}
+				
 			}
 			else if(workingmins == 0)
 			{
@@ -954,8 +980,10 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			}
 			else if(workinghours < 8)
 			{
-				row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
-				row.querySelector('.undertimeH').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
+				var Uworkinghour = workinghours + 1;
+				var Uworkingmins = 60 - workingmins;
+				row.querySelector('.undertime').value = Math.abs(8 - Uworkinghour) + " hrs, " + Uworkingmins + " mins";
+				row.querySelector('.undertimeH').value = Math.abs(8 - Uworkinghour) + " hrs, " + Uworkingmins + " mins";
 			}
 			else
 			{
@@ -1242,7 +1270,8 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			//Before break
 			if(timeinmin1 > timeoutmin1)
 			{
-				workingmins1 = timeinmin1 - timeoutmin1;
+				var time_temp = 60 - timeinmin1;
+				workingmins1 = time_temp - timeoutmin1;
 			}
 			if(timeoutmin1 > timeinmin1)
 			{
@@ -1255,7 +1284,8 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			//After break
 			if(timeinmin2 > timeoutmin2)
 			{
-				workingmins2 = timeinmin2 - timeoutmin2;
+				var time_temp = 60 - timeinmin2;
+				workingmins2 = time_temp - timeoutmin2;
 			}
 			if(timeoutmin2 > timeinmin2)
 			{
@@ -1268,7 +1298,8 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			//nightshift
 			if(timeinmin3 > timeoutmin3)
 			{
-				workingmins3 = timeinmin3 - timeoutmin3;
+				var time_temp = 60 - timeinmin3;
+				workingmins3 = time_temp - timeoutmin3;
 			}
 			if(timeoutmin3 > timeinmin3)
 			{
@@ -1293,8 +1324,16 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 		// WORKING HOURS
 			if(workinghours <= 5)//HALF DAY
 			{
-				row.querySelector('.workinghours').value = workinghours + " hrs/HALFDAY";
-				row.querySelector('.workinghoursH').value = workinghours + " hrs/HALFDAY";
+				if(workingmins == 0)
+				{
+					row.querySelector('.workinghours').value = workinghours + " hrs";
+					row.querySelector('.workinghoursH').value = workinghours + " hrs";
+				}
+				else
+				{
+					row.querySelector('.workinghours').value = workinghours + " hrs, " + workingmins + " mins";
+					row.querySelector('.workinghoursH').value = workinghours + " hrs, " +  + workingmins + " mins";
+				}
 			}
 			else if(workingmins == 0)
 			{
@@ -1355,8 +1394,11 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				}
 				else
 				{
-					row.querySelector('.undertime').value = undertime + " hrs, " + workingmins + " mins";
-					row.querySelector('.undertimeH').value = undertime + " hrs, " + workingmins + " mins";
+					var Uworkinghour = workinghours + 1;
+					var Uworkingmins = 60 - workingmins;
+					Uworkinghour = Math.abs(Uworkinghour - 8);
+					row.querySelector('.undertime').value = Uworkinghour + " hrs, " + Uworkingmins + " mins";
+					row.querySelector('.undertimeH').value = Uworkinghour + " hrs, " + Uworkingmins + " mins";
 				}
 				
 			}
@@ -1710,8 +1752,16 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 		// WORKING HOURS
 			if(workinghours <= 5)//HALF DAY
 			{
-				row.querySelector('.workinghours').value = workinghours + " hrs/HALFDAY";
-				row.querySelector('.workinghoursH').value = workinghours + " hrs/HALFDAY";
+				if(workingmins == 0)
+				{
+					row.querySelector('.workinghours').value = workinghours + " hrs";
+					row.querySelector('.workinghoursH').value = workinghours + " hrs";
+				}
+				else
+				{
+					row.querySelector('.workinghours').value = workinghours + " hrs, " + workingmins + " mins";
+					row.querySelector('.workinghoursH').value = workinghours + " hrs, " +  + workingmins + " mins";
+				}
 			}
 			else if(workingmins == 0)
 			{
@@ -1756,8 +1806,10 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			}
 			else if(workinghours < 8)
 			{
-				row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
-				row.querySelector('.undertimeH').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
+				var Uworkinghour = workinghours + 1;
+				var Uworkingmins = 60 - workingmins;
+				row.querySelector('.undertime').value = Math.abs(Uworkinghour - 8) + " hrs, " + Uworkingmins + " mins";
+				row.querySelector('.undertimeH').value = Math.abs(Uworkinghour - 8) + " hrs, " + Uworkingmins + " mins";
 			}
 			else
 			{
