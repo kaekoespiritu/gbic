@@ -143,9 +143,10 @@
 							<h4 class="modal-title" id="dito">Remarks for...</h4>
 						</div>
 						<div class="modal-body">
-							<input class="form-control" id="remark">
+							<input class="form-control" id="remark"  maxlength="100"onkeyup="remarksListener(this.value)">
 						</div>
 						<div class="modal-footer">
+							<h5 class="pull-left" >Characters left: &nbsp<span id="remarksCounter">100<span>&nbsp</h5>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 							<button type="button" class="btn btn-primary" data-dismiss="modal" id="saveRemarks">Save changes</button>
 						</div>

@@ -469,16 +469,16 @@ function attendance ()
 						<input type='hidden' value='". $empRow['remarks'] ."' name='remarks[".$counter."]' class='hiddenRemarks'>";
 					Print "<!-- Remarks Button --> 
 					<td>
-						<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks <span class='icon glyphicon glyphicon-edit'></span></a>
+						<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\"); remarksValidation(\"". $row_employee['empid'] ."\")'>Remarks <span class='icon glyphicon glyphicon-edit'></span></a>
 					</td>";
 				}
 				else
 				{
 					Print "<!-- Remarks Input --> 
 						<input type='hidden' name='remarks[".$counter."]' class='hiddenRemarks'>";
-					Print "<!-- Remarks Button --> 
+					Print "<!-- Remarks Button yow--> 
 					<td>
-						<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks <span class='icon'></span></a>
+						<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\"); remarksValidation(\"". $row_employee['empid'] ."\");'>Remarks <span class='icon'></span></a>
 					</td>";
 				}
 					Print 
@@ -566,7 +566,7 @@ function attendance ()
 						<input type='hidden' name='attendance[".$counter."]' class='attendance'>
 					<!-- Remarks Button --> 
 					<td>
-						<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\")'>Remarks <span class='icon'></span></a>
+						<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\"); remarksValidation(\"". $row_employee['empid'] ."\")'>Remarks <span class='icon'></span></a>
 					</td>
 					<td>
 						<a class='btn btn-sm btn-danger absent' onclick='absent(\"". $row_employee['empid'] ."\")'>Absent</a>

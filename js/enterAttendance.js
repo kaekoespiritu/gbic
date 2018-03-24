@@ -264,6 +264,28 @@ function timeOut(id) {
 			document.getElementById('form').submit();
 		}
 	}
+	function remarksValidation(id) {
+		var mainRow = document.getElementById(id);
+		var remarks = mainRow.querySelector('.hiddenRemarks').value;
+
+		var remarksCounter = remarks.length - 100;
+		remarksCounter = Math.abs(remarksCounter);
+		
+		document.getElementById('remarksCounter').innerHTML = remarksCounter;
+
+	}
+
+	function remarksListener(val) {
+		var remarkInput = 100 - val.length;
+		console.log(remarkInput);
+
+		if(remarkInput < 0)
+			document.getElementById('saveRemarks').classList.add('disabletotally');
+		else
+			document.getElementById('saveRemarks').classList.remove('disabletotally');
+
+		document.getElementById('remarksCounter').innerHTML = remarkInput;
+	}
 
 	function remarks(id) {	
 		// show modal here to input for remarks
