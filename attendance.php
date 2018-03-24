@@ -11,6 +11,7 @@ include('directives/session.php');
 	{
 		$date = strftime("%B %d, %Y");
 	}
+	$dateToday = strftime("%B %d, %Y");
 	$day = date('l', strtotime($date));
 	$holiday = "SELECT * FROM holiday WHERE date = '$date'";
 	$holidayQuery = mysql_query($holiday);
@@ -45,13 +46,13 @@ include('directives/session.php');
 					<?php 
 						if($holidayNum != 0)
 						{
-								$holidayRow = mysql_fetch_assoc($holidayQuery);
-								$_SESSION['holidayName'] = $holidayRow['holiday'];
-								$_SESSION['holidayDate'] = $holidayRow['date'];
-								$_SESSION['holidayType'] = $holidayRow['type'];
-								$holidayName = $holidayRow['holiday'];
-								$holidayType = $holidayRow['type'];
-								Print  $holidayName . " attendance log";
+							$holidayRow = mysql_fetch_assoc($holidayQuery);
+							$_SESSION['holidayName'] = $holidayRow['holiday'];
+							$_SESSION['holidayDate'] = $holidayRow['date'];
+							$_SESSION['holidayType'] = $holidayRow['type'];
+							$holidayName = $holidayRow['holiday'];
+							$holidayType = $holidayRow['type'];
+							Print  $holidayName . " attendance log";
 						}
 						else if(isset($_POST['holidaySubmit']))
 						{
@@ -381,7 +382,9 @@ include('directives/session.php');
 				$siteChecker = "SELECT * FROM site WHERE active = '1'";
 				$siteQuery = mysql_query($siteChecker);
 				$siteNum = mysql_num_rows($siteQuery);
-				if($siteNum == $attCounter)
+				
+
+				if($siteNum == $attCounter && $date == $dateToday)
 				{
 					$_SESSION['completeAtt'] = true;
 				}
