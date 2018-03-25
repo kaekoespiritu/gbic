@@ -329,7 +329,7 @@ function attendance ()
 							Print "<!-- Working Hours -->
 							<td>
 								<input type='text' placeholder='--'' value='". $wHrs ." hrs/HALFDAY' class='form-control input-sm workinghours' disabled>
-								<input type='hidden' class='workinghoursH' value='". $wHrs ." hrs/HALFDAY' name='workinghrs[".$counter."]' >
+								<input type='hidden' class='workinghoursH' value='". $wHrs ." hrs' name='workinghrs[".$counter."]' >
 							</td>";
 						}
 						
@@ -345,11 +345,12 @@ function attendance ()
 							
 							$wHrs = $work[0];
 							$wMin = $work[1];
+
 							//Print "<script>alert('workinghrs12')</script>";
 							Print "<!-- Working Hours -->
 							<td>
 								<input type='text' placeholder='--'' value='". $wHrs ." hrs, ".$wMin." mins/HALFDAY' class='form-control input-sm workinghours' disabled>
-								<input type='hidden' class='workinghoursH' value='". $wHrs ." hrs, ".$wMin." mins/HALFDAY' name='workinghrs[".$counter."]' >
+								<input type='hidden' class='workinghoursH' value='". $wHrs ." hrs, ".$wMin." mins' name='workinghrs[".$counter."]' >
 							</td>";
 						}
 						else// just hours
@@ -374,11 +375,17 @@ function attendance ()
 						{
 							$othrs = $work[0];
 							$otmin = $work[1];
+							if($othrs != 0 && $otmin != 0)
+								$otDisplay = $othrs ." hrs, ".$otmin." mins";
+							else if($othrs != 0 && $otmin == 0)
+								$otDisplay = $othrs ." hrs";
+							else if($othrs == 0 && $otmin != 0)
+								$otDisplay = $otmin." mins";
 
 							Print "<!-- Overtime -->
 							<td>
-								<input type='text' placeholder='--' class='form-control input-sm overtime' value='". $othrs ." hrs, ".$otmin." mins'  disabled>
-								<input type='hidden' class='overtimeH' value='". $othrs ." hrs, ".$otmin." mins' name='othrs[".$counter."]' >
+								<input type='text' placeholder='--' class='form-control input-sm overtime' value='".$otDisplay."'  disabled>
+								<input type='hidden' class='overtimeH' value='".$otDisplay."' name='othrs[".$counter."]' >
 							</td>";
 						}
 						else
@@ -411,11 +418,17 @@ function attendance ()
 						{
 							$uHrs = $work[0];
 							$uMin = $work[1];
+							if($uHrs != 0 && $uMin != 0)
+								$utDisplay = $uHrs ." hrs, ".$uMin." mins";
+							else if($uHrs != 0 && $uMin == 0)
+								$utDisplay = $uHrs ." hrs";
+							else if($uHrs == 0 && $uMin != 0)
+								$utDisplay = $uMin." mins";
 
 							Print "<!-- Undertime -->
 							<td>
-								<input type='text' placeholder='--' value='". $uHrs ." hrs, ".$uMin." mins' class='form-control input-sm undertime'  disabled>
-								<input type='hidden' class='undertimeH' value='". $uHrs ." hrs, ".$uMin." mins' name='undertime[".$counter."]'>
+								<input type='text' placeholder='--' value='".$utDisplay."' class='form-control input-sm undertime'  disabled>
+								<input type='hidden' class='undertimeH' value='".$utDisplay."' name='undertime[".$counter."]'>
 							</td>";
 						}
 						else
