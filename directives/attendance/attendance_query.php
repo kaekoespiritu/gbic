@@ -3,7 +3,7 @@
 
 	function updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate)
 	{
-
+		$remarks = mysql_real_escape_string($remarks);
 		//Print "<script>alert('workinghrs ". $workinghrs ."')</script>";
 		//Print "<script>alert('".$attendance."')</script>";
 		Print "<script>console.log('1.0')</script>";
@@ -112,6 +112,7 @@
 
 	function newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate)
 	{
+		// $remarks = mysql_real_escape_string($remarks);
 		Print "<script>console.log('3.0')</script>";
 		if((!empty($timein) && !empty($timeout)) && $day == "Sunday")
 		{

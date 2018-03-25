@@ -317,6 +317,8 @@ if(!empty($dateRows))// Updating attendance
 			if(!empty($_POST['remarks'][$counter]))
 			{
 				$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+				// $remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+				Print "<script>console.log('remarks1: ".$remarks."')</script>";
 			}
 			else 
 			{
@@ -417,6 +419,7 @@ if(!empty($dateRows))// Updating attendance
 			if(isset($_POST['remarks'][$counter]))
 			{
 				$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+				Print "<script>console.log('remarks2: ".$remarks."')</script>";
 			}
 			$attendance = 1;// 0 - no input / 1 - Absent / 2 - Present
 			$employee = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1'";
@@ -460,6 +463,7 @@ if(!empty($dateRows))// Updating attendance
 			if(isset($_POST['remarks'][$counter]))
 			{
 				$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+				Print "<script>console.log('remarks3: ".$remarks."')</script>";
 			}
 			$attendance = 0;// 0 - no input / 1 - Absent / 2 - Present
 			$employee = "SELECT * FROM employee WHERE empid = '$empid'";
@@ -648,6 +652,7 @@ else// NEW attendance
 			if(!empty($_POST['remarks'][$counter]))
 			{
 				$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+				Print "<script>console.log('remarks4: ".$remarks."')</script>";
 			}
 			else 
 			{
@@ -723,6 +728,7 @@ else// NEW attendance
 			if(isset($_POST['remarks'][$counter]))
 			{
 				$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+				Print "<script>console.log('remarks: ".$remarks."')</script>";
 			}
 			$attendance = 1;// 0 - no input / 1 - Absent / 2 - Present
 			$employee = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1' ";
@@ -757,6 +763,7 @@ else// NEW attendance
 			if(isset($_POST['remarks'][$counter]))
 			{
 				$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+				Print "<script>console.log('remarks5: ".$remarks."')</script>";
 			}
 			$attendance = 0;// 0 - no input / 1 - Absent / 2 - Present
 			$employee = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1' ";

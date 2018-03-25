@@ -465,6 +465,7 @@ function attendance ()
 			// REMARKS	
 				if($empRow['remarks'] != "")
 				{
+					Print "<script>console.log('".$empRow['remarks']."')</script>";
 					Print "<!-- Remarks Input --> 
 						<input type='hidden' value='". $empRow['remarks'] ."' name='remarks[".$counter."]' class='hiddenRemarks'>";
 					Print "<!-- Remarks Button --> 
