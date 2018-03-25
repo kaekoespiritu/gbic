@@ -156,7 +156,7 @@ if(!empty($dateRows))// Updating attendance
 			$AttQuery .= ",";
 		}
 		if(((!empty($_POST['timein1'][$counter]) && !empty($_POST['timeout1'][$counter])) && 
-			(!empty($_POST['timein2'][$counter]) && !empty($_POST['timeout2'][$counter]))) || (empty($_POST['timein2'][$counter] && empty($_POST['timeout2'][$counter]))) && $_POST['attendance'][$counter] == "PRESENT")
+			(!empty($_POST['timein2'][$counter]) && !empty($_POST['timeout2'][$counter]))) || ((empty($_POST['timein2'][$counter] && empty($_POST['timeout2'][$counter]))) && $_POST['attendance'][$counter] == "PRESENT"))
 		{	
 			Print "<script>console.log('present')</script>";
 			$empid = $_POST['empid'][$counter];
