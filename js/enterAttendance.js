@@ -1023,18 +1023,18 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				//alert("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
 				if((timeinhour1 <= 10 && timeouthour1 <= 18) || (timeinhour2 <= 10 && timeouthour2 <= 18))//night diff needs reconfiguration
 				{
-					//console.log("nightdiff");
+					console.log("nightdiff");
 					var NDin;
 					var NDout;
 					var workhrs;
-					console.log("timeinhour1: "+timeinhour1);
-					console.log("timeouthour1: "+timeouthour1);
-					console.log("timeinhour2: "+timeinhour2);
-					console.log("timeouthour2: "+timeouthour2);
+					// console.log("timeinhour1: "+timeinhour1);
+					// console.log("timeouthour1: "+timeouthour1);
+					// console.log("timeinhour2: "+timeinhour2);
+					// console.log("timeouthour2: "+timeouthour2);
 					//Possibility 2: if 10pm is in after lunch
 					if(timeinhour2 < 10)
 					{
-						//console.log("possibility 2");
+						console.log("possibility 2");
 						NDin = timeinhour2 - 10;
 						NDout = 0;
 						if(timeouthour2 >= 18)
@@ -1053,7 +1053,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					{
 						if(timeouthour1 >= 18)//If timein encapsulated all of the night diff
 						{
-							// console.log("possibility 1-1");
+							console.log("possibility 1-1");
 
 							NDin = timeinhour1 - 10;
 							NDout = timeouthour1 - 18;
@@ -1062,7 +1062,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 						}
 						else//the normal night diff
 						{
-							// console.log("possibility 1-2");
+							console.log("possibility 1-2");
 
 							workhrs1 = timeinhour1 - timeouthour1;
 							NDin1 = timeinhour1 - 10;
@@ -1072,12 +1072,17 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 							NDin2 = timeinhour2 - 10;
 							if(timeouthour2 <=18)
 							{
-								// console.log("possibility 1-2-1");
-								NDout2 = timeouthour2 - 10;
+								console.log("timeinhour1: "+timeinhour1+" || timeouthour1: "+timeouthour1+" || timeinhour2: "+timeinhour2+" || timeouthour2: "+timeouthour2 );
+								console.log("possibility 1-2-1");
+								var temp = 0;
+								if(timeouthour1 > 10)
+									temp = timeouthour1 - 10;
+								NDout2 = timeouthour2 - timeinhour2;
+								NDout2 = Math.abs(NDout2) + temp;
 							}
 							else
 							{
-								// console.log("possibility 1-2-2");
+								console.log("possibility 1-2-2");
 								NDout2 = 8;
 							}
 							if(timeouthour2 <=18)
@@ -1102,10 +1107,11 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			}
 			else
 			{
+				console.log("nightdiff");
 				//alert("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
 				if((timeinhour1 <= 10 && timeouthour1 <= 18))//night diff needs reconfiguration
 				{
-					console.log("nightdiff");
+					
 					var NDin;
 					var NDout;
 					var workhrs;

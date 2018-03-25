@@ -430,7 +430,7 @@ if(!empty($dateRows))// Updating attendance
 			$attCheckerQuery = mysql_query($attChecker) or die (mysql_error());
 			if(mysql_num_rows($attCheckerQuery) != 0)//update
 			{
-				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery,$holidayDate);
+				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate);
 			}
 			else//new attendance
 			{
