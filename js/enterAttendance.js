@@ -346,14 +346,28 @@ function timeOut(id) {
 		mainRow.querySelector('.timeout1').placeholder = "ABSENT";
 		mainRow.querySelector('.timein2').placeholder = "ABSENT";
 		mainRow.querySelector('.timeout2').placeholder = "ABSENT";
+		mainRow.querySelector('.timein3').placeholder = "ABSENT";
+		mainRow.querySelector('.timeout3').placeholder = "ABSENT";
+
+		//Checkboxes
+		if(mainRow.querySelector('.nightshiftChk').checked == true)//Nightdiff
+			mainRow.querySelector('.nightshiftChk').checked = false;
+		if(mainRow.querySelector('.halfdayChk').checked == true)//HalfDay
+			mainRow.querySelector('.halfdayChk').checked = false;
+		
 		// delete values
 		mainRow.querySelector('.timein1').value = "";
 		mainRow.querySelector('.timeout1').value = "";
 		mainRow.querySelector('.timein2').value = "";
 		mainRow.querySelector('.timeout2').value = "";
+		mainRow.querySelector('.timein3').value = "";
+		mainRow.querySelector('.timeout3').value = "";
 		mainRow.querySelector('.workinghours').value = "";
 		mainRow.querySelector('.overtime').value = "";
 		mainRow.querySelector('.undertime').value = "";
+
+		mainRow.querySelector('.timein3').disabled = true;
+		mainRow.querySelector('.timeout3').disabled = true;
 		//for hidden rows
 		mainRow.querySelector('.workinghoursH').value = "";
 		mainRow.querySelector('.overtimeH').value = "";

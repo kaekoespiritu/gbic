@@ -143,6 +143,24 @@ else
 if(!empty($dateRows))// Updating attendance
 {
 	// Print "<script>console.log('7')</script>";
+	$initialQuery = "INSERT INTO attendance(	empid, 
+												position,
+												timein,
+												timeout,
+												afterbreak_timein,
+												afterbreak_timeout,
+												nightshift_timein,
+												nightshift_timeout,
+												workhours,
+												overtime,
+												undertime,
+												nightdiff,
+												remarks,
+												attendance,
+												date,
+												site,
+												sunday,
+												holiday) VALUES";//ADD HOLIDAY HERE
 	$AttQuery = "";
 	for($counter = 0; $counter < $empNum; $counter++)
 	{
@@ -151,10 +169,10 @@ if(!empty($dateRows))// Updating attendance
 		// Print "<script>console.log('timeout1: ".$_POST['timeout1'][$counter]."')</script>";
 		// Print "<script>console.log('8')</script>";
 		//Print "<script>alert('4')</script>";
-		if($AttQuery != "")
-		{
-			$AttQuery .= ",";
-		}
+		// if($AttQuery != "")
+		// {
+		// 	$AttQuery .= ",";
+		// }
 		if(((!empty($_POST['timein1'][$counter]) && !empty($_POST['timeout1'][$counter])) || 
 			(!empty($_POST['timein2'][$counter]) && !empty($_POST['timeout2'][$counter]))) || ((empty($_POST['timein2'][$counter]) && empty($_POST['timeout2'][$counter])) && $_POST['attendance'][$counter] == "PRESENT"))
 		{	
@@ -239,7 +257,7 @@ if(!empty($dateRows))// Updating attendance
 				}
 				else
 				{
-					//dito
+					
 					//Print "<script>alert('yepa')</script>";
 					$work = explode(",", $OtHrs);//Separates the string
 					$hrs = $work[0];//gets the Hours
@@ -312,15 +330,28 @@ if(!empty($dateRows))// Updating attendance
 			$position = $employeeArr['position'];
 			// Print "<script>console.log('10')</script>";
 
-			//Print "<script>alert('workinghrs ". $workinghrs ."')</script>";
-			$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
+			$attChecker = "SELECT * from attendance WHERE date = '$date' AND empid = '$empid' LIMIT 1";
+			$attCheckerQuery = mysql_query($attChecker) or die (mysql_error());
+			if(mysql_num_rows($attCheckerQuery) != 0)//update
+			{
+				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate);
+			}
+			else//new attendance
+			{
+				$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, "",$holidayDate);
+
+				$AttQuery = $initialQuery.$AttQuery; 
+			}
+
 			// Print "<script>console.log('yow: ".$AttQuery."')</script>";
 			
 		}
 		else if($_POST['attendance'][$counter] == "ABSENT")// ABSENT
 		{
 			Print "<script>console.log('absent')</script>";
+
 			$empid = $_POST['empid'][$counter];
+
 			//Make Algorithm that will check if this employee is AWOL
 			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 7";
 			$AwolQuery = mysql_query($Awol) or die(mysql_error());
@@ -394,9 +425,21 @@ if(!empty($dateRows))// Updating attendance
 			$position = $employeeArr['position'];
 			//Print "<script>alert('".$attendance."')</script>";
 			//require "directives/attendance/attendance_query.php";
-			$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
-		
 
+			$attChecker = "SELECT * from attendance WHERE date = '$date' AND empid = '$empid' LIMIT 1";
+			$attCheckerQuery = mysql_query($attChecker) or die (mysql_error());
+			if(mysql_num_rows($attCheckerQuery) != 0)//update
+			{
+				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery,$holidayDate);
+			}
+			else//new attendance
+			{
+				$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, "",$holidayDate);
+				
+				$AttQuery = $initialQuery.$AttQuery;
+				// Print "<script>console.log('yow: ".$AttQuery."')</script>"; 
+
+			}
 		}
 		else if(empty($_POST['attendance'][$counter]))// NO INPUT
 		{
@@ -424,11 +467,25 @@ if(!empty($dateRows))// Updating attendance
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
 			//require "directives/attendance/attendance_query.php";
-			$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
-									  	
+
+			$attChecker = "SELECT * from attendance WHERE date = '$date' AND empid = '$empid' LIMIT 1";
+			$attCheckerQuery = mysql_query($attChecker) or die (mysql_error());
+
+			if(mysql_num_rows($attCheckerQuery) != 0)//update
+			{
+				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate);
+
+			}
+			else//new attendance
+			{
+				$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, "",$holidayDate);
+
+				$AttQuery = $initialQuery.$AttQuery; 
+
+			}					  	
 		}
 
-		//Print "<script>alert('". $AttQuery ."')</script>";
+		// Print "<script>alert('". $AttQuery ."')</script>";
 		mysql_query($AttQuery) or die(mysql_error());//query
 	}
 }
@@ -489,10 +546,6 @@ else// NEW attendance
 				$timein3 = "";
 				$timeout3 = "";
 			}
-			
-			 // Print "<script>alert('counter ". $counter ."')</script>";
-			 // Print "<script>alert('timein ". $timein ."')</script>";
-			 // Print "<script>alert('timeout ". $timeout ."')</script>";
 			
 
 			if(!empty($_POST['workinghrs'][$counter]))
@@ -607,7 +660,6 @@ else// NEW attendance
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
 			
-			
 			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 			
 			//Print "<script>alert('yeah3')</script>";
@@ -678,7 +730,12 @@ else// NEW attendance
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
 			//require "directives/attendance/attendance_query.php";
+
+			$attChecker = "SELECT * from attendance WHERE date = '$date' AND empid = '$empid' LIMIT 1";
+			$attCheckerQuery = mysql_query($attChecker) or die (mysql_error());
+
 			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
+		
 			//Print "<script>alert('".$AttQuery."')</script>";
 			
 		}
@@ -707,12 +764,14 @@ else// NEW attendance
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
 			//require "directives/attendance/attendance_query.php";
+
+			$attChecker = "SELECT * from attendance WHERE date = '$date' AND empid = '$empid' LIMIT 1";
+			$attCheckerQuery = mysql_query($attChecker) or die (mysql_error());
+
 			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
-		
+			
 		}
-		//Print "<script>alert('yeah')</script>";
 	}
-	//Print "<script>alert('".$AttQuery."')</script>";
 	$FinalQuery = $initialQuery . $AttQuery;
 	// Print "<script>console.log('".$FinalQuery."')</script>";
 	$queryAttendance = mysql_query($FinalQuery) or die(mysql_error());

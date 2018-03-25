@@ -112,6 +112,7 @@
 
 	function newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate)
 	{
+		Print "<script>console.log('3.0')</script>";
 		if((!empty($timein) && !empty($timeout)) && $day == "Sunday")
 		{
 			$AttQuery .= "('".$empid."',
