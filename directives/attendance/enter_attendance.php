@@ -255,7 +255,7 @@ function attendance ()
 					{
 						Print 	"<!-- Half Day Checkbox-->
 									<td>
-										<input type='checkbox' class='halfdayChk' onclick='halfDay(\"". $row_employee['empid'] ."\")' name='halfday[".$counter."]' disabled>
+										<input type='checkbox' class='halfdayChk' onclick='halfDay(\"". $row_employee['empid'] ."\")' name='halfday[".$counter."]' >
 									</td>";
 						Print	"<!-- AFTER BREAK Time In -->
 									<td>
@@ -290,7 +290,7 @@ function attendance ()
 						Print "
 								<!-- Night Shift Checkbox-->
 									<td>
-										<input type='checkbox' class='nightshiftChk' name='nightshift[".$counter."]' onclick='nightshift_ChkBox(\"". $row_employee['empid'] ."\")' disabled>
+										<input type='checkbox' class='nightshiftChk' name='nightshift[".$counter."]' onclick='nightshift_ChkBox(\"". $row_employee['empid'] ."\")' >
 									</td>
 								<!-- NIGHT SHIFT Time In -->
 									<td>
