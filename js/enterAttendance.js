@@ -508,7 +508,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		if(workinghours >= 1)
 		{
 		// Computing minutes
-		console.log("timein1: "+timeinhour1+"// timeout1: "+timeouthour1+"// timein2: "+timeinhour2+"// timeout2: "+timeouthour2);
+		// console.log("timein1: "+timeinhour1+"// timeout1: "+timeouthour1+"// timein2: "+timeinhour2+"// timeout2: "+timeouthour2);
 			console.log("Morning shift 12");
 			//Before break
 			//If employee chooses halfday
@@ -533,9 +533,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				if(timeinmin1 > timeoutmin1)
 				{
 					var time_temp = 60 - timeinmin1;
-					console.log("time_temp: "+time_temp);
 					workingmins1 = time_temp + timeoutmin1;
-					console.log("timeoutmin1: "+timeoutmin1);
 				}
 				else if(timeoutmin1 > timeinmin1)
 				{
@@ -545,7 +543,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				{
 					workingmins1 = 0;
 				}
-				console.log("workingmins1: "+workingmins1);
+				// console.log("workingmins1: "+workingmins1);
 				//After break
 				if(timeinmin2 > timeoutmin2)
 				{
@@ -560,11 +558,11 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				{
 					workingmins2 = 0;
 				}
-				console.log("workingmins2: "+workingmins2);
+				// console.log("workingmins2: "+workingmins2);
 				workingmins = Math.abs(workingmins1) + Math.abs(workingmins2);
 			}
 				
-			console.log("workingmins: "+workingmins);
+			// console.log("workingmins: "+workingmins);
 			
 
 			if(workingmins >= 60)
@@ -826,7 +824,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			// timeouthour1 += 12;
 			// timeinhour2 += 12;
 			// timeouthour2 += 12;
-		console.log("timein1: "+timeinhour1+"// timeout1: "+timeouthour1+"// timein2: "+timeinhour2+"// timeout2: "+timeouthour2);
+		// console.log("timein1: "+timeinhour1+"// timeout1: "+timeouthour1+"// timein2: "+timeinhour2+"// timeout2: "+timeouthour2);
 			if(timeinhour1 < 12)
 				timeinhour1 +=12;
 			else
@@ -1450,7 +1448,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				(timeinhour3 <= 22 && timeouthour3 >= 22) ||// pos 13
 				(timeinhour3 <= 22 && timeouthour3 <= 6))// pos 14
 			{
-				console.log('timein1: '+timeinhour1+' || timeout1: '+timeouthour1+' || timein2: '+timeinhour2+' || timeout2: '+timeouthour2+' || timein3: '+timeinhour3+' || timeout3: '+timeouthour3);
+				// console.log('timein1: '+timeinhour1+' || timeout1: '+timeouthour1+' || timein2: '+timeinhour2+' || timeout2: '+timeouthour2+' || timein3: '+timeinhour3+' || timeout3: '+timeouthour3);
 				if(timeinhour1 <= 22 && timeouthour1 >= 22)// pos1 ~ 6
 				{
 					// console.log('pos 1~6');
@@ -1628,7 +1626,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 		else
 		{
 			console.log("nightshift1");
-		console.log('timein1: '+timeinhour1+' || timeout1: '+timeouthour1+' || timein2: '+timeinhour2+' || timeout2: '+timeouthour2+' || timein3: '+timeinhour3+' || timeout3: '+timeouthour3);
+		// console.log('timein1: '+timeinhour1+' || timeout1: '+timeouthour1+' || timein2: '+timeinhour2+' || timeout2: '+timeouthour2+' || timein3: '+timeinhour3+' || timeout3: '+timeouthour3);
 
 		//Invert time for easier computation of night diff
 			//before break
@@ -1684,9 +1682,9 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			workinghours1 = timeouthour1 - timeinhour1;
 			workinghours2 = timeouthour2 - timeinhour2;
 			workinghours3 = timeouthour3 - timeinhour3;
-			console.log('workinghours1: '+workinghours1+' | workinghours2: '+workinghours2+' | workinghours3: '+workinghours3);
+			// console.log('workinghours1: '+workinghours1+' | workinghours2: '+workinghours2+' | workinghours3: '+workinghours3);
 
-			console.log('timein1: '+timeinhour1+' || timeout1: '+timeouthour1+' || timein2: '+timeinhour2+' || timeout2: '+timeouthour2+' || timein3: '+timeinhour3+' || timeout3: '+timeouthour3);
+			// console.log('timein1: '+timeinhour1+' || timeout1: '+timeouthour1+' || timein2: '+timeinhour2+' || timeout2: '+timeouthour2+' || timein3: '+timeinhour3+' || timeout3: '+timeouthour3);
 
 			//Decrement workinghours if minutes is more than time out mins
 			if(timeinmin1 > timeoutmin1)
@@ -1711,7 +1709,8 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			//Computing minutes
 			if(timeinmin1 > timeoutmin1)
 			{
-				workingmins1 = timeinmin1 - timeoutmin1;
+				var time_temp = 60 - timeinmin1;
+				workingmins1 = time_temp + timeoutmin1;
 			}
 			if(timeoutmin1 > timeinmin1)
 			{
@@ -1725,7 +1724,8 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			//After break
 			if(timeinmin2 > timeoutmin2)
 			{
-				workingmins2 = timeinmin2 - timeoutmin2;
+				var time_temp = 60 - timeinmin2;
+				workingmins2 = time_temp + timeoutmin2;
 			}
 			if(timeoutmin2 > timeinmin2)
 			{
@@ -1750,9 +1750,11 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			{
 				workingmins3 = 0;
 			}
-
+			console.log('workingmins1: '+workingmins1);
+			console.log('workingmins2: '+workingmins2);
+			console.log('workingmins3: '+workingmins3);
 			
-			workingmins = workingmins1 + workingmins2 + workingmins3;
+			workingmins = Math.abs(workingmins1) + Math.abs(workingmins2) + Math.abs(workingmins3);
 			
 			if(workingmins >= 60)
 			{

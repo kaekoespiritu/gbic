@@ -314,7 +314,7 @@ if(!empty($dateRows))// Updating attendance
 
 			//Print "<script>alert('workinghrs ". $workinghrs ."')</script>";
 			$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
-			Print "<script>console.log('yow: ".$AttQuery."')</script>";
+			// Print "<script>console.log('yow: ".$AttQuery."')</script>";
 			
 		}
 		else if($_POST['attendance'][$counter] == "ABSENT")// ABSENT
@@ -459,9 +459,11 @@ else// NEW attendance
 		{
 			$AttQuery .= ",";
 		}
-		if((!empty($_POST['timein1'][$counter]) && !empty($_POST['timeout1'][$counter]) && 
-			(!empty($_POST['timein2'][$counter]) && !empty($_POST['timeout2'][$counter])) || (empty($_POST['timein2'][$counter]) && empty($_POST['timeout2'][$counter]))) && $_POST['attendance'][$counter] == "PRESENT")
-		{	
+
+		if(((!empty($_POST['timein1'][$counter]) && !empty($_POST['timeout1'][$counter])) && 
+			(!empty($_POST['timein2'][$counter]) && !empty($_POST['timeout2'][$counter]))) || ((empty($_POST['timein2'][$counter]) && empty($_POST['timeout2'][$counter])) && $_POST['attendance'][$counter] == "PRESENT"))
+		{
+
 			//Print "<script>alert('Pasok')</script>";
 			$empid = $_POST['empid'][$counter];
 			$timein1 = $_POST['timein1'][$counter];
