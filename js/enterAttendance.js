@@ -292,7 +292,9 @@ function timeOut(id) {
 		var mainRow = document.getElementById(id);
 		if(mainRow.querySelector('.hiddenRemarks').value != null)
 		{
+
 			var input = mainRow.querySelector('.hiddenRemarks').value;
+			input = input.replace(/\\/g, '');
 			document.getElementById('remark').value = input;
 		}
 		else

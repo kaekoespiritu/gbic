@@ -465,9 +465,9 @@ function attendance ()
 			// REMARKS	
 				if($empRow['remarks'] != "")
 				{
-					Print "<script>console.log('".$empRow['remarks']."')</script>";
-					Print "<!-- Remarks Input --> 
-						<input type='hidden' value='". $empRow['remarks'] ."' name='remarks[".$counter."]' class='hiddenRemarks'>";
+					// Print "<script>alert('".$empRow['remarks']."')</script>";
+					Print '<!-- Remarks Input --> 
+						<input type="hidden" value="'. $empRow['remarks'] .'" name="remarks['.$counter.']" class="hiddenRemarks">';
 					Print "<!-- Remarks Button --> 
 					<td>
 						<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\"); remarksValidation(\"". $row_employee['empid'] ."\")'>Remarks <span class='icon glyphicon glyphicon-edit'></span></a>
