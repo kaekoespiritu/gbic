@@ -508,7 +508,8 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		if(workinghours >= 1)
 		{
 		// Computing minutes
-			console.log("Morning shift");
+		console.log("timein1: "+timeinhour1+"// timeout1: "+timeouthour1+"// timein2: "+timeinhour2+"// timeout2: "+timeouthour2);
+			console.log("Morning shift 12");
 			//Before break
 			//If employee chooses halfday
 			if(timeinhour2 == "HD")
@@ -516,7 +517,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				if(timeinmin1 > timeoutmin1)
 				{
 					var time_temp = 60 - timeinmin1;
-					workingmins = time_temp - timeoutmin1;
+					workingmins = time_temp + timeoutmin1;
 				}
 				if(timeoutmin1 > timeinmin1)
 				{
@@ -532,21 +533,24 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				if(timeinmin1 > timeoutmin1)
 				{
 					var time_temp = 60 - timeinmin1;
-					workingmins1 = time_temp - timeoutmin1;
+					console.log("time_temp: "+time_temp);
+					workingmins1 = time_temp + timeoutmin1;
+					console.log("timeoutmin1: "+timeoutmin1);
 				}
-				if(timeoutmin1 > timeinmin1)
+				else if(timeoutmin1 > timeinmin1)
 				{
 					workingmins1 = timeoutmin1 - timeinmin1;
 				}
-				if(timeinmin1 == timeoutmin1)
+				else if(timeinmin1 == timeoutmin1)
 				{
 					workingmins1 = 0;
 				}
+				console.log("workingmins1: "+workingmins1);
 				//After break
 				if(timeinmin2 > timeoutmin2)
 				{
 					var time_temp = 60 - timeinmin2;
-					workingmins2 = time_temp - timeoutmin2;
+					workingmins2 = time_temp + timeoutmin2;
 				}
 				if(timeoutmin2 > timeinmin2)
 				{
@@ -556,11 +560,11 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				{
 					workingmins2 = 0;
 				}
-
-				workingmins = workingmins1 + workingmins2;
+				console.log("workingmins2: "+workingmins2);
+				workingmins = Math.abs(workingmins1) + Math.abs(workingmins2);
 			}
 				
-
+			console.log("workingmins: "+workingmins);
 			
 
 			if(workingmins >= 60)
@@ -1281,7 +1285,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			if(timeinmin1 > timeoutmin1)
 			{
 				var time_temp = 60 - timeinmin1;
-				workingmins1 = time_temp - timeoutmin1;
+				workingmins1 = time_temp + timeoutmin1;
 			}
 			if(timeoutmin1 > timeinmin1)
 			{
@@ -1309,7 +1313,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			if(timeinmin3 > timeoutmin3)
 			{
 				var time_temp = 60 - timeinmin3;
-				workingmins3 = time_temp - timeoutmin3;
+				workingmins3 = time_temp + timeoutmin3;
 			}
 			if(timeoutmin3 > timeinmin3)
 			{
@@ -1735,7 +1739,8 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			//night shift
 			if(timeinmin3 > timeoutmin3)
 			{
-				workingmins3 = timeinmin3 - timeoutmin3;
+				var time_temp = 60 - timeinmin3;
+				workingmins3 = time_temp + timeoutmin3;
 			}
 			if(timeoutmin3 > timeinmin3)
 			{
