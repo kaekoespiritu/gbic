@@ -102,7 +102,7 @@
 									if($_GET['period'] == 'week')
 									{
 										$payrollEndDate = $payrollDateArr['date'];
-										$payrollStartDate = date('F j, Y', strtotime('-6 day', strtotime($payrollEndDate)));
+										$payrollStartDate = date('F d, Y', strtotime('-6 day', strtotime($payrollEndDate)));
 										if(isset($_POST['date']))
 										{
 											if($_POST['date'] == $payrollEndDate)
@@ -249,7 +249,7 @@
 									
 									//For the specfied week in first column
 									$endDate = $payDateArr['date'];
-									$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
+									$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
 									$payroll = "SELECT * FROM payroll WHERE date = '$endDate' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 									$payrollQuery = mysql_query($payroll);

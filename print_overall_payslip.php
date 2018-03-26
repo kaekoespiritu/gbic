@@ -21,7 +21,7 @@ switch($require)
 	case "withOReq": $requirementDisplay = "Incomplete Requirements"; break;
 }
 
-$weekBefore = date('F j, Y', strtotime('-6 day', strtotime($date)));
+$weekBefore = date('F d, Y', strtotime('-6 day', strtotime($date)));
 $filename =  $site." Payslip ".$weekBefore." - ".$date.".xls";
 
 $dateDisplay = $weekBefore." - ".$date;

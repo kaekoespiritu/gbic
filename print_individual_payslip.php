@@ -18,7 +18,7 @@ else
 
 // Get requirements type (with or without)
 
-$weekBefore = date('F j, Y', strtotime('-6 day', strtotime($date)));
+$weekBefore = date('F d, Y', strtotime('-6 day', strtotime($date)));
 $filename =  $empArr['lastname'].", ".$empArr['firstname']." Payslip ".$weekBefore." - ".$date.".xls";
 
 $dateDisplay = $weekBefore." - ".$date;

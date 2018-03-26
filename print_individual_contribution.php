@@ -81,7 +81,7 @@ $ERContribution = $EEContribution = $totalSSSContribution = $overallSSS = 0;
 		//Evaluates the attendance and compute the sss contribution
 		while($payDateArr = mysql_fetch_assoc($payrollDateQuery)) {
 			$endDate = $payDateArr['date'];
-			$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
+			$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
 			//Print "<script>console.log('".$month." - ".$year."')</script>";
 

@@ -17,9 +17,9 @@ for($dayCounter = 0; $dayCounter <= 6; $dayCounter++)//Finds the nearest wednesd
 	$decrement = '-'.$dayCounter.' day';
 	$day = date('l', strtotime($decrement, strtotime($date)));//get the day of the week
 	if($day == "Wednesday")
-		$startDate = date('F j, Y', strtotime($decrement, strtotime($date)));
+		$startDate = date('F d, Y', strtotime($decrement, strtotime($date)));
 }
-$endDate = date('F j, Y', strtotime('+6 day', strtotime($startDate)));
+$endDate = date('F d, Y', strtotime('+6 day', strtotime($startDate)));
 
 
 $filename = $date." - Attendance.xls";

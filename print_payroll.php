@@ -6,7 +6,7 @@ include('directives/print_styles.php');//Styles for PHPexcel
 
 $location = $_GET['site'];//Sample data
 $endDate = $_GET['date'];
-$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
+$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
 
 // TIMEZONE

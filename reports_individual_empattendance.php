@@ -72,7 +72,7 @@
 							{
 								if($payDateBool)
 								{
-									$onProcessDate = date('F j, Y', strtotime('+1 day', strtotime($payDateArr['date'])));
+									$onProcessDate = date('F d, Y', strtotime('+1 day', strtotime($payDateArr['date'])));
 									if(isset($_POST['date']))
 										if($_POST['date'] == "onProcess")
 											Print "<option value='onProcess' selected>".$onProcessDate." - Present</option>";
@@ -82,7 +82,7 @@
 										Print "<option value='onProcess'>".$onProcessDate." - Present</option>";
 									$payDateBool = false;
 								}
-								$startDate = date('F j, Y', strtotime('-6 day', strtotime($payDateArr['date'])));
+								$startDate = date('F d, Y', strtotime('-6 day', strtotime($payDateArr['date'])));
 								$endDate = $payDateArr['date'];
 
 								if(isset($_POST['date']))
@@ -122,18 +122,18 @@
 								if($_POST['date'] == "onProcess")
 								{
 									$openPayroll = $onProcessDate;
-									$closePayroll = date('F j, Y', strtotime('+6 day', strtotime($openPayroll)));
+									$closePayroll = date('F d, Y', strtotime('+6 day', strtotime($openPayroll)));
 								}
 								else
 								{
 									$closePayroll = $_POST['date'];
-									$openPayroll = date('F j, Y', strtotime('-6 day', strtotime($closePayroll)));
+									$openPayroll = date('F d, Y', strtotime('-6 day', strtotime($closePayroll)));
 								}
 							}
 							else
 							{
 								$openPayroll = $onProcessDate;
-								$closePayroll = date('F j, Y', strtotime('+6 day', strtotime($openPayroll)));
+								$closePayroll = date('F d, Y', strtotime('+6 day', strtotime($openPayroll)));
 
 							}
 							//Print '<script>console.log("'.$openPayroll.' - '.$closePayroll.'")</script>';
@@ -461,7 +461,7 @@
 							// 	if($_POST['date'] != "onProcess")
 							// 	{
 							// 		$closePayroll = $_POST['date'];
-							// 		$openPayroll = date('F j, Y', strtotime('-6 day', strtotime($closePayroll)));
+							// 		$openPayroll = date('F d, Y', strtotime('-6 day', strtotime($closePayroll)));
 
 							// 		$attendance = "SELECT * FROM attendance WHERE empid = '$empid' AND date >= '$openPayroll' AND date <= '$closePayroll' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							// 	}

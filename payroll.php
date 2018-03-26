@@ -12,22 +12,24 @@ $site = $_GET['site'];
 $position = $_GET['position'];
 $empid = $_GET['empid'];
 //Sample date for debugging purposes
-$date = strftime("%B %d, %Y");
+//$date = strftime("%B %d, %Y");
 
   //1st sample date
    // $date = "October 24, 2017";
+$date = "March 13, 2018";
   //2nd sample date
   //$date = "October 31, 2017";
+// $date = "March 20, 2018";
 
 $time = strftime("%X");//TIME
 
 $day1 = $date;
-$day2 = date('F j, Y', strtotime('-1 day', strtotime($date)));
-$day3 = date('F j, Y', strtotime('-2 day', strtotime($date)));
-$day4 = date('F j, Y', strtotime('-3 day', strtotime($date)));
-$day5 = date('F j, Y', strtotime('-4 day', strtotime($date)));
-$day6 = date('F j, Y', strtotime('-5 day', strtotime($date)));
-$day7 = date('F j, Y', strtotime('-6 day', strtotime($date)));
+$day2 = date('F d, Y', strtotime('-1 day', strtotime($date)));
+$day3 = date('F d, Y', strtotime('-2 day', strtotime($date)));
+$day4 = date('F d, Y', strtotime('-3 day', strtotime($date)));
+$day5 = date('F d, Y', strtotime('-4 day', strtotime($date)));
+$day6 = date('F d, Y', strtotime('-5 day', strtotime($date)));
+$day7 = date('F d, Y', strtotime('-6 day', strtotime($date)));
 //Holiday Checker
 $holiday = "SELECT * FROM holiday WHERE date = '$date'";
 $holidayQuery = mysql_query($holiday);
@@ -35,6 +37,7 @@ $holidayExist = mysql_num_rows($holidayQuery);
 $holidayName = "";
 if($holidayExist > 0)
 {
+	Print "<script>console.log('holidayExist: ".$holidayExist."')</script>";
 	$holidayRow = mysql_fetch_assoc($holidayQuery);
 	$holidayName = $holidayRow['holiday'];//Gets holiday name
 }
@@ -575,7 +578,7 @@ if($holidayExist > 0)
 					// {
 					//   for ($day = 0; $day < 7; $day++)
 					//   {
-					//     echo "<br />" . date("F j, Y", strtotime("$start_date +$day day"));
+					//     echo "<br />" . date("F d, Y", strtotime("$start_date +$day day"));
 					//     $yea = strtotime($start_date + $day);
 					//     echo $yea;
 					//   }
@@ -1111,12 +1114,12 @@ if($holidayExist > 0)
 					<?php
 					// 		//this is to check if employee has multiple new vales in a week
 					// $day1 = $date;
-					// $day2 = date('F j, Y', strtotime('-1 day', strtotime($date)));
-					// $day3 = date('F j, Y', strtotime('-2 day', strtotime($date)));
-					// $day4 = date('F j, Y', strtotime('-3 day', strtotime($date)));
-					// $day5 = date('F j, Y', strtotime('-4 day', strtotime($date)));
-					// $day6 = date('F j, Y', strtotime('-5 day', strtotime($date)));
-					// $day7 = date('F j, Y', strtotime('-6 day', strtotime($date)));
+					// $day2 = date('F d, Y', strtotime('-1 day', strtotime($date)));
+					// $day3 = date('F d, Y', strtotime('-2 day', strtotime($date)));
+					// $day4 = date('F d, Y', strtotime('-3 day', strtotime($date)));
+					// $day5 = date('F d, Y', strtotime('-4 day', strtotime($date)));
+					// $day6 = date('F d, Y', strtotime('-5 day', strtotime($date)));
+					// $day7 = date('F d, Y', strtotime('-6 day', strtotime($date)));
 					// $days = array("$day1","$day2","$day3","$day4","$day5","$day6","$day7");
 					// $newVale = 0;
 					// foreach($days as $checkDay)

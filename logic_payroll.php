@@ -4,11 +4,13 @@
 	//Print "<script>console.log('".$overtimeRate1."')</script>";
 	$time = strftime("%X");//TIME
 
-	$date = strftime("%B %d, %Y");
+	//$date = strftime("%B %d, %Y");
 	  //1st sample date
 	   // $date = "October 24, 2017";
+	 $date = "March 13, 2018";
 	  //2nd sample date
 	  //$date = "October 31, 2017";
+	// $date = "March 20, 2018";
 	
 //Employee ID
 	$empid = $_POST['employeeID'];
@@ -190,7 +192,7 @@
 			$holidayType = $_POST['holidayType'][0];
 			$holidayDate = $_POST['holidayDate'][0];
 
-			$dayBefore = date('F j, Y', strtotime('-1 day', strtotime($holidayDate)));
+			$dayBefore = date('F d, Y', strtotime('-1 day', strtotime($holidayDate)));
 			$dayBeforeChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayBefore'");
 			$sameDayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$date'");
 			if(mysql_num_rows($dayBeforeChecker) == 1 && mysql_num_rows($sameDayChecker) == 0)

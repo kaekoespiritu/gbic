@@ -80,7 +80,7 @@
 							while($PdaysOptions = mysql_fetch_assoc($payrollDaysQuery))
 							{
 
-								$startDate = date('F j, Y', strtotime('-6 day', strtotime($PdaysOptions['date'])));
+								$startDate = date('F d, Y', strtotime('-6 day', strtotime($PdaysOptions['date'])));
 
 								if(isset($_POST['payrollDate']))
 								{

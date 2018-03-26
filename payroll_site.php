@@ -4,11 +4,13 @@ require_once('directives/db.php');
 include('directives/session.php');
   date_default_timezone_set('Asia/Hong_Kong');
 
-  $date = strftime("%B %d, %Y");
+  //$date = strftime("%B %d, %Y");
   //1st sample date
    // $date = "October 24, 2017";
+   $date = "March 13, 2018";
   //2nd sample date
   // $date = "October 31, 2017";
+  // $date = "March 20, 2018";
 ?>
 <html>
 <head>
@@ -68,19 +70,19 @@ include('directives/session.php');
 				$site = $row['location'];
 
 				$day1 = $date;
-				$day2 = date('F j, Y', strtotime('-1 day', strtotime($date)));
-				$day3 = date('F j, Y', strtotime('-2 day', strtotime($date)));
-				$day4 = date('F j, Y', strtotime('-3 day', strtotime($date)));
-				$day5 = date('F j, Y', strtotime('-4 day', strtotime($date)));
-				$day6 = date('F j, Y', strtotime('-5 day', strtotime($date)));
-				$day7 = date('F j, Y', strtotime('-6 day', strtotime($date)));
+				$day2 = date('F d, Y', strtotime('-1 day', strtotime($date)));
+				$day3 = date('F d, Y', strtotime('-2 day', strtotime($date)));
+				$day4 = date('F d, Y', strtotime('-3 day', strtotime($date)));
+				$day5 = date('F d, Y', strtotime('-4 day', strtotime($date)));
+				$day6 = date('F d, Y', strtotime('-5 day', strtotime($date)));
+				$day7 = date('F d, Y', strtotime('-6 day', strtotime($date)));
 
 				$days = array("$day1","$day2","$day3","$day4","$day5","$day6","$day7");
 				
 				$attendanceStatus = 0;
 				foreach($days as $checkDay)
 				{
-					//Print "<script>console.log('".$attendanceStatus."')</script>";
+					Print "<script>console.log('checkDay: ".$checkDay."')</script>";
 					$day = date('l', strtotime($checkDay));//Gets the Day in the week of the date
 					
 					$holidayChecker = "SELECT * FROM holiday WHERE date = '$checkDay'";
@@ -104,6 +106,7 @@ include('directives/session.php');
 						$siteCheckerBool = false;
 
 						$empNum = mysql_num_rows($empCheckerQuery);// gets the number of employees in the query
+						Print "<script>console.log('".$checkDay." - empNum: ".$empNum."')</script>";
 						$count = 1;// counter for number of loops
 						$checkerBuilder = "";
 						if($empNum != 0)
@@ -127,10 +130,14 @@ include('directives/session.php');
 						{
 							//Check if overall attendance for a certain site is done
 							$attendanceChecker = "SELECT * FROM attendance WHERE date = '$checkDay' $checkerBuilder";
+							if($checkDay == "March 9, 2018")
+								Print "<script>console.log('".$attendanceChecker."')</script>";
 							$attendanceQuery = mysql_query($attendanceChecker);
+
 							if($attendanceQuery)
 							{
 								$attNum = mysql_num_rows($attendanceQuery);
+								
 								if($attNum == 0)
 								{
 									$attendanceStatus = 0;
@@ -147,14 +154,16 @@ include('directives/session.php');
 									}
 									if($checker == $attNum)//check if number of attendance and the counter are the same
 									{
-										++$attendanceStatus;//Trigger for completing the attendance for the site
+										$attendanceStatus++;//Trigger for completing the attendance for the site
+										
 									}
+									Print "<script>console.log('attendanceStatus: ".$attendanceStatus." | ".$checkDay."')</script>";
 								}
 							}
 						}
 					}
 				}
-				//Print "<script>console.log('".$attendanceStatus."')</script>";
+				// Print "<script>console.log('attendanceStatus: ".$attendanceStatus."')</script>";
 				$weekComplete = false; // boolean to check if attendance is complete for the whole week
 				if($attendanceStatus >= 7)
 				{
@@ -184,7 +193,7 @@ include('directives/session.php');
 				$checkerQuery = mysql_query($siteChecker) or die(mysql_error());
 
 				$siteEmpNum = mysql_num_rows($checkerQuery); // gets the number of emp that has finished payroll
-				Print "<script>console.log('".$siteChecker."')</script>";
+				// Print "<script>console.log('".$siteChecker."')</script>";
 				if($employee_num == $siteEmpNum)
 				{
 					//Print "<script>console.log('".$employee_num." == ".$siteEmpNum."')</script>";

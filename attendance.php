@@ -405,7 +405,7 @@ include('directives/session.php');
 	for($a = 1; $a<7; $a++)
 	{
 		$dayCheck = "-".$a." day";
-		$checker = date('F j, Y', strtotime($dayCheck, strtotime($date)));
+		$checker = date('F d, Y', strtotime($dayCheck, strtotime($date)));
 		$dayOfWeek = date('l', strtotime($checker));
 		if($dayOfWeek == $openPayroll)
 		{

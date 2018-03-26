@@ -6,7 +6,7 @@ include('directives/print_styles.php');//Styles for PHPexcel
 
 $empid = $_GET['empid'];
 $endDate = $_GET['date'];
-$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
+$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
 $employee = "SELECT * FROM employee WHERE empid = '$empid'";
 $empquery = mysql_query($employee);

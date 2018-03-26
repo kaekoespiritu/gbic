@@ -42,7 +42,7 @@ $dateDisplay = "";
 $periodDisplay = "";
 if($period == "week")
 {
-	$weekBefore = date('F j, Y', strtotime('-6 day', strtotime($date)));
+	$weekBefore = date('F d, Y', strtotime('-6 day', strtotime($date)));
 	$filename =  $site." Expense Report ".$weekBefore." - ".$date.".xls";
 
 	$dateDisplay = $weekBefore." - ".$date;
@@ -196,7 +196,7 @@ if(mysql_num_rows($empQuery) != 0)
 				$pagibigEE += $payrollArr['pagibig'];
 				$pagibigER += $payrollArr['pagibig_er'];
 
-				$startDate = date('F j, Y', strtotime('-6 day', strtotime($payrollArr['date'])));
+				$startDate = date('F d, Y', strtotime('-6 day', strtotime($payrollArr['date'])));
 				$endDate = $payrollArr['date'];
 
 				$loanCheckNew = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'newVale' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC";

@@ -103,7 +103,7 @@
 									if($_GET['period'] == 'week')
 									{
 										$payrollEndDate = $payrollDateArr['date'];
-										$payrollStartDate = date('F j, Y', strtotime('-6 day', strtotime($payrollEndDate)));
+										$payrollStartDate = date('F d, Y', strtotime('-6 day', strtotime($payrollEndDate)));
 										if(isset($_POST['date']))
 										{
 											if($_POST['date'] == $payrollEndDate)
@@ -239,7 +239,7 @@
 							//Print "<script>console.log('bool: ".$philhealthBool."')</script>";
 							//For the specfied week in first column
 							$endDate = $payDateArr['date'];
-							$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
+							$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 							//Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
 
 							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$endDate' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";

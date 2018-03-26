@@ -61,7 +61,7 @@
 							while($payrollDateArr = mysql_fetch_assoc($payrollDateQuery))
 							{
 								$payrollEndDate = $payrollDateArr['date'];
-								$payrollStartDate = date('F j, Y', strtotime('-6 day', strtotime($payrollEndDate)));
+								$payrollStartDate = date('F d, Y', strtotime('-6 day', strtotime($payrollEndDate)));
 								if(isset($_POST['dateChange']))
 								{
 									if($_POST['dateChange'] == $payrollEndDate)
@@ -129,7 +129,7 @@
 						$printBool = true;
 						while($payrollArr = mysql_fetch_assoc($payrollQuery))
 						{
-							$startDate = date('F j, Y', strtotime('-6 day', strtotime($payrollArr['date'])));
+							$startDate = date('F d, Y', strtotime('-6 day', strtotime($payrollArr['date'])));
 							Print "
 								<input type='hidden' id='payrollDate' value='".$payrollArr['date']."'>
 								<tr>

@@ -95,11 +95,11 @@ if($period == "week")
 		// Print "<script>console.log('".$payDateArr['date']."')</script>";
 		if($thirteenthBool)
 		{
-			$pastToDateThirteenthPay = date('F j, Y', strtotime('-6 day', strtotime($payDateArr['date'])));
+			$pastToDateThirteenthPay = date('F d, Y', strtotime('-6 day', strtotime($payDateArr['date'])));
 			$thirteenthBool = false;
 		}
 		$endDate = $payDateArr['date'];
-		$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
+		$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 		//Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
 
 		$attendance = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";

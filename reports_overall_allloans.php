@@ -118,7 +118,7 @@
 									if($_GET['period'] == 'week')
 									{
 										$payrollEndDate = $payrollDateArr['date'];
-										$payrollStartDate = date('F j, Y', strtotime('-6 day', strtotime($payrollEndDate)));
+										$payrollStartDate = date('F d, Y', strtotime('-6 day', strtotime($payrollEndDate)));
 										if(isset($_POST['date']))
 										{
 											if($_POST['date'] == $payrollEndDate)
@@ -226,7 +226,7 @@
 							{}
 							else if($_POST['numLen'] == 3)//Weekly
 							{
-								$startDate = date('F j, Y', strtotime('-6 day', strtotime($_POST['date'])));
+								$startDate = date('F d, Y', strtotime('-6 day', strtotime($_POST['date'])));
 								$endDate = $_POST['date'];
 								Print "	<td colspan='3'>
 											Date: ".$startDate." - ".$endDate."
