@@ -182,8 +182,9 @@ if($holidayExist > 0)
 				<table class="table-bordered table-condensed" style="background-color:white;">
 					<?php
 				//Sample query for debugging purposes
-					$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 7";
-				//$payrollDate = "SELECT * FROM attendance WHERE empid = '2017-0000011' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC LIMIT 7";
+					$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 7";
+					Print "<script>console.log('".$payrollDate."')</script>";
+				// $payrollDate = "SELECT * FROM attendance WHERE empid = '2017-0000011' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC LIMIT 7";
 					$payrollQuery = mysql_query($payrollDate);
 					//Boolean for the conditions not to repeat just incase the employee does't attend sundays
 					$monBool = true;
@@ -229,13 +230,14 @@ if($holidayExist > 0)
 					{
 						$holDateChecker = $dateRow['date'];
 						//Holiday Checker
-						$holiday = "SELECT * FROM holiday WHERE date = '$holDateChecker' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
+						$holiday = "SELECT * FROM holiday WHERE date = '$holDateChecker' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
+						Print "<script>console.log('".$holiday."')</script>";
 						$holidayQuery = mysql_query($holiday);
 						$holidayExist = mysql_num_rows($holidayQuery);
-						//Print "<script>console.log('".$holidayExist."')</script>";
+
+						
 						if($holidayExist > 0)//if holiday exist
 						{
-							//Print "<script>console.log('holiday')</script>";
 							$holidayRow = mysql_fetch_assoc($holidayQuery);
 							$holDay = date('l', strtotime($holidayRow['date']));
 							if($holidayCounter > 0)//if holiday lasted for more than 1day

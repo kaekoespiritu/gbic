@@ -236,12 +236,12 @@ $position = $_GET['position'];
 
 							if($row['complete_doc'] == 1)// For employee document
 							{
-								$document = "Complete";
+								$document = "Complete Documents";
 							}
 							else
 							{
 								$bool = false;
-								$document = "Incomplete - ";
+								$document = "Incomplete Documents - ";
 								if($row['sss'] == 0)//Checks if SSS is not complete yet
 								{
 									$document .= "SSS";
