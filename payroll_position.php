@@ -16,10 +16,10 @@ include('directives/session.php');
 
 // 1st sample date
 // $date = "October 24, 2017";
- $date = "March 13, 2018";
+ //$date = "March 13, 2018";
 // 2nd sample date
 // $date = "October 31, 2017";
-// $date = "March 20, 2018";
+ $date = "March 20, 2018";
 
 $dayToday = date('l, F d, Y', time());
 ?>
