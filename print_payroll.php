@@ -125,7 +125,7 @@ $grandTotalRow = $rowCounter + 1;
 //Grandtotal Merge cell
 $activeSheet->mergeCells('Y'.$grandTotalRow.':Z'.$grandTotalRow);
 $GrandTotal = numberExactFormat($GrandTotal, 2, '.', true);
-$activeSheet->setCellValue('Y'.$grandTotalRow, 'TOTAL COST:        '.$GrandTotal);
+$activeSheet->setCellValue('Y'.$grandTotalRow, 'Grand Total:        '.$GrandTotal);
 
 //Style for the Spreadsheet
 $activeSheet->getStyle('A3:AA3')->applyFromArray($border_all_medium);//Header 
