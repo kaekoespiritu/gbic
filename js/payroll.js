@@ -406,7 +406,7 @@ function settotalLimit(value){
 	var parent = value.parentElement.classList;
 
 	if(parseFloat(value.value) > parseFloat(payable)) {
-		alert("You have entered an amount greater than the loaned amount. Please re-enter an amount less than or equal to " + num + ".");
+		alert("You have entered an amount greater than the loaned amount. Please re-enter an amount less than or equal to " + payable + ".");
 		value.value = "";
 	}
 
