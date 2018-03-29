@@ -5,14 +5,14 @@ session_start();
 
 if(isset($_SESSION['user_logged_in']))
 {
-	Print "<script>console.log('admin: ".$_SESSION['user_logged_in']."')</script>";
+	// Print "<script>console.log('admin: ".$_SESSION['user_logged_in']."')</script>";
 }
 else
 {
-	Print "<script>console.log('else')</script>";
-	// Print "<script>window.location.assign('login.php')</script>";
+	// Print "<script>console.log('else')</script>";
+	Print "<script>window.location.assign('login.php')</script>";
 }
-Print "<script>console.log('yowyow')</script>";
+// Print "<script>console.log('yowyow')</script>";
 // Print "<script>console.log('admin: ".$_SESSION['user_logged_in']."')</script>";
 function restrictions($page) 
 {
