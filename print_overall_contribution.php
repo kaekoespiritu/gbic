@@ -14,7 +14,7 @@ $contributionType = strtolower($_GET['contribution']);
 
 // Print "<script>console.log('site: ".$site."')</script>";
 // Print "<script>console.log('period: ".$period."')</script>";
-// Print "<script>console.log('contributionType: ".$contributionDisplay."')</script>";
+// Print "<script>console.log('contributionType: ".$contributionType."')</script>";
 // Print "<script>console.log('date: ".$date."')</script>";
 
 $sheet = new PHPExcel();

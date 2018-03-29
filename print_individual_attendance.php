@@ -570,7 +570,7 @@ else// 2
 					$tueIn3 = $attArr2['nightshift_timein'];
 					$tueOut3 = $attArr2['nightshift_timeout'];
 
-					$wedRemarks = $attArr2['remarks'];
+					$tueRemarks = $attArr2['remarks'];
 
 					if($tueIn2 == "")
 						$tueBoolHD = true;//trigger H.D in display
@@ -610,7 +610,7 @@ else// 2
 					}
 			}
 			//Remarks
-			$activeSheet->setCellValue('J'.$rowCounter, $friRemarks);
+			$activeSheet->setCellValue('J'.$rowCounter, $sunRemarks);
 
 			if($monBool)//Monday
 			{
@@ -636,7 +636,7 @@ else// 2
 				}
 			}
 			//Remarks
-			$activeSheet->setCellValue('Q'.$rowCounter, $friRemarks);
+			$activeSheet->setCellValue('Q'.$rowCounter, $monRemarks);
 
 			if($tueBool)//Tuesday
 			{

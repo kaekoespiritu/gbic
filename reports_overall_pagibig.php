@@ -61,7 +61,7 @@
 				<div class="form-inline">
 					<div class="col-md-6">
 						<h4> Select Period</h4>
-						<select onchange="periodChange(this.value)" class="form-control">
+						<select onchange="periodChange(this.value)" class="form-control" id="period">
 							<?php 
 								if($period == "week")
 									Print "<option value='week' selected>Weekly</option>";
@@ -80,7 +80,7 @@
 					</div>
 					<div class="col-md-6">
 						<h4>Select <?php Print $period?></h4>
-						<select class="form-control" onchange="changeDate(this.value)" id="period">
+						<select class="form-control" onchange="changeDate(this.value)">
 							
 							<?php
 

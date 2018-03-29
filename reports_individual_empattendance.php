@@ -715,7 +715,7 @@
 										$tueIn3 = $attArr['nightshift_timein'];
 										$tueOut3 = $attArr['nightshift_timeout'];
 
-										$wedRemarks = $attArr['remarks'];
+										$tueRemarks = $attArr['remarks'];
 
 										if($tueIn2 == "")
 											$tueBoolHD = true;//trigger H.D in display
