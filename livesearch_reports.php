@@ -112,16 +112,36 @@ if(isset($_POST["search"]))
             }
             else if($reportType == "Loans")// for Contributions tab
             {
-                Print " <button class='btn btn-default' onclick='viewBtn(\"".$empArr['empid']."\",\"sss\")'>
+                $empid = $empArr['empid'];
+
+                $disableSSS = "";
+                $disablePagibig = "";
+                $disableOldVale = "";
+                $disableNewVale = "";
+
+                $loanChecker = "SELECT DISTINCT type FROM loans WHERE empid = '$empid'";
+                $loanQuery = mysql_query($loanChecker);
+                while($loanArr = mysql_fetch_assoc($loanQuery))
+                {
+                    switch($loanArr['type'])
+                    {
+                        case "SSS": $disableSSS = "disabletotally";break;
+                        case "PagIBIG": $disablePagibig = "disabletotally";break;
+                        case "oldVale": $disableOldVale = "disabletotally";break;
+                        case "newVale": $disableNewVale = "disabletotally";break;
+                    }
+                }
+
+                Print " <button class='btn btn-default ".$disableSSS."' onclick='viewBtn(\"".$empArr['empid']."\",\"sss\")'>
                             SSS
                         </button>
-                        <button class='btn btn-default' onclick='viewBtn(\"".$empArr['empid']."\",\"pagibig\")'>
+                        <button class='btn btn-default ".$disablePagibig."' onclick='viewBtn(\"".$empArr['empid']."\",\"pagibig\")'>
                             PagIBIG
                         </button>
-                        <button class='btn btn-default' onclick='viewBtn(\"".$empArr['empid']."\", \"oldvale\")'>
+                        <button class='btn btn-default ".$disableOldVale."' onclick='viewBtn(\"".$empArr['empid']."\", \"oldvale\")'>
                             Old Vale
                         </button>
-                        <button class='btn btn-default' onclick='viewBtn(\"".$empArr['empid']."\", \"newvale\")'>
+                        <button class='btn btn-default ".$disableNewVale."' onclick='viewBtn(\"".$empArr['empid']."\", \"newvale\")'>
                             New Vale
                         </button>";
             }
