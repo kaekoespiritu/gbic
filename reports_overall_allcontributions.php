@@ -182,8 +182,8 @@
 							?>
 						</select>
 					</div>
-					
-					
+				</div>
+				</div>	
 				</div>
 				<div class="col-md-12 pull-down">
 				
