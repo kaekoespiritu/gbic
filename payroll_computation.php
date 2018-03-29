@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <?php
-require_once('directives/db.php');
 include('directives/session.php');
-
+include('directives/db.php');
 
 // if(!isset($_POST['empid']))
 // {
@@ -37,7 +36,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 <div class="container-fluid">
 
 	<?php
-	require_once("directives/nav.php");
+	require("directives/nav.php");
 	?>
 <!-- ?site=Tagaytay&position=Carpenter&empid=2010-0903761 -->
 	<div class="col-md-10 col-md-offset-1 pull-down">
@@ -515,7 +514,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 							if($totalLoans  == 0)
 								Print "--";
 							else
-								Print numberExactFormat($totalLoans, 2, '.');
+								Print numberExactFormat($totalLoans, 2, '.', true);
 							?>
 						</td>
 					</tr>

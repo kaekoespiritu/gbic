@@ -1,6 +1,6 @@
 <?php
-	require_once('directives/session.php');
-	require_once('directives/db.php');
+	include('directives/session.php');
+	include('directives/db.php');
 	//Print "<script>console.log('".$overtimeRate1."')</script>";
 	$time = strftime("%X");//TIME
 
@@ -115,7 +115,7 @@
 			$overallWorkDays++;
 
 		}
-		Print "<script>console.log('1workdays: ".$overallWorkDays."')</script>";
+		// Print "<script>console.log('1workdays: ".$overallWorkDays."')</script>";
 	}
 
 //Computation for OVER TIME -----------------------------------------------------------
@@ -203,7 +203,7 @@
 					//Print "<script>console.log('".$overallWorkDays."')</script>";
 					$overallWorkDays++;//increment workdays 
 					//Print "<script>console.log('".$overallWorkDays."')</script>";
-					Print "<script>console.log('2workdays: ".$overallWorkDays."')</script>";
+					// Print "<script>console.log('2workdays: ".$overallWorkDays."')</script>";
 				}
 			}
 
@@ -386,7 +386,7 @@
 		{
 			mysql_query("DELETE FROM loans WHERE date='$date' AND empid='$empid' AND type='newVale'");
 		}
-		Print "<script>console.log('newVale')</script>";
+		// Print "<script>console.log('newVale')</script>";
 		$loan_newVale = $_POST['newVale'];
 		$Update = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
 							VALUES('$empid', 'newVale', '0', '$loan_newVale', 'deducted', '$date', '$time', '0')";
@@ -654,41 +654,53 @@
 		mysql_query($updateQuery)or die(mysql_error());;
 	}
 	
+	Print "	<form method = 'POST' action='payroll_computation.php' id='logicPayrollForm'>
+				<input type='hidden' name='empid' value='".$empid."'>
+				<input type='hidden' name='date' value='".$date."'>
+			</form>
+			<script rel='javascript' src='js/jquery.min.js'></script>
+			<script>
+			$( document ).ready(function(){
+				$('#logicPayrollForm').submit();
+			});
+			</script>
+			
+			";
 
-	$url = "http://localhost/gbic/payroll_computation.php";
+	// $url = "http://localhost/gbic/payroll_computation.php";
 
-	$post_data = array(
-		'method' => 'post',
-		'empid' => $empid,
-		'date' => $date
-	);
+	// $post_data = array(
+	// 	'method' => 'post',
+	// 	'empid' => $empid,
+	// 	'date' => $date
+	// );
 
-	$ch = curl_init();
+	// $ch = curl_init();
 
-	//URL to submit to
-	curl_setopt($ch, CURLOPT_URL, $url);
+	// //URL to submit to
+	// curl_setopt($ch, CURLOPT_URL, $url);
 
-	//Return output instead of outputting it
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	// //Return output instead of outputting it
+	// curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-	//Post request
-	curl_setopt($ch, CURLOPT_POST, 1);
+	// //Post request
+	// curl_setopt($ch, CURLOPT_POST, 1);
 
-	//Adding the post variables to the request
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+	// //Adding the post variables to the request
+	// curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
 
-	//Execute the request and fetch the response to check for errors
-	$output = curl_exec($ch);
+	// //Execute the request and fetch the response to check for errors
+	// $output = curl_exec($ch);
 
-	if($output === false) {
-		echo "cURL Error: ".curl_error($ch);
-	}
+	// if($output === false) {
+	// 	echo "cURL Error: ".curl_error($ch);
+	// }
 
-	//close and free up the curl handle
-	curl_close($ch);
+	// //close and free up the curl handle
+	// curl_close($ch);
 
-	//Display the row output
-	print_r($output);
+	// //Display the row output
+	// print_r($output);
 ?>
 
 
