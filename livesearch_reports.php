@@ -84,13 +84,29 @@ if(isset($_POST["search"]))
             }
             else if($reportType == "Contributions")// for Contributions tab
             {
-                Print "<button class='btn btn-default' onclick='viewSSSBtn(\"".$empArr['empid']."\")'>
+                $disableSSS = "";
+                $disablePhilhealth = "";
+                $disablePagibig = "";
+                if($empArr['sss'] == 0)
+                {
+                    $disableSSS = "disabletotally";
+                }
+                if($empArr['philhealth']  == 0)
+                {
+                    $disablePhilhealth = "disabletotally";
+                }
+                if($empArr['pagibig']  == 0)
+                {
+                    $disablePagibig = "disabletotally";
+                }
+
+                Print "<button class='btn btn-default ".$disableSSS."' onclick='viewSSSBtn(\"".$empArr['empid']."\")'>
                                             SSS
                         </button>
-                        <button class='btn btn-default' onclick='viewPhilHealthBtn(\"".$empArr['empid']."\")'>
+                        <button class='btn btn-default ".$disablePhilhealth."' onclick='viewPhilHealthBtn(\"".$empArr['empid']."\")'>
                             PhilHealth
                         </button>
-                        <button class='btn btn-default' onclick='viewPagIBIGBtn(\"".$empArr['empid']."\")'>
+                        <button class='btn btn-default ".$disablePagibig."' onclick='viewPagIBIGBtn(\"".$empArr['empid']."\")'>
                             PagIBIG
                         </button>";
             }
