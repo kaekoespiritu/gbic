@@ -37,7 +37,7 @@ $holidayExist = mysql_num_rows($holidayQuery);
 $holidayName = "";
 if($holidayExist > 0)
 {
-	Print "<script>console.log('holidayExist: ".$holidayExist."')</script>";
+	// Print "<script>console.log('holidayExist: ".$holidayExist."')</script>";
 	$holidayRow = mysql_fetch_assoc($holidayQuery);
 	$holidayName = $holidayRow['holiday'];//Gets holiday name
 }
@@ -183,7 +183,7 @@ if($holidayExist > 0)
 					<?php
 				//Sample query for debugging purposes
 					$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 7";
-					Print "<script>console.log('".$payrollDate."')</script>";
+					// Print "<script>console.log('".$payrollDate."')</script>";
 				// $payrollDate = "SELECT * FROM attendance WHERE empid = '2017-0000011' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC LIMIT 7";
 					$payrollQuery = mysql_query($payrollDate);
 					//Boolean for the conditions not to repeat just incase the employee does't attend sundays
@@ -231,7 +231,7 @@ if($holidayExist > 0)
 						$holDateChecker = $dateRow['date'];
 						//Holiday Checker
 						$holiday = "SELECT * FROM holiday WHERE date = '$holDateChecker' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
-						Print "<script>console.log('".$holiday."')</script>";
+						// Print "<script>console.log('".$holiday."')</script>";
 						$holidayQuery = mysql_query($holiday);
 						$holidayExist = mysql_num_rows($holidayQuery);
 
@@ -270,6 +270,7 @@ if($holidayExist > 0)
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Over
+								Print "<script>console.log('ndSun: ".$dateRow['nightdiff']."')</script>";
 
 								$sunTimeIn = $dateRow['timein'];
 								$sunTimeOut = $dateRow['timeout'];
@@ -302,7 +303,7 @@ if($holidayExist > 0)
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
-								//Print "<script>alert('".$totalOT."')</script>";
+								Print "<script>console.log('otMon: ".floatval($dateRow['overtime'])."')</script>";
 
 								$monTimeIn = $dateRow['timein'];
 								$monTimeOut = $dateRow['timeout'];
@@ -336,8 +337,7 @@ if($holidayExist > 0)
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
-								//Print "<script>alert('".$totalOT."')</script>";
-
+								
 								$tueTimeIn = $dateRow['timein'];
 								$tueTimeOut = $dateRow['timeout'];
 								$ABtueTimeIn = $dateRow['afterbreak_timein'];
@@ -371,8 +371,7 @@ if($holidayExist > 0)
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
-								//Print "<script>alert('".$totalOT."')</script>";
-
+								Print "<script>console.log('ndWed: ".$dateRow['nightdiff']."')</script>";
 								$wedTimeIn = $dateRow['timein'];
 								$wedTimeOut = $dateRow['timeout'];
 								$ABwedTimeIn = $dateRow['afterbreak_timein'];
@@ -405,7 +404,7 @@ if($holidayExist > 0)
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
-								//Print "<script>alert('".$totalOT."')</script>";
+								Print "<script>console.log('otThu: ".floatval($dateRow['overtime'])."')</script>";
 
 								$thuTimeIn = $dateRow['timein'];
 								$thuTimeOut = $dateRow['timeout'];
@@ -439,7 +438,7 @@ if($holidayExist > 0)
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
-								//Print "<script>alert('".$totalOT."')</script>";
+								Print "<script>console.log('otFri: ".floatval($dateRow['overtime'])."')</script>";
 
 								$friTimeIn = $dateRow['timein'];
 								$friTimeOut = $dateRow['timeout'];
@@ -472,7 +471,7 @@ if($holidayExist > 0)
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
-								//Print "<script>alert('".$totalOT."')</script>";
+								Print "<script>console.log('ndSat: ".$dateRow['nightdiff']."')</script>";
 
 								$satTimeIn = $dateRow['timein'];
 								$satTimeOut = $dateRow['timeout'];
@@ -889,10 +888,10 @@ if($holidayExist > 0)
 					</tr>
 					<!--  -------------------- NIGHTSHIFT TIME IN AND TIME OUT -------------------- -->
 						<?php
-						Print "<script>console.log('lal2 ".$payrollRow."')</script>";
+						// Print "<script>console.log('lal2 ".$payrollRow."')</script>";
 						if($payrollRow != '2')// if employee has nightshift
 						{
-							Print "<script>console.log('lala".$payrollRow."')</script>";
+							// Print "<script>console.log('lala".$payrollRow."')</script>";
 							Print "<tr>";
 							if(!$wedAbsent)
 							{

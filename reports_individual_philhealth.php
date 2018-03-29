@@ -590,7 +590,7 @@
 
 		</div>
 		<?php
-			$postDate = "";
+			$postDate = "all";
 			if(isset($_POST['date']))
 				$postDate = $_POST['date'];
 

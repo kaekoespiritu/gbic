@@ -397,10 +397,15 @@ function setoldvaleLimit(value) {
 
 function settotalLimit(value){
 	var total = document.getElementById('totalcost').value;
+	var OPtotal = document.getElementById('outstandingPayable').value;
 	var num = total.replace(',','');
+	var OPnum = OPtotal.replace(',','');
+
+	var payable = num + OPnum;
+
 	var parent = value.parentElement.classList;
 
-	if(parseFloat(value.value) > parseFloat(num)) {
+	if(parseFloat(value.value) > parseFloat(payable)) {
 		alert("You have entered an amount greater than the loaned amount. Please re-enter an amount less than or equal to " + num + ".");
 		value.value = "";
 	}
