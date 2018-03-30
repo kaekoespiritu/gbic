@@ -669,8 +669,6 @@
 										$wedIn3 = $attArr['nightshift_timein'];
 										$wedOut3 = $attArr['nightshift_timeout'];
 
-										$wedRemarks = $attArr['remarks'];
-
 										if($wedIn2 == "")
 											$wedBoolHD = true;//trigger H.D in display
 									}
@@ -678,6 +676,7 @@
 									{
 										$wedBool = true;//employee is absent
 									}
+									$wedRemarks = $attArr['remarks'];
 								}
 								else if($day == "Thursday" && $thuBoolNoRep)
 								{
@@ -691,8 +690,6 @@
 										$thuIn3 = $attArr['nightshift_timein'];
 										$thuOut3 = $attArr['nightshift_timeout'];
 
-										$thuRemarks = $attArr['remarks'];
-
 										if($thuIn2 == "")
 											$thuBoolHD = true;//trigger H.D in display
 									}
@@ -700,6 +697,7 @@
 									{
 										$thuBool = true;//employee is absent
 									}
+									$thuRemarks = $attArr['remarks'];
 								}
 								else if($day == "Friday" && $friBoolNoRep)
 								{
@@ -713,8 +711,6 @@
 										$friIn3 = $attArr['nightshift_timein'];
 										$friOut3 = $attArr['nightshift_timeout'];
 
-										$friRemarks = $attArr['remarks'];
-
 										if($friIn2 == "")
 											$friBoolHD = true;//trigger H.D in display
 									}
@@ -722,6 +718,7 @@
 									{
 										$friBool = true;//employee is absent
 									}
+									$friRemarks = $attArr['remarks'];
 								}
 								else if($day == "Saturday" && $satBoolNoRep)
 								{
@@ -735,8 +732,6 @@
 										$satIn3 = $attArr['nightshift_timein'];
 										$satOut3 = $attArr['nightshift_timeout'];
 
-										$satRemarks = $attArr['remarks'];
-
 										if($satIn2 == "")
 											$satBoolHD = true;//trigger H.D in display
 									}
@@ -744,6 +739,7 @@
 									{
 										$satBool = true;//employee is absent
 									}
+									$satRemarks = $attArr['remarks'];
 								}
 								else if($day == "Sunday" && $sunBoolNoRep)
 								{
@@ -757,8 +753,6 @@
 										$sunIn3 = $attArr['nightshift_timein'];
 										$sunOut3 = $attArr['nightshift_timeout'];
 
-										$sunRemarks = $attArr['remarks'];
-
 										if($sunIn2 == "")
 											$sunBoolHD = true;//trigger H.D in display
 									}
@@ -766,6 +760,7 @@
 									{
 										$sunBool = true;//employee is absent
 									}
+									$sunRemarks = $attArr['remarks'];
 								}
 								else if($day == "Monday" && $monBoolNoRep)
 								{
@@ -779,8 +774,6 @@
 										$monIn3 = $attArr['nightshift_timein'];
 										$monOut3 = $attArr['nightshift_timeout'];
 
-										$monRemarks = $attArr['remarks'];
-
 										if($monIn2 == "")
 											$monBoolHD = true;//trigger H.D in display
 									}
@@ -788,6 +781,7 @@
 									{
 										$monBool = true;//employee is absent
 									}
+									$monRemarks = $attArr['remarks'];
 								}
 								else if($day == "Tuesday" && $tueBoolNoRep)
 								{
@@ -801,8 +795,6 @@
 										$tueIn3 = $attArr['nightshift_timein'];
 										$tueOut3 = $attArr['nightshift_timeout'];
 
-										$tueRemarks = $attArr['remarks'];
-
 										if($tueIn2 == "")
 											$tueBoolHD = true;//trigger H.D in display
 									}
@@ -810,6 +802,7 @@
 									{
 										$tueBool = true;//employee is absent
 									}
+									$tueRemarks = $attArr['remarks'];
 								}
 							}
 							Print "<script>console.log('rowColor: ".$rowColor."')</script>";

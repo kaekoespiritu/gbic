@@ -274,8 +274,6 @@ if($pageSwitch == 1)
 				$wedIn3 = $attArr['nightshift_timein'];
 				$wedOut3 = $attArr['nightshift_timeout'];
 
-				$wedRemarks = $attArr['remarks'];
-
 				if($wedIn2 == "")
 					$wedBoolHD = true;//trigger H.D in display
 			}
@@ -283,6 +281,7 @@ if($pageSwitch == 1)
 			{
 				$wedBool = true;//employee is absent
 			}
+			$wedRemarks = $attArr['remarks'];
 		}
 		else if($day == "Thursday" && $thuBoolNoRep)
 		{
@@ -296,8 +295,6 @@ if($pageSwitch == 1)
 				$thuIn3 = $attArr['nightshift_timein'];
 				$thuOut3 = $attArr['nightshift_timeout'];
 
-				$thuRemarks = $attArr['remarks'];
-
 				if($thuIn2 == "")
 					$thuBoolHD = true;//trigger H.D in display
 			}
@@ -305,6 +302,7 @@ if($pageSwitch == 1)
 			{
 				$thuBool = true;//employee is absent
 			}
+			$thuRemarks = $attArr['remarks'];
 		}
 		else if($day == "Friday" && $friBoolNoRep)
 		{
@@ -318,8 +316,6 @@ if($pageSwitch == 1)
 				$friIn3 = $attArr['nightshift_timein'];
 				$friOut3 = $attArr['nightshift_timeout'];
 
-				$friRemarks = $attArr['remarks'];
-
 				if($friIn2 == "")
 					$friBoolHD = true;//trigger H.D in display
 			}
@@ -327,6 +323,7 @@ if($pageSwitch == 1)
 			{
 				$friBool = true;//employee is absent
 			}
+			$friRemarks = $attArr['remarks'];
 		}
 		else if($day == "Saturday" && $satBoolNoRep)
 		{
@@ -340,8 +337,6 @@ if($pageSwitch == 1)
 				$satIn3 = $attArr['nightshift_timein'];
 				$satOut3 = $attArr['nightshift_timeout'];
 
-				$satRemarks = $attArr['remarks'];
-
 				if($satIn2 == "")
 					$satBoolHD = true;//trigger H.D in display
 			}
@@ -349,6 +344,7 @@ if($pageSwitch == 1)
 			{
 				$satBool = true;//employee is absent
 			}
+			$satRemarks = $attArr['remarks'];
 		}
 		
 	}
@@ -526,8 +522,6 @@ else// 2
 					$sunIn3 = $attArr2['nightshift_timein'];
 					$sunOut3 = $attArr2['nightshift_timeout'];
 
-					$sunRemarks = $attArr2['remarks'];
-
 					if($sunIn2 == "")
 						$sunBoolHD = true;//trigger H.D in display
 				}
@@ -535,6 +529,7 @@ else// 2
 				{
 					$sunBool = true;//employee is absent
 				}
+				$sunRemarks = $attArr2['remarks'];
 			}
 			else if($dayN == "Monday" && $monBoolNoRep)
 			{
@@ -548,8 +543,6 @@ else// 2
 					$monIn3 = $attArr2['nightshift_timein'];
 					$monOut3 = $attArr2['nightshift_timeout'];
 
-					$monRemarks = $attArr2['remarks'];
-
 					if($monIn2 == "")
 						$monBoolHD = true;//trigger H.D in display
 				}
@@ -557,6 +550,7 @@ else// 2
 				{
 					$monBool = true;//employee is absent
 				}
+				$monRemarks = $attArr2['remarks'];
 			}
 			else if($dayN == "Tuesday" && $tueBoolNoRep)
 			{
@@ -570,8 +564,6 @@ else// 2
 					$tueIn3 = $attArr2['nightshift_timein'];
 					$tueOut3 = $attArr2['nightshift_timeout'];
 
-					$tueRemarks = $attArr2['remarks'];
-
 					if($tueIn2 == "")
 						$tueBoolHD = true;//trigger H.D in display
 				}
@@ -579,6 +571,7 @@ else// 2
 				{
 					$tueBool = true;//employee is absent
 				}
+				$tueRemarks = $attArr2['remarks'];
 			}
 	
 		}
