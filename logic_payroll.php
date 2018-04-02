@@ -19,6 +19,20 @@
 	$empQuery = mysql_query($employee);
 	$empArr = mysql_fetch_assoc($empQuery);
 
+//Admin Info
+	$adminUser = $_SESSION['user_logged_in'];
+	$admin = "SELECT * FROM administrator WHERE username = '$adminUser'";
+	$adminQuery = mysql_query($admin) or die(mysql_error());
+	if(mysql_num_rows($adminQuery) != 0)
+	{
+		$adminArr = mysql_fetch_assoc($adminQuery);
+		$adminName = $adminArr['firstname']." ".$adminArr['lastname'];
+	}
+	else
+	{
+		Print "<script>window.location.assign('login.php')</script>";
+	}
+
 //Daily rate of employee
 	$dailyRate = $empArr['rate'];
 
@@ -271,13 +285,13 @@
 	$compAllowance = (($overallWorkDays*$dailyAllowance)  + $extraAllowance);
 //Loans deduction --------------------------------------------------------------------- Incomplete
 //*query to loans table the deduction
-	function loanQuery($loanType , $empid, $DeductedLoan) //function for loans query
+	function loanQuery($loanType , $empid, $DeductedLoan, $date, $admin) //function for loans query
 	{
 		
 		$time = strftime("%X");//TIME
 
 		//Check if there is an existing query for this loan to avoid duplication
-		$loanChecker = mysql_query("SELECT * FROM loans WHERE date='$date' AND empid='$empid' AND type='$loanType'");
+		$loanChecker = mysql_query("SELECT * FROM loans WHERE date = '$date' AND empid='$empid' AND type='$loanType'");
 		if(mysql_num_rows($loanChecker) > 0)
 		{
 			mysql_query("DELETE FROM loans WHERE date='$date' AND empid='$empid' AND type='$loanType'");
@@ -292,8 +306,8 @@
 
 		
 
-		$Update = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
-						VALUES('$empid', '$loanType', '$LoanBalance', '$DeductedLoan', 'deducted', '$date', '$time', '0')";
+		$Update = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action, admin) 
+						VALUES('$empid', '$loanType', '$LoanBalance', '$DeductedLoan', 'deducted', '$date', '$time', '0', '$admin')";
 		mysql_query($Update);
 	}
 
@@ -306,11 +320,11 @@
 
 	if(!empty($_POST['sssDeduct']))//if SSS loan textbox in payroll has value
 	{
-		loanQuery('SSS', $empid, $loan_sss);
+		loanQuery('SSS', $empid, $loan_sss, $date, $adminName);
 	}
 	if(!empty($_POST['pagibigDeduct']))//if Pagibig loan textbox in payroll has value
 	{
-		loanQuery('PagIBIG', $empid, $loan_pagibig);
+		loanQuery('PagIBIG', $empid, $loan_pagibig, $date, $adminName);
 	}
 
 	$loan_newVale = 0;//preset the newvale
@@ -338,8 +352,7 @@
 			$LoanBalance = $DeductedLoan - $loanArr['balance'];
 			
 			$LoanBalance = abs($LoanBalance);//make it positive if ever it is negative
-			$Update1 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
-							VALUES('$empid', 'newVale', '$LoanAdded', '$LoanAdded', '$remarks', '$date', '$time', '1')";
+			$Update1 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action, admin) VALUES('$empid', 'newVale', '$LoanBalance', '$LoanAdded', '$remarks', '$date', '$time', '1', '$adminName')";
 			
 			$loanCheck = "SELECT * FROM loans WHERE type='newVale' AND empid='$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
 
@@ -350,8 +363,8 @@
 			$newValeArr = mysql_fetch_assoc($payNewVale);
 			$newBalance = $newValeArr['balance'];
 
-			$Update2 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
-							VALUES('$empid', 'newVale', '0', '$newBalance', 'deducted', '$date', '$time', '0')";
+			$Update2 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action, admin) 
+							VALUES('$empid', 'newVale', '0', '$newBalance', 'deducted', '$date', '$time', '0', '$adminName')";
 			mysql_query($Update2);
 		}
 		else//Employee has no newvale balance but added newvale in the payroll
@@ -360,8 +373,8 @@
 			//Deducted loan
 			$LoanAdded = $DeductedLoan;
 			
-			$Update1 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
-							VALUES('$empid', 'newVale', '$DeductedLoan', '$DeductedLoan', '$remarks', '$date', '$time', '1')";
+			$Update1 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action, admin) 
+							VALUES('$empid', 'newVale', '$DeductedLoan', '$DeductedLoan', '$remarks', '$date', '$time', '1', '$adminName')";
 
 			$loanCheck = "SELECT * FROM loans WHERE type='newVale' AND empid='$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
 			mysql_query($Update1);
@@ -371,15 +384,15 @@
 			$newValeArr = mysql_fetch_assoc($payNewVale);
 			$newBalance = $newValeArr['balance'];
 
-			$Update2 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
-							VALUES('$empid', 'newVale', '0', '$newBalance', 'deducted', '$date', '$time', '0')";
+			$Update2 = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action, admin) 
+							VALUES('$empid', 'newVale', '0', '$newBalance', 'deducted', '$date', '$time', '0', '$adminName')";
 			mysql_query($Update2);
 		}
 		
 
 		$loan_newVale = $LoanAdded;
 	}
-	else if(!empty($_POST['newVale']))//if employee didnot add any new vales but have previous newvale
+	else if(!empty($_POST['newVale']))//if employee did't add any new vales but have previous newvale
 	{
 		$loanChecker = mysql_query("SELECT * FROM loans WHERE date='$date' AND empid='$empid' AND type='newVale'");
 		if(mysql_num_rows($loanChecker) > 0)
@@ -388,13 +401,13 @@
 		}
 		// Print "<script>console.log('newVale')</script>";
 		$loan_newVale = $_POST['newVale'];
-		$Update = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action) 
-							VALUES('$empid', 'newVale', '0', '$loan_newVale', 'deducted', '$date', '$time', '0')";
+		$Update = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action, admin) 
+							VALUES('$empid', 'newVale', '0', '$loan_newVale', 'deducted', '$date', '$time', '0', '$adminName')";
 		mysql_query($Update)  or die (mysql_error());
 	}
 	if(!empty($_POST['oldValeDeduct']))//if SSS loan textbox in payroll has value
 	{
-		loanQuery('oldVale', $empid, $loan_oldVale);
+		loanQuery('oldVale', $empid, $loan_oldVale, $date, $adminName);
 	}
 	$compLoan = $loan_sss + $loan_pagibig + $loan_oldVale + $loan_newVale;
 

@@ -114,10 +114,10 @@ if(isset($_POST["search"]))
             {
                 $empid = $empArr['empid'];
 
-                $disableSSS = "";
-                $disablePagibig = "";
-                $disableOldVale = "";
-                $disableNewVale = "";
+                $disableSSS = "disabletotally";
+                $disablePagibig = "disabletotally";
+                $disableOldVale = "disabletotally";
+                $disableNewVale = "disabletotally";
 
                 $loanChecker = "SELECT DISTINCT type FROM loans WHERE empid = '$empid'";
                 $loanQuery = mysql_query($loanChecker);
@@ -125,10 +125,10 @@ if(isset($_POST["search"]))
                 {
                     switch($loanArr['type'])
                     {
-                        case "SSS": $disableSSS = "disabletotally";break;
-                        case "PagIBIG": $disablePagibig = "disabletotally";break;
-                        case "oldVale": $disableOldVale = "disabletotally";break;
-                        case "newVale": $disableNewVale = "disabletotally";break;
+                        case "SSS": $disableSSS = "";break;
+                        case "PagIBIG": $disablePagibig = "";break;
+                        case "oldVale": $disableOldVale = "";break;
+                        case "newVale": $disableNewVale = "";break;
                     }
                 }
 
