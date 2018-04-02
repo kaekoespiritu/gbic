@@ -56,7 +56,8 @@ $thirteenthRemainder = 0;
 if(mysql_num_rows($thirteenthCheckQuery) == 1)
 {
 	$thirteenthCheckArr = mysql_fetch_assoc($thirteenthCheckQuery);
-	$pastThirteenthDate = "AND date <= '".$thirteenthCheckArr['to_date']."'";
+
+	$pastThirteenthDate = "AND STR_TO_DATE(date, '%M %e, %Y ') >= STR_TO_DATE('".$thirteenthCheckArr['to_date']."', '%M %e, %Y ')";
 	$thirteenthRemainder = $thirteenthCheckArr['amount'] - $thirteenthCheckArr['received'];
 	$thirteenthRemainder = abs($thirteenthRemainder);// makes the value absolute
 
@@ -82,7 +83,7 @@ if($period == "week")
 		{
 			$activeSheet->setCellValue('A'.$rowCounter, '13th Month Pay remaining balance');
 			$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthRemainder, 2, '.', true));
-
+			$rowCounter++;//increment row
 			$remainderBool = false;
 
 		}
@@ -146,7 +147,7 @@ else if($period == "month")
 	$daysAttended = 0;//counter for days attended
 	$noRepeat = null;
 	//adds the 13th month pay remainder if there is
-	$overallPayment = ($thirteenthRemainder != 0 ? $overallPayment = $overallPayment : 0);
+	$overallPayment = ($thirteenthRemainder != 0 ? $thirteenthRemainder : 0);
 
 	if($remainderBool)
 	{
@@ -154,7 +155,7 @@ else if($period == "month")
 		{
 			$activeSheet->setCellValue('A'.$rowCounter, '13th Month Pay remaining balance');
 			$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthRemainder, 2, '.', true));
-
+			$rowCounter++;//increment row
 			$remainderBool = false;
 		}
 	}
@@ -167,7 +168,7 @@ else if($period == "month")
 
 		if ($noRepeat != $month.$year  || $noRepeat == null)
 		{
-			$attMonth = "SELECT * FROM attendance WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
+			$attMonth = "SELECT * FROM attendance WHERE empid = '$empid' AND (date LIKE '$month%' AND date LIKE '%$year') $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 			$attMonthQuery = mysql_query($attMonth);
 			//Computes 13th month per day of the month
 			while($attArr = mysql_fetch_assoc($attMonthQuery))
@@ -208,12 +209,12 @@ else if($period == "month")
 else if($period == "year")
 {
 	$attendance = "SELECT DISTINCT date FROM attendance WHERE empid = '$empid' $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
-	$attQuery = mysql_query($attendance);
+	$attQuery = mysql_query($attendance) or die(mysql_error());
 
 	$daysAttended = 0;//counter for days attended
 	$noRepeat = null;
 	//adds the 13th month pay remainder if there is
-	$overallPayment = ($thirteenthRemainder != 0 ? $overallPayment = $overallPayment : 0);
+	$overallPayment = ($thirteenthRemainder != 0 ? $thirteenthRemainder : 0);
 
 	if($remainderBool)
 	{
@@ -221,23 +222,24 @@ else if($period == "year")
 		{
 			$activeSheet->setCellValue('A'.$rowCounter, '13th Month Pay remaining balance');
 			$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthRemainder, 2, '.', true));
-
+			$rowCounter++;//increment row
 			$remainderBool = false;
 		}
-		
 	}
 	//Computes 13th monthpay per month
 	while($attDate = mysql_fetch_assoc($attQuery))
 	{
 		$dateExploded = explode(" ", $attDate['date']);
+		$month = $dateExploded[0];
 		$year = $dateExploded[2];
 
-		if ($noRepeat != $year || $noRepeat == null)
+		if ($noRepeat != $year  || $noRepeat == null)
 		{
-			$attYear = "SELECT * FROM attendance WHERE empid = '$empid' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
-			$attYearQuery = mysql_query($attYear);
+			$attMonth = "SELECT * FROM attendance WHERE empid = '$empid' AND (date LIKE '$month%' AND date LIKE '%$year') $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
+			// Print "<script>console.log('".$attMonth."')</script>";
+			$attMonthQuery = mysql_query($attMonth) or die (mysql_error());
 			//Computes 13th month per day of the month
-			while($attArr = mysql_fetch_assoc($attYearQuery))
+			while($attArr = mysql_fetch_assoc($attMonthQuery))
 			{
 				$date = $attArr['date'];
 
@@ -258,17 +260,82 @@ else if($period == "year")
 				}
 			}
 			$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
+
 			$yearBefore = $year - 1;
 
 			$activeSheet->setCellValue('A'.$rowCounter, $yearBefore." - ".$year);
 			$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthMonth, 2, '.', true));
-
+			
 			$overallPayment += $thirteenthMonth;
+			$rowCounter++;//increment row
 		}
 		
 		$noRepeat = $year;
-		$rowCounter++;//increment row
+		
 	}
+
+	// $attendance = "SELECT DISTINCT date FROM attendance WHERE empid = '$empid' $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
+	// $attQuery = mysql_query($attendance);
+
+	// $daysAttended = 0;//counter for days attended
+	// $noRepeat = null;
+	// //adds the 13th month pay remainder if there is
+	// $overallPayment = ($thirteenthRemainder != 0 ? $overallPayment = $overallPayment : 0);
+
+	// if($remainderBool)
+	// {
+	// 	if($thirteenthRemainder != 0)
+	// 	{
+	// 		$activeSheet->setCellValue('A'.$rowCounter, '13th Month Pay remaining balance');
+	// 		$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthRemainder, 2, '.', true));
+
+	// 		$remainderBool = false;
+	// 	}
+		
+	// }
+	// //Computes 13th monthpay per month
+	// while($attDate = mysql_fetch_assoc($attQuery))
+	// {
+	// 	$dateExploded = explode(" ", $attDate['date']);
+	// 	$year = $dateExploded[2];
+
+	// 	if ($noRepeat != $year || $noRepeat == null)
+	// 	{
+	// 		$attYear = "SELECT * FROM attendance WHERE empid = '$empid' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
+	// 		$attYearQuery = mysql_query($attYear);
+	// 		//Computes 13th month per day of the month
+	// 		while($attArr = mysql_fetch_assoc($attYearQuery))
+	// 		{
+	// 			$date = $attArr['date'];
+
+	// 			$workHrs = $attArr['workhours'];
+
+	// 			$holidayChecker = "SELECT * FROM holiday WHERE date = '$date'";
+	// 			$holidayCheckQuery = mysql_query($holidayChecker) or die (mysql_error());
+
+	// 			if(mysql_num_rows($holidayCheckQuery) == 0)
+	// 			{
+	// 				if($attArr['attendance'] == '2')//check if student is present
+	// 				{
+	// 					if($attArr['workhours'] >= 8)//check if employee attended 8hours
+	// 					{
+	// 						$daysAttended++;
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 		$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
+	// 		$yearBefore = $year - 1;
+
+	// 		$activeSheet->setCellValue('A'.$rowCounter, $yearBefore." - ".$year);
+	// 		$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthMonth, 2, '.', true));
+
+	// 		$overallPayment += $thirteenthMonth;
+	// 	}
+		
+	// 	$noRepeat = $year;
+	// 	$rowCounter++;//increment row
+	// }
 
 }
 

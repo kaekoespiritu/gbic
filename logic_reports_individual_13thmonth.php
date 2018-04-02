@@ -1,7 +1,7 @@
 <?php
 	include_once('directives/db.php');
 	include('directives/session.php');
-	Print "<script>alert('yow')</script>";
+	
 	$empid = $_GET['empid'];
 	$amount = $_GET['amount'];
 	$pay = $_GET['pay'];

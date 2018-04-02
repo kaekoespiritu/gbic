@@ -127,7 +127,7 @@
 					{
 
 						$thirteenthCheckArr = mysql_fetch_assoc($thirteenthCheckQuery);
-						$pastThirteenthDate = "AND STR_TO_DATE(date, '%M %e, %Y ') <= STR_TO_DATE(".$thirteenthCheckArr['to_date'].", '%M %e, %Y ')";
+						$pastThirteenthDate = "AND STR_TO_DATE(date, '%M %e, %Y ') >= STR_TO_DATE('".$thirteenthCheckArr['to_date']."', '%M %e, %Y ')";
 						$thirteenthRemainder = $thirteenthCheckArr['amount'] - $thirteenthCheckArr['received'];
 						$thirteenthRemainder = abs($thirteenthRemainder);// makes the value absolute
 
@@ -136,7 +136,7 @@
 						$thirteenthBool = false;
 						$remainderBool = true;// displays the remainder
 
-						Print "<script>console.log('pastToDateThirteenthPay: ".$pastToDateThirteenthPay."')</script>";
+						// Print "<script>console.log('pastToDateThirteenthPay: ".$pastToDateThirteenthPay."')</script>";
 					}
 
 					if($period == "week")
@@ -144,7 +144,8 @@
 						
 
 						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
-						$payrollQuery = mysql_query($payrollDate);
+						// Print "<script>console.log('".$payrollDate."')</script>";
+						$payrollQuery = mysql_query($payrollDate) or die (mysql_error());
 						$dateLength = mysql_num_rows($payrollQuery);
 
 						//adds the 13th month pay remainder if there is
@@ -179,7 +180,7 @@
 
 								$pastToDateThirteenthPay = date('F d, Y', strtotime('-6 day', strtotime($payDateArr['date'])));
 								$thirteenthBool = false;
-								Print "<script>console.log('pastToDateThirteenthPay: ".$pastToDateThirteenthPay."')</script>";
+								// Print "<script>console.log('pastToDateThirteenthPay: ".$pastToDateThirteenthPay."')</script>";
 							}
 							$endDate = $payDateArr['date'];
 							$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
@@ -236,7 +237,7 @@
 						$daysAttended = 0;//counter for days attended
 						$noRepeat = null;
 						//adds the 13th month pay remainder if there is
-						$overallPayment = ($thirteenthRemainder != 0 ? $overallPayment = $overallPayment : 0);
+						$overallPayment = ($thirteenthRemainder != 0 ? $thirteenthRemainder : 0);
 
 						if($remainderBool)
 						{
@@ -266,7 +267,7 @@
 
 								$pastToDateThirteenthPay = $attDate['date'];
 								$thirteenthBool = false;
-								Print "<script>console.log('pastToDateThirteenthPay: ".$pastToDateThirteenthPay."')</script>";
+								// Print "<script>console.log('pastToDateThirteenthPay: ".$pastToDateThirteenthPay."')</script>";
 							}
 							$dateExploded = explode(" ", $attDate['date']);
 							$month = $dateExploded[0];
@@ -274,7 +275,7 @@
 
 							if ($noRepeat != $month.$year  || $noRepeat == null)
 							{
-								$attMonth = "SELECT * FROM attendance WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
+								$attMonth = "SELECT * FROM attendance WHERE empid = '$empid' AND (date LIKE '$month%' AND date LIKE '%$year') $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 								$attMonthQuery = mysql_query($attMonth);
 								//Computes 13th month per day of the month
 								while($attArr = mysql_fetch_assoc($attMonthQuery))
@@ -324,7 +325,7 @@
 						$daysAttended = 0;//counter for days attended
 						$noRepeat = null;
 						//adds the 13th month pay remainder if there is
-						$overallPayment = ($thirteenthRemainder != 0 ? $overallPayment = $overallPayment : 0);
+						$overallPayment = ($thirteenthRemainder != 0 ? $thirteenthRemainder : 0);
 
 						if($remainderBool)
 						{
@@ -354,17 +355,19 @@
 
 								$pastToDateThirteenthPay = $attDate['date'];
 								$thirteenthBool = false;
-								Print "<script>console.log('pastToDateThirteenthPay: ".$pastToDateThirteenthPay."')</script>";
 							}
 							$dateExploded = explode(" ", $attDate['date']);
+							$month = $dateExploded[0];
 							$year = $dateExploded[2];
 
-							if ($noRepeat != $year || $noRepeat == null)
+							if ($noRepeat != $year  || $noRepeat == null)
 							{
-								$attYear = "SELECT * FROM attendance WHERE empid = '$empid' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
-								$attYearQuery = mysql_query($attYear);
+								$attMonth = "SELECT * FROM attendance WHERE empid = '$empid' AND (date LIKE '$month%' AND date LIKE '%$year') $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
+								// Print "<script>console.log('".$attMonth."')</script>";
+
+								$attMonthQuery = mysql_query($attMonth);
 								//Computes 13th month per day of the month
-								while($attArr = mysql_fetch_assoc($attYearQuery))
+								while($attArr = mysql_fetch_assoc($attMonthQuery))
 								{
 									$date = $attArr['date'];
 
@@ -385,8 +388,8 @@
 									}
 								}
 								$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
-								$yearBefore = $year - 1;
 								$printBool = true;//enable printable
+								$yearBefore = $year - 1;
 								Print "
 										<tr>
 											<td>
@@ -569,14 +572,14 @@
 	<script>
 		$( document ).ready(function() {
 		   	if($('#HistoricalPrint').val() == 1)
-		   		$('#printButton').addClass('disabletotally');
-		   	else
 		   		$('#printButton').removeClass('disabletotally');
+		   	else
+		   		$('#printButton').addClass('disabletotally');
 
 		   	if($('#Print').val() == 1)
-		   		$('#historyButton').addClass('disabletotally');
-		   	else
 		   		$('#historyButton').removeClass('disabletotally');
+		   	else
+		   		$('#historyButton').addClass('disabletotally');
 
 
 		});
@@ -585,9 +588,8 @@
 
 		function copyAmount(amount) {
 			amount = String(amount);
-			var splitThirteenth = amount.split('.');
-			var thirteenth = splitThirteenth[0]+"."+splitThirteenth[1].substring(0,2);
-			document.getElementById("amountToGive").value = thirteenth;
+			
+			document.getElementById("amountToGive").value = amount;
 		}
 
 		function give13thPay() {
@@ -595,11 +597,14 @@
 			var thirteenth = document.getElementById("overallPayment").value;
 			var fromDate = document.getElementById("fromDate").value;
 			var splitThirteenth = thirteenth.split('.');
-			thirteenth = splitThirteenth[0]+"."+splitThirteenth[1].substring(0,2);
+			if(splitThirteenth.length != 1)
+				thirteenth = splitThirteenth[0]+"."+splitThirteenth[1].substring(0,2);
+
+			console.log(amount+" "+thirteenth);
 			var a = confirm("Are you sure you want to give this employee's 13th month pay?")
 			if(a) 
 			{
-				if(thirteenth > amount || amount == 0 || thirteenth == 0)
+				if(amount > thirteenth || amount == 0 || thirteenth == 0)
 					alert("Please input proper amount.");
 				else
 				{
