@@ -272,25 +272,20 @@ if($contributionType == 'all') //Overall
 		{
 			
 			$contBool = false;//if employee dont have sss contribution
-			if(isset($_POST['date']))
+			
+			if($date != "all")
 			{
-				if($_POST['date'] != "all")
-				{
-					$changedPeriod = explode(' ',$_POST['date']);
-					$monthPeriod = $changedPeriod[0];
-					$yearPeriod = $changedPeriod[1];
-					$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
-				}
-				else
-				{
-					$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
-				}
-					
+				$changedPeriod = explode(' ',$date);
+				$monthPeriod = $changedPeriod[0];
+				$yearPeriod = $changedPeriod[1];
+				$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 			}
 			else
 			{
 				$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 			}
+					
+			
 			while($empArr = mysql_fetch_assoc($empQuery))
 			{
 				$empid = $empArr['empid'];
@@ -480,7 +475,7 @@ if($contributionType == 'all') //Overall
 
 
 	}
-	else if($period = "year")
+	else if($period = "year")//dito
 	{
 		$employee = "SELECT * FROM employee WHERE site = '$site'";
 		$empQuery = mysql_query($employee) or die (mysql_error());
@@ -490,24 +485,17 @@ if($contributionType == 'all') //Overall
 		{
 			
 			$contBool = false;//if employee dont have sss contribution
-			if(isset($_POST['date']))
+			
+			if($date != "all")
 			{
-				if($_POST['date'] != "all")
-
-				{
-					$changedPeriod = explode(' ',$_POST['date']);
-					$yearPeriod = $changedPeriod[0];
-					$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
-				}
-				else
-				{
-					$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
-				}
+				$yearPeriod = $date;
+				$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 			}
 			else
 			{
 				$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 			}
+			
 			while($empArr = mysql_fetch_assoc($empQuery))
 			{
 				$empid = $empArr['empid'];
