@@ -203,7 +203,6 @@ if($pageSwitch == 1)
 {
 	$attendance = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 
-	//Print '<script>console.log('.$attendance.')</script>';
 	$attendanceQuery = mysql_query($attendance);
 		
 		//preset variable for time in and time out
@@ -263,7 +262,6 @@ if($pageSwitch == 1)
 
 		if($day == "Wednesday" && $wedBoolNoRep)
 		{
-			
 			$wedBoolNoRep = false;//no repeat
 			if($attArr['attendance'] == 2)//employee is present
 			{
@@ -462,7 +460,6 @@ if($pageSwitch == 1)
 else// 2
 	{
 
-	// Print "<script>console.log('yow')</script>";
 		
 		$sunIn1 = "";
 		$sunOut1 = "";
@@ -505,11 +502,9 @@ else// 2
 
 		$attendance2 = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 		$attendanceQuery2 = mysql_query($attendance2) or die (mysql_error());
-		
 		while($attArr2 = mysql_fetch_assoc($attendanceQuery2))//Loop for employees in the site
 		{
 			$dayN = date('l', strtotime($attArr2['date']));//gets the day in the week
-
 			if($dayN == "Sunday" && $sunBoolNoRep)
 			{
 				$sunBoolNoRep = false;// no repeat
@@ -638,8 +633,8 @@ else// 2
 			}
 			else
 			{
-				$activeSheet->setCellValue('R'.$rowCounter, $sunIn1);
-				$activeSheet->setCellValue('S'.$rowCounter, $sunOut1);
+				$activeSheet->setCellValue('R'.$rowCounter, $tueIn1);
+				$activeSheet->setCellValue('S'.$rowCounter, $tueOut1);
 
 				if($sunBoolHD)
 				{
@@ -648,14 +643,14 @@ else// 2
 				}
 				else
 				{
-					$activeSheet->setCellValue('T'.$rowCounter, $sunIn2);
-					$activeSheet->setCellValue('U'.$rowCounter, $sunOut2);
-					$activeSheet->setCellValue('V'.$rowCounter, $sunIn3);
-					$activeSheet->setCellValue('W'.$rowCounter, $sunOut3);
+					$activeSheet->setCellValue('T'.$rowCounter, $tueIn2);
+					$activeSheet->setCellValue('U'.$rowCounter, $tueOut2);
+					$activeSheet->setCellValue('V'.$rowCounter, $tueIn3);
+					$activeSheet->setCellValue('W'.$rowCounter, $tueOut3);
 					}
 			}
 			//Remarks
-			$activeSheet->setCellValue('X'.$rowCounter, $sunRemarks);
+			$activeSheet->setCellValue('X'.$rowCounter, $tueRemarks);
 
 
 		

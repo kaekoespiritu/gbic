@@ -406,8 +406,8 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 				}
 				else
 				{
-					$activeSheet->setCellValue('R'.$rowCounter, $sunIn1);
-					$activeSheet->setCellValue('S'.$rowCounter, $sunOut1);
+					$activeSheet->setCellValue('R'.$rowCounter, $tueIn1);
+					$activeSheet->setCellValue('S'.$rowCounter, $tueOut1);
 
 					if($sunBoolHD)
 					{
@@ -416,14 +416,14 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 					}
 					else
 					{
-						$activeSheet->setCellValue('T'.$rowCounter, $sunIn2);
-						$activeSheet->setCellValue('U'.$rowCounter, $sunOut2);
-						$activeSheet->setCellValue('V'.$rowCounter, $sunIn3);
-						$activeSheet->setCellValue('W'.$rowCounter, $sunOut3);
+						$activeSheet->setCellValue('T'.$rowCounter, $tueIn2);
+						$activeSheet->setCellValue('U'.$rowCounter, $tueOut2);
+						$activeSheet->setCellValue('V'.$rowCounter, $tueIn3);
+						$activeSheet->setCellValue('W'.$rowCounter, $tueOut3);
 						}
 				}
 				//Remarks
-				$activeSheet->setCellValue('X'.$rowCounter, $sunRemarks);
+				$activeSheet->setCellValue('X'.$rowCounter, $tueRemarks);
 
 			//=================
 			$rowCounter++; //Row counter

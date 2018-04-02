@@ -2,7 +2,7 @@
 include_once('directives/db.php');
 include('directives/session.php');
 require "directives/attendance/attendance_query.php";
-// error_reporting(0);// fetch no error
+error_reporting(0);// fetch no error
 date_default_timezone_set('Asia/Hong_Kong');
 $location = $_GET['site'];
 //Print "<script>alert('absent')</script>";
@@ -74,6 +74,15 @@ $empNum = mysql_num_rows($siteQuery);
 //Print "<script>alert('".$empNum."')</script>";
 // Checker if there are inputs in the attendance
 $count = 0;
+
+$max = $empNum - 1;
+
+if($count == $empNum +1)
+{
+	Print "<script>alert('You have not inputted any values.');
+			window.location.assign('enterattendance.php?site=".$location."')</script>";
+}
+
 for($count; $count <= $empNum; $count++)
 {
 	// Print "<script>console.log('4')</script>";
@@ -86,13 +95,7 @@ for($count; $count <= $empNum; $count++)
 		break 1;
 	}
 }
-$max = $empNum - 1;
 
-if($count == $empNum +1)
-{
-	Print "<script>alert('You have not inputted any values.');
-			window.location.assign('enterattendance.php?site=".$location."')</script>";
-}
 // Print "<script>console.log('5')</script>";
 // Print "<script>console.log('".$location."')</script>";
 
