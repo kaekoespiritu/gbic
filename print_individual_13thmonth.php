@@ -75,7 +75,7 @@ if($period == "week")
 	$dateLength = mysql_num_rows($payrollQuery);
 
 	//adds the 13th month pay remainder if there is
-	$overallPayment = ($thirteenthRemainder != 0 ? $overallPayment = $overallPayment : 0);
+	$overallPayment = ($thirteenthRemainder != 0 ? $thirteenthRemainder : 0);
 
 	if($remainderBool)
 	{

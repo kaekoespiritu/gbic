@@ -476,7 +476,7 @@
 		      	</div>
 		      	<div class="col-md-6">
 		      		<h4>Amount to Give:</h4> <input type="number" id="amountToGive"><br>
-		        	<input type="checkbox" onclick="copyAmount(<?php Print $overallPayment?>)"> Copy overall amount
+		        	<input type="checkbox" onclick="copyAmount(<?php Print numberExactFormat($overallPayment, 2, '.', false)?>)"> Copy overall amount
 		      	</div>
 	      	</div>
 	      </div>
@@ -572,14 +572,14 @@
 	<script>
 		$( document ).ready(function() {
 		   	if($('#HistoricalPrint').val() == 1)
-		   		$('#printButton').removeClass('disabletotally');
-		   	else
-		   		$('#printButton').addClass('disabletotally');
-
-		   	if($('#Print').val() == 1)
 		   		$('#historyButton').removeClass('disabletotally');
 		   	else
 		   		$('#historyButton').addClass('disabletotally');
+
+		   	if($('#Print').val() == 1)
+		   		$('#printButton').removeClass('disabletotally');
+		   	else
+		   		$('#printButton').addClass('disabletotally');
 
 
 		});
