@@ -16,7 +16,7 @@
 			case "Weekly": break;
 			case "Monthly": break;
 			case "Yearly": break;
-			default: Print Print "<script>window.location.assign('index.php')</script>";
+			default: Print "<script>window.location.assign('index.php')</script>";
 		}
 	}
 	else

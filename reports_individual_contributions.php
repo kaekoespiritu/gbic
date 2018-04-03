@@ -82,7 +82,7 @@
 					Filter by:
 					<!-- POSITION DROPDOWN -->
 					<div class="btn-group">
-						<select class="form-control" id="position" onchange="position()">
+						<select class="form-control" id="position" onchange="position(this.value)">
 							<option hidden>Position</option>
 							<?php 
 								$position = "SELECT * FROM job_position WHERE active = '1'";
@@ -90,7 +90,10 @@
 
 								while($positionArr = mysql_fetch_assoc($positionQuery))
 								{
-									Print "<option value='".$positionArr['position']."'>".$positionArr['position']."</option>";
+									if($position_page == $positionArr['position'])
+										Print "<option value='".$positionArr['position']."' selected>".$positionArr['position']."</option>";
+									else
+										Print "<option value='".$positionArr['position']."'>".$positionArr['position']."</option>";
 								}
 
 							?>
@@ -99,7 +102,7 @@
 					<!-- END OF POSITION DROPDOWN -->
 					<!-- SITES DROPDOWN -->
 					<div class="btn-group">
-						<select class="form-control" id="site" onchange="site()">
+						<select class="form-control" id="site" onchange="site(this.value)">
 							<option hidden>Site</option>
 							<?php 
 								$site = "SELECT * FROM site WHERE active = '1'";
@@ -107,7 +110,10 @@
 
 								while($siteArr = mysql_fetch_assoc($siteQuery))
 								{
-									Print "<option value='".$siteArr['location']."'>".$siteArr['location']."</option>";
+									if($site_page == $siteArr['location'])
+										Print "<option value='".$siteArr['location']."' selected>".$siteArr['location']."</option>";
+									else
+										Print "<option value='".$siteArr['location']."'>".$siteArr['location']."</option>";
 								}
 
 							?>
@@ -191,8 +197,16 @@
 			window.location.assign("reports_individual.php?site="+site+"&position="+position+"&type="+type+"&period="+period)
 		}
 
-		function searchBox(id) {
+		function site(site) {
+			window.location.assign("reports_individual_contributions.php?site="+site+"&position=<?php Print $position_page?>&type=<?php Print $reportType?>&period=<?php Print $period?>")
+		}
 
+		function position(pos) {
+			window.location.assign("reports_individual_contributions.php?site=<?php Print $site_page?>&position="+pos+"&type=<?php Print $reportType?>&period=<?php Print $period?>")
+		}
+
+		function clearFilter() {
+			window.location.assign("reports_individual_contributions.php?type=Contributions&period=week&site=null&position=null");
 		}
 	</script>
 </body>

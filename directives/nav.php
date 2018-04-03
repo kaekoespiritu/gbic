@@ -183,7 +183,7 @@
 			</div>
 			<div class="sub-flipdown">
 				<div class="sub-flipdown-menu">
-					<a href="reports_individual_loans.php?type=Loans&period=week&site=null&position=null" class="<?php Print $loansReport?>"> Individual</a>
+					<a href="reports_individual_loans.php?type=Loans&period=week&site=null&position=null&loan=all" class="<?php Print $loansReport?>"> Individual</a>
 					<a href="reports_overall_loans.php?type=Loans&period=Weekly" class="<?php Print $loansReport?>"> Overall</a>
 				</div>
 				<a class="subflipbtn <?php Print $loansReport?>">Loans</a>
