@@ -525,7 +525,7 @@
 					if($position != "null")
 						$addQuery .= " AND position = '$position' ";
 
-					$emp = "SELECT * FROM employee WHERE site = '$site' AND employment_status = '1' $addQuery";
+					$emp = "SELECT * FROM employee WHERE site = '$site' AND employment_status = '1' $addQuery ORDER BY lastname ASC, firstname ASC";
 					$empQuery = mysql_query($emp);
 					//Print "<script>console.log('".$emp."')</script>";
 
@@ -539,25 +539,6 @@
 							$rowColor = ($rowColor ? false : true);
 
 							$empid = $empArr['empid'];
-
-							// if(isset($_POST['date']))
-							// {
-							// 	if($_POST['date'] != "onProcess")
-							// 	{
-							// 		$closePayroll = $_POST['date'];
-							// 		$openPayroll = date('F d, Y', strtotime('-6 day', strtotime($closePayroll)));
-
-							// 		$attendance = "SELECT * FROM attendance WHERE empid = '$empid' AND date >= '$openPayroll' AND date <= '$closePayroll' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
-							// 	}
-							// 	else//Default
-							// 		$attendance = "SELECT * FROM attendance WHERE empid = '$empid' AND date <= '$onProcessDate' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
-							
-							// }
-							// else//Default
-							// {
-							// 	$attendance = "SELECT * FROM attendance WHERE empid = '$empid' AND date <= '$onProcessDate' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
-							// }
-
 
 							$attendance = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$openPayroll', '%M %e, %Y') AND STR_TO_DATE('$closePayroll', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 
@@ -861,7 +842,7 @@
 							}
 							//Remarks
 							Print  	"<td>
-										".$wedRemarks."
+										".stripslashes($wedRemarks)."
 									</td>";
 
 							if($thuBool)//THURSDAY
@@ -902,7 +883,7 @@
 							}
 							//Remarks
 							Print  	"<td>
-										".$thuRemarks."
+										".stripslashes($thuRemarks)."
 									</td>";
 
 							if($friBool)//FRIDAY
@@ -943,7 +924,7 @@
 							}
 							//Remarks
 							Print  	"<td>
-										".$friRemarks."
+										".stripslashes($friRemarks)."
 									</td>";
 
 							if($satBool)//SATURDAY
@@ -984,7 +965,7 @@
 							}
 							//Remarks
 							Print  	"<td>
-										".$satRemarks."
+										".stripslashes($satRemarks)."
 									</td>";
 
 							if($sunBool)//SUNDAY
@@ -1025,7 +1006,7 @@
 							}
 							//Remarks
 							Print  	"<td>
-										".$sunRemarks."
+										".stripslashes($sunRemarks)."
 									</td>";
 
 							if($monBool)//MONDAY
@@ -1066,7 +1047,7 @@
 							}
 							//Remarks
 							Print  	"<td>
-										".$monRemarks."
+										".stripslashes($monRemarks)."
 									</td>";
 
 							if($tueBool)//TUESDAY
@@ -1107,7 +1088,7 @@
 							}
 							//Remarks
 							Print  	"<td>
-										".$tueRemarks."
+										".stripslashes($tueRemarks)."
 									</td>
 								</tr>
 								";

@@ -287,8 +287,6 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 						$sunIn3 = $attArr2['nightshift_timein'];
 						$sunOut3 = $attArr2['nightshift_timeout'];
 
-						$sunRemarks = $attArr2['remarks'];
-
 						if($sunIn2 == "")
 							$sunBoolHD = true;//trigger H.D in display
 					}
@@ -296,6 +294,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 					{
 						$sunBool = true;//employee is absent
 					}
+					$sunRemarks = $attArr2['remarks'];
 				}
 				else if($dayN == "Monday" && $monBoolNoRep)
 				{
@@ -309,8 +308,6 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 						$monIn3 = $attArr2['nightshift_timein'];
 						$monOut3 = $attArr2['nightshift_timeout'];
 
-						$monRemarks = $attArr2['remarks'];
-
 						if($monIn2 == "")
 							$monBoolHD = true;//trigger H.D in display
 					}
@@ -318,6 +315,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 					{
 						$monBool = true;//employee is absent
 					}
+					$monRemarks = $attArr2['remarks'];
 				}
 				else if($dayN == "Tuesday" && $tueBoolNoRep)
 				{
@@ -331,8 +329,6 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 						$tueIn3 = $attArr2['nightshift_timein'];
 						$tueOut3 = $attArr2['nightshift_timeout'];
 
-						$wedRemarks = $attArr2['remarks'];
-
 						if($tueIn2 == "")
 							$tueBoolHD = true;//trigger H.D in display
 					}
@@ -340,6 +336,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 					{
 						$tueBool = true;//employee is absent
 					}
+					$wedRemarks = $attArr2['remarks'];
 				}
 		
 			}
@@ -371,7 +368,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 						}
 				}
 				//Remarks
-				$activeSheet->setCellValue('J'.$rowCounter, $sunRemarks);
+				$activeSheet->setCellValue('J'.$rowCounter, stripslashes($sunRemarks));
 
 				if($monBool)//Monday
 				{
@@ -397,7 +394,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 					}
 				}
 				//Remarks
-				$activeSheet->setCellValue('Q'.$rowCounter, $monRemarks);
+				$activeSheet->setCellValue('Q'.$rowCounter, stripslashes($monRemarks));
 
 				if($tueBool)//Tuesday
 				{
@@ -423,7 +420,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 						}
 				}
 				//Remarks
-				$activeSheet->setCellValue('X'.$rowCounter, $tueRemarks);
+				$activeSheet->setCellValue('X'.$rowCounter, stripslashes($tueRemarks));
 
 			//=================
 			$rowCounter++; //Row counter
@@ -515,8 +512,6 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 						$wedIn3 = $attArr['nightshift_timein'];
 						$wedOut3 = $attArr['nightshift_timeout'];
 
-						$wedRemarks = $attArr['remarks'];
-
 						if($wedIn2 == "")
 							$wedBoolHD = true;//trigger H.D in display
 					}
@@ -524,6 +519,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 					{
 						$wedBool = true;//employee is absent
 					}
+					$wedRemarks = $attArr['remarks'];
 				}
 				else if($day == "Thursday" && $thuBoolNoRep)
 				{
@@ -537,8 +533,6 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 						$thuIn3 = $attArr['nightshift_timein'];
 						$thuOut3 = $attArr['nightshift_timeout'];
 
-						$thuRemarks = $attArr['remarks'];
-
 						if($thuIn2 == "")
 							$thuBoolHD = true;//trigger H.D in display
 					}
@@ -546,6 +540,8 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 					{
 						$thuBool = true;//employee is absent
 					}
+					$thuRemarks = $attArr['remarks'];
+
 				}
 				else if($day == "Friday" && $friBoolNoRep)
 				{
@@ -559,8 +555,6 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 						$friIn3 = $attArr['nightshift_timein'];
 						$friOut3 = $attArr['nightshift_timeout'];
 
-						$friRemarks = $attArr['remarks'];
-
 						if($friIn2 == "")
 							$friBoolHD = true;//trigger H.D in display
 					}
@@ -568,6 +562,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 					{
 						$friBool = true;//employee is absent
 					}
+					$friRemarks = $attArr['remarks'];
 				}
 				else if($day == "Saturday" && $satBoolNoRep)
 				{
@@ -581,8 +576,6 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 						$satIn3 = $attArr['nightshift_timein'];
 						$satOut3 = $attArr['nightshift_timeout'];
 
-						$satRemarks = $attArr['remarks'];
-
 						if($satIn2 == "")
 							$satBoolHD = true;//trigger H.D in display
 					}
@@ -590,6 +583,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 					{
 						$satBool = true;//employee is absent
 					}
+					$satRemarks = $attArr['remarks'];
 				}
 				
 			}
@@ -622,7 +616,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 				}
 			}
 			//Remarks
-			$activeSheet->setCellValue('J'.$rowCounter, $wedRemarks);
+			$activeSheet->setCellValue('J'.$rowCounter, stripslashes($wedRemarks));
 
 			if($thuBool)//THURSDAY
 			{
@@ -649,7 +643,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 				}
 			}
 			//Remarks
-			$activeSheet->setCellValue('Q'.$rowCounter, $thuRemarks);
+			$activeSheet->setCellValue('Q'.$rowCounter, stripslashes($thuRemarks));
 
 			if($friBool)//FRIDAY
 			{
@@ -675,7 +669,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 					}
 			}
 			//Remarks
-			$activeSheet->setCellValue('X'.$rowCounter, $friRemarks);
+			$activeSheet->setCellValue('X'.$rowCounter, stripslashes($friRemarks));
 
 			if($satBool)//SATURDAY
 			{
@@ -702,7 +696,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 				}
 			}
 			//Remarks
-			$activeSheet->setCellValue('AE'.$rowCounter, $satRemarks);
+			$activeSheet->setCellValue('AE'.$rowCounter, stripslashes($satRemarks));
 
 			//=================
 

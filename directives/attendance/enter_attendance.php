@@ -24,9 +24,9 @@ function attendance ()
 	else if(isset($_POST['txt_search']))
 	{
 		$search = $_POST['txt_search'];
-		$employees = "SELECT * FROM employee WHERE 	site = '$site' AND firstname LIKE '%$search%' OR 
+		$employees = "SELECT * FROM employee WHERE 	site = '$site' AND (firstname LIKE '%$search%' OR 
 													lastname LIKE '%$search%' OR
-													position LIKE '%$search%' AND employment_status = '1' ORDER BY lastname";
+													position LIKE '%$search%') AND employment_status = '1' ORDER BY lastname";
 	}
 	else
 	{

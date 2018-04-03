@@ -754,7 +754,7 @@
 							}
 							//Remarks
 							Print  	"<td>
-										".$wedRemarks."
+										".stripslashes($wedRemarks)."
 									</td>";
 
 							if($thuBool)//THURSDAY
@@ -795,7 +795,7 @@
 							}
 							//Remarks
 							Print  	"<td>
-										".$thuRemarks."
+										".stripslashes($thuRemarks)."
 									</td>";
 
 							if($friBool)//FRIDAY
@@ -836,7 +836,7 @@
 							}
 							//Remarks
 							Print  	"<td>
-										".$friRemarks."
+										".stripslashes($friRemarks)."
 									</td>";
 
 							if($satBool)//SATURDAY
@@ -877,7 +877,7 @@
 							}
 							//Remarks
 							Print  	"<td>
-										".$satRemarks."
+										".stripslashes($satRemarks)."
 									</td>";
 
 							if($sunBool)//SUNDAY
@@ -918,7 +918,7 @@
 							}
 							//Remarks
 							Print  	"<td>
-										".$sunRemarks."
+										".stripslashes($sunRemarks)."
 									</td>";
 
 							if($monBool)//MONDAY
@@ -959,7 +959,7 @@
 							}
 							//Remarks
 							Print  	"<td>
-										".$monRemarks."
+										".stripslashes($monRemarks)."
 									</td>";
 
 							if($tueBool)//TUESDAY
@@ -1000,7 +1000,7 @@
 							}
 							//Remarks
 							Print  	"<td>
-										".$tueRemarks."
+										".stripslashes($tueRemarks)."
 									</td>
 								</tr>
 								";

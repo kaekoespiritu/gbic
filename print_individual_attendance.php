@@ -375,7 +375,7 @@ if($pageSwitch == 1)
 		}
 	}
 	//Remarks
-	$activeSheet->setCellValue('J'.$rowCounter, $wedRemarks);
+	$activeSheet->setCellValue('J'.$rowCounter, stripslashes($wedRemarks));
 
 	if($thuBool)//THURSDAY
 	{
@@ -402,7 +402,7 @@ if($pageSwitch == 1)
 		}
 	}
 	//Remarks
-	$activeSheet->setCellValue('Q'.$rowCounter, $thuRemarks);
+	$activeSheet->setCellValue('Q'.$rowCounter, stripslashes($thuRemarks));
 
 	if($friBool)//FRIDAY
 	{
@@ -428,7 +428,7 @@ if($pageSwitch == 1)
 			}
 	}
 	//Remarks
-	$activeSheet->setCellValue('X'.$rowCounter, $friRemarks);
+	$activeSheet->setCellValue('X'.$rowCounter, stripslashes($friRemarks));
 
 	if($satBool)//SATURDAY
 	{
@@ -455,7 +455,7 @@ if($pageSwitch == 1)
 		}
 	}
 	//Remarks
-	$activeSheet->setCellValue('AE'.$rowCounter, $satRemarks);
+	$activeSheet->setCellValue('AE'.$rowCounter, stripslashes($satRemarks));
 }
 else// 2
 	{
@@ -598,7 +598,7 @@ else// 2
 					}
 			}
 			//Remarks
-			$activeSheet->setCellValue('J'.$rowCounter, $sunRemarks);
+			$activeSheet->setCellValue('J'.$rowCounter, stripslashes($sunRemarks));
 
 			if($monBool)//Monday
 			{
@@ -624,7 +624,7 @@ else// 2
 				}
 			}
 			//Remarks
-			$activeSheet->setCellValue('Q'.$rowCounter, $monRemarks);
+			$activeSheet->setCellValue('Q'.$rowCounter, stripslashes($monRemarks));
 
 			if($tueBool)//Tuesday
 			{
@@ -650,7 +650,7 @@ else// 2
 					}
 			}
 			//Remarks
-			$activeSheet->setCellValue('X'.$rowCounter, $tueRemarks);
+			$activeSheet->setCellValue('X'.$rowCounter, stripslashes($tueRemarks));
 
 
 		
