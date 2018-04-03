@@ -169,6 +169,8 @@ while($empArr = mysql_fetch_assoc($empQuery))
 			$activeSheet->setCellValue('G'.$rowCounter, numberExactFormat($newValeLoan['balance'], 2, '.', true));
 		else
 			$activeSheet->setCellValue('G'.$rowCounter, "N/A");
+		
+		$rowCounter++;//Increment row
 	
 	}
 	
@@ -178,7 +180,7 @@ while($empArr = mysql_fetch_assoc($empQuery))
 	$newValeGrandTotal += $newValeLoan['balance'];
 	$oldValeGrandTotal += $oldValeLoan['balance'];
 
-	$rowCounter++;//Increment row
+	
 }
 
 if(	$sssGrandTotal != 0 || 
