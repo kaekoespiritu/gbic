@@ -162,7 +162,6 @@ $position = $_GET['position'];
 					<?php
 					if(isset($_POST['txt_search']))
 					{
-						Print "<script>alert('1')</script>";
 						$find = $_POST['txt_search'];
 						$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site' AND position = '$position' AND (empid LIKE '%$find%' OR
 							firstname LIKE '%$find%' OR
