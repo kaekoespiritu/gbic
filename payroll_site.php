@@ -4,13 +4,7 @@ require_once('directives/db.php');
 include('directives/session.php');
   date_default_timezone_set('Asia/Hong_Kong');
 
-  //$date = strftime("%B %d, %Y");
-  //1st sample date
-   // $date = "October 24, 2017";
-   //$date = "March 13, 2018";
-  //2nd sample date
-  // $date = "October 31, 2017";
-  $date = "March 20, 2018";
+$date = strftime("%B %d, %Y");
 ?>
 <html>
 <head>

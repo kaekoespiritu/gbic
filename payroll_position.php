@@ -12,14 +12,7 @@ include('directives/session.php');
   $site = $_GET['site'];//Change this to dynamic by getting data from PayrollSite.php
 
 
-//$date = strftime("%B %d, %Y");
-
-// 1st sample date
-// $date = "October 24, 2017";
- //$date = "March 13, 2018";
-// 2nd sample date
-// $date = "October 31, 2017";
- $date = "March 20, 2018";
+$date = strftime("%B %d, %Y");
 
 $dayToday = date('l, F d, Y', time());
 ?>
