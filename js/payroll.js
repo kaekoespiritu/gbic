@@ -2,10 +2,8 @@
 	document.getElementById("payroll").setAttribute("style", "background-color: #10621e;");
 
 	$( document ).ready(function() {
-console.log('123');
     	if($('#outstandingPayable').val()){
     		$('#amountToPay').removeAttr("readonly");
-    		console.log('123');
     	}
 	});
 
@@ -50,14 +48,10 @@ console.log('123');
 			for(var count = 0; count < toolsLength; count++)
 			{
 
-				console.log("count: "+count);
 				document.getElementsByName('toolsRow[]')[count].setAttribute('id',count+1);
 				document.getElementsByName('rowDelete[]')[count].setAttribute('onclick','deleteRow('+(count+1)+')');
 			}
 		}
-		console.log(parentEle);
-		console.log(ele);
-		console.log(parentEle.children);
 	}
 
 	function validatenumber(evt) {
@@ -110,7 +104,6 @@ console.log('123');
 
 	// Adding new vale
 	function addvale() {
-		//console.log("yow");
 		// Get current amount in vale
 		var original = document.querySelector(".vale");
 		var oldVale = original.innerHTML;
@@ -138,45 +131,36 @@ console.log('123');
 
 		if(addVale > 0)
 		{
-			console.log('1');
 			if(oNewVale != "")
 			{
-				console.log('2');
 				if(child.innerHTML != "N/A")
 				{
-					console.log('3');
 					var newVale = parseFloat(oNewVale) + parseFloat(addVale);
 					var oNewVale = parseFloat(oNewVale).toFixed(2);
-					console.log(newVale);
 					newVale = parseFloat(newVale).toFixed(2);
 					child.innerHTML = null;
 					child.innerHTML += addCommas(oNewVale)+"<br><u>+ "+addCommas(addVale)+"</u><br>"+addCommas(newVale);
-					console.log(child);
 				}
 				else
 				{
-					console.log('4');
 					child.innerHTML = addCommas(addVale);
 				}
 				
 			}
 			else
 			{
-				console.log('5');
 				child.innerHTML = addCommas(addVale);
 			}
 			// Show value to payroll page	
 		}
 		else
 		{
-			console.log('6');
 			child.innerHTML = oNewVale;
 			if(modalValue === "")
 			child.innerHTML = "N/A";
 		}
 		
 		// Save to hidden input for database access
-		//console.log("yow:"+modalValue);
 		var remarks = document.getElementById('newValeRemarks').value;
 		document.querySelector(".addRemarks").value = remarks;
 
@@ -212,21 +196,12 @@ console.log('123');
 			names[0].parentElement.classList.remove('has-success');
 		}	
 	}
-	
-	//console.log(names[0].parentElement.classList.contains('has-success'));
 
 	// Looping through the dynamic list of tools
 	if( length > 1 ) { // If there are many tools 
 		for(var i = 1; i < length; i++) {
 			if(toolprices[i].value!="") {
 				totalcost += parseFloat(toolprices[i].value);
-				// console.log("Total Cost = " + totalcost + " | toolpricetemp = " + parseInt(toolprices[i].value));
-
-				// // If the element was removed
-				// if(!document.getElementById(i)){
-				// 	totalcost -= parseFloat(toolprices[i].value);
-				// 	// console.log("Total Cost = " + totalcost + " | toolpricetemp = " + parseInt(toolprices[i].value) + " | div = " + i);
-				// }
 				
 				// Require name if there is an amount placed
 				names[i].setAttribute('required','');
@@ -248,15 +223,12 @@ console.log('123');
 					}	
 					break;
 			}
-			// console.log(names[i].innerHTML);
 		}
 
 		totalcost += parseFloat(document.getElementById('price').value);
-		// console.log("Inside IF: " + totalcost);
 	}
 	else if(length == 1) { // If only 1 tool was entered
 		totalcost = parseFloat(document.getElementById('price').value);
-		// console.log("Inside ELSE: " + totalcost);
 	}
 
 	// Only allowing numbers and null to be displayed
@@ -283,8 +255,6 @@ console.log('123');
 			amountToPay.parentElement.classList.remove('has-success');
 		}
 	}
-
-	console.log(totalcost);
 	
 }
 
@@ -420,8 +390,6 @@ function settotalLimit(value){
 			parent.add('has-error');
 		}
 	}
-
-	console.log(parent);
 }
 
 function checkName(value) {

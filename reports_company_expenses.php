@@ -124,7 +124,6 @@ include("pagination/reports_individual_function.php");//For pagination
 		document.getElementById("reports").setAttribute("style", "background-color: #10621e;");
 
 		function dataModalTransfer(site) {
-			console.log(site);
 			document.getElementById("payrollButton").href = "reports_overall_payroll.php?req=null&site="+site;
 			document.getElementById("13thMonthButton").href = "reports_overall_13thmonthpay.php?position=all&period=week&req=null&site="+site;
 

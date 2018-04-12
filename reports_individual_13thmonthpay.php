@@ -136,7 +136,6 @@
 						$thirteenthBool = false;
 						$remainderBool = true;// displays the remainder
 
-						// Print "<script>console.log('pastToDateThirteenthPay: ".$pastToDateThirteenthPay."')</script>";
 					}
 
 					if($period == "week")
@@ -144,7 +143,6 @@
 						
 
 						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
-						// Print "<script>console.log('".$payrollDate."')</script>";
 						$payrollQuery = mysql_query($payrollDate) or die (mysql_error());
 						$dateLength = mysql_num_rows($payrollQuery);
 
@@ -180,11 +178,9 @@
 
 								$pastToDateThirteenthPay = date('F d, Y', strtotime('-6 day', strtotime($payDateArr['date'])));
 								$thirteenthBool = false;
-								// Print "<script>console.log('pastToDateThirteenthPay: ".$pastToDateThirteenthPay."')</script>";
 							}
 							$endDate = $payDateArr['date'];
 							$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
-							//Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
 
 							$attendance = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 							$attQuery = mysql_query($attendance);
@@ -195,7 +191,6 @@
 							{
 								$date = $attArr['date'];
 
-								//Print "<script>console.log('".$date."')</script>";
 								$workHrs = $attArr['workhours'];
 
 								$holidayChecker = "SELECT * FROM holiday WHERE date = '$date'";
@@ -212,7 +207,6 @@
 									}
 								}
 							}
-							//Print "<script>console.log('".$daysAttended."')</script>";
 							$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
 
 							$printBool = true;//enable printable
@@ -267,7 +261,6 @@
 
 								$pastToDateThirteenthPay = $attDate['date'];
 								$thirteenthBool = false;
-								// Print "<script>console.log('pastToDateThirteenthPay: ".$pastToDateThirteenthPay."')</script>";
 							}
 							$dateExploded = explode(" ", $attDate['date']);
 							$month = $dateExploded[0];
@@ -363,7 +356,6 @@
 							if ($noRepeat != $year  || $noRepeat == null)
 							{
 								$attMonth = "SELECT * FROM attendance WHERE empid = '$empid' AND (date LIKE '$month%' AND date LIKE '%$year') $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
-								// Print "<script>console.log('".$attMonth."')</script>";
 
 								$attMonthQuery = mysql_query($attMonth);
 								//Computes 13th month per day of the month
@@ -599,8 +591,6 @@
 			var splitThirteenth = thirteenth.split('.');
 			if(splitThirteenth.length != 1)
 				thirteenth = splitThirteenth[0]+"."+splitThirteenth[1].substring(0,2);
-
-			console.log(amount+" "+thirteenth);
 			var a = confirm("Are you sure you want to give this employee's 13th month pay?")
 			if(a) 
 			{
@@ -608,10 +598,8 @@
 					alert("Please input proper amount.");
 				else
 				{
-					console.log(amount+" = "+thirteenth+" = "+fromDate);
 					window.location.assign("logic_reports_individual_13thmonth.php?empid=<?php Print $empid?>&amount="+amount+"&pay="+thirteenth+"&fromDate="+fromDate);
 				}
-				//	window.location.assign("");
 			}
 		}
 		function periodChange(period) {

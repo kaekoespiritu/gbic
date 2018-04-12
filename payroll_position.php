@@ -93,10 +93,8 @@ $dayToday = date('l, F d, Y', time());
 				$checkerQuery = mysql_query($positionChecker) or die(mysql_error());
 
 				$positionEmpNum = mysql_num_rows($checkerQuery); // gets the number of emp that has finished payroll
-				Print "<script>console.log('".$positionEmpNum."')</script>";
 				if($employee_num == $positionEmpNum)
 				{
-					Print "<script>console.log('yow')</script>";
 					$positionBool = true;//site is finish with payroll
 				}
 				else

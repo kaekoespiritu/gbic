@@ -9,7 +9,6 @@ document.getElementById("attendance").setAttribute("style", "background-color: #
 				if(sites[i].getAttribute('value')==1)
 				{
 					// add checkmark to box
-					console.log("First off... " + sites[i]);
 					sites[i].setAttribute("class", "checkmark glyphicon glyphicon-ok");
 					
 				}

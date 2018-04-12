@@ -11,12 +11,6 @@ $date = $_GET['date'];
 $contributionDisplay = $_GET['contribution'];
 $contributionType = strtolower($_GET['contribution']);
 
-
-// Print "<script>console.log('site: ".$site."')</script>";
-// Print "<script>console.log('period: ".$period."')</script>";
-// Print "<script>console.log('contributionType: ".$contributionType."')</script>";
-// Print "<script>console.log('date: ".$date."')</script>";
-
 $sheet = new PHPExcel();
 
 $activeSheet = $sheet -> createSheet(0);
@@ -327,8 +321,6 @@ if($contributionType == 'all') //Overall
 
 					$payrollDay = $payDateArr['date'];
 
-					// Print "<script>console.log('".$month." ".$year."')</script>";
-
 
 					$payroll = "SELECT * FROM payroll WHERE (date LIKE '$month%' AND date LIKE '%$year') AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 					$payrollQuery = mysql_query($payroll);
@@ -345,15 +337,12 @@ if($contributionType == 'all') //Overall
 							$monthly = $payrollArr['rate'] * 25;
 							if($payrollArr['sss'] != 0)
 							{
-								//Print "<script>console.log('sss')</script>";
 								$contBool = true;
 								$sssBool = true;
 
 
 								$sssEmployer = $payrollArr['sss_er'];//Gets the value in the sss table
 
-
-								//Print "<script>console.log('".$sssEmployer."')</script>";
 								$sssERContribution += $sssEmployer;
 								$sssEEContribution += $payrollArr['sss'];
 
@@ -362,7 +351,6 @@ if($contributionType == 'all') //Overall
 							}
 							if($payrollArr['pagibig'] != 0)
 							{
-								//Print "<script>console.log('pagibig')</script>";
 								$contBool = true;
 								$pagibigBool = true;
 
@@ -833,9 +821,6 @@ else {
 									$contributionBool = false;
 								}
 							}
-							// Print "<script>console.log('".$empid."')</script>";
-							// Print "<script>console.log('".$month." - ".$year."')</script>";
-							// Print "<script>console.log('".$totalEmployer." - ".$totalEmployer."')</script>";
 									
 							if($contributionBool)
 							{

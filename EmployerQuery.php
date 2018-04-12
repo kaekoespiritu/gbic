@@ -178,7 +178,6 @@
 				}
 					$sssContribution = $sssContribution / 4;
 					$sssEmployer = $sssEmployer / 4;
-				//Print "<script>console.log('".$monthly."')</script>";
 				
 				
 
@@ -188,7 +187,6 @@
 			if($empArr['philhealth'] != 0)
 			{
 				$philhealthER = $empArr['philhealth'];
-				Print "<script>console.log('".$philhealthER."')</script>";
 				mysql_query("UPDATE payroll SET philhealth_er = '$philhealthER' WHERE empid ='$empid'");
 			}
 			if($empArr['pagibig'] != 0)

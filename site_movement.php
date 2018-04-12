@@ -132,7 +132,6 @@ $location = $_GET['site'];
 								}
 								$sites .= "'".$pendingArr['location']."'";
 							}
-							//Print '<script>console.log("'.$Query.$sites.'")</script>';
 
 							if(isset($_GET['position']))
 							{
@@ -238,7 +237,6 @@ $location = $_GET['site'];
 			function selectMany() {
 				var button = document.getElementById('siteButton');
 				var checkboxes = document.querySelectorAll("input[type='checkbox']:checked").length;
-				console.log(checkboxes);
 
 				if(checkboxes >= 2)
 				{

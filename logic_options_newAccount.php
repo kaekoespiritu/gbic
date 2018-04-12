@@ -14,15 +14,6 @@
 	$firstname = ucwords($firstname);
 	$lastname = ucwords($lastname);
 
-	// Print "<script>console.log('".$firstname."')</script>";
-	// Print "<script>console.log('".$lastname."')</script>";
-	// Print "<script>console.log('".$username."')</script>";
-	// Print "<script>console.log('".$password."')</script>";
-	// Print "<script>console.log('".$Cpassword."')</script>";
-	// Print "<script>console.log('".$security."')</script>";
-	// Print "<script>console.log('".$answer."')</script>";
-	// Print "<script>console.log('".$role."')</script>";
-	//Print "<script>alert('password: ".$password." | Cpass: ".$Cpassword."')</script>";
 	if($password == $Cpassword)
 	{
 		$checker = "SELECT * FROM administrator WHERE username = '$username'";
@@ -149,8 +140,6 @@
 			Print "<script>alert('Please choose restrictions for this employee\'s account.')</script>";
 			Print "<script>window.location.assign('options.php')</script>";
 		}
-
-		Print "<script>console.log('".$restrictionSet."')</script>";
 
 		$account = "INSERT INTO administrator(	firstname,
 												lastname,

@@ -29,7 +29,6 @@ $holidayExist = mysql_num_rows($holidayQuery);
 $holidayName = "";
 if($holidayExist > 0)
 {
-	// Print "<script>console.log('holidayExist: ".$holidayExist."')</script>";
 	$holidayRow = mysql_fetch_assoc($holidayQuery);
 	$holidayName = $holidayRow['holiday'];//Gets holiday name
 }
@@ -175,7 +174,6 @@ if($holidayExist > 0)
 					<?php
 				//Sample query for debugging purposes
 					$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 7";
-					// Print "<script>console.log('".$payrollDate."')</script>";
 				// $payrollDate = "SELECT * FROM attendance WHERE empid = '2017-0000011' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC LIMIT 7";
 					$payrollQuery = mysql_query($payrollDate);
 					//Boolean for the conditions not to repeat just incase the employee does't attend sundays
@@ -223,7 +221,6 @@ if($holidayExist > 0)
 						$holDateChecker = $dateRow['date'];
 						//Holiday Checker
 						$holiday = "SELECT * FROM holiday WHERE date = '$holDateChecker' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
-						// Print "<script>console.log('".$holiday."')</script>";
 						$holidayQuery = mysql_query($holiday);
 						$holidayExist = mysql_num_rows($holidayQuery);
 
@@ -234,7 +231,6 @@ if($holidayExist > 0)
 							$holDay = date('l', strtotime($holidayRow['date']));
 							if($holidayCounter > 0)//if holiday lasted for more than 1day
 							{
-								//Print "<script>console.log('if')</script>";
 								$holidayCounter++;
 								$holidayName .= "+".$holidayRow['holiday'];
 								$holidayType .= "+".$holidayRow['type'];
@@ -243,7 +239,6 @@ if($holidayExist > 0)
 							}
 							else
 							{
-								//Print "<script>console.log('else')</script>";
 								$holidayCounter++;
 								$holidayName = $holidayRow['holiday'];//Gets holiday name
 								$holidayType = $holidayRow['type'];
@@ -251,8 +246,6 @@ if($holidayExist > 0)
 								$holidayDay = $holDay;
 							}
 						}
-						//Print "<script>console.log('holyeah: ".$holidayName."')</script>";
-						//Print "<script>alert('".$dateRow['date']."')</script>";
 						$day = date('l', strtotime($dateRow['date']));
 						if($day == "Sunday" && $sunBool)
 						{
@@ -262,7 +255,6 @@ if($holidayExist > 0)
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Over
-								Print "<script>console.log('ndSun: ".$dateRow['nightdiff']."')</script>";
 
 								$sunTimeIn = $dateRow['timein'];
 								$sunTimeOut = $dateRow['timeout'];
@@ -295,7 +287,6 @@ if($holidayExist > 0)
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
-								Print "<script>console.log('otMon: ".floatval($dateRow['overtime'])."')</script>";
 
 								$monTimeIn = $dateRow['timein'];
 								$monTimeOut = $dateRow['timeout'];
@@ -363,7 +354,6 @@ if($holidayExist > 0)
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
-								Print "<script>console.log('ndWed: ".$dateRow['nightdiff']."')</script>";
 								$wedTimeIn = $dateRow['timein'];
 								$wedTimeOut = $dateRow['timeout'];
 								$ABwedTimeIn = $dateRow['afterbreak_timein'];
@@ -396,7 +386,6 @@ if($holidayExist > 0)
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
-								Print "<script>console.log('otThu: ".floatval($dateRow['overtime'])."')</script>";
 
 								$thuTimeIn = $dateRow['timein'];
 								$thuTimeOut = $dateRow['timeout'];
@@ -430,7 +419,6 @@ if($holidayExist > 0)
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
-								Print "<script>console.log('otFri: ".floatval($dateRow['overtime'])."')</script>";
 
 								$friTimeIn = $dateRow['timein'];
 								$friTimeOut = $dateRow['timeout'];
@@ -463,7 +451,6 @@ if($holidayExist > 0)
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
-								Print "<script>console.log('ndSat: ".$dateRow['nightdiff']."')</script>";
 
 								$satTimeIn = $dateRow['timein'];
 								$satTimeOut = $dateRow['timeout'];
@@ -512,18 +499,15 @@ if($holidayExist > 0)
 					$holFri = false; 
 					$holSat = false;
 					$holSun = false;
-					//Print "<script>console.log('holidayCounter: ".$holidayCounter."')</script>";
 					if($holidayCounter > 1)//Output as Hidden Name, Type, Date of holiday 
 					{
 						$holNameArr = explode("+", $holidayName);
 						$holTypeArr = explode("+", $holidayType);
 						$holDateArr = explode("+", $holidayDate);
 						$holDayArr = explode("+", $holidayDay);
-						//Print "<script>console.log('".$holNameArr[0]." + ".$holNameArr[1]."')</script>";
 						$holidayCounter -= 1;
 						for($a = 0; $a <= $holidayCounter; $a++)
 						{
-							//Print "<script>console.log('".$holNameArr[$a]." + ".$a."')</script>";
 							Print "<input type='hidden' name='holidayName[]' value='".$holNameArr[$a]."'>";
 							Print "<input type='hidden' name='holidayType[]' value='".$holTypeArr[$a]."'>";
 							Print "<input type='hidden' name='holidayDate[]' value='".$holDateArr[$a]."'>";
@@ -880,10 +864,8 @@ if($holidayExist > 0)
 					</tr>
 					<!--  -------------------- NIGHTSHIFT TIME IN AND TIME OUT -------------------- -->
 						<?php
-						// Print "<script>console.log('lal2 ".$payrollRow."')</script>";
 						if($payrollRow != '2')// if employee has nightshift
 						{
-							// Print "<script>console.log('lala".$payrollRow."')</script>";
 							Print "<tr>";
 							if(!$wedAbsent)
 							{
@@ -1119,19 +1101,16 @@ if($holidayExist > 0)
 					// {
 								//Check if overall attendance for a certain site is done
 						// $loanChecker = "SELECT * FROM loans WHERE date = '$checkDay' AND type = 'newVale' AND empid = '$empid'";
-						// 		//Print '<script>colsole.log("'.$loanChecker.'")</script>';
 						// $loanCheckerQuery = mysql_query($loanChecker);
 						// if($loanCheckerQuery)
 						// {
 						// 	$newValeNum = mysql_num_rows($loanCheckerQuery);
 						// 	if($newValeNum != 0)
 						// 	{
-						// 				//Print "<script>alert('yea')</script>";
 						// 		if($newValeNum > 1)
 						// 		{
 						// 			while($newValeArr = mysql_fetch_assoc($loanCheckerQuery))
 						// 			{
-						// 				//Print "<script>alert('yea')</script>";
 						// 				if($newValeNum > 1)
 						// 				{
 						// 					while($newValeArr = mysql_fetch_assoc($loanCheckerQuery))
@@ -1141,16 +1120,13 @@ if($holidayExist > 0)
 						// 				}
 						// 				else
 						// 				{
-						// 					//Print "<script>alert('yea')</script>";
 						// 					$newValeRow = mysql_fetch_assoc($loanCheckerQuery);
 						// 					$newVale += $newValeRow['amount'];
-						// 					Print "<script>console.log('".$newVale."')</script>";
 						// 				}
 						// 			}
 						// 		}
 						// 		else
 						// 		{
-						// 					//Print "<script>alert('yea')</script>";
 						// 			$newValeRow = mysql_fetch_assoc($loanCheckerQuery);
 						// 			$newVale += $newValeRow['amount'];
 						// 		}

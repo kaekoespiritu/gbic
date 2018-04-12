@@ -9,7 +9,6 @@ if(!isset($_POST['empid']))
 else
 {
 	$empid = $_POST['empid'];
-	Print "<script>console.log('".$empid."')</script>";
 }
 
 $employee = "SELECT * FROM employee WHERE empid = '$empid'";

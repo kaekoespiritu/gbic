@@ -3,7 +3,6 @@ include('directives/session.php');
 include_once('directives/db.php');
 
 $user = $_POST['userTerminate'];
-Print "<script>console.log('".$user."')</script>";
 $employee = "SELECT * FROM administrator WHERE username = '$user'";
 $empQuery = mysql_query($employee);
 $empArr = mysql_fetch_assoc($empQuery);

@@ -1,7 +1,6 @@
 <?php
 	include('directives/session.php');
 	include('directives/db.php');
-	//Print "<script>console.log('".$overtimeRate1."')</script>";
 	$time = strftime("%X");//TIME
 
 	$date = strftime("%B %d, %Y");
@@ -123,7 +122,6 @@
 			$overallWorkDays++;
 
 		}
-		// Print "<script>console.log('1workdays: ".$overallWorkDays."')</script>";
 	}
 
 //Computation for OVER TIME -----------------------------------------------------------
@@ -173,7 +171,6 @@
 	$philhealthER = $empArr['philhealth_er'] / 4;
 
 	$compDeductions = $tax + $sss + $pagibig + $philhealth;
-	//Print "<script>console.log('compDeductions: ".$compDeductions."')</script>";
 
 //COLA incrementation -----------------------------------------------------------------
 	$cola = 0;
@@ -195,7 +192,6 @@
 		$holidayNum = count($_POST['holidayDate']);//counts the number of holiday in that week
 		if($holidayNum == 1)//if there is only one Holiday in the week
 		{	
-			//Print "<script>console.log('holiday 1')</script>";
 			$holidayName = $_POST['holidayName'][0];
 			$holidayType = $_POST['holidayType'][0];
 			$holidayDate = $_POST['holidayDate'][0];
@@ -208,10 +204,7 @@
 				$dayBeforeArr = mysql_fetch_assoc($dayBeforeChecker);
 				if($dayBeforeArr['attendance'] == '2' )//2 if employee is present on the day before the holiday
 				{
-					//Print "<script>console.log('".$overallWorkDays."')</script>";
 					$overallWorkDays++;//increment workdays 
-					//Print "<script>console.log('".$overallWorkDays."')</script>";
-					// Print "<script>console.log('2workdays: ".$overallWorkDays."')</script>";
 				}
 			}
 
@@ -240,13 +233,11 @@
 
 				if($boolHoliday)
 				{
-					//Print "<script>console.log('holiday 2.2')</script>";
 					$holidayName = $_POST['holidayName'][$count];
 					$holidayType = $_POST['holidayType'][$count];
 					$holidayDate = $_POST['holidayDate'][$count];
 					$holidayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayDate'") or die (mysql_error());
 					$holdayArr = mysql_fetch_assoc($holidayChecker);
-					//Print "<script>console.log('".$holdayArr['attendance']."')</script>";
 					if($holdayArr['attendance'] == '2')
 					{
 						if($holidayType == "special")//Special Holiday
@@ -393,7 +384,6 @@
 		{
 			mysql_query("DELETE FROM loans WHERE date='$date' AND empid='$empid' AND type='newVale'");
 		}
-		// Print "<script>console.log('newVale')</script>";
 		$loan_newVale = $_POST['newVale'];
 		$Update = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action, admin) 
 							VALUES('$empid', 'newVale', '0', '$loan_newVale', 'deducted', '$date', '$time', '0', '$adminName')";
@@ -416,7 +406,6 @@
 		$BoolTool = false; //Boolean to if there is more than 2 tools
 		if($toolNum > 1)
 		{
-			// Print "<script>console.log('More')</script>";
 			$toolQuery = "INSERT INTO tools(empid, tools, cost, date) VALUES";
 			for($counter = 0; $counter < $toolNum; $counter++)
 			{

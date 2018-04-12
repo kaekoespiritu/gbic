@@ -55,7 +55,6 @@
 		// 		alert("You have selected an invalid date range. Please select dates that are adjacent. Like Monday-Tuesday.");
 		// 		modalBool = false;
 		// 	}
-		// 	console.log(modalBool);
 		// 	if(modalBool){
 		// 		document.querySelector('#secureChanges').showModal();
 		// 	}

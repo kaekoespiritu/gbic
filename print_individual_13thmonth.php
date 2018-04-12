@@ -7,7 +7,6 @@ include('directives/print_styles.php');//Styles for PHPexcel
 $empid = $_GET['empid'];
 $period = $_GET['per'];
 
-// Print "<script>console.log('".$empid." ".$period."')</script>";
 switch($period)
 {
 	case "week": $periodDisplay = "Weekly"; ;break;
@@ -93,7 +92,6 @@ if($period == "week")
 	//Evaluates the attendance and compute the 13th monthpay
 	while($payDateArr = mysql_fetch_assoc($payrollQuery))
 	{
-		// Print "<script>console.log('".$payDateArr['date']."')</script>";
 		if($thirteenthBool)
 		{
 			$pastToDateThirteenthPay = date('F d, Y', strtotime('-6 day', strtotime($payDateArr['date'])));
@@ -101,7 +99,6 @@ if($period == "week")
 		}
 		$endDate = $payDateArr['date'];
 		$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
-		//Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
 
 		$attendance = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 		$attQuery = mysql_query($attendance);
@@ -112,7 +109,6 @@ if($period == "week")
 		{
 			$date = $attArr['date'];
 
-			//Print "<script>console.log('".$date."')</script>";
 			$workHrs = $attArr['workhours'];
 
 			$holidayChecker = "SELECT * FROM holiday WHERE date = '$date'";
@@ -236,7 +232,6 @@ else if($period == "year")
 		if ($noRepeat != $year  || $noRepeat == null)
 		{
 			$attMonth = "SELECT * FROM attendance WHERE empid = '$empid' AND (date LIKE '$month%' AND date LIKE '%$year') $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
-			// Print "<script>console.log('".$attMonth."')</script>";
 			$attMonthQuery = mysql_query($attMonth) or die (mysql_error());
 			//Computes 13th month per day of the month
 			while($attArr = mysql_fetch_assoc($attMonthQuery))

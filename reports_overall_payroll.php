@@ -246,20 +246,17 @@
 						$employeeQuery = mysql_query($employee);
 						if(mysql_num_rows($employeeQuery) >= 1)
 						{
-							Print "<script>console.log('1')</script>";
 							$color = "#ECF0F1";//for alternating color
 							$rowNum = 1;
 							
 							while($employeeArr = mysql_fetch_assoc($employeeQuery))
 							{
-								Print "<script>console.log('2')</script>";
 								$emplid = $employeeArr['empid'];
 								$payroll = "SELECT * FROM payroll WHERE date = '$date' AND empid='$emplid'";
 								$payrollQuery = mysql_query($payroll);
 								if(mysql_num_rows($payrollQuery) >= 1)
 								{
 									$dataBool = false;
-									Print "<script>console.log('3')</script>";
 									$payrollArr = mysql_fetch_assoc($payrollQuery);
 
 										$color = ($rowNum % 2 == 0 ? "#ECF0F1" : "#FDFEFE");//alternating color
@@ -408,7 +405,6 @@
 			// enable dropdown if step1 has a selected value
 			var item = document.getElementById('step1');
 			var step1 = item.options[item.selectedIndex].text;
-			console.log(step1);
 			if(step1 !== '-- All / With / Without --') {
 				document.getElementById('step2').disabled = false;
 			}

@@ -199,7 +199,6 @@ else
 
 	
     function loadAwol(num){
-    	console.log('asd');
 		// $('#awolNumber').val(num);
 		// $('#show').modal('show');
 	}
@@ -212,8 +211,6 @@ else
 
 		// Change name of modal to name of appropriate site
 		var span = document.getElementById('addSiteName').innerHTML = sitename;
-
-		console.log(sitename);
 
 		// Changing links accordingly
 		attendance.setAttribute("href", "enterattendance.php?site="+sitename+"&position=null"); 

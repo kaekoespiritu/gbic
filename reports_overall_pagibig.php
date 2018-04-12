@@ -7,11 +7,6 @@
 	include('directives/reports/middleware/reports_overall_contributions.php');
 
 	$site = $_GET['site'];
-
-	if(isset($_POST['date']))
-	{
-		Print "<script>console.log('".$_POST['date']."')</script>";
-	}
 ?>
 <html>
 <head>
@@ -254,7 +249,6 @@
 									//For the specfied week in first column
 									$endDate = $payDateArr['date'];
 									$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
-									//Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
 
 									$payroll = "SELECT * FROM payroll WHERE date = '$endDate' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 									$payrollQuery = mysql_query($payroll);
@@ -264,12 +258,9 @@
 										if($payrollArr['pagibig'] != 0)
 										{
 											$PagibigBool = true;
-											//Print "<script>console.log('bool: ".$PagibigBool."')</script>";
 											$monthly = $payrollArr['rate'] * 25;
 
 											$PagibigEmployer = $payrollArr['pagibig_er'];//Gets the value in the pagibig table
-
-											//Print "<script>console.log('".$PagibigEmployer."')</script>";
 											$PagibigContribution = $PagibigEmployer;
 
 											$totalPagibigContribution = $PagibigContribution + $payrollArr['pagibig'];
@@ -375,14 +366,11 @@
 								//Evaluates the attendance and compute the Pagibig contribution
 								while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 								{
-									//Print "<script>console.log('".$payrollDate."')</script>";
 									$dateExploded = explode(" ", $payDateArr['date']);
 									$month = $dateExploded[0];//gets the month
 									$year = $dateExploded[2];// gets the year
 
 									$payrollDay = $payDateArr['date'];
-
-									//Print "<script>console.log('".$month." - ".$year."')</script>";
 
 									$payroll = "SELECT * FROM payroll WHERE (date LIKE '$month%' AND date LIKE '%$year') AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 									$payrollQuery = mysql_query($payroll);
@@ -395,12 +383,9 @@
 											if($payrollArr['pagibig'] != 0)
 											{
 												$PagibigBool = true;
-												//Print "<script>console.log('yess')</script>";
 												$monthly = $payrollArr['rate'] * 25;
 
 												$PagibigEmployer = $payrollArr['pagibig_er'];//Gets the value in the Pagibig table
-
-												//Print "<script>console.log('".$PagibigEmployer."')</script>";
 												$ERContribution += $PagibigEmployer;
 
 												$totalPagibigContribution = $ERContribution + $payrollArr['pagibig'];
@@ -517,13 +502,10 @@
 								//Evaluates the attendance and compute the Pagibig contribution
 								while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 								{
-									//Print "<script>console.log('".$payrollDate."')</script>";
 									$dateExploded = explode(" ", $payDateArr['date']);
 									$year = $dateExploded[2];// gets the year
 
 									$payrollDay = $payDateArr['date'];
-
-									//Print "<script>console.log('".$month." - ".$year."')</script>";
 
 									$payroll = "SELECT * FROM payroll WHERE date LIKE '%$year' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 									$payrollQuery = mysql_query($payroll);
@@ -536,12 +518,9 @@
 											if($payrollArr['pagibig'] != 0)
 											{
 												$PagibigBool = true;
-												//Print "<script>console.log('yess')</script>";
 												$monthly = $payrollArr['rate'] * 25;
 
 												$PagibigEmployer = $payrollArr['pagibig_er'];//Gets the value in the Pagibig table
-
-												//Print "<script>console.log('".$PagibigEmployer."')</script>";
 												$ERContribution += $PagibigEmployer;
 
 												$totalPagibigContribution = $ERContribution + $payrollArr['pagibig'];

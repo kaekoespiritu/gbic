@@ -7,11 +7,6 @@
 	include('directives/reports/middleware/reports_overall_contributions.php');
 
 	$site = $_GET['site'];
-
-	if(isset($_POST['date']))
-	{
-		//Print "<script>console.log('".$_POST['date']."')</script>";
-	}
 ?>
 <html>
 <head>
@@ -254,7 +249,6 @@
 										//For the specfied week in first column
 										$endDate = $payDateArr['date'];
 										$startDate = date('F j, Y', strtotime('-6 day', strtotime($endDate)));
-										//Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
 
 										$payroll = "SELECT * FROM payroll WHERE date = '$endDate' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 										$payrollQuery = mysql_query($payroll);
@@ -264,12 +258,9 @@
 											if($payrollArr['sss'] != 0)
 											{
 												$sssBool = true;
-												//Print "<script>console.log('bool: ".$sssBool."')</script>";
 												$monthly = $payrollArr['rate'] * 25;
 
 												$sssEmployer = $payrollArr['sss_er'];//Gets the value in the sss table
-
-												//Print "<script>console.log('".$sssEmployer."')</script>";
 												$sssContribution = $sssEmployer;
 
 												$totalSSSContribution = $sssContribution + $payrollArr['sss'];
@@ -376,14 +367,11 @@
 									//Evaluates the attendance and compute the sss contribution
 									while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 									{
-										//Print "<script>console.log('".$payrollDate."')</script>";
 										$dateExploded = explode(" ", $payDateArr['date']);
 										$month = $dateExploded[0];//gets the month
 										$year = $dateExploded[2];// gets the year
 
 										$payrollDay = $payDateArr['date'];
-
-										//Print "<script>console.log('".$month." - ".$year."')</script>";
 
 										$payroll = "SELECT * FROM payroll WHERE (date LIKE '$month%' AND date LIKE '%$year') AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 										$payrollQuery = mysql_query($payroll);
@@ -396,12 +384,9 @@
 												if($payrollArr['sss'] != 0)
 												{
 													$sssBool = true;
-													//Print "<script>console.log('yess')</script>";
 													$monthly = $payrollArr['rate'] * 25;
 
 													$sssEmployer = $payrollArr['sss_er'];//Gets the value in the sss table
-
-													//Print "<script>console.log('".$sssEmployer."')</script>";
 													$ERContribution += $sssEmployer;
 
 													$totalSSSContribution = $ERContribution + $payrollArr['sss'];
@@ -518,13 +503,10 @@
 									//Evaluates the attendance and compute the sss contribution
 									while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 									{
-										//Print "<script>console.log('".$payrollDate."')</script>";
 										$dateExploded = explode(" ", $payDateArr['date']);
 										$year = $dateExploded[2];// gets the year
 
 										$payrollDay = $payDateArr['date'];
-
-										//Print "<script>console.log('".$month." - ".$year."')</script>";
 
 										$payroll = "SELECT * FROM payroll WHERE date LIKE '%$year' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 										$payrollQuery = mysql_query($payroll);
@@ -537,12 +519,9 @@
 												if($payrollArr['sss'] != 0)
 												{
 													$sssBool = true;
-													//Print "<script>console.log('yess')</script>";
 													$monthly = $payrollArr['rate'] * 25;
 
 													$sssEmployer = $payrollArr['sss_er'];//Gets the value in the sss table
-
-													//Print "<script>console.log('".$sssEmployer."')</script>";
 													$ERContribution += $sssEmployer;
 
 													$totalSSSContribution = $ERContribution + $payrollArr['sss'];

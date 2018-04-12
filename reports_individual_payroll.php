@@ -113,15 +113,8 @@
 								</td>
 							</tr>";
 							
-				
-					Print "<script>console.log('".$_POST['dateChange']."')</script>";
 					$chosenDate = $_POST['dateChange'];
 					$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$chosenDate' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
-				// }
-				// else//default
-				// {
-				// 	$payroll = "SELECT * FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
-				// }
 					$payrollQuery = mysql_query($payroll);
 					$printBool = false;//disable print button if there's no data retrieved
 					if(mysql_num_rows($payrollQuery))

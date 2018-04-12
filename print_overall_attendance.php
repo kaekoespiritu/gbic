@@ -9,11 +9,6 @@ $position = $_GET['position'];
 $require = $_GET['req'];
 $date = $_GET['date'];
 
-// Print "<script>console.log('site: ".$site."')</script>";
-// Print "<script>console.log('position: ".$position."')</script>";
-// Print "<script>console.log('require: ".$require."')</script>";
-// Print "<script>console.log('date: ".$date."')</script>";
-
 
 //Middleware
 $positionChecker = "SELECT * FROM job_position WHERE position = '$position' AND active = '1'";
@@ -75,7 +70,6 @@ if($require != "null")
 $spreadSheetCounter = 0;
 
 $siteLocation = "SELECT * FROM employee WHERE site = '$site' AND employment_status = '1' $appendQuery ORDER BY lastname ASC, position ASC";
-// Print "<script>console.log('".$siteLocation."')</script>";
 $siteQuery = mysql_query($siteLocation) or die (mysql_error());
 $rowCounter = 8; //start for the data in the row of excel
 
@@ -441,7 +435,6 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 
 			$attendance = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 
-			//Print '<script>console.log('.$attendance.')</script>';
 			$attendanceQuery = mysql_query($attendance);
 				
 			//preset variable for time in and time out

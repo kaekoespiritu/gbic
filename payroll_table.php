@@ -213,7 +213,6 @@ $date = strftime("%B %d, %Y");
 					//Default
 					else 
 					{
-						Print "<script>console.log('8')</script>";
 						$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'AND position = '$position'";
 					}
 					
@@ -276,7 +275,6 @@ $date = strftime("%B %d, %Y");
 							$payrollChecker = "SELECT * FROM payroll WHERE empid = '$empid' AND date='$date'";
 							$payrollQuery = mysql_query($payrollChecker);
 							$payrollStatus = "Incomplete";
-							Print '<script>console.log("'.$payrollChecker.'")</script>';
 							if(mysql_num_rows($payrollQuery) > 0)
 							{
 								$payrollStatus = "Complete";	

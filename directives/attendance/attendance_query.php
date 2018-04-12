@@ -4,13 +4,8 @@
 	function updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate)
 	{
 		$remarks = mysql_real_escape_string($remarks);
-		//Print "<script>alert('workinghrs ". $workinghrs ."')</script>";
-		//Print "<script>alert('".$attendance."')</script>";
-		Print "<script>console.log('1.0')</script>";
 		if((!empty($timein) && !empty($timeout)) && $day == "Sunday")
 		{
-			Print "<script>console.log('1.1')</script>";
-			//Print "<script>alert('1')</script>";
 			$AttQuery = "UPDATE attendance SET 	empid='".$empid."',
 											  	position= '".$position."',
 											  	timein= '".$timein1."',
@@ -32,8 +27,6 @@
 		}
 		else if((empty($timein) && empty($timeout)) && $day == "Sunday")
 		{
-			Print "<script>console.log('1.2')</script>";
-			//Print "<script>alert('2')</script>";
 			$AttQuery = "UPDATE attendance SET 	empid='".$empid."',
 											  	position= '".$position."',
 											  	timein= '".$timein1."',
@@ -55,12 +48,8 @@
 		}
 		else
 		{
-			Print "<script>console.log('2.0')</script>";
-			//Print "<script>alert('3')</script>";
 			if(!empty($holidayDate))
 			{
-				Print "<script>console.log('2.1')</script>";
-				//Print "<script>alert('4')</script>";
 				$AttQuery = "UPDATE attendance SET 	empid='".$empid."',
 												  	position= '".$position."',
 												  	timein= '".$timein1."',
@@ -82,9 +71,6 @@
 			}
 			else
 			{
-				Print "<script>console.log('2.2')</script>";
-
-				//Print "<script>alert('5')</script>";
 				$AttQuery = "UPDATE attendance SET 	empid='".$empid."',
 												  	position= '".$position."',
 												  	timein= '".$timein1."',
@@ -103,17 +89,13 @@
 												  	site='".$location."',
 												  	sunday='0',
 												  	holiday='0' WHERE date = '$date' AND empid = '$empid'";
-				// Print "<script>console.log('".$AttQuery."')</script>";
 			}
 		}
-		//Print "<script>alert('".$AttQuery."')</script>";
 		return $AttQuery;
 	}
 
 	function newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate)
 	{
-		// $remarks = mysql_real_escape_string($remarks);
-		Print "<script>console.log('3.0')</script>";
 		if((!empty($timein) && !empty($timeout)) && $day == "Sunday")
 		{
 			$AttQuery .= "('".$empid."',

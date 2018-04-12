@@ -132,7 +132,6 @@ $loopCount = ($rowCount != 0 ? $countExplode[0] : 1);//gets only the whole numbe
 
 $endCounter = 5;//end Query
 $startCounter = 0;// start query
-// Print "<script>console.log('".$loopCount."')</script>";
 
 $cellArray = 	array(
 					array('A','B','C','D'),//1st payslip column
@@ -153,7 +152,6 @@ for($count = 0; $count <= $loopCount; $count++)
 		$counter = 0;//counter for loop for horizontal display
 		while($empRow = mysql_fetch_assoc($empQuery))//horizontal display
 		{
-			// Print "<script>console.log('".$empCounter."')</script>";
 			// $empCounter++;	
 			$cellA = $cellArray[$counter][0];
 			$cellB = $cellArray[$counter][1];

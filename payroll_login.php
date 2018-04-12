@@ -22,7 +22,6 @@
 
 	//Checks if the current date is the closed payroll
 	$day = date('l', strtotime($date));
-	// Print "<script>console.log('".$day."')</script>";
 	$payrollCheck = "SELECT * FROM payroll_day";
 	$payrollDayQuery = mysql_query($payrollCheck) or die(mysql_error());
 	$payrollArr = mysql_fetch_assoc($payrollDayQuery);
@@ -62,7 +61,6 @@
 					<?php
 						//Checks if the current date is the closed payroll
 						$day = date('l', strtotime($date));
-						// Print "<script>console.log('".$day."')</script>";
 						$payrollCheck = "SELECT * FROM payroll_day";
 						$payrollDayQuery = mysql_query($payrollCheck) or die(mysql_error());
 						$payrollArr = mysql_fetch_assoc($payrollDayQuery);

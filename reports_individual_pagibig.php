@@ -7,11 +7,6 @@
 	include('directives/reports/middleware/reports_individual_contributions.php');
 
 	$empid = $_GET['empid'];
-
-	if(isset($_POST['date']))
-	{
-		Print "<script>console.log('".$_POST['date']."')</script>";
-	}
 ?>
 <html>
 <head>
@@ -237,11 +232,9 @@
 						//Evaluates the attendance and compute the 13th monthpay
 						while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 						{
-							//Print "<script>console.log('bool: ".$pagibigBool."')</script>";
 							//For the specfied week in first column
 							$endDate = $payDateArr['date'];
 							$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
-							//Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
 
 							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$endDate' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 							$payrollQuery = mysql_query($payroll);
@@ -251,12 +244,10 @@
 								if($payrollArr['pagibig'] != 0)
 								{
 									$pagibigBool = true;
-									//Print "<script>console.log('bool: ".$pagibigBool."')</script>";
 									$monthly = $payrollArr['rate'] * 25;
 
 									$pagibigEmployer = $payrollArr['pagibig_er'];//Gets the value in the Pagibig table
 
-									//Print "<script>console.log('".$pagibigEmployer."')</script>";
 									$pagibigContribution = $pagibigEmployer;
 
 									$totalPagibigContribution = $pagibigContribution + $payrollArr['pagibig'];
@@ -341,8 +332,6 @@
 
 							$payrollDay = $payDateArr['date'];
 
-							//Print "<script>console.log('".$month." - ".$year."')</script>";
-
 							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 							$payrollQuery = mysql_query($payroll);
 							if(mysql_num_rows($payrollQuery) > 0)
@@ -360,12 +349,9 @@
 										if($payrollArr['pagibig'] != 0)
 										{
 											$pagibigBool = true;
-											//Print "<script>console.log('yess')</script>";
 											$monthly = $payrollArr['rate'] * 25;
 
 											$pagibigEmployer = $payrollArr['pagibig_er'];//Gets the value in the pagibig table
-
-											//Print "<script>console.log('".$pagibigEmployer."')</script>";
 											$ERContribution += $pagibigEmployer;
 											$EEContribution += $payrollArr['pagibig'];
 
@@ -474,8 +460,6 @@
 
 							$payrollDay = $payDateArr['date'];
 
-							//Print "<script>console.log('".$month." - ".$year."')</script>";
-
 							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 							$payrollQuery = mysql_query($payroll);
 							if(mysql_num_rows($payrollQuery) > 0)
@@ -493,12 +477,9 @@
 										if($payrollArr['pagibig'] != 0)
 										{
 											$pagibigBool = true;
-											//Print "<script>console.log('yess')</script>";
 											$monthly = $payrollArr['rate'] * 25;
 
 											$pagibigEmployer = $payrollArr['pagibig_er'];//Gets the value in the Pagibig table
-
-											//Print "<script>console.log('".$pagibigEmployer."')</script>";
 											$ERContribution += $pagibigEmployer;
 											$EEContribution += $payrollArr['pagibig'];
 

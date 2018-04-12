@@ -7,11 +7,6 @@
 	include('directives/reports/middleware/reports_overall_contributions.php');
 
 	$site = $_GET['site'];
-
-	if(isset($_POST['date']))
-	{
-		Print "<script>console.log('".$_POST['date']."')</script>";
-	}
 ?>
 <html>
 <head>
@@ -274,7 +269,6 @@
 									//For the specfied week in first column
 									$endDate = $payDateArr['date'];
 									$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
-									//Print "<script>console.log('".$endDate." - ".$startDate."')</script>";
 
 									$payroll = "SELECT * FROM payroll WHERE date = '$endDate' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 									$payrollQuery = mysql_query($payroll);
@@ -480,14 +474,11 @@
 								while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 								{
 
-									//Print "<script>console.log('".$payrollDate."')</script>";
 									$dateExploded = explode(" ", $payDateArr['date']);
 									$month = $dateExploded[0];//gets the month
 									$year = $dateExploded[2];// gets the year
 
 									$payrollDay = $payDateArr['date'];
-
-									Print "<script>console.log('".$month." ".$year."')</script>";
 
 									$payroll = "SELECT * FROM payroll WHERE (date LIKE '$month%' AND date LIKE '%$year') AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 									$payrollQuery = mysql_query($payroll);
@@ -503,13 +494,11 @@
 											$monthly = $payrollArr['rate'] * 25;
 											if($payrollArr['sss'] != 0)
 											{
-												//Print "<script>console.log('sss')</script>";
 												$contBool = true;
 												$sssBool = true;
 
 												$sssEmployer = $payrollArr['sss_er'];//Gets the value in the sss table
 
-												//Print "<script>console.log('".$sssEmployer."')</script>";
 												$sssERContribution += $sssEmployer;
 												$sssEEContribution += $payrollArr['sss'];
 
@@ -518,7 +507,6 @@
 											}
 											if($payrollArr['pagibig'] != 0)
 											{
-												//Print "<script>console.log('pagibig')</script>";
 												$contBool = true;
 												$pagibigBool = true;
 
@@ -539,12 +527,10 @@
 												$philhealthBool = true;
 
 												$philhealthEmployer = $payrollArr['philhealth_er'];//Gets the value in the philhealth table
-												// Print "<script>console.log('Ph: ".$payrollArr['philhealth_er']."')</script>";
 												$philhealthERContribution += $philhealthEmployer;
 												$philhealthEEContribution += $payrollArr['philhealth'];
 
 												$philhealthContribution = $philhealthERContribution + $philhealthEEContribution;
-												 Print "<script>console.log('Phee: ".$philhealthERContribution." - Pher: ".$philhealthEEContribution."')</script>";
 												
 												
 											}
@@ -554,7 +540,6 @@
 											if($monthNoRepeat != $month.$year)
 											{
 												$subTotalContribution += $philhealthContribution + $pagibigContribution + $sssContribution;
-												// Print "<script>console.log('Ph: ".$philhealthContribution." - Pagibig: ".$pagibigContribution."')</script>";
 												$totalContribution += $subTotalContribution;
 
 												Print "
@@ -709,8 +694,6 @@
 								//Evaluates the attendance and compute the sss contribution
 								while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 								{
-
-									//Print "<script>console.log('".$payrollDate."')</script>";
 									$dateExploded = explode(" ", $payDateArr['date']);
 									$year = $dateExploded[2];// gets the year
 
@@ -728,13 +711,10 @@
 											$monthly = $payrollArr['rate'] * 25;
 											if($payrollArr['sss'] != 0)
 											{
-												//Print "<script>console.log('sss')</script>";
 												$contBool = true;
 												$sssBool = true;
 
 												$sssEmployer = $payrollArr['sss_er'];//Gets the value in the sss table
-
-												//Print "<script>console.log('".$sssEmployer."')</script>";
 												$sssERContribution += $sssEmployer;
 												$sssEEContribution += $payrollArr['sss'];
 
@@ -743,7 +723,6 @@
 											}
 											if($payrollArr['pagibig'] != 0)
 											{
-												//Print "<script>console.log('pagibig')</script>";
 												$contBool = true;
 												$pagibigBool = true;
 

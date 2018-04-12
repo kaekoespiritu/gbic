@@ -2,7 +2,6 @@ document.getElementById("attendance").setAttribute("style", "background-color: #
 
 //jQuery for timepicker
 $(document).ready(function(){
-	console.log("jQuery comes in!");
 	$('input.timein1').timepicker({
 		timeFormat: 'hh:mm p',
 		dynamic: false,
@@ -47,32 +46,26 @@ $(document).ready(function(){
 	//to compute the time, workhours,etc.
 	$('input.timein1').change(function(){
 		var id = $(this).parent().parent().attr('id');
-		//console.log(id);
 		timeIn(id);
 	});
 	$('input.timeout1').change(function(){
 		var id = $(this).parent().parent().attr('id');
-		//console.log(id);
 		timeOut(id);
 	});
 	$('input.timein2').change(function(){
 		var id = $(this).parent().parent().attr('id');
-		//console.log(id);
 		timeIn(id);
 	});
 	$('input.timeout2').change(function(){
 		var id = $(this).parent().parent().attr('id');
-		//console.log(id);
 		timeOut(id);
 	});
 	$('input.timein3').change(function(){
 		var id = $(this).parent().parent().attr('id');
-		//console.log(id);
 		timeIn(id);
 	});
 	$('input.timeout3').change(function(){
 		var id = $(this).parent().parent().attr('id');
-		//console.log(id);
 		timeOut(id);
 	});
 
@@ -130,7 +123,6 @@ function timeIn(id) {
 	if(timein3 && timeout3)//if there is value inside nightshift
 		computeTimeNightshift( mainRow, timeinhour1, timeinmin1, timeouthour1, timeoutmin1, timeinhour2, timeinmin2, timeouthour2, timeoutmin2, timeinhour3, timeinmin3, timeouthour3, timeoutmin3);
 	
-	// console.log("auth: "+ nightShiftAuth);
 	// Function call to compute for working hours, undertime and overtime
 	if(!nightShiftAuth) 
 		computeTime( mainRow, timeinhour1, timeinmin1, timeouthour1, timeoutmin1, timeinhour2, timeinmin2, timeouthour2, timeoutmin2);
@@ -177,7 +169,6 @@ function timeOut(id) {
 	if(timein3 && timeout3)//if there is value inside nightshift
 		computeTimeNightshift( mainRow, timeinhour1, timeinmin1, timeouthour1, timeoutmin1, timeinhour2, timeinmin2, timeouthour2, timeoutmin2, timeinhour3, timeinmin3, timeouthour3, timeoutmin3);
 	
-	// console.log("auth: "+ nightShiftAuth);
 	// Function call to compute for working hours, undertime and overtime
 	if(!nightShiftAuth)
 		computeTime(mainRow, timeinhour1, timeinmin1, timeouthour1, timeoutmin1, timeinhour2, timeinmin2, timeouthour2, timeoutmin2);
@@ -277,7 +268,6 @@ function timeOut(id) {
 
 	function remarksListener(val) {
 		var remarkInput = 100 - val.length;
-		console.log(remarkInput);
 
 		if(remarkInput < 0)
 			document.getElementById('saveRemarks').classList.add('disabletotally');
@@ -304,7 +294,6 @@ function timeOut(id) {
 		var empName = mainRow.querySelector('.empName').innerHTML.trim();
 		var modal = document.getElementById('dito').innerHTML = "Remarks for " + empName;
 		document.getElementById('saveRemarks').setAttribute('onclick', "saveRemarks(\""+ id +"\")");
-		//console.log(modal);
 		
 	}
 	// This triggers the submit of search Form ( 13 = Enter key )
@@ -385,7 +374,6 @@ function timeOut(id) {
 	}
 
 	function getHour(time) {
-		//console.log("getHour: " + time);
 		if(time)
 		{
 		var hour = time.split(":"); // Split hour + min + AM/PM
@@ -417,7 +405,6 @@ function timeOut(id) {
 }
 
 function getMin(time) {
-	//console.log("getMin: " + time);
 	if(time)
 	{
 		var hour = time.split(":"); // Split hour + min + AM/PM
@@ -434,7 +421,6 @@ function getMin(time) {
 
 function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timeinhour2,timeinmin2,timeouthour2,timeoutmin2) 
 {
-	//console.log("Time in: " + timeinhour1 + ":" + timeinmin1 + " Time out: " + timeouthour1 + ":" + timeoutmin1 + "/AFTER BREAK - Time in: " + timeinhour2 + ":" + timeinmin2 + " Time out: " + timeouthour2 + ":" + timeoutmin2 );
 
 	row.querySelector('.attendance').value = "";
 
@@ -478,7 +464,6 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		}
 		else
 		{
-			// console.log("timein1: "+timeinhour1+"// timeout1: "+timeouthour1+"// timein2: "+timeinhour2+"// timeout2: "+timeouthour2);
 			// If time is 12AM
 			if(timeinhour1 == 0)
 			{
@@ -490,7 +475,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				//alert(workinghours);
 
 			}
-			// console.log("workinghours1: "+workinghours1);
+		
 			// If time in 12AM of after break
 			if(timeinhour2 == 0)
 			{
@@ -506,17 +491,13 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			{
 				workinghours1 = workinghours1 - 1;
 			}
-			// console.log("workinghours1: "+workinghours1);
 			//Decrement workinghours if minutes is more than time out mins
 			if(timeinmin2 > timeoutmin2)
 			{
 				workinghours2 = workinghours2 - 1;
 			}
-			// console.log("workinghours1: "+workinghours1);
-			// console.log("workinghours2: "+workinghours2);
 			// Gets the overal working hours;
 			workinghours = workinghours1 + workinghours2;
-			//console.log("Workinghours :  "+workinghours);
 		}
 		
 
@@ -524,8 +505,6 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		if(workinghours >= 1)
 		{
 		// Computing minutes
-		// console.log("timein1: "+timeinhour1+"// timeout1: "+timeouthour1+"// timein2: "+timeinhour2+"// timeout2: "+timeouthour2);
-			console.log("Morning shift 12");
 			//Before break
 			//If employee chooses halfday
 			if(timeinhour2 == "HD")
@@ -559,7 +538,6 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				{
 					workingmins1 = 0;
 				}
-				// console.log("workingmins1: "+workingmins1);
 				//After break
 				if(timeinmin2 > timeoutmin2)
 				{
@@ -574,11 +552,10 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				{
 					workingmins2 = 0;
 				}
-				// console.log("workingmins2: "+workingmins2);
+
 				workingmins = Math.abs(workingmins1) + Math.abs(workingmins2);
 			}
 				
-			// console.log("workingmins: "+workingmins);
 			
 
 			if(workingmins >= 60)
@@ -694,21 +671,11 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				if ((timeinhour1 <= 22 && timeouthour1 <= 6) ||
 			   (timeinhour1 <= 22 && timeouthour1 <= 24))
 				{
-					//console.log("timein: "+timeinhour1+" | timeout: "+timeouthour1);
 					//posibility 1
 					if(timeinhour1 <= 24 && timeouthour1 >= 22)
 					{
-						//console.log("possibility 1");
 						nightdiff = timeouthour1 - 22;
-						//console.log("nightdiff : "+nightdiff);
 					}
-				// // possibility 2 -- When after break time is past 12AM (and started past 10PM)
-				// 	else if((timeinhour1 <= 22 || timeinhour1 >= 22))
-				// 	{
-				// 		console.log("possibility 2la");
-
-				// 		nightdiff = timeouthour1 - 22;
-				// 	}
 					else
 					{
 						nightdiff = "";
@@ -746,19 +713,14 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			   (timeinhour2 <= 22 && timeouthour2 <= 6) ||
 			   (timeinhour2 <= 22 && timeouthour2 <= 24))//night diff needs reconfiguration
 			{
-				//console.log("timein1: "+timeinhour1+"// timeout1: "+timeouthour1+"// timein2: "+timeinhour2+"// timeout2: "+timeouthour2);
-				// console.log("nightdiff 2");
 			//posibility 1
 				if(timeouthour2 <= 24 && timeouthour2 >= 22)
 				{
-					//console.log("possibility 1");
 					nightdiff = timeouthour2 - 22;
-					//console.log("nightdiff : "+nightdiff);
 				}
 			// possibility 2 -- When after break time is past 12AM (and started past 10PM)
 				else if(timeouthour2 >= 24 && timeouthour2 <= 6 && (timeinhour1 <= 22 || timeinhour1 >= 22 || timeinhour2 <= 22 || timeouthour2 >= 22))
 				{
-					//console.log("possibility 2");
 
 					nightdiff = timeouthour1 - 22 + (timeouthour2 - timeinhour2);
 
@@ -772,18 +734,15 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				}
 				else if (timeinhour1 <= 22 && timeouthour1 >= 22)
 				{
-					//console.log("possibility 3");
 					nightdiff = timeouthour1 - 22;
 
 					if(timeouthour2 > 6)
 					{
-						//console.log("possibility 3.1");
 						temp = (timeinhour2 - 6);
 						nightdiff += Math.abs(temp); 
 					}
 					else if(timeouthour2 <= 6)
 					{
-						//console.log("possibility 3.2");
 						temp = timeinhour2 - timeouthour2;
 						nightdiff += Math.abs(temp); 
 					}
@@ -791,7 +750,6 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				}
 				else
 				{
-					//console.log("possibility 4");
 					nightdiff = "";
 				}
 				if(Number.isInteger(nightdiff))
@@ -828,19 +786,13 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		// NIGHT SHIFT (timeout-timein is negative)
 		else
 		{
-			console.log("nightshift");
 		// Night differential starts at 10pm - 6am
-			//console.log("Time in: " + timeinhour + ":" + timeinmin + " Time out: " + timeouthour + ":" + timeoutmin);
-			//console.log("Working hours: " + workinghours + " Working mins: " + workingmins);
-			// sets the attendance status to PRESENT
-			//row.querySelector('.attendance').value = "PRESENT";
 
 			//Invert the time to make the computation the same as the morning shift
 			// timeinhour1 -= 12;
 			// timeouthour1 += 12;
 			// timeinhour2 += 12;
 			// timeouthour2 += 12;
-		// console.log("timein1: "+timeinhour1+"// timeout1: "+timeouthour1+"// timein2: "+timeinhour2+"// timeout2: "+timeouthour2);
 			if(timeinhour1 < 12)
 				timeinhour1 +=12;
 			else
@@ -1025,37 +977,28 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				//alert("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
 				if((timeinhour1 <= 10 && timeouthour1 <= 18) || (timeinhour2 <= 10 && timeouthour2 <= 18))//night diff needs reconfiguration
 				{
-					console.log("nightdiff");
 					var NDin;
 					var NDout;
 					var workhrs;
-					// console.log("timeinhour1: "+timeinhour1);
-					// console.log("timeouthour1: "+timeouthour1);
-					// console.log("timeinhour2: "+timeinhour2);
-					// console.log("timeouthour2: "+timeouthour2);
+
 					//Possibility 2: if 10pm is in after lunch
 					if(timeinhour2 < 10)
 					{
-						console.log("possibility 2");
 						NDin = timeinhour2 - 10;
 						NDout = 0;
 						if(timeouthour2 >= 18)
 						{
 							NDout = timeouthour2 - 18;
 						}
-						//console.log("NDout : "+ NDout);
 						workhrs = timeinhour2 - timeouthour2;
 						nightdiff = Math.abs(NDin) - Math.abs(workhrs);
-						//console.log("nightdiff : "+ nightdiff);
 						nightdiff += NDout;
-						// console.log("ND: "+nightdiff);
 					}
 					//Possibility 1: if 10pm is in before lunch
 					else if(timeinhour1 <= 10)
 					{
 						if(timeouthour1 >= 18)//If timein encapsulated all of the night diff
 						{
-							console.log("possibility 1-1");
 
 							NDin = timeinhour1 - 10;
 							NDout = timeouthour1 - 18;
@@ -1064,18 +1007,14 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 						}
 						else//the normal night diff
 						{
-							console.log("possibility 1-2");
 
 							workhrs1 = timeinhour1 - timeouthour1;
 							NDin1 = timeinhour1 - 10;
 							nightdiff1 = Math.abs(NDin1) - Math.abs(workhrs1);
-							// console.log("ND1: "+nightdiff1);
 							
 							NDin2 = timeinhour2 - 10;
 							if(timeouthour2 <=18)
 							{
-								console.log("timeinhour1: "+timeinhour1+" || timeouthour1: "+timeouthour1+" || timeinhour2: "+timeinhour2+" || timeouthour2: "+timeouthour2 );
-								console.log("possibility 1-2-1");
 								var temp = 0;
 								if(timeouthour1 > 10)
 									temp = timeouthour1 - 10;
@@ -1084,7 +1023,6 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 							}
 							else
 							{
-								console.log("possibility 1-2-2");
 								NDout2 = 8;
 							}
 							if(timeouthour2 <=18)
@@ -1109,8 +1047,6 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			}
 			else
 			{
-				console.log("nightdiff");
-				//alert("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
 				if((timeinhour1 <= 10 && timeouthour1 <= 18))//night diff needs reconfiguration
 				{
 					
@@ -1123,7 +1059,6 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					{
 						if(timeouthour1 >= 18)//If timein encapsulated all of the night diff
 						{
-							//console.log("possibility 1-1");
 
 							NDin = timeinhour1 - 10;
 							NDout = timeouthour1 - 18;
@@ -1132,17 +1067,10 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 						}
 						else//the normal night diff
 						{
-							//console.log("possibility 1-2");
 
 							workhrs1 = timeinhour1 - timeouthour1;
 							NDin1 = timeinhour1 - 10;
 							nightdiff1 = Math.abs(NDin1) - Math.abs(workhrs1);
-							// console.log("ND1: "+nightdiff1);
-							// console.log(timeouthour2);
-							
-							
-							// console.log("NDout2: "+NDout2);
-							// console.log("ND2: "+nightdiff2);
 							nightdiff = nightdiff1;
 							
 							nightdiff = Math.abs(nightdiff);
@@ -1197,13 +1125,11 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 
 		if(!row.querySelector('.halfdayChk').checked)
 		{
-			//console.log('yea');
 			row.querySelector('.timein2').placeholder = "";
 			row.querySelector('.timeout2').placeholder = "";
 			row.querySelector('.timein3').placeholder = "";
 			row.querySelector('.timeout3').placeholder = "";
 		}
-		//console.log('yow');
 		//for hidden rows
 		row.querySelector('.workinghoursH').value = "";
 		row.querySelector('.overtimeH').value = "";
@@ -1224,14 +1150,12 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 // For night shift
 function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, timeoutmin1, timeinhour2, timeinmin2, timeouthour2, timeoutmin2, timeinhour3, timeinmin3, timeouthour3, timeoutmin3)
 {
-	//console.log("Time in: " + timeinhour1 + ":" + timeinmin1 + " Time out: " + timeouthour1 + ":" + timeoutmin1 + "/AFTER BREAK - Time in: " + timeinhour2 + ":" + timeinmin2 + " Time out: " + timeouthour2 + ":" + timeoutmin2 );
 
 	row.querySelector('.attendance').value = "";
 
 	// Verifies that time in and time out input fields have value
 	if(timeinhour1 && timeouthour1 && timeinhour2 && timeouthour2 && timeinhour3 && timeouthour3)
 	{
-		console.log('timein1: '+timeinhour1+' || timeout1: '+timeouthour1+' || timein2: '+timeinhour2+' || timeout2: '+timeouthour2+' || timein3: '+timeinhour3+' || timeout3: '+timeouthour3);
 		//alert("timein: "+timeinhour+"timeout: "+ timeouthour);
 		var workinghours;
 		var workingmins;
@@ -1291,7 +1215,6 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 		}
 		// Gets the overal working hours;
 		workinghours = workinghours1 + workinghours2 + workinghours3;
-		//console.log("Workinghours :  "+workinghours);
 		
 		
 
@@ -1299,7 +1222,6 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 		if(workinghours >= 1)
 		{
 		// Computing minutes
-			console.log("Morning shift");
 		
 			//Before break
 			if(timeinmin1 > timeoutmin1)
@@ -1470,13 +1392,10 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				(timeinhour3 <= 22 && timeouthour3 >= 22) ||// pos 13
 				(timeinhour3 <= 22 && timeouthour3 <= 6))// pos 14
 			{
-				// console.log('timein1: '+timeinhour1+' || timeout1: '+timeouthour1+' || timein2: '+timeinhour2+' || timeout2: '+timeouthour2+' || timein3: '+timeinhour3+' || timeout3: '+timeouthour3);
 				if(timeinhour1 <= 22 && timeouthour1 >= 22)// pos1 ~ 6
 				{
-					// console.log('pos 1~6');
 					if((timeinhour2 >= 1 && timeouthour2 <= 6) && (timeinhour3 >= 1 && timeouthour3 <= 6))// pos 1
 					{
-						// console.log('pos 1');
 						time1 = timeouthour1 - 22;
 						time2 = timeinhour2 - timeouthour2;
 						time3 = timeinhour3 - timeouthour3;
@@ -1484,7 +1403,6 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					}
 					else if((timeinhour2 >= 1 && timeouthour2 <= 6) && (timeinhour3 <= 6 && timeouthour3 >= 6))// pos 2
 					{
-						// console.log('pos 2');
 						time1 = timeouthour1 - 22;
 						time2 = timeinhour2 - timeouthour2;
 						time3 = timeinhour3 - 6;
@@ -1492,7 +1410,6 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					}
 					else if((timeinhour2 >= 22 && timeouthour2 <= 6) && (timeinhour3 >= 1 && timeouthour3 <= 6))// pos 3
 					{
-						// console.log('pos 3');
 						time1 = timeouthour1 - 22;
 
 						var time2n1 = timeinhour2 - 24;
@@ -1503,7 +1420,6 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					}
 					else if((timeinhour2 >= 22 && timeouthour2 <= 6) && (timeinhour3 <= 6 && timeouthour3 >= 6))// pos 4
 					{
-						// console.log('pos 4');
 						time1 = timeouthour1 - 22;
 
 						var time2n1 = timeinhour2 - 24;
@@ -1514,14 +1430,12 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					}
 					else if((timeinhour2 >= 1 && timeouthour2 <= 6) && timeinhour3 >= 6)// pos 5
 					{
-						// console.log('pos 5');
 						time1 = timeouthour1 - 22;
 						time2 = timeinhour2 - timeouthour2;
 						nightdiff = Math.abs(time1) + Math.abs(time2);
 					}
 					else// pos 6 -- 1st time is the only one inside nightdiff time
 					{
-						// console.log('pos 6');
 						time1 = timeouthour1 - 22;
 						nightdiff = Math.abs(time1);
 					}
@@ -1529,10 +1443,9 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				}
 				else if(timeinhour1 <= 22 && timeouthour1 <= 6)// pos7 ~ 8
 				{
-					// console.log('pos 7~8');
+
 					if((timeinhour2 >= 1 && timeouthour2 <= 6) && timeinhour3 > 6)// pos 7
 					{
-						// console.log('pos 7');
 						var time1n1 = 24 - 22; //because in this possibility the time in is before 10 and will last until the next day.
 						time1 = Math.abs(time1n1) + timeouthour1;
 
@@ -1541,7 +1454,6 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					}
 					else if((timeinhour2 >= 1 && timeouthour2 <= 6) && (timeinhour3 <= 6 && timeouthour3 >= 6))// pos 8
 					{
-						// console.log('pos 8');
 						var time1n1 = 24 - 22; //because in this possibility the time in is before 10 and will last until the next day.
 						time1 = Math.abs(time1n1) + timeouthour1;
 
@@ -1552,27 +1464,22 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				}
 				else if(timeinhour2 <= 22 && timeouthour2 >= 22)// pos9 ~ 10
 				{
-					// console.log('pos 9~10');
 					if(timeinhour3 >= 1 && timeouthour3 <= 6) // pos 9
 					{
-						// console.log('pos 9');
 						time2 = timeouthour2 - 22;
 						time3 = timeinhour3 - timeouthour3;
 						nightdiff = Math.abs(time2) + Math.abs(time3);
 					}
 					else // pos 10
 					{
-						// console.log('pos 10');
 						time2 = timeouthour2 - 22;
 						nightdiff = Math.abs(time2);
 					}
 				}
 				else if(timeinhour2 <= 22 && timeouthour2 <= 6)// pos 11 ~ 12
 				{
-					// console.log('pos 11~12');
 					if(timeinhour3 <= 6 && timeouthour3 >= 6)// pos 11
 					{
-						// console.log('pos 11');
 						var time2n1 = 24 - 22; //because in this possibility the time in is before 10 and will last until the next day.
 						time2 = Math.abs(time2n1) + timeouthour2;;
 
@@ -1581,7 +1488,6 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					}
 					else if(timeinhour3 >= 1 && timeouthour3 <= 6)// pos 12
 					{
-						// console.log('pos 12');
 						var time2n1 = 24 - 22; //because in this possibility the time in is before 10 and will last until the next day.
 						time2 = Math.abs(time2n1) + timeouthour2;;
 
@@ -1591,13 +1497,11 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				}
 				else if(timeinhour3 <= 22 && timeouthour3 >= 22)// pos 13
 				{
-					// console.log('pos 13');
 					time3 = timeouthour3 - 22;
 					nightdiff = Math.abs(time3);
 				}
 				else if(timeinhour3 <= 22 && timeouthour3 <= 6)// pos 14
 				{
-					// console.log('pos 14');
 					var time3n1 = 24 - 22; //because in this possibility the time in is before 10 and will last until the next day.
 					time3 = Math.abs(time3n1) + timeouthour3;
 
@@ -1647,8 +1551,6 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 	// NIGHT SHIFT (timeout-timein is negative)
 		else
 		{
-			console.log("nightshift1");
-		// console.log('timein1: '+timeinhour1+' || timeout1: '+timeouthour1+' || timein2: '+timeinhour2+' || timeout2: '+timeouthour2+' || timein3: '+timeinhour3+' || timeout3: '+timeouthour3);
 
 		//Invert time for easier computation of night diff
 			//before break
@@ -1699,14 +1601,10 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				timeinhour3 = 24;
 			if(timeouthour3 == 0)
 				timeouthour3 = 24;
-			
-			//console.log("timein1: "+timeinhour1+"// timeout1: "+timeouthour1+"// timein2: "+timeinhour2+"// timeout2: "+timeouthour2);
+		
 			workinghours1 = timeouthour1 - timeinhour1;
 			workinghours2 = timeouthour2 - timeinhour2;
 			workinghours3 = timeouthour3 - timeinhour3;
-			// console.log('workinghours1: '+workinghours1+' | workinghours2: '+workinghours2+' | workinghours3: '+workinghours3);
-
-			// console.log('timein1: '+timeinhour1+' || timeout1: '+timeouthour1+' || timein2: '+timeinhour2+' || timeout2: '+timeouthour2+' || timein3: '+timeinhour3+' || timeout3: '+timeouthour3);
 
 			//Decrement workinghours if minutes is more than time out mins
 			if(timeinmin1 > timeoutmin1)
@@ -1772,9 +1670,6 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			{
 				workingmins3 = 0;
 			}
-			console.log('workingmins1: '+workingmins1);
-			console.log('workingmins2: '+workingmins2);
-			console.log('workingmins3: '+workingmins3);
 			
 			workingmins = Math.abs(workingmins1) + Math.abs(workingmins2) + Math.abs(workingmins3);
 			
@@ -1873,13 +1768,10 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				(timeinhour3 <= 10 && timeouthour3 >= 10) ||// pos 13
 				(timeinhour3 <= 10 && timeouthour3 <= 18))// pos 14
 			{
-				//console.log('timein1: '+timeinhour1+' || timeout1: '+timeouthour1+' || timein2: '+timeinhour2+' || timeout2: '+timeouthour2+' || timein3: '+timeinhour3+' || timeout3: '+timeouthour3);
 				if((timeinhour1 <= 10 && timeouthour1 >= 10) && timeouthour1 <= 12)// pos1 ~ 6
 				{
-					// console.log('pos 1~6');
 					if((timeinhour2 >= 12 && timeouthour2 <= 18) && (timeinhour3 >= 12 && timeouthour3 <= 18))// pos 1
 					{
-						// console.log('pos 1');
 						time1 = timeouthour1 - 10;
 						time2 = timeinhour2 - timeouthour2;
 						time3 = timeinhour3 - timeouthour3;
@@ -1887,7 +1779,6 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					}
 					else if((timeinhour2 >= 12 && timeouthour2 <= 18) && (timeinhour3 <= 18 && timeouthour3 >= 18))// pos 2
 					{
-						// console.log('pos 2');
 						time1 = timeouthour1 - 10;
 						time2 = timeinhour2 - timeouthour2;
 						time3 = timeinhour3 - 18;
@@ -1895,7 +1786,6 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					}
 					if((timeinhour2 >= 10 && timeouthour2 <= 18) && (timeinhour3 >= 12 && timeouthour3 <= 18))// pos 3
 					{
-						// console.log('pos 3');
 						time1 = timeouthour1 - 10;
 						time2 = timeinhour2 - timeouthour2;
 						time3 = timeinhour3 - timeouthour3;
@@ -1903,7 +1793,6 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					}
 					else if((timeinhour2 >= 10 && timeouthour2 <= 18) && (timeinhour3 <= 18 && timeouthour3 >= 18))// pos 4
 					{
-						// console.log('pos 4');
 						time1 = timeouthour1 - 10;
 						time2 = timeinhour2 - timeouthour2;
 						time3 = timeinhour3 - 18;
@@ -1911,14 +1800,12 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					}
 					else if((timeinhour2 >= 12 && timeouthour2 <= 18) && timeinhour3 >= 18)// pos 5
 					{
-						// console.log('pos 5');
 						time1 = timeouthour1 - 10;
 						time2 = timeinhour2 - timeouthour2;
 						nightdiff = Math.abs(time1) + Math.abs(time2);
 					}
 					else// pos 6 -- 1st time is the only one inside nightdiff time
 					{
-						// console.log('pos 6');
 						time1 = timeouthour1 - 10;
 						nightdiff = Math.abs(time1);
 					}
@@ -1926,17 +1813,14 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				}
 				else if(timeinhour1 <= 10 && timeouthour1 >= 10)// pos7 ~ 8
 				{
-					// console.log('pos 7~8');
 					if((timeinhour2 >= 12 && timeouthour2 <= 18) && timeinhour3 > 18)// pos 7
 					{
-						// console.log('pos 7');
 						time1 = 10 - timeouthour1;
 						time2 = timeinhour2 - timeouthour2;
 						nightdiff = Math.abs(time1) + Math.abs(time2);
 					}
 					else if((timeinhour2 >= 12 && timeouthour2 <= 18) && (timeinhour3 <= 18 && timeouthour3 >= 18))// pos 8
 					{
-						// console.log('pos 8');
 						time1 = 10 - timeouthour1;
 						time2 = timeinhour2 - timeouthour2;
 						time3 = timeinhour3 - 18;
@@ -1945,34 +1829,28 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				}
 				else if(timeinhour2 <= 10 && timeouthour2 >= 10)// pos9 ~ 10
 				{
-					// console.log('pos 9~10');
 					if(timeinhour3 >= 12 && timeouthour3 <= 18) // pos 9
 					{
-						// console.log('pos 9');
 						time2 = timeouthour2 - 10;
 						time3 = timeinhour3 - timeouthour3;
 						nightdiff = Math.abs(time2) + Math.abs(time3);
 					}
 					else // pos 10
 					{
-						// console.log('pos 10');
 						time2 = timeouthour2 - 10;
 						nightdiff = Math.abs(time2);
 					}
 				}
 				else if((timeinhour2 <= 10 && timeouthour2 >= 10) && timeouthour2 >= 12)// pos 11 ~ 12
 				{
-					// console.log('pos 11~12');
 					if(timeinhour3 <= 18 && timeouthour3 >= 18)// pos 11
 					{
-						// console.log('pos 11');
 						time2 = 10 - timeouthour2;
 						time3 = timeinhour3 - 18;
 						nightdiff = Math.abs(time2) + Math.abs(time3);
 					}
 					else if(timeinhour3 >= 12 && timeouthour3 <= 18)// pos 12
 					{
-						// console.log('pos 12');
 						time2 = 10 - timeouthour2;
 						time3 = timeinhour3 - timeouthour3;
 						nightdiff = Math.abs(time2) + Math.abs(time3);
@@ -1980,13 +1858,11 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				}
 				else if(timeinhour3 <= 10 && timeouthour3 >= 10)// pos 13
 				{
-					// console.log('pos 13');
 					time3 = timeouthour3 - 10;
 					nightdiff = Math.abs(time3);
 				}
 				else if(timeinhour3 <= 10 && timeouthour3 <= 18)// pos 14
 				{
-					// console.log('pos 14');
 					time3 = 10 - timeouthour3;
 					nightdiff = Math.abs(time3);
 				}

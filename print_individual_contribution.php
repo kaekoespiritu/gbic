@@ -83,8 +83,6 @@ $ERContribution = $EEContribution = $totalSSSContribution = $overallSSS = 0;
 			$endDate = $payDateArr['date'];
 			$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
-			//Print "<script>console.log('".$month." - ".$year."')</script>";
-
 			$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$endDate' ORDER BY date ASC";
 			$payrollQuery = mysql_query($payroll);
 
@@ -169,8 +167,6 @@ $ERContribution = $EEContribution = $totalSSSContribution = $overallSSS = 0;
 			$year = $dateExploded[2];// gets the year
 
 			$payrollDay = $payDateArr['date'];
-
-			//Print "<script>console.log('".$month." - ".$year."')</script>";
 
 			$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 			$payrollQuery = mysql_query($payroll);

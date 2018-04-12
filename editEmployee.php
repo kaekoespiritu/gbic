@@ -546,12 +546,10 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 		}
 
 		function salaryDecimal(){
-			console.log('s')
 			var salary = document.getElementById('monthlysalary');
 			var value = salary.value;
 			var decimal = parseInt(value).toFixed(2);
 			if(value != ""){
-				console.log(salary);
 				salary.value=decimal;
 			}
 		}
@@ -737,7 +735,6 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 			
 			sssContribution = sssContribution.toFixed(2);
 			sssEmployer = sssEmployer.toFixed(2);
-			console.log(sssEmployer);
 			var sssCheck = document.getElementById('sssCheckbox');
 
 			if(sssCheck.checked){

@@ -254,7 +254,6 @@
 		{
 			$printDate = $_POST['date'];//for printable
 
-			Print "<script>console.log('".$_POST['date']."')</script>";
 			Print "
 				<button class='btn btn-default pull-down' onclick='printReport()'>
 					Print ".$periodDisplay." Expense Report

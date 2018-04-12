@@ -313,7 +313,6 @@ if(isset($_GET['search']))
 <script>
 	/* SEARCHING DATABASE VIA ENTER KEYPRESS */
 	function enter(e) {
-		console.log(e);
 		if(e.keyCode == 13 || e.which == 13) 
 		{
 			var value = document.getElementById('search_box').value;

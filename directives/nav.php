@@ -19,7 +19,6 @@
 	########################################
 	// error_reporting(0);
 	$adminLoggedIn = $_SESSION['user_logged_in'];//gets the logged in user
-	// Print "<script>console.log('yow: ".$adminLoggedIn."')</script>";
 	$restrictCheck = "SELECT * FROM administrator WHERE username = '$adminLoggedIn'";
 	$restrictQuery = mysql_query($restrictCheck) or die(mysql_error());
 
@@ -82,8 +81,7 @@
 
 		for($count = 0; $count < $resCount; $count++)
 		{
-			
-			Print "<script>console.log('count: ".$restrictions[$count]."')</script>";
+		
 			switch($restrictions[$count])
 			{
 				case "1": $ListOfEmployees = ""; break;

@@ -27,8 +27,6 @@ error_reporting(0);
 		$salary = mysql_real_escape_string($_POST['txt_addMonthlySalary']);
 		$emergencyContact = mysql_real_escape_string($_POST['txt_emergencyContact']);
 		$characterReference = mysql_real_escape_string($_POST['txt_characterReference']);
-		Print "<script>console.log('".$emergencyContact." || ".$characterReference."')</script>";
-		//debug
 
 		$firstName = ucwords($firstName);
 		$lastName = ucwords($lastName);
@@ -89,7 +87,6 @@ error_reporting(0);
 
 		$employment_status = 1;//1 for active employee and 0 for resigned or inactive
 
-		// Print "<script>console.log('SSS: ".$sssEE." - ".$sssER." |Philhealth:  ".$philhealthEE." - ".$philhealthER." | PAGIBIG: ".$pagibigEE." - ".$pagibigER."')</script>";
 		mysql_query("INSERT INTO 	employee(	empid, 
 												firstname,
 												lastname,

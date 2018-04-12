@@ -6,7 +6,6 @@ include("pagination/reports_individual_function.php");//For pagination
 $site_page = $_POST['site'];
 $position_page = $_POST['position_page'];
 $reportType = $_POST['report_type'];
-Print "<script>console.log('".$reportType."')</script>";
 $pageNum = $_POST['page'];
 
 Print "<!-- Table of employees -->

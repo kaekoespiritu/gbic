@@ -356,7 +356,6 @@ $adminRole = $adminArr['role'];
 						$('#usernameVal').append("<b style='color:red' id='errorPrompt'><br>*Invalid Username</b>");
 					$('#addAccountSubmit').prop("disabled", true);
 				}
-				console.log(data);
 			}
 		});
 	}
@@ -383,7 +382,6 @@ $adminRole = $adminArr['role'];
 						$('#currUsername').append("<b style='color:red' id='errorPrompt'>*Invalid Username</b>");
 					$('#accountOptionsSubmit').prop("disabled", true);
 				}
-				console.log(data);
 			}
 		});
 	}

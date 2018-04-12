@@ -76,7 +76,6 @@ $date = strftime("%B %d, %Y");
 				$attendanceStatus = 0;
 				foreach($days as $checkDay)
 				{
-					Print "<script>console.log('checkDay: ".$checkDay."')</script>";
 					$day = date('l', strtotime($checkDay));//Gets the Day in the week of the date
 					
 					$holidayChecker = "SELECT * FROM holiday WHERE date = '$checkDay'";
@@ -100,7 +99,6 @@ $date = strftime("%B %d, %Y");
 						$siteCheckerBool = false;
 
 						$empNum = mysql_num_rows($empCheckerQuery);// gets the number of employees in the query
-						Print "<script>console.log('".$checkDay." - empNum: ".$empNum."')</script>";
 						$count = 1;// counter for number of loops
 						$checkerBuilder = "";
 						if($empNum != 0)
@@ -125,7 +123,6 @@ $date = strftime("%B %d, %Y");
 							//Check if overall attendance for a certain site is done
 							$attendanceChecker = "SELECT * FROM attendance WHERE date = '$checkDay' $checkerBuilder";
 							if($checkDay == "March 9, 2018")
-								Print "<script>console.log('".$attendanceChecker."')</script>";
 							$attendanceQuery = mysql_query($attendanceChecker);
 
 							if($attendanceQuery)
@@ -151,19 +148,16 @@ $date = strftime("%B %d, %Y");
 										$attendanceStatus++;//Trigger for completing the attendance for the site
 										
 									}
-									Print "<script>console.log('attendanceStatus: ".$attendanceStatus." | ".$checkDay."')</script>";
 								}
 							}
 						}
 					}
 				}
-				// Print "<script>console.log('attendanceStatus: ".$attendanceStatus."')</script>";
 				$weekComplete = false; // boolean to check if attendance is complete for the whole week
 				if($attendanceStatus >= 7)
 				{
 					$weekComplete = true;
 				}
-				//Print "<script>console.log('".$weekComplete." : ".$site."')</script>";
 
 				if($counter == 0)
 				{
@@ -187,10 +181,8 @@ $date = strftime("%B %d, %Y");
 				$checkerQuery = mysql_query($siteChecker) or die(mysql_error());
 
 				$siteEmpNum = mysql_num_rows($checkerQuery); // gets the number of emp that has finished payroll
-				// Print "<script>console.log('".$siteChecker."')</script>";
 				if($employee_num == $siteEmpNum)
 				{
-					//Print "<script>console.log('".$employee_num." == ".$siteEmpNum."')</script>";
 					$siteBool = true;//site is finish with payroll
 				}
 
@@ -201,7 +193,6 @@ $date = strftime("%B %d, %Y");
 					{
 						if(!$weekComplete)
 						{
-							Print "<script>console.log('1: ".$row['location']."')</script>";
 							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important; pointer-events:none; cursor:not-allowed;" disabled>
 									<div class="sitebox" style="background-color:grey !important; ">
 										<span class="smalltext">'
@@ -215,7 +206,6 @@ $date = strftime("%B %d, %Y");
 						}
 						else
 						{
-							Print "<script>console.log('2-".$siteBool.": ".$row['location']."')</script>";
 							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important; ">
 									<div class="sitebox" >
 										<span class="smalltext">'
@@ -236,7 +226,6 @@ $date = strftime("%B %d, %Y");
 						
 						if(!$weekComplete)
 						{
-							Print "<script>console.log('1: ".$row['location']."')</script>";
 							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important;  text-decoration: none !important; pointer-events:none; cursor:not-allowed;" disabled> 
 									<div class="sitebox" style="background-color:grey !important; ">
 										<span class="autofit">'
@@ -249,7 +238,6 @@ $date = strftime("%B %d, %Y");
 						}
 						else
 						{
-							Print "<script>console.log('2-".$siteBool.": ".$row['location']."')</script>";
 							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
 									<div class="sitebox">
 									

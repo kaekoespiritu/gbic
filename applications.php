@@ -611,7 +611,6 @@ function sssbox() {
 			sssContribution = 581.30;
 
 		sssContribution = sssContribution.toFixed(2);
-		console.log(sssContribution);
 		document.getElementById('sss').value = sssContribution;
 }
 function monthlySalary(salary){
@@ -655,14 +654,12 @@ function sssCheckboxFunc() {
 	var sssRow = document.getElementById('sss');
 	if(sss.checked == true)
 	{
-		console.log('checked');
 		sssbox();
 		sssRow.readOnly = false;
 		sssRow.placeholder = "";
 	}
 	else
 	{
-		console.log('unchecked');
 		sssRow.placeholder = "No document";
 		sssRow.readOnly = true;
 		sssRow.value = "";

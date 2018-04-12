@@ -4,7 +4,6 @@ include('directives/db.php');
 
 $empNum = count($_POST['empid']);
 $siteFrom = $_GET['s'];
-// Print "<script>console.log('".$empNum."')</script>";
 //for admin history
 $user = $_SESSION['user_logged_in'];
 $admin = "SELECT * FROM administrator WHERE username = '$user'";

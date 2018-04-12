@@ -203,7 +203,6 @@
 								$closePayroll = date('F d, Y', strtotime('+6 day', strtotime($openPayroll)));
 
 							}
-							//Print '<script>console.log("'.$openPayroll.' - '.$closePayroll.'")</script>';
 
 							Print $openPayroll." - ".$closePayroll;
 						?>
@@ -527,7 +526,6 @@
 
 					$emp = "SELECT * FROM employee WHERE site = '$site' AND employment_status = '1' $addQuery ORDER BY lastname ASC, firstname ASC";
 					$empQuery = mysql_query($emp);
-					//Print "<script>console.log('".$emp."')</script>";
 
 					$rowColor = true;
 
@@ -541,8 +539,6 @@
 							$empid = $empArr['empid'];
 
 							$attendance = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$openPayroll', '%M %e, %Y') AND STR_TO_DATE('$closePayroll', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
-
-							//Print '<script>console.log('.$attendance.')</script>';
 							$attendanceQuery = mysql_query($attendance);
 	 						
 	 						//preset variable for time in and time out
@@ -786,7 +782,7 @@
 									$tueRemarks = $attArr['remarks'];
 								}
 							}
-							Print "<script>console.log('rowColor: ".$rowColor."')</script>";
+
 							if($rowColor)
 								Print "
 									<tr style='background-color:#EEEEEE'>";

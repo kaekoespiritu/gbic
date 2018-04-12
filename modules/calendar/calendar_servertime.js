@@ -14,7 +14,6 @@ this.container=document.getElementById(container)
 this.displayversion=displayversion
 this.lang=lang
 var servertimestring=this_time;
-//console.log("AAA: "+this_time);
 this.localtime=this.serverdate=new Date(servertimestring)
 this.localtime.setTime(this.serverdate.getTime()+offsetMinutes*60*1000) //add user offset to server time
 this.updateTime()

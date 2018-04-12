@@ -79,7 +79,6 @@
 							$amountLeft = 0;//this the amount left in the 13th month pay just incase the employer did not consume all of the 13th month pay of the employee
 
 							$empid = $empArr['empid'];
-							//Print "<script>console.log('".$empid."')</script>";
 							//Evaluates the attendance and compute the 13th monthpay
 							
 							// previous 13th Month pay checker
@@ -103,10 +102,8 @@
 								$attCheckerQuery = mysql_query($attendanceChecker);
 								$attChecerArr = mysql_fetch_assoc($attCheckerQuery);
 								$startDate = $attChecerArr['date'];
-								//Print "<script>console.log('$attendanceChecker')</script>";
 							}
 							$endDate = $dateToday;//Current date
-							// Print "<script>console.log('".$startDate." - ".$endDate."')</script>";
 
 							
 							$attendance = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
@@ -118,7 +115,6 @@
 							{
 								$date = $attArr['date'];
 
-								//Print "<script>console.log('".$date."')</script>";
 								$workHrs = $attArr['workhours'];
 
 								$holidayChecker = "SELECT * FROM holiday WHERE date = '$date'";
@@ -135,7 +131,6 @@
 									}
 								}
 							}
-							//Print "<script>console.log('".$daysAttended."')</script>";
 							$thirteenthMonth = (($daysAttended * $empArr['rate']) / 12)+$amountLeft; 
 							Print "
 									<tr id='".$empArr['empid']."'>
