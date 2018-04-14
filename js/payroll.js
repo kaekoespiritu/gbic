@@ -16,18 +16,18 @@
 		div1.id = ct;
 		div1.setAttribute('name','toolsRow[]');
 
-		var delLink = '<div class="col-md-1 nopadding">'+
+		var delLink = '<div class="col-md-1 col-lg-1 nopadding">'+
 		'<button class="btn-sm btn btn-danger" name="rowDelete[]" onclick="deleteRow('+ ct +')">'+
 		'<span class="glyphicon glyphicon-minus"></span>'+
 		'</button>'+
 		'</div>';
 
-		var template = '<label class="control-label col-md-2" for="tools">Name</label>' +
-		'<div class="col-md-4">' +
+		var template = '<label class="control-label col-md-2 col-lg-2" for="tools">Name</label>' +
+		'<div class="col-md-4 col-lg-4">' +
 		'<input type="text" id="toolstemp" name="toolname[]" class="form-control input-sm" onchange="checkName(this)">' +
 		'</div>' +
-		'<label class="control-label col-md-1" for="price">Cost</label>' +
-		'<div class="col-md-4"><input type="number" id="pricetemp" name="toolprice[]" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">' +
+		'<label class="control-label col-md-1 col-lg-1" for="price">Cost</label>' +
+		'<div class="col-md-4 col-lg-4"><input type="number" id="pricetemp" name="toolprice[]" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">' +
 		'</div>';
 
 		div1.innerHTML = delLink + template;
