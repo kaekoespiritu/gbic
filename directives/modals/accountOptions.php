@@ -3,23 +3,23 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<div class="col-md-11">
+						<div class="col-md-11 col-lg-11">
 							<h4 class="modal-title">Options for this account</h4>
 						</div>
-						<div class="col-md-1">
+						<div class="col-md-1 col-lg-1">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 						</div>
 					</div>
 					<div class="modal-body">
 						<div class="row">
-							<div class="col-md-5">
+							<div class="col-md-5 col-lg-5">
 							<ul class="nav nav-pills nav-stacked">
 								<li class="active"><a href="#changepass" data-toggle="tab">Change Password</a></li>
 								<li><a href="#changeuser" data-toggle="tab">Change Username</a></li>
 								<li><a href="#securityq" data-toggle="tab">Configure security questions</a></li>
 							</ul>
 							</div>
-							<div class="col-md-7 text-left" style="border-left-style: solid;">
+							<div class="col-md-7 col-lg-7 text-left" style="border-left-style: solid;">
 								<?php
 
 									$user = $_SESSION['user_logged_in'];

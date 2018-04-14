@@ -119,14 +119,14 @@
 <div class="row">
 <div class="menubar navibar">
 	<!-- HOME BUTTON -->
-	<div id="home" class="col-md-1 navibutton">
+	<div id="home" class="col-md-1 col-lg-1 navibutton">
 	<a href="index.php">
 		<img src="Images/house.png" class="center-block">
 		<h6 class="text-center">HOME</h6>
 	</a>
 	</div>
 	<!-- EMPLOYEES BUTTON -->
-	<div id="employees" class="col-md-1 navibutton <?php Print $employeesTab?>">
+	<div id="employees" class="col-md-1 col-lg-1 navibutton <?php Print $employeesTab?>">
 	<div class="flipdown">
 		<a href="employees.php?site=null&position=null" class="flipbtn <?php Print $employeesTab?>">
 			<img src="Images/engineer.png" class="center-block">
@@ -141,7 +141,7 @@
 	</div>
 	</div>
 	<!-- ATTENDANCE BUTTON -->
-	<div id="attendance" class="col-md-1 navibutton <?php Print $attendanceAccess?>">
+	<div id="attendance" class="col-md-1 col-lg-1 navibutton <?php Print $attendanceAccess?>">
 	<div class="flipdown">
 		<a href="attendance.php" class="<?php Print $attendanceAccess?>">
 			<img src="Images/attendance.png" class="center-block">
@@ -150,14 +150,14 @@
 	</div>
 	</div>
 	<!-- PAYROLL BUTTON -->
-	<div id="payroll" class="col-md-1 navibutton <?php Print $payrollAccess ?>">
+	<div id="payroll" class="col-md-1 col-lg-1 navibutton <?php Print $payrollAccess ?>">
 	<a href="payroll_login.php" class="payroll <?php Print $payrollAccess ?>">
 		<img src="Images/cash-pay.png" class="center-block">
 		<h6 class="text-center">PAYROLL</h6>
 	</a>
 	</div>
 	<!-- REPORTS BUTTON -->
-	<div id="reports" class="col-md-1 navibutton <?php Print $reportsTab?>">
+	<div id="reports" class="col-md-1 col-lg-1 navibutton <?php Print $reportsTab?>">
 	<div class="flipdown">
 		<a  class="reports flipbtn <?php Print $reportsTab?>">
 			<img src="Images/tax.png" class="center-block">
@@ -201,7 +201,7 @@
 	</div>
 	</div>
 	<!-- OPTIONS BUTTON-->
-	<div id="adminOptions" class="col-md-1 navibutton">
+	<div id="adminOptions" class="col-md-1 col-lg-1 navibutton">
 	<a href="options.php" class="adminOptions">
 		<span>	
 			<img src="Images/admin-with-cogwheels.png" class="center-block">
@@ -210,7 +210,7 @@
 	</a>
 	</div>
 	<!-- LOGOUT BUTTON -->
-	<div class="col-md-1 navibutton">
+	<div class="col-md-1 col-lg-1 navibutton">
 	<a href="logout.php" class="">
 		<span>
 			<img src="Images/power-button-symbol.png" class="center-block">

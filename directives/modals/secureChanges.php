@@ -7,7 +7,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-md-8 col-md-offset-2">Save changes by entering your password:</p>
+					<div class="col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">Save changes by entering your password:</p>
 						<form method="post" id="payrollForm" action="logic_options_payroll.php">
 							<input type="password" id="newAddVale" name="adminPassword" class="form-control" placeholder="Enter your password"><br>
 							<input type="hidden" name="openPay" id="openPay">

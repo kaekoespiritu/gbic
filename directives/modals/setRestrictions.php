@@ -5,16 +5,16 @@
 				<div class="modal-content">
 					<form method="post" action="logic_options_update_restrictions.php">
 						<div class="modal-header">
-							<div class="col-md-10">
+							<div class="col-sm-10 col-md-10 col-lg-10">
 								<h4 class="modal-title">Set Restrictions</h4>
 							</div>
-							<div class="col-md-1">
+							<div class="col-md-1 col-lg-1">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 							</div>
 						</div>
 						<div class="modal-body">
 							<div class="row">
-								<div class="col-md-12">
+								<div class="col-md-12 col-lg-12">
 									<div id="restrictionsData">
 									</div>
 								</div>

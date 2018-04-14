@@ -3,48 +3,48 @@
 			<div class="modal-dialog modal-lg" id='modalsize'>
 				<div class="modal-content">
 					<div class="modal-header">
-						<div class="col-md-12">
+						<div class="col-md-12 col-lg-12">
 							<h4 class="modal-title">Add new account</h4>
 						</div>
 					</div>
 					<div class="modal-body">
 						<div class="row">
 						<form id="newAccountForm" method="POST" action="logic_options_newAccount.php" class="form-inline text-left">
-						<div class="col-md-6" id='modalcol'>
+						<div class="col-md-6 col-lg-6" id='modalcol'>
 							<?php
 							
 							?>
-							<label class="col-md-12">
+							<label class="col-md-12 col-lg-12">
 								Firstname:
 								<input type="text" name="n_firstname" class="form-control" required>
 							</label>
-							<label class="col-md-12">
+							<label class="col-md-12 col-lg-12">
 								Lastname:
 								<input type="text" name="n_lastname" class="form-control" required>
 							</label>
-							<label class="col-md-12" id="usernameVal">
+							<label class="col-md-12 col-lg-12" id="usernameVal">
 								Username:
 								<input type="text" name="n_username" onkeyup="usernameValidation(this.value)" class="form-control" required>
 							</label>
-							<label class="col-md-12">
+							<label class="col-md-12 col-lg-12">
 								Password:
 								<input type="password" name="n_password" class="form-control" required>
 							</label>
-							<label class="col-md-12">
+							<label class="col-md-12 col-lg-12">
 								Confirm Password:
 								<input type="password" name="n_confirmPassword" class="form-control" required>
 							</label>
-							<label class="col-md-12">
+							<label class="col-md-12 col-lg-12">
 								Security Question:
 								<select class="form-control" name="n_security">
 									<?php Print $secretQuestions?>
 								</select>
 							</label>
-							<label class="col-md-12">
+							<label class="col-md-12 col-lg-12">
 								Answer:
 								<input type="text" name="n_answer" class="form-control" required>
 							</label>
-							<div class="col-md-12">
+							<div class="col-md-12 col-lg-12">
 								Choose account role:
 								<div class="radio">
 									<label>
@@ -59,7 +59,7 @@
 							</div>
 						</div>
 						<!-- To appear only when employee is selected -->
-							<div class="col-md-6" id='restrictions' style="display:block">
+							<div class="col-md-6 col-lg-6" id='restrictions' style="display:block">
 								<h4>Restrictions</h4>
 								<ul class="list-unstyled">
 									<li>

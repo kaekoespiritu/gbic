@@ -7,7 +7,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-md-8 col-md-offset-2">
+					<div class="col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
 						<h4 class="text-left">Amount:</h4>
 						<input type="text" id="newAddVale" class="form-control" placeholder="Amount of new vale" onkeypress="validatenumber(event)"><br>
 						<h4 class="text-left">Reason:</h4>

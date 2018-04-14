@@ -3,14 +3,14 @@
 	<div class="modal-dialog modal-sm" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title col-md-11">Modify COLA for site</h4>
-				<button type="button" class="close col-md-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title col-md-11 col-lg-11">Modify COLA for site</h4>
+				<button type="button" class="close col-md-1 col-lg-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
 			<form method="POST" action="logic_options_modCola.php" id="modColaForm">
 			<div class="modal-body">
 				
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-6 col-lg-6">
 							<div class="dropdown">
 								<select class="form-control" name="dd_site" onchange="modifyCola(this.value)" required>
 									<option hidden>Select a site</option>
@@ -38,7 +38,7 @@
 								?>
 							</div>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-6 col-lg-6">
 							<input type="number" name="cola" id="modifyColaInput" class="form-control" placeholder="Enter COLA">
 						</div>
 					</div>

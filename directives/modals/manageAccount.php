@@ -3,10 +3,10 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<div class="col-md-11">
+						<div class="col-md-11 col-lg-11">
 							<h4 class="modal-title">Manage employee accounts</h4>
 						</div>
-						<div class="col-md-1">
+						<div class="col-md-1 col-lg-1">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 						</div>
 					</div>
@@ -21,7 +21,7 @@
 								while($AcctRow = mysql_fetch_assoc($accountQuery))
 								{
 									Print "
-										<div class='col-md-12'>
+										<div class='col-md-12 col-lg-12'>
 											<div class='panel panel-primary'>
 												<div class='panel-body'>
 												<h4>
