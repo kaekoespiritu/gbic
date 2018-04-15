@@ -5,20 +5,20 @@
 
 	$date = strftime("%B %d, %Y");//Current date
 
-	// if(isset($_POST['password']))
-	// {
-	// 	$password = mysql_real_escape_string($_POST['password']);
-	// 	$username = $_SESSION['user_logged_in'];
+	if(isset($_POST['password']))
+	{
+		$password = mysql_real_escape_string($_POST['password']);
+		$username = $_SESSION['user_logged_in'];
 
-	// 	$admin = "SELECT * FROM administrator WHERE username = '$username' AND password = '$password'";
-	// 	$adminQuery = mysql_query($admin);
+		$admin = "SELECT * FROM administrator WHERE username = '$username' AND password = '$password'";
+		$adminQuery = mysql_query($admin);
 
-	// 	if(mysql_num_rows($adminQuery) != 0)
+		if(mysql_num_rows($adminQuery) != 0)
 			header("location: payroll_site.php");
-	// 	else
-	// 		Print "<script>alert('You have entered a wrong password.')</script>";
+		else
+			Print "<script>alert('You have entered a wrong password.')</script>";
 
-	// }
+	}
 
 	//Checks if the current date is the closed payroll
 	$day = date('l', strtotime($date));
@@ -65,16 +65,16 @@
 						$payrollDayQuery = mysql_query($payrollCheck) or die(mysql_error());
 						$payrollArr = mysql_fetch_assoc($payrollDayQuery);
 
-						// if($payrollArr['close'] == $day)
+						if($payrollArr['close'] == $day)
 							Print '
 								<input type="password" class="form-control" id="payrollpass" name="password" placeholder="Password">
 								<input type="submit" value="Submit" class="btn btn-primary pull-down" >
 								';
-						// else
-						// 	Print '
-						// 		<input type="password" class="form-control" id="payrollpass" name="password" placeholder="Password" readonly>
-						// 		<input type="submit" value="Submit" class="btn btn-primary pull-down" disabled>
-						// 		';
+						else
+							Print '
+								<input type="password" class="form-control" id="payrollpass" name="password" placeholder="Password" readonly>
+								<input type="submit" value="Submit" class="btn btn-primary pull-down" disabled>
+								';
 					?>
 					
 				</form>
