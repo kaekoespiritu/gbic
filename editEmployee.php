@@ -99,7 +99,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 							<label for="contact">Contact number</label>
 						</div>
 						<div class="col-md-5 col-lg-5">
-							<input type="text" class="form-control" name = "contactnum" placeholder="<?php Print "$contactnum"?>" id="contact">
+							<input type="number" class="form-control" name = "contactnum" placeholder="<?php Print "$contactnum"?>" id="contact">
 						</div>
 						<div class="col-md-1 col-lg-1">
 							<label for="contact">Date of Birth</label>
@@ -235,7 +235,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 							<label for="rate">Monthly Salary</label>
 						</div>
 						<div class="col-md-5 col-lg-5">
-							<input name="salary"  type="text" class="form-control" id="monthlysalary" onkeyup="monthlySalary()" placeholder="<?php Print "$salary"?>" onchange="salaryDecimal()">
+							<input name="salary"  type="number" class="form-control" id="monthlysalary" onkeyup="monthlySalary()" placeholder="<?php Print "$salary"?>" onchange="salaryDecimal()">
 						</div>
 					</div><br>
 
@@ -253,7 +253,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 							<label for="allowance">Allowance</label>
 						</div>
 						<div class="col-md-5 col-lg-5">
-							<input type="text" name="allowance" placeholder="<?php Print "$allowance"?>" class="form-control" onchange="allowanceDecimal()" id="allowance">
+							<input type="number" name="allowance" placeholder="<?php Print "$allowance"?>" class="form-control" onchange="allowanceDecimal()" id="allowance">
 						</div>
 					</div>
 					<div class="row">
@@ -273,13 +273,13 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 														<label for="sss_ee">EE:</label>
 													</div>
 													<div class="col-md-4 col-lg-4">
-														<input name="sssEE" type="text" placeholder="'.$sssEE.'" class="form-control" id="sssEE">
+														<input name="sssEE" type="number" placeholder="'.$sssEE.'" class="form-control" id="sssEE">
 													</div>
 													<div class="col-md-1 col-lg-1">
 														<label for="sss_er">ER:</label>
 													</div>
 													<div class="col-md-4 col-lg-4">
-														<input name="sssER" type="text" placeholder="'.$sssER.'" class="form-control" id="sssER">
+														<input name="sssER" type="number" placeholder="'.$sssER.'" class="form-control" id="sssER">
 													</div>
 												</div>
 											</div>
@@ -297,13 +297,13 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 														<label for="sss_ee">EE:</label>
 													</div>
 													<div class="col-md-4 col-lg-4">
-														<input name="sssEE" type="text" placeholder="No document" class="form-control" id="sssEE" readonly>
+														<input name="sssEE" type="number" placeholder="No document" class="form-control" id="sssEE" readonly>
 													</div>
 													<div class="col-md-1 col-lg-1">
 														<label for="sss_er">ER:<label>
 													</div>
 													<div class="col-md-4 col-lg-4">
-														<input name="sssER" type="text" placeholder="No document" class="form-control" id="sssER" readonly>
+														<input name="sssER" type="number" placeholder="No document" class="form-control" id="sssER" readonly>
 													</div>
 												</div>
 											</div>
@@ -323,13 +323,13 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 														<label for="philhealth_ee">EE:</label>
 													</div>
 													<div class="col-md-4 col-lg-4">
-														<input name="philhealthEE" placeholder="'.$philhealthEE.'" type="text" class="form-control" id="philhealthEE">
+														<input name="philhealthEE" placeholder="'.$philhealthEE.'" type="number" class="form-control" id="philhealthEE">
 													</div>
 													<div class="col-md-1 col-lg-1">
 														<label for="philhealth_er">ER:</label>
 													</div>
 													<div class="col-md-4 col-lg-4">
-														<input name="philhealthER" placeholder="'.$philhealthER.'" type="text" class="form-control" id="philhealthER">
+														<input name="philhealthER" placeholder="'.$philhealthER.'" type="number" class="form-control" id="philhealthER">
 													</div>
 												</div>
 											</div>
