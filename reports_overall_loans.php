@@ -57,7 +57,7 @@
 		?>
 
 		<div class="container pull-down">
-			<div class="col-md-12 pull-down">
+			<div class="col-md-1 col-lg-12 pull-down">
 				<h2>Overall <span id="period"></span> <?php Print $_GET['type']; ?> Report</h2>
 			</div>
 				<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
@@ -71,7 +71,7 @@
 			<div class="row pull-down">
 				<h3>Sites</h3>
 
-		<div class="col-md-9 col-md-offset-3">
+		<div class="col-md-9 col-lg-9 col-md-offset-3 col-lg-offset-3">
 			<?php
 			$attCounter = 0;//Attendance Completion Checker
 			$counter = 0;//Counter for the While loop

@@ -18,10 +18,10 @@
 
 		$output = '
 			<div class="modal-header">
-				<div class="col-md-10 text-right">
+				<div class="col-md-1 col-lg-10 text-right">
 					<h5 class="modal-title">Answer the security question</h5>
 				</div>
-				<div class="col-md-1 pull-right">
+				<div class="col-md-1 col-lg-1 pull-right">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				</div>
 			</div>

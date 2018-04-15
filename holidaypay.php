@@ -24,7 +24,7 @@ include('directives/session.php');
 
 	<div class="row">
 		<form>
-			<div class="col-md-4 col-md-offset-1 pull-down">
+			<div class="col-md-4 col-lg-4 col-md-offset-1 col-lg-offset-1 pull-down">
 			<label for="holiday"><h2>What kind of holiday?</h2></label>
 				<div class="form-group">
 					<label class="radio-inline">
@@ -35,7 +35,7 @@ include('directives/session.php');
 					</label>
 				</div>
 			</div>
-			<div class="col-md-5 pull-down">
+			<div class="col-md-5 col-lg-5 pull-down">
 				<div class="form-group">
 					<label for="holidayname"><h2>Name of the Holiday</h2></label>
 					<input type="text" class="form-control" id="holidayname" placeholder="Ex. Independence Day">
@@ -44,7 +44,7 @@ include('directives/session.php');
 		</form>
 	</div>
 </div>
-<div class="col-md-4 col-md-offset-1 pull-down">
+<div class="col-md-4 col-lg-4 col-md-offset-1 col-lg-offset-1 pull-down">
 	<div class="input-group">
 		<input type="text" class="form-control">
 		<span class="input-group-btn">
@@ -54,7 +54,7 @@ include('directives/session.php');
 </div>
 <div class="row">
 <!-- FILTER EMPLOYEE BY POSITION -->
-<div class="col-md-5 col-md-pull-1 text-right pull-down">
+<div class="col-md-5 col-lg-5 col-md-pull-1 text-right pull-down">
 	Filter by:
 	<div class="btn-group">
 		<select class="form-control">
@@ -96,13 +96,13 @@ include('directives/session.php');
 		</select>
 	</div>
 </div>
-<div class="col-md-1 col-md-pull-1 text-right pull-down">
+<div class="col-md-1 col-lg-1 col-md-pull-1 text-right pull-down">
 	<a class="btn btn-primary" href="enterattendance.php">Start input of attendance</a>
 </div>
 </div>
 
 <div class="row pull-down">
-			<div class="col-md-10 col-md-offset-1">
+			<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 				<table class="table table-bordered table-condensed" style="background-color:white;">
 					<tr>
 						<td>ID</td>

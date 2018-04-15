@@ -34,7 +34,7 @@
 		require_once("directives/nav.php");
 		?>
 
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 			<div class="row"><br>
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
@@ -45,7 +45,7 @@
 			</div>
 
 		<div class="row">
-			<div class="col-md-3 col-md-offset-3">
+			<div class="col-md-3 col-lg-3 col-md-offset-3 col-lg-offset-3">
 				<h4>Step 1: Select Requirements</h4>
 				<select onchange="payrollRequirements(this.value)" class="form-control" id="step1">
 					<?php 
@@ -67,7 +67,7 @@
 					?>
 				</select>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-3 col-lg-3">
 					<h4>Step 2: Select Payroll Dates</h4>
 					<select onchange="payrollDates(this.value)" class="form-control" id="step2" disabled>
 						<option hidden>Select date</option>
@@ -114,7 +114,7 @@
 
 				if(isset($_POST['payrollDate'])) {
 					Print '<div class="row pull-down">
-					<div class="col-md-12 pull-down">
+					<div class="col-md-1 col-lg-12 pull-down">
 								<a class="btn btn-default" href="print_payroll.php?site='.$location.'&date='.$_POST['payrollDate'].'">
 									Print Payroll
 								</a>
@@ -130,7 +130,7 @@
 					else if($req == 'withOReq')
 						$reqMessage = $location." W/o Requirements";
 					Print '<div class="row">
-							<div class="col-md-12 overflow">
+							<div class="col-md-1 col-lg-12 overflow">
 							<table class="table table-bordered pull-down">
 								<tr>
 									<td colspan="6">
@@ -375,7 +375,7 @@
 			}
 			else
 			{
-				Print "<h4 class='pull-down-more col-md-12'>Select Requirements and Date to view Payroll report.</h4>";
+				Print "<h4 class='pull-down-more col-md-1 col-lg-12'>Select Requirements and Date to view Payroll report.</h4>";
 			}
 			?>
 			</div>

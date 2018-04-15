@@ -41,7 +41,7 @@ include('directives/session.php');
 	<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
 	<div class="row pull-down">
 		<div class="row">
-			<div class="col-md-4 col-md-offset-2" style="border-right: 1px solid black;">
+			<div class="col-md-4 col-lg-4 col-md-offset-2 col-lg-offset-2" style="border-right: 1px solid black;">
 				<h2 id='holidayTitle'>
 					<?php 
 						if($holidayNum != 0)
@@ -126,7 +126,7 @@ include('directives/session.php');
 					?>
 				</h2>
 				<br>
-				<div class="col-md-6 col-md-offset-3">
+				<div class="col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
 					<form>
 					
 						<input name="txt_attendance" type="text" size="10" class="form-control" value = <?php
@@ -215,7 +215,7 @@ include('directives/session.php');
 					</form>
 				</div>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-4 col-lg-4">
 				<button class="btn btn-success col-md-pull-4 pull-down-more" onclick="printAll()">
 					Print attendance sheet for all sites
 				</button>
@@ -227,7 +227,7 @@ include('directives/session.php');
 	<div class="container">
 		<h3>Sites</h3>
 
-		<div class="col-md-9 col-md-offset-2">
+		<div class="col-md-9 col-lg-9 col-md-offset-2 col-lg-offset-2">
 			<?php
 			$attCounter = 0;//Attendance Completion Checker
 			$counter = 0;//Counter for the While loop

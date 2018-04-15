@@ -48,7 +48,7 @@ else if($loanType == "newVale")
 
 		<!-- Breadcrumbs -->
 		<div class="row">
-			<div class="col-md-10 col-md-offset-1 pull-down">
+			<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down">
 				<ol class="breadcrumb text-left">
 					<li>
 						<a href="loans_landing.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Loans Application</a>
@@ -58,7 +58,7 @@ else if($loanType == "newVale")
 			</div>
 
 
-			<div class="col-md-11 text-right">
+			<div class="col-md-1 col-lg-11 text-right">
 				Filter by:
 
 
@@ -123,7 +123,7 @@ else if($loanType == "newVale")
 
 		<!-- EMPLOYEE TABLE -->
 		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
+			<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 
 			<table class="table table-bordered table-condensed" style="background-color:white;">
 				<tr>

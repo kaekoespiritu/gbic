@@ -53,10 +53,10 @@
 
 	<div class="jumbotron pull-down">
 	<div class="row pull-down">
-		<div class="col-md-8 col-md-offset-2 pull-down text-center">
+		<div class="col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 pull-down text-center">
 				<h2><?php Print $head?></h2>
 				</div>
-				<div class="col-md-4 col-md-offset-4 pull-down">
+				<div class="col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4 pull-down">
 				<form action="" method="post">
 					<?php
 						//Checks if the current date is the closed payroll

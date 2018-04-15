@@ -60,7 +60,7 @@ if($holidayExist > 0)
 			<!-- Breadcrumbs -->
 			<input type="hidden" name="employeeID" value="<?php Print $empid?>">
 			<div class="row pull-down">
-				<div class="col-md-10 col-md-offset-1">
+				<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 					<ol class="breadcrumb text-left" style="margin-bottom: 0px">
 
 						<li><a href="payroll_table.php?position=<?php Print $position?>&site=<?php Print $site?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Table of Employees</a></li>
@@ -71,7 +71,7 @@ if($holidayExist > 0)
 				</div>
 
 				<!-- Employee information -->
-				<div class="col-md-10 col-md-offset-1">
+				<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 					<?php
 					$employee = "SELECT * FROM employee WHERE empid = '$empid'";
 					$employeeQuery = mysql_query($employee);
@@ -113,7 +113,7 @@ if($holidayExist > 0)
 					Print "
 					<h2 class='text-left'>". $empArr['lastname'] .", ". $empArr['firstname'] ."</h2>
 					<div class='row'>
-					<div class='col-md-8 text-left' style='word-break: keep-all'>
+					<div class='col-md-8 col-lg-8 text-left' style='word-break: keep-all'>
 					
 					<h4>
 					<b style='font-family: QuickSandMed'>
@@ -137,7 +137,7 @@ if($holidayExist > 0)
 					</h4>
 					</div>";
 					Print "
-					<div class='col-md-4 text-right'>";
+					<div class='col-md-4 col-lg-4 text-right'>";
 				if($empArr['philhealth'] != 0)//Phil Health Display
 				{
 					Print "<h4><span class='glyphicon glyphicon-ok'></span> PhilHealth documents</h4>";
@@ -169,7 +169,7 @@ if($holidayExist > 0)
 
 
 			<!-- Attendance table -->
-			<div class="col-md-10 col-md-offset-1">
+			<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 				<table class="table-bordered table-condensed" style="background-color:white;">
 					<?php
 				//Sample query for debugging purposes
@@ -562,13 +562,13 @@ if($holidayExist > 0)
 					// }
 					?>
 					<tr style="white-space: nowrap">
-						<td colspan="2" class="navibar col-md-1"><?php Print $day7 ?></td>
-						<td colspan="2" class="navibar col-md-1"><?php Print $day6 ?></td>
-						<td colspan="2" class="navibar col-md-1"><?php Print $day5 ?></td>
-						<td colspan="2" class="navibar col-md-1"><?php Print $day4 ?></td>
-						<td colspan="2" class="navibar col-md-1"><?php Print $day3 ?></td>
-						<td colspan="2" class="navibar col-md-1"><?php Print $day2 ?></td>
-						<td colspan="2" class="navibar col-md-1"><?php Print $day1 ?></td>
+						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $day7 ?></td>
+						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $day6 ?></td>
+						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $day5 ?></td>
+						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $day4 ?></td>
+						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $day3 ?></td>
+						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $day2 ?></td>
+						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $day1 ?></td>
 					</tr>
 					<tr>
 						<td colspan="2">Wednesday</td>
@@ -1062,7 +1062,7 @@ if($holidayExist > 0)
 	</div>
 
 	<!-- Summary of attendance -->
-	<div class="col-md-10 col-md-offset-1">
+	<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 		<div class="panel">
 			<table class="table table-bordered table-responsive">
 				<tr>
@@ -1084,7 +1084,7 @@ if($holidayExist > 0)
 			<!-- Deductions to be made -->
 			<!-- LOANS -->
 			<div class="row">
-				<div class="col-md-2">
+				<div class="col-md-2 col-lg-2">
 					<h4>Loans</h4>
 					<?php
 					// 		//this is to check if employee has multiple new vales in a week
@@ -1204,8 +1204,8 @@ if($holidayExist > 0)
 					}
 					?>
 					<div class="form-group row">
-						<label class="control-label col-md-3" for="sss" >SSS</label>
-						<div class="col-md-9">
+						<label class="control-label col-md-3 col-lg-3" for="sss" >SSS</label>
+						<div class="col-md-9 col-lg-9">
 							<?php
 							if($sss != "N/A")
 							{
@@ -1217,13 +1217,13 @@ if($holidayExist > 0)
 							}
 							?>
 						</div>
-						<div class="col-md-12">
+						<div class="col-md-1 col-lg-12">
 							<input type="number" class="form-control" id="sssDeduct" name="sssDeduct" placeholder="To deduct" onblur="addDecimal(this)" onchange="setsssLimit(this)">
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="control-label col-md-3" for="pagibig" style="white-space: nowrap;">Pag-IBIG</label>
-						<div class="col-md-9">
+						<label class="control-label col-md-3 col-lg-3" for="pagibig" style="white-space: nowrap;">Pag-IBIG</label>
+						<div class="col-md-9 col-lg-9">
 							<?php
 							if($pagibig != "N/A")
 							{
@@ -1235,15 +1235,15 @@ if($holidayExist > 0)
 							}
 							?>
 						</div>
-						<div class="col-md-12">
+						<div class="col-md-1 col-lg-12">
 							<input type="number" class="form-control" id="pagibigDeduct" name="pagibigDeduct" placeholder="To deduct" onblur="addDecimal(this)" onchange="setpagibigLimit(this)">
 						</div>
 					</div>
 				</div>
 
 				<!-- OLD VALE -->
-				<div class="col-md-2">
-					<div class="col-md-6">
+				<div class="col-md-2 col-lg-2">
+					<div class="col-md-6 col-lg-6">
 						<h4 class="text-left" style="white-space: nowrap;">Old Vale</h4>
 						<h5 class="text-right" style="white-space: nowrap;">
 							<span class="pull-right">
@@ -1261,7 +1261,7 @@ if($holidayExist > 0)
 					</div>
 
 					<!-- NEW VALE -->
-					<div class="col-md-6">
+					<div class="col-md-6 col-lg-6">
 						<h4 class="text-left" style="white-space: nowrap;">New Vale</h4>
 						<h5 class="text-right" style="white-space: nowrap;">
 							<span class="vale pull-right" id="parent">
@@ -1288,12 +1288,12 @@ if($holidayExist > 0)
 						<input type="hidden" name="newValeRemarks" class="addRemarks">
 
 						<div class="row" style="margin-top:9px">
-							<button type='button' class='btn btn-success btn-sm col-md-12' data-toggle='modal' data-target='#addVale'><span class='glyphicon glyphicon-plus'></span> Add</button>
+							<button type='button' class='btn btn-success btn-sm col-md-1 col-lg-12' data-toggle='modal' data-target='#addVale'><span class='glyphicon glyphicon-plus'></span> Add</button>
 						</div>
 					</div>
 
 					<!-- COLA -->
-					<div class="col-md-12">
+					<div class="col-md-1 col-lg-12">
 						<?php
 						$cola = "SELECT * FROM site WHERE location = '$site'";
 						$colaQuery = mysql_query($cola);
@@ -1310,24 +1310,24 @@ if($holidayExist > 0)
 				</div>
 
 				<!-- Contributions -->
-				<div class="col-md-3">
+				<div class="col-md-3 col-lg-3">
 					<h4 class="text-center">Contributions</h4>
 					<div class="form-group">
-						<label class="control-label col-md-5" for="tax">Tax</label>
-						<div class="col-md-7">
+						<label class="control-label col-md-5 col-lg-5" for="tax">Tax</label>
+						<div class="col-md-7 col-lg-7">
 							<input type="number" id="tax" name="tax" class="form-control input-sm" onkeypress="validatenumber(event)" onblur="addDecimal(this)">
 						</div>
-						<label class="control-label col-md-5" for="sssContribution">SSS</label>
-						<div class="col-md-7">
+						<label class="control-label col-md-5 col-lg-5" for="sssContribution">SSS</label>
+						<div class="col-md-7 col-lg-7">
 							<input type="text" id="sssContribution" name="sss" placeholder="No document" class="form-control input-sm" value="<?php Print $deductionSSS?>" onkeypress="validatenumber(event)" readonly>
 
 						</div>
-						<label class="control-label col-md-5" for="pagibigContribution" style="white-space: nowrap;">Pag-IBIG</label>
-						<div class="col-md-7">
+						<label class="control-label col-md-5 col-lg-5" for="pagibigContribution" style="white-space: nowrap;">Pag-IBIG</label>
+						<div class="col-md-7 col-lg-7">
 							<input type="text" id="pagibigContribution" name="pagibig" class="form-control input-sm" value="<?php Print $deductionPagibig?>" placeholder="No document" readonly>
 						</div>
-						<label class="control-label col-md-5" for="philhealth">PhilHealth</label>
-						<div class="col-md-7">
+						<label class="control-label col-md-5 col-lg-5" for="philhealth">PhilHealth</label>
+						<div class="col-md-7 col-lg-7">
 							<input type="text" id="philhealth" name="philhealth" placeholder="No document" class="form-control input-sm" value="<?php Print $deductionPhilhealth?>" onkeypress="validatenumber(event)" readonly>
 						</div>
 					</div>
@@ -1345,50 +1345,50 @@ if($holidayExist > 0)
 				?>
 				<!-- Days the employee came to work -->
 				<input type="hidden" name="daysAttended" value="<?php Print $allowCounter?>">
-				<div class="col-md-5">
+				<div class="col-md-5 col-lg-5">
 					<h4 class="text-left">Allowance</h4>
 					<div class="form-group">
-						<label class="control-label col-md-2">Daily</label>
-						<div class="col-md-2 nopadding">
+						<label class="control-label col-md-2 col-lg-2">Daily</label>
+						<div class="col-md-2 col-lg-2 nopadding">
 							<input type="text" id="allowance" name="allowance" class="form-control input-sm" placeholder="Daily allowance" value="<?php Print $empArr['allowance']?>" readonly>
 						</div>
-						<label class="control-label col-md-2">Overall</label>
-						<div class="col-md-2 nopadding">
+						<label class="control-label col-md-2 col-lg-2">Overall</label>
+						<div class="col-md-2 col-lg-2 nopadding">
 							<input type="text" id="OverallAllowance" name="OverallAllowance" class="form-control input-sm" placeholder="Overall Allow."  value="<?php Print $overallAllow?>" readonly>
 						</div>
-						<label class="control-label col-md-2">Extra</label>
-						<div class="col-md-2 nopadding">
+						<label class="control-label col-md-2 col-lg-2">Extra</label>
+						<div class="col-md-2 col-lg-2 nopadding">
 							<input type="number" id="allowance" name="extra_allowance" name="extra_allowance" class="form-control input-sm" onblur="addDecimal(this)">
 						</div>
 					</div>
 
 					<!-- Tools deductions -->
-					<div class="col-md-12">
+					<div class="col-md-1 col-lg-12">
 						<h4 class="text-left">Tools</h4>
-						<a class="btn btn-sm btn-primary col-md-1" onclick="addRow()"><span class="glyphicon glyphicon-plus"></span></a>
+						<a class="btn btn-sm btn-primary col-md-1 col-lg-1" onclick="addRow()"><span class="glyphicon glyphicon-plus"></span></a>
 						<div class="form-group" id="toolform">
 							<div>
-								<label class="control-label col-md-2" for="tools">Name</label>
-								<div class="col-md-4">
+								<label class="control-label col-md-2 col-lg-2" for="tools">Name</label>
+								<div class="col-md-4 col-lg-4">
 									<input type="text" id="tools" name="toolname[]" class="form-control input-sm" onchange="checkName(this)">
 								</div>
-								<label class="control-label col-md-1" for="price">Cost</label>
-								<div class="col-md-4">
+								<label class="control-label col-md-1 col-lg-1" for="price">Cost</label>
+								<div class="col-md-4 col-lg-4">
 									<input type="number" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">
 								</div>
 							</div>	
 						</div>
-						<div class="col-md-12 pull-down">
-							<label class="col-md-5">
+						<div class="col-md-1 col-lg-12 pull-down">
+							<label class="col-md-5 col-lg-5">
 								Total Cost
 							</label>
-							<div class="col-md-6">
+							<div class="col-md-6 col-lg-6">
 								<input type="text" class="form-control" id="totalcost" name="totalcost" value="" readonly>
 							</div>
 
 						</div>
-						<div class="col-md-12">
-							<label class="col-md-5">
+						<div class="col-md-1 col-lg-12">
+							<label class="col-md-5 col-lg-5">
 								Previous Payable
 							</label>
 							<?php
@@ -1406,15 +1406,15 @@ if($holidayExist > 0)
 									$outstanding = $outstArr['tools_outstanding'];
 							}
 							?>
-							<div class="col-md-6">
+							<div class="col-md-6 col-lg-6">
 								<input type="text" class="form-control" name="previousPayable" id="outstandingPayable" value="<?php Print $outstanding ?>" readonly>
 							</div>
 						</div>
-						<div class="col-md-12">
-							<label class="col-md-5">
+						<div class="col-md-1 col-lg-12">
+							<label class="col-md-5 col-lg-5">
 								Amount to Pay
 							</label>
-							<div class="col-md-6">
+							<div class="col-md-6 col-lg-6">
 								<input type="number" id="amountToPay" name="amountToPay" class="form-control" onblur="addDecimal(this)" onchange="settotalLimit(this)" readonly>
 							</div>
 						</div>

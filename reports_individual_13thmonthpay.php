@@ -42,7 +42,7 @@
 		require_once("directives/nav.php");
 		?>
 
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 			<div class="row"><br>
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
@@ -82,7 +82,7 @@
 		<div class="pull-down">
 			
 				
-			<div class="col-md-6 col-md-offset-3">
+			<div class="col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
 				
 				<?php
 				 switch($period)
@@ -462,11 +462,11 @@
 	      </div>
 	      <div class="modal-body">
 	      	<div class="row">
-		      	<div class="col-md-6">
+		      	<div class="col-md-6 col-lg-6">
 		      		<h4>13th Month Pay Amount:</h4>
 		      			<b><?php Print numberExactFormat($overallPayment, 2, '.', true)?></b>
 		      	</div>
-		      	<div class="col-md-6">
+		      	<div class="col-md-6 col-lg-6">
 		      		<h4>Amount to Give:</h4> <input type="number" id="amountToGive"><br>
 		        	<input type="checkbox" onclick="copyAmount(<?php Print numberExactFormat($overallPayment, 2, '.', false)?>)"> Copy overall amount
 		      	</div>

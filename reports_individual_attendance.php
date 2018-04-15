@@ -53,13 +53,13 @@
 		?>
 
 		<div class="container pull-down">
-			<div class="col-md-12 pull-down">
+			<div class="col-md-1 col-lg-12 pull-down">
 				<h2>Individual <?php Print $_GET['type']?> Report</h2>
 			</div>
 
 			<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
 			<div class="row">
-				<div class="col-md-3 col-md-offset-1 pull-down">
+				<div class="col-md-3 col-lg-3 col-md-offset-1 col-lg-offset-1 pull-down">
 					<div class="form-group">
 						<input type="text" placeholder="Search" id="search_box" name="txt_search"  class="form-control" autocomplete="off">
 					</div>
@@ -79,7 +79,7 @@
 
 
 				<!-- FILTER EMPLOYEE BY POSITION -->
-				<div class="col-md-7 pull-down text-right">
+				<div class="col-md-7 col-lg-7 pull-down text-right">
 					Filter by:
 					<!-- POSITION DROPDOWN -->
 					<div class="btn-group">
@@ -128,7 +128,7 @@
 				<!-- END OF ACTION BUTTONS FOR FILTERS-->
 			</div>
 
-			<div id="search_result" class="col-md-9 search-results-table"></div>
+			<div id="search_result" class="col-md-9 col-lg-9 search-results-table"></div>
 
 			<?php
 				echo "<div id='pagingg' >";

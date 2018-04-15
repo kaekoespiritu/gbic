@@ -27,7 +27,7 @@ require_once("directives/modals/addLoan.php");
 
 		<!-- Breadcrumbs -->
 		<div class="row">
-			<div class="col-md-10 col-md-offset-1 pull-down">
+			<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down">
 				<ol class="breadcrumb text-left">
 					<li>
 						<a href="employees.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a>
@@ -38,24 +38,24 @@ require_once("directives/modals/addLoan.php");
 		</div>
 
 		<!-- Add new loan -->
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 				<div class="panel panel-info">
 					<div class="panel-heading">
 						<h4>To add a new loan, search for an employee:</h4>
-						<div class="form-group col-md-6 col-md-offset-3" style="float:none">
+						<div class="form-group col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3" style="float:none">
 							<input placeholder="Search for employee (can look up any part of employees name)" class="form-control" id="search_text">
 						</div>
 
 					</div>
 				</div>
 
-				<div id="search_result" class="col-md-12"></div>
+				<div id="search_result" class="col-md-1 col-lg-12"></div>
 				 
 
 		</div>
 
 		<!-- View loans -->
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<h4>To view employee loans, first select a loan type:</h4>
@@ -124,7 +124,7 @@ require_once("directives/modals/addLoan.php");
 		//New vale loaned to employees
 		?>
 		<!-- Dashboard -->
-		<div class="row col-md-10 col-md-offset-1">
+		<div class="row col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 				<table class="table table-bordered table-responsive" style="color: white; font-family:Quicksand">
 					<tr>
 						<td style="background-color:chocolate">

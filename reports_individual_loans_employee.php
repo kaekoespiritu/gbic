@@ -54,7 +54,7 @@
 		require_once("directives/nav.php");
 		?>
 
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 			<div class="row"><br>
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
@@ -82,7 +82,7 @@
 				</div>
 			</div>
 
-			<div class="col-md-12">
+			<div class="col-md-1 col-lg-12">
 				<div class="pull-down">
 				<table class="table table-bordered pull-down">
 					<tr>

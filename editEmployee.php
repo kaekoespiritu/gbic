@@ -56,7 +56,7 @@ include_once('directives/db.php');
 <?php
 Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 ?>
-	<div class="col-md-10 col-md-offset-1">
+	<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 		<div class="row"><br>
 			<div class="row text-center">
 				<ol class="breadcrumb text-left">
@@ -68,51 +68,51 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 		</div>
 		<form class="horizontal">
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-6 col-lg-6">
 					<h4 class="modal-title">Personal Information</h4><hr>
 					<div class="row">
-						<div class="col-md-3">
+						<div class="col-md-3 col-lg-3">
 							<label for="fname">First name</label>
 						</div>
-						<div class="col-md-9">
+						<div class="col-md-9 col-lg-9">
 							<input type="text" class="form-control" id="fname" name = "firstname" value="<?php Print "$firstname"?>" disabled>
 						</div>
 					</div><br>
 					<div class="row">
-						<div class="col-md-3">
+						<div class="col-md-3 col-lg-3">
 							<label for="lname">Last name</label>
 						</div>
-						<div class="col-md-9">
+						<div class="col-md-9 col-lg-9">
 							<input type="text" class="form-control" id="lname" name = "lastname" value="<?php Print "$lastname"?>" disabled>
 						</div>
 					</div><br>
 					<div class="row">
-						<div class="col-md-3">
+						<div class="col-md-3 col-lg-3">
 							<label for="address">Address</label>
 						</div>
-						<div class="col-md-9">
+						<div class="col-md-9 col-lg-9">
 							<input type="text" class="form-control" name = "address" placeholder="<?php Print "$address"?>" id="address">
 						</div>
 					</div><br>
 					<div class="row">
-						<div class="col-md-3">
+						<div class="col-md-3 col-lg-3">
 							<label for="contact">Contact number</label>
 						</div>
-						<div class="col-md-5">
+						<div class="col-md-5 col-lg-5">
 							<input type="text" class="form-control" name = "contactnum" placeholder="<?php Print "$contactnum"?>" id="contact">
 						</div>
-						<div class="col-md-1">
+						<div class="col-md-1 col-lg-1">
 							<label for="contact">Date of Birth</label>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-3 col-lg-3">
 							<input type="text" class="form-control" name = "dob" placeholder="<?php Print "$dob"?>" id="dtpkr_dob">
 						</div>
 					</div><br>
 					<div class="row">
-						<div class="col-md-3">
+						<div class="col-md-3 col-lg-3">
 							<label for="contact">Civil Status</label>
 						</div>
-						<div class="col-md-9">
+						<div class="col-md-9 col-lg-9">
 							<div class="dropdown">
 								<select class="form-control" name = "civilstatus" aria-labelledby="dropdownMenu1">
 									<option hidden>Select a status</option>
@@ -137,47 +137,47 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 					</div><br>
 
 					<div class="row">
-						<div class="col-md-3">
+						<div class="col-md-3 col-lg-3">
 							<label for="contact">Date of Hire</label>
 						</div>
-						<div class="col-md-9">
+						<div class="col-md-9 col-lg-9">
 							<input type="text" size="10" style="width:150px" name = "datehired" class="form-control" placeholder="<?php Print "$datehired"?>" id="dtpkr_datehired" >
 						</div>
 					</div>
 
 					<div class="row pull-down">
-								<div class="col-md-4">
+								<div class="col-md-4 col-lg-4">
 									<label for="emergency">Emergency contact:</label>	
 								</div>
-								<div class="col-md-8">									
+								<div class="col-md-8 col-lg-8">									
 									<input name="emergencyContact" type="text" placeholder="<?php Print $emergency?>"class="form-control">
 								</div>
 							</div>
 
 							<div class="row pull-down">
-								<div class="col-md-4">
+								<div class="col-md-4 col-lg-4">
 									<label for="emergency" class="no-wrap">Character Reference:</label>
 								</div>
-								<div class="col-md-8">
+								<div class="col-md-8 col-lg-8">
 									<input name="characterReference" type="text" placeholder="<?php Print $reference?>" class="form-control">
 								</div>
 							</div>
 
-						<div class="col-md-4 col-md-offset-3 pull-down">
+						<div class="col-md-4 col-lg-4 col-md-offset-3 col-lg-offset-3 pull-down">
 							<input type='submit' class='btn btn-primary pull-down' value='Save Changes'>
 						</div>
-						<div class="col-md-1 pull-down">
+						<div class="col-md-1 col-lg-1 pull-down">
 							<input type='button' onclick="terminateEmployee('<?php Print $empid?>')" class='btn btn-danger pull-down' value='Terminate Employee'>
 						</div>
 				</div>
 
-				<div class="col-md-6">
+				<div class="col-md-6 col-lg-6">
 					<h4 class="modal-title">Job details</h4><hr>
 					<div class="row">
-						<div class="col-md-5">
+						<div class="col-md-5 col-lg-5">
 							<label for="position" class="text-right">Position</label>
 						</div>
-						<div class="col-md-5">
+						<div class="col-md-5 col-lg-5">
 							<div class="dropdown">
 								<select class="form-control" name="position" aria-labelledby="dropdownMenu1">
 									<option hidden>Select a position</option>
@@ -203,10 +203,10 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 					</div><br>
 
 					<div class="row">
-						<div class="col-md-5">
+						<div class="col-md-5 col-lg-5">
 							<label for="position" class="text-right">Site</label>
 						</div>
-						<div class="col-md-5">
+						<div class="col-md-5 col-lg-5">
 							<div class="dropdown">
 								<select name="site" class="form-control">
 									<option hidden>Select a site</option>
@@ -231,28 +231,28 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 					</div><br> 
 
 					<div class="row">
-						<div class="col-md-5">
+						<div class="col-md-5 col-lg-5">
 							<label for="rate">Monthly Salary</label>
 						</div>
-						<div class="col-md-5">
+						<div class="col-md-5 col-lg-5">
 							<input name="salary"  type="text" class="form-control" id="monthlysalary" onkeyup="monthlySalary()" placeholder="<?php Print "$salary"?>" onchange="salaryDecimal()">
 						</div>
 					</div><br>
 
 					<div class="row">
-						<div class="col-md-5">
+						<div class="col-md-5 col-lg-5">
 							<label for="rate">Rate Per Day</label>
 						</div>
-						<div class="col-md-5">
+						<div class="col-md-5 col-lg-5">
 							<input name="rate"  type="text" placeholder="<?php Print "$rate"?>" class="form-control" id="rate" readonly>
 						</div>
 					</div><br>
 
 					<div class="row">
-						<div class="col-md-5">
+						<div class="col-md-5 col-lg-5">
 							<label for="allowance">Allowance</label>
 						</div>
-						<div class="col-md-5">
+						<div class="col-md-5 col-lg-5">
 							<input type="text" name="allowance" placeholder="<?php Print "$allowance"?>" class="form-control" onchange="allowanceDecimal()" id="allowance">
 						</div>
 					</div>
@@ -262,23 +262,23 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 							<?php
 							if($sssEE != 0)
 								Print  '
-										<div class="col-md-12">
-											<div class="col-md-3">
+										<div class="col-md-1 col-lg-12">
+											<div class="col-md-3 col-lg-3">
 												<input type="checkbox" name="sssCheckbox" id="sssCheckbox" onchange="sssCheckboxFunc()" checked>
 												<label for="sss">SSS</label>
 											</div>
-											<div class="col-md-9">
+											<div class="col-md-9 col-lg-9">
 												<div class="row">
-													<div class="col-md-1">
+													<div class="col-md-1 col-lg-1">
 														<label for="sss_ee">EE:</label>
 													</div>
-													<div class="col-md-4">
+													<div class="col-md-4 col-lg-4">
 														<input name="sssEE" type="text" placeholder="'.$sssEE.'" class="form-control" id="sssEE">
 													</div>
-													<div class="col-md-1">
+													<div class="col-md-1 col-lg-1">
 														<label for="sss_er">ER:</label>
 													</div>
-													<div class="col-md-4">
+													<div class="col-md-4 col-lg-4">
 														<input name="sssER" type="text" placeholder="'.$sssER.'" class="form-control" id="sssER">
 													</div>
 												</div>
@@ -286,23 +286,23 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 										</div>';
 							else
 								Print  '
-										<div class="col-md-12">
-											<div class="col-md-3">
+										<div class="col-md-1 col-lg-12">
+											<div class="col-md-3 col-lg-3">
 												<input type="checkbox" name="sssCheckbox" id="sssCheckbox" onchange="sssCheckboxFunc()">
 												<label for="sss">SSS</label>
 											</div>
-											<div class="col-md-9">
+											<div class="col-md-9 col-lg-9">
 												<div class="row">
-													<div class="col-md-1">
+													<div class="col-md-1 col-lg-1">
 														<label for="sss_ee">EE:</label>
 													</div>
-													<div class="col-md-4">
+													<div class="col-md-4 col-lg-4">
 														<input name="sssEE" type="text" placeholder="No document" class="form-control" id="sssEE" readonly>
 													</div>
-													<div class="col-md-1">
+													<div class="col-md-1 col-lg-1">
 														<label for="sss_er">ER:<label>
 													</div>
-													<div class="col-md-4">
+													<div class="col-md-4 col-lg-4">
 														<input name="sssER" type="text" placeholder="No document" class="form-control" id="sssER" readonly>
 													</div>
 												</div>
@@ -312,23 +312,23 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 
 							<?php
 							if($philhealthEE != 0)
-								Print '<div class="col-md-12 pull-down">
-											<div class="col-md-3">
+								Print '<div class="col-md-1 col-lg-12 pull-down">
+											<div class="col-md-3 col-lg-3">
 												<input type="checkbox" name="philhealthCheckbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()" checked>
 												<label for="philhealth" class="nowrap">PhilHealth</label>
 											</div>
-											<div class="col-md-9">
+											<div class="col-md-9 col-lg-9">
 												<div class="row">
-													<div class="col-md-1">
+													<div class="col-md-1 col-lg-1">
 														<label for="philhealth_ee">EE:</label>
 													</div>
-													<div class="col-md-4">
+													<div class="col-md-4 col-lg-4">
 														<input name="philhealthEE" placeholder="'.$philhealthEE.'" type="text" class="form-control" id="philhealthEE">
 													</div>
-													<div class="col-md-1">
+													<div class="col-md-1 col-lg-1">
 														<label for="philhealth_er">ER:</label>
 													</div>
-													<div class="col-md-4">
+													<div class="col-md-4 col-lg-4">
 														<input name="philhealthER" placeholder="'.$philhealthER.'" type="text" class="form-control" id="philhealthER">
 													</div>
 												</div>
@@ -336,23 +336,23 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 										</div>';
 							else
 								Print '
-										<div class="col-md-12 pull-down">
-											<div class="col-md-3">
+										<div class="col-md-1 col-lg-12 pull-down">
+											<div class="col-md-3 col-lg-3">
 												<input type="checkbox" name="philhealthCheckbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()">
 												<label for="philhealth" class="nowrap">PhilHealth</label>
 											</div>
-											<div class="col-md-9">
+											<div class="col-md-9 col-lg-9">
 												<div class="row">
-													<div class="col-md-1">
+													<div class="col-md-1 col-lg-1">
 														<label for="philhealth_ee">EE:</label>
 													</div>
-													<div class="col-md-4">
+													<div class="col-md-4 col-lg-4">
 									   					<input name="philhealthEE" placeholder="No document" type="text" class="form-control" id="philhealthEE" readonly>
 									   				</div>
-									   				<div class="col-md-1">
+									   				<div class="col-md-1 col-lg-1">
 									   					<label for="philhealth_er">ER:</label>
 									   				</div>
-									   				<div class="col-md-4">
+									   				<div class="col-md-4 col-lg-4">
 									   					<input name="philhealthER" placeholder="No document" type="text" class="form-control" id="philhealthER" readonly>
 									   				</div>
 									   			</div>
@@ -362,46 +362,46 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 						
 							<?php
 							if($pagibigEE != 0)
-								Print  '<div class="col-md-12 pull-down">
-											<div class="col-md-3">
+								Print  '<div class="col-md-1 col-lg-12 pull-down">
+											<div class="col-md-3 col-lg-3">
 												<input type="checkbox" name="pagibigCheckbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()" checked>
 												<label for="pagibig" class="nowrap">Pagibig</label>
 											</div>
-											<div class="col-md-9">
+											<div class="col-md-9 col-lg-9">
 												<div class="row">
-													<div class="col-md-1">
+													<div class="col-md-1 col-lg-1">
 														<label for="pagibig_ee">EE:</label>
 													</div>
-													<div class="col-md-4">
+													<div class="col-md-4 col-lg-4">
 														<input name="pagibigEE" placeholder="'.$pagibigEE.'" type="text" class="form-control" id="pagibigEE">
 													</div>
-													<div class="col-md-1">
+													<div class="col-md-1 col-lg-1">
 														<label for="pagibig_er">ER:</label>
 													</div>
-													<div class="col-md-4">
+													<div class="col-md-4 col-lg-4">
 														<input name="pagibigER" placeholder="'.$pagibigER.'" type="text" class="form-control" id="pagibigER">
 													</div>
 												</div>
 											</div>
 										</div>';
 							else
-								Print  '<div class="col-md-12 pull-down">
-											<div class="col-md-3">
+								Print  '<div class="col-md-1 col-lg-12 pull-down">
+											<div class="col-md-3 col-lg-3">
 												<input type="checkbox" name="pagibigCheckbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()">
 												<label for="pagibig" class="nowrap">Pagibig</label>
 											</div>
-											<div class="col-md-9">
+											<div class="col-md-9 col-lg-9">
 												<div class="row">
-													<div class="col-md-1">
+													<div class="col-md-1 col-lg-1">
 														<label for="pagibig_ee">EE:</label>
 													</div>
-													<div class="col-md-4">
+													<div class="col-md-4 col-lg-4">
 														<input name="pagibigEE" placeholder="No document" type="text" class="form-control" id="pagibigEE" readonly>
 													</div>
-													<div class="col-md-1">
+													<div class="col-md-1 col-lg-1">
 														<label for="pagibig_er">ER:</label>
 													</div>
-													<div class="col-md-4">
+													<div class="col-md-4 col-lg-4">
 														<input name="pagibigER" placeholder="No document" type="text" class="form-control" id="pagibigER" readonly>
 													</div>
 												</div>
@@ -410,7 +410,7 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 							?>
 						</div>
 
-						<div class="col-md-10 col-md-offset-1 pull-down text-center well well-sm">
+						<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down text-center well well-sm">
 						<!-- /////////////////////////// -->
 						
 							

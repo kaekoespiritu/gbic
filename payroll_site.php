@@ -25,7 +25,7 @@ $date = strftime("%B %d, %Y");
 	?>
 
 	<div class="row pull-down">
-	<div class="col-md-10 col-md-offset-1">
+	<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 		<ol class="breadcrumb text-left">
 			<li><a href="payroll_login.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Logout of Payroll</a></li>
 			<li class="active">Site</li>
@@ -52,7 +52,7 @@ $date = strftime("%B %d, %Y");
 	<div class="container">
 		<h3>Choose a site</h3>
 
-		<div class="col-md-9 col-md-offset-2">
+		<div class="col-md-9 col-lg-9 col-md-offset-2 col-lg-offset-2">
 			<?php
 
 			$counter = 0;

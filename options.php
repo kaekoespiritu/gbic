@@ -41,9 +41,9 @@ $adminRole = $adminArr['role'];
 		?>
 
 		<!-- Open/Close payroll options-->
-		<div class="col-md-10 col-md-offset-1 pull-down">
+		<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down">
 
-			<div class="col-md-6 <?php Print $openNclosingPayroll ?>">
+			<div class="col-md-6 col-lg-6 <?php Print $openNclosingPayroll ?>">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Change opening and closing payroll</h3>
@@ -104,30 +104,30 @@ $adminRole = $adminArr['role'];
 				</div>
 			</div>
 
-		<div class="col-md-6">
+		<div class="col-md-6 col-lg-6">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Manage accounts</h3>
 				</div>
 				<div class="panel-body">
-					<div class="col-md-6">
+					<div class="col-md-6 col-lg-6">
 						<div class="alert alert-success" role="alert">
 							You're logged in as<br>
 							<?php Print $adminName ?><br>
 							Role: <span class="mediumtext"><?php Print $adminRole ?></span>
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="col-md-12 margin-separator">
-							<button type="button" class="btn btn-default col-md-12" data-toggle="modal" data-target="#accountOptions"><span class="glyphicon glyphicon-user"></span> Options</button>
+					<div class="col-md-6 col-lg-6">
+						<div class="col-md-1 col-lg-12 margin-separator">
+							<button type="button" class="btn btn-default col-md-1 col-lg-12" data-toggle="modal" data-target="#accountOptions"><span class="glyphicon glyphicon-user"></span> Options</button>
 						</div>
 						<!-- Only visible on admin side -->
-						<div class="col-md-12 margin-separator <?php Print $addNewAccountAdmin ?>">
-							<button type="button" class="btn btn-default col-md-12" data-toggle="modal" data-target="#newAccount"><span class="glyphicon glyphicon-plus"></span> Add new account</button>
+						<div class="col-md-1 col-lg-12 margin-separator <?php Print $addNewAccountAdmin ?>">
+							<button type="button" class="btn btn-default col-md-1 col-lg-12" data-toggle="modal" data-target="#newAccount"><span class="glyphicon glyphicon-plus"></span> Add new account</button>
 						</div>
 						<!-- Only visible on admin side -->
-						<div class="col-md-12 margin-separator <?php Print $manageEmployee ?>">
-							<button type="button" class="btn btn-default col-md-12" data-toggle="modal" data-target="#manageAccount"><span class="glyphicon glyphicon-cog"></span> Manage employees</button>
+						<div class="col-md-1 col-lg-12 margin-separator <?php Print $manageEmployee ?>">
+							<button type="button" class="btn btn-default col-md-1 col-lg-12" data-toggle="modal" data-target="#manageAccount"><span class="glyphicon glyphicon-cog"></span> Manage employees</button>
 						</div>
 					</div>
 				</div>
@@ -139,8 +139,8 @@ $adminRole = $adminArr['role'];
 		<div id="hiddenFormDiv"></div>
 
 
-		<div class="col-md-10 col-md-offset-1">
-			<div class="col-md-6 <?php Print $siteManagement?>">
+		<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
+			<div class="col-md-6 col-lg-6 <?php Print $siteManagement?>">
 
 				<!-- Site management -->
 				<div class="panel panel-default">
@@ -148,13 +148,13 @@ $adminRole = $adminArr['role'];
 						<h3 class="panel-title">Site management</h3>
 					</div>
 					<div class="panel-body">
-						<div class="col-md-5">
-							<a data-target="#addSite" data-toggle="modal" class="btn btn-success col-md-12 pull-down">ADD SITE</a>
-							<a class="btn btn-primary col-md-12 pull-down" data-toggle="modal" data-target="#siteHistory">SITE HISTORY</a>
-							<a class="btn btn-warning col-md-12 pull-down" data-target="#colaSettings" data-toggle="modal">SETTINGS FOR COLA</a>
+						<div class="col-md-5 col-lg-5">
+							<a data-target="#addSite" data-toggle="modal" class="btn btn-success col-md-1 col-lg-12 pull-down">ADD SITE</a>
+							<a class="btn btn-primary col-md-1 col-lg-12 pull-down" data-toggle="modal" data-target="#siteHistory">SITE HISTORY</a>
+							<a class="btn btn-warning col-md-1 col-lg-12 pull-down" data-target="#colaSettings" data-toggle="modal">SETTINGS FOR COLA</a>
 						</div>
 
-						<div class="col-md-7 text-left">
+						<div class="col-md-7 col-lg-7 text-left">
 							<div class="sitelist">
 								<form id="siteForm" method="post" action="logic_options_removeSite.php">
 									<?php 
@@ -177,19 +177,19 @@ $adminRole = $adminArr['role'];
 			</div>
 
 			<!-- Position Management -->
-			<div class="col-md-6 <?php Print $positionManagement?>">
+			<div class="col-md-6 col-lg-6 <?php Print $positionManagement?>">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">Position management</h3>
 					</div>
 					<div class="panel-body">
-						<div class="col-md-5">
-							<a data-target="#addPosition" data-toggle="modal" class="btn btn-success col-md-12 pull-down">ADD POSITION</a>
-							<a data-target="#removePosition" data-toggle="modal" class="btn btn-danger col-md-12 pull-down disabletotally" id="removePositionButton" onclick="removeSite()">REMOVE POSITION</a>
-							<!-- <a class="btn btn-danger col-md-12 pull-down disabletotally"  onclick="removeSite()">REMOVE POSITION</a> -->
+						<div class="col-md-5 col-lg-5">
+							<a data-target="#addPosition" data-toggle="modal" class="btn btn-success col-md-1 col-lg-12 pull-down">ADD POSITION</a>
+							<a data-target="#removePosition" data-toggle="modal" class="btn btn-danger col-md-1 col-lg-12 pull-down disabletotally" id="removePositionButton" onclick="removeSite()">REMOVE POSITION</a>
+							<!-- <a class="btn btn-danger col-md-1 col-lg-12 pull-down disabletotally"  onclick="removeSite()">REMOVE POSITION</a> -->
 						</div>
 
-						<div class="col-md-7 text-left">
+						<div class="col-md-7 col-lg-7 text-left">
 							<div class="sitelist">
 								<form id="positionForm" method="post" action="logic_options_removePosition.php">
 									<?php 
@@ -218,8 +218,8 @@ $adminRole = $adminArr['role'];
 			  <div class="modal-dialog" role="document">
 			  	<div class="modal-content">
 				  	<div class="modal-header">
-				  		<h4 class="modal-title col-md-11">View site history</h4>
-				        <button type="button" class="close col-md-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  		<h4 class="modal-title col-md-1 col-lg-11">View site history</h4>
+				        <button type="button" class="close col-md-1 col-lg-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				    </div>
 				    <!-- form for adding POSITIONS -->
 				    <div class="modal-body">

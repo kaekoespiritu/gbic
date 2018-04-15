@@ -48,7 +48,7 @@
 
 		<div class="row" style="z-index: 101">
 			<!-- BREAD CRUMBS -->
-			<div class="col-md-10 col-md-offset-1 pull-down">
+			<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down">
 				<ol class="breadcrumb text-left">
 					<li><a href="attendance.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a></li>
 					<?php
@@ -61,7 +61,7 @@
 			</div>
 
 			<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
-				<div class="col-md-3 col-md-offset-1">
+				<div class="col-md-3 col-lg-3 col-md-offset-1 col-lg-offset-1">
 					<form method="post" action="" id="search_form">
 						<div class="form-group">
 							<input type="text" placeholder="Search" id="search_box" name="txt_search" onkeypress="enter(enter)" class="form-control">
@@ -69,7 +69,7 @@
 					</form>
 				</div>
 				<!-- FILTER EMPLOYEE BY POSITION -->
-				<div class="col-md-5 pull-right">
+				<div class="col-md-5 col-lg-5 pull-right">
 					Filter by:
 					<!-- POSITION DROPDOWN -->
 					<div class="btn-group">
@@ -103,7 +103,7 @@
 			
 			<!-- Attendance table -->
 			<form id="form" method="post" action="logic_attendance.php?site=<?php Print $site_name;?>">
-		<div class="col-md-12">
+		<div class="col-md-1 col-lg-12">
 			<table class="table table-condensed table-bordered" style="background-color:white;">
 				<tr>
 					<td style='width:200px !important;'>Name</td>

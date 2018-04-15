@@ -73,7 +73,7 @@
 			Table for expenses
 		-->
 
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 			<div class="row"><br>
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
@@ -84,7 +84,7 @@
 			</div>
 
 			<div class="form-inline">
-				<div class="col-md-3">
+				<div class="col-md-3 col-lg-3">
 					<h4>Select Period</h4>
 					<select onchange="periodChange(this.value)" class="form-control">
 						<?php 
@@ -104,7 +104,7 @@
 					</select>
 				</div>
 
-				<div class="col-md-3">
+				<div class="col-md-3 col-lg-3">
 					<h4>Select <?php Print $period?></h4>
 					<select class="form-control" onchange="changeDate(this.value)">
 						<option hidden>Choose a <?php Print $period?></option>
@@ -203,7 +203,7 @@
 					</select>
 				</div>
 
-				<div class="col-md-2">
+				<div class="col-md-2 col-lg-2">
 					<h4>Filter:</h4>
 					<select onchange="positionChange(this.value)" class="form-control">
 						<option hidden>Position</option>
@@ -222,7 +222,7 @@
 					</select>
 				</div>
 
-				<div class="col-md-2">
+				<div class="col-md-2 col-lg-2">
 					<h4>Requirement</h4>
 					<select onchange="requirementChange(this.value)" class="form-control">
 						<?php 
@@ -241,7 +241,7 @@
 						?>
 					</select>
 				</div>
-				<div class="col-md-1">
+				<div class="col-md-1 col-lg-1">
 					<button type="button" class="btn btn-danger pull-down" onclick="clearFilter()">Clear Filters</button>
 				</div>
 			</div>

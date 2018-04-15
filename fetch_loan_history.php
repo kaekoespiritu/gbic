@@ -15,7 +15,7 @@ $employeeQuery = mysql_query($employee);
 $empArr = mysql_fetch_assoc($employeeQuery);
 $output = "";//this is the object that will be fetch to the loans_view.php
 
-$output .= "<div class='col-md-12'>
+$output .= "<div class='col-md-1 col-lg-12'>
 					<h4 class='modal-title'>".$empArr['lastname'].", ".$empArr['firstname']."'s loan history</h4>
 				</div>
 				<div class='modal-body pull-down'>

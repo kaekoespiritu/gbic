@@ -38,7 +38,7 @@ $location = $_GET['site'];
 
 		<!-- Breadcrumbs -->
 		<div class="row">
-			<div class="col-md-10 col-md-offset-1 pull-down">
+			<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down">
 				<ol class="breadcrumb text-left">
 					<li>
 						<a href="site_landing.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a>
@@ -51,14 +51,14 @@ $location = $_GET['site'];
 
 
 		<!-- Table of vacant employees-->
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 			<div class="pull-left">
 				<button type="button" data-target="#changeSite" data-toggle="modal" class="btn btn-default" id="siteButton">
 					<span class="glyphicon glyphicon-arrow-down"></span> Change site for selected employees
 				</button>
 			</div>
 			<!-- FILTER EMPLOYEE BY POSITION -->
-				<div class="col-md-4 pull-right text-right">
+				<div class="col-md-4 col-lg-4 pull-right text-right">
 					Filter by:
 					<!-- POSITION DROPDOWN -->
 					<div class="btn-group">
@@ -193,8 +193,8 @@ $location = $_GET['site'];
 			  <div class="modal-dialog modal-sm" role="document">
 			  	<div class="modal-content">
 				  	<div class="modal-header">
-				  		<h4 class="modal-title col-md-11">Transfer to new site</h4>
-				        <button type="button" class="close col-md-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  		<h4 class="modal-title col-md-1 col-lg-11">Transfer to new site</h4>
+				        <button type="button" class="close col-md-1 col-lg-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				    </div>
 				    <div class="modal-body">
 			     	<select class="form-control input-sm" id="dd_groupChange" onchange="groupChange(this)">

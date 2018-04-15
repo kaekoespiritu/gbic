@@ -23,7 +23,7 @@ include('directives/session.php');
 		?>
 
 		<!-- Breadcrumbs -->
-		<div class="col-md-10 col-md-offset-1 pull-down">
+		<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down">
 			<ol class="breadcrumb text-left">
 				<li>
 					<a href="options.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Options</a>
@@ -46,7 +46,7 @@ include('directives/session.php');
 		</div>
 
 		<!-- Table of vacant employees-->
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 			<table class="table table-bordered">
 				<thead>
 				<tr>

@@ -23,7 +23,7 @@ include_once('directives/db.php');
 
 		<!-- Breadcrumbs -->
 		<div class="row">
-			<div class="col-md-10 col-md-offset-1 pull-down">
+			<div class="col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 pull-down">
 				<ol class="breadcrumb text-left">
 					<li><a href="employees.php?site=null&position=null" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a></li>
 					<li class="active">Absence Notifications</li>
@@ -43,7 +43,7 @@ include_once('directives/db.php');
 				    </div>
 			    	<div class="modal-body">
 						<h4>To rehire an employee, search for their name below:</h4>
-						<div class="form-group col-md-10 col-md-offset-1" style="float:none">
+						<div class="form-group col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1" style="float:none">
 							<input placeholder="Search for an old employee" id="search_text" class="form-control">
 							<div id="search_result" class="searchresult-rehire-employee"></div>
 						</div>
@@ -57,67 +57,67 @@ include_once('directives/db.php');
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<div class="col-md-7">
+						<div class="col-md-7 col-lg-7">
 							<h4 class="modal-title text-right">Rehire old employee</h4>
 						</div>
-						<div class="col-md-5">
+						<div class="col-md-5 col-lg-5">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 						</div>
 					</div>
 					<div class="modal-body">
 						<form class="horizontal" method="POST" action="logic_rehire_employee.php">
 							<div class="row">
-								<div class="col-md-6">
+								<div class="col-md-6 col-lg-6">
 									<input type="hidden" name="empid" id="employeeID">
 									<h4 class="modal-title">Personal Information</h4><br>
 									<div class="row">
-										<div class="col-md-3">
+										<div class="col-md-3 col-lg-3">
 											<label for="fname">First name</label>
 										</div>
-										<div class="col-md-9">
+										<div class="col-md-9 col-lg-9">
 											<input name="txt_addFirstName" type="text" class="form-control" id="fname" readonly>
 										</div>
 									</div><br>
 
 									<div class="row">
-										<div class="col-md-3">
+										<div class="col-md-3 col-lg-3">
 											<label for="lname">Last name</label>
 										</div>
-										<div class="col-md-9">
+										<div class="col-md-9 col-lg-9">
 											<input name="txt_addLastName" type="text" class="form-control" id="lname" readonly>
 										</div>
 									</div><br>
 
 									<div class="row">
-										<div class="col-md-3">
+										<div class="col-md-3 col-lg-3">
 											<label for="address">Address</label>
 										</div>
-										<div class="col-md-9">
+										<div class="col-md-9 col-lg-9">
 											<input name="txt_addAddress" type="text" class="form-control" id="address" required>
 										</div>
 									</div><br>
 
 									<div class="row">
-										<div class="col-md-3">
+										<div class="col-md-3 col-lg-3">
 											<label for="contact">Contact number</label>
 										</div>
-										<div class="col-md-4">
+										<div class="col-md-4 col-lg-4">
 											<input name="txt_addContactNum" type="text" class="form-control" id="contact" required>
 										</div>
 
-										<div class="col-md-1">
+										<div class="col-md-1 col-lg-1">
 											<label for="contact">Date of Birth</label>
 										</div>
-										<div class="col-md-4">
+										<div class="col-md-4 col-lg-4">
 											<input name="txt_addDOB" type="text" placeholder="mm-dd-yyyy" class="form-control" id="dtpkr_dob" reaodnly>
 										</div>
 									</div><br>
 
 									<div class="row">
-										<div class="col-md-3">
+										<div class="col-md-3 col-lg-3">
 											<label for="contact">Civil Status</label>
 										</div>
-										<div class="col-md-9">
+										<div class="col-md-9 col-lg-9">
 											<div class="dropdown">
 												<select name="txt_addCivilStatus" id="civilstatus" class="form-control" aria-labelledby="dropdownMenu1" required>
 													<option value="Single">Single</option>
@@ -131,40 +131,40 @@ include_once('directives/db.php');
 									</div><br>
 
 									<div class="row">
-										<div class="col-md-3">
+										<div class="col-md-3 col-lg-3">
 											<label for="contact">Date of Hire</label>
 										</div>
-										<div class="col-md-9">
+										<div class="col-md-9 col-lg-9">
 											<input name="txt_addDateHired" type="text" size="10" style="width:150px" class="form-control" id="dtpkr_datehired" placeholder="mm-dd-yyyy" required>
 										</div>
 									</div>
 
 									<div class="row pull-down">
-										<div class="col-md-4">
+										<div class="col-md-4 col-lg-4">
 											<label for="emergency">Emergency contact:</label>	
 										</div>
-										<div class="col-md-8">									
+										<div class="col-md-8 col-lg-8">									
 											<input name="txt_emergencyContact" id="emergencyContact" type="text" class="form-control" >
 										</div>
 									</div>
 
 									<div class="row pull-down">
-										<div class="col-md-4">
+										<div class="col-md-4 col-lg-4">
 											<label for="emergency" class="no-wrap">Character Reference:</label>
 										</div>
-										<div class="col-md-8">
+										<div class="col-md-8 col-lg-8">
 											<input name="txt_characterReference" id="characterRef" type="text" class="form-control">
 										</div>
 									</div>
 								</div>
 
-								<div class="col-md-6">
+								<div class="col-md-6 col-lg-6">
 									<h4 class="modal-title">Job details</h4><hr>
 									<div class="row">
-										<div class="col-md-5">
+										<div class="col-md-5 col-lg-5">
 											<label for="position" class="text-right">Position</label>
 										</div>
-										<div class="col-md-5">
+										<div class="col-md-5 col-lg-5">
 											<div class="dropdown">
 												<select name="dd_addPosition" id="position" class="form-control" aria-labelledby="dropdownMenu1" required>
 													<option hidden>Select a position</option>
@@ -182,10 +182,10 @@ include_once('directives/db.php');
 									</div><br>
 
 									<div class="row">
-										<div class="col-md-5">
+										<div class="col-md-5 col-lg-5">
 											<label for="position" class="text-right">Site</label>
 										</div>
-										<div class="col-md-5">
+										<div class="col-md-5 col-lg-5">
 											<div class="dropdown">
 												<select class="form-control" name="dd_site" id="site" required>
 													<option hidden>Select a site</option>
@@ -203,28 +203,28 @@ include_once('directives/db.php');
 									</div><br> 
 
 									<div class="row">
-										<div class="col-md-5">
+										<div class="col-md-5 col-lg-5">
 											<label for="rate">Monthly Salary</label>
 										</div>
-										<div class="col-md-5">
+										<div class="col-md-5 col-lg-5">
 											<input name="txt_addMonthlySalary" autocomplete="off" type="text" class="form-control" id="monthlysalary" onchange="salaryDecimal()" onkeyup="monthlySalary()" required>
 										</div>
 									</div><br>
 
 									<div class="row">
-										<div class="col-md-5">
+										<div class="col-md-5 col-lg-5">
 											<label for="rate">Rate Per Day</label>
 										</div>
-										<div class="col-md-5">
+										<div class="col-md-5 col-lg-5">
 											<input name="txt_addRatePerDay"  type="text" class="form-control" id="rate" readonly>
 										</div>
 									</div><br>
 
 									<div class="row">
-										<div class="col-md-5">
+										<div class="col-md-5 col-lg-5">
 											<label for="allowance">Allowance</label>
 										</div>
-										<div class="col-md-5">
+										<div class="col-md-5 col-lg-5">
 											<input name="txt_addAllowance" type="text" class="form-control" id="allowance">
 										</div>
 									</div>
@@ -234,29 +234,29 @@ include_once('directives/db.php');
 										
 
 										<div class="row">
-											<div class="col-md-5">
+											<div class="col-md-5 col-lg-5">
 												<label for="sss">SSS</label>
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-4 col-lg-4">
 												<input type="checkbox" id="sssCheckbox" onchange="sssCheckboxFunc()">
 												<input name="txt_addSSS" type="text" class="form-control" id="sss">
 											</div>
-											<div class="col-md-5">
+											<div class="col-md-5 col-lg-5">
 												<label for="philhealth">Philhealth</label>
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-4 col-lg-4">
 												<input type="checkbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()">
 												<input name="txt_addPhilhealth" type="text" class="form-control" id="philhealth">
 											</div>
-											<div class="col-md-5">
+											<div class="col-md-5 col-lg-5">
 												<label for="pagibig">Pag-IBIG</label>
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-4 col-lg-4">
 												<input type="checkbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()">
 												<input name="txt_addPagibig" type="text" class="form-control" id="pagibig">
 											</div>
 
-											<div class="col-md-10 col-md-offset-1 pull-down text-center well well-sm">
+											<div class="col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 pull-down text-center well well-sm">
 												* SSS contribution is automatically computed based on employee's monthly salary.
 											</div>
 										</div>
@@ -275,7 +275,7 @@ include_once('directives/db.php');
 
 		<!-- EMPLOYEE TABLE -->
 		<div class="row pull-down">
-			<div class="col-md-10 col-md-offset-1">
+			<div class="col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
 				<table class="table table-bordered table-condensed" style="background-color:white;">
 					<tr>
 						<td>ID</td>

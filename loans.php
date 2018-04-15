@@ -29,7 +29,7 @@ $date = strftime("%B %d, %Y");
 
 		<!-- Breadcrumbs -->
 		<div class="row">
-			<div class="col-md-10 col-md-offset-1 pull-down">
+			<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down">
 				<ol class="breadcrumb text-left">
 					<li>
 						<a href="employees.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a>
@@ -40,7 +40,7 @@ $date = strftime("%B %d, %Y");
 			</div>
 
 			<!-- Search bar -->
-			<div class="col-md-3 col-md-offset-1">
+			<div class="col-md-3 col-lg-3 col-md-offset-1 col-lg-offset-1">
 				<div class="">
 					<form method="post" action="" id="search_form">
 						<input type="text" class="form-control" name="search" placeholder="Search" onkeypress="enter(enter)"">
@@ -49,7 +49,7 @@ $date = strftime("%B %d, %Y");
 			</div>
 
 
-			<div class="col-md-7 text-right">
+			<div class="col-md-7 col-lg-7 text-right">
 				Filter by:
 
 
@@ -114,7 +114,7 @@ $date = strftime("%B %d, %Y");
 
 		<!-- EMPLOYEE TABLE -->
 		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
+			<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 			<?php 
 			
 			Print "<form class=form-inline' id='loansForm' method='post' action='logic_loans.php?site=".$_GET['site']."&position=".$_GET['position']."'>";

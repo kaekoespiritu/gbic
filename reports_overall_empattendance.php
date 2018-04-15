@@ -61,7 +61,7 @@
 		require_once("directives/nav.php");
 		?>
 
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 			<div class="row"><br>
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
@@ -75,7 +75,7 @@
 			</div>
 
 			<div class="form-inline">
-				<div class="col-md-4">
+				<div class="col-md-4 col-lg-4">
 					<h4>Select Period</h4>
 					<select class="form-control" onchange="periodChange(this.value)">
 						<option hidden>Select date period</option>
@@ -121,7 +121,7 @@
 					</select>
 				</div>
 
-				<div class="col-md-3">
+				<div class="col-md-3 col-lg-3">
 					<h4>Select Requirements</h4>
 					<select onchange="requirementChange(this.value)" class="form-control">
 						<option hidden>Select Requirements</option>
@@ -142,7 +142,7 @@
 					</select>
 				</div>
 
-				<div class="col-md-3">
+				<div class="col-md-3 col-lg-3">
 					<h4>Select Position</h4>
 					<select class="form-control" onchange="positionChange(this.value)">
 						<option hidden>Select Position</option>
@@ -171,7 +171,7 @@
 			<a type="button" class="btn btn-danger pull-down" href="reports_overall_empattendance.php?site=<?php Print $site ?>&position=null&req=null">Clear Filter</a>
 		</div>
 
-		<div class="pull-down col-md-12 overflow">
+		<div class="pull-down col-md-1 col-lg-12 overflow">
 			<table class="table table-bordered pull-down">
 				<tr>
 					<td colspan="3">

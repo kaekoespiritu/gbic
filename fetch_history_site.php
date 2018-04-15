@@ -9,11 +9,11 @@
 	$empArr = mysql_fetch_assoc($employeeQuery);
 	$output = "
 				<div class='modal-header'>
-							<div class='col-md-11'>
+							<div class='col-md-1 col-lg-11'>
 								<h4 class='modal-title'>Site History for ".$empArr['lastname'].", ".$empArr['firstname']."</h4>
 							</div>
-							<div class='col-md-1 pull-right'>
-					        	<button type='button' class='close col-md-1' style='float:right' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+							<div class='col-md-1 col-lg-1 pull-right'>
+					        	<button type='button' class='close col-md-1 col-lg-1' style='float:right' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
 				        	</div>
 						</div>
 						<div class='modal-body'>

@@ -48,7 +48,7 @@ include('directives/session.php');
 
 	<!-- Breadcrumbs -->
 		<div class="row">
-			<div class="col-md-10 col-md-offset-1 pull-down">
+			<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down">
 				<ol class="breadcrumb text-left">
 					<li>
 						<a href="employees.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a>
@@ -91,7 +91,7 @@ include('directives/session.php');
 	<div class="container pull-down">
 		<h3>Choose a site</h3>
 
-		<div class="col-md-9 col-md-offset-2">
+		<div class="col-md-9 col-lg-9 col-md-offset-2 col-lg-offset-2">
 			<?php
 			$attCounter = 0;//Attendance Completion Checker
 			$counter = 0;//Counter for the While loop

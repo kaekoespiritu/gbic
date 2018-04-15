@@ -28,7 +28,7 @@
 		?>
 
 
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 			<div class="row"><br>
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
@@ -52,9 +52,9 @@
 				</div>
 			</div>
 
-			<div class="col-md-10 col-md-offset-1">
+			<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 				<div class="form-inline">
-					<div class="col-md-6">
+					<div class="col-md-6 col-lg-6">
 						<h4> Select Period</h4>
 						<select onchange="periodChange(this.value)" class="form-control" id="period">
 							<?php 
@@ -73,7 +73,7 @@
 							?>
 						</select>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-6 col-lg-6">
 						<h4>Select <?php Print $period?></h4>
 						<select class="form-control" onchange="changeDate(this.value)">
 							
@@ -181,7 +181,7 @@
 					
 					
 				</div>
-				<div class="col-md-12 pull-down">
+				<div class="col-md-1 col-lg-12 pull-down">
 				
 				<table class="table table-bordered pull-down">
 					<tr>

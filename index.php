@@ -119,7 +119,7 @@ while($row = mysql_fetch_assoc($site_query))
 		{
 			$employee_num = mysql_num_rows($employee_find_query);
 		}
-		Print "<a data-toggle='modal' href='#shortcut' onclick='shortcut(\"".$row['location']."\")''><div class='col-md-2 col-md-offset-1 card card-1'>
+		Print "<a data-toggle='modal' href='#shortcut' onclick='shortcut(\"".$row['location']."\")''><div class='col-md-2 col-lg-2 col-md-offset-1 col-lg-offset-1 card card-1'>
 				<h4 class='sitename' id='".$row['location']."'>".$row['location']."</h4>	
 				Employees deployed: ".$employee_num."
 			   </div></a>";
@@ -143,7 +143,7 @@ else
 	{
 		$employee_num = mysql_num_rows($employee_find_query);
 	}
-	Print "<a data-toggle='modal' href='#shortcut' onclick='shortcut(\"".$row['location']."\")''><div class='col-md-2 card card-1'>
+	Print "<a data-toggle='modal' href='#shortcut' onclick='shortcut(\"".$row['location']."\")''><div class='col-md-2 col-lg-2 card card-1'>
 			<h4 class='sitename' id='".$row['location']."'>".$row['location']."</h4>
 			Employees deployed: ".$employee_num."	
 		   </div></a>";
@@ -159,15 +159,15 @@ else
 		<div class="modal-content">
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-md-6 <?php Print $attendanceAccess?>">
-						<a id="attendanceLink" class="btn btn-primary btn-lg col-md-12 <?php Print $attendanceAccess?>">
+					<div class="col-md-6 col-lg-6 <?php Print $attendanceAccess?>">
+						<a id="attendanceLink" class="btn btn-primary btn-lg col-md-1 col-lg-12 <?php Print $attendanceAccess?>">
 						<img src="Images/attendance.png" class="center-block">Attendance</a>
 					</div>
-					<div class="col-md-6  <?php Print $employeesTab?>">
-						<a id="employeesLink" class="btn btn-primary btn-lg col-md-12  <?php Print $employeesTab?>">
+					<div class="col-md-6 col-lg-6  <?php Print $employeesTab?>">
+						<a id="employeesLink" class="btn btn-primary btn-lg col-md-1 col-lg-12  <?php Print $employeesTab?>">
 						<img src="Images/engineer.png" class="center-block"> Employees</a>
 					</div>
-					<div class="pull-down col-md-12">
+					<div class="pull-down col-md-1 col-lg-12">
 						<h4 class="text-center">Click on the options above to view details for <span id="addSiteName"></span>.</h4>
 					</div>
 				</div>

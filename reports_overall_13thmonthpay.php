@@ -54,7 +54,7 @@
 		?>
 
 
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 			<div class="row"><br>
 				<div class="row text-center">
 					<ol class="breadcrumb text-left">
@@ -69,7 +69,7 @@
 			</div>
 
 		<div class="form-inline">
-			<div class="col-md-6 col-md-offset-3">
+			<div class="col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
 			<h4>Filters:</h4>
 			<select onchange="requirementChange(this.value)" class="form-control">
 				<option hidden>Requirements</option>
@@ -107,7 +107,7 @@
 
 
 		<!-- <div class='pull-down'> -->
-		<div class='col-md-10 col-md-offset-1'>
+		<div class='col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1'>
 			<button class='btn btn-primary pull-down' onclick="print13thMonth()">
 				Print 13th Month pay report
 			</button>

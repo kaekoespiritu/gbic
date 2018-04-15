@@ -39,7 +39,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 	require("directives/nav.php");
 	?>
 <!-- ?site=Tagaytay&position=Carpenter&empid=2010-0903761 -->
-	<div class="col-md-10 col-md-offset-1 pull-down">
+	<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down">
 		<ol class="breadcrumb text-left" style="margin-bottom: 0px">
 
 			<li><a href="logic_payroll_backPayroll.php?e=<?php Print $empid?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span>Edit Payroll</a></li>
@@ -53,10 +53,10 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 		</ol>
 	</div>
 
-	<div class="col-md-10 col-md-offset-1">
+	<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 
 		<!-- Earnings -->
-		<div class="col-md-6 text-left">
+		<div class="col-md-6 col-lg-6 text-left">
 			<h3>Earnings</h3>
 			<table class="table">
 				<thead>
@@ -394,7 +394,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 		</div>
 
 		<!-- Contributions -->
-		<div class="col-md-6 text-left">
+		<div class="col-md-6 col-lg-6 text-left">
 			<h3>Contributions</h3>
 			<table class="table">
 				<?php 
@@ -522,27 +522,27 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 		</div>
 
 		<!-- Overall Computation -->
-		<div class="col-md-12">
+		<div class="col-md-1 col-lg-12">
 			<div class="panel panel-primary">
 			  <div class="panel-heading">
 			    <h3 style="margin:0px">Overall Computation</h3>
 			  </div>
 			  <div class="panel-body text-center">
-			  	<div class="col-md-3">
+			  	<div class="col-md-3 col-lg-3">
 			  		<h4><span class="glyphicon glyphicon-plus" style="color:green;"></span> Total Earnings:<br>
 			  			<b>
 			  				<?php Print numberExactFormat($totalEarnings, 2, '.', true)?>
 			  			</b>
 			  		</h4>
 			  	</div>
-			    <div class="col-md-3">
+			    <div class="col-md-3 col-lg-3">
 			    	<h4><span class="glyphicon glyphicon-minus" style="color:red;"></span> Total Contributions:<br>
 			    		<strong>
 			    			<?php Print numberExactFormat($contributions, 2, '.', true) ?>
 			    		</strong>
 			    	</h4>
 			    </div>
-			    <div class="col-md-3">
+			    <div class="col-md-3 col-lg-3">
 			    	<h4><span class="glyphicon glyphicon-minus" style="color:red;"></span> Total Loans:
 			    	<br>
 			    		<strong>
@@ -550,7 +550,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 			    		</strong>
 			    	</h4>
 			    </div>
-			    <div class="col-md-3">
+			    <div class="col-md-3 col-lg-3">
 			    	<h4><span class="glyphicon glyphicon-minus" style="color:red;"></span> Total Tools:
 			    	<br> 
 			    		<b>
@@ -562,7 +562,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 			    	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($payrollArr['tools_paid']);
 			    	$grandTotal = abs($grandTotal);
 			    ?>
-			    <div class="col-md-12">
+			    <div class="col-md-1 col-lg-12">
 			    	<h3><u>Grand total: <?php Print numberExactFormat($grandTotal, 2, '.', true) ?></u></h3>
 				</div>
 			  </div>

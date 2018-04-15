@@ -33,7 +33,7 @@ $date = strftime("%B %d, %Y");
 
 
 			<!-- BREAD CRUMBS -->
-			<div class="col-md-10 col-md-offset-1 pull-down">
+			<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down">
 				<ol class="breadcrumb text-left">
 					<li><a href="payroll_position.php?site=<?php Print $site?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a></li>
 
@@ -49,7 +49,7 @@ $date = strftime("%B %d, %Y");
 
 
 			<!-- Search bar -->
-			<div class="col-md-3 col-md-offset-1">
+			<div class="col-md-3 col-lg-3 col-md-offset-1 col-lg-offset-1">
 				<form method="post" action="" id="search_form">
 					<div class="form-group">
 						<form method="post" action="" id="search_form">
@@ -61,7 +61,7 @@ $date = strftime("%B %d, %Y");
 
 
 			<!-- Date -->
-			<div class="col-md-3">
+			<div class="col-md-3 col-lg-3">
 				<h3 style="margin-top:0px"><?php 
 				echo $date;
 				?></h3>
@@ -69,7 +69,7 @@ $date = strftime("%B %d, %Y");
 
 
 			<!-- Filters -->
-			<div class="col-md-4 pull-left">
+			<div class="col-md-4 col-lg-4 pull-left">
 				Filter by:
 
 
@@ -144,7 +144,7 @@ $date = strftime("%B %d, %Y");
 
 
 			<!-- Payroll table -->
-			<div class="col-md-10 col-md-offset-1 pull-down">
+			<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down">
 				<table class="table table-condensed table-bordered" style="background-color:white;">
 					<tr>
 						<td>Employee ID</td>

@@ -56,13 +56,13 @@ if(isset($_GET['search']))
 
 		<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
 		<div class="row">
-				<div class="col-md-3 col-md-offset-1 pull-down">
+				<div class="col-md-3 col-lg-3 col-md-offset-1 col-lg-offset-1 pull-down">
 					<div class="form-group">
 						<input type="text" placeholder="Search" id="search_box" name="txt_search" onkeyup="enter(event)" class="form-control">
 					</div>
 				</div>
 				<!-- FILTER EMPLOYEE BY POSITION -->
-				<div class="col-md-7 pull-down text-right">
+				<div class="col-md-7 col-lg-7 pull-down text-right">
 					Filter by:
 					<!-- POSITION DROPDOWN -->
 					<div class="btn-group">
@@ -122,7 +122,7 @@ if(isset($_GET['search']))
 
 		<!-- EMPLOYEE TABLE -->
 		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
+			<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 				<table class="table table-bordered table-condensed" style="background-color:white;">
 					<tr>
 						<th class='fixedWidth text-center'>Employee ID</th>

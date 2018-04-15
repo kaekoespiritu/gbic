@@ -36,7 +36,7 @@ $empRow = mysql_fetch_assoc($employeeQuery);
 	?>
 
 	<div class="row pull-down">
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-lg-10 col-lg-offset-1">
 		<ol class="breadcrumb text-left">
 			<li><a href="applications.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Absence Notifications</a></li>
 			<li class="active">AWOL pending</li>
@@ -50,13 +50,13 @@ $empRow = mysql_fetch_assoc($employeeQuery);
 			<hr>
 
 			<div class="row">
-				<div class="col-md-8 text-left" style="word-break: keep-all">
+				<div class="col-md-8 col-lg-8 text-left" style="word-break: keep-all">
 					<h4><b style="font-family: QuickSandMed">Employee ID:</b><?php Print $empRow['empid']?></h4>
 					<h4><b style="font-family: QuickSandMed">Date of hire:</b><?php Print $empRow['datehired']?></h4>
 					<h4><b style="font-family: QuickSandMed">Address:</b><?php Print $empRow['address']?></h4>
 					<h4><b style="font-family: QuickSandMed">Contact Number:</b><?php Print $empRow['contactnum']?></h4>
 				</div>
-				<div class="col-md-4 pull-right text-right">
+				<div class="col-md-4 col-lg-4 pull-right text-right">
 					<h4>Unpaid loans:<br><br>
 					<?php
 					$empid = $empRow['empid'];

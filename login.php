@@ -24,10 +24,10 @@ if(isset($_SESSION['user_logged_in']))
 			<div class="modal-dialog modal-sm">
 				<div class="modal-content">
 					<div class="modal-header">
-						<div class="col-md-10 text-right">
+						<div class="col-md-1 col-lg-10 text-right">
 							<h5 class="modal-title">Forgot your password?</h5>
 						</div>
-						<div class="col-md-1 pull-right">
+						<div class="col-md-1 col-lg-1 pull-right">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						</div>
 					</div>
@@ -57,10 +57,10 @@ if(isset($_SESSION['user_logged_in']))
 			<div class="modal-dialog modal-sm">
 				<div class="modal-content">
 					<div class="modal-header">
-						<div class="col-md-10 text-right">
+						<div class="col-md-1 col-lg-10 text-right">
 							<h4 class="modal-title">Password is reset</h4>
 						</div>
-						<div class="col-md-1 pull-right">
+						<div class="col-md-1 col-lg-1 pull-right">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						</div>
 					</div>
@@ -91,8 +91,8 @@ if(isset($_SESSION['user_logged_in']))
 
 					<form class="horizontal" action="" method="post">
 						<div class="form-group">
-							<label for="username" class="control-label col-md-3 login-text">Username</label>
-							<div class="col-md-9">
+							<label for="username" class="control-label col-md-3 col-lg-3 login-text">Username</label>
+							<div class="col-md-9 col-lg-9">
 								<input type="text" class="form-control" name="username" autocomplete="off">
 							</div>
 						</div>
@@ -101,14 +101,14 @@ if(isset($_SESSION['user_logged_in']))
 						
 
 						<div class="form-group">
-							<label for="password" class="control-label col-md-3 login-text">Password</label>
-							<div class="col-md-9">
+							<label for="password" class="control-label col-md-3 col-lg-3 login-text">Password</label>
+							<div class="col-md-9 col-lg-9">
 								<input type="password" class="form-control" name="password" autocomplete="off">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<div class="col-md-12"><br>
+							<div class="col-md-1 col-lg-12"><br>
 								<!-- FIX PLACEMENT OF LINK AND ADD MODAL -->
 								<a href="#" data-toggle="modal" data-target="#forgotPass" class='whitelink'><h5>Forgot your password?</h5></a>
 								<input type="hidden" name="login">

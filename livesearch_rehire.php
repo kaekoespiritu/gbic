@@ -13,7 +13,7 @@ if(isset($_POST["query"]))
  }
 }
 
-// <div class="col-md-6 col-md-offset-3 searchResults">
+// <div class="col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3 searchResults">
 //           SEARCH RESULTS...
 //         </div>
 // data-toggle="modal" data-target="#addEmployee"
@@ -31,7 +31,7 @@ if(!empty($result))
       {
     
       $output .= '
-      <div class="col-md-6 col-md-offset-3 searchresults text-left" id="'.$row['empid'].'">
+      <div class="col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3 searchresults text-left" id="'.$row['empid'].'">
       <a href="#"  onclick="sendToModal(\''.$row['empid'].'\')" data-toggle="modal" data-target="#oldEmployee">'.$row['lastname'].', '.$row['firstname'].'<cite>['.$row['position'].', '.$row['site'].']</cite></a>
       <input type="hidden" class="toModalEmpid" value="'.$row['empid'].'">
       <input type="hidden" class="toModalAddress" value="'.$row['address'].'">
@@ -60,7 +60,7 @@ if(!empty($result))
 }
 else
 {   
-   echo '<div class="col-md-6 col-md-offset-3 searchresults text-left">
+   echo '<div class="col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3 searchresults text-left">
    Employee Not Found...
    </div>';
 }
