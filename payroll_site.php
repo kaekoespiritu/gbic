@@ -122,11 +122,11 @@ $date = strftime("%B %d, %Y");
 						{
 							//Check if overall attendance for a certain site is done
 							$attendanceChecker = "SELECT * FROM attendance WHERE date = '$checkDay' $checkerBuilder";
-							if($checkDay == "March 9, 2018")
-							$attendanceQuery = mysql_query($attendanceChecker);
+							// if($checkDay == "March 9, 2018")
+								$attendanceQuery = mysql_query($attendanceChecker);
 
-							if($attendanceQuery)
-							{
+							// if($attendanceQuery)
+							// {
 								$attNum = mysql_num_rows($attendanceQuery);
 								
 								if($attNum == 0)
@@ -149,7 +149,7 @@ $date = strftime("%B %d, %Y");
 										
 									}
 								}
-							}
+							// }
 						}
 					}
 				}
