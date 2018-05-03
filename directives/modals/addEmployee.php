@@ -95,10 +95,19 @@
 
 							<div class="row pull-down">
 								<div class="col-md-4 col-lg-4">
-									<label for="emergency" class="no-wrap">Character Reference:</label>
+									<label for="characterReference" class="no-wrap">Character Reference:</label>
 								</div>
 								<div class="col-md-8 col-lg-8">
 									<input name="txt_characterReference" type="text" class="form-control">
+								</div>
+							</div>
+
+							<div class="row pull-down">
+								<div class="col-md-4 col-lg-4">
+									<label for="cola" class="no-wrap">COLA:</label>
+								</div>
+								<div class="col-md-4 col-lg-4">
+									<input name="txt_cola" type="text" class="form-control">
 								</div>
 							</div>
 						</div>
