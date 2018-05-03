@@ -33,7 +33,6 @@ $adminRole = $adminArr['role'];
 		require_once("directives/modals/secureChanges.php");
 		require_once("directives/modals/setRestrictions.php");
 		require_once("directives/modals/addSite.php");
-		require_once("directives/modals/colaSettings.php");
 		require_once("directives/modals/modifyCola.php");
 		require_once("directives/modals/addCola.php");
 		require_once("directives/modals/addPosition.php");
@@ -151,7 +150,6 @@ $adminRole = $adminArr['role'];
 						<div class="col-md-5 col-lg-5">
 							<a data-target="#addSite" data-toggle="modal" class="btn btn-success col-md-1 col-lg-12 pull-down">ADD SITE</a>
 							<a class="btn btn-primary col-md-1 col-lg-12 pull-down" data-toggle="modal" data-target="#siteHistory">SITE HISTORY</a>
-							<a class="btn btn-warning col-md-1 col-lg-12 pull-down" data-target="#colaSettings" data-toggle="modal">SETTINGS FOR COLA</a>
 						</div>
 
 						<div class="col-md-7 col-lg-7 text-left">
