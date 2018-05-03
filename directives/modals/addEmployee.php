@@ -38,7 +38,7 @@
 									<label for="address">Address</label>
 								</div>
 								<div class="col-md-9 col-lg-9">
-									<input name="txt_addAddress" type="text" class="form-control" id="address" required>
+									<input name="txt_addAddress" type="text" class="form-control" id="address">
 								</div>
 							</div><br>
 
@@ -47,7 +47,7 @@
 									<label for="contact">Contact number</label>
 								</div>
 								<div class="col-md-4 col-lg-4">
-									<input name="txt_addContactNum" onkeypress="validatenumber(event)" type="text" class="form-control" id="contact" required>
+									<input name="txt_addContactNum" onkeypress="validatenumber(event)" type="text" class="form-control" id="contact">
 								</div>
 
 								<div class="col-md-1 col-lg-1">
