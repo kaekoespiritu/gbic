@@ -401,6 +401,29 @@ hr
   color: black;
 }
 
+/* SEARCH RESULTS FOR LOANS */
+.search-results-loans {
+  background-color: white;
+  z-index:100;
+  position:relative;
+  width:458px;
+  margin-left:21%;
+}
+
+.search-results-loans:hover {
+  background-color: lightblue;
+}
+
+.search-results-loans a:hover {
+  text-decoration: none;
+  color: black;
+}
+
+#search_result_loans {
+  position:absolute;
+  margin-top: -3.3em;
+}
+
 #search_result
 {
   position:absolute;
