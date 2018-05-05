@@ -45,7 +45,7 @@ include_once('directives/db.php');
 						<h4>To rehire an employee, search for their name below:</h4>
 						<div class="form-group col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1" style="float:none">
 							<input placeholder="Search for an old employee" id="search_text" class="form-control">
-							<div id="search_result" class="searchresult-rehire-employee"></div>
+							<div id="search_result_rehire" class="search-result-rehire"></div>
 						</div>
 					</div>
 			    </div>
@@ -468,7 +468,7 @@ include_once('directives/db.php');
 		   	},
 		   success:function(data)
 		   {
-		    $('#search_result').html(data);
+		    $('#search_result_rehire').html(data);
 		   }
 		  });
 		 }
