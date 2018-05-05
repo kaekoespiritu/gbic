@@ -64,7 +64,7 @@
 				<div class="col-md-3 col-lg-3 col-md-offset-1 col-lg-offset-1">
 					<form method="post" action="" id="search_form">
 						<div class="form-group">
-							<input type="text" placeholder="Search" id="search_box" name="txt_search" onkeypress="enter(enter)" class="form-control">
+							<input type="text" placeholder="Search then press Enter" id="search_box" name="txt_search" onkeypress="enter(enter)" class="form-control">
 						</div>
 					</form>
 				</div>

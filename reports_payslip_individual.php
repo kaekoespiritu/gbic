@@ -68,7 +68,7 @@
 			<div class="row">
 				<div class="col-md-3 col-lg-3 col-md-offset-1 col-lg-offset-1 pull-down">
 					<div class="form-group">
-						<input type="text" placeholder="Search" id="search_box" name="txt_search"  class="form-control" autocomplete="off">
+						<input type="text" placeholder="Search then press Enter" id="search_box" name="txt_search"  class="form-control" autocomplete="off">
 					</div>
 					<div id="search_result" class="report-search"></div>
 				</div>

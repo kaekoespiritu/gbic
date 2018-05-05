@@ -43,7 +43,7 @@ $date = strftime("%B %d, %Y");
 			<div class="col-md-3 col-lg-3 col-md-offset-1 col-lg-offset-1">
 				<div class="">
 					<form method="post" action="" id="search_form">
-						<input type="text" class="form-control" name="search" placeholder="Search" onkeypress="enter(enter)"">
+						<input type="text" class="form-control" name="search" placeholder="Search then press Enter" onkeypress="enter(enter)"">
 					</form>
 				</div>
 			</div>

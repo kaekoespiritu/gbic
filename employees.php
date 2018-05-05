@@ -58,7 +58,7 @@ if(isset($_GET['search']))
 		<div class="row">
 				<div class="col-md-3 col-lg-3 col-md-offset-1 col-lg-offset-1 pull-down">
 					<div class="form-group">
-						<input type="text" placeholder="Search" id="search_box" name="txt_search" onkeyup="enter(event)" class="form-control">
+						<input type="text" placeholder="Search then press Enter" id="search_box" name="txt_search" onkeyup="enter(event)" class="form-control">
 					</div>
 				</div>
 				<!-- FILTER EMPLOYEE BY POSITION -->
