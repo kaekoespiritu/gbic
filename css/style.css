@@ -401,17 +401,60 @@ hr
   color: black;
 }
 
+/* SEARCH RESULTS FOR LOANS */
+  .search-results-loans {
+    background-color: white;
+    z-index:100;
+    position:relative;
+    width:458px;
+    margin-left:21%;
+  }
+
+  .search-results-loans:hover {
+    background-color: lightblue;
+  }
+
+  .search-results-loans a:hover {
+    text-decoration: none;
+    color: black;
+  }
+
+  #search_result_loans {
+    position:absolute;
+    margin-top: -3.3em;
+  }
+/* END */
+
 #search_result
 {
   position:absolute;
   margin-top: -3.3em;
 }
 
-.searchresult-rehire-employee {
-  margin-top: unset !important;
-  margin-left: -56% !important;
+/* SEARCH RESULTS FOR REHIRING EMPLOYEE */
+  .search-result-rehire {
+    margin-top: unset !important;
+    margin-left: -53% !important;
+  }
 
-}
+  .search-result-rehire-employee {
+    background-color: white;
+    z-index:100;
+    position:relative;
+    width:65%;
+    margin-left:35%;
+    padding: 0;
+  }
+
+  .search-result-rehire-employee:hover {
+    background-color: lightblue;
+  }
+
+  .search-result-rehire-employee a:hover {
+    text-decoration: none;
+    color: black;
+  }
+/* END */
 
 /* Options page */
 .sitelist

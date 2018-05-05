@@ -54,7 +54,7 @@ $date = strftime("%B %d, %Y");
 				<form method="post" action="" id="search_form">
 					<div class="form-group">
 						<form method="post" action="" id="search_form">
-							<input type="text" placeholder="Search" id="search_box" name="txt_search" onkeypress="enter(enter)" class="form-control">
+							<input type="text" placeholder="Search then press Enter" id="search_box" name="txt_search" onkeypress="enter(enter)" class="form-control">
 						</form>
 					</div>
 				</form>

@@ -49,7 +49,7 @@ require_once("directives/modals/addLoan.php");
 					</div>
 				</div>
 
-				<div id="search_result" class="col-md-1 col-lg-12"></div>
+				<div id="search_result_loans" class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1"></div>
 				 
 
 		</div>
@@ -165,7 +165,7 @@ require_once("directives/modals/addLoan.php");
 		   data:{query:query},
 		   success:function(data)
 		   {
-		    $('#search_result').html(data);
+		    $('#search_result_loans').html(data);
 		   }
 		  });
 		 }
