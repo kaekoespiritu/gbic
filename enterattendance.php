@@ -110,7 +110,7 @@
 					<td>Position</td>
 					<td>Time In</td>
 					<td>Time Out</td>
-					<td>H.D.</td>
+					<td>H.D. / Straight</td>
 					<td>A.B. Time In</td>
 					<td>A.B. Time Out</td>
 					<td>N.S.</td>
