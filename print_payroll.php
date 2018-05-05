@@ -100,7 +100,7 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 	$activeSheet->setCellValue('O'.$rowCounter, $payrollArr['reg_holiday']);//Reg.Hol
 	$activeSheet->setCellValue('P'.$rowCounter, $payrollArr['reg_holiday_num']);//#
 	$activeSheet->setCellValue('Q'.$rowCounter, $payrollArr['spe_holiday']);//Spe.Hol
-	$activeSheet->setCellValue('R'.$rowCounter, $payrollArr['spe_holiday']);//#
+	$activeSheet->setCellValue('R'.$rowCounter, $payrollArr['spe_holiday_num']);//#
 	$activeSheet->setCellValue('S'.$rowCounter, $payrollArr['x_allowance']);//X All.
 	$activeSheet->setCellValue('T'.$rowCounter, $payrollArr['sss']);//SSS
 	$activeSheet->setCellValue('U'.$rowCounter, $payrollArr['philhealth']);//Philhealth
