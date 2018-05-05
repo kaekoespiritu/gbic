@@ -4,7 +4,7 @@
 	$time = strftime("%X");//TIME
 
 	$date = strftime("%B %d, %Y");
-	
+	// $date = "May 2, 2018";
 //Employee ID
 	$empid = $_POST['employeeID'];
 

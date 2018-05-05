@@ -5,6 +5,7 @@ include('directives/session.php');
   date_default_timezone_set('Asia/Hong_Kong');
 
 $date = strftime("%B %d, %Y");
+  // $date = "May 2, 2018";
 ?>
 <html>
 <head>
@@ -63,13 +64,13 @@ $date = strftime("%B %d, %Y");
 			{
 				$site = $row['location'];
 
-				$day1 = $date;
-				$day2 = date('F d, Y', strtotime('-1 day', strtotime($date)));
-				$day3 = date('F d, Y', strtotime('-2 day', strtotime($date)));
-				$day4 = date('F d, Y', strtotime('-3 day', strtotime($date)));
-				$day5 = date('F d, Y', strtotime('-4 day', strtotime($date)));
-				$day6 = date('F d, Y', strtotime('-5 day', strtotime($date)));
-				$day7 = date('F d, Y', strtotime('-6 day', strtotime($date)));
+				$day1 = date('F d, Y', strtotime('-1 day', strtotime($date)));
+				$day2 = date('F d, Y', strtotime('-2 day', strtotime($date)));
+				$day3 = date('F d, Y', strtotime('-3 day', strtotime($date)));
+				$day4 = date('F d, Y', strtotime('-4 day', strtotime($date)));
+				$day5 = date('F d, Y', strtotime('-5 day', strtotime($date)));
+				$day6 = date('F d, Y', strtotime('-6 day', strtotime($date)));
+				$day7 = date('F d, Y', strtotime('-7 day', strtotime($date)));
 
 				$days = array("$day1","$day2","$day3","$day4","$day5","$day6","$day7");
 				

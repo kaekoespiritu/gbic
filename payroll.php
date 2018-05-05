@@ -12,16 +12,17 @@ $site = $_GET['site'];
 $position = $_GET['position'];
 $empid = $_GET['empid'];
 $date = strftime("%B %d, %Y");
+// $date = "May 2, 2018";
 
 $time = strftime("%X");//TIME
 
-$day1 = $date;
-$day2 = date('F d, Y', strtotime('-1 day', strtotime($date)));
-$day3 = date('F d, Y', strtotime('-2 day', strtotime($date)));
-$day4 = date('F d, Y', strtotime('-3 day', strtotime($date)));
-$day5 = date('F d, Y', strtotime('-4 day', strtotime($date)));
-$day6 = date('F d, Y', strtotime('-5 day', strtotime($date)));
-$day7 = date('F d, Y', strtotime('-6 day', strtotime($date)));
+$day1 = date('F d, Y', strtotime('-1 day', strtotime($date)));
+$day2 = date('F d, Y', strtotime('-2 day', strtotime($date)));
+$day3 = date('F d, Y', strtotime('-3 day', strtotime($date)));
+$day4 = date('F d, Y', strtotime('-4 day', strtotime($date)));
+$day5 = date('F d, Y', strtotime('-5 day', strtotime($date)));
+$day6 = date('F d, Y', strtotime('-6 day', strtotime($date)));
+$day7 = date('F d, Y', strtotime('-7 day', strtotime($date)));
 //Holiday Checker
 $holiday = "SELECT * FROM holiday WHERE date = '$date'";
 $holidayQuery = mysql_query($holiday);

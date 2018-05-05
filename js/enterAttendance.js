@@ -556,13 +556,86 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				workingmins = Math.abs(workingmins1) + Math.abs(workingmins2);
 			}
 				
-			
 
 			if(workingmins >= 60)
 			{
 				workinghours++;
 				 workingmins = Math.abs(workingmins) - 60;
 			}
+
+
+			//Undeclared break
+			var checkTime1 = timeinhour1 - timeouthour1;
+			var checkTime2 = timeinhour2 - timeouthour2;
+			if(Math.abs(checkTime1) >= 14) 
+			{
+				if(workingmins == 0)
+				{
+					console.log("1: "+ workingmins);
+					workinghours -= 1;
+					workingmins = 30;//minus 30mins
+					console.log("workingmins: "+ workingmins);
+				}
+				else
+				{
+					console.log("2: "+ workingmins);
+					workingmins = 30 - workingmins;//minus 30mins
+				}
+				
+				if(workingmins < 0)
+				{
+					console.log("3: "+ workingmins);
+					workinghours -= 1;
+					workingmins = 60 - Math.abs(workingmins);
+				}
+			}
+			console.log("checkTime1: "+ checkTime1);
+			if(Math.abs(checkTime1) >= 8)
+			{
+				
+				if(workingmins == 0)
+				{
+					console.log("1: "+ workingmins);
+					workinghours -= 1;
+					workingmins = 30;//minus 30mins
+					console.log("workingmins: "+ workingmins);
+				}
+				else
+				{
+					console.log("2: "+ workingmins);
+					workingmins = 30 - workingmins;//minus 30mins
+				}
+				
+				if(workingmins < 0)
+				{
+					console.log("3: "+ workingmins);
+					workinghours -= 1;
+					workingmins = 60 - Math.abs(workingmins);
+				}
+				
+			}
+			if(checkTime2 >= 14) 
+			{
+				workingmins = 30 - workingmins;//minus 30mins
+				if(workingmins <= 0)
+				{
+					workinghours -= 1;
+					workingmins = 60 - Math.abs(workingmins);
+				}
+			}
+			if(checkTime2 >= 8)
+			{
+				workingmins = 30 - workingmins;//minus 30mins
+				if(workingmins <= 0)
+				{
+					workinghours -= 1;
+					workingmins = 60 - Math.abs(workingmins);
+				}
+			}
+
+
+
+
 
 			//alert(workinghours);
 			//set the attendance status to PRESENT
