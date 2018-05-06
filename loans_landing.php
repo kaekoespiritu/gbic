@@ -257,7 +257,7 @@ require_once("directives/modals/addLoan.php");
 			document.getElementById('position&site').innerHTML = "<h5>"+position+" at "+ site;
 			document.getElementById('position').value = position;
 			document.getElementById('site').value = site;
-			document.getElementById('monthlysalary').value = accounting.formatNumber(monthly, 2, ",");
+			// document.getElementById('monthlysalary').value = accounting.formatNumber(monthly, 2, ",");
 			document.getElementById('rate').value = accounting.formatNumber(rate, 2, ",");
 			//done display if value is equal to Zero
 			if(sss != 0)

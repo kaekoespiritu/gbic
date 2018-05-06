@@ -50,11 +50,11 @@
 		//Set historical for this change
 		mysql_query("INSERT INTO site_history(empid, site, date, admin) VALUES('$empid', '$site', '$date', '$adminName')") or die (mysql_error());
 	}
-	if($_POST['salary'] != null)
-	{
-		$salary = mysql_real_escape_string($_POST['salary']);
-		mysql_query("UPDATE employee SET salary = '$salary' WHERE empid = '$empid'") or die (mysql_error());	
-	}
+	// if($_POST['salary'] != null)
+	// {
+	// 	$salary = mysql_real_escape_string($_POST['salary']);
+	// 	mysql_query("UPDATE employee SET salary = '$salary' WHERE empid = '$empid'") or die (mysql_error());	
+	// }
 	if($_POST['rate'] != null)
 	{
 		$rate = mysql_real_escape_string($_POST['rate']);
@@ -64,6 +64,11 @@
 	{
 		$allowance = mysql_real_escape_string($_POST['allowance']);
 		mysql_query("UPDATE employee SET allowance = '$allowance' WHERE empid = '$empid'") or die (mysql_error());	
+	}
+	if($_POST['cola'] != null)
+	{
+		$cola = mysql_real_escape_string($_POST['cola']);
+		mysql_query("UPDATE employee SET cola = '$cola' WHERE empid = '$empid'") or die (mysql_error());	
 	}
 
 

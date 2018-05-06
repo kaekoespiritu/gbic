@@ -24,9 +24,10 @@ error_reporting(0);
 		$philhealthER = mysql_real_escape_string($_POST['txt_addPhilhealthER']);
 		$pagibigEE = mysql_real_escape_string($_POST['txt_addPagibigEE']);
 		$pagibigER = mysql_real_escape_string($_POST['txt_addPagibigER']);
-		$salary = mysql_real_escape_string($_POST['txt_addMonthlySalary']);
+		// $salary = mysql_real_escape_string($_POST['txt_addMonthlySalary']);
 		$emergencyContact = mysql_real_escape_string($_POST['txt_emergencyContact']);
 		$characterReference = mysql_real_escape_string($_POST['txt_characterReference']);
+		$cola = mysql_real_escape_string($_POST['txt_cola']);
 
 		$firstName = ucwords($firstName);
 		$lastName = ucwords($lastName);
@@ -76,7 +77,7 @@ error_reporting(0);
 		}while($success == false);
 
 
-		$monthlySalary = $ratePerDay * 25;//6days working days * 4 weeks
+		// $monthlySalary = $ratePerDay * 25;//6days working days * 4 weeks
 		
 		//Contributions
 		if($sssEE && $philhealthEE && $pagibigEE)//checks if the employee has all the documents needed
@@ -96,7 +97,7 @@ error_reporting(0);
 												civilstatus,
 												datehired,
 												position,
-												salary,
+												-- salary,
 												rate,
 												allowance,
 												site,
@@ -106,6 +107,7 @@ error_reporting(0);
 												philhealth_er,
 												pagibig,
 												pagibig_er,
+												cola,
 												employment_status,
 												complete_doc,
 												reference,
@@ -118,7 +120,7 @@ error_reporting(0);
 																	'$civilStatus',
 																	'$dateHired',
 																	'$position',
-																	'$salary',
+																	-- '$salary',
 																	'$ratePerDay',
 																	'$allowance',
 																	'$site',
@@ -128,6 +130,7 @@ error_reporting(0);
 																	'$philhealthER',
 																	'$pagibigEE',
 																	'$pagibigER',
+																	'$cola',
 																	'$employment_status',
 																	'$complete_doc',
 																	'$characterReference',

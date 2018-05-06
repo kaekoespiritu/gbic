@@ -107,7 +107,7 @@
 									<label for="cola" class="no-wrap">COLA:</label>
 								</div>
 								<div class="col-md-4 col-lg-4">
-									<input name="txt_cola" type="text" class="form-control">
+									<input name="txt_cola" type="text" onchange="colaDecimal()" class="form-control">
 								</div>
 							</div>
 						</div>
@@ -156,21 +156,21 @@
 								</div>
 							</div><br> 
 
-							<div class="row">
+							<!-- <div class="row">
 								<div class="col-md-5 col-lg-5">
 									<label for="rate">Monthly Salary</label>
 								</div>
 								<div class="col-md-5 col-lg-5">
 									<input name="txt_addMonthlySalary"  type="text" class="form-control" id="monthlysalary" onkeypress="validatenumber(event)" onkeyup="monthlySalary()" onchange="salaryDecimal()" required>
 								</div>
-							</div><br>
+							</div><br> -->
 
 							<div class="row">
 								<div class="col-md-5 col-lg-5">
 									<label for="rate">Rate Per Day</label>
 								</div>
 								<div class="col-md-5 col-lg-5">
-									<input name="txt_addRatePerDay"  type="text" class="form-control" id="rate" readonly>
+									<input name="txt_addRatePerDay" onkeypress="validatenumber(event)" onchange="salaryDecimal()" type="text" class="form-control" id="rate" >
 								</div>
 							</div><br>
 

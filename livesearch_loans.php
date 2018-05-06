@@ -78,7 +78,6 @@ if(!empty($result))
       <input type="hidden" id="lastname" value="'.$row['lastname'].'">
       <input type="hidden" id="position" value="'.$row['position'].'">
       <input type="hidden" id="site" value="'.$row['site'].'">
-      <input type="hidden" id="monthly" value="'.$row['salary'].'">
       <input type="hidden" id="rate" value="'.$row['rate'].'">
       <input type="hidden" id="sss" value="'.$employeeSSS.'">
       <input type="hidden" id="pagibig" value="'.$employeePAGIBIG.'">
@@ -86,6 +85,24 @@ if(!empty($result))
       <input type="hidden" id="newvale" value="'.$employeeNewVale.'">
       </div>
       ';
+      //   $output .= '
+      // <div class="col-md-6 col-lg-6 search-results-loans text-left" id="'.$row['empid'].'">
+      // <a href="#"  onclick="sendToModal(\''.$row['empid'].'\')" data-toggle="modal" data-target="#addLoan">'.$row['lastname'].', '.$row['firstname'].'<cite>['.$row['position'].', '.$row['site'].']</cite></a>
+      // <input type="hidden" id="empid" value="'.$row['empid'].'">
+      // <input type="hidden" id="address" value="'.$row['address'].'">
+      // <input type="hidden" id="contactnum" value="'.$row['contactnum'].'">
+      // <input type="hidden" id="firstname" value="'.$row['firstname'].'">
+      // <input type="hidden" id="lastname" value="'.$row['lastname'].'">
+      // <input type="hidden" id="position" value="'.$row['position'].'">
+      // <input type="hidden" id="site" value="'.$row['site'].'">
+      // <input type="hidden" id="monthly" value="'.$row['salary'].'">
+      // <input type="hidden" id="rate" value="'.$row['rate'].'">
+      // <input type="hidden" id="sss" value="'.$employeeSSS.'">
+      // <input type="hidden" id="pagibig" value="'.$employeePAGIBIG.'">
+      // <input type="hidden" id="oldvale" value="'.$employeeOldVale.'">
+      // <input type="hidden" id="newvale" value="'.$employeeNewVale.'">
+      // </div>
+      // ';
     //Pre-requisite is the loan to be able to finish the data display on the modal
   }
 

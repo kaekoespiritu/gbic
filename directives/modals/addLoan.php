@@ -90,14 +90,14 @@
 								</div>
 							</div><br>
 
-							<div class="row">
+							<!-- <div class="row">
 								<div class="col-md-5 col-lg-5">
 									<label for="rate">Monthly Salary</label>
 								</div>
 								<div class="col-md-5 col-lg-5">
 									<input name="txt_addMonthlySalary" name="monthlysalary" type="text" class="form-control" id="monthlysalary" readonly >
 								</div>
-							</div><br>
+							</div><br> -->
 
 							<div class="row">
 								<div class="col-md-5 col-lg-5">

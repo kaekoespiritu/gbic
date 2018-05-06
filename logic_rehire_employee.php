@@ -18,7 +18,7 @@
 	$position = mysql_real_escape_string($_POST['dd_addPosition']);
 	$site = mysql_real_escape_string($_POST['dd_site']);
 	
-	$salary = mysql_real_escape_string($_POST['txt_addMonthlySalary']);
+	// $salary = mysql_real_escape_string($_POST['txt_addMonthlySalary']);
 	$ratePerDay = mysql_real_escape_string($_POST['txt_addRatePerDay']);
 	$allowance = mysql_real_escape_string($_POST['txt_addAllowance']);
 	
@@ -33,7 +33,7 @@
 	$date = strftime("%B %d, %Y");//date today
 	$yearHired = substr($dateHired, -4); //get the year 
 
-	$monthlySalary = $ratePerDay * 25;//6days working days * 4 weeks
+	// $monthlySalary = $ratePerDay * 25;//6days working days * 4 weeks
 	//SSS contribution computation
 
 	
@@ -69,7 +69,7 @@
 											civilstatus = '$civilStatus',
 											datehired = '$date',
 											position = '$position',
-											salary = '$salary',
+											-- salary = '$salary',
 											rate = '$ratePerDay',
 											allowance = '$allowance',
 											site = '$site',

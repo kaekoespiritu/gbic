@@ -202,21 +202,21 @@ include_once('directives/db.php');
 										</div>
 									</div><br> 
 
-									<div class="row">
+									<!-- <div class="row">
 										<div class="col-md-5 col-lg-5">
 											<label for="rate">Monthly Salary</label>
 										</div>
 										<div class="col-md-5 col-lg-5">
 											<input name="txt_addMonthlySalary" autocomplete="off" type="text" class="form-control" id="monthlysalary" onchange="salaryDecimal()" onkeyup="monthlySalary()" required>
 										</div>
-									</div><br>
+									</div><br> -->
 
 									<div class="row">
 										<div class="col-md-5 col-lg-5">
 											<label for="rate">Rate Per Day</label>
 										</div>
 										<div class="col-md-5 col-lg-5">
-											<input name="txt_addRatePerDay"  type="text" class="form-control" id="rate" readonly>
+											<input name="txt_addRatePerDay" onblur="salaryDecimal()" type="text" class="form-control" id="rate">
 										</div>
 									</div><br>
 
@@ -256,9 +256,9 @@ include_once('directives/db.php');
 												<input name="txt_addPagibig" type="text" class="form-control" id="pagibig">
 											</div>
 
-											<div class="col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 pull-down text-center well well-sm">
+											<!-- <div class="col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 pull-down text-center well well-sm">
 												* SSS contribution is automatically computed based on employee's monthly salary.
-											</div>
+											</div> -->
 										</div>
 									</div>
 								</div>
@@ -391,7 +391,7 @@ include_once('directives/db.php');
 			var datehired = parent.querySelector('.toModalHired').value;
 			var position = parent.querySelector('.toModalPosition').value;
 			var site = parent.querySelector('.toModalSite').value;
-			var monthly = parent.querySelector('.toModalMonthly').value;
+			// var monthly = parent.querySelector('.toModalMonthly').value;
 			var rate = parent.querySelector('.toModalRate').value;
 			var allowance = parent.querySelector('.toModalAllowance').value;
 			
@@ -452,7 +452,7 @@ include_once('directives/db.php');
 			document.getElementById('site').insertAdjacentHTML('afterbegin', htmlSite);
 			document.getElementById('emergencyContact').value = emergency;
 			document.getElementById('characterRef').value = reference;
-			document.getElementById('monthlysalary').value = accounting.formatNumber(monthly, 2, ",");
+			// document.getElementById('monthlysalary').value = accounting.formatNumber(monthly, 2, ",");
 			document.getElementById('rate').value = accounting.formatNumber(rate, 2, ",");
 			document.getElementById('allowance').value = accounting.formatNumber(allowance, 2, ",");
 		}
@@ -511,119 +511,119 @@ include_once('directives/db.php');
 		}	
 
 		/* AUTOMATED COMPUTATION FOR SSS BASED ON MONTHLY SALARY */
-function sssbox() {
-		var monthly = document.getElementById('monthlysalary').value;
-		var sssContribution = 0;
+// function sssbox() {
+// 		var monthly = document.getElementById('monthlysalary').value;
+// 		var sssContribution = 0;
 
-		monthly = monthly.replace( /,/g, "");//removes commas
+// 		monthly = monthly.replace( /,/g, "");//removes commas
 
-		if(monthly >= 1000 && monthly <= 1249.9)
-			sssContribution = 36.30;
-		//1250 ~ 1749.9 = 54.50
-		else if(monthly >= 1250 && monthly <= 1749.9)
-			sssContribution = 54.50;
-		//1750 ~ 2249.9 = 72.70
-		else if(monthly >= 1750 && monthly <= 2249.9)
-			sssContribution = 72.70;
-		//2250 ~ 2749.9 = 90.80
-		else if(monthly >= 2250 && monthly <= 2749.9)
-			sssContribution = 90.80;
-		//2750 ~ 3249.9 = 109.0
-		else if(monthly >= 2750 && monthly <= 3249.9)
-			sssContribution = 109.00;
-		//3250 ~ 3749.9 = 127.20
-		else if(monthly >= 3250 && monthly <= 3749.9)
-			sssContribution = 127.20;
-		//3750 ~ 4249.9 = 145.30
-		else if(monthly >= 3750 && monthly <= 4249.9)
-			sssContribution = 145.30;
-		//4250 ~ 4749.9 = 163.50
-		else if(monthly >= 4250 && monthly <= 4749.9)
-			sssContribution = 163.50;
-		//4750 ~ 5249.9 = 181.70
-		else if(monthly >= 4750 && monthly <= 5249.9)
-			sssContribution = 181.70;
-		//5250 ~ 5749.9 = 199.80
-		else if(monthly >= 5250 && monthly <= 5749.9)
-			sssContribution = 199.80;
-		//5750 ~ 6249.9 = 218.0
-		else if(monthly >= 5750 && monthly <= 6249.9)
-			sssContribution = 218.00;
-		//6250 ~ 6749.9 = 236.20
-		else if(monthly >= 6250 && monthly <= 6749.9)
-			sssContribution = 236.20;
-		//6750 ~ 7249.9 = 254.30
-		else if(monthly >= 6750 && monthly <= 7249.9)
-			sssContribution = 254.30;
-		//7250 ~ 7749.9 = 272.50
-		else if(monthly >= 7250 && monthly <= 7749.9)
-			sssContribution = 272.50;
-		//7750 ~ 8249.9 = 290.70
-		else if(monthly >= 7750 && monthly <=  8249.9)
-			sssContribution = 290.70;
-		//8250 ~ 8749.9 = 308.80
-		else if(monthly >= 8250 && monthly <= 8749.9)
-			sssContribution = 308.80;
-		//8750 ~ 9249.9 = 327.0
-		else if(monthly >= 8750 && monthly <= 9249.9 )
-			sssContribution = 327.00;
-		//9250 ~ 9749.9 = 345.20
-		else if(monthly >= 9250 && monthly <= 9749.9)
-			sssContribution = 345.20;
-		//9750 ~ 10249.9 = 363.30
-		else if(monthly >= 9750 && monthly <= 10249.9)
-			sssContribution = 363.30;
-		//10250 ~ 10749.9 = 381.50
-		else if(monthly >= 10250 && monthly <=  10749.9)
-			sssContribution = 381.50;
-		//10750 ~ 11249.9 = 399.70
-		else if(monthly >= 10750 && monthly <= 11249.9)
-			sssContribution = 399.70;
-		//11250 ~ 11749.9 = 417.80
-		else if(monthly >= 11250 && monthly <= 11749.9)
-			sssContribution = 417.80;
-		//11750 ~ 12249.9 = 436.0
-		else if(monthly >= 11750 && monthly <= 12249.9)
-			sssContribution = 436.00;
-		//12250 ~ 12749.9 = 454.20
-		else if(monthly >= 12250 && monthly <= 12749.9)
-			sssContribution = 454.20;
-		//12750 ~ 13249.9 = 472.30
-		else if(monthly >= 12750 && monthly <= 13249.9)
-			sssContribution = 472.30;
-		//13250 ~ 13749.9 = 490.50
-		else if(monthly >= 13250 && monthly <= 13749.9)
-			sssContribution = 490.50;
-		//13750 ~ 14249.9 = 508.70
-		else if(monthly >= 13750 && monthly <= 14249.9 )
-			sssContribution = 508.70;
-		//14250 ~ 14749.9 = 526.80
-		else if(monthly >= 14250 && monthly <= 14749.9)
-			sssContribution = 526.80;
-		//14750 ~ 15249.9 = 545.0
-		else if(monthly >= 14750 && monthly <= 15249.9 )
-			sssContribution = 545.00;
-		//15250 ~ 15749.9 = 563.20
-		else if(monthly >= 15250 && monthly <= 15749.9)
-			sssContribution = 563.20;
-		//15750 ~ higher = 581.30
-		else if(monthly >= 15750)
-			sssContribution = 581.30;
+// 		if(monthly >= 1000 && monthly <= 1249.9)
+// 			sssContribution = 36.30;
+// 		//1250 ~ 1749.9 = 54.50
+// 		else if(monthly >= 1250 && monthly <= 1749.9)
+// 			sssContribution = 54.50;
+// 		//1750 ~ 2249.9 = 72.70
+// 		else if(monthly >= 1750 && monthly <= 2249.9)
+// 			sssContribution = 72.70;
+// 		//2250 ~ 2749.9 = 90.80
+// 		else if(monthly >= 2250 && monthly <= 2749.9)
+// 			sssContribution = 90.80;
+// 		//2750 ~ 3249.9 = 109.0
+// 		else if(monthly >= 2750 && monthly <= 3249.9)
+// 			sssContribution = 109.00;
+// 		//3250 ~ 3749.9 = 127.20
+// 		else if(monthly >= 3250 && monthly <= 3749.9)
+// 			sssContribution = 127.20;
+// 		//3750 ~ 4249.9 = 145.30
+// 		else if(monthly >= 3750 && monthly <= 4249.9)
+// 			sssContribution = 145.30;
+// 		//4250 ~ 4749.9 = 163.50
+// 		else if(monthly >= 4250 && monthly <= 4749.9)
+// 			sssContribution = 163.50;
+// 		//4750 ~ 5249.9 = 181.70
+// 		else if(monthly >= 4750 && monthly <= 5249.9)
+// 			sssContribution = 181.70;
+// 		//5250 ~ 5749.9 = 199.80
+// 		else if(monthly >= 5250 && monthly <= 5749.9)
+// 			sssContribution = 199.80;
+// 		//5750 ~ 6249.9 = 218.0
+// 		else if(monthly >= 5750 && monthly <= 6249.9)
+// 			sssContribution = 218.00;
+// 		//6250 ~ 6749.9 = 236.20
+// 		else if(monthly >= 6250 && monthly <= 6749.9)
+// 			sssContribution = 236.20;
+// 		//6750 ~ 7249.9 = 254.30
+// 		else if(monthly >= 6750 && monthly <= 7249.9)
+// 			sssContribution = 254.30;
+// 		//7250 ~ 7749.9 = 272.50
+// 		else if(monthly >= 7250 && monthly <= 7749.9)
+// 			sssContribution = 272.50;
+// 		//7750 ~ 8249.9 = 290.70
+// 		else if(monthly >= 7750 && monthly <=  8249.9)
+// 			sssContribution = 290.70;
+// 		//8250 ~ 8749.9 = 308.80
+// 		else if(monthly >= 8250 && monthly <= 8749.9)
+// 			sssContribution = 308.80;
+// 		//8750 ~ 9249.9 = 327.0
+// 		else if(monthly >= 8750 && monthly <= 9249.9 )
+// 			sssContribution = 327.00;
+// 		//9250 ~ 9749.9 = 345.20
+// 		else if(monthly >= 9250 && monthly <= 9749.9)
+// 			sssContribution = 345.20;
+// 		//9750 ~ 10249.9 = 363.30
+// 		else if(monthly >= 9750 && monthly <= 10249.9)
+// 			sssContribution = 363.30;
+// 		//10250 ~ 10749.9 = 381.50
+// 		else if(monthly >= 10250 && monthly <=  10749.9)
+// 			sssContribution = 381.50;
+// 		//10750 ~ 11249.9 = 399.70
+// 		else if(monthly >= 10750 && monthly <= 11249.9)
+// 			sssContribution = 399.70;
+// 		//11250 ~ 11749.9 = 417.80
+// 		else if(monthly >= 11250 && monthly <= 11749.9)
+// 			sssContribution = 417.80;
+// 		//11750 ~ 12249.9 = 436.0
+// 		else if(monthly >= 11750 && monthly <= 12249.9)
+// 			sssContribution = 436.00;
+// 		//12250 ~ 12749.9 = 454.20
+// 		else if(monthly >= 12250 && monthly <= 12749.9)
+// 			sssContribution = 454.20;
+// 		//12750 ~ 13249.9 = 472.30
+// 		else if(monthly >= 12750 && monthly <= 13249.9)
+// 			sssContribution = 472.30;
+// 		//13250 ~ 13749.9 = 490.50
+// 		else if(monthly >= 13250 && monthly <= 13749.9)
+// 			sssContribution = 490.50;
+// 		//13750 ~ 14249.9 = 508.70
+// 		else if(monthly >= 13750 && monthly <= 14249.9 )
+// 			sssContribution = 508.70;
+// 		//14250 ~ 14749.9 = 526.80
+// 		else if(monthly >= 14250 && monthly <= 14749.9)
+// 			sssContribution = 526.80;
+// 		//14750 ~ 15249.9 = 545.0
+// 		else if(monthly >= 14750 && monthly <= 15249.9 )
+// 			sssContribution = 545.00;
+// 		//15250 ~ 15749.9 = 563.20
+// 		else if(monthly >= 15250 && monthly <= 15749.9)
+// 			sssContribution = 563.20;
+// 		//15750 ~ higher = 581.30
+// 		else if(monthly >= 15750)
+// 			sssContribution = 581.30;
 
-		sssContribution = sssContribution.toFixed(2);
-		document.getElementById('sss').value = sssContribution;
-}
-function monthlySalary(salary){
-	var salary = document.getElementById('monthlysalary').value;
-	var dailyRate = document.getElementById('rate');
-	dailyRate.value= (salary/25).toFixed(2);
-	if(document.getElementById('sssCheckbox').checked == true){
-		sssbox();
-	}
-}
+// 		sssContribution = sssContribution.toFixed(2);
+// 		document.getElementById('sss').value = sssContribution;
+// }
+// function monthlySalary(salary){
+// 	var salary = document.getElementById('monthlysalary').value;
+// 	var dailyRate = document.getElementById('rate');
+// 	dailyRate.value= (salary/25).toFixed(2);
+// 	if(document.getElementById('sssCheckbox').checked == true){
+// 		sssbox();
+// 	}
+// }
 function salaryDecimal(){
-	var salary = document.getElementById('monthlysalary');
-	var value = document.getElementById('monthlysalary').value;
+	var salary = document.getElementsByName('txt_addRatePerDay')[0];
+	var value = salary.value;
 	var decimal = parseInt(value).toFixed(2);
 	salary.value=decimal;
 }
@@ -654,7 +654,7 @@ function sssCheckboxFunc() {
 	var sssRow = document.getElementById('sss');
 	if(sss.checked == true)
 	{
-		sssbox();
+		// sssbox();
 		sssRow.readOnly = false;
 		sssRow.placeholder = "";
 	}
