@@ -160,7 +160,7 @@ include('directives/session.php');
 					$weekComplete = true;
 				}
 
-				if($counter == 0)
+				if($counter == 0 && $empNum != 0)
 				{
 					Print '<div class="row">';
 				}
@@ -256,6 +256,7 @@ include('directives/session.php');
 						
 					}
 					$counter++;
+					Print "<script>console.log('".mysql_num_rows($site_box_query)."')</script>";
 					if($counter == 5)
 					{
 						Print '</div>';	
