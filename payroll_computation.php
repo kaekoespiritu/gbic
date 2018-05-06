@@ -206,7 +206,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 						$regHolidayDays = $empArr['rate'] * $payrollArr['reg_holiday_num'];
 						$subTotalRegularHolidayRate = ($payrollArr['reg_holiday_num'] * $payrollArr['reg_holiday']) + $regHolidayDays;
 
-						$totalSpecialHolidayRate = $subTotalRegularHolidayRate;//for the Subtotal of Earnings
+						$totalRegularHolidayRate = $subTotalRegularHolidayRate;//for the Subtotal of Earnings
 						$regHolNum = $payrollArr['reg_holiday_num']." Day(s)";
 						if($subTotalRegularHolidayRate == 0)
 							$subTotalRegularHolidayRate = "--";
@@ -226,7 +226,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					<?php
 						$speHolidayDays = $empArr['rate'] * $payrollArr['spe_holiday_num'];
 						$subTotalSpecialHolidayRate = ($payrollArr['spe_holiday_num'] * $payrollArr['spe_holiday']) + $speHolidayDays;
-						$totalRegularHolidayRate = $subTotalSpecialHolidayRate;//for the Subtotal of Earnings
+						$totalSpecialHolidayRate = $subTotalSpecialHolidayRate;//for the Subtotal of Earnings
 						$speHolNum = $payrollArr['spe_holiday_num']." Day(s)";
 						if($subTotalSpecialHolidayRate == 0)
 							$subTotalSpecialHolidayRate = "--";
@@ -244,19 +244,19 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					</tr>
 					<!-- COLA -->
 					<?php
-						$subTotalCola = $payrollArr['cola'];
-						if($subTotalCola == 0)
+						$totalCola = $payrollArr['cola'] * $ratePerDayDisp;
+						if($totalCola == 0)
 							$subTotalCola = "--";
 						else
-							$subTotalCola = numberExactFormat($subTotalCola, 2, '.', true);
+							$subTotalCola = numberExactFormat($totalCola, 2, '.', true);
 
 						if($payrollArr['cola'] != 0)
 						{
 							Print "
 								<tr>
 									<td>COLA</td>
-									<td></td>
-									<td></td>
+									<td>".$payrollArr['cola']."</td>
+									<td>".$ratePerDayDisp."</td>
 									<td>".$subTotalCola."</td>
 								</tr>
 							";
@@ -264,7 +264,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					?>
 
 					<?php
-						$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $payrollArr['cola'];
+						$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $totalCola;
 					?>
 					<tr style="font-family: QuicksandMed;">
 						<td colspan="2" class="active">Subtotal</td>

@@ -242,7 +242,7 @@ require_once("directives/modals/addLoan.php");
 			var contactnum = parent.querySelector('#contactnum').value;
 			var position = parent.querySelector('#position').value;
 			var site = parent.querySelector('#site').value;
-			var monthly = parent.querySelector('#monthly').value;
+			// var monthly = parent.querySelector('#monthly').value;
 			var rate = parent.querySelector('#rate').value;
 			var sss = parent.querySelector('#sss').value;
 			var pagibig = parent.querySelector('#pagibig').value;

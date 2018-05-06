@@ -3,8 +3,8 @@
 	include('directives/db.php');
 	$time = strftime("%X");//TIME
 
-	$date = strftime("%B %d, %Y");
-	// $date = "May 2, 2018";
+	// $date = strftime("%B %d, %Y");
+	$date = "May 2, 2018";
 //Employee ID
 	$empid = $_POST['employeeID'];
 
@@ -172,14 +172,14 @@
 
 	$compDeductions = $tax + $sss + $pagibig + $philhealth;
 
-//COLA incrementation -----------------------------------------------------------------
+//COLA incrementation -----------------------------------------------------------------dito
 	$cola = 0;
 	if($_POST['cola'] != "N/A")
 	{
 		$cola = $_POST['cola'];
 	}
 
-//Holiday Computation ----------------------------------------------------- Incomplete
+//Holiday Computation ----------------------------------------------------- 
 
 	$regHolidayInc = $dailyRate;//Computation for Regular Holiday 
 	$speHolidayInc = $dailyRate * .30;//Special Holiday 
@@ -254,7 +254,6 @@
 				}
 			}
 		}
-// ----------------------------------------
 	}
 	
 //Computation for Allowance -----------------------------------------------------------
@@ -516,7 +515,8 @@
 	$totalRatePerDay = $overallWorkDays * $dailyRate;
 	$xAllowance = $extraAllowance;
 
-	$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $cola;
+	$totalCola = $cola * $overallWorkDays;
+	$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $totalCola;
 
 	$contributions = $pagibig + $philhealth + $sss + $tax;
 

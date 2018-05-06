@@ -11,8 +11,8 @@ if(!isset($_GET['site']) && !isset($_GET['position']))
 $site = $_GET['site'];
 $position = $_GET['position'];
 $empid = $_GET['empid'];
-$date = strftime("%B %d, %Y");
-// $date = "May 2, 2018";
+// $date = strftime("%B %d, %Y");
+$date = "May 2, 2018";
 
 $time = strftime("%X");//TIME
 
@@ -1296,17 +1296,14 @@ if($holidayExist > 0)
 					<!-- COLA -->
 					<div class="col-md-1 col-lg-12">
 						<?php
-						$cola = "SELECT * FROM site WHERE location = '$site'";
-						$colaQuery = mysql_query($cola);
-						$colaArr = mysql_fetch_assoc($colaQuery);
-						$colaValue = $colaArr['cola']/4;
+						$colaValue = $empArr['cola'];
 						if($colaValue == NULL)
 						{
 							$colaValue = "N/A";
 						}
 						?>
 						<h4>COLA</h4>
-						<input type="text" value="<?php Print $colaValue?>" name="cola" class="form-control" readonly>
+						<input type="text" value="<?php Print $colaValue?>" name="cola" class="form-control">
 					</div>
 				</div>
 

@@ -109,7 +109,7 @@ function allowanceDecimal(){
 }
 
 function colaDecimal(){
-	var allowance = document.getElementById('allowance');
+	var allowance = document.getElementsByName('txt_cola');
 	var value = allowance.value;
 	var decimal = parseInt(value).toFixed(2);
 	if(value != "")
