@@ -3,35 +3,35 @@
 include('directives/session.php');
 include_once('directives/db.php');
 
-	$empid = $_GET['empid'];
+$empid = $_GET['empid'];
 
-	$query = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1'";
-	$employee_query = mysql_query($query);
-	$employee_info = mysql_fetch_assoc($employee_query);
+$query = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1'";
+$employee_query = mysql_query($query);
+$employee_info = mysql_fetch_assoc($employee_query);
 
-	$firstname = $employee_info['firstname'];
-	$lastname =  $employee_info['lastname'];
-	$address = $employee_info['address'];
-	$contactnum = $employee_info['contactnum'];
-	$dob = $employee_info['dob'];
-	$datehired = $employee_info['datehired'];
-	$civilstatus = $employee_info['civilstatus'];
-	$position = $employee_info['position'];
+$firstname = $employee_info['firstname'];
+$lastname =  $employee_info['lastname'];
+$address = $employee_info['address'];
+$contactnum = $employee_info['contactnum'];
+$dob = $employee_info['dob'];
+$datehired = $employee_info['datehired'];
+$civilstatus = $employee_info['civilstatus'];
+$position = $employee_info['position'];
 	// $salary = $employee_info['salary'];
-	$rate = $employee_info['rate'];
-	$allowance = $employee_info['allowance'];
-	$site = $employee_info['site'];
-	$sssEE = $employee_info['sss'];
-	$sssER = $employee_info['sss_er'];
-	$philhealthEE = $employee_info['philhealth'];
-	$philhealthER = $employee_info['philhealth_er'];
-	$pagibigEE = $employee_info['pagibig'];
-	$pagibigER = $employee_info['pagibig_er'];
-	$empid = $employee_info['empid'];
-	$emergency = $employee_info['emergency'];
-	$reference = $employee_info['reference'];
-	$cola = $employee_info['cola'];
-	
+$rate = $employee_info['rate'];
+$allowance = $employee_info['allowance'];
+$site = $employee_info['site'];
+$sssEE = $employee_info['sss'];
+$sssER = $employee_info['sss_er'];
+$philhealthEE = $employee_info['philhealth'];
+$philhealthER = $employee_info['philhealth_er'];
+$pagibigEE = $employee_info['pagibig'];
+$pagibigER = $employee_info['pagibig_er'];
+$empid = $employee_info['empid'];
+$emergency = $employee_info['emergency'];
+$reference = $employee_info['reference'];
+$cola = $employee_info['cola'];
+
 ?>
 <html>
 <head>
@@ -54,15 +54,16 @@ include_once('directives/db.php');
 	require_once("directives/nav.php");
 	?>
 
-<?php
-Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
-?>
+	<?php
+	Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
+	?>
 	<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 		<div class="row"><br>
 			<div class="row text-center">
 				<ol class="breadcrumb text-left">
 					<li><a href='employees.php?site=<?php Print "$site"?>&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a></li>
 					<li class="active">Edit employee details</li>
+					<input style="float:right; margin-left:2em" type='button' onclick="terminateEmployee('<?php Print $empid?>')" class='btn btn-danger' value='Terminate Employee'>
 					<h4 style="float:right;">Employee ID: <?php Print "$empid"?></h4>
 				</ol>
 			</div>
@@ -118,19 +119,19 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 								<select class="form-control" name = "civilstatus" aria-labelledby="dropdownMenu1">
 									<option hidden>Select a status</option>
 									<?php
-										$status_query = "SELECT status FROM civil_status";
-										$civilstatus_query = mysql_query($status_query);
-										while($row = mysql_fetch_assoc($civilstatus_query))
+									$status_query = "SELECT status FROM civil_status";
+									$civilstatus_query = mysql_query($status_query);
+									while($row = mysql_fetch_assoc($civilstatus_query))
+									{
+										if($civilstatus == $row['status'])
 										{
-											if($civilstatus == $row['status'])
-											{
-												Print '<option selected="selected" value="'.$row["status"].'">'.$row["status"].'</option>';
-											}
-											else
-											{
-												Print '<option value="'.$row["status"].'">'.$row["status"].'</option>';
-											}
+											Print '<option selected="selected" value="'.$row["status"].'">'.$row["status"].'</option>';
 										}
+										else
+										{
+											Print '<option value="'.$row["status"].'">'.$row["status"].'</option>';
+										}
+									}
 									?>
 								</select>
 							</div>
@@ -147,38 +148,31 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 					</div>
 
 					<div class="row pull-down">
-								<div class="col-md-4 col-lg-4">
-									<label for="emergency">Emergency contact:</label>	
-								</div>
-								<div class="col-md-8 col-lg-8">									
-									<input name="emergencyContact" type="text" placeholder="<?php Print $emergency?>" class="form-control">
-								</div>
-							</div>
-
-							<div class="row pull-down">
-								<div class="col-md-4 col-lg-4">
-									<label for="characterReference" class="no-wrap">Character Reference:</label>
-								</div>
-								<div class="col-md-8 col-lg-8">
-									<input name="characterReference" type="text" placeholder="<?php Print $reference?>" class="form-control">
-								</div>
-							</div>
-
-							<div class="row pull-down">
-								<div class="col-md-4 col-lg-4">
-									<label for="cola" class="no-wrap">COLA:</label>
-								</div>
-								<div class="col-md-4 col-lg-4">
-									<input name="cola" type="text" placeholder="<?php Print $cola?>" class="form-control">
-								</div>
-							</div>
-
-						<div class="col-md-4 col-lg-4 col-md-offset-3 col-lg-offset-3 pull-down">
-							<input type='submit' class='btn btn-primary pull-down' value='Save Changes'>
+						<div class="col-md-4 col-lg-4">
+							<label for="emergency">Emergency contact:</label>	
 						</div>
-						<div class="col-md-1 col-lg-1 pull-down">
-							<input type='button' onclick="terminateEmployee('<?php Print $empid?>')" class='btn btn-danger pull-down' value='Terminate Employee'>
+						<div class="col-md-8 col-lg-8">									
+							<input name="emergencyContact" type="text" placeholder="<?php Print $emergency?>" class="form-control">
 						</div>
+					</div>
+
+					<div class="row pull-down">
+						<div class="col-md-4 col-lg-4">
+							<label for="characterReference" class="no-wrap">Character Reference:</label>
+						</div>
+						<div class="col-md-8 col-lg-8">
+							<input name="characterReference" type="text" placeholder="<?php Print $reference?>" class="form-control">
+						</div>
+					</div>
+
+					<div class="row pull-down">
+						<div class="col-md-4 col-lg-4">
+							<label for="cola" class="no-wrap">COLA:</label>
+						</div>
+						<div class="col-md-4 col-lg-4">
+							<input name="cola" type="text" placeholder="<?php Print $cola?>" class="form-control">
+						</div>
+					</div>
 				</div>
 
 				<div class="col-md-6 col-lg-6">
@@ -192,19 +186,19 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 								<select class="form-control" name="position" aria-labelledby="dropdownMenu1">
 									<option hidden>Select a position</option>
 									<?php
-										$query = "SELECT position FROM job_position WHERE active = '1'";
-										$job_query = mysql_query($query);
-										while($row = mysql_fetch_assoc($job_query))
+									$query = "SELECT position FROM job_position WHERE active = '1'";
+									$job_query = mysql_query($query);
+									while($row = mysql_fetch_assoc($job_query))
+									{
+										if($position == $row['position'])
 										{
-											if($position == $row['position'])
-											{
-												Print '<option selected="selected" value="'.$row["position"].'">'.$row["position"].'</option>';
-											}
-											else
-											{
-												Print '<option value="'.$row["position"].'">'.$row["position"].'</option>';
-											}
+											Print '<option selected="selected" value="'.$row["position"].'">'.$row["position"].'</option>';
 										}
+										else
+										{
+											Print '<option value="'.$row["position"].'">'.$row["position"].'</option>';
+										}
+									}
 									?>
 
 								</select>
@@ -221,19 +215,19 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 								<select name="site" class="form-control">
 									<option hidden>Select a site</option>
 									<?php
-										$site_query = "SELECT location FROM site WHERE active = '1'";
-										$location_query = mysql_query($site_query);
-										while($row = mysql_fetch_assoc($location_query))
+									$site_query = "SELECT location FROM site WHERE active = '1'";
+									$location_query = mysql_query($site_query);
+									while($row = mysql_fetch_assoc($location_query))
+									{
+										if($site == $row['location'])
 										{
-											if($site == $row['location'])
-											{
-												Print '<option selected="selected" value="'.$row["location"].'">'.$row["location"].'</option>';
-											}
-											else
-											{
-												Print '<option value="'.$row["location"].'">'.$row["location"].'</option>';
-											}
+											Print '<option selected="selected" value="'.$row["location"].'">'.$row["location"].'</option>';
 										}
+										else
+										{
+											Print '<option value="'.$row["location"].'">'.$row["location"].'</option>';
+										}
+									}
 									?>
 								</select>
 							</div>
@@ -269,179 +263,182 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 					<div class="row">
 						<h4 class="modal-title"><br>Contributions</h4><hr>
 						<!-- /////////////////////////// -->
-							<?php
-							if($sssEE != 0)
-								Print  '
-										<div class="col-md-1 col-lg-12">
-											<div class="col-md-3 col-lg-3">
-												<input type="checkbox" name="sssCheckbox" id="sssCheckbox" onchange="sssCheckboxFunc()" checked>
-												<label for="sss">SSS</label>
-											</div>
-											<div class="col-md-9 col-lg-9">
-												<div class="row">
-													<div class="col-md-1 col-lg-1">
-														<label for="sss_ee">EE:</label>
-													</div>
-													<div class="col-md-4 col-lg-4">
-														<input name="sssEE" type="number" placeholder="'.$sssEE.'" class="form-control" id="sssEE">
-													</div>
-													<div class="col-md-1 col-lg-1">
-														<label for="sss_er">ER:</label>
-													</div>
-													<div class="col-md-4 col-lg-4">
-														<input name="sssER" type="number" placeholder="'.$sssER.'" class="form-control" id="sssER">
-													</div>
-												</div>
-											</div>
-										</div>';
-							else
-								Print  '
-										<div class="col-md-1 col-lg-12">
-											<div class="col-md-3 col-lg-3">
-												<input type="checkbox" name="sssCheckbox" id="sssCheckbox" onchange="sssCheckboxFunc()">
-												<label for="sss">SSS</label>
-											</div>
-											<div class="col-md-9 col-lg-9">
-												<div class="row">
-													<div class="col-md-1 col-lg-1">
-														<label for="sss_ee">EE:</label>
-													</div>
-													<div class="col-md-4 col-lg-4">
-														<input name="sssEE" type="number" placeholder="No document" class="form-control" id="sssEE" readonly>
-													</div>
-													<div class="col-md-1 col-lg-1">
-														<label for="sss_er">ER:<label>
-													</div>
-													<div class="col-md-4 col-lg-4">
-														<input name="sssER" type="number" placeholder="No document" class="form-control" id="sssER" readonly>
-													</div>
-												</div>
-											</div>
-										</div>';
-							?>
+						<?php
+						if($sssEE != 0)
+							Print  '
+						<div class="col-md-1 col-lg-12">
+						<div class="col-md-3 col-lg-3">
+						<input type="checkbox" name="sssCheckbox" id="sssCheckbox" onchange="sssCheckboxFunc()" checked>
+						<label for="sss">SSS</label>
+						</div>
+						<div class="col-md-9 col-lg-9">
+						<div class="row">
+						<div class="col-md-1 col-lg-1">
+						<label for="sss_ee">EE:</label>
+						</div>
+						<div class="col-md-4 col-lg-4">
+						<input name="sssEE" type="number" placeholder="'.$sssEE.'" class="form-control" id="sssEE">
+						</div>
+						<div class="col-md-1 col-lg-1">
+						<label for="sss_er">ER:</label>
+						</div>
+						<div class="col-md-4 col-lg-4">
+						<input name="sssER" type="number" placeholder="'.$sssER.'" class="form-control" id="sssER">
+						</div>
+						</div>
+						</div>
+						</div>';
+						else
+							Print  '
+						<div class="col-md-1 col-lg-12">
+						<div class="col-md-3 col-lg-3">
+						<input type="checkbox" name="sssCheckbox" id="sssCheckbox" onchange="sssCheckboxFunc()">
+						<label for="sss">SSS</label>
+						</div>
+						<div class="col-md-9 col-lg-9">
+						<div class="row">
+						<div class="col-md-1 col-lg-1">
+						<label for="sss_ee">EE:</label>
+						</div>
+						<div class="col-md-4 col-lg-4">
+						<input name="sssEE" type="number" placeholder="No document" class="form-control" id="sssEE" readonly>
+						</div>
+						<div class="col-md-1 col-lg-1">
+						<label for="sss_er">ER:<label>
+						</div>
+						<div class="col-md-4 col-lg-4">
+						<input name="sssER" type="number" placeholder="No document" class="form-control" id="sssER" readonly>
+						</div>
+						</div>
+						</div>
+						</div>';
+						?>
 
-							<?php
-							if($philhealthEE != 0)
-								Print '<div class="col-md-1 col-lg-12 pull-down">
-											<div class="col-md-3 col-lg-3">
-												<input type="checkbox" name="philhealthCheckbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()" checked>
-												<label for="philhealth" class="nowrap">PhilHealth</label>
-											</div>
-											<div class="col-md-9 col-lg-9">
-												<div class="row">
-													<div class="col-md-1 col-lg-1">
-														<label for="philhealth_ee">EE:</label>
-													</div>
-													<div class="col-md-4 col-lg-4">
-														<input name="philhealthEE" placeholder="'.$philhealthEE.'" type="number" class="form-control" id="philhealthEE">
-													</div>
-													<div class="col-md-1 col-lg-1">
-														<label for="philhealth_er">ER:</label>
-													</div>
-													<div class="col-md-4 col-lg-4">
-														<input name="philhealthER" placeholder="'.$philhealthER.'" type="number" class="form-control" id="philhealthER">
-													</div>
-												</div>
-											</div>
-										</div>';
-							else
-								Print '
-										<div class="col-md-1 col-lg-12 pull-down">
-											<div class="col-md-3 col-lg-3">
-												<input type="checkbox" name="philhealthCheckbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()">
-												<label for="philhealth" class="nowrap">PhilHealth</label>
-											</div>
-											<div class="col-md-9 col-lg-9">
-												<div class="row">
-													<div class="col-md-1 col-lg-1">
-														<label for="philhealth_ee">EE:</label>
-													</div>
-													<div class="col-md-4 col-lg-4">
-									   					<input name="philhealthEE" placeholder="No document" type="text" class="form-control" id="philhealthEE" readonly>
-									   				</div>
-									   				<div class="col-md-1 col-lg-1">
-									   					<label for="philhealth_er">ER:</label>
-									   				</div>
-									   				<div class="col-md-4 col-lg-4">
-									   					<input name="philhealthER" placeholder="No document" type="text" class="form-control" id="philhealthER" readonly>
-									   				</div>
-									   			</div>
-									   		</div>
-									   	</div>';
-							?>
+						<?php
+						if($philhealthEE != 0)
+							Print '<div class="col-md-1 col-lg-12 pull-down">
+						<div class="col-md-3 col-lg-3">
+						<input type="checkbox" name="philhealthCheckbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()" checked>
+						<label for="philhealth" class="nowrap">PhilHealth</label>
+						</div>
+						<div class="col-md-9 col-lg-9">
+						<div class="row">
+						<div class="col-md-1 col-lg-1">
+						<label for="philhealth_ee">EE:</label>
+						</div>
+						<div class="col-md-4 col-lg-4">
+						<input name="philhealthEE" placeholder="'.$philhealthEE.'" type="number" class="form-control" id="philhealthEE">
+						</div>
+						<div class="col-md-1 col-lg-1">
+						<label for="philhealth_er">ER:</label>
+						</div>
+						<div class="col-md-4 col-lg-4">
+						<input name="philhealthER" placeholder="'.$philhealthER.'" type="number" class="form-control" id="philhealthER">
+						</div>
+						</div>
+						</div>
+						</div>';
+						else
+							Print '
+						<div class="col-md-1 col-lg-12 pull-down">
+						<div class="col-md-3 col-lg-3">
+						<input type="checkbox" name="philhealthCheckbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()">
+						<label for="philhealth" class="nowrap">PhilHealth</label>
+						</div>
+						<div class="col-md-9 col-lg-9">
+						<div class="row">
+						<div class="col-md-1 col-lg-1">
+						<label for="philhealth_ee">EE:</label>
+						</div>
+						<div class="col-md-4 col-lg-4">
+						<input name="philhealthEE" placeholder="No document" type="text" class="form-control" id="philhealthEE" readonly>
+						</div>
+						<div class="col-md-1 col-lg-1">
+						<label for="philhealth_er">ER:</label>
+						</div>
+						<div class="col-md-4 col-lg-4">
+						<input name="philhealthER" placeholder="No document" type="text" class="form-control" id="philhealthER" readonly>
+						</div>
+						</div>
+						</div>
+						</div>';
+						?>
 						
-							<?php
-							if($pagibigEE != 0)
-								Print  '<div class="col-md-1 col-lg-12 pull-down">
-											<div class="col-md-3 col-lg-3">
-												<input type="checkbox" name="pagibigCheckbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()" checked>
-												<label for="pagibig" class="nowrap">Pagibig</label>
-											</div>
-											<div class="col-md-9 col-lg-9">
-												<div class="row">
-													<div class="col-md-1 col-lg-1">
-														<label for="pagibig_ee">EE:</label>
-													</div>
-													<div class="col-md-4 col-lg-4">
-														<input name="pagibigEE" placeholder="'.$pagibigEE.'" type="text" class="form-control" id="pagibigEE">
-													</div>
-													<div class="col-md-1 col-lg-1">
-														<label for="pagibig_er">ER:</label>
-													</div>
-													<div class="col-md-4 col-lg-4">
-														<input name="pagibigER" placeholder="'.$pagibigER.'" type="text" class="form-control" id="pagibigER">
-													</div>
-												</div>
-											</div>
-										</div>';
-							else
-								Print  '<div class="col-md-1 col-lg-12 pull-down">
-											<div class="col-md-3 col-lg-3">
-												<input type="checkbox" name="pagibigCheckbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()">
-												<label for="pagibig" class="nowrap">Pagibig</label>
-											</div>
-											<div class="col-md-9 col-lg-9">
-												<div class="row">
-													<div class="col-md-1 col-lg-1">
-														<label for="pagibig_ee">EE:</label>
-													</div>
-													<div class="col-md-4 col-lg-4">
-														<input name="pagibigEE" placeholder="No document" type="text" class="form-control" id="pagibigEE" readonly>
-													</div>
-													<div class="col-md-1 col-lg-1">
-														<label for="pagibig_er">ER:</label>
-													</div>
-													<div class="col-md-4 col-lg-4">
-														<input name="pagibigER" placeholder="No document" type="text" class="form-control" id="pagibigER" readonly>
-													</div>
-												</div>
-											</div>
-										</div>';
-							?>
+						<?php
+						if($pagibigEE != 0)
+							Print  '<div class="col-md-1 col-lg-12 pull-down">
+						<div class="col-md-3 col-lg-3">
+						<input type="checkbox" name="pagibigCheckbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()" checked>
+						<label for="pagibig" class="nowrap">Pagibig</label>
 						</div>
+						<div class="col-md-9 col-lg-9">
+						<div class="row">
+						<div class="col-md-1 col-lg-1">
+						<label for="pagibig_ee">EE:</label>
+						</div>
+						<div class="col-md-4 col-lg-4">
+						<input name="pagibigEE" placeholder="'.$pagibigEE.'" type="text" class="form-control" id="pagibigEE">
+						</div>
+						<div class="col-md-1 col-lg-1">
+						<label for="pagibig_er">ER:</label>
+						</div>
+						<div class="col-md-4 col-lg-4">
+						<input name="pagibigER" placeholder="'.$pagibigER.'" type="text" class="form-control" id="pagibigER">
+						</div>
+						</div>
+						</div>
+						</div>';
+						else
+							Print  '<div class="col-md-1 col-lg-12 pull-down">
+						<div class="col-md-3 col-lg-3">
+						<input type="checkbox" name="pagibigCheckbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()">
+						<label for="pagibig" class="nowrap">Pagibig</label>
+						</div>
+						<div class="col-md-9 col-lg-9">
+						<div class="row">
+						<div class="col-md-1 col-lg-1">
+						<label for="pagibig_ee">EE:</label>
+						</div>
+						<div class="col-md-4 col-lg-4">
+						<input name="pagibigEE" placeholder="No document" type="text" class="form-control" id="pagibigEE" readonly>
+						</div>
+						<div class="col-md-1 col-lg-1">
+						<label for="pagibig_er">ER:</label>
+						</div>
+						<div class="col-md-4 col-lg-4">
+						<input name="pagibigER" placeholder="No document" type="text" class="form-control" id="pagibigER" readonly>
+						</div>
+						</div>
+						</div>
+						</div>';
+						?>
+					</div>
 
-						<div class="col-sm-10 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down text-center well well-sm">
-										Note: Check boxes if employee has document for<br>SSS / PhilHealth / Pagibig.
-						</div>
+					<div class="col-sm-10 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down text-center well well-sm">
+						Note: Check boxes if employee has document for<br>SSS / PhilHealth / Pagibig.
+					</div>
+					<div class="col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4">
+						<input type='submit' class='btn btn-primary pull-down' value='Save Changes'>
 					</div>
 				</div>
 			</div>
-		</form>
-	</div>
+		</div>
+	</form>
+</div>
 </form>
-	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
+<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script rel="javascript" src="js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script rel="javascript" src="js/bootstrap.min.js"></script>
 
-	<script>
-		function sssCheckboxFunc() {
-			var sss = document.getElementById('sssCheckbox');
-			var sssEERow = document.getElementById('sssEE');
-			var sssERRow = document.getElementById('sssER');
-			if(sss.checked == true)
-			{
+<script>
+	function sssCheckboxFunc() {
+		var sss = document.getElementById('sssCheckbox');
+		var sssEERow = document.getElementById('sssEE');
+		var sssERRow = document.getElementById('sssER');
+		if(sss.checked == true)
+		{
 				//Employee
 				sssEERow.readOnly = false;
 				sssEERow.placeholder = "";
@@ -738,8 +735,8 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 		// 		sssContribution = 581.30;
 		// 		sssEmployer = 1208.70;
 		// 	}
-				
-			
+
+
 		// 	sssContribution = sssContribution.toFixed(2);
 		// 	sssEmployer = sssEmployer.toFixed(2);
 		// 	var sssCheck = document.getElementById('sssCheckbox');
@@ -747,25 +744,25 @@ Print "<form method='post' action='logic_edit_employee.php?empid=".$empid."'>";
 		// 	if(sssCheck.checked){
 		// 		document.getElementById('sssEE').value = sssContribution;
 		// 		document.getElementById('sssER').value = sssEmployer;
-				
+
 		// 	}
 
 		// }
 		
-	function Editemp(id) {
-	  	window.location.assign("logic_edit_employee.php?empid="+id);	
-	}
-	
-	function terminateEmployee(id) {
-
-		var con = confirm("Are you sure you want to terminate this employee?");
-		if(con) {
-			window.location.assign("logic_terminate_employee.php?empid="+id);
+		function Editemp(id) {
+			window.location.assign("logic_edit_employee.php?empid="+id);	
 		}
-	}
+
+		function terminateEmployee(id) {
+
+			var con = confirm("Are you sure you want to terminate this employee?");
+			if(con) {
+				window.location.assign("logic_terminate_employee.php?empid="+id);
+			}
+		}
 	</script>
 
 
-	</div>
+</div>
 </body>
 </html>
