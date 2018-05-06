@@ -42,11 +42,27 @@ if(isset($_POST['groupChange']))//group site movement
 		mysql_query("UPDATE employee SET site = '$site' WHERE empid = '$empid'");
 		mysql_query("INSERT INTO site_history(empid, site, date, admin) VALUES(	'$empid', '$siteHist', '$date', '$adminName')");
 	}
+	//Check pending sites if there are no employees
+	$pending = "SELECT * FROM site WHERE active = 'pending'";
+	$pendingQuery = mysql_query($pending);
+	if(mysql_num_rows($pendingQuery) != 0)
+	{
+		while($pendingSites = mysql_fetch_assoc($pendingQuery))
+		{
+			$sitePending = $pendingSites['location'];
+			$empChecker = "SELECT * FROM employee WHERE site = '$sitePending' AND employment_status = '1'";
+			$empQuery = mysql_query($empChecker);
+
+			if(mysql_num_rows($empQuery) == 0)
+				mysql_query("UPDATE site SET active = '0', end = '$date' WHERE location = '$sitePending'") or die (mysql_error());
+		}
+
+	}
 	Print "<script>alert('Successfully transfered employees.')</script>";
 }
 else
 {
-	$empChange = "";// store employees that has been changed
+		$empChange = "";// store employees that has been changed
 	$siteNum = "";//store index of new site to trasfer
 	$moreThanTwo = false;
 	for($counter = 0; $counter < $empNum; $counter++)
@@ -63,6 +79,7 @@ else
 			$siteNum .= $_POST['newSite'][$counter];
 		}
 	}
+
 	if($moreThanTwo)
 	{
 		$empSite = explode(",", $empChange);
@@ -77,6 +94,22 @@ else
 			mysql_query("INSERT INTO site_history(empid, site, date, admin) VALUES('$empid', '$siteTransfer', '$date', '$adminName')");
 
 		}
+
+		//Check pending sites if there are no employees
+		$pending = "SELECT * FROM site WHERE active = 'pending'";
+		$pendingQuery = mysql_query($pending);
+		if(mysql_num_rows($pendingQuery) != 0)
+		{
+			while($pendingSites = mysql_fetch_assoc($pendingQuery))
+			{
+				$sitePending = $pendingSites['location'];
+				$empChecker = "SELECT * FROM employee WHERE site = '$sitePending' AND employment_status = '1'";
+				$empQuery = mysql_query($empChecker);
+				if(mysql_num_rows($empQuery) == 0)
+					mysql_query("UPDATE site SET active = '0', end = '$date' WHERE location = '$sitePending'") or die (mysql_error());
+			}
+
+		}
 		Print "<script>alert('Successfully transfered employees.')</script>";
 
 	}
@@ -86,6 +119,22 @@ else
 		$siteNum = $siteFrom." -> ".$siteNum;
 		mysql_query("UPDATE employee SET site = '$site' WHERE empid = '$empChange'");
 		mysql_query("INSERT INTO site_history(empid, site, date, admin) VALUES('$empChange', '$siteNum', '$date', '$adminName')");
+
+		//Check pending sites if there are no employees
+		$pending = "SELECT * FROM site WHERE active = 'pending'";
+		$pendingQuery = mysql_query($pending);
+		if(mysql_num_rows($pendingQuery) != 0)
+		{
+			while($pendingSites = mysql_fetch_assoc($pendingQuery))
+			{
+				$sitePending = $pendingSites['location'];
+				$empChecker = "SELECT * FROM employee WHERE site = '$sitePending' AND employment_status = '1'";
+				$empQuery = mysql_query($empChecker);
+				if(mysql_num_rows($empQuery) == 0)
+					mysql_query("UPDATE site SET active = '0', end = '$date' WHERE location = '$sitePending'") or die (mysql_error());
+			}
+
+		}
 		Print "<script>alert('Successfully transfered employees.')</script>";
 	}
 }
