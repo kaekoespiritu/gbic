@@ -3,7 +3,24 @@ include('directives/session.php');
 include('directives/db.php');
 
 $empNum = count($_POST['empid']);
-$siteFrom = $_GET['s'];
+
+$siteIdentifier = $_POST['empid'][0];
+$siteChecker = "SELECT * FROM employee WHERE employment_status = '1' AND empid = '$siteIdentifier'";
+$siteQuery = mysql_query($siteChecker);
+if(mysql_num_rows($siteQuery) != 0)
+{
+	$siteArr = mysql_fetch_assoc($siteQuery);
+	$siteFrom = $siteArr['site'];
+}
+else
+{
+	Print "<script>
+			alert('No employee in this site.'); 
+			window.location.assign('site_movement.php?site=".$siteFrom."');
+			</script>";
+
+}
+
 //for admin history
 $user = $_SESSION['user_logged_in'];
 $admin = "SELECT * FROM administrator WHERE username = '$user'";

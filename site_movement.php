@@ -121,7 +121,7 @@ $location = $_GET['site'];
 							$pendingSites = "SELECT * FROM site WHERE active = 'pending'";
 							$pendingQuery = mysql_query($pendingSites);
 							
-							$initialQuery = "SELECT * FROM employee WHERE (site = ";
+							$initialQuery = "SELECT * FROM employee WHERE employment_status = '1' AND (site = ";
 
 							$sites = "";//Store sites that are pending
 							while($pendingArr = mysql_fetch_assoc($pendingQuery))

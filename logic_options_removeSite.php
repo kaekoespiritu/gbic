@@ -53,7 +53,7 @@
 		}
 		else
 		{
-			Print "<script>alert('The site you chosen still have employees assigned to it. ".$withEmployee."')</script>";
+			Print "<script>alert('The site you have chosen still has employees assigned to it. Kindly move them to other site. ".$withEmployee."')</script>";
 		}
 		//Print "<script>alert('".$successArchive."')</script>";
 		$sitePending = $primaryQuery.$secondaryQuery;
