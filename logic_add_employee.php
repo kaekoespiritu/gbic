@@ -111,7 +111,8 @@ error_reporting(0);
 												employment_status,
 												complete_doc,
 												reference,
-												emergency) VALUES('$empid',
+												emergency,
+												site_pending) VALUES('$empid',
 																	'$firstName',
 																	'$lastName',
 																	'$address',
@@ -134,7 +135,8 @@ error_reporting(0);
 																	'$employment_status',
 																	'$complete_doc',
 																	'$characterReference',
-																	'$emergencyContact')") or die(mysql_error());//adds values to employee table
+																	'$emergencyContact',
+																	'0')") or die(mysql_error());//adds values to employee table
 		// //Set historical for Position
 		mysql_query("INSERT INTO position_history(empid, position, date, admin) VALUES('$empid', '$position', '$date', '$adminName')");	
 		//Set historical for Site

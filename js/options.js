@@ -62,6 +62,11 @@
 
 			
 		// }
+		function siteRemove(site) {
+			var a = confirm("Are you sure you want to end your contract with your client at "+site+"?");
+			if(a)
+				window.location.assign("logic_options_removeSite.php?site="+site);
+		}
 
 		function hideRestrictions() {
 			var admin = document.getElementById('adminradio');
