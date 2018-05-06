@@ -74,11 +74,6 @@ $dayToday = date('l, F d, Y', time());
 			while($row = mysql_fetch_assoc($position_box_query))
 			{
 
-				if($counter == 0)
-				{
-					Print '<div class="row">';
-				}
-
 				$position_num = $row['position'];
 				$num_employee = "SELECT * FROM employee WHERE position = '$position_num' AND site = '$site' AND employment_status = '1'";
 				$employee_query = mysql_query($num_employee);
@@ -103,6 +98,11 @@ $dayToday = date('l, F d, Y', time());
 				else
 				{
 					$payrollPrintBool = false;//Print function will be disabled
+				}
+
+				if($counter == 0 && $employee_num != 0)
+				{
+					Print '<div class="row">';
 				}
 
 				if($employee_num != 0)
