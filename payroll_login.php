@@ -26,10 +26,10 @@
 	$payrollDayQuery = mysql_query($payrollCheck) or die(mysql_error());
 	$payrollArr = mysql_fetch_assoc($payrollDayQuery);
 
-	if($payrollArr['close'] == $day)
+	if($payrollArr['open'] == $day)
 		$head = "Enter password to access payroll";
 	else
-		$head = "Payroll is currently disabled and can be only accessed on ".$payrollArr['close']."(Closed payroll)";
+		$head = "Payroll is currently disabled and can be only accessed on ".$payrollArr['open']."(Open payroll)";
 ?>
 <html>
 <head>
@@ -65,7 +65,7 @@
 						$payrollDayQuery = mysql_query($payrollCheck) or die(mysql_error());
 						$payrollArr = mysql_fetch_assoc($payrollDayQuery);
 
-						if($payrollArr['close'] == $day)
+						if($payrollArr['open'] == $day)
 							Print '
 								<input type="password" class="form-control" id="payrollpass" name="password" placeholder="Password">
 								<input type="submit" value="Submit" class="btn btn-primary pull-down" >
