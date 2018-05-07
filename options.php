@@ -219,35 +219,63 @@ $adminRole = $adminArr['role'];
 				  		<h4 class="modal-title col-md-1 col-lg-11">View site history</h4>
 				        <button type="button" class="close col-md-1 col-lg-1" style="float:right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				    </div>
-				    <!-- form for adding POSITIONS -->
 				    <div class="modal-body">
-				    	<table class="table table-bordered">
-				    		<tr>
-				    			<td>Site Name</td>
-				    			<td>Start Date</td>
-				    			<td>End Date</td>
-				    			<td>Action</td>
-				    		</tr>
-				    		<?php
-				    		$siteHist = "SELECT * FROM site ORDER BY end ASC";
-				    		$siteHistQuery = mysql_query($siteHist);
-				    		while($siteHistArr = mysql_fetch_assoc($siteHistQuery))
-				    		{
-				    			Print "
-				    				<tr>
-						    			<td>".$siteHistArr['location']."</td>
-						    			<td>".$siteHistArr['start']."</td>";
-						    	if($siteHistArr['end'] != null)
-						    		Print 	"<td>".$siteHistArr['end']."</td>
-						    				 <td>Contract Ended</td>
-						    		</tr>";
-						    	else
-						    		Print 	"<td>On-going</td>
-						    				<td><a class='btn btn-danger' onclick='siteRemove(\"".$siteHistArr['location']."\")'>END CONTRACT</a>
-						    			</td>";
-				    		}
-				    		?>
-				    	</table>
+				    	<ul class="nav nav-tabs">
+							<li class="active"><a href="#onGoing" data-toggle="tab">On-going site</a></li>
+							<li><a href="#contractEnded" data-toggle="tab">Contract ended</a></li>
+						</ul>
+						<div class="tab-content">
+							<div id="onGoing" class="tab-pane active">
+								<table class="table table-bordered">
+						    		<tr>
+						    			<td>Site Name</td>
+						    			<td>Start Date</td>
+						    			<td>End Date</td>
+						    			<td>Action</td>
+						    		</tr>
+						    		<?php
+						    		$siteHist = "SELECT * FROM site ORDER BY end ASC";
+						    		$siteHistQuery = mysql_query($siteHist);
+						    		while($siteHistArr = mysql_fetch_assoc($siteHistQuery))
+						    		{
+						    			Print "
+						    				<tr>
+								    			<td>".$siteHistArr['location']."</td>
+								    			<td>".$siteHistArr['start']."</td>";
+								    		Print 	"<td>On-going</td>
+								    				<td><a class='btn btn-danger' onclick='siteRemove(\"".$siteHistArr['location']."\")'>END CONTRACT</a>
+								    			</td>";
+						    		}
+						    		?>
+						    	</table>
+							</div>
+							<div id="contractEnded" class="tab-pane">
+								<table class="table table-bordered">
+						    		<tr>
+						    			<td>Site Name</td>
+						    			<td>Start Date</td>
+						    			<td>End Date</td>
+						    			<td>Action</td>
+						    		</tr>
+						    		<?php
+						    		$siteHist = "SELECT * FROM site ORDER BY end ASC";
+						    		$siteHistQuery = mysql_query($siteHist);
+						    		while($siteHistArr = mysql_fetch_assoc($siteHistQuery))
+						    		{
+						    			if($siteHistArr['end'] != null) {
+						    				Print "
+						    				<tr>
+								    			<td>".$siteHistArr['location']."</td>
+								    			<td>".$siteHistArr['start']."</td>";
+								    		Print 	"<td>".$siteHistArr['end']."</td>
+								    				 <td>Contract Ended</td>
+								    		</tr>";
+						    			}
+						    		}
+						    		?>
+						    	</table>
+							</div>
+						</div>
 				    	<form method='POST' action='print_history_site.php'>
 							<input type='submit' value='Print site history' class='btn btn-success pull-up'>
 						</form>
