@@ -238,6 +238,7 @@ $adminRole = $adminArr['role'];
 						    		$siteHistQuery = mysql_query($siteHist);
 						    		while($siteHistArr = mysql_fetch_assoc($siteHistQuery))
 						    		{
+						    			if($siteHistArr['end'] == null) {
 						    			Print "
 						    				<tr>
 								    			<td>".$siteHistArr['location']."</td>
@@ -245,6 +246,7 @@ $adminRole = $adminArr['role'];
 								    		Print 	"<td>On-going</td>
 								    				<td><a class='btn btn-danger' onclick='siteRemove(\"".$siteHistArr['location']."\")'>END CONTRACT</a>
 								    			</td>";
+								    		}
 						    		}
 						    		?>
 						    	</table>
