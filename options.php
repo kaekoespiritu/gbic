@@ -222,7 +222,7 @@ $adminRole = $adminArr['role'];
 				    <div class="modal-body">
 				    	<ul class="nav nav-tabs">
 							<li class="active"><a href="#onGoing" data-toggle="tab">On-going site</a></li>
-							<li><a href="#contractEnded" data-toggle="tab">Contract ended</a></li>
+							<li><a href="#siteArchive" data-toggle="tab">Site archive</a></li>
 						</ul>
 						<div class="tab-content">
 							<div id="onGoing" class="tab-pane active">
@@ -251,7 +251,7 @@ $adminRole = $adminArr['role'];
 						    		?>
 						    	</table>
 							</div>
-							<div id="contractEnded" class="tab-pane">
+							<div id="siteArchive" class="tab-pane">
 								<table class="table table-bordered">
 						    		<tr>
 						    			<td>Site Name</td>
