@@ -12,9 +12,6 @@
 				     		<input type="text" class="form-control" name="site_name" placeholder="Name of new site">
 				     	</div>
 				     	<div class="modal-footer">
-				     		<div class="col-md-5 col-lg-5">
-				     			<input type="number" placeholder="COLA" class="form-control input-sm">
-				     		</div>
 					        <button type="submit" class="btn btn-primary">Save changes</button>
 					    </div>
 				  	</form>
