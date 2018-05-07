@@ -48,7 +48,9 @@ while($siteHistArr = mysql_fetch_assoc($siteHistQuery))
 $activeSheet->getStyle('A2:C2')->applyFromArray($border_all_medium);//Header 
 $activeSheet->getStyle('A1')->applyFromArray($align_center);//Header 
 $activeSheet->getStyle('A2:C'.$rowCounter)->applyFromArray($border_all_thin);//Content
-
+$activeSheet->getColumnDimension('A')->setAutoSize(true);
+$activeSheet->getColumnDimension('B')->setAutoSize(true);
+$activeSheet->getColumnDimension('C')->setAutoSize(true);
 
 
 
