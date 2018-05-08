@@ -204,7 +204,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					<!-- Regular Holiday Rate -->
 					<?php
 						$regHolidayDays = $empArr['rate'] * $payrollArr['reg_holiday_num'];
-						$subTotalRegularHolidayRate = ($payrollArr['reg_holiday_num'] * $payrollArr['reg_holiday']) + $regHolidayDays;
+						$subTotalRegularHolidayRate = ($payrollArr['reg_holiday_num'] * $payrollArr['reg_holiday']) ;
 
 						$totalRegularHolidayRate = $subTotalRegularHolidayRate;//for the Subtotal of Earnings
 						$regHolNum = $payrollArr['reg_holiday_num']." Day(s)";
@@ -218,7 +218,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					?>
 					<tr>
 						<td>Regular Holiday</td>
-						<td><?php Print numberExactFormat($empArr['rate'] + $payrollArr['reg_holiday'], 2, '.', true) ?></td>
+						<td><?php Print numberExactFormat($payrollArr['reg_holiday'], 2, '.', true) ?></td>
 						<td><?php Print $regHolNum?></td>
 						<td><?php Print $subTotalRegularHolidayRate?></td>
 					</tr>
@@ -238,7 +238,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					?>
 					<tr>
 						<td>Special Holiday</td>
-						<td><?php Print  numberExactFormat($empArr['rate'] + $payrollArr['spe_holiday'], 2, '.', true)?></td>
+						<td><?php Print numberExactFormat($payrollArr['spe_holiday'], 2, '.', true)?></td>
 						<td><?php Print $speHolNum?></td>
 						<td><?php Print $subTotalSpecialHolidayRate?></td>
 					</tr>
@@ -265,6 +265,8 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 
 					<?php
 						$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $totalCola;
+							Print "<script>console.log('payComp1 - totalRegularHolidayRate: ".abs($totalRegularHolidayRate)." | totalSpecialHolidayRate: ".abs($totalSpecialHolidayRate)." | totalSundayRate: ".abs($totalSundayRate)." | totalNightDifferential: ".$totalNightDifferential." | totalAllowance: ".$totalAllowance." | totalOvertime: ".$totalOvertime." | totalRatePerDay: ".$totalRatePerDay." | xAllowance: ".$xAllowance." | totalCola: ".$totalCola."')</script>";
+
 					?>
 					<tr style="font-family: QuicksandMed;">
 						<td colspan="2" class="active">Subtotal</td>
@@ -559,7 +561,9 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 			    	</h4>
 			    </div>
 			    <?php
+
 			    	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($payrollArr['tools_paid']);
+			    
 			    	$grandTotal = abs($grandTotal);
 			    ?>
 			    <div class="col-md-1 col-lg-12">

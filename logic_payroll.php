@@ -100,7 +100,6 @@
 	$sunday_Att = 0;//Preset the sunday attendance to filter out the overal to the sunday
 	foreach($workHrs as $hrsCheck)
 	{
-
 		if($sundayBool)
 		{
 			if($hrsCheck < 8)
@@ -109,9 +108,10 @@
 			}
 			else
 			{
-				$overallWorkDays++;
+				// $overallWorkDays++;
 				$sunday_Att = 1;
 			}
+			$sundayBool = false;
 		}
 		else if($hrsCheck < 8)
 		{
@@ -128,6 +128,7 @@
 	$compOT = 0;
 	$totalOT = 0;
 	$OtRatePerHour = (($dailyRate + ($dailyRate * .25))/8);//Overtime Hourly Rate
+	$OtRatePerHour = numberExactFormat($OtRatePerHour, 2, '.', true);
 	if(!empty($_POST['totalOverTime']))
 	{
 		$totalOT = $_POST['totalOverTime'];//Total Overtime by employee
@@ -204,7 +205,11 @@
 				$dayBeforeArr = mysql_fetch_assoc($dayBeforeChecker);
 				if($dayBeforeArr['attendance'] == '2' )//2 if employee is present on the day before the holiday
 				{
-					$overallWorkDays++;//increment workdays 
+					// $overallWorkDays++;//increment workdays 
+					if($holidayType == "special")//Special Holiday
+						$speHolNum++;
+					else//Regular Holiday
+						$regHolNum++;
 				}
 			}
 
@@ -215,11 +220,13 @@
 				if($holidayType == "special")//Special Holiday
 				{
 					$addHoliday = $speHolidayInc;
+					// $overallWorkDays++;//increment workdays 
 					$speHolNum++;
 				}
 				else//Regular Holiday
 				{
 					$addHoliday = $regHolidayInc;
+					// $overallWorkDays++;//increment workdays 
 					$regHolNum++;
 				}
 			}
@@ -506,8 +513,8 @@
 
 //Grand Total Computation
 
-	$totalRegularHolidayRate = ($regHolNum * $regHolidayInc) + ($dailyRate * $regHolNum);
-	$totalSpecialHolidayRate = ($speHolNum * $speHolidayInc) + ($dailyRate * $speHolNum);
+	$totalRegularHolidayRate = ($regHolNum * $regHolidayInc);
+	$totalSpecialHolidayRate = ($speHolNum * $speHolidayInc);
 	$totalSundayRate = $SundayRatePerHour * $sunWorkHrs;
 	$totalNightDifferential = $NdRatePerHour * $totalND;
 	$totalAllowance = $overallWorkDays * $dailyAllowance;
@@ -517,11 +524,12 @@
 
 	$totalCola = $cola * $overallWorkDays;
 	$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $totalCola;
+	Print "<script>console.log('payComp - totalRegularHolidayRate: ".abs($totalRegularHolidayRate)." | totalSpecialHolidayRate: ".abs($totalSpecialHolidayRate)." | totalSundayRate: ".abs($totalSundayRate)." | totalNightDifferential: ".$totalNightDifferential." | totalAllowance: ".$totalAllowance." | totalOvertime: ".$totalOvertime." | totalRatePerDay: ".$totalRatePerDay." | xAllowance: ".$xAllowance." | totalCola: ".$totalCola."')</script>";
 
 	$contributions = $pagibig + $philhealth + $sss + $tax;
 
-	$totalLoans = $loan_pagibig + $loan_sss + $loan_oldVale + $loan_oldVale;
-
+	$totalLoans = $loan_pagibig + $loan_sss + $loan_oldVale + $loan_newVale;
+	Print "<script>console.log('toDB - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".abs($tools_paid)."')</script>";
 	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($tools_paid);
 	$grandTotal = abs($grandTotal);
 

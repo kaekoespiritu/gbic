@@ -255,7 +255,24 @@ if($holidayExist > 0)
 							{
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
-								$totalOT += floatval($dateRow['overtime']);//Get the total Over
+
+								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime
+								if(count($OTcomp) == 2)
+								{
+									$OThours = $OTcomp[0];
+									$OTmins = $OTcomp[1];
+									$OTcomp = $OTmins / 60;
+
+									$OTresult = $OThours.$OTcomp;
+
+									$totalOT += $OTresult;
+								}
+								else
+								{
+									$totalOT +=  $OTcomp[0];
+									$OTresult = $OTcomp[0];
+								}
+								
 
 								$sunTimeIn = $dateRow['timein'];
 								$sunTimeOut = $dateRow['timeout'];
@@ -280,14 +297,33 @@ if($holidayExist > 0)
 							}
 							$sunBool = false;
 						}
-						else if($day == "Monday" && $monBool)
+						else if($day == "Monday" && $monBool)// Monday
 						{
 							$monDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
-								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
+
+								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime)
+								if(count($OTcomp) == 2)
+								{
+									$OThours = $OTcomp[0];
+									$OTmins = $OTcomp[1];
+									$OTcomp = $OTmins / 60;
+
+									$OTresult = $OThours.$OTcomp;
+
+									$totalOT += $OTresult;
+								}
+								else
+								{
+									$totalOT +=  $OTcomp[0];
+									$OTresult = $OTcomp[0];
+								}
+								Print "<script>console.log('$day: ".$dateRow['overtime']."')</script>";
+								Print "<script>console.log('$day: ".$OTcomp[0].".".$OTcomp[1]."')</script>";
+								
 
 								$monTimeIn = $dateRow['timein'];
 								$monTimeOut = $dateRow['timeout'];
@@ -320,8 +356,24 @@ if($holidayExist > 0)
 							{
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
-								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
 								
+								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime)
+								if(count($OTcomp) == 2)
+								{
+									$OThours = $OTcomp[0];
+									$OTmins = $OTcomp[1];
+									$OTcomp = $OTmins / 60;
+
+									$OTresult = $OThours.$OTcomp;
+
+									$totalOT += $OTresult;
+								}
+								else
+								{
+									$totalOT +=  $OTcomp[0];
+									$OTresult = $OTcomp[0];
+								}
+
 								$tueTimeIn = $dateRow['timein'];
 								$tueTimeOut = $dateRow['timeout'];
 								$ABtueTimeIn = $dateRow['afterbreak_timein'];
@@ -354,7 +406,24 @@ if($holidayExist > 0)
 							{
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
-								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
+								
+								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime)
+								if(count($OTcomp) == 2)
+								{
+									$OThours = $OTcomp[0];
+									$OTmins = $OTcomp[1];
+									$OTcomp = $OTmins / 60;
+
+									$OTresult = $OThours.$OTcomp;
+
+									$totalOT += $OTresult;
+								}
+								else
+								{
+									$totalOT +=  $OTcomp[0];
+									$OTresult = $OTcomp[0];
+								}
+
 								$wedTimeIn = $dateRow['timein'];
 								$wedTimeOut = $dateRow['timeout'];
 								$ABwedTimeIn = $dateRow['afterbreak_timein'];
@@ -386,7 +455,23 @@ if($holidayExist > 0)
 							{
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
-								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
+								
+								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime)
+								if(count($OTcomp) == 2)
+								{
+									$OThours = $OTcomp[0];
+									$OTmins = $OTcomp[1];
+									$OTcomp = $OTmins / 60;
+
+									$OTresult = $OThours.$OTcomp;
+
+									$totalOT += $OTresult;
+								}
+								else
+								{
+									$totalOT +=  $OTcomp[0];
+									$OTresult = $OTcomp[0];
+								}
 
 								$thuTimeIn = $dateRow['timein'];
 								$thuTimeOut = $dateRow['timeout'];
@@ -419,7 +504,23 @@ if($holidayExist > 0)
 							{
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
-								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
+								
+								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime)
+								if(count($OTcomp) == 2)
+								{
+									$OThours = $OTcomp[0];
+									$OTmins = $OTcomp[1];
+									$OTcomp = $OTmins / 60;
+
+									$OTresult = $OThours.$OTcomp;
+
+									$totalOT += $OTresult;
+								}
+								else
+								{
+									$totalOT +=  $OTcomp[0];
+									$OTresult = $OTcomp[0];
+								}
 
 								$friTimeIn = $dateRow['timein'];
 								$friTimeOut = $dateRow['timeout'];
@@ -451,7 +552,24 @@ if($holidayExist > 0)
 							{
 								$totalHours += $dateRow['workhours'];//Get the total workhours
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
-								$totalOT += floatval($dateRow['overtime']);//Get the total Overtime
+								
+								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime)
+								if(count($OTcomp) == 2)
+								{
+									$OThours = $OTcomp[0];
+									$OTmins = $OTcomp[1];
+									$OTcomp = $OTmins / 60;
+
+									$OTresult = $OThours.$OTcomp;
+
+									$totalOT += $OTresult;
+
+								}
+								else
+								{
+									$totalOT +=  $OTcomp[0];
+									$OTresult = $OTcomp[0];
+								}
 
 								$satTimeIn = $dateRow['timein'];
 								$satTimeOut = $dateRow['timeout'];
@@ -774,7 +892,7 @@ if($holidayExist > 0)
 							}
 							else if (isset($wedTimeIn) && isset($wedTimeOut))
 							{
-								Print 	"	<td colspan='2'>Half Day</td>";
+								Print 	"	<td colspan='2'>Half Day/Straight</td>";
 							}
 							
 						}
@@ -788,7 +906,7 @@ if($holidayExist > 0)
 							}
 							else if (isset($thuTimeIn) && isset($thuTimeOut))
 							{
-								Print 	"	<td colspan='2'>Half Day</td>";
+								Print 	"	<td colspan='2'>Half Day/Straight</td>";
 							}
 						}
 						if(!$friAbsent)
@@ -801,7 +919,7 @@ if($holidayExist > 0)
 							}
 							else if (isset($friTimeOut) && isset($friTimeIn))
 							{
-								Print 	"	<td colspan='2'>Half Day</td>";
+								Print 	"	<td colspan='2'>Half Day/Straight</td>";
 							}
 						}
 						if(!$satAbsent)
@@ -814,7 +932,7 @@ if($holidayExist > 0)
 							}
 							else if (isset($satTimeIn) && isset($satTimeOut))
 							{
-								Print 	"	<td colspan='2'>Half Day</td>";
+								Print 	"	<td colspan='2'>Half Day/Straight</td>";
 							}
 						}
 						if(!$sunAbsent)
@@ -830,7 +948,7 @@ if($holidayExist > 0)
 								}
 								else
 								{
-									Print 	"	<td colspan='2'>Half Day</td>";
+									Print 	"	<td colspan='2'>Half Day/Straight</td>";
 								}
 							}
 						}
@@ -844,7 +962,7 @@ if($holidayExist > 0)
 							}
 							else if (isset($monTimeIn) && isset($monTimeOut))
 							{
-								Print 	"	<td colspan='2'>Half Day</td>";
+								Print 	"	<td colspan='2'>Half Day/Straight</td>";
 							}
 						}
 						if(!$tueAbsent)
@@ -857,7 +975,7 @@ if($holidayExist > 0)
 							}
 							else if (isset($tueTimeIn) && isset($tueTimeOut))
 							{
-								Print 	"	<td colspan='2'>Half Day</td>";
+								Print 	"	<td colspan='2'>Half Day/Straight</td>";
 							}
 						}
 
