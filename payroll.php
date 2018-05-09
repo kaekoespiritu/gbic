@@ -322,7 +322,6 @@ if($holidayExist > 0)
 									$OTresult = $OTcomp[0];
 								}
 								Print "<script>console.log('$day: ".$dateRow['overtime']."')</script>";
-								Print "<script>console.log('$day: ".$OTcomp[0].".".$OTcomp[1]."')</script>";
 								
 
 								$monTimeIn = $dateRow['timein'];
