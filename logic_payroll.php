@@ -190,11 +190,41 @@
 	
 	if($empArr['complete_doc'] == 1) 
 	{
+
 		if(isset($_POST['holidayName']) && isset($_POST['holidayType']) && isset($_POST['holidayDate']))
 		{
 			$holidayNum = count($_POST['holidayDate']);//counts the number of holiday in that week
+			$holidaysTogether = false;
+
+			// Check if multiple holidays are beside each other
+			if($holidayNum > 1)
+			{
+				for($count = 0; $count < $holidayNum; $count++)
+				{
+					if($count != $holidayNum - 1)
+					{
+						$checker = $_POST['holidayDate'][$count + 1]; 
+						$dayBefore = date('F d, Y', strtotime('-1 day', strtotime($_POST['holidayDate'][$count])));
+
+						if($dayBefore == $checker)
+						{
+							$holidaysTogether = true;
+						}
+						else
+						{
+							$holidaysTogether = false;
+							break;
+						}
+					}
+				}
+			}
+
+			Print '<script>console.log("Are the holidays together? '.$holidaysTogether.'")</script>';
+
 			if($holidayNum == 1)//if there is only one Holiday in the week
 			{	
+				Print '<script>console.log("Only 1 Holiday in the week.")</script>';
+
 				$holidayName = $_POST['holidayName'][0];
 				$holidayType = $_POST['holidayType'][0];
 				$holidayDate = $_POST['holidayDate'][0];
@@ -212,6 +242,10 @@
 							$speHolNum++;
 						else//Regular Holiday
 							$regHolNum++;
+					}
+					else
+					{
+						$regHolNum++;
 					}
 				}
 
@@ -232,35 +266,136 @@
 						$regHolNum++;
 					}
 				}
+				Print '<script>console.log("Total overall holidays: '.$regHolNum.'")</script>';
 			}
 	// ----------------------------------------
-			else if($holidayNum > 1)// if there is more than 1 holidays in the week
+			else if($holidayNum > 1 && $holidaysTogether)// if there is more than 1 holidays in the week & they are together
 			{
+				Print '<script>console.log("Multiple holidays in the week and they are together.")</script>';
+
+				$holidayType = $_POST['holidayType'][0];
+				$holidayDate = $_POST['holidayDate'][0];
+
+				$dayBefore = date('F d, Y', strtotime('-1 day', strtotime($holidayDate)));
+				$dayAfter = date('F d, Y', strtotime('1 day', strtotime($holidayDate)));
+				$dayBeforeChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayBefore'");
+				$dayAfterChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayAfter'");
+				$sameDayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$date'");
+				if(mysql_num_rows($dayBeforeChecker) == 1 && mysql_num_rows($sameDayChecker) == 0)
+				{
+					$dayBeforeArr = mysql_fetch_assoc($dayBeforeChecker);
+					if($dayBeforeArr['attendance'] == '2' )//2 if employee is present on the day before the holiday
+					{
+						// $overallWorkDays++;//increment workdays 
+						if($holidayType == "special")//Special Holiday
+							$speHolNum++;
+						else//Regular Holiday
+						{
+							// check if employee went to work the next day
+							$dayAfterArr = mysql_fetch_assoc($dayAfterChecker);
+							if($dayAfterArr['attendance'] == '2') // If employee went to work on holiday
+							{
+								$regHolNum++;
+								Print '<script>console.log("Went to work the day before: '.$regHolNum.'")</script>';
+							}
+						}	
+							
+					}
+				}
+
 				for($count = 0; $count < $holidayNum; $count++)
 				{
-					$boolHoliday = true;//if employee did not appear to work the day before holiday
-
-					if($boolHoliday)
+					$holidayClass = $_POST['holidayType'][$count];
+					$holidayIndex = $_POST['holidayDate'][$count];
+					$holidayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayIndex'") or die (mysql_error());
+					$holdayArr = mysql_fetch_assoc($holidayChecker);
+					if($holdayArr['attendance'] == '2') // If employee went to work on holiday
 					{
-						$holidayName = $_POST['holidayName'][$count];
-						$holidayType = $_POST['holidayType'][$count];
-						$holidayDate = $_POST['holidayDate'][$count];
-						$holidayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayDate'") or die (mysql_error());
-						$holdayArr = mysql_fetch_assoc($holidayChecker);
-						if($holdayArr['attendance'] == '2')
+						Print '<script>console.log("Employee went to work on holiday.")</script>';
+						if($holidayClass == "special")//Special Holiday
 						{
+							$addHoliday += $speHolidayInc;
+							$speHolNum++;
+						}
+						else//Regular Holiday
+						{
+							$addHoliday += $regHolidayInc;
+							$regHolNum+=2;
+							Print '<script>console.log("Went to work on the holiday: '.$regHolNum.'")</script>';
+						}
+					}
+					else
+					{
+						if($holidayClass != "special")
+							$regHolNum++;
+						Print '<script>console.log("Employee automatically gets regular rate: '.$regHolNum.'")</script>';
+					}
+					Print '<script>console.log("Total overall holidays: '.$regHolNum.'")</script>';
+				}
+			}
+
+			else if($holidayNum > 1 && !$holidaysTogether)// if there is more than 1 holiday and they are not together
+			{
+				Print '<script>console.log("Multiple holidays in the week and they are not together.")</script>';
+				for($count = 0; $count < $holidayNum; $count++)
+				{
+
+					$holidayName = $_POST['holidayName'][$count];
+					$holidayType = $_POST['holidayType'][$count];
+					$holidayDate = $_POST['holidayDate'][$count];
+
+					Print '<script>console.log("Date: '.$holidayDate.'")</script>';	
+
+					$dayBefore = date('F d, Y', strtotime('-1 day', strtotime($holidayDate)));
+					$dayHoliday = date('F d, Y', strtotime('1 day', strtotime($holidayDate)));
+					$dayBeforeChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayBefore'");
+					$dayHolidayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayHoliday'");
+					$sameDayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$date'");
+					if(mysql_num_rows($dayBeforeChecker) == 1 && mysql_num_rows($sameDayChecker) == 0)
+					{
+						$dayBeforeArr = mysql_fetch_assoc($dayBeforeChecker);
+						if($dayBeforeArr['attendance'] == '2' )//2 if employee is present on the day before the holiday
+						{
+							// $overallWorkDays++;//increment workdays 
 							if($holidayType == "special")//Special Holiday
-							{
-								$addHoliday += $speHolidayInc;
 								$speHolNum++;
-							}
 							else//Regular Holiday
 							{
-								$addHoliday += $regHolidayInc;
-								$regHolNum++;
+								$dayHolidayArr = mysql_fetch_assoc($dayHolidayChecker);
+								if($dayHolidayArr['attendance'] == '2')
+								{
+									$regHolNum++;
+									Print '<script>console.log("Went to work the day before: '.$regHolNum.'")</script>';	
+								}
 							}
 						}
 					}
+
+					$holidayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayDate'");
+					$holidayArr = mysql_fetch_assoc($holidayChecker);
+					if($holidayArr['attendance'] == 2)
+					{
+						Print '<script>console.log("Employee went to work on a holiday.")</script>';
+						if($holidayType == "special")//Special Holiday
+						{
+							$addHoliday = $speHolidayInc;
+							// $overallWorkDays++;//increment workdays 
+							$speHolNum++;
+						}
+						else//Regular Holiday
+						{
+							$addHoliday = $regHolidayInc;
+							// $overallWorkDays++;//increment workdays 
+							$regHolNum+=2;
+						}
+					}
+					else
+					{
+						if($holidayType != "special")
+							$regHolNum++;
+						Print '<script>console.log("Employee automatically gets regular rate: '.$regHolNum.'")</script>';
+					}
+					Print '<script>console.log("Total overall holidays: '.$regHolNum.'")</script>';
 				}
 			}
 		}
