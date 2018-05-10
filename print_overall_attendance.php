@@ -35,17 +35,17 @@ if($date == "onProcess")
 	$payDateQuery = mysql_query($payrollDate);
 	$payArr = mysql_fetch_assoc($payDateQuery);
 
-	$startDate = date('F d, Y', strtotime('+1 day', strtotime($payArr['date'])));
-	$endDate = date('F d, Y', strtotime('+7 day', strtotime($payArr['date'])));
+	$startDate = $payArr['date'];
+	$endDate = date('F d, Y', strtotime('+6 day', strtotime($payArr['date'])));
 }
 else
 {
-	$startDate = date('F d, Y', strtotime('-6 day', strtotime($date)));
-	$endDate = $date;
+	$startDate = date('F d, Y', strtotime('-7 day', strtotime($date)));
+	$endDate = date('F d, Y', strtotime('-1 day', strtotime($date)));
 }
 	
 
-$filename = $site." Attendance Report ".$startDate."-".$endDate.".xls";
+$filename = $site." Attendance Report ".$startDate."-".$endDate.".xlsx";
 // Last Name, First Name of Site (Date) - Payroll.xls
 
 
@@ -719,13 +719,38 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 }
 
 
+// array_map('unlink', glob( __DIR__."/*.xlsx"));
 
-header('Content-Type: application/vnd.ms-excel');
+// header('Content-Type: application/vnd.ms-excel');
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header('Content-Disposition: attachment; filename="'.$filename.'"');
 header('Cache-Control: max-age=0');
 
-$objWriter = PHPExcel_IOFactory::createWriter($sheet, 'Excel5');
-$objWriter->save('php://output');
+$objWriter = PHPExcel_IOFactory::createWriter($sheet, 'Excel2007');
+
+function SaveViaTempFile($objWriter)
+{
+    $filePath = __DIR__ . "/" . rand(0, getrandmax()) . rand(0, getrandmax()) . ".tmp";
+    $objWriter->save($filePath);
+    readfile($filePath);
+    unlink($filePath);
+}
+
+SaveViaTempFile($objWriter);
+// $objWriter->save('php://output');
+// $objPHPWriter->save(str_replace('.php', '.xlsx', __FILE__));
+// $file = 'test.xlsx';
+// $objWriter->save($file);
+// header("Location: $file");
+
+// header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+// header('Content-Disposition: attachment;filename="workbook2.xlsx"');
+// header('Cache-Control: max-age=0');
+
+
+// $objWriter->save('php://output');
+// $objWriter = PHPExcel_IOFactory::createWriter($sheet, 'Excel2007');
+// $objWriter->save('php//output'); 
 exit;
 
 ?>
