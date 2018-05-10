@@ -718,16 +718,21 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 	$spreadSheetCounter++;//increment the number of spreadsheet			
 }
 
+function SaveViaTempFile($objWriter){
+   	$filePath = sys_get_temp_dir() . "/" . rand(0, getrandmax()) . rand(0, getrandmax()) . ".tmp";
+    $objWriter->save($filePath);
+    readfile($filePath);
+    unlink($filePath);
+    exit;
+}
 
-
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment; filename="'.$filename.'"');
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment; filename="testinf.xlsx"');
 header('Cache-Control: max-age=0');
 
-$objWriter = PHPExcel_IOFactory::createWriter($sheet, 'Excel5');
+$objWriter = PHPExcel_IOFactory::createWriter($sheet,'Excel2007');
 $objWriter->save('php://output');
 exit;
-
 ?>
 
 
