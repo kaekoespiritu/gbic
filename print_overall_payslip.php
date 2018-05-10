@@ -75,47 +75,50 @@ $dateCoveredRowCounter = 1;
 $nameRowCounter = 2;
 $rateRowCounter = 3;
 $overtimeRowCounter = 4;
-$colaRowCounter = 5;
-$sundayRowCounter = 6;
-$nightDiffRowCounter = 7;
-$regHolRowCounter = 8;
-$speHolRowCounter = 9;
-$sssRowCounter = 10;
-$philhealthRowCounter = 11;
-$pagibigRowCounter = 12;
-$oldValeRowCounter = 13;
-$newValeRowCounter = 14;
-$toolsRowCounter = 15;
-$extraAllowanceRowCounter = 10;
+$allowRowCounter = 5;
+$colaRowCounter = 6;
+$sundayRowCounter = 7;
+$nightDiffRowCounter = 8;
+$regHolRowCounter = 9;
+$speHolRowCounter = 10;
+$sssRowCounter = 11;
+$philhealthRowCounter = 12;
+$pagibigRowCounter = 13;
+$oldValeRowCounter = 14;
+$newValeRowCounter = 15;
+$toolsRowCounter = 16;
+$extraAllowanceRowCounter = 11;
 
 //------ Counter for date ------//
 $rateDataCounter = 3;//Rate
 $overtimeDataCounter = 4;//Overtime
-$colaDataCounter = 5;//COLA
-$sundayDataCounter = 6;//Sunday
-$NDDataCounter = 7;//Night differential
-$regHolDataCounter = 8;//Regular Holiday
-$speHolDataCounter = 9;//Special Holiday
+$allowDataCounter = 5;//Allowance
+$colaDataCounter = 6;//COLA
+$sundayDataCounter = 7;//Sunday
+$NDDataCounter = 8;//Night differential
+$regHolDataCounter = 9;//Regular Holiday
+$speHolDataCounter = 10;//Special Holiday
 
-$sssDataCounter = 10;//sss
-$philhealthDataCounter = 11;//philhealth
-$pagibigDataCounter = 12;//pagibig
 
-$allowanceDataCounter = 10;//Allowance
-$oldValeDataCounter = 13;//Vale
-$newValeDataCounter = 14;
+$sssDataCounter = 11;//sss
+$philhealthDataCounter = 12;//philhealth
+$pagibigDataCounter = 13;//pagibig
 
-$toolsDataCounter = 15;//Tools
-$totalDataCounter = 16;//Total
+$xAllowanceDataCounter = 11;//Allowance
+$oldValeDataCounter = 14;//Vale
+$newValeDataCounter = 15;
+
+$toolsDataCounter = 16;//Tools
+$totalDataCounter = 17;//Total
 
 //------ Counter Style ------//
 //Border
 $borderStyleCounter1 = 1;
-$borderStyleCounter2 = 16;
+$borderStyleCounter2 = 17;
 //Extra Allowance
-$allowanceStyleCounter = 10;
+$allowanceStyleCounter = 11;
 //Total
-$totalStyleCounter = 16;
+$totalStyleCounter = 17;
 //Header
 $headerStyleCounter1 = 1;
 $headerStyleCounter2 = 2;
@@ -169,6 +172,7 @@ for($count = 0; $count <= $loopCount; $count++)
 
 			$activeSheet->setCellValue($cellA.$rateRowCounter, 'Rate');
 			$activeSheet->setCellValue($cellA.$overtimeRowCounter, 'OT');
+			$activeSheet->setCellValue($cellA.$allowRowCounter, 'Allow.');
 			$activeSheet->setCellValue($cellA.$colaRowCounter, 'cola');
 			$activeSheet->setCellValue($cellA.$sundayRowCounter, 'Sun');
 			$activeSheet->setCellValue($cellA.$nightDiffRowCounter, 'N.D');
@@ -220,6 +224,16 @@ for($count = 0; $count <= $loopCount; $count++)
 			$OTSubTotal = $payrollArr['ot_num'] * $payrollArr['overtime'];
 			$activeSheet->setCellValue($cellD.$overtimeDataCounter, $OTSubTotal);
 
+			//Allowance
+			$daysAllowance = $payrollArr['num_days'];
+			if(!empty($payrollArr['sunday_hrs']))
+				$daysAllowance++;
+			$activeSheet->setCellValue($cellB.$allowDataCounter, $payrollArr['allow']);
+			$activeSheet->setCellValue($cellC.$allowDataCounter, 'x '.$daysAllowance);
+
+			$allowSubTotal = $payrollArr['allow'] * $daysAllowance;
+			$activeSheet->setCellValue($cellD.$allowDataCounter, $allowSubTotal);
+
 			//Cola
 			$activeSheet->setCellValue($cellB.$colaDataCounter, $payrollArr['cola']);
 			$activeSheet->setCellValue($cellC.$colaDataCounter, 'x '.$payrollArr['num_days']);
@@ -261,7 +275,7 @@ for($count = 0; $count <= $loopCount; $count++)
 			$activeSheet->setCellValue($cellB.$pagibigDataCounter, $payrollArr['pagibig']);
 
 			//Allowance
-			$activeSheet->setCellValue($cellD.$allowanceDataCounter, $payrollArr['x_allowance']);
+			$activeSheet->setCellValue($cellD.$xAllowanceDataCounter, $payrollArr['x_allowance']);
 
 			//Vale
 			$activeSheet->setCellValue($cellB.$oldValeDataCounter, $payrollArr['old_vale']);
@@ -271,6 +285,7 @@ for($count = 0; $count <= $loopCount; $count++)
 			$activeSheet->setCellValue($cellB.$toolsDataCounter , $payrollArr['tools_paid']);
 
 			//Total
+			$activeSheet->mergeCells($cellC.$totalDataCounter.":".$cellD.$totalDataCounter);// Date
 			$activeSheet->setCellValue($cellC.$totalDataCounter, $payrollArr['total_salary']);
 
 			$counter++;//Increment counter for horizontal inputs
@@ -287,6 +302,7 @@ for($count = 0; $count <= $loopCount; $count++)
 		$dateCoveredRowCounter += $rowIncrement;
 		$nameRowCounter += $rowIncrement;
 		$rateRowCounter += $rowIncrement;
+		$allowRowCounter += $rowIncrement;
 		$overtimeRowCounter += $rowIncrement;
 		$colaRowCounter += $rowIncrement;
 		$sundayRowCounter += $rowIncrement;
@@ -314,7 +330,7 @@ for($count = 0; $count <= $loopCount; $count++)
 		$philhealthDataCounter += $rowIncrement;
 		$pagibigDataCounter += $rowIncrement;
 
-		$allowanceDataCounter += $rowIncrement;
+		$xAllowanceDataCounter += $rowIncrement;
 		$oldValeDataCounter += $rowIncrement;
 		$newValeDataCounter += $rowIncrement;
 

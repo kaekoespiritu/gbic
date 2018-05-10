@@ -400,7 +400,6 @@ $date = "May 2, 2018";
 		//View the payroll computation
 		function viewPayrollComp(id, date) {
 			var empid = id;
-
 				//Create form to pass the values through POST and not GET
 				var form = document.createElement("form");
 				form.setAttribute("method","post");

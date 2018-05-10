@@ -53,7 +53,7 @@
 					<li><a href="attendance.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a></li>
 					<?php
 					
-					Print '<li class="active">Employee attendance sheet for '. $site_name .' on '. $date .'</li>';
+					Print '<li class="active">Employee attendance sheet for '. $site_name .' on '. $date .' ('.$day.')</li>';
 					?>
 					<button class="btn btn-success pull-right" onclick="save()">Save Changes</button>
 				</ol>

@@ -73,19 +73,20 @@ $activeSheet->setCellValue('A2', $empArr['lastname'].", ".$empArr['firstname']);
 
 $activeSheet->setCellValue('A3', 'Rate');
 $activeSheet->setCellValue('A4', 'OT');
-$activeSheet->setCellValue('A5', 'cola');
-$activeSheet->setCellValue('A6', 'Sun');
-$activeSheet->setCellValue('A7', 'N.D');
-$activeSheet->setCellValue('A8', 'Reg. Hol');
-$activeSheet->setCellValue('A9', 'Spe. Hol');
-$activeSheet->setCellValue('A10', 'SSS');
-$activeSheet->setCellValue('A11', 'PhilHealth');
-$activeSheet->setCellValue('A12', 'Pag-IBIG');
-$activeSheet->setCellValue('A13', 'Old vale');
-$activeSheet->setCellValue('A14', 'vale');
-$activeSheet->setCellValue('A15', 'tools');
+$activeSheet->setCellValue('A5', 'Allow.');
+$activeSheet->setCellValue('A6', 'cola');
+$activeSheet->setCellValue('A7', 'Sun');
+$activeSheet->setCellValue('A8', 'N.D');
+$activeSheet->setCellValue('A9', 'Reg. Hol');
+$activeSheet->setCellValue('A10', 'Spe. Hol');
+$activeSheet->setCellValue('A11', 'SSS');
+$activeSheet->setCellValue('A12', 'PhilHealth');
+$activeSheet->setCellValue('A13', 'Pag-IBIG');
+$activeSheet->setCellValue('A14', 'Old vale');
+$activeSheet->setCellValue('A15', 'vale');
+$activeSheet->setCellValue('A16', 'tools');
 
-$activeSheet->setCellValue('C10', 'X. All.');
+$activeSheet->setCellValue('C11', 'X. All.');
 
 //----------------- Body Contents ---------------------//
 
@@ -108,68 +109,79 @@ $activeSheet->setCellValue('C4', 'x '.$payrollArr['ot_num']);
 $OTSubTotal = $payrollArr['ot_num'] * $payrollArr['overtime'];
 $activeSheet->setCellValue('D4', $OTSubTotal);
 
+//Allowance
+$daysAllowance = $payrollArr['num_days'];
+if(!empty($payrollArr['ot_num']))
+	$daysAllowance++;
+$activeSheet->setCellValue('B5', $payrollArr['allow']);
+$activeSheet->setCellValue('C5', 'x '.$daysAllowance);
+
+$AllowSubTotal =  $payrollArr['allow'] * $daysAllowance;
+$activeSheet->setCellValue('D5', $AllowSubTotal);
+
 //Cola
-$activeSheet->setCellValue('B5', $payrollArr['cola']);
-$activeSheet->setCellValue('C5', 'x '.$payrollArr['num_days']);
+$activeSheet->setCellValue('B6', $payrollArr['cola']);
+$activeSheet->setCellValue('C6', 'x '.$payrollArr['num_days']);
 
 $colaSubTotal = $payrollArr['cola'] * $payrollArr['num_days'];
-$activeSheet->setCellValue('D5', $colaSubTotal);
+$activeSheet->setCellValue('D6', $colaSubTotal);
 
 //Sunday
-$activeSheet->setCellValue('B6', $payrollArr['sunday_rate']);
-$activeSheet->setCellValue('C6', 'x '.$payrollArr['sunday_hrs']);
+$activeSheet->setCellValue('B7', $payrollArr['sunday_rate']);
+$activeSheet->setCellValue('C7', 'x '.$payrollArr['sunday_hrs']);
 
 $sundaySubTotal = $payrollArr['sunday_hrs'] * $payrollArr['sunday_rate'];
-$activeSheet->setCellValue('D6', $sundaySubTotal);
+$activeSheet->setCellValue('D7', $sundaySubTotal);
 
 //Night differential
-$activeSheet->setCellValue('B7', $payrollArr['nightdiff_rate']);
-$activeSheet->setCellValue('C7', 'x '.$payrollArr['nightdiff_num']);
+$activeSheet->setCellValue('B8', $payrollArr['nightdiff_rate']);
+$activeSheet->setCellValue('C8', 'x '.$payrollArr['nightdiff_num']);
 
 $NDSubTotal = $payrollArr['nightdiff_num'] * $payrollArr['nightdiff_rate'];
-$activeSheet->setCellValue('D7', $NDSubTotal);
+$activeSheet->setCellValue('D8', $NDSubTotal);
 
 //Regular Holiday
-$activeSheet->setCellValue('B8', $payrollArr['reg_holiday']);
-$activeSheet->setCellValue('C8', 'x '.$payrollArr['reg_holiday_num']);
+$activeSheet->setCellValue('B9', $payrollArr['reg_holiday']);
+$activeSheet->setCellValue('C9', 'x '.$payrollArr['reg_holiday_num']);
 
 $regHolSubTotal = $payrollArr['reg_holiday_num'] * $payrollArr['reg_holiday'];
-$activeSheet->setCellValue('D8', $regHolSubTotal);
+$activeSheet->setCellValue('D9', $regHolSubTotal);
 
 //Special Holiday
-$activeSheet->setCellValue('B9', $payrollArr['spe_holiday']);
-$activeSheet->setCellValue('C9', 'x '.$payrollArr['spe_holiday_num']);
+$activeSheet->setCellValue('B10', $payrollArr['spe_holiday']);
+$activeSheet->setCellValue('C10', 'x '.$payrollArr['spe_holiday_num']);
 
 $speHolSubTotal = $payrollArr['spe_holiday_num'] * $payrollArr['spe_holiday'];
-$activeSheet->setCellValue('D9', $speHolSubTotal);
+$activeSheet->setCellValue('D10', $speHolSubTotal);
 
 //Contribution
-$activeSheet->setCellValue('B10', $payrollArr['sss']);
-$activeSheet->setCellValue('B11', $payrollArr['philhealth']);
-$activeSheet->setCellValue('B12', $payrollArr['pagibig']);
+$activeSheet->setCellValue('B11', $payrollArr['sss']);
+$activeSheet->setCellValue('B12', $payrollArr['philhealth']);
+$activeSheet->setCellValue('B13', $payrollArr['pagibig']);
 
 //Allowance
-$activeSheet->setCellValue('D10', $payrollArr['x_allowance']);
+$activeSheet->setCellValue('D11', $payrollArr['x_allowance']);
 
 //Vale
-$activeSheet->setCellValue('B13', $payrollArr['old_vale']);
-$activeSheet->setCellValue('B14', $payrollArr['new_vale']);
+$activeSheet->setCellValue('B14', $payrollArr['old_vale']);
+$activeSheet->setCellValue('B15', $payrollArr['new_vale']);
 
 //Tools
-$activeSheet->setCellValue('B15', $payrollArr['tools_paid']);
+$activeSheet->setCellValue('B16', $payrollArr['tools_paid']);
 
 //Total
-$activeSheet->setCellValue('C16', $payrollArr['total_salary']);
+$activeSheet->mergeCells('C17:D17');// Date
+$activeSheet->setCellValue('C17', $payrollArr['total_salary']);
 
 //------------ Style for the Spreadsheet ------------
-$activeSheet->getStyle('A1:D16')->applyFromArray($border_allsides_medium); 
+$activeSheet->getStyle('A1:D17')->applyFromArray($border_allsides_medium); 
 
 //extra Allowance
-$activeSheet->getStyle('C10')->applyFromArray($border_buttom_left_thin);
-$activeSheet->getStyle('D10')->applyFromArray($border_buttom_thin);
+$activeSheet->getStyle('C11')->applyFromArray($border_buttom_left_thin);
+$activeSheet->getStyle('D11')->applyFromArray($border_buttom_thin);
 
 //Total
-$activeSheet->getStyle('C16:D16')->applyFromArray($border_top_double);
+$activeSheet->getStyle('C17:D17')->applyFromArray($border_top_double);
 
 //Header
 $activeSheet->getStyle('A1:A2')->applyFromArray($align_left);

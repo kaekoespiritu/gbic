@@ -10,7 +10,8 @@ include('directives/db.php');
 
 $empid = $_POST['empid'];
 $date = $_POST['date'];
-// Print "<script>alert('".$empid."')</script>";
+
+// Print "<script>alert('".$date."')</script>";
 $employee = "SELECT * FROM employee WHERE empid = '$empid'";
 $employeeQuery = mysql_query($employee);
 $empArr = mysql_fetch_assoc($employeeQuery);
@@ -20,6 +21,16 @@ $position = $empArr['position'];
 $payroll = "SELECT * FROM payroll WHERE date = '$date' AND empid = '$empid'";
 $payrollQuery = mysql_query($payroll);
 $payrollArr = mysql_fetch_assoc($payrollQuery);
+
+$day1 = $date;
+$day2 = date('F d, Y', strtotime('-1 day', strtotime($date)));
+$day3 = date('F d, Y', strtotime('-2 day', strtotime($date)));
+$day4 = date('F d, Y', strtotime('-3 day', strtotime($date)));
+$day5 = date('F d, Y', strtotime('-4 day', strtotime($date)));
+$day6 = date('F d, Y', strtotime('-5 day', strtotime($date)));
+$day7 = date('F d, Y', strtotime('-6 day', strtotime($date)));
+
+$weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 
 ?>
 
@@ -78,7 +89,7 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 						{
 							if($payrollArr['sunday_hrs'] >= 8)
 							{
-								$ratePerDaySub = $payrollArr['num_days'] - 1;
+								$ratePerDaySub = $payrollArr['num_days'];
 								$ratePerDaySub = abs($ratePerDaySub);
 							}
 							else
@@ -113,19 +124,28 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 
 					<!-- Allowance -->
 					<?php
-						$subTotalAllowance = $empArr['allowance'] * $payrollArr['num_days'];
-							$totalAllowance = $subTotalAllowance;//for the Subtotal of Earnings
+						$allowDays = 0;
+						if(!empty($payrollArr['sunday_hrs']))
+							$allowDays = $numDays + 1;
+
+						$subTotalAllowance = $empArr['allowance'] * $allowDays;
+						$totalAllowance = $subTotalAllowance;//for the Subtotal of Earnings
 
 						// Print "<script>alert('".$totalAllowance." | ".$payrollArr['x_allowance']."')</script>";
 						if($subTotalAllowance == 0)
 							$subTotalAllowance = "--";
 						else
 							$subTotalAllowance = numberExactFormat($subTotalAllowance, 2, '.', true);
+
+						if($allowDays == 0)
+							$allowDays = "--";
+						else
+							$allowDays = $allowDays." Day(s)";
 					?>
 					<tr>
 						<td>Allowance</td>
 						<td><?php Print $empArr['allowance']?></td>
-						<td><?php Print $numDays?></td>
+						<td><?php Print $allowDays?></td>
 						<td><?php Print $subTotalAllowance?></td>
 					</tr>
 
@@ -203,11 +223,25 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 					</tr>
 					<!-- Regular Holiday Rate -->
 					<?php
-						$regHolidayDays = $empArr['rate'] * $payrollArr['reg_holiday_num'];
+
+						if($payrollArr['reg_holiday_num'] > 1)
+						{
+							$holidayRegChecker = "SELECT * FROM holiday AS h INNER JOIN attendance AS a ON h.date = a.date WHERE a.empid = '$empid' AND a.attendance = '2' AND h.type = 'regular'";
+							$holidayRegQuery = mysql_query($holidayRegChecker);
+							$regHolidayNum = mysql_num_rows($holidayRegQuery);
+						}
+						else if($payrollArr['reg_holiday_num'] == 1)
+						{
+							$regHolidayNum = 1;
+						}
+							
+
+						
+
 						$subTotalRegularHolidayRate = ($payrollArr['reg_holiday_num'] * $payrollArr['reg_holiday']) ;
 
 						$totalRegularHolidayRate = $subTotalRegularHolidayRate;//for the Subtotal of Earnings
-						$regHolNum = $payrollArr['reg_holiday_num']." Day(s)";
+						$regHolNum = $regHolidayNum." Day(s)";
 						if($subTotalRegularHolidayRate == 0)
 							$subTotalRegularHolidayRate = "--";
 						else

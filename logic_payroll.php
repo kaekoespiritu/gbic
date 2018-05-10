@@ -173,7 +173,7 @@
 
 	$compDeductions = $tax + $sss + $pagibig + $philhealth;
 
-//COLA incrementation -----------------------------------------------------------------dito
+//COLA incrementation -----------------------------------------------------------------
 	$cola = 0;
 	if($_POST['cola'] != "N/A")
 	{
@@ -219,11 +219,11 @@
 				}
 			}
 
-			Print '<script>console.log("Are the holidays together? '.$holidaysTogether.'")</script>';
+			// Print '<script>console.log("Are the holidays together? '.$holidaysTogether.'")</script>';
 
 			if($holidayNum == 1)//if there is only one Holiday in the week
 			{	
-				Print '<script>console.log("Only 1 Holiday in the week.")</script>';
+				// Print '<script>console.log("Only 1 Holiday in the week.")</script>';
 
 				$holidayName = $_POST['holidayName'][0];
 				$holidayType = $_POST['holidayType'][0];
@@ -266,12 +266,12 @@
 						$regHolNum++;
 					}
 				}
-				Print '<script>console.log("Total overall holidays: '.$regHolNum.'")</script>';
+				// Print '<script>console.log("Total overall holidays: '.$regHolNum.'")</script>';
 			}
 	// ----------------------------------------
 			else if($holidayNum > 1 && $holidaysTogether)// if there is more than 1 holidays in the week & they are together
 			{
-				Print '<script>console.log("Multiple holidays in the week and they are together.")</script>';
+				// Print '<script>console.log("Multiple holidays in the week and they are together.")</script>';
 
 				$holidayType = $_POST['holidayType'][0];
 				$holidayDate = $_POST['holidayDate'][0];
@@ -296,7 +296,7 @@
 							if($dayAfterArr['attendance'] == '2') // If employee went to work on holiday
 							{
 								$regHolNum++;
-								Print '<script>console.log("Went to work the day before: '.$regHolNum.'")</script>';
+								// Print '<script>console.log("Went to work the day before: '.$regHolNum.'")</script>';
 							}
 						}	
 							
@@ -311,7 +311,7 @@
 					$holdayArr = mysql_fetch_assoc($holidayChecker);
 					if($holdayArr['attendance'] == '2') // If employee went to work on holiday
 					{
-						Print '<script>console.log("Employee went to work on holiday.")</script>';
+						// Print '<script>console.log("Employee went to work on holiday.")</script>';
 						if($holidayClass == "special")//Special Holiday
 						{
 							$addHoliday += $speHolidayInc;
@@ -321,22 +321,22 @@
 						{
 							$addHoliday += $regHolidayInc;
 							$regHolNum+=2;
-							Print '<script>console.log("Went to work on the holiday: '.$regHolNum.'")</script>';
+							// Print '<script>console.log("Went to work on the holiday: '.$regHolNum.'")</script>';
 						}
 					}
 					else
 					{
 						if($holidayClass != "special")
 							$regHolNum++;
-						Print '<script>console.log("Employee automatically gets regular rate: '.$regHolNum.'")</script>';
+						// Print '<script>console.log("Employee automatically gets regular rate: '.$regHolNum.'")</script>';
 					}
-					Print '<script>console.log("Total overall holidays: '.$regHolNum.'")</script>';
+					// Print '<script>console.log("Total overall holidays: '.$regHolNum.'")</script>';
 				}
 			}
 
 			else if($holidayNum > 1 && !$holidaysTogether)// if there is more than 1 holiday and they are not together
 			{
-				Print '<script>console.log("Multiple holidays in the week and they are not together.")</script>';
+				// Print '<script>console.log("Multiple holidays in the week and they are not together.")</script>';
 				for($count = 0; $count < $holidayNum; $count++)
 				{
 
@@ -344,7 +344,7 @@
 					$holidayType = $_POST['holidayType'][$count];
 					$holidayDate = $_POST['holidayDate'][$count];
 
-					Print '<script>console.log("Date: '.$holidayDate.'")</script>';	
+					// Print '<script>console.log("Date: '.$holidayDate.'")</script>';	
 
 					$dayBefore = date('F d, Y', strtotime('-1 day', strtotime($holidayDate)));
 					$dayHoliday = date('F d, Y', strtotime('1 day', strtotime($holidayDate)));
@@ -365,7 +365,7 @@
 								if($dayHolidayArr['attendance'] == '2')
 								{
 									$regHolNum++;
-									Print '<script>console.log("Went to work the day before: '.$regHolNum.'")</script>';	
+									// Print '<script>console.log("Went to work the day before: '.$regHolNum.'")</script>';	
 								}
 							}
 						}
@@ -375,7 +375,7 @@
 					$holidayArr = mysql_fetch_assoc($holidayChecker);
 					if($holidayArr['attendance'] == 2)
 					{
-						Print '<script>console.log("Employee went to work on a holiday.")</script>';
+						// Print '<script>console.log("Employee went to work on a holiday.")</script>';
 						if($holidayType == "special")//Special Holiday
 						{
 							$addHoliday = $speHolidayInc;
@@ -393,9 +393,9 @@
 					{
 						if($holidayType != "special")
 							$regHolNum++;
-						Print '<script>console.log("Employee automatically gets regular rate: '.$regHolNum.'")</script>';
+						// Print '<script>console.log("Employee automatically gets regular rate: '.$regHolNum.'")</script>';
 					}
-					Print '<script>console.log("Total overall holidays: '.$regHolNum.'")</script>';
+					// Print '<script>console.log("Total overall holidays: '.$regHolNum.'")</script>';
 				}
 			}
 		}
@@ -411,7 +411,11 @@
 	if(!empty($_POST['extra_allowance']))
 		$extraAllowance = $_POST['extra_allowance'];
 
-	$compAllowance = (($overallWorkDays*$dailyAllowance)  + $extraAllowance);
+	$daysAllowance = $overallWorkDays;
+	if(!empty($_POST['sunWorkHrs']))
+		$daysAllowance++;
+
+	$compAllowance = (($daysAllowance * $dailyAllowance)  + $extraAllowance);
 //Loans deduction --------------------------------------------------------------------- Incomplete
 //*query to loans table the deduction
 	function loanQuery($loanType , $empid, $DeductedLoan, $date, $admin) //function for loans query
@@ -655,7 +659,7 @@
 	$totalSpecialHolidayRate = ($speHolNum * $speHolidayInc);
 	$totalSundayRate = $SundayRatePerHour * $sunWorkHrs;
 	$totalNightDifferential = $NdRatePerHour * $totalND;
-	$totalAllowance = $overallWorkDays * $dailyAllowance;
+	$totalAllowance = $compAllowance;
 	$totalOvertime = $OtRatePerHour * $totalOT;
 	$totalRatePerDay = $overallWorkDays * $dailyRate;
 	$xAllowance = $extraAllowance;
