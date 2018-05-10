@@ -32,13 +32,13 @@ if($date == "onProcess")
 	$payDateQuery = mysql_query($payrollDate);
 	$payArr = mysql_fetch_assoc($payDateQuery);
 
-	$startDate = date('F d, Y', strtotime('+1 day', strtotime($payArr['date'])));
-	$endDate = date('F d, Y', strtotime('+7 day', strtotime($payArr['date'])));
+	$startDate = $payArr['date'];
+	$endDate = date('F d, Y', strtotime('+6 day', strtotime($payArr['date'])));
 }
 else
 {
-	$startDate = date('F d, Y', strtotime('-6 day', strtotime($date)));
-	$endDate = $date;
+	$startDate = date('F d, Y', strtotime('-7 day', strtotime($date)));
+	$endDate = date('F d, Y', strtotime('-1 day', strtotime($date)));
 }
 	
 

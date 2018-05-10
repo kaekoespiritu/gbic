@@ -72,7 +72,7 @@
 							{
 								if($payDateBool)
 								{
-									$onProcessDate = date('F d, Y', strtotime('+1 day', strtotime($payDateArr['date'])));
+									$onProcessDate = $payDateArr['date'];
 									if(isset($_POST['date']))
 										if($_POST['date'] == "onProcess")
 											Print "<option value='onProcess' selected>".$onProcessDate." - Present</option>";
@@ -82,8 +82,8 @@
 										Print "<option value='onProcess'>".$onProcessDate." - Present</option>";
 									$payDateBool = false;
 								}
-								$startDate = date('F d, Y', strtotime('-6 day', strtotime($payDateArr['date'])));
-								$endDate = $payDateArr['date'];
+								$startDate = date('F d, Y', strtotime('-7 day', strtotime($payDateArr['date'])));
+								$endDate = date('F d, Y', strtotime('-1 day', strtotime($payDateArr['date'])));
 
 								if(isset($_POST['date']))
 									if($_POST['date'] == $endDate)
