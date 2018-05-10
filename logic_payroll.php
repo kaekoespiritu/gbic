@@ -219,11 +219,9 @@
 				}
 			}
 
-			// Print '<script>console.log("Are the holidays together? '.$holidaysTogether.'")</script>';
-
 			if($holidayNum == 1)//if there is only one Holiday in the week
 			{	
-				// Print '<script>console.log("Only 1 Holiday in the week.")</script>';
+				Print '<script>console.log("One holiday in the week.")</script>';
 
 				$holidayName = $_POST['holidayName'][0];
 				$holidayType = $_POST['holidayType'][0];
@@ -237,10 +235,7 @@
 					$dayBeforeArr = mysql_fetch_assoc($dayBeforeChecker);
 					if($dayBeforeArr['attendance'] == '2' )//2 if employee is present on the day before the holiday
 					{
-						// $overallWorkDays++;//increment workdays 
-						if($holidayType == "special")//Special Holiday
-							$speHolNum++;
-						else//Regular Holiday
+						if($holidayType != "special")
 							$regHolNum++;
 					}
 					else
@@ -255,14 +250,12 @@
 				{
 					if($holidayType == "special")//Special Holiday
 					{
-						$addHoliday = $speHolidayInc;
-						// $overallWorkDays++;//increment workdays 
+						$addHoliday = $speHolidayInc; 
 						$speHolNum++;
 					}
 					else//Regular Holiday
 					{
-						$addHoliday = $regHolidayInc;
-						// $overallWorkDays++;//increment workdays 
+						$addHoliday = $regHolidayInc; 
 						$regHolNum++;
 					}
 				}
@@ -271,7 +264,7 @@
 	// ----------------------------------------
 			else if($holidayNum > 1 && $holidaysTogether)// if there is more than 1 holidays in the week & they are together
 			{
-				// Print '<script>console.log("Multiple holidays in the week and they are together.")</script>';
+				Print '<script>console.log("Multiple holidays in the week and they are together.")</script>';
 
 				$holidayType = $_POST['holidayType'][0];
 				$holidayDate = $_POST['holidayDate'][0];
@@ -287,9 +280,7 @@
 					if($dayBeforeArr['attendance'] == '2' )//2 if employee is present on the day before the holiday
 					{
 						// $overallWorkDays++;//increment workdays 
-						if($holidayType == "special")//Special Holiday
-							$speHolNum++;
-						else//Regular Holiday
+						if($holidayType != "special")//Special Holiday
 						{
 							// check if employee went to work the next day
 							$dayAfterArr = mysql_fetch_assoc($dayAfterChecker);
@@ -336,7 +327,7 @@
 
 			else if($holidayNum > 1 && !$holidaysTogether)// if there is more than 1 holiday and they are not together
 			{
-				// Print '<script>console.log("Multiple holidays in the week and they are not together.")</script>';
+				Print '<script>console.log("Multiple holidays in the week and they are not together.")</script>';
 				for($count = 0; $count < $holidayNum; $count++)
 				{
 
@@ -357,9 +348,7 @@
 						if($dayBeforeArr['attendance'] == '2' )//2 if employee is present on the day before the holiday
 						{
 							// $overallWorkDays++;//increment workdays 
-							if($holidayType == "special")//Special Holiday
-								$speHolNum++;
-							else//Regular Holiday
+							if($holidayType != "special")//Special Holiday
 							{
 								$dayHolidayArr = mysql_fetch_assoc($dayHolidayChecker);
 								if($dayHolidayArr['attendance'] == '2')
@@ -379,7 +368,6 @@
 						if($holidayType == "special")//Special Holiday
 						{
 							$addHoliday = $speHolidayInc;
-							// $overallWorkDays++;//increment workdays 
 							$speHolNum++;
 						}
 						else//Regular Holiday
@@ -656,7 +644,7 @@
 //Grand Total Computation
 
 	$totalRegularHolidayRate = ($regHolNum * $regHolidayInc);
-	$totalSpecialHolidayRate = ($speHolNum * $speHolidayInc);
+	$totalSpecialHolidayRate = $speHolidayInc;
 	$totalSundayRate = $SundayRatePerHour * $sunWorkHrs;
 	$totalNightDifferential = $NdRatePerHour * $totalND;
 	$totalAllowance = $compAllowance;
