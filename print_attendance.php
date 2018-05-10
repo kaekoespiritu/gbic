@@ -106,8 +106,8 @@ while($locationArr = mysql_fetch_assoc($locQuery))//looping for the Site
 
 		//Header Contents
 		$activeSheet->setCellValue('A4', '#');
-		$activeSheet->setCellValue('B4', 'Name of worker');
-		$activeSheet->setCellValue('D4', 'Position');
+		$activeSheet->setCellValue('B4', 'Name');
+		$activeSheet->setCellValue('C4', 'Position');
 
 		//Wednesday / Sunday
 		if($siteSwitch == 1)
@@ -181,7 +181,6 @@ while($locationArr = mysql_fetch_assoc($locQuery))//looping for the Site
 			$activeSheet->setCellValue('AD7', 'Out');
 		}
 			
-	
 		if($siteSwitch == 2)
 		{
 			$sites = "SELECT * FROM employee WHERE site = '$siteLocation' AND employment_status = '1' ORDER BY lastname ASC, position ASC";
@@ -237,7 +236,11 @@ while($locationArr = mysql_fetch_assoc($locQuery))//looping for the Site
 			$activeSheet->getColumnDimension("B")->setAutoSize(true);
 			$activeSheet->getColumnDimension("C")->setAutoSize(true);
 		}
-		$spreadSheetCounter++;//increment the number of spreadsheet			
+		$spreadSheetCounter++;//increment the number of spreadsheet	
+		$activeSheet->getColumnDimension('B')->setAutoSize(false);		
+		$activeSheet->getColumnDimension('C')->setAutoSize(false);
+		$activeSheet->getColumnDimension('B')->setWidth('20');
+		$activeSheet->getColumnDimension('C')->setWidth('20');
 	}
 }
 
