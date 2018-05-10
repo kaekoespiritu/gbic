@@ -71,11 +71,11 @@ require_once("directives/modals/addLoan.php");
 		function loanDashboard($type)
 		{
 			if($type == 'empVale')//Employees with vale
-			$empVale = "SELECT DISTINCT empid FROM loans WHERE type = 'oldVale' OR type = 'newVale'";
+			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE (loans.type = 'oldVale' OR loans.type = 'newVale') AND action != 0";
 			if($type == 'newVale')//Employees with new vale
-			$empVale = "SELECT DISTINCT empid FROM loans WHERE type = 'newVale'";
+			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE loans.type = 'newVale' AND action != 0";
 			if($type == 'oldVale')//Employees with old vale
-			$empVale = "SELECT DISTINCT empid FROM loans WHERE type = 'oldVale'";
+			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE loans.type = 'oldVale' AND loans.action != 0";
 
 			$empValeQuery = mysql_query($empVale)or die(mysql_error());
 			$ValeNum = mysql_num_rows($empValeQuery);
