@@ -124,9 +124,9 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 
 					<!-- Allowance -->
 					<?php
-						$allowDays = 0;
+						$allowDays =  $payrollArr['num_days'];
 						if(!empty($payrollArr['sunday_hrs']))
-							$allowDays = $numDays + 1;
+							$allowDays++;
 
 						$subTotalAllowance = $empArr['allowance'] * $allowDays;
 						$totalAllowance = $subTotalAllowance;//for the Subtotal of Earnings
@@ -141,6 +141,7 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 							$allowDays = "--";
 						else
 							$allowDays = $allowDays." Day(s)";
+						
 					?>
 					<tr>
 						<td>Allowance</td>
@@ -234,9 +235,10 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 						{
 							$regHolidayNum = 1;
 						}
-							
-
-						
+						else
+						{
+							$regHolidayNum = 0;
+						}
 
 						$subTotalRegularHolidayRate = ($payrollArr['reg_holiday_num'] * $payrollArr['reg_holiday']) ;
 
@@ -258,8 +260,10 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 					</tr>
 					<!-- Special Holiday Rate -->
 					<?php
-						$speHolidayDays = $empArr['rate'] * $payrollArr['spe_holiday_num'];
-						$subTotalSpecialHolidayRate = ($payrollArr['spe_holiday_num'] * $payrollArr['spe_holiday']) + $speHolidayDays;
+						if($payrollArr['spe_holiday_num'] > 0)
+							$subTotalSpecialHolidayRate = ($payrollArr['spe_holiday_num'] * $payrollArr['spe_holiday']);
+						else
+							$subTotalSpecialHolidayRate = 0;
 						$totalSpecialHolidayRate = $subTotalSpecialHolidayRate;//for the Subtotal of Earnings
 						$speHolNum = $payrollArr['spe_holiday_num']." Day(s)";
 						if($subTotalSpecialHolidayRate == 0)
