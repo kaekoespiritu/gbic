@@ -79,23 +79,24 @@
 						{
 							while($PdaysOptions = mysql_fetch_assoc($payrollDaysQuery))
 							{
-
-								$startDate = date('F d, Y', strtotime('-6 day', strtotime($PdaysOptions['date'])));
+								$payDay = $PdaysOptions['date'];
+								$endDate = date('F d, Y', strtotime('-1 day', strtotime($PdaysOptions['date'])));
+								$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
 								if(isset($_POST['payrollDate']))
 								{
-									if($_POST['payrollDate'] == $PdaysOptions['date'])
+									if($_POST['payrollDate'] == $payDay)
 									{
-										Print "<option value='".$PdaysOptions['date']."' selected>".$startDate." - ".$PdaysOptions['date']."</option>";
+										Print "<option value='".$payDay."' selected>".$startDate." - ".$endDate."</option>";
 									}
 									else
 									{
-										Print "<option value='".$PdaysOptions['date']."'>".$startDate." - ".$PdaysOptions['date']."</option>";
+										Print "<option value='".$payDay."'>".$startDate." - ".$endDate."</option>";
 									}
 								}
 								else
 								{
-									Print "<option value='".$PdaysOptions['date']."'>".$startDate." - ".$PdaysOptions['date']."</option>";
+									Print "<option value='".$payDay."'>".$startDate." - ".$endDate."</option>";
 								}
 							}
 						}
@@ -115,10 +116,10 @@
 				if(isset($_POST['payrollDate'])) {
 					Print '<div class="row pull-down">
 					<div class="col-md-1 col-lg-12 pull-down">
-								<a class="btn btn-default" href="print_payroll.php?site='.$location.'&date='.$_POST['payrollDate'].'">
+								<a class="btn btn-default" id="printPayroll" href="print_overall_payroll.php?site='.$location.'&date='.$_POST['payrollDate'].'&req='.$req.'">
 									Print Payroll
 								</a>
-								<a class="btn btn-default" onclick="printPayslips()">
+								<a class="btn btn-default" id="printPayslip" onclick="printPayslips()">
 									Print Payslips
 								</a>
 								</div>
@@ -142,7 +143,7 @@
 								</tr>
 								<tr>
 									<td colspan="6">
-										Date covered: '.$startDate.' - '.$_POST['payrollDate'].'
+										Date covered: '.$startDate.' - '.$endDate.'
 									</td>
 								</tr>
 								<tr>
@@ -241,7 +242,7 @@
 								$employee = "SELECT * FROM employee WHERE site = '$location' AND complete_doc = '0'ORDER BY lastname ASC, position ASC";
 							}
 
-						
+						$printBool = 1;
 						$dataBool = true;//Boolean if there is data for the payroll
 						$employeeQuery = mysql_query($employee);
 						if(mysql_num_rows($employeeQuery) >= 1)
@@ -354,6 +355,7 @@
 						
 						else
 						{
+							$printBool = 0;
 							$dataBool = false;
 							Print '	<tr>
 										<td colspan="27">
@@ -364,6 +366,7 @@
 
 						if($dataBool)
 						{
+							$printBool = 0;
 							Print '	<tr>
 										<td colspan="27">
 											<h4>No Payroll data at the moment</h4>
@@ -385,10 +388,27 @@
 	<form id="dynamicForm" method="POST" action="reports_overall_payroll.php?req=<?php Print $req?>&site=<?php Print $location?>">
 		<input type="hidden" name="payrollDate" id="payrollDate">
 	</form>
+
+	<input type="hidden" id="printButton" value="<?php Print $printBool?>">
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 	<script rel="javascript" src="js/jquery.min.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script>
+		$( document ).ready(function() {
+		   	if($('#printButton').val() == 1)
+		   	{
+		   		$('#printPayslip').removeClass('disabletotally');
+		   		$('#printPayroll').removeClass('disabletotally');
+		   	}
+		   	else
+		   	{
+		   		$('#printPayslip').addClass('disabletotally');
+		   		$('#printPayroll').addClass('disabletotally');
+		   	}	
+		});
+	</script>
+	<script>
+
 		document.getElementById("reports").setAttribute("style", "background-color: #10621e;");
 
 		function payrollRequirements(req) {

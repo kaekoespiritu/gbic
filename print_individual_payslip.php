@@ -5,7 +5,7 @@ include_once 'modules/Classes/PHPExcel.php';
 include('directives/print_styles.php');//Styles for PHPexcel
 
 $empid = $_GET['empid'];
-$date = $_GET['date'];
+$payDay = $_GET['date'];
 
 $empCheck = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1'";
 $empQuery = mysql_query($empCheck);
@@ -17,11 +17,11 @@ else
 
 
 // Get requirements type (with or without)
+$endDay = date('F d, Y', strtotime('-1 day', strtotime($payDay)));
+$startDay = date('F d, Y', strtotime('-6 day', strtotime($endDay)));
+$filename =  $empArr['lastname'].", ".$empArr['firstname']." Payslip ".$startDay." - ".$endDay.".xls";
 
-$weekBefore = date('F d, Y', strtotime('-6 day', strtotime($date)));
-$filename =  $empArr['lastname'].", ".$empArr['firstname']." Payslip ".$weekBefore." - ".$date.".xls";
-
-$dateDisplay = $weekBefore." - ".$date;
+$dateDisplay = $startDay." - ".$endDay;
 
 // Last Name, First Name of Site (Date) - Payroll.xls
 function monthConvert($month)
@@ -55,11 +55,11 @@ $activeSheet->mergeCells('A2:D2');// Name
 $activeSheet->mergeCells('C16:D16');// Total
 
 //----------------- Header Contents ---------------------//
-$endDateExplode = explode(' ', $date);
+$endDateExplode = explode(' ', $endDay);
 $endDateMonth = monthConvert($endDateExplode[0]);
 $endDateDay = substr($endDateExplode[1], 0, -1);
 
-$startDateExplode = explode(' ', $weekBefore);
+$startDateExplode = explode(' ', $startDay);
 $startDateMonth = monthConvert($startDateExplode[0]);
 $startDateDay = substr($startDateExplode[1], 0, -1);
 
@@ -90,7 +90,7 @@ $activeSheet->setCellValue('C11', 'X. All.');
 
 //----------------- Body Contents ---------------------//
 
-$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$date'";
+$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$payDay'";
 $payrollQuery = mysql_query($payroll);
 
 $payrollArr = mysql_fetch_assoc($payrollQuery);

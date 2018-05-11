@@ -33,12 +33,16 @@ if($date == "onProcess")
 	$payArr = mysql_fetch_assoc($payDateQuery);
 
 	$startDate = $payArr['date'];
+
 	$endDate = date('F d, Y', strtotime('+6 day', strtotime($payArr['date'])));
+	// Print "<script>console.log('OP - startDate: ".$startDate." | endDate: ".$endDate."')</script>";
 }
 else
 {
-	$startDate = date('F d, Y', strtotime('-7 day', strtotime($date)));
-	$endDate = date('F d, Y', strtotime('-1 day', strtotime($date)));
+	$startDate = date('F d, Y', strtotime('-6 day', strtotime($date)));
+	$endDate = $date;
+	// $endDate = date('F d, Y', strtotime('-1 day', strtotime($date)));
+	// Print "<script>console.log('startDate: ".$startDate." | endDate: ".$endDate."')</script>";
 }
 	
 
@@ -203,8 +207,8 @@ if($pageSwitch == 1)
 {
 	$attendance = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 
-	$attendanceQuery = mysql_query($attendance);
-		
+	$attendanceQuery = mysql_query($attendance) or die (mysql_error());
+	// Print "<script>console.log('".mysql_num_rows($attendanceQuery)."')</script>";
 		//preset variable for time in and time out
 	$wedIn1 = "";
 	$wedOut1 = "";
@@ -364,7 +368,7 @@ if($pageSwitch == 1)
 		if($wedBoolHD)
 		{
 			$activeSheet->mergeCells('F'.$rowCounter.':I'.$rowCounter);
-			$activeSheet->setCellValue('F'.$rowCounter, 'H A L F  D A Y');
+			$activeSheet->setCellValue('F'.$rowCounter, 'H A L F  D A Y / S T R A I G H T');
 		}
 		else
 		{
@@ -390,7 +394,7 @@ if($pageSwitch == 1)
 		if($thuBoolHD)
 		{
 			$activeSheet->mergeCells('M'.$rowCounter.':P'.$rowCounter);//Wednesday
-			$activeSheet->setCellValue('M'.$rowCounter, 'H A L F  D A Y');
+			$activeSheet->setCellValue('M'.$rowCounter, 'H A L F  D A Y / S T R A I G H T');
 		}
 		else
 		{
@@ -416,8 +420,8 @@ if($pageSwitch == 1)
 
 		if($friBoolHD)
 		{
-			$activeSheet->mergeCells('T'.$rowCounter.':P'.$rowCounter);//Wednesday
-			$activeSheet->setCellValue('T'.$rowCounter, 'H A L F  D A Y');
+			$activeSheet->mergeCells('T'.$rowCounter.':W'.$rowCounter);//Wednesday
+			$activeSheet->setCellValue('T'.$rowCounter, 'H A L F  D A Y / S T R A I G H T');
 		}
 		else
 		{
@@ -443,7 +447,7 @@ if($pageSwitch == 1)
 		if($satBoolHD)
 		{
 			$activeSheet->mergeCells('AA'.$rowCounter.':AD'.$rowCounter);//Wednesday
-			$activeSheet->setCellValue('AA'.$rowCounter, 'H A L F  D A Y');
+			$activeSheet->setCellValue('AA'.$rowCounter, 'H A L F  D A Y / S T R A I G H T');
 			
 		}
 		else
@@ -502,6 +506,7 @@ else// 2
 
 		$attendance2 = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 		$attendanceQuery2 = mysql_query($attendance2) or die (mysql_error());
+
 		while($attArr2 = mysql_fetch_assoc($attendanceQuery2))//Loop for employees in the site
 		{
 			$dayN = date('l', strtotime($attArr2['date']));//gets the day in the week
@@ -587,7 +592,7 @@ else// 2
 				if($sunBoolHD)
 				{
 					$activeSheet->mergeCells('F'.$rowCounter.':I'.$rowCounter);//Sunday
-					$activeSheet->setCellValue('F'.$rowCounter, 'H A L F  D A Y');
+					$activeSheet->setCellValue('F'.$rowCounter, 'H A L F  D A Y / S T R A I G H T');
 				}
 				else
 				{
@@ -613,7 +618,7 @@ else// 2
 				if($sunBoolHD)
 				{
 					$activeSheet->mergeCells('M'.$rowCounter.':P'.$rowCounter);//Monday
-					$activeSheet->setCellValue('M'.$rowCounter, 'H A L F  D A Y');
+					$activeSheet->setCellValue('M'.$rowCounter, 'H A L F  D A Y / S T R A I G H T');
 				}
 				else
 				{
@@ -639,7 +644,7 @@ else// 2
 				if($sunBoolHD)
 				{
 					$activeSheet->mergeCells('T'.$rowCounter.':W'.$rowCounter);//Tuesday
-					$activeSheet->setCellValue('T'.$rowCounter, 'H A L F  D A Y');
+					$activeSheet->setCellValue('T'.$rowCounter, 'H A L F  D A Y / S T R A I G H T');
 				}
 				else
 				{
@@ -678,13 +683,13 @@ else// 2
 
 
 
-// header('Content-Type: application/vnd.ms-excel');
-// header('Content-Disposition: attachment; filename="'.$filename.'"');
-// header('Cache-Control: max-age=0');
+header('Content-Type: application/vnd.ms-excel');
+header('Content-Disposition: attachment; filename="'.$filename.'"');
+header('Cache-Control: max-age=0');
 
-// $objWriter = PHPExcel_IOFactory::createWriter($sheet, 'Excel5');
-// $objWriter->save('php://output');
-// exit;
+$objWriter = PHPExcel_IOFactory::createWriter($sheet, 'Excel5');
+$objWriter->save('php://output');
+exit;
 
 ?>
 

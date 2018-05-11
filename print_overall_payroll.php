@@ -5,7 +5,10 @@ include_once 'modules/Classes/PHPExcel.php';
 include('directives/print_styles.php');//Styles for PHPexcel
 
 $location = $_GET['site'];//Sample data
-$endDate = $_GET['date'];
+$payDay = $_GET['date'];
+$req = $_GET['req'];
+
+$endDate = date('F d, Y', strtotime('-1 day', strtotime($payDay)));
 $startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
 
@@ -25,7 +28,12 @@ $activeSheet->mergeCells('G1:AA2');//"PAYROLL"
 
 //----------------- Header Contents ---------------------//
 //Title Contents
-$activeSheet->setCellValue('A1', $location." with Requirements");//Site w/ requirements
+if($req == "withReq")
+	$activeSheet->setCellValue('A1', $location." W/ Requirements");//Site w/ requirements
+else if($req == "withOReq")
+	$activeSheet->setCellValue('A1', $location." W/O Requirements");//Site w/ requirements
+else
+	$activeSheet->setCellValue('A1', $location." All Employees");//Site w/ requirements
 
 $activeSheet->setCellValue('A2', "Date Covered: ".$startDate." - ".$endDate);//Date
 $activeSheet->setCellValue('G1', 'PAYROLL');//"Payroll"
@@ -60,9 +68,13 @@ $activeSheet->setCellValue('AA3', 'Signature');
 
 
 //----------------- Body ---------------------//
+$appendQuery = "";
+if($req == "withReq")
+	$appendQuery = " AND complete_doc = '1' ";
+else if($req == "withOReq")
+	$appendQuery = " AND complete_doc = '0' ";
 
-
-$site = "SELECT * FROM employee WHERE site = '$location' AND employment_status = '1' ORDER BY lastname ASC, position ASC";
+$site = "SELECT * FROM employee WHERE site = '$location' AND employment_status = '1' $appendQuery ORDER BY lastname ASC, position ASC";
 $siteQuery = mysql_query($site) or die (mysql_error());
 $counter = 0;
 $rowCounter = 4; //start for the data in the row of excel
@@ -74,7 +86,7 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 	$employeePosition = $siteArr['position'];
 	$empid = $siteArr['empid'];
 	
-	$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$endDate'";
+	$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$payDay'";
 	$payrollQuery = mysql_query($payroll) or die (mysql_error());
 	$payrollArr = mysql_fetch_assoc($payrollQuery);
 
@@ -137,11 +149,19 @@ $activeSheet->getStyle('G1:AA2')->applyFromArray($align_center);//Centered heade
 $activeSheet->getColumnDimension('B')->setAutoSize(true);//Lengthen cell to fit text for Employee name
 $activeSheet->getColumnDimension('Z')->setAutoSize(true);//Lengthen cell to fit text for Total Cost
 
-header('Content-Type: application/vnd.ms-excel');
+// header('Content-Type: application/vnd.ms-excel');
+// header('Content-Disposition: attachment; filename="'.$filename.'"');
+// header('Cache-Control: max-age=0');
+
+// $objWriter = PHPExcel_IOFactory::createWriter($sheet, 'Excel5');
+// $objWriter->save('php://output');
+// exit;
+
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header('Content-Disposition: attachment; filename="'.$filename.'"');
 header('Cache-Control: max-age=0');
 
-$objWriter = PHPExcel_IOFactory::createWriter($sheet, 'Excel5');
+$objWriter = PHPExcel_IOFactory::createWriter($sheet,'Excel2007');
 $objWriter->save('php://output');
 exit;
 
