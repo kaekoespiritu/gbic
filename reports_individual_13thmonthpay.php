@@ -22,6 +22,12 @@
 	{}
 	else
 		header("location: reports_individual_earnings.php?type=Earnings&period=week&site=null&position=null");
+
+	$payrollChecker = "SELECT * FROM payroll WHERE empid = '$empid'";
+	$payrollCheckQuery = mysql_query($payrollChecker);
+	$give13Bool = 0;
+	if(mysql_num_rows($payrollCheckQuery) > 0)
+		$give13Bool = 1;
 ?>
 <html>
 <head>
@@ -48,7 +54,7 @@
 					<ol class="breadcrumb text-left">
 						<li><a href='reports_individual_earnings.php?type=Earnings&period=week&site=null&position=null' class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Earnings</a></li>
 						<li>13th Month Pay Report for <?php Print $employeeInfo?></li>
-						<button class='btn btn-success pull-right' data-toggle="modal" data-target="#give13thmonthpay">
+						<button class='btn btn-success pull-right' id="give13thpay" data-toggle="modal" data-target="#give13thmonthpay">
 							Give 13th Month Pay
 						</button>
 						<button class='btn btn-danger pull-right' data-toggle="modal" data-target="#13thmonthhistory">
@@ -249,9 +255,7 @@
 								</tr>";
 
 								$remainderBool = false;
-
 							}
-							
 						}
 						//Computes 13th monthpay per month
 						while($attDate = mysql_fetch_assoc($attQuery))
@@ -552,6 +556,9 @@
 	  </div>
 	</div>
 
+	<!-- 13th month pay giving printable -->
+	<input type="hidden" id="give13Pay" value="<?php Print $give13Bool?>">
+
 	<!-- Historical printable -->
 	<input type="hidden" id="HistoricalPrint" value="<?php Print $histBool?>">
 	<input type="hidden" id="Print" value="<?php Print $printBool?>">
@@ -562,11 +569,17 @@
 	<script rel="javascript" src="js/jquery.min.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script>
+
 		$( document ).ready(function() {
 		   	if($('#HistoricalPrint').val() == 1)
 		   		$('#historyButton').removeClass('disabletotally');
 		   	else
 		   		$('#historyButton').addClass('disabletotally');
+
+		   	if($('#give13Pay').val() == 1)
+		   		$('#give13thpay').removeClass('disabletotally');
+		   	else
+		   		$('#give13thpay').addClass('disabletotally');
 
 		   	if($('#Print').val() == 1)
 		   		$('#printButton').removeClass('disabletotally');
