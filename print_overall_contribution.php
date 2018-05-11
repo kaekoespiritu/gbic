@@ -136,10 +136,11 @@ if($contributionType == 'all') //Overall
 				{
 					
 					//For the specfied week in first column
-					$endDate = $payDateArr['date'];
+					$payDay = $payDateArr['date'];
+					$endDate = date('F d, Y', strtotime('-1 day', strtotime($payDateArr['date'])));
 					$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
-					$payroll = "SELECT * FROM payroll WHERE date = '$endDate' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+					$payroll = "SELECT * FROM payroll WHERE date = '$payDay' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 					$payrollQuery = mysql_query($payroll);
 					if(mysql_num_rows($payrollQuery) > 0)
 					{
@@ -689,7 +690,7 @@ else {
 		$totalEmployee = 0;
 		$totalEmployer = 0;
 
-		$activeSheet->setCellValue('A1', 'Overall '.$contributionType.' Contribution at '.$site);
+		$activeSheet->setCellValue('A1', 'Overall '.$contributionDisplay.' Contribution at '.$site);
 
 
 
@@ -721,10 +722,11 @@ else {
 					{
 						
 						//For the specfied week in first column
-						$endDate = $payDateArr['date'];
+						$payDay = $payDateArr['date'];
+						$endDate = date('F d, Y', strtotime('-1 day', strtotime($payDateArr['date'])));
 						$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
-						$payroll = "SELECT * FROM payroll WHERE date = '$endDate' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+						$payroll = "SELECT * FROM payroll WHERE date = '$payDay' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 						$payrollQuery = mysql_query($payroll);
 						if(mysql_num_rows($payrollQuery) > 0)
 						{
@@ -934,106 +936,12 @@ else {
 									$rowCounter++;
 
 								}
-								
 							}
 						}
-
 						$yearNoRepeat = $year;
 					}
 				}
 			}
-			//================================================
-			// $employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'";
-			// $empQuery = mysql_query($employee) or die (mysql_error());
-			// $contributionBool = false;//if employee dont have sss contribution
-			// $overallContribution = 0;
-			// if(mysql_num_rows($empQuery))//there's employee in the site
-			// {
-				
-			// 	$contributionBool = false;//if employee dont have sss contribution
-			// 	if($date == 'all'){
-			// 		$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
-			// 	}
-			// 	else {
-			// 		$yearPeriod = $date;
-			// 		$payrollDate = "SELECT DISTINCT date FROM payroll WHERE  date LIKE '%$yearPeriod' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
-			// 	}
-
-			// 	while($empArr = mysql_fetch_assoc($empQuery))
-			// 	{
-			// 		$empid = $empArr['empid'];
-
-
-			// 		$payrollDateQuery = mysql_query($payrollDate);
-
-			// 		$yearNoRepeat = "";
-
-			// 		$contributionBool = true;
-
-			// 		//Evaluates the attendance and compute the sss contribution
-			// 		while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
-			// 		{
-			// 			$dateExploded = explode(" ", $payDateArr['date']);
-			// 			$year = $dateExploded[2];// gets the year
-
-
-			// 			$payrollDay = $payDateArr['date'];
-
-
-			// 			$payroll = "SELECT * FROM payroll WHERE date LIKE '%$year' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
-			// 			$payrollQuery = mysql_query($payroll);
-			// 			if(mysql_num_rows($payrollQuery) > 0)
-			// 			{
-			// 				$totalEmployee = 0;
-			// 				$totalEmployer = 0;
-			// 				while($payrollArr = mysql_fetch_assoc($payrollQuery))
-			// 				{
-			// 					if($payrollArr[$contributionType] != 0)
-			// 					{
-			// 						$contributionBool = true;
-
-			// 						$totalEmployer += $payrollArr[$contributionType.'_er'];
-			// 						$totalEmployee += $payrollArr[$contributionType];
-									
-			// 					}
-			// 					else
-			// 					{
-			// 						$contributionBool = false;
-			// 					}
-			// 				}
-			// 				if($contributionBool)
-			// 				{
-			// 					if($yearNoRepeat != $year)
-			// 					{
-
-
-			// 						$yearBefore = $year - 1;
-									
-			// 						$activeSheet->setCellValue('A'.$rowCounter, $yearBefore.' - '.$year); // Period
-
-
-			// 						$activeSheet->setCellValue('B'.$rowCounter, $empArr['lastname'].", ".$empArr['firstname']); // Name
-			// 						$activeSheet->setCellValue('C'.$rowCounter, $empArr['position']); // Position
-
-			// 						$activeSheet->setCellValue('D'.$rowCounter, numberExactFormat($totalEmployee, 2, ".", true)); // Employee
-			// 						$activeSheet->setCellValue('E'.$rowCounter, numberExactFormat($totalEmployer, 2, ".", true)); // Employer
-			// 						$GrandTotal = $totalEmployer + $totalEmployee;
-			// 						$activeSheet->setCellValue('F'.$rowCounter, numberExactFormat($GrandTotal, 2, ".", true)); // Employer
-
-			// 						$GrandTotalContribution += $totalEmployer + $totalEmployee;
-
-			// 						$rowCounter++;
-
-			// 					}
-								
-			// 				}
-			// 			}
-
-
-			// 			$yearNoRepeat = $year;
-			// 		}
-			// 	}
-			// }
 		}
 			
 		$activeSheet->mergeCells('A'.$rowCounter.':E'.$rowCounter);

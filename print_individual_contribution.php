@@ -80,10 +80,11 @@ $ERContribution = $EEContribution = $totalSSSContribution = $overallSSS = 0;
 
 		//Evaluates the attendance and compute the sss contribution
 		while($payDateArr = mysql_fetch_assoc($payrollDateQuery)) {
-			$endDate = $payDateArr['date'];
+			$payDay = $payDateArr['date'];
+			$endDate = date('F d, Y', strtotime('-1 day', strtotime($payDateArr['date'])));
 			$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
-			$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$endDate' ORDER BY date ASC";
+			$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$payDay' ORDER BY date ASC";
 			$payrollQuery = mysql_query($payroll);
 
 			if(mysql_num_rows($payrollQuery) > 0)
