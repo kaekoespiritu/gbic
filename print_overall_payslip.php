@@ -4,7 +4,7 @@ include_once('directives/db.php');
 include_once 'modules/Classes/PHPExcel.php';
 include('directives/print_styles.php');//Styles for PHPexcel
 
-$date = $_GET['date'];
+// $date = $_GET['date'];
 $site = $_GET['site'];
 $require = $_GET['req'];
 
@@ -21,10 +21,12 @@ switch($require)
 	case "withOReq": $requirementDisplay = "Incomplete Requirements"; break;
 }
 
-$weekBefore = date('F d, Y', strtotime('-6 day', strtotime($date)));
-$filename =  $site." Payslip ".$weekBefore." - ".$date.".xls";
+$payDay = $_GET['date'];
+$endDate = date('F d, Y', strtotime('-1 day', strtotime($payDay)));
+$weekBefore = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
+$filename =  $site." Payslip ".$weekBefore." - ".$endDate.".xls";
 
-$dateDisplay = $weekBefore." - ".$date;
+$dateDisplay = $weekBefore." - ".$endDate;
 
 // Last Name, First Name of Site (Date) - Payroll.xls
 function monthConvert($month)
@@ -52,7 +54,7 @@ $sheet = new PHPExcel();
 $activeSheet = $sheet -> createSheet(0);
 
 //----------------- Header Contents ---------------------//
-$endDateExplode = explode(' ', $date);
+$endDateExplode = explode(' ', $endDate);
 $endDateMonth = monthConvert($endDateExplode[0]);
 $endDateDay = substr($endDateExplode[1], 0, -1);
 
@@ -205,7 +207,7 @@ for($count = 0; $count <= $loopCount; $count++)
 			//------------ Date for the Spreadsheet ------------//
 
 			$empid = $empRow['empid'];
-			$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$date'";
+			$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$payDay'";
 			$payrollQuery = mysql_query($payroll);
 
 			$payrollArr = mysql_fetch_assoc($payrollQuery);

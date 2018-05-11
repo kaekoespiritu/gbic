@@ -5,7 +5,8 @@ include_once 'modules/Classes/PHPExcel.php';
 include('directives/print_styles.php');//Styles for PHPexcel
 
 $empid = $_GET['empid'];
-$endDate = $_GET['date'];
+$payDay = $_GET['date'];
+$endDate = date('F d, Y', strtotime('-1 day', strtotime($payDay)));
 $startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
 $employee = "SELECT * FROM employee WHERE empid = '$empid'";
@@ -30,7 +31,7 @@ $activeSheet->mergeCells('G1:Z2');//"PAYROLL"
 
 //----------------- Header Contents ---------------------//
 //Title Contents
-if($siteArr['complete_doc'] === 1)
+if($siteArr['complete_doc'] == 1)
 	$activeSheet->setCellValue('A1', 'With Requirements');
 else
 	$activeSheet->setCellValue('A1', 'Without Requirements');
@@ -72,7 +73,7 @@ $rowCounter = 4; //start for the data in the row of excel
 	$employeePosition = $siteArr['position'];
 	$empid = $siteArr['empid'];
 	
-	$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$endDate'";
+	$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$payDay'";
 	$payrollQuery = mysql_query($payroll) or die (mysql_error());
 	$payrollArr = mysql_fetch_assoc($payrollQuery);
 

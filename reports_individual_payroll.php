@@ -60,22 +60,23 @@
 						{
 							while($payrollDateArr = mysql_fetch_assoc($payrollDateQuery))
 							{
-								$payrollEndDate = $payrollDateArr['date'];
+								$payDay = $payrollDateArr['date'];
+								$payrollEndDate = date('F d, Y', strtotime('-1 day', strtotime($payrollDateArr['date'])));
 								$payrollStartDate = date('F d, Y', strtotime('-6 day', strtotime($payrollEndDate)));
 								if(isset($_POST['dateChange']))
 								{
-									if($_POST['dateChange'] == $payrollEndDate)
+									if($_POST['dateChange'] == $payDay)
 									{
-										Print "<option value = '".$payrollEndDate."' selected>".$payrollStartDate." - ".$payrollEndDate."</option>";
+										Print "<option value = '".$payDay."' selected>".$payrollStartDate." - ".$payrollEndDate."</option>";
 									}
 									else
 									{
-										Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
+										Print "<option value = '".$payDay."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
 									}
 								}
 								else
 								{
-									Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
+									Print "<option value = '".$payDay."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
 								}
 							}
 						}
@@ -122,14 +123,16 @@
 						$printBool = true;
 						while($payrollArr = mysql_fetch_assoc($payrollQuery))
 						{
-							$startDate = date('F d, Y', strtotime('-6 day', strtotime($payrollArr['date'])));
+							$endDate = date('F d, Y', strtotime('-1 day', strtotime($payrollArr['date'])));
+							$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
+
 							Print "
 								<input type='hidden' id='payrollDate' value='".$payrollArr['date']."'>
 								<tr>
 								<tr>
 									<td colspan='24' bgcolor='#AAB7B8'>
 										<strong>
-											Period: ".$startDate." - ".$payrollArr['date']."
+											Period: ".$startDate." - ".$endDate."
 										</strong>
 									</td>
 								</tr>
