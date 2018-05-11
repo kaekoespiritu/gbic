@@ -40,12 +40,12 @@ if($date == "onProcess")
 }
 else
 {
-	$startDate = date('F d, Y', strtotime('-7 day', strtotime($date)));
-	$endDate = date('F d, Y', strtotime('-1 day', strtotime($date)));
+	$startDate = date('F d, Y', strtotime('-6 day', strtotime($date)));
+	$endDate = $date;
 }
 	
 
-$filename = $site." Attendance Report ".$startDate."-".$endDate.".xls";
+$filename = $site." Attendance Report ".$startDate."-".$endDate.".xlsx";
 // Last Name, First Name of Site (Date) - Payroll.xls
 
 
@@ -351,7 +351,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 					if($sunBoolHD)
 					{
 						$activeSheet->mergeCells('F'.$rowCounter.':I'.$rowCounter);//Sunday
-						$activeSheet->setCellValue('F'.$rowCounter, 'H A L F  D A Y');
+						$activeSheet->setCellValue('F'.$rowCounter, 'H A L F  D A Y / S T R A I G H T');
 					}
 					else
 					{
@@ -377,7 +377,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 					if($sunBoolHD)
 					{
 						$activeSheet->mergeCells('M'.$rowCounter.':P'.$rowCounter);//Monday
-						$activeSheet->setCellValue('M'.$rowCounter, 'H A L F  D A Y');
+						$activeSheet->setCellValue('M'.$rowCounter, 'H A L F  D A Y / S T R A I G H T');
 					}
 					else
 					{
@@ -403,7 +403,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 					if($sunBoolHD)
 					{
 						$activeSheet->mergeCells('T'.$rowCounter.':W'.$rowCounter);//Tuesday
-						$activeSheet->setCellValue('T'.$rowCounter, 'H A L F  D A Y');
+						$activeSheet->setCellValue('T'.$rowCounter, 'H A L F  D A Y / S T R A I G H T');
 					}
 					else
 					{
@@ -598,7 +598,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 				if($wedBoolHD)
 				{
 					$activeSheet->mergeCells('F'.$rowCounter.':I'.$rowCounter);
-					$activeSheet->setCellValue('F'.$rowCounter, 'H A L F  D A Y');
+					$activeSheet->setCellValue('F'.$rowCounter, 'H A L F  D A Y / S T R A I G H T');
 				}
 				else
 				{
@@ -624,7 +624,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 				if($thuBoolHD)
 				{
 					$activeSheet->mergeCells('M'.$rowCounter.':P'.$rowCounter);//Wednesday
-					$activeSheet->setCellValue('M'.$rowCounter, 'H A L F  D A Y');
+					$activeSheet->setCellValue('M'.$rowCounter, 'H A L F  D A Y / S T R A I G H T');
 				}
 				else
 				{
@@ -650,8 +650,8 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 
 				if($friBoolHD)
 				{
-					$activeSheet->mergeCells('T'.$rowCounter.':P'.$rowCounter);//Wednesday
-					$activeSheet->setCellValue('T'.$rowCounter, 'H A L F  D A Y');
+					$activeSheet->mergeCells('T'.$rowCounter.':W'.$rowCounter);//Wednesday
+					$activeSheet->setCellValue('T'.$rowCounter, 'H A L F  D A Y / S T R A I G H T');
 				}
 				else
 				{
@@ -677,7 +677,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 				if($satBoolHD)
 				{
 					$activeSheet->mergeCells('AA'.$rowCounter.':AD'.$rowCounter);//Wednesday
-					$activeSheet->setCellValue('AA'.$rowCounter, 'H A L F  D A Y');
+					$activeSheet->setCellValue('AA'.$rowCounter, 'H A L F  D A Y / S T R A I G H T');
 					
 				}
 				else
@@ -727,7 +727,7 @@ function SaveViaTempFile($objWriter){
 }
 
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment; filename="testinf.xlsx"');
+header('Content-Disposition: attachment; filename="'.$filename.'"');
 header('Cache-Control: max-age=0');
 
 $objWriter = PHPExcel_IOFactory::createWriter($sheet,'Excel2007');
