@@ -3,7 +3,7 @@
 	include('directives/session.php');
 	include('directives/db.php');
 
-	// $date = strftime("%B %d, %Y");//Current date
+	$date = strftime("%B %d, %Y");//Current date
 
 	// if(isset($_POST['password']))
 	// {

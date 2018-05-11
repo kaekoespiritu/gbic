@@ -46,7 +46,7 @@ include_once('directives/db.php');
 				</td>
 				<td style="background-color: #236068">
 					<?php
-					$emp_query = "SELECT * FROM employee";
+					$emp_query = "SELECT * FROM employee WHERE employment_status = 1";
 					$employee_query = mysql_query($emp_query);
 					$employees = mysql_num_rows($employee_query);
 					?>
