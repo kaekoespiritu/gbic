@@ -117,7 +117,7 @@ while($empArr = mysql_fetch_assoc($empQuery))
 			$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY date DESC, time DESC LIMIT 1";
 		else if($period == "week")//weekly
 		{
-			$endDate = $date;
+			$endDate = date('F d, Y', strtotime('-6 day', strtotime($date)));
 			$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 			$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY date DESC, time DESC LIMIT 1";
 		}

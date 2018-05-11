@@ -117,22 +117,23 @@
 									
 									if($_GET['period'] == 'week')
 									{
-										$payrollEndDate = $payrollDateArr['date'];
+										$payDay = $payrollDateArr['date'];
+										$payrollEndDate = date('F d, Y', strtotime('-1 day', strtotime($payrollDateArr['date'])));
 										$payrollStartDate = date('F d, Y', strtotime('-6 day', strtotime($payrollEndDate)));
 										if(isset($_POST['date']))
 										{
-											if($_POST['date'] == $payrollEndDate)
+											if($_POST['date'] == $payDay)
 											{
-												Print "<option value = '".$payrollEndDate."' selected>".$payrollStartDate." - ".$payrollEndDate."</option>";
+												Print "<option value = '".$payDay."' selected>".$payrollStartDate." - ".$payrollEndDate."</option>";
 											}
 											else
 											{
-												Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
+												Print "<option value = '".$payDay."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
 											}
 										}
 										else
 										{
-											Print "<option value = '".$payrollEndDate."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
+											Print "<option value = '".$payDay."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
 										}
 									}
 									else if($_GET['period'] == 'month')

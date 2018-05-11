@@ -678,13 +678,13 @@ else// 2
 
 
 
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment; filename="'.$filename.'"');
-header('Cache-Control: max-age=0');
+// header('Content-Type: application/vnd.ms-excel');
+// header('Content-Disposition: attachment; filename="'.$filename.'"');
+// header('Cache-Control: max-age=0');
 
-$objWriter = PHPExcel_IOFactory::createWriter($sheet, 'Excel5');
-$objWriter->save('php://output');
-exit;
+// $objWriter = PHPExcel_IOFactory::createWriter($sheet, 'Excel5');
+// $objWriter->save('php://output');
+// exit;
 
 ?>
 
