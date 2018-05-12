@@ -106,6 +106,8 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 	$activeSheet->setCellValue('J'.$rowCounter, $payrollArr['sunday_rate']);//Sun
 	if($sundayBool)
 		$activeSheet->setCellValue('K'.$rowCounter, '1');//D
+	else
+		$activeSheet->setCellValue('K'.$rowCounter, '0');
 	$activeSheet->setCellValue('L'.$rowCounter, $payrollArr['sunday_hrs']);//hrs
 	$activeSheet->setCellValue('M'.$rowCounter, $payrollArr['nightdiff_rate']);//N.D
 	$activeSheet->setCellValue('N'.$rowCounter, $payrollArr['nightdiff_num']);//#

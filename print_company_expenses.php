@@ -10,6 +10,9 @@ $position = $_GET['position'];
 $require = $_GET['req'];
 $date = $_GET['date'];
 
+$endDate = date('F d, Y', strtotime('-1 day', strtotime($date)));
+$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
+
 //Checks if site in HTTP is altered by user manually
 $siteChecker = "SELECT * FROM site WHERE location = '$site'";
 //Checks if position in HTTP is altered by user manually 
@@ -42,10 +45,9 @@ $dateDisplay = "";
 $periodDisplay = "";
 if($period == "week")
 {
-	$weekBefore = date('F d, Y', strtotime('-6 day', strtotime($date)));
-	$filename =  $site." Expense Report ".$weekBefore." - ".$date.".xls";
+	$filename =  $site." Expense Report ".$startDate." - ".$endDate.".xls";
 
-	$dateDisplay = $weekBefore." - ".$date;
+	$dateDisplay = $startDate." - ".$endDate;
 	$periodDisplay = "Weekly";
 }
 else if($period == "month" || $period == "year")
