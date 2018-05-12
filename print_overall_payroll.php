@@ -88,47 +88,50 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 	
 	$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$payDay'";
 	$payrollQuery = mysql_query($payroll) or die (mysql_error());
-	$payrollArr = mysql_fetch_assoc($payrollQuery);
+	if(mysql_num_rows($payrollQuery) != 0)
+	{
+		$payrollArr = mysql_fetch_assoc($payrollQuery);
 
-	$activeSheet->setCellValue('A'.$rowCounter, $counter);//#
-	$activeSheet->setCellValue('B'.$rowCounter, $employeeName);//Name of worker
-	$activeSheet->setCellValue('C'.$rowCounter, $employeePosition);//Name of worker
+		$activeSheet->setCellValue('A'.$rowCounter, $counter);//#
+		$activeSheet->setCellValue('B'.$rowCounter, $employeeName);//Name of worker
+		$activeSheet->setCellValue('C'.$rowCounter, $employeePosition);//Name of worker
 
-	//Sunday
-	$sundayBool = (!empty($payrollArr['sunday_hrs']) ? true : false);// employee didn't attend sunday
+		//Sunday
+		$sundayBool = (!empty($payrollArr['sunday_hrs']) ? true : false);// employee didn't attend sunday
 
-	$activeSheet->setCellValue('D'.$rowCounter, $siteArr['rate']);//Rate
-	$activeSheet->setCellValue('E'.$rowCounter, $payrollArr['num_days']);//ofDays
-	$activeSheet->setCellValue('F'.$rowCounter, $payrollArr['overtime']);//O.T.
-	$activeSheet->setCellValue('G'.$rowCounter, $payrollArr['ot_num']);//#ofHrs
-	$activeSheet->setCellValue('H'.$rowCounter, $payrollArr['allow']);//Allow.
-	$activeSheet->setCellValue('I'.$rowCounter, $payrollArr['cola']);//cola
-	$activeSheet->setCellValue('J'.$rowCounter, $payrollArr['sunday_rate']);//Sun
-	if($sundayBool)
-		$activeSheet->setCellValue('K'.$rowCounter, '1');//D
-	else
-		$activeSheet->setCellValue('K'.$rowCounter, '0');
-	$activeSheet->setCellValue('L'.$rowCounter, $payrollArr['sunday_hrs']);//hrs
-	$activeSheet->setCellValue('M'.$rowCounter, $payrollArr['nightdiff_rate']);//N.D
-	$activeSheet->setCellValue('N'.$rowCounter, $payrollArr['nightdiff_num']);//#
-	$activeSheet->setCellValue('O'.$rowCounter, $payrollArr['reg_holiday']);//Reg.Hol
-	$activeSheet->setCellValue('P'.$rowCounter, $payrollArr['reg_holiday_num']);//#
-	$activeSheet->setCellValue('Q'.$rowCounter, $payrollArr['spe_holiday']);//Spe.Hol
-	$activeSheet->setCellValue('R'.$rowCounter, $payrollArr['spe_holiday_num']);//#
-	$activeSheet->setCellValue('S'.$rowCounter, $payrollArr['x_allowance']);//X All.
-	$activeSheet->setCellValue('T'.$rowCounter, $payrollArr['sss']);//SSS
-	$activeSheet->setCellValue('U'.$rowCounter, $payrollArr['philhealth']);//Philhealth
-	$activeSheet->setCellValue('V'.$rowCounter, $payrollArr['pagibig']);//Pagibig
-	$activeSheet->setCellValue('W'.$rowCounter, $payrollArr['old_vale']);//old vale
-	$activeSheet->setCellValue('X'.$rowCounter, $payrollArr['new_vale']);//vale
-	$activeSheet->setCellValue('Y'.$rowCounter, $payrollArr['tools_paid']);//tools
+		$activeSheet->setCellValue('D'.$rowCounter, $siteArr['rate']);//Rate
+		$activeSheet->setCellValue('E'.$rowCounter, $payrollArr['num_days']);//ofDays
+		$activeSheet->setCellValue('F'.$rowCounter, $payrollArr['overtime']);//O.T.
+		$activeSheet->setCellValue('G'.$rowCounter, $payrollArr['ot_num']);//#ofHrs
+		$activeSheet->setCellValue('H'.$rowCounter, $payrollArr['allow']);//Allow.
+		$activeSheet->setCellValue('I'.$rowCounter, $payrollArr['cola']);//cola
+		$activeSheet->setCellValue('J'.$rowCounter, $payrollArr['sunday_rate']);//Sun
+		if($sundayBool)
+			$activeSheet->setCellValue('K'.$rowCounter, '1');//D
+		else
+			$activeSheet->setCellValue('K'.$rowCounter, '0');
+		$activeSheet->setCellValue('L'.$rowCounter, $payrollArr['sunday_hrs']);//hrs
+		$activeSheet->setCellValue('M'.$rowCounter, $payrollArr['nightdiff_rate']);//N.D
+		$activeSheet->setCellValue('N'.$rowCounter, $payrollArr['nightdiff_num']);//#
+		$activeSheet->setCellValue('O'.$rowCounter, $payrollArr['reg_holiday']);//Reg.Hol
+		$activeSheet->setCellValue('P'.$rowCounter, $payrollArr['reg_holiday_num']);//#
+		$activeSheet->setCellValue('Q'.$rowCounter, $payrollArr['spe_holiday']);//Spe.Hol
+		$activeSheet->setCellValue('R'.$rowCounter, $payrollArr['spe_holiday_num']);//#
+		$activeSheet->setCellValue('S'.$rowCounter, $payrollArr['x_allowance']);//X All.
+		$activeSheet->setCellValue('T'.$rowCounter, $payrollArr['sss']);//SSS
+		$activeSheet->setCellValue('U'.$rowCounter, $payrollArr['philhealth']);//Philhealth
+		$activeSheet->setCellValue('V'.$rowCounter, $payrollArr['pagibig']);//Pagibig
+		$activeSheet->setCellValue('W'.$rowCounter, $payrollArr['old_vale']);//old vale
+		$activeSheet->setCellValue('X'.$rowCounter, $payrollArr['new_vale']);//vale
+		$activeSheet->setCellValue('Y'.$rowCounter, $payrollArr['tools_paid']);//tools
 
-	$totalSalary = numberExactFormat($payrollArr['total_salary'], 2, '.', true);
-	$activeSheet->setCellValue('Z'.$rowCounter, $totalSalary);//Total Salary
+		$totalSalary = numberExactFormat($payrollArr['total_salary'], 2, '.', true);
+		$activeSheet->setCellValue('Z'.$rowCounter, $totalSalary);//Total Salary
 
-	$GrandTotal += $payrollArr['total_salary'];// Gets the overall total salary
+		$GrandTotal += $payrollArr['total_salary'];// Gets the overall total salary
 
-	$rowCounter++; //Row counter
+		$rowCounter++; //Row counter
+	}
 }
 
 $rowCounter++;//to give space for clearer data
