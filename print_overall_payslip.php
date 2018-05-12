@@ -57,15 +57,16 @@ $activeSheet = $sheet -> createSheet(0);
 $endDateExplode = explode(' ', $endDate);
 $endDateMonth = monthConvert($endDateExplode[0]);
 $endDateDay = substr($endDateExplode[1], 0, -1);
+$endYear = $endDateExplode[2];
 
 $startDateExplode = explode(' ', $weekBefore);
 $startDateMonth = monthConvert($startDateExplode[0]);
 $startDateDay = substr($startDateExplode[1], 0, -1);
 
 if($endDateMonth == $startDateMonth)
-	$dateCovered = $startDateMonth."/".$startDateDay."-".$endDateDay;
+	$dateCovered = $startDateMonth."/".$startDateDay."-".$endDateDay.",".$endYear;
 else
-	$dateCovered = $startDateMonth."/".$startDateDay."-".$endDateMonth."/".$endDateDay;
+	$dateCovered = $startDateMonth."/".$startDateDay."-".$endDateMonth."/".$endDateDay.",".$endYear;
 
 //------ Counter for merged cells ------//
 $dateMergeCounter = 1;

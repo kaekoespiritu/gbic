@@ -19,7 +19,7 @@ else
 // Get requirements type (with or without)
 $endDay = date('F d, Y', strtotime('-1 day', strtotime($payDay)));
 $startDay = date('F d, Y', strtotime('-6 day', strtotime($endDay)));
-$filename =  $empArr['lastname'].", ".$empArr['firstname']." Payslip ".$startDay." - ".$endDay.".xls";
+$filename =  $empArr['lastname'].", ".$empArr['firstname']." of ".$empArr['site']." Payslip ".$startDay." - ".$endDay.".xls";
 
 $dateDisplay = $startDay." - ".$endDay;
 
@@ -57,16 +57,18 @@ $activeSheet->mergeCells('C16:D16');// Total
 //----------------- Header Contents ---------------------//
 $endDateExplode = explode(' ', $endDay);
 $endDateMonth = monthConvert($endDateExplode[0]);
+$endYear = $endDateExplode[2];
 $endDateDay = substr($endDateExplode[1], 0, -1);
+
 
 $startDateExplode = explode(' ', $startDay);
 $startDateMonth = monthConvert($startDateExplode[0]);
 $startDateDay = substr($startDateExplode[1], 0, -1);
 
 if($endDateMonth == $startDateMonth)
-	$dateCovered = $startDateMonth."/".$startDateDay."-".$endDateDay;
+	$dateCovered = $startDateMonth."/".$startDateDay."-".$endDateDay.",".$endYear;
 else
-	$dateCovered = $startDateMonth."/".$startDateDay."-".$endDateMonth."/".$endDateDay;
+	$dateCovered = $startDateMonth."/".$startDateDay."-".$endDateMonth."/".$endDateDay.",".$endYear;
 
 $activeSheet->setCellValue('A1', 'Date Covered: '.$dateCovered);
 $activeSheet->setCellValue('A2', $empArr['lastname'].", ".$empArr['firstname']);

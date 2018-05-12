@@ -15,7 +15,7 @@ $startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 // TIMEZONE
 date_default_timezone_set('Asia/Hong_Kong');
 $date = $startDate." - ".$endDate;
-$filename = $date." Payroll.xls";
+$filename = $location." Payroll ".$date.".xls";
 
 $sheet = new PHPExcel();
 
