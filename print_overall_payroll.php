@@ -81,7 +81,7 @@ $rowCounter = 4; //start for the data in the row of excel
 $GrandTotal = 0;
 while($siteArr = mysql_fetch_assoc($siteQuery))
 {
-	$counter++;
+	
 	$employeeName = $siteArr['lastname'].", ".$siteArr['firstname'];
 	$employeePosition = $siteArr['position'];
 	$empid = $siteArr['empid'];
@@ -90,6 +90,7 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 	$payrollQuery = mysql_query($payroll) or die (mysql_error());
 	if(mysql_num_rows($payrollQuery) != 0)
 	{
+		$counter++;
 		$payrollArr = mysql_fetch_assoc($payrollQuery);
 
 		$activeSheet->setCellValue('A'.$rowCounter, $counter);//#
