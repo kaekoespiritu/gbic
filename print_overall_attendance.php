@@ -701,7 +701,8 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 		
 	if($siteSwitch == 1) // Wednesday, Thursday, Friday, Saturday
 	{
-		$activeSheet->getStyle("A4:AE7")->applyFromArray($border_all_thin);
+
+		$activeSheet->getStyle("A1:AE7")->applyFromArray($border_all_medium);
 		$activeSheet->getStyle("A4:AE".$rowCounter)->applyFromArray($border_all_thin);
 		$activeSheet->getStyle("D1:AE3")->applyFromArray($align_center);
 		$activeSheet->getColumnDimension("B")->setAutoSize(true);
@@ -709,7 +710,8 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 	}	
 	else // Sunday, Monday, Tuesday
 	{
-		$activeSheet->getStyle("A4:X7")->applyFromArray($border_all_thin);
+		$activeSheet->getStyle("A1:X7")->applyFromArray($border_all_medium);
+		// $activeSheet->getStyle("A4:X7")->applyFromArray($border_all_thin);
 		$activeSheet->getStyle("A4:X".$rowCounter)->applyFromArray($border_all_thin);
 		$activeSheet->getStyle("D1:X3")->applyFromArray($align_center);
 		$activeSheet->getColumnDimension("B")->setAutoSize(true);

@@ -812,7 +812,7 @@
 											".$wedIn1."
 										</td>
 										<td>
-											".$wedIn1."
+											".$wedOut1."
 										</td>";
 								if($wedBoolHD)
 								{
@@ -853,7 +853,7 @@
 											".$thuIn1."
 										</td>
 										<td>
-											".$thuIn1."
+											".$thuOut1."
 										</td>";
 								if($thuBoolHD)
 								{
@@ -894,7 +894,7 @@
 											".$friIn1."
 										</td>
 										<td>
-											".$friIn1."
+											".$friOut1."
 										</td>";
 								if($friBoolHD)
 								{
@@ -935,7 +935,7 @@
 											".$satIn1."
 										</td>
 										<td>
-											".$satIn1."
+											".$satOut1."
 										</td>";
 								if($satBoolHD)
 								{
@@ -976,7 +976,7 @@
 											".$sunIn1."
 										</td>
 										<td>
-											".$sunIn1."
+											".$sunOut1."
 										</td>";
 								if($sunBoolHD)
 								{
@@ -1017,7 +1017,7 @@
 											".$monIn1."
 										</td>
 										<td>
-											".$monIn1."
+											".$monOut1."
 										</td>";
 								if($monBoolHD)
 								{
@@ -1058,7 +1058,7 @@
 											".$tueIn1."
 										</td>
 										<td>
-											".$tueIn1."
+											".$tueOut1."
 										</td>";
 								if($tueBoolHD)
 								{
