@@ -260,90 +260,106 @@
 									$dataBool = false;
 									$payrollArr = mysql_fetch_assoc($payrollQuery);
 
-										$color = ($rowNum % 2 == 0 ? "#ECF0F1" : "#FDFEFE");//alternating color
+									//Gets the actual holiday num
+									if($payrollArr['reg_holiday_num'] > 1)
+									{
+										$holidayRegChecker = "SELECT * FROM holiday AS h INNER JOIN attendance AS a ON h.date = a.date WHERE a.empid = '$emplid' AND a.attendance = '2' AND h.type = 'regular'";
+										$holidayRegQuery = mysql_query($holidayRegChecker);
+										$regHolidayNum = mysql_num_rows($holidayRegQuery);
+									}
+									else if($payrollArr['reg_holiday_num'] == 1)
+									{
+										$regHolidayNum = 1;
+									}
+									else
+									{
+										$regHolidayNum = 0;
+									}
 
-										Print '	<tr bgcolor="'.$color.'">
-													<td><!-- # -->
-														'.$rowNum.'
-													</td>
-													<td><!-- Name -->
-														'.$employeeArr['lastname'].', '.$employeeArr['firstname'].'
-													</td>
-													<td><!-- Position -->
-														'.$employeeArr['position'].'
-													</td>
-													<td><!-- Rate -->
-														'.$payrollArr['rate'].'
-													</td>
-													<td><!-- # of days -->
-														'.$payrollArr['num_days'].'
-													</td>
-													<td><!-- OT -->
-														'.$payrollArr['overtime'].'
-													</td>
-													<td><!-- # of hours -->
-														'.$payrollArr['ot_num'].'
-													</td>
-													<td><!-- Allow -->
-														'.$payrollArr['allow'].'
-													</td>
-													<td><!-- COLA -->
-														'.$payrollArr['cola'].'
-													</td>
-													<td><!-- Sun -->
-														'.$payrollArr['sunday_rate'].'
-													</td>
-													<td><!-- D -->
-														'.$payrollArr['sunday_att'].'
-													</td>
-													<td><!-- hrs -->
-														'.$payrollArr['sunday_hrs'].'
-													</td>
-													<td><!-- ND -->
-														'.$payrollArr['nightdiff_rate'].'
-													</td>
-													<td><!-- # -->
-														'.$payrollArr['nightdiff_num'].'
-													</td>
-													<td><!-- Reg.hol -->
-														'.$payrollArr['reg_holiday'].'
-													</td>
-													<td><!-- # -->
-														'.$payrollArr['reg_holiday_num'].'
-													</td>
-													<td><!-- Spe. hol -->
-														'.$payrollArr['spe_holiday'].'
-													</td>
-													<td><!-- # -->
-														'.$payrollArr['spe_holiday_num'].'
-													</td>
-													<td><!-- X.All -->
-														'.$payrollArr['x_allowance'].'
-													</td>
-													<td><!-- SSS -->
-														'.$payrollArr['sss'].'
-													</td>
-													<td><!-- Philhealth -->
-														'.$payrollArr['philhealth'].'
-													</td>
-													<td><!-- Pagibig -->
-														'.$payrollArr['pagibig'].'
-													</td>
-													<td><!-- Old vale -->
-														'.$payrollArr['old_vale'].'
-													</td>
-													<td><!-- vale -->
-														'.$payrollArr['new_vale'].'
-													</td>
-													<td><!-- tools -->
-														'.$payrollArr['tools_paid'].'
-													</td>
-													<td><!-- Total Salary -->
-														'.numberExactFormat($payrollArr['total_salary'],2,".", true).'
-													</td>
-												</tr>';
-											
-											$rowNum++;//increment the row number
+									$color = ($rowNum % 2 == 0 ? "#ECF0F1" : "#FDFEFE");//alternating color
+
+									Print '	<tr bgcolor="'.$color.'">
+												<td><!-- # -->
+													'.$rowNum.'
+												</td>
+												<td><!-- Name -->
+													'.$employeeArr['lastname'].', '.$employeeArr['firstname'].'
+												</td>
+												<td><!-- Position -->
+													'.$employeeArr['position'].'
+												</td>
+												<td><!-- Rate -->
+													'.$payrollArr['rate'].'
+												</td>
+												<td><!-- # of days -->
+													'.$payrollArr['num_days'].'
+												</td>
+												<td><!-- OT -->
+													'.$payrollArr['overtime'].'
+												</td>
+												<td><!-- # of hours -->
+													'.$payrollArr['ot_num'].'
+												</td>
+												<td><!-- Allow -->
+													'.$payrollArr['allow'].'
+												</td>
+												<td><!-- COLA -->
+													'.$payrollArr['cola'].'
+												</td>
+												<td><!-- Sun -->
+													'.$payrollArr['sunday_rate'].'
+												</td>
+												<td><!-- D -->
+													'.$payrollArr['sunday_att'].'
+												</td>
+												<td><!-- hrs -->
+													'.$payrollArr['sunday_hrs'].'
+												</td>
+												<td><!-- ND -->
+													'.$payrollArr['nightdiff_rate'].'
+												</td>
+												<td><!-- # -->
+													'.$payrollArr['nightdiff_num'].'
+												</td>
+												<td><!-- Reg.hol -->
+													'.$payrollArr['reg_holiday'].'
+												</td>
+												<td><!-- # -->
+													'.$regHolidayNum.'
+												</td>
+												<td><!-- Spe. hol -->
+													'.$payrollArr['spe_holiday'].'
+												</td>
+												<td><!-- # -->
+													'.$payrollArr['spe_holiday_num'].'
+												</td>
+												<td><!-- X.All -->
+													'.$payrollArr['x_allowance'].'
+												</td>
+												<td><!-- SSS -->
+													'.$payrollArr['sss'].'
+												</td>
+												<td><!-- Philhealth -->
+													'.$payrollArr['philhealth'].'
+												</td>
+												<td><!-- Pagibig -->
+													'.$payrollArr['pagibig'].'
+												</td>
+												<td><!-- Old vale -->
+													'.$payrollArr['old_vale'].'
+												</td>
+												<td><!-- vale -->
+													'.$payrollArr['new_vale'].'
+												</td>
+												<td><!-- tools -->
+													'.$payrollArr['tools_paid'].'
+												</td>
+												<td><!-- Total Salary -->
+													'.numberExactFormat($payrollArr['total_salary'],2,".", true).'
+												</td>
+											</tr>';
+										
+										$rowNum++;//increment the row number
 								}
 									
 							}

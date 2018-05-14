@@ -126,6 +126,22 @@
 							$endDate = date('F d, Y', strtotime('-1 day', strtotime($payrollArr['date'])));
 							$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
+							//Gets the actual holiday num
+							if($payrollArr['reg_holiday_num'] > 1)
+							{
+								$holidayRegChecker = "SELECT * FROM holiday AS h INNER JOIN attendance AS a ON h.date = a.date WHERE a.empid = '$empid' AND a.attendance = '2' AND h.type = 'regular'";
+								$holidayRegQuery = mysql_query($holidayRegChecker);
+								$regHolidayNum = mysql_num_rows($holidayRegQuery);
+							}
+							else if($payrollArr['reg_holiday_num'] == 1)
+							{
+								$regHolidayNum = 1;
+							}
+							else
+							{
+								$regHolidayNum = 0;
+							}
+
 							Print "
 								<input type='hidden' id='payrollDate' value='".$payrollArr['date']."'>
 								<tr>
@@ -247,7 +263,7 @@
 									".$payrollArr['reg_holiday']."
 								</td>
 								<td><!-- # -->
-									".$payrollArr['reg_holiday_num']."
+									".$regHolidayNum."
 								</td>
 								<td><!-- Spe. hol -->
 									".$payrollArr['spe_holiday']."

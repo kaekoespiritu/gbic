@@ -77,6 +77,22 @@ $rowCounter = 4; //start for the data in the row of excel
 	$payrollQuery = mysql_query($payroll) or die (mysql_error());
 	$payrollArr = mysql_fetch_assoc($payrollQuery);
 
+	//Gets the actual holiday num
+	if($payrollArr['reg_holiday_num'] > 1)
+	{
+		$holidayRegChecker = "SELECT * FROM holiday AS h INNER JOIN attendance AS a ON h.date = a.date WHERE a.empid = '$empid' AND a.attendance = '2' AND h.type = 'regular'";
+		$holidayRegQuery = mysql_query($holidayRegChecker);
+		$regHolidayNum = mysql_num_rows($holidayRegQuery);
+	}
+	else if($payrollArr['reg_holiday_num'] == 1)
+	{
+		$regHolidayNum = 1;
+	}
+	else
+	{
+		$regHolidayNum = 0;
+	}
+	
 	//Sunday
 	$sundayBool = (!empty($payrollArr['sunday_hrs']) ? true : false);// employee didn't attend sunday
 
@@ -97,7 +113,7 @@ $rowCounter = 4; //start for the data in the row of excel
 	$activeSheet->setCellValue('M'.$rowCounter, $payrollArr['nightdiff_rate']);//N.D
 	$activeSheet->setCellValue('N'.$rowCounter, $payrollArr['nightdiff_num']);//#
 	$activeSheet->setCellValue('O'.$rowCounter, $payrollArr['reg_holiday']);//Reg.Hol
-	$activeSheet->setCellValue('P'.$rowCounter, $payrollArr['reg_holiday_num']);//#
+	$activeSheet->setCellValue('P'.$rowCounter, $regHolidayNum);//#
 	$activeSheet->setCellValue('Q'.$rowCounter, $payrollArr['spe_holiday']);//Spe.Hol
 	$activeSheet->setCellValue('R'.$rowCounter, $payrollArr['spe_holiday_num']);//#
 	$activeSheet->setCellValue('S'.$rowCounter, $payrollArr['x_allowance']);//X All.
