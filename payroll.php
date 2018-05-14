@@ -253,7 +253,23 @@ if($holidayExist > 0)
 							$sunDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
-								$totalHours += $dateRow['workhours'];//Get the total workhours
+								$hrsComp = explode('.', $dateRow['workhours']);//Get the total workhours
+								if(count($hrsComp) == 2)
+								{
+									$totalHrs = $hrsComp[0];
+									$totalHrsMins = $hrsComp[1];
+									$totalHrsMins = $totalHrsMins / 60;
+
+									$hrsResult = $totalHrs+$totalHrsMins;
+
+									$totalHours += $hrsResult;
+								}
+								else
+								{
+									$totalHours +=  $hrsComp[0];
+									$hrsResult = $hrsComp[0];
+								}
+
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 
 								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime
@@ -263,7 +279,7 @@ if($holidayExist > 0)
 									$OTmins = $OTcomp[1];
 									$OTcomp = $OTmins / 60;
 
-									$OTresult = $OThours.$OTcomp;
+									$OTresult = $OThours+$OTcomp;
 
 									$totalOT += $OTresult;
 								}
@@ -302,7 +318,23 @@ if($holidayExist > 0)
 							$monDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
-								$totalHours += $dateRow['workhours'];//Get the total workhours
+								$hrsComp = explode('.', $dateRow['workhours']);//Get the total workhours
+								if(count($hrsComp) == 2)
+								{
+									$totalHrs = $hrsComp[0];
+									$totalHrsMins = $hrsComp[1];
+									$totalHrsMins = $totalHrsMins / 60;
+
+									$hrsResult = $totalHrs+$totalHrsMins;
+
+									$totalHours += $hrsResult;
+								}
+								else
+								{
+									$totalHours +=  $hrsComp[0];
+									$hrsResult = $hrsComp[0];
+								}
+
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 
 								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime)
@@ -312,7 +344,7 @@ if($holidayExist > 0)
 									$OTmins = $OTcomp[1];
 									$OTcomp = $OTmins / 60;
 
-									$OTresult = $OThours.$OTcomp;
+									$OTresult = $OThours+$OTcomp;
 
 									$totalOT += $OTresult;
 								}
@@ -321,7 +353,6 @@ if($holidayExist > 0)
 									$totalOT +=  $OTcomp[0];
 									$OTresult = $OTcomp[0];
 								}
-								Print "<script>console.log('$day: ".$dateRow['overtime']."')</script>";
 								
 
 								$monTimeIn = $dateRow['timein'];
@@ -353,7 +384,23 @@ if($holidayExist > 0)
 							$tueDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
-								$totalHours += $dateRow['workhours'];//Get the total workhours
+								$hrsComp = explode('.', $dateRow['workhours']);//Get the total workhours
+								if(count($hrsComp) == 2)
+								{
+									$totalHrs = $hrsComp[0];
+									$totalHrsMins = $hrsComp[1];
+									$totalHrsMins = $totalHrsMins / 60;
+
+									$hrsResult = $totalHrs+$totalHrsMins;
+
+									$totalHours += $hrsResult;
+								}
+								else
+								{
+									$totalHours +=  $hrsComp[0];
+									$hrsResult = $hrsComp[0];
+								}
+
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								
 								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime)
@@ -363,7 +410,7 @@ if($holidayExist > 0)
 									$OTmins = $OTcomp[1];
 									$OTcomp = $OTmins / 60;
 
-									$OTresult = $OThours.$OTcomp;
+									$OTresult = $OThours+$OTcomp;
 
 									$totalOT += $OTresult;
 								}
@@ -403,7 +450,23 @@ if($holidayExist > 0)
 							$wedDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
-								$totalHours += $dateRow['workhours'];//Get the total workhours
+								$hrsComp = explode('.', $dateRow['workhours']);//Get the total workhours
+								if(count($hrsComp) == 2)
+								{
+									$totalHrs = $hrsComp[0];
+									$totalHrsMins = $hrsComp[1];
+									$totalHrsMins = $totalHrsMins / 60;
+
+									$hrsResult = $totalHrs+$totalHrsMins;
+
+									$totalHours += $hrsResult;
+								}
+								else
+								{
+									$totalHours +=  $hrsComp[0];
+									$hrsResult = $hrsComp[0];
+								}
+
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								
 								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime)
@@ -413,7 +476,7 @@ if($holidayExist > 0)
 									$OTmins = $OTcomp[1];
 									$OTcomp = $OTmins / 60;
 
-									$OTresult = $OThours.$OTcomp;
+									$OTresult = $OThours+$OTcomp;
 
 									$totalOT += $OTresult;
 								}
@@ -452,7 +515,24 @@ if($holidayExist > 0)
 							$thuDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
-								$totalHours += $dateRow['workhours'];//Get the total workhours
+								$hrsComp = explode('.', $dateRow['workhours']);//Get the total workhours
+								if(count($hrsComp) == 2)
+								{
+									$totalHrs = $hrsComp[0];
+									$totalHrsMins = $hrsComp[1];
+									$totalHrsMins = $totalHrsMins / 60;
+
+
+									$hrsResult = $totalHrs+$totalHrsMins;
+
+									$totalHours += $hrsResult;
+								}
+								else
+								{
+									$totalHours +=  $hrsComp[0];
+									$hrsResult = $hrsComp[0];
+								}
+
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								
 								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime)
@@ -462,7 +542,7 @@ if($holidayExist > 0)
 									$OTmins = $OTcomp[1];
 									$OTcomp = $OTmins / 60;
 
-									$OTresult = $OThours.$OTcomp;
+									$OTresult = $OThours+$OTcomp;
 
 									$totalOT += $OTresult;
 								}
@@ -501,7 +581,23 @@ if($holidayExist > 0)
 							$friDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
-								$totalHours += $dateRow['workhours'];//Get the total workhours
+								$hrsComp = explode('.', $dateRow['workhours']);//Get the total workhours
+								if(count($hrsComp) == 2)
+								{
+									$totalHrs = $hrsComp[0];
+									$totalHrsMins = $hrsComp[1];
+									$totalHrsMins = $totalHrsMins / 60;
+
+									$hrsResult = $totalHrs+$totalHrsMins;
+
+									$totalHours += $hrsResult;
+								}
+								else
+								{
+									$totalHours +=  $hrsComp[0];
+									$hrsResult = $hrsComp[0];
+								}
+
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								
 								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime)
@@ -511,7 +607,7 @@ if($holidayExist > 0)
 									$OTmins = $OTcomp[1];
 									$OTcomp = $OTmins / 60;
 
-									$OTresult = $OThours.$OTcomp;
+									$OTresult = $OThours+$OTcomp;
 
 									$totalOT += $OTresult;
 								}
@@ -549,7 +645,23 @@ if($holidayExist > 0)
 							$satDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
-								$totalHours += $dateRow['workhours'];//Get the total workhours
+								$hrsComp = explode('.', $dateRow['workhours']);//Get the total workhours
+								if(count($hrsComp) == 2)
+								{
+									$totalHrs = $hrsComp[0];
+									$totalHrsMins = $hrsComp[1];
+									$totalHrsMins = $totalHrsMins / 60;
+
+									$hrsResult = $totalHrs+$totalHrsMins;
+
+									$totalHours += $hrsResult;
+								}
+								else
+								{
+									$totalHours +=  $hrsComp[0];
+									$hrsResult = $hrsComp[0];
+								}
+
 								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
 								
 								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime)
@@ -559,7 +671,7 @@ if($holidayExist > 0)
 									$OTmins = $OTcomp[1];
 									$OTcomp = $OTmins / 60;
 
-									$OTresult = $OThours.$OTcomp;
+									$OTresult = $OThours+$OTcomp;
 
 									$totalOT += $OTresult;
 
