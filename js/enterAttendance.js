@@ -948,7 +948,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			// timeouthour1 += 12;
 			// timeinhour2 += 12;
 			// timeouthour2 += 12;
-			console.log("timein: "+timeinhour1 + " | timeout: " + timeouthour1);
+			// console.log("timein: "+timeinhour1 + " | timeout: " + timeouthour1);
 			if(timeinhour1 < 12)
 				timeinhour1 +=12;
 			else
@@ -1073,19 +1073,26 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			{
 				checkTime1 = timeinhour1 - timeouthour1;
 			}
-			if(timeinhour2 >= timeouthour2)
+			if(timeinhour2 != "HD")
 			{
-				var tempTime = 24 - timeinhour1;
-				checkTime1 = tempTime + timeouthour1;
+				if(timeinhour2 >= timeouthour2)
+				{
+					var tempTime = 24 - timeinhour1;
+					checkTime2 = tempTime + timeouthour1;
+					
+				}
+				else
+				{
+					checkTime2 = timeinhour2 - timeouthour2;
+				}
 			}
-			else
-			{
-				checkTime2 = timeinhour2 - timeouthour2;
-			}
+			
 
 			var useOnce = true;
+			console.log("yow: "+checkTime1);
 			if(Math.abs(checkTime1) >= 14)// if accumulated time is more than 14 hours 
 			{
+				console.log("14hrs");
 				if(workingmins == 0)// if no minutes are rendered
 				{
 					useOnce = false;
@@ -1110,7 +1117,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			workingmins = Math.abs(workingmins);
 			if(Math.abs(checkTime1) >= 8)// if accumulated time is more than 8 hours 
 			{
-				
+				console.log("8hrs");
 				if(workingmins == 0)
 				{
 					if(useOnce)
@@ -1242,23 +1249,34 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		// UNDERTIME if Working Hours don't reach 8
 			if(workinghours < 8 && workingmins == 0)
 			{
-				if((workinghours == 7) && (workingmins != 0))
+				row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hrs";
+				row.querySelector('.undertimeH').value = Math.abs(workinghours - 8) + " hrs";
+
+			}
+			else if(workinghours <= 8 && workingmins != 0)
+			{
+				if(workinghours == 8)
 				{
 					row.querySelector('.undertime').value = workingmins + " mins";
 					row.querySelector('.undertimeH').value = workingmins + " mins";
 				}
 				else
 				{
-					row.querySelector('.undertime').value = Math.abs(workinghours - 8) + " hrs";
-					row.querySelector('.undertimeH').value = Math.abs(workinghours - 8) + " hrs";
+					console.log("yes: "+workinghours);
+					var Uworkinghour = workinghours + 1;
+					var Uworkingmins = 60 - workingmins;
+					if(Uworkinghour != 8)
+					{
+						row.querySelector('.undertime').value = Math.abs(8 - Uworkinghour) + " hrs, " + Uworkingmins + " mins";
+						row.querySelector('.undertimeH').value = Math.abs(8 - Uworkinghour) + " hrs, " + Uworkingmins + " mins";	
+					}
+					else
+					{
+						row.querySelector('.undertime').value = Uworkingmins + " mins";
+						row.querySelector('.undertimeH').value = Uworkingmins + " mins";	
+					}
+					
 				}
-			}
-			else if(workinghours < 8)
-			{
-				var Uworkinghour = workinghours + 1;
-				var Uworkingmins = 60 - workingmins;
-				row.querySelector('.undertime').value = Math.abs(8 - Uworkinghour) + " hrs, " + Uworkingmins + " mins";
-				row.querySelector('.undertimeH').value = Math.abs(8 - Uworkinghour) + " hrs, " + Uworkingmins + " mins";
 			}
 			else
 			{
