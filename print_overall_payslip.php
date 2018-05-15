@@ -243,9 +243,9 @@ for($count = 0; $count <= $loopCount; $count++)
 
 				//Cola
 				$activeSheet->setCellValue($cellB.$colaDataCounter, $payrollArr['cola']);
-				$activeSheet->setCellValue($cellC.$colaDataCounter, 'x '.$payrollArr['num_days']);
+				$activeSheet->setCellValue($cellC.$colaDataCounter, 'x '.$daysAllowance);
 
-				$colaSubTotal = $payrollArr['cola'] * $payrollArr['num_days'];
+				$colaSubTotal = $payrollArr['cola'] * $daysAllowance;
 				$activeSheet->setCellValue($cellD.$colaDataCounter, $colaSubTotal);
 
 				//Sunday

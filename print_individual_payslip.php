@@ -123,9 +123,9 @@ $activeSheet->setCellValue('D5', $AllowSubTotal);
 
 //Cola
 $activeSheet->setCellValue('B6', $payrollArr['cola']);
-$activeSheet->setCellValue('C6', 'x '.$payrollArr['num_days']);
+$activeSheet->setCellValue('C6', 'x '.$daysAllowance);
 
-$colaSubTotal = $payrollArr['cola'] * $payrollArr['num_days'];
+$colaSubTotal = $payrollArr['cola'] * $daysAllowance;
 $activeSheet->setCellValue('D6', $colaSubTotal);
 
 //Sunday

@@ -85,27 +85,28 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 						$numDays = $payrollArr['num_days']." Day(s)";
 
 						$ratePerDaySub = 0;
-						if(!empty($payrollArr['sunday_hrs']))
-						{
-							if($payrollArr['sunday_hrs'] >= 8)
-							{
-								$ratePerDaySub = $payrollArr['num_days'];
-								$ratePerDaySub = abs($ratePerDaySub);
-							}
-							else
-							{
-								$ratePerDaySub = ($payrollArr['sunday_hrs']/8) - $payrollArr['num_days'];
-								$ratePerDaySub = abs($ratePerDaySub);
-							}
-							$ratePerDayDisp = $ratePerDaySub." Day(s)";
+						// if(!empty($payrollArr['sunday_hrs']))
+						// {
+						// 	if($payrollArr['sunday_hrs'] >= 8)
+						// 	{
+						// 		$ratePerDaySub = $payrollArr['num_days'];
+						// 		$ratePerDaySub = abs($ratePerDaySub);
+						// 	}
+						// 	else
+						// 	{
+						// 		$ratePerDaySub = ($payrollArr['sunday_hrs']/8) - $payrollArr['num_days'];
+						// 		$ratePerDaySub = abs($ratePerDaySub);
+						// 	}
+						// 	$ratePerDayDisp = $ratePerDaySub." Day(s)";
 
-						}
-						else
-						{
+						// }
+						// else
+						// {
 							$ratePerDaySub = $payrollArr['num_days'];//for computation
 							$ratePerDayDisp = $payrollArr['num_days']." Day(s)";// for display
-						}
+						// }
 						$subTotalRatePerDay = $ratePerDaySub * numberExactFormat($empArr['rate'],2,'.', true);
+						Print "<script>console.log('ratePerDaySub: ". $ratePerDaySub." | dailyRate: ".numberExactFormat($empArr['rate'],2,'.', true)."')</script>";//dito
 						$totalRatePerDay = $subTotalRatePerDay;//for the Subtotal of Earnings
 
 						if($subTotalRatePerDay == 0)
@@ -114,6 +115,7 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 							$subTotalRatePerDay = numberExactFormat($subTotalRatePerDay, 2, '.', true);
 						if($numDays == 0)
 							$numDays = "--";
+						Print "<script>console.log('num_days: ".$payrollArr['num_days']."')</script>";
 					?>
 					<tr>
 						<td>Rate per day</td>
@@ -124,7 +126,20 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 
 					<!-- Allowance -->
 					<?php
+
 						$allowDays =  $payrollArr['num_days'];
+						$allowExplode = explode('.', $payrollArr['num_days']);
+						if(count($allowExplode) == 2)
+						{
+							if($allowExplode[1] != 0)
+								$allowDays = $allowExplode[0]+1;
+							else
+								$allowDays = $allowExplode[0];
+						}
+						else
+						{
+							$allowDays = $allowExplode[0];
+						}
 						if(!empty($payrollArr['sunday_hrs']))
 							$allowDays++;
 
@@ -206,15 +221,43 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 					</tr>
 					<!-- Sunday Rate -->
 					<?php
+
+						$sundayHrs = $payrollArr['sunday_hrs'];
+						$sundayHoursComp = 0;
+						if($sundayHrs == 0)
+							$sundayHrs = "--";
+						else
+						{
+							$sundayArr = explode('.', $sundayHrs);
+							if(count($sundayArr) > 1)//if it has minutes
+							{
+								if($sundayArr[1] == 0)//no minutes
+								{
+									$sundayHoursComp = $sundayArr[0];
+									$sundayHrs =  $sundayArr[0]." Hour(s)";
+								}
+								else
+								{
+									$sundayMinComp = $sundayArr[1]/60;
+									$sundayHoursComp = $sundayArr[0] + $sundayMinComp;
+									$sundayHrs =  $sundayArr[0]." Hour(s) ".$sundayArr[1]." min(s)";	
+								}
+							}
+							else
+							{
+								$sundayHoursComp = $sundayArr[0];
+								$sundayHrs =  $sundayArr[0]." Hour(s)";
+							}
+						}
+
 						$subTotalSundayRate = $payrollArr['sunday_rate'] * $payrollArr['sunday_hrs'];
 						$totalSundayRate = $subTotalSundayRate;//for the Subtotal of Earnings
-						$sundayHrs = $payrollArr['sunday_hrs']." Hour(s)";
+						
 						if($subTotalSundayRate == 0)
 							$subTotalSundayRate = "--";
 						else
 							$subTotalSundayRate = numberExactFormat($subTotalSundayRate, 2, '.', true);
-						if($sundayHrs == 0)
-							$sundayHrs = "--";
+							
 					?>
 					<tr>
 						<td>Sunday Rate</td>
@@ -282,7 +325,7 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 					</tr>
 					<!-- COLA -->
 					<?php
-						$totalCola = $payrollArr['cola'] * $ratePerDayDisp;
+						$totalCola = $payrollArr['cola'] * $allowDays;
 						if($totalCola == 0)
 							$subTotalCola = "--";
 						else
@@ -294,7 +337,7 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 								<tr>
 									<td>COLA</td>
 									<td>".$payrollArr['cola']."</td>
-									<td>".$ratePerDayDisp."</td>
+									<td>".$allowDays."</td>
 									<td>".$subTotalCola."</td>
 								</tr>
 							";
@@ -303,7 +346,7 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 
 					<?php
 						$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $totalCola;
-							Print "<script>console.log('payComp1 - totalRegularHolidayRate: ".abs($totalRegularHolidayRate)." | totalSpecialHolidayRate: ".abs($totalSpecialHolidayRate)." | totalSundayRate: ".abs($totalSundayRate)." | totalNightDifferential: ".$totalNightDifferential." | totalAllowance: ".$totalAllowance." | totalOvertime: ".$totalOvertime." | totalRatePerDay: ".$totalRatePerDay." | xAllowance: ".$xAllowance." | totalCola: ".$totalCola."')</script>";
+							Print "<script>console.log('payroll_computation.php - totalRegularHolidayRate: ".abs($totalRegularHolidayRate)." | totalSpecialHolidayRate: ".abs($totalSpecialHolidayRate)." | totalSundayRate: ".abs($totalSundayRate)." | totalNightDifferential: ".$totalNightDifferential." | totalAllowance: ".$totalAllowance." | totalOvertime: ".$totalOvertime." | totalRatePerDay: ".$totalRatePerDay." | xAllowance: ".$xAllowance." | totalCola: ".$totalCola."')</script>";
 
 					?>
 					<tr style="font-family: QuicksandMed;">
@@ -599,9 +642,9 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 			    	</h4>
 			    </div>
 			    <?php
-
+			    		Print "<script>console.log('logic_payroll - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".abs($payrollArr['tools_paid'])."')</script>";
 			    	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($payrollArr['tools_paid']);
-			    
+			    	
 			    	$grandTotal = abs($grandTotal);
 			    ?>
 			    <div class="col-md-1 col-lg-12">

@@ -71,6 +71,7 @@
 	{
 		$sundayBool = true;
 		$sunWorkHrs = $_POST['sunWorkHrs'];
+		Print "<script>console.log('sunWorkHrs: ". $sunWorkHrs."')</script>";
 		if($WorkHrsArr != "")
 			$WorkHrsArr .= ","; 
 		$WorkHrsArr .= $sunWorkHrs;
@@ -102,20 +103,23 @@
 	{
 		if($sundayBool)
 		{
-			if($hrsCheck < 8)
-			{
-				$overallWorkDays = ($hrsCheck / 8) + $overallWorkDays;
-			}
-			else
-			{
-				// $overallWorkDays++;
+			// if($hrsCheck < 8)
+			// {
+			// 	$overallWorkDays = ($hrsCheck / 8) + $overallWorkDays;
+			// 	Print '<script>console.log("less than 8hrs on a Sunday:"'.$overallWorkDays.');</script>';
+			// }
+			// else
+			// {
+			// 	$overallWorkDays++;
 				$sunday_Att = 1;
-			}
+			// }
 			$sundayBool = false;
 		}
 		else if($hrsCheck < 8)
 		{
 			$overallWorkDays = ($hrsCheck / 8) + $overallWorkDays;
+			$overallWorkDays = numberExactFormat($overallWorkDays,2,'.', false);
+			// $overallWorkDays++;
 		}
 		else
 		{
@@ -221,8 +225,8 @@
 
 			if($holidayNum == 1)//if there is only one Holiday in the week
 			{	
-				Print '<script>console.log("One holiday in the week.")</script>';
-
+				// Print '<script>console.log("One holiday in the week.")</script>';
+				Print '<script>console.log("speHolidayInc5: '.$speHolidayInc.'")</script>';
 				$holidayName = $_POST['holidayName'][0];
 				$holidayType = $_POST['holidayType'][0];
 				$holidayDate = $_POST['holidayDate'][0];
@@ -250,12 +254,13 @@
 				{
 					if($holidayType == "special")//Special Holiday
 					{
-						$addHoliday = $speHolidayInc; 
+						Print '<script>console.log("speHolidayInc3: '.$speHolidayInc.'")</script>';
+						$addHoliday += $speHolidayInc; 
 						$speHolNum++;
 					}
 					else//Regular Holiday
 					{
-						$addHoliday = $regHolidayInc; 
+						$addHoliday += $regHolidayInc; 
 						$regHolNum++;
 					}
 				}
@@ -282,6 +287,7 @@
 						// $overallWorkDays++;//increment workdays 
 						if($holidayType != "special")//Special Holiday
 						{
+							Print '<script>console.log("special3")</script>';
 							// check if employee went to work the next day
 							$dayAfterArr = mysql_fetch_assoc($dayAfterChecker);
 							if($dayAfterArr['attendance'] == '2') // If employee went to work on holiday
@@ -305,6 +311,7 @@
 						// Print '<script>console.log("Employee went to work on holiday.")</script>';
 						if($holidayClass == "special")//Special Holiday
 						{
+							Print '<script>console.log("speHolidayInc2: '.$speHolidayInc.'")</script>';
 							$addHoliday += $speHolidayInc;
 							$speHolNum++;
 						}
@@ -318,7 +325,10 @@
 					else
 					{
 						if($holidayClass != "special")
+						{
+							$addHoliday += $regHolidayInc;
 							$regHolNum++;
+						}
 						// Print '<script>console.log("Employee automatically gets regular rate: '.$regHolNum.'")</script>';
 					}
 					// Print '<script>console.log("Total overall holidays: '.$regHolNum.'")</script>';
@@ -367,12 +377,13 @@
 						// Print '<script>console.log("Employee went to work on a holiday.")</script>';
 						if($holidayType == "special")//Special Holiday
 						{
-							$addHoliday = $speHolidayInc;
+							Print '<script>console.log("speHolidayInc1: '.$speHolidayInc.'")</script>';
+							$addHoliday += $speHolidayInc;
 							$speHolNum++;
 						}
 						else//Regular Holiday
 						{
-							$addHoliday = $regHolidayInc;
+							$addHoliday += $regHolidayInc;
 							// $overallWorkDays++;//increment workdays 
 							$regHolNum+=2;
 						}
@@ -380,7 +391,10 @@
 					else
 					{
 						if($holidayType != "special")
+						{
+							$addHoliday += $regHolidayInc;
 							$regHolNum++;
+						}
 						// Print '<script>console.log("Employee automatically gets regular rate: '.$regHolNum.'")</script>';
 					}
 					// Print '<script>console.log("Total overall holidays: '.$regHolNum.'")</script>';
@@ -400,8 +414,20 @@
 		$extraAllowance = $_POST['extra_allowance'];
 
 	$daysAllowance = $overallWorkDays;
+	$checkRoundAllowance = explode(".", $daysAllowance);
+	if(count($checkRoundAllowance) > 1)
+	{
+
+		if($checkRoundAllowance[1] != 0)
+			$daysAllowance = $checkRoundAllowance[0] + 1;
+		else
+			$daysAllowance = $checkRoundAllowance[0];
+	}
+
 	if(!empty($_POST['sunWorkHrs']))
+	{
 		$daysAllowance++;
+	}
 
 	$compAllowance = (($daysAllowance * $dailyAllowance)  + $extraAllowance);
 //Loans deduction --------------------------------------------------------------------- Incomplete
@@ -644,24 +670,26 @@
 //Grand Total Computation
 
 	$totalRegularHolidayRate = ($regHolNum * $regHolidayInc);
-	$totalSpecialHolidayRate = $speHolidayInc;
+	$totalSpecialHolidayRate = ($speHolNum * $speHolidayInc);
 	$totalSundayRate = $SundayRatePerHour * $sunWorkHrs;
 	$totalNightDifferential = $NdRatePerHour * $totalND;
 	$totalAllowance = $compAllowance;
 	$totalOvertime = $OtRatePerHour * $totalOT;
 	$totalRatePerDay = $overallWorkDays * $dailyRate;
+	Print "<script>console.log('overallWorkDays: ". $overallWorkDays." | dailyRate: ".$dailyRate."')</script>";
 	$xAllowance = $extraAllowance;
 
-	$totalCola = $cola * $overallWorkDays;
+	$totalCola = $cola * $daysAllowance;
 	$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $totalCola;
-	Print "<script>console.log('payComp - totalRegularHolidayRate: ".abs($totalRegularHolidayRate)." | totalSpecialHolidayRate: ".abs($totalSpecialHolidayRate)." | totalSundayRate: ".abs($totalSundayRate)." | totalNightDifferential: ".$totalNightDifferential." | totalAllowance: ".$totalAllowance." | totalOvertime: ".$totalOvertime." | totalRatePerDay: ".$totalRatePerDay." | xAllowance: ".$xAllowance." | totalCola: ".$totalCola."')</script>";
+	Print "<script>console.log('logic_payroll - totalRegularHolidayRate: ".abs($totalRegularHolidayRate)." | totalSpecialHolidayRate: ".abs($totalSpecialHolidayRate)." | totalSundayRate: ".abs($totalSundayRate)." | totalNightDifferential: ".$totalNightDifferential." | totalAllowance: ".$totalAllowance." | totalOvertime: ".$totalOvertime." | totalRatePerDay: ".$totalRatePerDay." | xAllowance: ".$xAllowance." | totalCola: ".$totalCola."')</script>";
 
 	$contributions = $pagibig + $philhealth + $sss + $tax;
 
 	$totalLoans = $loan_pagibig + $loan_sss + $loan_oldVale + $loan_newVale;
-	Print "<script>console.log('toDB - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".abs($tools_paid)."')</script>";
+	// Print "<script>console.log('toDB - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".abs($tools_paid)."')</script>";
+	Print "<script>console.log('logic_payroll - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".$tools_paid."')</script>";
 	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($tools_paid);
-	$grandTotal = abs($grandTotal);
+	$grandTotal = abs(numberExactFormat($grandTotal, 2, '.', false));
 
 
 
@@ -787,7 +815,8 @@
 	{
 		mysql_query($updateQuery)or die(mysql_error());;
 	}
-	
+	 
+
 	Print "	<form method = 'POST' action='payroll_computation.php' id='logicPayrollForm'>
 				<input type='hidden' name='empid' value='".$empid."'>
 				<input type='hidden' name='date' value='".$date."'>
