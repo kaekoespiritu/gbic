@@ -225,8 +225,7 @@
 
 			if($holidayNum == 1)//if there is only one Holiday in the week
 			{	
-				// Print '<script>console.log("One holiday in the week.")</script>';
-				Print '<script>console.log("speHolidayInc5: '.$speHolidayInc.'")</script>';
+				Print '<script>console.log("One holiday in the week.")</script>';
 				$holidayName = $_POST['holidayName'][0];
 				$holidayType = $_POST['holidayType'][0];
 				$holidayDate = $_POST['holidayDate'][0];
@@ -241,10 +240,6 @@
 					{
 						if($holidayType != "special")
 							$regHolNum++;
-					}
-					else
-					{
-						$regHolNum++;
 					}
 				}
 
