@@ -140,8 +140,11 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 						{
 							$allowDays = $allowExplode[0];
 						}
-						if(!empty($payrollArr['sunday_hrs']))
+						if($payrollArr['sunday_hrs'] != 0)
+						{
+							Print "<script>console.log('sunday')</script>";
 							$allowDays++;
+						}
 
 						$subTotalAllowance = $empArr['allowance'] * $allowDays;
 						$totalAllowance = $subTotalAllowance;//for the Subtotal of Earnings
