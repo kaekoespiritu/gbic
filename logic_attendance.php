@@ -341,7 +341,7 @@ if(!empty($dateRows))// Updating attendance
 			{
 				if($AwolChecker['attendance'] == 1)
 				{
-					//Print "<script>alert('".$AwolCounter."')</script>";
+					
 					$AwolCounter++;
 				}
 				if($loopCounter == 0)
@@ -352,7 +352,8 @@ if(!empty($dateRows))// Updating attendance
 				$loopCounter++;
 
 			}
-			if($AwolCounter >= 7)
+			Print "<script>console.log('update: ".$AwolCounter."')</script>";
+			if($AwolCounter >= 6)
 			{
 				
 				$checkAwol = "SELECT * FROM awol_employees WHERE empid = '$empid'";
@@ -658,12 +659,13 @@ else// NEW attendance
 			{
 				if($AwolChecker['attendance'] == 1)
 				{
-					//Print "<script>alert('".$AwolCounter."')</script>";
+					
 					$AwolCounter++;
 				}
 				if($AwolCounter >= 6)
 					$start = $AwolChecker['date'];
 			}
+			Print "<script>console.log('new: ".$AwolCounter."')</script>";
 			if($AwolCounter >= 6)
 			{
 				//Print "<script>alert('1')</script>";
@@ -753,7 +755,12 @@ else// NEW attendance
 }
 
 //require "directives/attendance/attendance_query.php";
-Print "<script>window.location.assign('enterattendance.php?position=null&site=". $location."')</script>";
+
+Print "<script>
+	var a = confirm('yow?');
+	if(a)
+		window.location.assign('enterattendance.php?position=null&site=". $location."');
+	</script>";
 
 ?>
 
