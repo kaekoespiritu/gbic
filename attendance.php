@@ -156,7 +156,7 @@ include('directives/session.php');
 								{
 									Print "<h4>Special Holiday</h4>";
 								}
-								Print "	<a href='holiday_query.php?date=".$date."' class='btn btn-danger btn-sm pull-down'  id='cancel'>
+								Print "	<a href='holiday_query.php?date=".$date."' class='btn btn-danger btn-sm pull-down col-md-12 col-lg-12'  id='cancel'>
 										Cancel
 									</a>";	
 							}
@@ -492,7 +492,7 @@ include('directives/session.php');
 			var inputField = document.getElementById('nameOfHoliday');
 			var cancel = document.getElementById('cancel');
 			var cancelButton = document.createElement("a");
-				cancelButton.setAttribute("class", "btn btn-danger btn-sm pull-down");
+				cancelButton.setAttribute("class", "btn btn-danger btn-sm pull-down col-md-12 col-lg-12");
 				cancelButton.setAttribute("id", "cancel");
 				cancelButton.setAttribute("href", "holiday_query.php?date=<?php Print $date ?>");
 				//cancelButton.setAttribute("onclick", "cancelHoliday()");
@@ -550,7 +550,7 @@ include('directives/session.php');
 			nameOfHoliday.setAttribute("id", "nameOfHoliday");
 
 		var cancelButton = document.createElement("a");
-			cancelButton.setAttribute("class", "btn btn-danger btn-sm pull-down");
+			cancelButton.setAttribute("class", "btn btn-danger btn-sm pull-down col-md-12 col-lg-12");
 			cancelButton.setAttribute("id", "cancel");
 			cancelButton.setAttribute("href", "holiday_query.php?date=<?php Print $date ?>");
 			cancelButton.innerHTML = "Cancel";
