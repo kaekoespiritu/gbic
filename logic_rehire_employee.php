@@ -22,9 +22,12 @@
 	$ratePerDay = mysql_real_escape_string($_POST['txt_addRatePerDay']);
 	$allowance = mysql_real_escape_string($_POST['txt_addAllowance']);
 	
-	$sss = mysql_real_escape_string($_POST['txt_addSSS']);
-	$philhealth = mysql_real_escape_string($_POST['txt_addPhilhealth']);
-	$pagibig = mysql_real_escape_string($_POST['txt_addPagibig']);
+	$sssEE = mysql_real_escape_string($_POST['txt_addSSSEE']);
+	$sssER = mysql_real_escape_string($_POST['txt_addSSSER']);
+	$philhealthEE = mysql_real_escape_string($_POST['txt_addPhilhealthEE']);
+	$philhealthER = mysql_real_escape_string($_POST['txt_addPhilhealthER']);
+	$pagibigEE = mysql_real_escape_string($_POST['txt_addPagibigEE']);
+	$pagibigER = mysql_real_escape_string($_POST['txt_addPagibigER']);
 	
 	$emergencyContact = mysql_real_escape_string($_POST['txt_emergencyContact']);
 	$characterReference = mysql_real_escape_string($_POST['txt_characterReference']);
@@ -37,7 +40,7 @@
 	//SSS contribution computation
 
 	
-	if(($sss && $philhealth && $pagibig))//checks if the employee has all the documents needed
+	if(($sssEE && $philhealthEE && $pagibigEE))//checks if the employee has all the documents needed
 	{
 		$complete_doc = 1;
 	}
@@ -69,13 +72,15 @@
 											civilstatus = '$civilStatus',
 											datehired = '$date',
 											position = '$position',
-											-- salary = '$salary',
 											rate = '$ratePerDay',
 											allowance = '$allowance',
 											site = '$site',
-											sss = '$sss',
-											philhealth = '$philhealth',
-											pagibig = '$pagibig',
+											sss = '$sssEE',
+											philhealth = '$philhealthEE',
+											pagibig = '$pagibigEE',
+											sss_er = '$sssER',
+											philhealth_er = '$philhealthER',
+											pagibig_er = '$pagibigER',
 											employment_status = '1',
 											complete_doc = '$complete_doc',
 											reference = '$characterReference',

@@ -93,7 +93,7 @@ include_once('directives/db.php');
 											<label for="address">Address</label>
 										</div>
 										<div class="col-md-9 col-lg-9">
-											<input name="txt_addAddress" type="text" class="form-control" id="address" required>
+											<input name="txt_addAddress" type="text" class="form-control" id="address">
 										</div>
 									</div><br>
 
@@ -234,7 +234,84 @@ include_once('directives/db.php');
 										
 
 										<div class="row">
-											<div class="col-md-5 col-lg-5">
+											<!-- SSS -->
+											<div class="col-md-12 col-lg-12">
+												<div class="col-md-3 col-lg-3">
+													<input type="checkbox" id="sssCheckbox" onchange="sssCheckboxFunc()">
+													<label for="sss">SSS</label>
+												</div>
+												<div class="col-md-9 col-lg-9">
+													<!-- <div class="form-inline"> -->
+														<div class="row">
+															<div class="col-md-1 col-lg-1">
+																<label for="sss_ee">EE:</label>
+															</div>
+															<div class="col-md-4 col-lg-4">
+																<input name="txt_addSSSEE" type="text" placeholder="No document" class="form-control" id="sssEE" readonly>
+															</div>
+															<div class="col-md-1 col-lg-1">
+																<label for="sss_er">ER:</label>
+															</div>
+															<div class="col-md-4 col-lg-4">
+																<input name="txt_addSSSER" type="text" placeholder="No document" class="form-control" id="sssER" readonly>
+															</div>
+														</div>
+													<!-- </div> -->
+												</div>
+											</div>
+
+											<!-- PhilHealth -->
+											<div class="col-md-12 col-lg-12 pull-down">
+												<div class="col-md-3 col-lg-3">
+													<input type="checkbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()">
+													<label for="philhealth" class="nowrap">Philhealth</label>
+												</div>
+												<div class="col-md-9 col-lg-9">
+													<div class="row">
+														<div class="col-md-1 col-lg-1">
+															<label for="philhealth_ee">EE:</label>
+														</div>
+														<div class="col-md-4 col-lg-4">
+															<input name="txt_addPhilhealthEE" type="text" placeholder="No document" class="form-control" id="philhealthEE" readonly>
+														</div>
+														<div class="col-md-1 col-lg-1">
+															<label for="philhealth_er">ER:</label>
+														</div>
+														<div class="col-md-4 col-lg-4">
+															<input name="txt_addPhilhealthER" type="text" placeholder="No document" class="form-control" id="philhealthER" readonly>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<!-- PagIBIG-->
+											<div class="col-md-12 col-lg-12 pull-down">
+												<div class="col-md-3 col-lg-3">
+													<input type="checkbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()">
+													<label for="pagibig" class="nowrap">Pagibig</label>
+												</div>
+												<div class="col-md-9 col-lg-9">
+													<div class="row">
+														<div class="col-md-1 col-lg-1">
+															<label for="pagibig_ee">EE:</label>
+														</div>
+														<div class="col-md-4 col-lg-4">
+															<input name="txt_addPagibigEE" type="text" placeholder="No document" class="form-control" id="pagibigEE" readonly>
+														</div>
+														<div class="col-md-1 col-lg-1">
+															<label for="pagibig_er">ER:</label>
+														</div>
+														<div class="col-md-4 col-lg-4">
+															<input name="txt_addPagibigER" type="text" placeholder="No document" class="form-control" id="pagibigER" readonly>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<div class="col-sm-10 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down text-center well well-sm">
+												Note: Check boxes if employee has document for<br>SSS / PhilHealth / Pagibig.
+											</div>
+											<!-- <div class="col-md-5 col-lg-5">
 												<label for="sss">SSS</label>
 											</div>
 											<div class="col-md-4 col-lg-4">
@@ -259,7 +336,7 @@ include_once('directives/db.php');
 											<!-- <div class="col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 pull-down text-center well well-sm">
 												* SSS contribution is automatically computed based on employee's monthly salary.
 											</div> -->
-										</div>
+										</div> 
 									</div>
 								</div>
 							</div>	
@@ -396,47 +473,68 @@ include_once('directives/db.php');
 			var allowance = parent.querySelector('.toModalAllowance').value;
 			
 			//Government Documents
-			var sss = parent.querySelector('.toModalSss').value;
-			var pagibig = parent.querySelector('.toModalPagibig').value;
-			var philhealth = parent.querySelector('.toModalPhilhealth').value;
-
-			
+			var sssEE = parent.querySelector('.toModalSssEE').value;
+			var sssER = parent.querySelector('.toModalSssER').value;
+			var pagibigEE = parent.querySelector('.toModalPagibigEE').value;
+			var pagibigER = parent.querySelector('.toModalPagibigER').value;
+			var philhealthEE = parent.querySelector('.toModalPhilhealthEE').value;
+			var philhealthER = parent.querySelector('.toModalPhilhealthER').value;
 
 			var htmlPosition = "<option value='"+position+"' selected>"+position+"</option>";
 			var htmlSite = "<option value='"+site+"' selected>"+site+"</option>";
 			var htmlCivil = "<option value='"+civilstatus+"' selected>"+civilstatus+"</option>";
 
-			var sssRow = document.getElementById('sss');
-			var pagibigRow = document.getElementById('pagibig');
-			var philhealthRow = document.getElementById('philhealth');
-			if(sss != ""){
+			var sssRowEE = document.getElementById('sssEE');
+			var sssRowER = document.getElementById('sssER');
+			var pagibigRowEE = document.getElementById('pagibigEE');
+			var pagibigRowER = document.getElementById('pagibigER');
+			var philhealthRowEE = document.getElementById('philhealthEE');
+			var philhealthRowER = document.getElementById('philhealthER');
+			if(sssEE != ""){
 				document.getElementById('sssCheckbox').checked = true;
-				sssRow.value = sss;
-				sssRow.placeholder = "";
+				sssRowEE.value = sssEE;
+				sssRowEE.placeholder = "";
+				sssRowER.value = sssER;
+				sssRowER.placeholder = "";
 
 			}
 			else {
-				sssRow.placeholder = "No document";
-				sssRow.readOnly = true;
-				sssRow.value = "";
+				sssRowEE.placeholder = "No document";
+				sssRowEE.readOnly = true;
+				sssRowEE.value = "";
+				sssRowER.placeholder = "No document";
+				sssRowER.readOnly = true;
+				sssRowER.value = "";
 			}
-			if(pagibig != ""){
+			if(pagibigEE != ""){
 				document.getElementById('pagibigCheckbox').checked = true;
-				pagibigRow.value = pagibig;
+				pagibigRowEE.value = pagibigEE;
+				pagibigRowEE.placeholder = "";
+				pagibigRowER.value = pagibigER;
+				pagibigRowER.placeholder = "";
 			}
 			else {
-				pagibigRow.placeholder = "No document";
-				pagibigRow.readOnly = true;
-				pagibigRow.value = "";
+				pagibigRowEE.placeholder = "No document";
+				pagibigRowEE.readOnly = true;
+				pagibigRowEE.value = "";
+				pagibigRowER.placeholder = "No document";
+				pagibigRowER.readOnly = true;
+				pagibigRowER.value = "";
 			}
-			if(philhealth != ""){
+			if(philhealthEE != ""){
 				document.getElementById('philhealthCheckbox').checked = true;
-				philhealthRow.value = philhealth;
+				philhealthRowEE.value = philhealthEE;
+				philhealthRowEE.placeholder = "";
+				philhealthRowER.value = philhealthER;
+				philhealthRowER.placeholder = "";
 			}
 			else {
-				philhealthRow.placeholder = "No document";
-				philhealthRow.readOnly = true;
-				philhealthRow.value = "";
+				philhealthRowEE.placeholder = "No document";
+				philhealthRowEE.readOnly = true;
+				philhealthRowEE.value = "";
+				philhealthRowER.placeholder = "No document";
+				philhealthRowER.readOnly = true;
+				philhealthRowER.value = "";
 			}
 
 			// Move values to modal
@@ -492,213 +590,138 @@ include_once('directives/db.php');
 		
 		function next(id) 
 		{
-	  	var form, input, newInput2;
-	  	//Created a form
-	  	form = document.createElement('form');
-	  	form.action = 'absence_view.php';
-	  	form.method = 'post';
-	  	//Elements insite the form
-	  	input = document.createElement('input');
-	  	input.type = 'hidden';
-	  	input.name = 'empid';
-	  	input.value = id;
+		  	var form, input, newInput2;
+		  	//Created a form
+		  	form = document.createElement('form');
+		  	form.action = 'absence_view.php';
+		  	form.method = 'post';
+		  	//Elements insite the form
+		  	input = document.createElement('input');
+		  	input.type = 'hidden';
+		  	input.name = 'empid';
+		  	input.value = id;
 
-	  	//Insert inside the elements inside the form
-	  	form.appendChild(input);
-	  	document.getElementById('hidden_form_container').appendChild(form);
-	  	//used DOM to submit the form
-	  	form.submit();
+		  	//Insert inside the elements inside the form
+		  	form.appendChild(input);
+		  	document.getElementById('hidden_form_container').appendChild(form);
+		  	//used DOM to submit the form
+		  	form.submit();
 		}	
 
-		/* AUTOMATED COMPUTATION FOR SSS BASED ON MONTHLY SALARY */
-// function sssbox() {
-// 		var monthly = document.getElementById('monthlysalary').value;
-// 		var sssContribution = 0;
 
-// 		monthly = monthly.replace( /,/g, "");//removes commas
+		function salaryDecimal(){
+			var salary = document.getElementsByName('txt_addRatePerDay')[0];
+			var value = salary.value;
+			var decimal = parseInt(value).toFixed(2);
+			salary.value=decimal;
+		}
+		function allowanceDecimal(){
+			var allowance = document.getElementById('allowance');
+			var value = document.getElementById('allowance').value;
+			var decimal = parseInt(value).toFixed(2);
+			allowance.value=decimal;
+		}
+		function pagibigDecimal(evt){
+			var pagibig = document.getElementById('pagibig');
+			var value = document.getElementById('pagibig').value;
+			var decimal = parseInt(value).toFixed(2);
+			pagibig.value=decimal;	
 
-// 		if(monthly >= 1000 && monthly <= 1249.9)
-// 			sssContribution = 36.30;
-// 		//1250 ~ 1749.9 = 54.50
-// 		else if(monthly >= 1250 && monthly <= 1749.9)
-// 			sssContribution = 54.50;
-// 		//1750 ~ 2249.9 = 72.70
-// 		else if(monthly >= 1750 && monthly <= 2249.9)
-// 			sssContribution = 72.70;
-// 		//2250 ~ 2749.9 = 90.80
-// 		else if(monthly >= 2250 && monthly <= 2749.9)
-// 			sssContribution = 90.80;
-// 		//2750 ~ 3249.9 = 109.0
-// 		else if(monthly >= 2750 && monthly <= 3249.9)
-// 			sssContribution = 109.00;
-// 		//3250 ~ 3749.9 = 127.20
-// 		else if(monthly >= 3250 && monthly <= 3749.9)
-// 			sssContribution = 127.20;
-// 		//3750 ~ 4249.9 = 145.30
-// 		else if(monthly >= 3750 && monthly <= 4249.9)
-// 			sssContribution = 145.30;
-// 		//4250 ~ 4749.9 = 163.50
-// 		else if(monthly >= 4250 && monthly <= 4749.9)
-// 			sssContribution = 163.50;
-// 		//4750 ~ 5249.9 = 181.70
-// 		else if(monthly >= 4750 && monthly <= 5249.9)
-// 			sssContribution = 181.70;
-// 		//5250 ~ 5749.9 = 199.80
-// 		else if(monthly >= 5250 && monthly <= 5749.9)
-// 			sssContribution = 199.80;
-// 		//5750 ~ 6249.9 = 218.0
-// 		else if(monthly >= 5750 && monthly <= 6249.9)
-// 			sssContribution = 218.00;
-// 		//6250 ~ 6749.9 = 236.20
-// 		else if(monthly >= 6250 && monthly <= 6749.9)
-// 			sssContribution = 236.20;
-// 		//6750 ~ 7249.9 = 254.30
-// 		else if(monthly >= 6750 && monthly <= 7249.9)
-// 			sssContribution = 254.30;
-// 		//7250 ~ 7749.9 = 272.50
-// 		else if(monthly >= 7250 && monthly <= 7749.9)
-// 			sssContribution = 272.50;
-// 		//7750 ~ 8249.9 = 290.70
-// 		else if(monthly >= 7750 && monthly <=  8249.9)
-// 			sssContribution = 290.70;
-// 		//8250 ~ 8749.9 = 308.80
-// 		else if(monthly >= 8250 && monthly <= 8749.9)
-// 			sssContribution = 308.80;
-// 		//8750 ~ 9249.9 = 327.0
-// 		else if(monthly >= 8750 && monthly <= 9249.9 )
-// 			sssContribution = 327.00;
-// 		//9250 ~ 9749.9 = 345.20
-// 		else if(monthly >= 9250 && monthly <= 9749.9)
-// 			sssContribution = 345.20;
-// 		//9750 ~ 10249.9 = 363.30
-// 		else if(monthly >= 9750 && monthly <= 10249.9)
-// 			sssContribution = 363.30;
-// 		//10250 ~ 10749.9 = 381.50
-// 		else if(monthly >= 10250 && monthly <=  10749.9)
-// 			sssContribution = 381.50;
-// 		//10750 ~ 11249.9 = 399.70
-// 		else if(monthly >= 10750 && monthly <= 11249.9)
-// 			sssContribution = 399.70;
-// 		//11250 ~ 11749.9 = 417.80
-// 		else if(monthly >= 11250 && monthly <= 11749.9)
-// 			sssContribution = 417.80;
-// 		//11750 ~ 12249.9 = 436.0
-// 		else if(monthly >= 11750 && monthly <= 12249.9)
-// 			sssContribution = 436.00;
-// 		//12250 ~ 12749.9 = 454.20
-// 		else if(monthly >= 12250 && monthly <= 12749.9)
-// 			sssContribution = 454.20;
-// 		//12750 ~ 13249.9 = 472.30
-// 		else if(monthly >= 12750 && monthly <= 13249.9)
-// 			sssContribution = 472.30;
-// 		//13250 ~ 13749.9 = 490.50
-// 		else if(monthly >= 13250 && monthly <= 13749.9)
-// 			sssContribution = 490.50;
-// 		//13750 ~ 14249.9 = 508.70
-// 		else if(monthly >= 13750 && monthly <= 14249.9 )
-// 			sssContribution = 508.70;
-// 		//14250 ~ 14749.9 = 526.80
-// 		else if(monthly >= 14250 && monthly <= 14749.9)
-// 			sssContribution = 526.80;
-// 		//14750 ~ 15249.9 = 545.0
-// 		else if(monthly >= 14750 && monthly <= 15249.9 )
-// 			sssContribution = 545.00;
-// 		//15250 ~ 15749.9 = 563.20
-// 		else if(monthly >= 15250 && monthly <= 15749.9)
-// 			sssContribution = 563.20;
-// 		//15750 ~ higher = 581.30
-// 		else if(monthly >= 15750)
-// 			sssContribution = 581.30;
+			// REGEX
+			var theEvent = evt || window.event;
+			var key = theEvent.keyCode || theEvent.which;
+			key = String.fromCharCode( key );
+			var regex = /[0-9]|\./;
+			if( !regex.test(key) ) 
+				 theEvent.returnValue = false;
+			if(theEvent.preventDefault) 
+				theEvent.preventDefault();
+		}
+		function sssCheckboxFunc() {
+			var sss = document.getElementById('sssCheckbox');
+			var sssEERow = document.getElementById('sssEE');
+			var sssERRow = document.getElementById('sssER');
+			if(sss.checked == true)
+			{
+				//Employee
+				sssEERow.readOnly = false;
+				sssEERow.placeholder = "";
+				//Employer
+				sssERRow.readOnly = false;
+				sssERRow.placeholder = "";
 
-// 		sssContribution = sssContribution.toFixed(2);
-// 		document.getElementById('sss').value = sssContribution;
-// }
-// function monthlySalary(salary){
-// 	var salary = document.getElementById('monthlysalary').value;
-// 	var dailyRate = document.getElementById('rate');
-// 	dailyRate.value= (salary/25).toFixed(2);
-// 	if(document.getElementById('sssCheckbox').checked == true){
-// 		sssbox();
-// 	}
-// }
-function salaryDecimal(){
-	var salary = document.getElementsByName('txt_addRatePerDay')[0];
-	var value = salary.value;
-	var decimal = parseInt(value).toFixed(2);
-	salary.value=decimal;
-}
-function allowanceDecimal(){
-	var allowance = document.getElementById('allowance');
-	var value = document.getElementById('allowance').value;
-	var decimal = parseInt(value).toFixed(2);
-	allowance.value=decimal;
-}
-function pagibigDecimal(evt){
-	var pagibig = document.getElementById('pagibig');
-	var value = document.getElementById('pagibig').value;
-	var decimal = parseInt(value).toFixed(2);
-	pagibig.value=decimal;	
-
-	// REGEX
-	var theEvent = evt || window.event;
-	var key = theEvent.keyCode || theEvent.which;
-	key = String.fromCharCode( key );
-	var regex = /[0-9]|\./;
-	if( !regex.test(key) ) 
-		 theEvent.returnValue = false;
-	if(theEvent.preventDefault) 
-		theEvent.preventDefault();
-}
-function sssCheckboxFunc() {
-	var sss = document.getElementById('sssCheckbox');
-	var sssRow = document.getElementById('sss');
-	if(sss.checked == true)
-	{
-		// sssbox();
-		sssRow.readOnly = false;
-		sssRow.placeholder = "";
-	}
-	else
-	{
-		sssRow.placeholder = "No document";
-		sssRow.readOnly = true;
-		sssRow.value = "";
-	}
-}
-function philhealthCheckboxFunc() {
-	var philhealth = document.getElementById('philhealthCheckbox');
-	var philhealthRow = document.getElementById('philhealth');
-	if(philhealth.checked == true)
-	{
-		philhealthRow.readOnly = false;
-		philhealthRow.required = true;
-		philhealthRow.placeholder = "";
-	}
-	else
-	{
-		philhealthRow.placeholder = "No document";
-		philhealthRow.readOnly = true;
-		philhealthRow.required = false;
-		philhealthRow.value = "";
-	}
-}
-function pagibigCheckboxFunc() {
-	var pagibig = document.getElementById('pagibigCheckbox');
-	var pagibigRow = document.getElementById('pagibig');
-	if(pagibig.checked == true)
-	{
-		pagibigRow.readOnly = false;
-		pagibigRow.required = true;
-		pagibigRow.placeholder = "";
-	}
-	else
-	{
-		pagibigRow.placeholder = "No document";
-		pagibigRow.readOnly = true;
-		pagibigRow.required = false;
-		pagibigRow.value = "";
-	}
-}
+				// sssbox();
+			}
+			else
+			{
+				//Employee
+				sssEERow.placeholder = "No document";
+				sssEERow.readOnly = true;
+				sssEERow.value = "";
+				//Employer
+				sssERRow.placeholder = "No document";
+				sssERRow.readOnly = true;
+				sssERRow.value = "";
+			}
+		}
+		function philhealthCheckboxFunc() {
+			var philhealth = document.getElementById('philhealthCheckbox');
+			var philhealthEERow = document.getElementById('philhealthEE');
+			var philhealthERRow = document.getElementById('philhealthER');
+			if(philhealth.checked == true)
+			{
+				//Employee
+				philhealthEERow.readOnly = false;
+				philhealthEERow.required = true;
+				philhealthEERow.placeholder = "";
+				//Employer
+				philhealthERRow.readOnly = false;
+				philhealthERRow.required = true;
+				philhealthERRow.placeholder = "";
+			}
+			else
+			{
+				//Employee
+				philhealthEERow.placeholder = "No document";
+				philhealthEERow.readOnly = true;
+				philhealthEERow.required = false;
+				philhealthEERow.value = "";
+				//Employer
+				philhealthERRow.placeholder = "No document";
+				philhealthERRow.readOnly = true;
+				philhealthERRow.required = false;
+				philhealthERRow.value = "";
+			}
+		}
+		function pagibigCheckboxFunc() {
+			var pagibig = document.getElementById('pagibigCheckbox');
+			var pagibigEERow = document.getElementById('pagibigEE');
+			var pagibigERRow = document.getElementById('pagibigER');
+			if(pagibig.checked == true)
+			{
+				//Employee
+				pagibigEERow.readOnly = false;
+				pagibigEERow.required = true;
+				pagibigEERow.placeholder = "";
+				//Employer
+				pagibigERRow.readOnly = false;
+				pagibigERRow.required = true;
+				pagibigERRow.placeholder = "";
+			}
+			else
+			{
+				//Employee
+				pagibigEERow.placeholder = "No document";
+				pagibigEERow.readOnly = true;
+				pagibigEERow.required = false;
+				pagibigEERow.value = "";
+				//Employer
+				pagibigERRow.placeholder = "No document";
+				pagibigERRow.readOnly = true;
+				pagibigERRow.required = false;
+				pagibigERRow.value = "";
+			}
+		}
 	</script>
 
 </body>

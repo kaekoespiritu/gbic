@@ -40,9 +40,12 @@ if(!empty($result))
       <input type="hidden" class="toModalRate" value="'.$row['rate'].'">
       <input type="hidden" class="toModalAllowance" value="'.$row['allowance'].'">
       <input type="hidden" class="toModalCivilStatus" value="'.$row['civilstatus'].'">
-      <input type="hidden" class="toModalSss" value="'.$row['sss'].'">
-      <input type="hidden" class="toModalPagibig" value="'.$row['pagibig'].'">
-      <input type="hidden" class="toModalPhilhealth" value="'.$row['philhealth'].'">
+      <input type="hidden" class="toModalSssEE" value="'.$row['sss'].'">
+      <input type="hidden" class="toModalSssER" value="'.$row['sss_er'].'">
+      <input type="hidden" class="toModalPagibigEE" value="'.$row['pagibig'].'">
+      <input type="hidden" class="toModalPagibigER" value="'.$row['pagibig_er'].'">
+      <input type="hidden" class="toModalPhilhealthEE" value="'.$row['philhealth'].'">
+      <input type="hidden" class="toModalPhilhealthER" value="'.$row['philhealth_er'].'">
       <input type="hidden" class="toModalEmergency" value="'.$row['emergency'].'">
       <input type="hidden" class="toModalReference" value="'.$row['reference'].'">
       </div>

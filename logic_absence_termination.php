@@ -14,7 +14,7 @@
 	$empQuery = mysql_query($employee);
 	$empRow = mysql_fetch_assoc($empQuery);
 	Print "	<script>
-					alert('".$empRow['lastname'].", ".$empRow['lastname']." Terminated.');
+					alert('".$empRow['lastname'].", ".$empRow['firstname']." Terminated.');
 					window.location.assign('applications.php');
 				</script>";
 ?>

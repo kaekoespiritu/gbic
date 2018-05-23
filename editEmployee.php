@@ -266,151 +266,154 @@ $cola = $employee_info['cola'];
 						<?php
 						if($sssEE != 0)
 							Print  '
-						<div class="col-md-1 col-lg-12">
-						<div class="col-md-3 col-lg-3">
-						<input type="checkbox" name="sssCheckbox" id="sssCheckbox" onchange="sssCheckboxFunc()" checked>
-						<label for="sss">SSS</label>
-						</div>
-						<div class="col-md-9 col-lg-9">
-						<div class="row">
-						<div class="col-md-1 col-lg-1">
-						<label for="sss_ee">EE:</label>
-						</div>
-						<div class="col-md-4 col-lg-4">
-						<input name="sssEE" type="text" placeholder="'.$sssEE.'" class="form-control" id="sssEE">
-						</div>
-						<div class="col-md-1 col-lg-1">
-						<label for="sss_er">ER:</label>
-						</div>
-						<div class="col-md-4 col-lg-4">
-						<input name="sssER" type="text" placeholder="'.$sssER.'" class="form-control" id="sssER">
-						</div>
-						</div>
-						</div>
-						</div>';
+								<div class="col-md-1 col-lg-12">
+									<div class="col-md-3 col-lg-3">
+										<input type="checkbox" name="sssCheckbox" id="sssCheckbox" onchange="sssCheckboxFunc()" checked>
+										<label for="sss">SSS</label>
+									</div>
+									<div class="col-md-9 col-lg-9">
+										<div class="row">
+											<div class="col-md-1 col-lg-1">
+												<label for="sss_ee">EE:</label>
+											</div>
+											<div class="col-md-4 col-lg-4">
+												<input name="sssEE" type="text" placeholder="'.$sssEE.'" class="form-control" id="sssEE">
+											</div>
+											<div class="col-md-1 col-lg-1">
+												<label for="sss_er">ER:</label>
+											</div>
+											<div class="col-md-4 col-lg-4">
+												<input name="sssER" type="text" placeholder="'.$sssER.'" class="form-control" id="sssER">
+											</div>
+										</div>
+									</div>
+								</div>';
 						else
 							Print  '
-						<div class="col-md-1 col-lg-12">
-						<div class="col-md-3 col-lg-3">
-						<input type="checkbox" name="sssCheckbox" id="sssCheckbox" onchange="sssCheckboxFunc()">
-						<label for="sss">SSS</label>
-						</div>
-						<div class="col-md-9 col-lg-9">
-						<div class="row">
-						<div class="col-md-1 col-lg-1">
-						<label for="sss_ee">EE:</label>
-						</div>
-						<div class="col-md-4 col-lg-4">
-						<input name="sssEE" type="text" placeholder="No document" class="form-control" id="sssEE" readonly>
-						</div>
-						<div class="col-md-1 col-lg-1">
-						<label for="sss_er">ER:<label>
-						</div>
-						<div class="col-md-4 col-lg-4">
-						<input name="sssER" type="text" placeholder="No document" class="form-control" id="sssER" readonly>
-						</div>
-						</div>
-						</div>
-						</div>';
+								<div class="col-md-1 col-lg-12">
+									<div class="col-md-3 col-lg-3">
+										<input type="checkbox" name="sssCheckbox" id="sssCheckbox" onchange="sssCheckboxFunc()">
+										<label for="sss">SSS</label>
+									</div>
+									<div class="col-md-9 col-lg-9">
+										<div class="row">
+											<div class="col-md-1 col-lg-1">
+												<label for="sss_ee">EE:</label>
+											</div>
+											<div class="col-md-4 col-lg-4">
+												<input name="sssEE" type="text" placeholder="No document" class="form-control" id="sssEE" readonly>
+											</div>
+												<div class="col-md-1 col-lg-1">
+												<label for="sss_er">ER:<label>
+											</div>
+											<div class="col-md-4 col-lg-4">
+												<input name="sssER" type="text" placeholder="No document" class="form-control" id="sssER" readonly>
+											</div>
+										</div>
+									</div>
+								</div>';
 						?>
 
 						<?php
 						if($philhealthEE != 0)
-							Print '<div class="col-md-1 col-lg-12 pull-down">
-						<div class="col-md-3 col-lg-3">
-						<input type="checkbox" name="philhealthCheckbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()" checked>
-						<label for="philhealth" class="nowrap">PhilHealth</label>
-						</div>
-						<div class="col-md-9 col-lg-9">
-						<div class="row">
-						<div class="col-md-1 col-lg-1">
-						<label for="philhealth_ee">EE:</label>
-						</div>
-						<div class="col-md-4 col-lg-4">
-						<input name="philhealthEE" placeholder="'.$philhealthEE.'" type="text" class="form-control" id="philhealthEE">
-						</div>
-						<div class="col-md-1 col-lg-1">
-						<label for="philhealth_er">ER:</label>
-						</div>
-						<div class="col-md-4 col-lg-4">
-						<input name="philhealthER" placeholder="'.$philhealthER.'" type="text" class="form-control" id="philhealthER">
-						</div>
-						</div>
-						</div>
-						</div>';
+							Print '
+								<div class="col-md-1 col-lg-12 pull-down">
+									<div class="col-md-3 col-lg-3">
+										<input type="checkbox" name="philhealthCheckbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()" checked>
+										<label for="philhealth" class="nowrap">PhilHealth</label>
+									</div>
+									<div class="col-md-9 col-lg-9">
+										<div class="row">
+											<div class="col-md-1 col-lg-1">
+												<label for="philhealth_ee">EE:</label>
+											</div>
+											<div class="col-md-4 col-lg-4">
+												<input name="philhealthEE" placeholder="'.$philhealthEE.'" type="text" class="form-control" id="philhealthEE">
+											</div>
+											<div class="col-md-1 col-lg-1">
+												<label for="philhealth_er">ER:</label>
+											</div>
+											<div class="col-md-4 col-lg-4">
+												<input name="philhealthER" placeholder="'.$philhealthER.'" type="text" class="form-control" id="philhealthER">
+											</div>
+										</div>
+									</div>
+								</div>';
 						else
 							Print '
 						<div class="col-md-1 col-lg-12 pull-down">
-						<div class="col-md-3 col-lg-3">
-						<input type="checkbox" name="philhealthCheckbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()">
-						<label for="philhealth" class="nowrap">PhilHealth</label>
-						</div>
-						<div class="col-md-9 col-lg-9">
-						<div class="row">
-						<div class="col-md-1 col-lg-1">
-						<label for="philhealth_ee">EE:</label>
-						</div>
-						<div class="col-md-4 col-lg-4">
-						<input name="philhealthEE" placeholder="No document" type="text" class="form-control" id="philhealthEE" readonly>
-						</div>
-						<div class="col-md-1 col-lg-1">
-						<label for="philhealth_er">ER:</label>
-						</div>
-						<div class="col-md-4 col-lg-4">
-						<input name="philhealthER" placeholder="No document" type="text" class="form-control" id="philhealthER" readonly>
-						</div>
-						</div>
-						</div>
+							<div class="col-md-3 col-lg-3">
+								<input type="checkbox" name="philhealthCheckbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()">
+								<label for="philhealth" class="nowrap">PhilHealth</label>
+							</div>
+							<div class="col-md-9 col-lg-9">
+								<div class="row">
+									<div class="col-md-1 col-lg-1">
+										<label for="philhealth_ee">EE:</label>
+									</div>
+									<div class="col-md-4 col-lg-4">
+										<input name="philhealthEE" placeholder="No document" type="text" class="form-control" id="philhealthEE" readonly>
+									</div>
+									<div class="col-md-1 col-lg-1">
+										<label for="philhealth_er">ER:</label>
+									</div>
+									<div class="col-md-4 col-lg-4">
+										<input name="philhealthER" placeholder="No document" type="text" class="form-control" id="philhealthER" readonly>
+									</div>
+								</div>
+							</div>
 						</div>';
 						?>
 						
 						<?php
 						if($pagibigEE != 0)
-							Print  '<div class="col-md-1 col-lg-12 pull-down">
-						<div class="col-md-3 col-lg-3">
-						<input type="checkbox" name="pagibigCheckbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()" checked>
-						<label for="pagibig" class="nowrap">Pagibig</label>
-						</div>
-						<div class="col-md-9 col-lg-9">
-						<div class="row">
-						<div class="col-md-1 col-lg-1">
-						<label for="pagibig_ee">EE:</label>
-						</div>
-						<div class="col-md-4 col-lg-4">
-						<input name="pagibigEE" placeholder="'.$pagibigEE.'" type="text" class="form-control" id="pagibigEE">
-						</div>
-						<div class="col-md-1 col-lg-1">
-						<label for="pagibig_er">ER:</label>
-						</div>
-						<div class="col-md-4 col-lg-4">
-						<input name="pagibigER" placeholder="'.$pagibigER.'" type="text" class="form-control" id="pagibigER">
-						</div>
-						</div>
-						</div>
-						</div>';
+							Print  '
+								<div class="col-md-1 col-lg-12 pull-down">
+									<div class="col-md-3 col-lg-3">
+										<input type="checkbox" name="pagibigCheckbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()" checked>
+										<label for="pagibig" class="nowrap">Pagibig</label>
+									</div>
+									<div class="col-md-9 col-lg-9">
+										<div class="row">
+											<div class="col-md-1 col-lg-1">
+												<label for="pagibig_ee">EE:</label>
+											</div>
+											<div class="col-md-4 col-lg-4">
+												<input name="pagibigEE" placeholder="'.$pagibigEE.'" type="text" class="form-control" id="pagibigEE">
+											</div>
+											<div class="col-md-1 col-lg-1">
+												<label for="pagibig_er">ER:</label>
+											</div>
+											<div class="col-md-4 col-lg-4">
+												<input name="pagibigER" placeholder="'.$pagibigER.'" type="text" class="form-control" id="pagibigER">
+											</div>
+										</div>
+									</div>
+								</div>';
 						else
-							Print  '<div class="col-md-1 col-lg-12 pull-down">
-						<div class="col-md-3 col-lg-3">
-						<input type="checkbox" name="pagibigCheckbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()">
-						<label for="pagibig" class="nowrap">Pagibig</label>
-						</div>
-						<div class="col-md-9 col-lg-9">
-						<div class="row">
-						<div class="col-md-1 col-lg-1">
-						<label for="pagibig_ee">EE:</label>
-						</div>
-						<div class="col-md-4 col-lg-4">
-						<input name="pagibigEE" placeholder="No document" type="text" class="form-control" id="pagibigEE" readonly>
-						</div>
-						<div class="col-md-1 col-lg-1">
-						<label for="pagibig_er">ER:</label>
-						</div>
-						<div class="col-md-4 col-lg-4">
-						<input name="pagibigER" placeholder="No document" type="text" class="form-control" id="pagibigER" readonly>
-						</div>
-						</div>
-						</div>
-						</div>';
+							Print  '
+								<div class="col-md-1 col-lg-12 pull-down">
+									<div class="col-md-3 col-lg-3">
+										<input type="checkbox" name="pagibigCheckbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()">
+										<label for="pagibig" class="nowrap">Pagibig</label>
+									</div>
+									<div class="col-md-9 col-lg-9">
+										<div class="row">
+											<div class="col-md-1 col-lg-1">
+												<label for="pagibig_ee">EE:</label>
+											</div>
+											<div class="col-md-4 col-lg-4">
+												<input name="pagibigEE" placeholder="No document" type="text" class="form-control" id="pagibigEE" readonly>
+											</div>
+												<div class="col-md-1 col-lg-1">
+												<label for="pagibig_er">ER:</label>
+											</div>
+											<div class="col-md-4 col-lg-4">
+												<input name="pagibigER" placeholder="No document" type="text" class="form-control" id="pagibigER" readonly>
+											</div>
+										</div>
+									</div>
+								</div>';
 						?>
 					</div>
 
