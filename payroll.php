@@ -12,7 +12,8 @@ $site = $_GET['site'];
 $position = $_GET['position'];
 $empid = $_GET['empid'];
 // $date = strftime("%B %d, %Y");
-$date = "May 2, 2018";
+$date = "May 16, 2018";
+// $date = "May 9, 2018";
 
 $time = strftime("%X");//TIME
 
@@ -269,8 +270,23 @@ if($holidayExist > 0)
 									$totalHours +=  $hrsComp[0];
 									$hrsResult = $hrsComp[0];
 								}
+								
+								//Night differential computation
+								$NDcomp = explode('.', $dateRow['nightdiff']);//Get the total Overtime
+								if(count($NDcomp) == 2)
+								{
+									$NDhours = $NDcomp[0];
+									$NDmins = $NDcomp[1];
+									$NDcomp = $NDmins / 60;
 
-								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
+									$NDresult = $NDhours+$NDcomp;
+
+									$totalNightDiff += $NDresult;
+								}
+								else
+								{
+									$totalNightDiff +=  $NDcomp[0];
+								}
 
 								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime
 								if(count($OTcomp) == 2)
@@ -286,7 +302,7 @@ if($holidayExist > 0)
 								else
 								{
 									$totalOT +=  $OTcomp[0];
-									$OTresult = $OTcomp[0];
+									// $OTresult = $OTcomp[0];
 								}
 								
 
@@ -335,8 +351,24 @@ if($holidayExist > 0)
 									$hrsResult = $hrsComp[0];
 								}
 
-								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
+								//Night differential computation
+								$NDcomp = explode('.', $dateRow['nightdiff']);//Get the total Overtime
+								if(count($NDcomp) == 2)
+								{
+									$NDhours = $NDcomp[0];
+									$NDmins = $NDcomp[1];
+									$NDcomp = $NDmins / 60;
 
+									$NDresult = $NDhours+$NDcomp;
+
+									$totalNightDiff += $NDresult;
+								}
+								else
+								{
+									$totalNightDiff +=  $NDcomp[0];
+								}
+
+								//Overtime Computation
 								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime)
 								if(count($OTcomp) == 2)
 								{
@@ -401,8 +433,24 @@ if($holidayExist > 0)
 									$hrsResult = $hrsComp[0];
 								}
 
-								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
+								//Night differential computation
+								$NDcomp = explode('.', $dateRow['nightdiff']);//Get the total Overtime
+								if(count($NDcomp) == 2)
+								{
+									$NDhours = $NDcomp[0];
+									$NDmins = $NDcomp[1];
+									$NDcomp = $NDmins / 60;
+
+									$NDresult = $NDhours+$NDcomp;
+
+									$totalNightDiff += $NDresult;
+								}
+								else
+								{
+									$totalNightDiff +=  $NDcomp[0];
+								}
 								
+								//Overtime computation
 								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime)
 								if(count($OTcomp) == 2)
 								{
@@ -467,8 +515,24 @@ if($holidayExist > 0)
 									$hrsResult = $hrsComp[0];
 								}
 
-								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
+								//Night differential computation
+								$NDcomp = explode('.', $dateRow['nightdiff']);//Get the total Overtime
+								if(count($NDcomp) == 2)
+								{
+									$NDhours = $NDcomp[0];
+									$NDmins = $NDcomp[1];
+									$NDcomp = $NDmins / 60;
+
+									$NDresult = $NDhours+$NDcomp;
+
+									$totalNightDiff += $NDresult;
+								}
+								else
+								{
+									$totalNightDiff +=  $NDcomp[0];
+								}
 								
+								//Overtime computation
 								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime)
 								if(count($OTcomp) == 2)
 								{
@@ -533,8 +597,24 @@ if($holidayExist > 0)
 									$hrsResult = $hrsComp[0];
 								}
 
-								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
+								//Night differential computation
+								$NDcomp = explode('.', $dateRow['nightdiff']);//Get the total Overtime
+								if(count($NDcomp) == 2)
+								{
+									$NDhours = $NDcomp[0];
+									$NDmins = $NDcomp[1];
+									$NDcomp = $NDmins / 60;
+
+									$NDresult = $NDhours+$NDcomp;
+
+									$totalNightDiff += $NDresult;
+								}
+								else
+								{
+									$totalNightDiff +=  $NDcomp[0];
+								}
 								
+								//Overtime computation
 								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime)
 								if(count($OTcomp) == 2)
 								{
@@ -598,8 +678,24 @@ if($holidayExist > 0)
 									$hrsResult = $hrsComp[0];
 								}
 
-								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
+								//Night differential computation
+								$NDcomp = explode('.', $dateRow['nightdiff']);//Get the total Overtime
+								if(count($NDcomp) == 2)
+								{
+									$NDhours = $NDcomp[0];
+									$NDmins = $NDcomp[1];
+									$NDcomp = $NDmins / 60;
+
+									$NDresult = $NDhours+$NDcomp;
+
+									$totalNightDiff += $NDresult;
+								}
+								else
+								{
+									$totalNightDiff +=  $NDcomp[0];
+								}
 								
+								//Overtime computation
 								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime)
 								if(count($OTcomp) == 2)
 								{
@@ -662,8 +758,24 @@ if($holidayExist > 0)
 									$hrsResult = $hrsComp[0];
 								}
 
-								$totalNightDiff += $dateRow['nightdiff'];//Get the total Night Diff
+								//Night differential computation
+								$NDcomp = explode('.', $dateRow['nightdiff']);//Get the total Overtime
+								if(count($NDcomp) == 2)
+								{
+									$NDhours = $NDcomp[0];
+									$NDmins = $NDcomp[1];
+									$NDcomp = $NDmins / 60;
+
+									$NDresult = $NDhours+$NDcomp;
+
+									$totalNightDiff += $NDresult;
+								}
+								else
+								{
+									$totalNightDiff +=  $NDcomp[0];
+								}
 								
+								//Overtime computation
 								$OTcomp = explode('.', $dateRow['overtime']);//Get the total Overtime)
 								if(count($OTcomp) == 2)
 								{

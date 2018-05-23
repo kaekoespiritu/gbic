@@ -436,7 +436,7 @@ function getMin(time) {
 
 function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timeinhour2,timeinmin2,timeouthour2,timeoutmin2) 
 {
-
+	var originalMins;
 	row.querySelector('.attendance').value = "";
 
 	// Verifies that time in and time out input fields have value
@@ -540,6 +540,8 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		// Computing minutes
 			//Before break
 			//If employee chooses halfday
+
+		
 			if(timeinhour2 == "HD")
 			{
 				if(timeinmin1 > timeoutmin1)
@@ -555,6 +557,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				{
 					workingmins = 0;
 				}
+				originalMins = workingmins;//minutes for night diff
 			}
 			else
 			{
@@ -587,6 +590,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				}
 
 				workingmins = Math.abs(workingmins1) + Math.abs(workingmins2);
+				originalMins = workingmins;//minutes for night diff
 			}
 				
 
@@ -599,116 +603,185 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			var checkTime1 = timeinhour1 - timeouthour1;
 			var checkTime2 = timeinhour2 - timeouthour2;
 			var useOnce = true;
-			if(Math.abs(checkTime1) >= 14)// if accumulated time is more than 14 hours 
+
+			if(row.querySelector('.driver').value == '1')
 			{
-				if(workingmins == 0)// if no minutes are rendered
+				if(Math.abs(checkTime1) >= 8)// if accumulated time is more than 8 hours 
 				{
-					useOnce = false;
-					workinghours -= 1;
-					workingmins = 30;//minus 30mins
-				}
-				else // if there are minutes entered
-				{
-					workingmins = workingmins - 30;//minus 30mins
-				}
-				// if workingmins is negative it should get the 
-				if(workingmins < 0)
-				{
-					workinghours -= 1;
-					useOnce = false;
+					
 					if(workingmins == 0)
-						workingmins = Math.abs(workingmins);
+					{
+						if(useOnce)
+						{
+							useOnce = false;
+							workinghours -= 1;
+						}
+						workingmins = 30;//minus 30mins
+					}
 					else
-						workingmins = 60 - Math.abs(workingmins);
+					{
+						workingmins = workingmins - 30;//minus 30mins
+					}
+					
+					if(workingmins < 0)
+					{
+						if(useOnce)
+							workinghours -= 1;
+						
+						if(workingmins == 0)
+							workingmins = Math.abs(workingmins);
+						else
+							workingmins = 60 - Math.abs(workingmins);
+					}
 				}
-			}
-			console.log(workinghours+" : "+workingmins)
-			workingmins = Math.abs(workingmins);
-			if(Math.abs(checkTime1) >= 8)// if accumulated time is more than 8 hours 
-			{
-				
-				if(workingmins == 0)
+				//2nd Time in and Time out
+				useOnce = true;
+				workingmins = Math.abs(workingmins);
+				if(Math.abs(checkTime2) >= 8)// if accumulated time is more than 8 hours 
 				{
-					if(useOnce)
+					
+					if(workingmins == 0)
+					{
+						if(useOnce)
+						{
+							useOnce = false;
+							workinghours -= 1;
+						}
+						workingmins = 30;//minus 30mins
+					}
+					else
+					{
+						workingmins = workingmins - 30;//minus 30mins
+					}
+					
+					if(workingmins < 0)
+					{
+						if(useOnce)
+							workinghours -= 1;
+						
+						if(workingmins == 0)
+							workingmins = Math.abs(workingmins);
+						else
+							workingmins = 60 - Math.abs(workingmins);
+					}
+					
+				}
+
+			}
+			else
+			{
+				if(Math.abs(checkTime1) >= 14)// if accumulated time is more than 14 hours 
+				{
+					if(workingmins == 0)// if no minutes are rendered
 					{
 						useOnce = false;
 						workinghours -= 1;
+						workingmins = 30;//minus 30mins
 					}
-					workingmins = 30;//minus 30mins
-				}
-				else
-				{
-					workingmins = workingmins - 30;//minus 30mins
-				}
-				
-				if(workingmins < 0)
-				{
-					if(useOnce)
+					else // if there are minutes entered
+					{
+						workingmins = workingmins - 30;//minus 30mins
+					}
+					// if workingmins is negative it should get the 
+					if(workingmins < 0)
+					{
 						workinghours -= 1;
+						useOnce = false;
+						if(workingmins == 0)
+							workingmins = Math.abs(workingmins);
+						else
+							workingmins = 60 - Math.abs(workingmins);
+					}
+				}
+				console.log(workinghours+" : "+workingmins)
+				workingmins = Math.abs(workingmins);
+				if(Math.abs(checkTime1) >= 8)// if accumulated time is more than 8 hours 
+				{
 					
 					if(workingmins == 0)
-						workingmins = Math.abs(workingmins);
+					{
+						if(useOnce)
+						{
+							useOnce = false;
+							workinghours -= 1;
+						}
+						workingmins = 30;//minus 30mins
+					}
 					else
-						workingmins = 60 - Math.abs(workingmins);
+					{
+						workingmins = workingmins - 30;//minus 30mins
+					}
+					
+					if(workingmins < 0)
+					{
+						if(useOnce)
+							workinghours -= 1;
+						
+						if(workingmins == 0)
+							workingmins = Math.abs(workingmins);
+						else
+							workingmins = 60 - Math.abs(workingmins);
+					}
+					
 				}
-				
-			}
-			//2nd Time in and Time out
-			useOnce = true;
-			if(Math.abs(checkTime2) >= 14)// if accumulated time is more than 14 hours 
-			{
-				if(workingmins == 0)// if no minutes are rendered
+				//2nd Time in and Time out
+				useOnce = true;
+				if(Math.abs(checkTime2) >= 14)// if accumulated time is more than 14 hours 
 				{
-					useOnce = false;
-					workinghours -= 1;
-					workingmins = 30;//minus 30mins
-				}
-				else // if there are minutes entered
-				{
-					workingmins = workingmins - 30;//minus 30mins
-				}
-				// if workingmins is negative it should get the 
-				if(workingmins < 0)
-				{
-					workinghours -= 1;
-					useOnce = false;
-					if(workingmins == 0)
-						workingmins = Math.abs(workingmins);
-					else
-						workingmins = 60 - Math.abs(workingmins);
-				}
-			}
-			console.log(workinghours+" : "+workingmins)
-			workingmins = Math.abs(workingmins);
-			if(Math.abs(checkTime2) >= 8)// if accumulated time is more than 8 hours 
-			{
-				
-				if(workingmins == 0)
-				{
-					if(useOnce)
+					if(workingmins == 0)// if no minutes are rendered
 					{
 						useOnce = false;
 						workinghours -= 1;
+						workingmins = 30;//minus 30mins
 					}
-					workingmins = 30;//minus 30mins
-				}
-				else
-				{
-					workingmins = workingmins - 30;//minus 30mins
-				}
-				
-				if(workingmins < 0)
-				{
-					if(useOnce)
+					else // if there are minutes entered
+					{
+						workingmins = workingmins - 30;//minus 30mins
+					}
+					// if workingmins is negative it should get the 
+					if(workingmins < 0)
+					{
 						workinghours -= 1;
+						useOnce = false;
+						if(workingmins == 0)
+							workingmins = Math.abs(workingmins);
+						else
+							workingmins = 60 - Math.abs(workingmins);
+					}
+				}
+				console.log(workinghours+" : "+workingmins)
+				workingmins = Math.abs(workingmins);
+				if(Math.abs(checkTime2) >= 8)// if accumulated time is more than 8 hours 
+				{
 					
 					if(workingmins == 0)
-						workingmins = Math.abs(workingmins);
+					{
+						if(useOnce)
+						{
+							useOnce = false;
+							workinghours -= 1;
+						}
+						workingmins = 30;//minus 30mins
+					}
 					else
-						workingmins = 60 - Math.abs(workingmins);
+					{
+						workingmins = workingmins - 30;//minus 30mins
+					}
+					
+					if(workingmins < 0)
+					{
+						if(useOnce)
+							workinghours -= 1;
+						
+						if(workingmins == 0)
+							workingmins = Math.abs(workingmins);
+						else
+							workingmins = 60 - Math.abs(workingmins);
+					}
+					
 				}
-				
 			}
+				
 
 
 			if(workingmins >= 60)
@@ -841,9 +914,17 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				}
 				if(nightdiff != "")
 				{
+					if(originalMins != 0)
+					{
+						row.querySelector('.nightdiff').value = nightdiff + " hrs, " + originalMins + "mins";
+						row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + originalMins + "mins";
+					}
+					else
+					{
+						row.querySelector('.nightdiff').value = nightdiff + " hrs";
+						row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+					}
 					
-					row.querySelector('.nightdiff').value = nightdiff + " hrs";
-					row.querySelector('.nightdiffH').value = nightdiff + " hrs";
 				}
 				else
 				{
@@ -913,9 +994,16 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			}
 			if(nightdiff != "")
 			{
-				
-				row.querySelector('.nightdiff').value = nightdiff + " hrs";
-				row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+				if(originalMins != 0)
+				{
+					row.querySelector('.nightdiff').value = nightdiff + " hrs, " + originalMins + "mins";
+					row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + originalMins + "mins";
+				}
+				else
+				{
+					row.querySelector('.nightdiff').value = nightdiff + " hrs";
+					row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+				}
 			}
 			else
 			{
@@ -1018,6 +1106,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			//alert(workinghours);
 			//alert("timein: "+timeinhour + " timeout: " + timeouthour);
 			//Computing minutes
+
 			if(timeinmin1 > timeoutmin1)
 			{
 				var time_temp = 60 - timeinmin1;
@@ -1051,10 +1140,12 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				}
 
 				workingmins = workingmins1 + workingmins2;
+				originalMins = workingmins;//minutes for night diff
 			}
 			else
 			{
 				workingmins = workingmins1;
+				originalMins = workingmins;//minutes for night diff
 			}
 
 			
@@ -1427,8 +1518,16 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			if(nightdiff != "")
 			{
 				
-				row.querySelector('.nightdiff').value = nightdiff + " hrs";
-				row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+				if(originalMins != 0)
+				{
+					row.querySelector('.nightdiff').value = nightdiff + " hrs, " + originalMins + "mins";
+					row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + originalMins + "mins";
+				}
+				else
+				{
+					row.querySelector('.nightdiff').value = nightdiff + " hrs";
+					row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+				}
 			}
 			else
 			{
@@ -1489,7 +1588,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 // For night shift
 function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, timeoutmin1, timeinhour2, timeinmin2, timeouthour2, timeoutmin2, timeinhour3, timeinmin3, timeouthour3, timeoutmin3)
 {
-
+	var originalMins;
 	row.querySelector('.attendance').value = "";
 
 	// Verifies that time in and time out input fields have value
@@ -1505,7 +1604,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 		var workinghours3;
 		var workinghours3;
 
-		
+
 
 		// If time is 12AM
 		if(timeinhour1 == 0)
@@ -1606,7 +1705,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			}
 
 			workingmins = workingmins1 + workingmins2 + workingmins3;
-			
+			originalMins = workingmins;//minutes for night diff
 			//Undeclared break
 
 			//1st Time in and Time out
@@ -1615,180 +1714,277 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			var checkTime3 = timeinhour3 - timeouthour3;
 
 			var useOnce = true;
-			if(Math.abs(checkTime1) >= 14)// if accumulated time is more than 14 hours 
+
+			//if employee is a driver or pahinante
+			if(row.querySelector('.driver').value == 1)
 			{
-				if(workingmins == 0)// if no minutes are rendered
+				console.log("driver");
+				if(Math.abs(checkTime1) >= 8)// if accumulated time is more than 8 hours 
 				{
-					useOnce = false;
-					workinghours -= 1;
-					workingmins = 30;//minus 30mins
-				}
-				else // if there are minutes entered
-				{
-					workingmins = workingmins - 30;//minus 30mins
-				}
-				// if workingmins is negative it should get the 
-				if(workingmins < 0)
-				{
-					workinghours -= 1;
-					useOnce = false;
+					
 					if(workingmins == 0)
-						workingmins = Math.abs(workingmins);
+					{
+						if(useOnce)
+						{
+							useOnce = false;
+							workinghours -= 1;
+						}
+						workingmins = 30;//minus 30mins
+					}
 					else
-						workingmins = 60 - Math.abs(workingmins);
+					{
+						workingmins = workingmins - 30;//minus 30mins
+					}
+					
+					if(workingmins < 0)
+					{
+						if(useOnce)
+							workinghours -= 1;
+						
+						if(workingmins == 0)
+							workingmins = Math.abs(workingmins);
+						else
+							workingmins = 60 - Math.abs(workingmins);
+					}
+					
+				}
+				//2nd Time in and Time out
+				useOnce = true;
+				if(Math.abs(checkTime2) >= 8)// if accumulated time is more than 8 hours 
+				{
+					
+					if(workingmins == 0)
+					{
+						if(useOnce)
+						{
+							useOnce = false;
+							workinghours -= 1;
+						}
+						workingmins = 30;//minus 30mins
+					}
+					else
+					{
+						workingmins = workingmins - 30;//minus 30mins
+					}
+					
+					if(workingmins < 0)
+					{
+						if(useOnce)
+							workinghours -= 1;
+						
+						if(workingmins == 0)
+							workingmins = Math.abs(workingmins);
+						else
+							workingmins = 60 - Math.abs(workingmins);
+					}
+					
+				}
+				//3nd Time in  and Time out
+				workingmins = Math.abs(workingmins);
+				if(Math.abs(checkTime3) >= 8)// if accumulated time is more than 8 hours 
+				{
+					
+					if(workingmins == 0)
+					{
+						if(useOnce)
+						{
+							useOnce = false;
+							workinghours -= 1;
+						}
+						workingmins = 30;//minus 30mins
+					}
+					else
+					{
+						workingmins = workingmins - 30;//minus 30mins
+					}
+					
+					if(workingmins < 0)
+					{
+						if(useOnce)
+							workinghours -= 1;
+						
+						if(workingmins == 0)
+							workingmins = Math.abs(workingmins);
+						else
+							workingmins = 60 - Math.abs(workingmins);
+					}
 				}
 			}
-			console.log(workinghours+" : "+workingmins)
-			workingmins = Math.abs(workingmins);
-			if(Math.abs(checkTime1) >= 8)// if accumulated time is more than 8 hours 
+			else
 			{
-				
-				if(workingmins == 0)
+				console.log("hindi driver");
+				if(Math.abs(checkTime1) >= 14)// if accumulated time is more than 14 hours 
 				{
-					if(useOnce)
+					if(workingmins == 0)// if no minutes are rendered
 					{
 						useOnce = false;
 						workinghours -= 1;
+						workingmins = 30;//minus 30mins
 					}
-					workingmins = 30;//minus 30mins
-				}
-				else
-				{
-					workingmins = workingmins - 30;//minus 30mins
-				}
-				
-				if(workingmins < 0)
-				{
-					if(useOnce)
+					else // if there are minutes entered
+					{
+						workingmins = workingmins - 30;//minus 30mins
+					}
+					// if workingmins is negative it should get the 
+					if(workingmins < 0)
+					{
 						workinghours -= 1;
+						useOnce = false;
+						if(workingmins == 0)
+							workingmins = Math.abs(workingmins);
+						else
+							workingmins = 60 - Math.abs(workingmins);
+					}
+				}
+				console.log(workinghours+" : "+workingmins)
+				workingmins = Math.abs(workingmins);
+
+				if(Math.abs(checkTime1) >= 8)// if accumulated time is more than 8 hours 
+				{
 					
 					if(workingmins == 0)
-						workingmins = Math.abs(workingmins);
+					{
+						if(useOnce)
+						{
+							useOnce = false;
+							workinghours -= 1;
+						}
+						workingmins = 30;//minus 30mins
+					}
 					else
-						workingmins = 60 - Math.abs(workingmins);
+					{
+						workingmins = workingmins - 30;//minus 30mins
+					}
+					
+					if(workingmins < 0)
+					{
+						if(useOnce)
+							workinghours -= 1;
+						
+						if(workingmins == 0)
+							workingmins = Math.abs(workingmins);
+						else
+							workingmins = 60 - Math.abs(workingmins);
+					}
+					
 				}
-				
-			}
-			//2nd Time in and Time out
-			useOnce = true;
-			if(Math.abs(checkTime2) >= 14)// if accumulated time is more than 14 hours 
-			{
-				if(workingmins == 0)// if no minutes are rendered
+				//2nd Time in and Time out
+				useOnce = true;
+				if(Math.abs(checkTime2) >= 14)// if accumulated time is more than 14 hours 
 				{
-					useOnce = false;
-					workinghours -= 1;
-					workingmins = 30;//minus 30mins
-				}
-				else // if there are minutes entered
-				{
-					workingmins = workingmins - 30;//minus 30mins
-				}
-				// if workingmins is negative it should get the 
-				if(workingmins < 0)
-				{
-					workinghours -= 1;
-					useOnce = false;
-					if(workingmins == 0)
-						workingmins = Math.abs(workingmins);
-					else
-						workingmins = 60 - Math.abs(workingmins);
-				}
-			}
-			console.log(workinghours+" : "+workingmins)
-			workingmins = Math.abs(workingmins);
-			if(Math.abs(checkTime2) >= 8)// if accumulated time is more than 8 hours 
-			{
-				
-				if(workingmins == 0)
-				{
-					if(useOnce)
+					if(workingmins == 0)// if no minutes are rendered
 					{
 						useOnce = false;
 						workinghours -= 1;
+						workingmins = 30;//minus 30mins
 					}
-					workingmins = 30;//minus 30mins
-				}
-				else
-				{
-					workingmins = workingmins - 30;//minus 30mins
-				}
-				
-				if(workingmins < 0)
-				{
-					if(useOnce)
+					else // if there are minutes entered
+					{
+						workingmins = workingmins - 30;//minus 30mins
+					}
+					// if workingmins is negative it should get the 
+					if(workingmins < 0)
+					{
 						workinghours -= 1;
+						useOnce = false;
+						if(workingmins == 0)
+							workingmins = Math.abs(workingmins);
+						else
+							workingmins = 60 - Math.abs(workingmins);
+					}
+				}
+				console.log(workinghours+" : "+workingmins)
+				workingmins = Math.abs(workingmins);
+				if(Math.abs(checkTime2) >= 8)// if accumulated time is more than 8 hours 
+				{
 					
 					if(workingmins == 0)
-						workingmins = Math.abs(workingmins);
+					{
+						if(useOnce)
+						{
+							useOnce = false;
+							workinghours -= 1;
+						}
+						workingmins = 30;//minus 30mins
+					}
 					else
-						workingmins = 60 - Math.abs(workingmins);
+					{
+						workingmins = workingmins - 30;//minus 30mins
+					}
+					
+					if(workingmins < 0)
+					{
+						if(useOnce)
+							workinghours -= 1;
+						
+						if(workingmins == 0)
+							workingmins = Math.abs(workingmins);
+						else
+							workingmins = 60 - Math.abs(workingmins);
+					}
+					
 				}
-				
-			}
 
-			//3nd Time in and Time out
-			useOnce = true;
-			if(Math.abs(checkTime3) >= 14)// if accumulated time is more than 14 hours 
-			{
-				if(workingmins == 0)// if no minutes are rendered
+				//3nd Time in and Time out
+				useOnce = true;
+				if(Math.abs(checkTime3) >= 14)// if accumulated time is more than 14 hours 
 				{
-					useOnce = false;
-					workinghours -= 1;
-					workingmins = 30;//minus 30mins
-				}
-				else // if there are minutes entered
-				{
-					workingmins = workingmins - 30;//minus 30mins
-				}
-				// if workingmins is negative it should get the 
-				if(workingmins < 0)
-				{
-					workinghours -= 1;
-					useOnce = false;
-					if(workingmins == 0)
-						workingmins = Math.abs(workingmins);
-					else
-						workingmins = 60 - Math.abs(workingmins);
-				}
-			}
-			workingmins = Math.abs(workingmins);
-			if(Math.abs(checkTime3) >= 8)// if accumulated time is more than 8 hours 
-			{
-				
-				if(workingmins == 0)
-				{
-					if(useOnce)
+					if(workingmins == 0)// if no minutes are rendered
 					{
 						useOnce = false;
 						workinghours -= 1;
+						workingmins = 30;//minus 30mins
 					}
-					workingmins = 30;//minus 30mins
-				}
-				else
-				{
-					workingmins = workingmins - 30;//minus 30mins
-				}
-				
-				if(workingmins < 0)
-				{
-					if(useOnce)
+					else // if there are minutes entered
+					{
+						workingmins = workingmins - 30;//minus 30mins
+					}
+					// if workingmins is negative it should get the 
+					if(workingmins < 0)
+					{
 						workinghours -= 1;
+						useOnce = false;
+						if(workingmins == 0)
+							workingmins = Math.abs(workingmins);
+						else
+							workingmins = 60 - Math.abs(workingmins);
+					}
+				}
+				workingmins = Math.abs(workingmins);
+				if(Math.abs(checkTime3) >= 8)// if accumulated time is more than 8 hours 
+				{
 					
 					if(workingmins == 0)
-						workingmins = Math.abs(workingmins);
+					{
+						if(useOnce)
+						{
+							useOnce = false;
+							workinghours -= 1;
+						}
+						workingmins = 30;//minus 30mins
+					}
 					else
-						workingmins = 60 - Math.abs(workingmins);
+					{
+						workingmins = workingmins - 30;//minus 30mins
+					}
+					
+					if(workingmins < 0)
+					{
+						if(useOnce)
+							workinghours -= 1;
+						
+						if(workingmins == 0)
+							workingmins = Math.abs(workingmins);
+						else
+							workingmins = 60 - Math.abs(workingmins);
+					}
 				}
-				
 			}
-
-
 			if(workingmins >= 60)
 			{
 				workinghours++;
 				 workingmins = Math.abs(workingmins) - 60;
 			}
-
 			//alert(workinghours);
 			//set the attendance status to PRESENT
 			row.querySelector('.attendance').value = "PRESENT";
@@ -2038,9 +2234,16 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			}
 			if(nightdiff != "")
 			{
-				
-				row.querySelector('.nightdiff').value = nightdiff + " hrs";
-				row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+				if(originalMins != 0)
+				{
+					row.querySelector('.nightdiff').value = nightdiff + " hrs, " + originalMins + "mins";
+					row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + originalMins + "mins";
+				}
+				else
+				{
+					row.querySelector('.nightdiff').value = nightdiff + " hrs";
+					row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+				}
 			}
 			else
 			{
@@ -2187,7 +2390,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			}
 			
 			workingmins = Math.abs(workingmins1) + Math.abs(workingmins2) + Math.abs(workingmins3);
-			
+			originalMins = workingmins;//minutes for night diff
 			//Undeclared break
 
 			//1st Time in and Time out
@@ -2572,9 +2775,16 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			}
 			if(nightdiff != "")
 			{
-				
-				row.querySelector('.nightdiff').value = nightdiff + " hrs";
-				row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+				if(originalMins != 0)
+				{
+					row.querySelector('.nightdiff').value = nightdiff + " hrs, " + originalMins + "mins";
+					row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + originalMins + "mins";
+				}
+				else
+				{
+					row.querySelector('.nightdiff').value = nightdiff + " hrs";
+					row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+				}
 			}
 			else
 			{

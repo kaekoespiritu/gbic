@@ -288,9 +288,33 @@ if(!empty($dateRows))// Updating attendance
 			if(!empty($_POST['nightdiff'][$counter]))
 			{
 				$nightdiff = mysql_real_escape_string($_POST['nightdiff'][$counter]);
-				$nightdiff = $nightdiff[0].$nightdiff[1];
-				$nightdiff = str_replace(' ', '', $nightdiff);
+				// $nightdiff = $nightdiff[0].$nightdiff[1];
+				// $nightdiff = str_replace(' ', '', $nightdiff);
 				//Print "<script>alert('ND ". $nightdiff ."')</script>";
+
+				
+				$hasMins = strpos($nightdiff, ",");//Search the string if it has comma
+				$justMins = strpos($nightdiff, "mins");
+				if($justMins == true && $hasMins == false)
+				{
+					//Print "<script>alert('yeah')</script>";
+					$nightdiff = "0.".$nightdiff[0].$nightdiff[1];//Gets the first 2 characters
+					$nightdiff = str_replace(' ', '', $nightdiff);//removes all the spaces
+				}
+				else if($hasMins == false)
+				{
+					$nightdiff = $nightdiff[0].$nightdiff[1];//Gets the first 2 characters
+					$nightdiff = str_replace(' ', '', $nightdiff);//removes all the spaces
+				}
+				else
+				{
+					$work = explode(",", $nightdiff);//Separates the string
+					$hrs = $work[0];//gets the Hours
+					$mins = $work[1];//Gets the minutes
+					
+					$nightdiff = $hrs[0].$hrs[1].".".$mins[1].$mins[2];
+					$nightdiff = str_replace(' ', '', $nightdiff);//removes all the spaces
+				}
 			}
 			else 
 			{
@@ -756,11 +780,7 @@ else// NEW attendance
 
 //require "directives/attendance/attendance_query.php";
 
-Print "<script>
-	var a = confirm('yow?');
-	if(a)
-		window.location.assign('enterattendance.php?position=null&site=". $location."');
-	</script>";
+Print "<script>window.location.assign('enterattendance.php?position=null&site=". $location."');</script>";
 
 ?>
 

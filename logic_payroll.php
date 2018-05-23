@@ -4,7 +4,8 @@
 	$time = strftime("%X");//TIME
 
 	// $date = strftime("%B %d, %Y");
-	$date = "May 2, 2018";
+	$date = "May 16, 2018";
+	// $date = "May 9, 2018";
 //Employee ID
 	$empid = $_POST['employeeID'];
 
@@ -70,7 +71,19 @@
 	if(!empty($_POST['sunWorkHrs']))
 	{
 		$sundayBool = true;
-		$sunWorkHrs = $_POST['sunWorkHrs'];
+		$sunExplode = explode('.',$_POST['sunWorkHrs']);
+		if(count($sunExplode) > 1)
+		{
+			$sunHrs = $sunExplode[0];
+			$sunMins = $sunExplode[1] / 60;
+
+			$sunWorkHrs = $sunHrs+$sunMins;
+		}
+		else
+		{
+			$sunWorkHrs = $sunExplode[0];
+		}
+
 		Print "<script>console.log('sunWorkHrs: ". $sunWorkHrs."')</script>";
 		if($WorkHrsArr != "")
 			$WorkHrsArr .= ","; 
@@ -288,7 +301,7 @@
 							if($dayAfterArr['attendance'] == '2') // If employee went to work on holiday
 							{
 								$regHolNum++;
-								// Print '<script>console.log("Went to work the day before: '.$regHolNum.'")</script>';
+								Print '<script>console.log("Went to work the day before: '.$regHolNum.'")</script>';
 							}
 						}	
 							
@@ -303,7 +316,7 @@
 					$holdayArr = mysql_fetch_assoc($holidayChecker);
 					if($holdayArr['attendance'] == '2') // If employee went to work on holiday
 					{
-						// Print '<script>console.log("Employee went to work on holiday.")</script>';
+						Print '<script>console.log("Employee went to work on holiday.")</script>';
 						if($holidayClass == "special")//Special Holiday
 						{
 							Print '<script>console.log("speHolidayInc2: '.$speHolidayInc.'")</script>';
@@ -314,19 +327,10 @@
 						{
 							$addHoliday += $regHolidayInc;
 							$regHolNum+=2;
-							// Print '<script>console.log("Went to work on the holiday: '.$regHolNum.'")</script>';
+							Print '<script>console.log("Went to work on the holiday: '.$regHolNum.'")</script>';
 						}
 					}
-					else
-					{
-						if($holidayClass != "special")
-						{
-							$addHoliday += $regHolidayInc;
-							$regHolNum++;
-						}
-						// Print '<script>console.log("Employee automatically gets regular rate: '.$regHolNum.'")</script>';
-					}
-					// Print '<script>console.log("Total overall holidays: '.$regHolNum.'")</script>';
+					Print '<script>console.log("Total overall holidays: '.$regHolNum.'")</script>';
 				}
 			}
 
@@ -382,15 +386,6 @@
 							// $overallWorkDays++;//increment workdays 
 							$regHolNum+=2;
 						}
-					}
-					else
-					{
-						if($holidayType != "special")
-						{
-							$addHoliday += $regHolidayInc;
-							$regHolNum++;
-						}
-						// Print '<script>console.log("Employee automatically gets regular rate: '.$regHolNum.'")</script>';
 					}
 					// Print '<script>console.log("Total overall holidays: '.$regHolNum.'")</script>';
 				}

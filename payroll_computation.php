@@ -53,7 +53,13 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 	<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down">
 		<ol class="breadcrumb text-left" style="margin-bottom: 0px">
 
-			<li><a href="logic_payroll_backPayroll.php?e=<?php Print $empid?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span>Edit Payroll</a></li>
+			<li>
+				<?php
+					Print "<button onclick='EditPayroll(\"".$empid."\")'  class='btn btn-primary'>";
+				?>
+					<span class="glyphicon glyphicon-arrow-left"></span>Edit Payroll
+				</button>
+			</li>
 			<li class="active">
 				<?php
 				Print "Computation for ".$empArr['lastname'].", ".$empArr['firstname']." the ". $empArr['position']." from ". $empArr['site'];
@@ -103,7 +109,16 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 						// else
 						// {
 							$ratePerDaySub = $payrollArr['num_days'];//for computation
-							$ratePerDayDisp = $payrollArr['num_days']." Day(s)";// for display
+							$numDaysArr = explode('.', $ratePerDaySub);
+							if(count($numDaysArr) == 2)
+							{
+								if($numDaysArr[1] == 0)
+									$ratePerDaySub = $numDaysArr[0];
+							}
+							else
+								$ratePerDaySub = $numDaysArr[0];
+
+							$ratePerDayDisp = $ratePerDaySub." Day(s)";// for display
 						// }
 						$subTotalRatePerDay = $ratePerDaySub * numberExactFormat($empArr['rate'],2,'.', true);
 						Print "<script>console.log('ratePerDaySub: ". $ratePerDaySub." | dailyRate: ".numberExactFormat($empArr['rate'],2,'.', true)."')</script>";//dito
@@ -231,26 +246,26 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 							$sundayHrs = "--";
 						else
 						{
-							$sundayArr = explode('.', $sundayHrs);
-							if(count($sundayArr) > 1)//if it has minutes
-							{
-								if($sundayArr[1] == 0)//no minutes
-								{
-									$sundayHoursComp = $sundayArr[0];
-									$sundayHrs =  $sundayArr[0]." Hour(s)";
-								}
-								else
-								{
-									$sundayMinComp = $sundayArr[1]/60;
-									$sundayHoursComp = $sundayArr[0] + $sundayMinComp;
-									$sundayHrs =  $sundayArr[0]." Hour(s) ".$sundayArr[1]." min(s)";	
-								}
-							}
-							else
-							{
-								$sundayHoursComp = $sundayArr[0];
-								$sundayHrs =  $sundayArr[0]." Hour(s)";
-							}
+							// $sundayArr = explode('.', $sundayHrs);
+							// if(count($sundayArr) > 1)//if it has minutes
+							// {
+							// 	if($sundayArr[1] == 0)//no minutes
+							// 	{
+							// 		$sundayHoursComp = $sundayArr[0];
+							// 		$sundayHrs =  $sundayArr[0]." Hour(s)";
+							// 	}
+							// 	else
+							// 	{
+							// 		$sundayMinComp = $sundayArr[1]/60;
+							// 		$sundayHoursComp = $sundayArr[0] + $sundayMinComp;
+							// 		$sundayHrs =  $sundayArr[0]." Hour(s) ".$sundayArr[1]." min(s)";	
+							// 	}
+							// }
+							// else
+							// {
+								$sundayHoursComp = $sundayHrs;
+								$sundayHrs =  $sundayHrs." Hour(s)";
+							// }
 						}
 
 						$subTotalSundayRate = $payrollArr['sunday_rate'] * $payrollArr['sunday_hrs'];
@@ -660,6 +675,12 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 
 <script>
 	document.getElementById("payroll").setAttribute("style", "background-color: #10621e;");
+
+	function EditPayroll(id){
+		var res = confirm("Editing the payroll will remove all previously inputted data for this employee. Are you sure you want to proceed?");
+		if(res)
+			window.location.assign('logic_payroll_backPayroll.php?e='+id);
+	}
 </script>
 <script rel="javascript" src="js/jquery.min.js"></script>
 </body>

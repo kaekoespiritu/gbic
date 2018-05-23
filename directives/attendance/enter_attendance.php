@@ -74,6 +74,13 @@ function attendance ()
 		{	
 			while($row_employee = mysql_fetch_assoc($employees_query))
 			{
+				$job = $row_employee['position'];
+				$driverCheck = mysql_query("SELECT * FROM job_position WHERE position = '$job'");//check if position is driver
+				$driverCheckArr = mysql_fetch_array($driverCheck);
+				$driverBool = false;//boolean for hidden input of driver
+				if($driverCheckArr['driver'] == '1')
+					$driverBool = true;
+
 				$empidChecker = $row_employee['empid'];
 				$empCheck = "SELECT * FROM attendance WHERE date = '$date' AND empid = '$empidChecker' ";
 				$empCheckQuery = mysql_query($empCheck);
@@ -81,8 +88,11 @@ function attendance ()
 			// Attendance Check
 				if($empRow['attendance'] == 0)//No input
 				{
-					Print 	"<tr id=\"". $row_employee['empid'] ."\">
-								<!-- Employee ID -->
+					Print 	"<tr id=\"". $row_employee['empid'] ."\">";
+
+						Print "<input type='hidden' class='driver' value='".$driverBool."' >";//Boolean for driver
+
+						Print		"<!-- Employee ID -->
 									<td class='empName'>
 										". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
 									</td>
@@ -149,8 +159,11 @@ function attendance ()
 				}
 				else if($empRow['attendance'] == 1)//Absent
 				{
-					Print 	"<tr id=\"". $row_employee['empid'] ."\" class='danger'>
-								<!-- Employee ID -->
+					Print 	"<tr id=\"". $row_employee['empid'] ."\" class='danger'>";
+
+						Print "<input type='hidden' class='driver' value='".$driverBool."' >";//Boolean for driver
+
+						Print		"<!-- Employee ID -->
 									<td class='empName'>
 										". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
 									</td>
@@ -215,8 +228,11 @@ function attendance ()
 				}
 				else if($empRow['attendance'] == 2)//Present
 				{
-					Print 	"<tr id=\"". $row_employee['empid'] ."\" class='success'>
-								<!-- Employee ID -->
+					Print 	"<tr id=\"". $row_employee['empid'] ."\" class='success'>";
+					
+						Print "<input type='hidden' class='driver' value='".$driverBool."' >";//Boolean for driver
+
+						Print	"<!-- Employee ID -->
 									<td class='empName'>
 										". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
 									</td>
@@ -315,7 +331,7 @@ function attendance ()
 							//Print "<script>alert('workinghrs')</script>";
 							Print "<!-- Working Hours -->
 							<td>
-								<input type='text' placeholder='--'' value='". $wHrs ." hrs, ".$wMin." mins/HALFDAY' class='form-control input-sm workinghours' disabled>
+								<input type='text' placeholder='--'' value='". $wHrs ." hrs, ".$wMin." mins' class='form-control input-sm workinghours' disabled>
 								<input type='hidden' class='workinghoursH' value='". $wHrs ." hrs, ".$wMin." mins/HALFDAY' name='workinghrs[".$counter."]' >
 							</td>";
 						}
@@ -325,7 +341,7 @@ function attendance ()
 							//Print "<script>alert('workinghrs1')</script>";
 							Print "<!-- Working Hours -->
 							<td>
-								<input type='text' placeholder='--'' value='". $wHrs ." hrs/HALFDAY' class='form-control input-sm workinghours' disabled>
+								<input type='text' placeholder='--'' value='". $wHrs ." hrs' class='form-control input-sm workinghours' disabled>
 								<input type='hidden' class='workinghoursH' value='". $wHrs ." hrs' name='workinghrs[".$counter."]' >
 							</td>";
 						}
@@ -450,13 +466,35 @@ function attendance ()
 				// NightDiff
 					if($empRow['nightdiff'] != 0)
 					{
-						$work = explode(".", $empRow['nightdiff']);//Separates the string
-						$nHrs = $work[0];
-						Print "<!-- Night Differential --> 
+						$nightdiff = $empRow['nightdiff'];
+						$hasMins = strpos($nightdiff, ".");
+						$work = explode(".", $nightdiff);//Separates the string
+						if($hasMins == true)
+						{
+							$ndhrs = $work[0];
+							$ndmin = $work[1];
+							if($ndhrs != 0 && $ndmin != 0)
+								$ndDisplay = $ndhrs ." hrs, ".$ndmin." mins";
+							else if($ndhrs != 0 && $ndmin == 0)
+								$ndDisplay = $ndhrs ." hrs";
+							else if($ndhrs == 0 && $ndmin != 0)
+								$ndDisplay = $ndmin." mins";
+
+							Print "<!-- Night Differential -->
 							<td>
-								<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='". $nHrs ." hrs' disabled>
-								<input type='hidden' class='nightdiffH' value='". $nHrs ." hrs' name='nightdiff[".$counter."]' >
+								<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='".$ndDisplay."'  disabled>
+								<input type='hidden' class='nightdiffH' value='".$ndDisplay."' name='nightdiff[".$counter."]' >
 							</td>";
+						}
+						else
+						{
+							$ndHrs = $work[0];
+							Print "<!-- Night Differential -->
+							<td>
+								<input type='text' placeholder='--' value='". $ndHrs ." hrs' class='form-control input-sm nightdiff'  disabled>
+								<input type='hidden' class='nightdiffH' value='". $ndHrs ." hrs' name='nightdiff[".$counter."]'>
+							</td>";
+						}
 					}
 					else
 					{

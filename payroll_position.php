@@ -13,8 +13,8 @@ include('directives/session.php');
 
 
 // $date = strftime("%B %d, %Y");
-
-$date = "May 2, 2018";
+$date = "May 16, 2018";
+// $date = "May 9, 2018";
 
 
 $dayToday = date('l, F d, Y', time());

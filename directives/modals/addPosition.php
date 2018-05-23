@@ -13,7 +13,9 @@
 				     	</div>
 			     	
 			     		<div class="modal-footer">
-				        <button type="submit" class="btn btn-primary">Save changes</button>
+				     		<input type="checkbox" name="driver" class="pull-left">
+				     		<span class="pull-left">Driver/Truck helper</span>
+					        <button type="submit" class="btn btn-primary">Save changes</button>
 				      	</div>
 				  	</form>
 			    </div>
