@@ -17,7 +17,6 @@ $dob = $employee_info['dob'];
 $datehired = $employee_info['datehired'];
 $civilstatus = $employee_info['civilstatus'];
 $position = $employee_info['position'];
-	// $salary = $employee_info['salary'];
 $rate = $employee_info['rate'];
 $allowance = $employee_info['allowance'];
 $site = $employee_info['site'];

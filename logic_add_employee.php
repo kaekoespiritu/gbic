@@ -24,7 +24,6 @@ error_reporting(0);
 		$philhealthER = mysql_real_escape_string($_POST['txt_addPhilhealthER']);
 		$pagibigEE = mysql_real_escape_string($_POST['txt_addPagibigEE']);
 		$pagibigER = mysql_real_escape_string($_POST['txt_addPagibigER']);
-		// $salary = mysql_real_escape_string($_POST['txt_addMonthlySalary']);
 		$emergencyContact = mysql_real_escape_string($_POST['txt_emergencyContact']);
 		$characterReference = mysql_real_escape_string($_POST['txt_characterReference']);
 		$cola = mysql_real_escape_string($_POST['txt_cola']);
@@ -97,7 +96,6 @@ error_reporting(0);
 												civilstatus,
 												datehired,
 												position,
-												-- salary,
 												rate,
 												allowance,
 												site,
@@ -120,7 +118,6 @@ error_reporting(0);
 																	'$civilStatus',
 																	'$dateHired',
 																	'$position',
-																	-- '$salary',
 																	'$ratePerDay',
 																	'$allowance',
 																	'$site',

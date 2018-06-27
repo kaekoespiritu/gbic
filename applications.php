@@ -550,7 +550,6 @@ include_once('directives/db.php');
 			document.getElementById('site').insertAdjacentHTML('afterbegin', htmlSite);
 			document.getElementById('emergencyContact').value = emergency;
 			document.getElementById('characterRef').value = reference;
-			// document.getElementById('monthlysalary').value = accounting.formatNumber(monthly, 2, ",");
 			document.getElementById('rate').value = accounting.formatNumber(rate, 2, ",");
 			document.getElementById('allowance').value = accounting.formatNumber(allowance, 2, ",");
 		}

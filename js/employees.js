@@ -85,13 +85,6 @@ function pagibigCheckboxFunc() {
 	}
 }
 
-// function monthlySalary(salary){
-// 	var salary = document.getElementById('monthlysalary').value;
-// 	var dailyRate = document.getElementById('rate');
-// 	dailyRate.setAttribute('value',(salary/25).toFixed(2));
-// 	if(document.getElementById('sssCheckbox').checked)
-// 		sssbox();
-// }
 
 function salaryDecimal(){
 	var salary = document.getElementsByName('txt_addRatePerDay')[0];
