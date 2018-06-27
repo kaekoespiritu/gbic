@@ -20,7 +20,7 @@
 									<label for="fname">First name</label>
 								</div>
 								<div class="col-md-9 col-lg-9">
-									<input name="txt_addFirstName" onkeypress="validateletter(event)" type="text" class="form-control" id="fname" required>
+									<input name="txt_addFirstName" onkeypress="validateletter(event)" type="text" autocomplete="off" class="form-control" id="fname" required>
 								</div>
 							</div><br>
 
@@ -29,7 +29,7 @@
 									<label for="lname">Last name</label>
 								</div>
 								<div class="col-md-9 col-lg-9">
-									<input name="txt_addLastName" onkeypress="validateletter(event)" type="text" class="form-control" id="lname" required>
+									<input name="txt_addLastName" autocomplete="off" onkeypress="validateletter(event)" type="text" class="form-control" id="lname" required>
 								</div>
 							</div><br>
 
@@ -38,7 +38,7 @@
 									<label for="address">Address</label>
 								</div>
 								<div class="col-md-9 col-lg-9">
-									<input name="txt_addAddress" type="text" class="form-control" id="address">
+									<input name="txt_addAddress" autocomplete="off" type="text" class="form-control" id="address">
 								</div>
 							</div><br>
 
@@ -47,7 +47,7 @@
 									<label for="contact">Contact number</label>
 								</div>
 								<div class="col-md-4 col-lg-4">
-									<input name="txt_addContactNum" onkeypress="validatenumber(event)" type="text" class="form-control" id="contact">
+									<input name="txt_addContactNum" autocomplete="off" onkeypress="validatenumber(event)" type="text" class="form-control" id="contact">
 								</div>
 
 								<div class="col-md-1 col-lg-1">
@@ -89,7 +89,7 @@
 									<label for="emergency">Emergency contact:</label>	
 								</div>
 								<div class="col-md-8 col-lg-8">									
-									<input name="txt_emergencyContact" type="text" class="form-control">
+									<input name="txt_emergencyContact" type="text" autocomplete="off" class="form-control">
 								</div>
 							</div>
 
@@ -98,7 +98,8 @@
 									<label for="characterReference" class="no-wrap">Character Reference:</label>
 								</div>
 								<div class="col-md-8 col-lg-8">
-									<input name="txt_characterReference" type="text" class="form-control">
+									<input name="txt_characterReference" type="text" autocomplete="off" 
+									class="form-control">
 								</div>
 							</div>
 
@@ -107,7 +108,7 @@
 									<label for="cola" class="no-wrap">COLA:</label>
 								</div>
 								<div class="col-md-4 col-lg-4">
-									<input name="txt_cola" type="text" onchange="colaDecimal()" class="form-control">
+									<input name="txt_cola" type="text" autocomplete="off" onchange="colaDecimal()" class="form-control">
 								</div>
 							</div>
 						</div>
@@ -170,7 +171,7 @@
 									<label for="rate">Rate Per Day</label>
 								</div>
 								<div class="col-md-5 col-lg-5">
-									<input name="txt_addRatePerDay" onkeypress="validatenumber(event)" onchange="salaryDecimal()" type="text" class="form-control" id="rate" >
+									<input name="txt_addRatePerDay" onkeypress="validatenumber(event)" onchange="salaryDecimal()" type="text" autocomplete="off" class="form-control" id="rate" >
 								</div>
 							</div><br>
 
@@ -179,7 +180,7 @@
 									<label for="allowance">Allowance</label>
 								</div>
 								<div class="col-md-5 col-lg-5">
-									<input name="txt_addAllowance" onkeypress="validatenumber(event)" type="text" class="form-control" onchange="allowanceDecimal()" id="allowance">
+									<input name="txt_addAllowance" onkeypress="validatenumber(event)" type="text" class="form-control" autocomplete="off" onchange="allowanceDecimal()" id="allowance">
 								</div>
 							</div>
 
@@ -201,13 +202,13 @@
 														<label for="sss_ee">EE:</label>
 													</div>
 													<div class="col-md-4 col-lg-4">
-														<input name="txt_addSSSEE" type="text" placeholder="No document" class="form-control" id="sssEE" readonly>
+														<input name="txt_addSSSEE" type="text" autocomplete="off" placeholder="No document" class="form-control" id="sssEE" readonly>
 													</div>
 													<div class="col-md-1 col-lg-1">
 														<label for="sss_er">ER:</label>
 													</div>
 													<div class="col-md-4 col-lg-4">
-														<input name="txt_addSSSER" type="text" placeholder="No document" class="form-control" id="sssER" readonly>
+														<input name="txt_addSSSER" type="text" autocomplete="off" placeholder="No document" class="form-control" id="sssER" readonly>
 													</div>
 												</div>
 											<!-- </div> -->
@@ -226,13 +227,13 @@
 													<label for="philhealth_ee">EE:</label>
 												</div>
 												<div class="col-md-4 col-lg-4">
-													<input name="txt_addPhilhealthEE" type="text" placeholder="No document" class="form-control" id="philhealthEE" readonly>
+													<input name="txt_addPhilhealthEE" type="text" placeholder="No document" class="form-control" autocomplete="off" id="philhealthEE" readonly>
 												</div>
 												<div class="col-md-1 col-lg-1">
 													<label for="philhealth_er">ER:</label>
 												</div>
 												<div class="col-md-4 col-lg-4">
-													<input name="txt_addPhilhealthER" type="text" placeholder="No document" class="form-control" id="philhealthER" readonly>
+													<input name="txt_addPhilhealthER" type="text" placeholder="No document" autocomplete="off" class="form-control" id="philhealthER" readonly>
 												</div>
 											</div>
 										</div>
@@ -250,13 +251,13 @@
 													<label for="pagibig_ee">EE:</label>
 												</div>
 												<div class="col-md-4 col-lg-4">
-													<input name="txt_addPagibigEE" type="text" placeholder="No document" class="form-control" id="pagibigEE" readonly>
+													<input name="txt_addPagibigEE" type="text" autocomplete="off" placeholder="No document" class="form-control" id="pagibigEE" readonly>
 												</div>
 												<div class="col-md-1 col-lg-1">
 													<label for="pagibig_er">ER:</label>
 												</div>
 												<div class="col-md-4 col-lg-4">
-													<input name="txt_addPagibigER" type="text" placeholder="No document" class="form-control" id="pagibigER" readonly>
+													<input name="txt_addPagibigER" autocomplete="off" type="text" placeholder="No document" class="form-control" id="pagibigER" readonly>
 												</div>
 											</div>
 										</div>

@@ -71,11 +71,11 @@ require_once("directives/modals/addLoan.php");
 		function loanDashboard($type)
 		{
 			if($type == 'empVale')//Employees with vale
-			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE (loans.type = 'oldVale' OR loans.type = 'newVale') AND action != 0";
+			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE loans.type = 'oldVale' OR loans.type = 'newVale'";
 			if($type == 'newVale')//Employees with new vale
-			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE loans.type = 'newVale' AND action != 0";
+			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE loans.type = 'newVale'";
 			if($type == 'oldVale')//Employees with old vale
-			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE loans.type = 'oldVale' AND loans.action != 0";
+			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE loans.type = 'oldVale'";
 
 			$empValeQuery = mysql_query($empVale)or die(mysql_error());
 			$ValeNum = mysql_num_rows($empValeQuery);
@@ -87,19 +87,24 @@ require_once("directives/modals/addLoan.php");
 				while($row = mysql_fetch_assoc($empValeQuery))
 				{
 					$empid = $row['empid'];
-
+					
 					if($type == 'empVale')//Employees with vale
+					{
+						Print "<script>console.log('".$empid."')</script>";
 						$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' OR type = 'newVale' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1") or die(mysql_error());
+					}
 					else if($type == 'newVale')//Employees with new vale
 						$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND type = 'newVale' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1") or die(mysql_error());
 					else if($type == 'oldVale')//Employees with old vale
 						$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1")or die(mysql_error());
 
+					// Print "<script>console.log('checkerQuery: ".mysql_num_rows($checkerQuery)."')</script>";
+
 					if(mysql_num_rows($checkerQuery) != 0)
 					{
-						
+
 						$checkRow = mysql_fetch_assoc($checkerQuery);
-						if($type == 'empVale')//Employees with vale
+						if($type == 'empVale' && $checkRow['balance'] != 0)//Employees with vale
 							$counter++;
 						else if($type == 'newVale')//Company cost to newvale
 							$newValeComputation += $checkRow['balance'];

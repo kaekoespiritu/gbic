@@ -77,7 +77,7 @@ $cola = $employee_info['cola'];
 							<label for="fname">First name</label>
 						</div>
 						<div class="col-md-9 col-lg-9">
-							<input type="text" class="form-control" id="fname" name = "firstname" value="<?php Print "$firstname"?>" disabled>
+							<input type="text" autocomplete="off" class="form-control" id="fname" name = "firstname" value="<?php Print "$firstname"?>" disabled>
 						</div>
 					</div><br>
 					<div class="row">
@@ -85,7 +85,7 @@ $cola = $employee_info['cola'];
 							<label for="lname">Last name</label>
 						</div>
 						<div class="col-md-9 col-lg-9">
-							<input type="text" class="form-control" id="lname" name = "lastname" value="<?php Print "$lastname"?>" disabled>
+							<input type="text" autocomplete="off" class="form-control" id="lname" name = "lastname" value="<?php Print "$lastname"?>" disabled>
 						</div>
 					</div><br>
 					<div class="row">
@@ -93,7 +93,7 @@ $cola = $employee_info['cola'];
 							<label for="address">Address</label>
 						</div>
 						<div class="col-md-9 col-lg-9">
-							<input type="text" class="form-control" name = "address" placeholder="<?php Print "$address"?>" id="address">
+							<input type="text" autocomplete="off" class="form-control" name = "address" placeholder="<?php Print "$address"?>" id="address">
 						</div>
 					</div><br>
 					<div class="row">
@@ -101,7 +101,7 @@ $cola = $employee_info['cola'];
 							<label for="contact">Contact number</label>
 						</div>
 						<div class="col-md-5 col-lg-5">
-							<input type="number" class="form-control" name = "contactnum" placeholder="<?php Print "$contactnum"?>" id="contact">
+							<input type="number" autocomplete="off" class="form-control" name = "contactnum" placeholder="<?php Print "$contactnum"?>" id="contact">
 						</div>
 						<div class="col-md-1 col-lg-1">
 							<label for="contact">Date of Birth</label>
@@ -152,7 +152,7 @@ $cola = $employee_info['cola'];
 							<label for="emergency">Emergency contact:</label>	
 						</div>
 						<div class="col-md-8 col-lg-8">									
-							<input name="emergencyContact" type="text" placeholder="<?php Print $emergency?>" class="form-control">
+							<input name="emergencyContact" type="text" autocomplete="off" placeholder="<?php Print $emergency?>" class="form-control">
 						</div>
 					</div>
 
@@ -161,7 +161,7 @@ $cola = $employee_info['cola'];
 							<label for="characterReference" class="no-wrap">Character Reference:</label>
 						</div>
 						<div class="col-md-8 col-lg-8">
-							<input name="characterReference" type="text" placeholder="<?php Print $reference?>" class="form-control">
+							<input name="characterReference" type="text" autocomplete="off" placeholder="<?php Print $reference?>" class="form-control">
 						</div>
 					</div>
 
@@ -170,7 +170,7 @@ $cola = $employee_info['cola'];
 							<label for="cola" class="no-wrap">COLA:</label>
 						</div>
 						<div class="col-md-4 col-lg-4">
-							<input name="cola" type="text" placeholder="<?php Print $cola?>" class="form-control">
+							<input name="cola" type="text" autocomplete="off" placeholder="<?php Print $cola?>" class="form-control">
 						</div>
 					</div>
 				</div>
@@ -248,7 +248,7 @@ $cola = $employee_info['cola'];
 							<label for="rate">Rate Per Day</label>
 						</div>
 						<div class="col-md-5 col-lg-5">
-							<input name="rate"  type="text" onchange="salaryDecimal()" placeholder="<?php Print $rate?>" class="form-control" id="rate">
+							<input name="rate"  type="text" autocomplete="off" onchange="salaryDecimal()" placeholder="<?php Print $rate?>" class="form-control" id="rate">
 						</div>
 					</div><br>
 
@@ -277,13 +277,13 @@ $cola = $employee_info['cola'];
 												<label for="sss_ee">EE:</label>
 											</div>
 											<div class="col-md-4 col-lg-4">
-												<input name="sssEE" type="text" placeholder="'.$sssEE.'" class="form-control" id="sssEE">
+												<input name="sssEE" type="text" autocomplete="off" placeholder="'.$sssEE.'" class="form-control" id="sssEE">
 											</div>
 											<div class="col-md-1 col-lg-1">
 												<label for="sss_er">ER:</label>
 											</div>
 											<div class="col-md-4 col-lg-4">
-												<input name="sssER" type="text" placeholder="'.$sssER.'" class="form-control" id="sssER">
+												<input name="sssER" type="text" autocomplete="off" placeholder="'.$sssER.'" class="form-control" id="sssER">
 											</div>
 										</div>
 									</div>
@@ -301,13 +301,13 @@ $cola = $employee_info['cola'];
 												<label for="sss_ee">EE:</label>
 											</div>
 											<div class="col-md-4 col-lg-4">
-												<input name="sssEE" type="text" placeholder="No document" class="form-control" id="sssEE" readonly>
+												<input name="sssEE" type="text" autocomplete="off" placeholder="No document" class="form-control" id="sssEE" readonly>
 											</div>
 												<div class="col-md-1 col-lg-1">
 												<label for="sss_er">ER:<label>
 											</div>
 											<div class="col-md-4 col-lg-4">
-												<input name="sssER" type="text" placeholder="No document" class="form-control" id="sssER" readonly>
+												<input name="sssER" type="text" autocomplete="off" placeholder="No document" class="form-control" id="sssER" readonly>
 											</div>
 										</div>
 									</div>
@@ -328,13 +328,13 @@ $cola = $employee_info['cola'];
 												<label for="philhealth_ee">EE:</label>
 											</div>
 											<div class="col-md-4 col-lg-4">
-												<input name="philhealthEE" placeholder="'.$philhealthEE.'" type="text" class="form-control" id="philhealthEE">
+												<input name="philhealthEE" placeholder="'.$philhealthEE.'" type="text" autocomplete="off" class="form-control" id="philhealthEE">
 											</div>
 											<div class="col-md-1 col-lg-1">
 												<label for="philhealth_er">ER:</label>
 											</div>
 											<div class="col-md-4 col-lg-4">
-												<input name="philhealthER" placeholder="'.$philhealthER.'" type="text" class="form-control" id="philhealthER">
+												<input name="philhealthER" placeholder="'.$philhealthER.'" type="text" autocomplete="off" class="form-control" id="philhealthER">
 											</div>
 										</div>
 									</div>
@@ -352,13 +352,13 @@ $cola = $employee_info['cola'];
 										<label for="philhealth_ee">EE:</label>
 									</div>
 									<div class="col-md-4 col-lg-4">
-										<input name="philhealthEE" placeholder="No document" type="text" class="form-control" id="philhealthEE" readonly>
+										<input name="philhealthEE" placeholder="No document" type="text" autocomplete="off" class="form-control" id="philhealthEE" readonly>
 									</div>
 									<div class="col-md-1 col-lg-1">
 										<label for="philhealth_er">ER:</label>
 									</div>
 									<div class="col-md-4 col-lg-4">
-										<input name="philhealthER" placeholder="No document" type="text" class="form-control" id="philhealthER" readonly>
+										<input name="philhealthER" placeholder="No document" type="text" class="form-control" autocomplete="off" id="philhealthER" readonly>
 									</div>
 								</div>
 							</div>
@@ -379,13 +379,13 @@ $cola = $employee_info['cola'];
 												<label for="pagibig_ee">EE:</label>
 											</div>
 											<div class="col-md-4 col-lg-4">
-												<input name="pagibigEE" placeholder="'.$pagibigEE.'" type="text" class="form-control" id="pagibigEE">
+												<input name="pagibigEE" placeholder="'.$pagibigEE.'" type="text" autocomplete="off" class="form-control" id="pagibigEE">
 											</div>
 											<div class="col-md-1 col-lg-1">
 												<label for="pagibig_er">ER:</label>
 											</div>
 											<div class="col-md-4 col-lg-4">
-												<input name="pagibigER" placeholder="'.$pagibigER.'" type="text" class="form-control" id="pagibigER">
+												<input name="pagibigER" placeholder="'.$pagibigER.'" type="text" autocomplete="off" class="form-control" id="pagibigER">
 											</div>
 										</div>
 									</div>
@@ -403,13 +403,13 @@ $cola = $employee_info['cola'];
 												<label for="pagibig_ee">EE:</label>
 											</div>
 											<div class="col-md-4 col-lg-4">
-												<input name="pagibigEE" placeholder="No document" type="text" class="form-control" id="pagibigEE" readonly>
+												<input name="pagibigEE" placeholder="No document" type="text" autocomplete="off" class="form-control" id="pagibigEE" readonly>
 											</div>
 												<div class="col-md-1 col-lg-1">
 												<label for="pagibig_er">ER:</label>
 											</div>
 											<div class="col-md-4 col-lg-4">
-												<input name="pagibigER" placeholder="No document" type="text" class="form-control" id="pagibigER" readonly>
+												<input name="pagibigER" placeholder="No document" type="text" autocomplete="off" class="form-control" id="pagibigER" readonly>
 											</div>
 										</div>
 									</div>

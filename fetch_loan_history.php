@@ -27,11 +27,17 @@ $output .= "<div class='col-md-1 col-lg-12'>
 						<td>Remarks</td>
 						<td>Date</td>
 						<td>Approved by</td>
+						<td>Options</td>
 					</tr>";
 if(mysql_num_rows($historyQuery) > 0)
 {
+	$numRows = mysql_num_rows($historyQuery);
+	$counter = 0;
+	Print "<script>console.log('".$numRows."')</script>";
 	while($row = mysql_fetch_assoc($historyQuery))
 	{
+		$counter++;
+		Print "<script>console.log('".$counter."')</script>";
 		$output .= "
 					<tr>
 						<td>".number_format($row['balance'], 2, '.', ',')."</td>";
@@ -48,9 +54,16 @@ if(mysql_num_rows($historyQuery) > 0)
 		
 		$output .= 	"	<td>".$row['remarks']."</td>
 						<td>".$row['date']."</td>
-						<td>".$row['admin']."</td>
-					</tr>
-				";
+						<td>".$row['admin']."</td>";
+
+		if($numRows == $counter && $row['action'] == '1')
+			$output .= '<td><button type="button" class="btn btn-danger" onclick="deleteLoan('.$row['id'].',\''.$type.'\')">Remove</button></td>';
+		else
+			$output .= "<td></td>";
+
+		$output .=	"</tr>";
+
+
 	}
 	
 }

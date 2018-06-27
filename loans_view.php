@@ -2,6 +2,7 @@
 <?php
 include('directives/session.php');
 include_once('directives/db.php');
+include("pagination/loans_function.php");//For pagination
 
 $date = strftime("%B %d, %Y");
 
@@ -25,7 +26,9 @@ else if($loanType == "newVale")
 
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="js/jquery-ui/jquery-ui.min.css" type="text/css">
+	<link href="pagination/css/pagination.css" rel="stylesheet" type="text/css" />
+	<link href="pagination/css/A_green.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body style="font-family: QuicksandMed;">
@@ -152,31 +155,40 @@ else if($loanType == "newVale")
 								{
 									if($_GET['position'] != "null")
 									{
-										$employees = "SELECT * FROM employee WHERE empid = '$empid' AND site = '$site' AND position = '$position'";
+										$employees = "employee WHERE empid = '$empid' AND site = '$site' AND position = '$position'";
 									}
 									else
 									{
-										$employees = "SELECT * FROM employee WHERE empid = '$empid' AND site = '$site'";
+										$employees = "employee WHERE empid = '$empid' AND site = '$site'";
 									}
 								}
 								else if($_GET['position'] != "null")
 								{
 									if($_GET['site'] != "null")
 									{
-										$employees = "SELECT * FROM employee WHERE empid = '$empid' AND site = '$site' AND position = '$position'";
+										$employees = "employee WHERE empid = '$empid' AND site = '$site' AND position = '$position'";
 									}
 									else
 									{
-										$employees = "SELECT * FROM employee WHERE empid = '$empid' AND position = '$position'";
+										$employees = "employee WHERE empid = '$empid' AND position = '$position'";
 									}
 								}
 							}
 							else
 							{
-								$employees = "SELECT * FROM employee WHERE empid = '$empid'";
+								$employees = "employee WHERE empid = '$empid'";
 							}
+							//---
 
-							$employeeQuery = mysql_query($employees);
+							//Print "<script>alert('default')</script>";
+							$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
+					    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
+					    	$startpoint = ($page * $limit) - $limit;
+					        $statement = $employees;
+
+							$employeeQuery=mysql_query("SELECT * FROM {$statement} LIMIT {$startpoint} , {$limit}");
+
+							//---
 							$empArr = mysql_fetch_assoc($employeeQuery);
 							//Print "<script>alert(".mysql_num_rows($employeeQuery).")</script>";
 							//Check if employee has already fully paid his/her loan
@@ -237,12 +249,18 @@ else if($loanType == "newVale")
 			</form>
 		</div>	
 	</div>
+	<?php
+			echo "<div id='pagingg' >";
+			if($statement && $limit && $page)
+				echo pagination($statement,$limit,$page);
+			echo "</div>";
+		?>
 </div>
 
 <!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script rel="javascript" src="js/jquery-ui/external/jquery/jquery.js"></script>
+<script rel="javascript" src="js/jquery-ui/jquery-ui.js"></script>
 <script rel="javascript" src="js/bootstrap.min.js"></script>
 <script>
 // Regex for loan input fields
@@ -324,6 +342,12 @@ function load_history(id, type)
 		$('#dynamicTable').html(data);
 		}
 	});
+}
+
+function deleteLoan(id, loan) {
+	var a = confirm("Are you sure you want to remove this loan?");
+	if(a)
+		window.location.assign("logic_loans_delete.php?id="+id+"&loan="+loan);
 }
 </script>
 </body>
