@@ -35,7 +35,7 @@
 
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="js/jquery-ui/jquery-ui.min.css" type="text/css">
 	<link rel="stylesheet" href="js/timepicker/jquery.timepicker.min.css">
 
 </head>
@@ -158,9 +158,8 @@
 	</div>
 
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
-
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script rel="javascript" src="js/jquery-ui/external/jquery/jquery.js"></script>
+	<script rel="javascript" src="js/jquery-ui/jquery-ui.js"></script>
 	<script src="js/timepicker/jquery.timepicker.min.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script src="js/enterAttendance.js"></script>

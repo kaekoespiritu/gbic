@@ -2,6 +2,7 @@ function sssCheckboxFunc() {
 	var sss = document.getElementById('sssCheckbox');
 	var sssEERow = document.getElementById('sssEE');
 	var sssERRow = document.getElementById('sssER');
+	
 	if(sss.checked == true)
 	{
 		//Employee
@@ -434,7 +435,7 @@ $( "#dtpkr_addEmployee" ).datepicker({
 	yearRange: "-50:+0",
 	maxDate: (0),
 	beforeShow: function(){    
-	$(".ui-datepicker").css('font-size', 10) 
+	$(".ui-datepicker").css('font-size', 15) 
 	}
 });
 $( "#dtpkr_addDOB").datepicker({
@@ -446,7 +447,7 @@ $( "#dtpkr_addDOB").datepicker({
 	yearRange: "-70:+0",
 	maxDate: (0),
 	beforeShow: function(){    
-	$(".ui-datepicker").css('font-size', 10) 
+	$(".ui-datepicker").css('font-size', 15) 
 	}
 });
 	// SITE FILTER 

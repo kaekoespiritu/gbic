@@ -11,7 +11,7 @@ require_once("directives/modals/addLoan.php");
 
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="js/jquery-ui/jquery-ui.min.css" type="text/css">
 
 </head>
 <body style="font-family: QuicksandMed;">

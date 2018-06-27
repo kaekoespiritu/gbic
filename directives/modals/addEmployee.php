@@ -54,7 +54,7 @@
 									<label for="contact">Date of Birth</label>
 								</div>
 								<div class="col-md-4 col-lg-4">
-									<input name="txt_addDOB" type="text" placeholder="mm-dd-yyyy" class="form-control" id="dtpkr_addDOB" required>
+									<input name="txt_addDOB" type="text" autocomplete="off" placeholder="mm-dd-yyyy" class="form-control" id="dtpkr_addDOB" required>
 								</div>
 							</div><br>
 
@@ -80,7 +80,7 @@
 									<label for="contact">Date of Hire</label>
 								</div>
 								<div class="col-md-9 col-lg-9">
-									<input name="txt_addDateHired" type="text" size="10" style="width:150px" class="form-control" id="dtpkr_addEmployee" placeholder="mm-dd-yyyy" required>
+									<input name="txt_addDateHired" autocomplete="off" type="text" size="10" style="width:150px" class="form-control" id="dtpkr_addEmployee" placeholder="mm-dd-yyyy" required>
 								</div>
 							</div>
 

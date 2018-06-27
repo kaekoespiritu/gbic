@@ -11,7 +11,7 @@ include_once('directives/db.php');
 
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="js/jquery-ui/jquery-ui.min.css" type="text/css">
 
 </head>
 <body style="font-family: QuicksandMed;">
@@ -422,9 +422,9 @@ include_once('directives/db.php');
 	</div>
 
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
+	<script rel="javascript" src="js/jquery-ui/external/jquery/jquery.js"></script>
+	<script rel="javascript" src="js/jquery-ui/jquery-ui.min.js"></script>
 
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script rel="javascript" src="js/accounting.min.js"></script>
 	<script>
@@ -435,7 +435,7 @@ include_once('directives/db.php');
 			showAnim: 'blind',
 			maxDate:(0),
 			beforeShow: function(){    
-				$(".ui-datepicker").css('font-size', 10) 
+				$(".ui-datepicker").css('font-size', 15) 
 			}
 		});
 		$("#dtpkr_dob").datepicker({
@@ -445,10 +445,10 @@ include_once('directives/db.php');
 			showAnim: 'blind',
 			maxDate:(0),
 			beforeShow: function(){    
-				$(".ui-datepicker").css('font-size', 10) 
+				$(".ui-datepicker").css('font-size', 15) 
 			}
 		});
-
+		
 		function sendToModal(id){
 			var parent = document.getElementById(id);
 			// Getting values from the searched employee
