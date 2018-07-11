@@ -211,6 +211,8 @@
 			mainRow.querySelector('.undertimeH').value = "";
 			mainRow.querySelector('.nightdiffH').value = "";
 
+			mainRow.querySelector('.attendance').value = "";//reset the attendance status
+			
 			// If absent was initially placed, changed to success
 			if(mainRow.classList.contains('danger'))
 			{
