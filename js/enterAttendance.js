@@ -99,6 +99,7 @@ function halfDay(id){
 		mainRow.querySelector('.timein2').readOnly = false; // unset the textbox to readonly
 		mainRow.querySelector('.timeout2').readOnly = false; // Unset the textbox to readonly
 
+		mainRow.querySelector('.attendance').value = ""; // Unset the attendance status to 
 		// If absent was initially placed, changed to success
 		if(mainRow.classList.contains('danger'))
 		{

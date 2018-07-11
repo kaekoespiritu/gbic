@@ -5,7 +5,6 @@ require "directives/attendance/attendance_query.php";
 error_reporting(0);// fetch no error
 date_default_timezone_set('Asia/Hong_Kong');
 $location = $_GET['site'];
-//Print "<script>alert('absent')</script>";
 if(isset($_SESSION['date']))
 {
 	$date = $_SESSION['date'];// This gets the chosen date by the admin
@@ -40,7 +39,6 @@ if(isset($_SESSION['holidayDate']))
 		$holidayName = $_SESSION['holidayName'];
 		$holidayType = $_SESSION['holidayType'];
 		$holidayDate = $_SESSION['holidayDate'];
-		//Print "<script>alert('".$holidayType."')</script>";
 		
 		$holidayChecker = "SELECT * FROM holiday WHERE date = '$holidayDate'";
 		$holidayCheckerQuery = mysql_query($holidayChecker) or die(mysql_error());
@@ -69,7 +67,6 @@ $site = "SELECT * FROM employee WHERE site = '$location'";
 
 $siteQuery = mysql_query($site) or die(mysql_error());
 $empNum = mysql_num_rows($siteQuery);
-//Print "<script>alert('".$empNum."')</script>";
 // Checker if there are inputs in the attendance
 $count = 0;
 
@@ -88,7 +85,6 @@ for($count; $count <= $empNum; $count++)
 		((empty($_POST['timein2'][$count]) && empty($_POST['timeout2'][$count])) || (!empty($_POST['timein2'][$count]) && !empty($_POST['timeout2'][$count]))) 
 		 || $_POST['attendance'][$count] == "ABSENT")
 	{
-		//Print "<script>alert('yea')</script>";
 		break 1;
 	}
 }
@@ -158,8 +154,9 @@ if(!empty($dateRows))// Updating attendance
 	$AttQuery = "";
 	for($counter = 0; $counter < $empNum; $counter++)
 	{
-		if(((!empty($_POST['timein1'][$counter]) && !empty($_POST['timeout1'][$counter])) || 
-			(!empty($_POST['timein2'][$counter]) && !empty($_POST['timeout2'][$counter]))) || ((empty($_POST['timein2'][$counter]) && empty($_POST['timeout2'][$counter])) && $_POST['attendance'][$counter] == "PRESENT"))
+
+		// if(((!empty($_POST['timein1'][$counter]) && !empty($_POST['timeout1'][$counter])) || (!empty($_POST['timein2'][$counter]) && !empty($_POST['timeout2'][$counter]))) || ((empty($_POST['timein2'][$counter]) && empty($_POST['timeout2'][$counter])) && $_POST['attendance'][$counter] == "PRESENT"))
+		if(((!empty($_POST['timein1'][$counter]) && !empty($_POST['timeout1'][$counter])) && $_POST['attendance'][$counter] == "PRESENT"))
 		{	
 			$empid = $_POST['empid'][$counter];
 			
@@ -188,10 +185,6 @@ if(!empty($dateRows))// Updating attendance
 				$timeout3 = "";
 			}
 			
-			 // Print "<script>alert('counter ". $counter ."')</script>";
-			 // Print "<script>alert('timein ". $timein ."')</script>";
-			 // Print "<script>alert('timeout ". $timeout ."')</script>";
-			
 
 			if(!empty($_POST['workinghrs'][$counter]))
 			{
@@ -211,9 +204,7 @@ if(!empty($dateRows))// Updating attendance
 					$workinghrs = $hrs[0].$hrs[1].".".$mins[1].$mins[2];
 					
 					$workinghrs = str_replace(' ', '', $workinghrs);//removes all the spaces
-					//Print "<script>alert('workinghrs ". $workinghrs ."')</script>";
 				}
-				 //Print "<script>alert('workinghrs ".$workinghrs."')</script>";
 			}
 			else 
 			{
@@ -228,7 +219,6 @@ if(!empty($dateRows))// Updating attendance
 				$justMins = strpos($OtHrs, "mins");
 				if($justMins == true && $hasMins == false)
 				{
-					//Print "<script>alert('yeah')</script>";
 					$OtHrs = "0.".$OtHrs[0].$OtHrs[1];//Gets the first 2 characters
 					$OtHrs = str_replace(' ', '', $OtHrs);//removes all the spaces
 				}
@@ -239,8 +229,6 @@ if(!empty($dateRows))// Updating attendance
 				}
 				else
 				{
-					
-					//Print "<script>alert('yepa')</script>";
 					$work = explode(",", $OtHrs);//Separates the string
 					$hrs = $work[0];//gets the Hours
 					$mins = $work[1];//Gets the minutes
@@ -259,10 +247,8 @@ if(!empty($dateRows))// Updating attendance
 				$undertime = mysql_real_escape_string($_POST['undertime'][$counter]);
 				$hasMins = strpos($undertime, ",");//Search the string if it has comma
 				$justMins = strpos($undertime, "mins");
-				//Print "<script>alert('yeah')</script>";
 				if($justMins == true && $hasMins == false)
 				{
-					//Print "<script>alert('yeah')</script>";
 					$undertime = "0.".$undertime[0].$undertime[1];//Gets the first 2 characters
 					$undertime = str_replace(' ', '', $undertime);//removes all the spaces
 				}
@@ -290,14 +276,12 @@ if(!empty($dateRows))// Updating attendance
 				$nightdiff = mysql_real_escape_string($_POST['nightdiff'][$counter]);
 				// $nightdiff = $nightdiff[0].$nightdiff[1];
 				// $nightdiff = str_replace(' ', '', $nightdiff);
-				//Print "<script>alert('ND ". $nightdiff ."')</script>";
 
 				
 				$hasMins = strpos($nightdiff, ",");//Search the string if it has comma
 				$justMins = strpos($nightdiff, "mins");
 				if($justMins == true && $hasMins == false)
 				{
-					//Print "<script>alert('yeah')</script>";
 					$nightdiff = "0.".$nightdiff[0].$nightdiff[1];//Gets the first 2 characters
 					$nightdiff = str_replace(' ', '', $nightdiff);//removes all the spaces
 				}
@@ -352,7 +336,6 @@ if(!empty($dateRows))// Updating attendance
 		}
 		else if($_POST['attendance'][$counter] == "ABSENT")// ABSENT
 		{
-
 			$empid = $_POST['empid'][$counter];
 
 			//Make Algorithm that will check if this employee is AWOL
@@ -376,7 +359,7 @@ if(!empty($dateRows))// Updating attendance
 				$loopCounter++;
 
 			}
-			Print "<script>console.log('update: ".$AwolCounter."')</script>";
+
 			if($AwolCounter >= 6)
 			{
 				
@@ -384,8 +367,6 @@ if(!empty($dateRows))// Updating attendance
 				$checkAwolQuery = mysql_query($checkAwol) or die(mysql_error());
 				if(mysql_num_rows($checkAwolQuery) == 0)
 				{
-					//Print "<script>alert('start: ".$start." | end: ".$end."')</script>";
-					//Print "<script>alert('2')</script>";
 					$AwolPending = "INSERT awol_employees(empid, start_date, end_date, status) 
 												VALUES(	'$empid',
 														'$start',
@@ -404,8 +385,6 @@ if(!empty($dateRows))// Updating attendance
 				
 			}
 
-
-			//Print "<script>alert('absent')</script>";
 			
 			$timein1 = "";
 			$timeout1 = "";
@@ -427,7 +406,6 @@ if(!empty($dateRows))// Updating attendance
 			$employeeQuery = mysql_query($employee) or die(mysql_error());
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
-			//Print "<script>alert('".$attendance."')</script>";
 			//require "directives/attendance/attendance_query.php";
 
 			$attChecker = "SELECT * from attendance WHERE date = '$date' AND empid = '$empid' LIMIT 1";
@@ -446,6 +424,7 @@ if(!empty($dateRows))// Updating attendance
 		}
 		else if(empty($_POST['attendance'][$counter]))// NO INPUT
 		{
+
 			$empid = $_POST['empid'][$counter];
 			$timein1 = "";
 			$timeout1 = "";
@@ -486,7 +465,6 @@ if(!empty($dateRows))// Updating attendance
 			}					  	
 		}
 
-		// Print "<script>alert('". $AttQuery ."')</script>";
 		mysql_query($AttQuery) or die(mysql_error());//query
 	}
 }
@@ -522,7 +500,6 @@ else// NEW attendance
 			(!empty($_POST['timein2'][$counter]) && !empty($_POST['timeout2'][$counter]))) || ((empty($_POST['timein2'][$counter]) && empty($_POST['timeout2'][$counter])) && $_POST['attendance'][$counter] == "PRESENT"))
 		{
 
-			//Print "<script>alert('Pasok')</script>";
 			$empid = $_POST['empid'][$counter];
 			$timein1 = $_POST['timein1'][$counter];
 			$timeout1 = $_POST['timeout1'][$counter];
@@ -565,7 +542,6 @@ else// NEW attendance
 					$mins = $work[1];//Gets the minutes
 					
 					$workinghrs = $hrs[0].$hrs[1].".".$mins[1].$mins[2];
-					//Print "<script>alert('workinghrs ". $mins[1].$mins[2] ."')</script>";
 					$workinghrs = str_replace(' ', '', $workinghrs);//removes all the spaces
 				}
 				 //
@@ -609,10 +585,8 @@ else// NEW attendance
 				$undertime = mysql_real_escape_string($_POST['undertime'][$counter]);
 				$hasMins = strpos($undertime, ",");//Search the string if it has comma
 				$justMins = strpos($undertime, "mins");
-				//Print "<script>alert('yeah')</script>";
 				if($justMins == true && $hasMins == false)
 				{
-					//Print "<script>alert('yeah')</script>";
 					$undertime = "0.".$undertime[0].$undertime[1];//Gets the first 2 characters
 					$undertime = str_replace(' ', '', $undertime);//removes all the spaces
 				}
@@ -640,7 +614,6 @@ else// NEW attendance
 				$nightdiff = mysql_real_escape_string($_POST['nightdiff'][$counter]);
 				$nightdiff = $nightdiff[0].$nightdiff[1];
 				$nightdiff = str_replace(' ', '', $nightdiff);
-				//Print "<script>alert('ND ". $nightdiff ."')</script>";
 			}
 			else 
 			{
@@ -663,7 +636,6 @@ else// NEW attendance
 			
 			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 			
-			//Print "<script>alert('yeah3')</script>";
 			
 		}
 		else if($_POST['attendance'][$counter] == "ABSENT")// ABSENT
@@ -689,10 +661,10 @@ else// NEW attendance
 				if($AwolCounter >= 6)
 					$start = $AwolChecker['date'];
 			}
-			Print "<script>console.log('new: ".$AwolCounter."')</script>";
+
 			if($AwolCounter >= 6)
 			{
-				//Print "<script>alert('1')</script>";
+
 				//insert to AWOL PENDING
 				$AwolPending = "INSERT awol_employees(empid, start_date, end_date, status) 
 												VALUES(	'$empid',
@@ -710,7 +682,6 @@ else// NEW attendance
 				mysql_query($empAwolPending) or die(mysql_error());//update employment status of employee to 2 = pending
 			}
 
-			//Print "<script>alert('absent')</script>";
 			$timein1 = "";
 			$timeout1 = "";
 			$timein2 = "";
@@ -738,12 +709,10 @@ else// NEW attendance
 
 			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
 		
-			//Print "<script>alert('".$AttQuery."')</script>";
 			
 		}
 		else if(empty($_POST['attendance'][$counter]))
 		{
-			//Print "<script>alert('yeah1')</script>";
 			$empid = $_POST['empid'][$counter];
 			$timein1 = "";
 			$timeout1 = "";
