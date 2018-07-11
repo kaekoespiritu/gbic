@@ -611,8 +611,10 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					
 					if(workingmins == 0)
 					{
+						console.log("1");
 						if(useOnce)
 						{
+							console.log("2");
 							useOnce = false;
 							workinghours -= 1;
 						}
@@ -620,11 +622,13 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					}
 					else
 					{
+						console.log("3");
 						workingmins = workingmins - 30;//minus 30mins
 					}
 					
 					if(workingmins < 0)
 					{
+						console.log("4");
 						if(useOnce)
 							workinghours -= 1;
 						
@@ -635,22 +639,24 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					}
 				}
 				//2nd Time in and Time out
-				useOnce = true;
+				// useOnce = true;
 				workingmins = Math.abs(workingmins);
 				if(Math.abs(checkTime2) >= 8)// if accumulated time is more than 8 hours 
 				{
-					
+					console.log("5");
 					if(workingmins == 0)
 					{
 						if(useOnce)
 						{
+							console.log("6");
 							useOnce = false;
 							workinghours -= 1;
 						}
 						workingmins = 30;//minus 30mins
 					}
-					else
+					else if(useOnce)
 					{
+						console.log("7");
 						workingmins = workingmins - 30;//minus 30mins
 					}
 					
@@ -1377,21 +1383,22 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		
 		// NIGHT DIFF if Working Hours is in between 10pm - 6am
 		// 10 is 10pm and 18 is 6pm
-		//alert("timein: "+timeinhour+"timeout: "+ timeouthour);
+		// alert("yow timein: "+timeinhour+"timeout: "+ timeouthour);
 			var nightdiff = "";
 
 			//If employee chooses halfday
 			if(timeinhour2 != "HD")
 			{
-				// console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
+
+				console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
 				if((timeinhour1 <= 10 && timeouthour1 <= 18) || (timeinhour2 <= 10 && timeouthour2 <= 18))//night diff needs reconfiguration
 				{
 					var NDin;
 					var NDout;
 					var workhrs;
-
+					// console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
 					//Possibility 2: if 10pm is in after lunch
-					if(timeinhour2 < 10)
+					if(timeinhour2 <= 10)
 					{
 						NDin = timeinhour2 - 10;
 						NDout = 0;

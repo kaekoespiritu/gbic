@@ -67,7 +67,7 @@
 									</select>
 								</div>
 								<div class="col-md-5 col-lg-5">
-									<input type="number" class="form-control" required name="loanAmount" id="loanAmount" placeholder="Amount of loan" onchange="validateLoanAmount('loanAmount')">
+									<input type="text" class="form-control" required name="loanAmount" id="loanAmount" placeholder="Amount of loan" onchange="validateLoanAmount('loanAmount')">
 								</div>
 							</div>
 

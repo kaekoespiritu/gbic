@@ -142,24 +142,24 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 					<!-- Allowance -->
 					<?php
 
-						$allowDays =  $payrollArr['num_days'];
-						$allowExplode = explode('.', $payrollArr['num_days']);
-						if(count($allowExplode) == 2)
-						{
-							if($allowExplode[1] != 0)
-								$allowDays = $allowExplode[0]+1;
-							else
-								$allowDays = $allowExplode[0];
-						}
-						else
-						{
-							$allowDays = $allowExplode[0];
-						}
-						if($payrollArr['sunday_hrs'] != 0)
-						{
-							Print "<script>console.log('sunday')</script>";
-							$allowDays++;
-						}
+						$allowDays =  $payrollArr['allow_days'];
+						// $allowExplode = explode('.', $payrollArr['allow_days']);
+						// if(count($allowExplode) == 2)
+						// {
+						// 	if($allowExplode[1] != 0)
+						// 		$allowDays = $allowExplode[0]+1;
+						// 	else
+						// 		$allowDays = $allowExplode[0];
+						// }
+						// else
+						// {
+						// 	$allowDays = $allowExplode[0];
+						// }
+						// if($payrollArr['sunday_hrs'] != 0)
+						// {
+						// 	Print "<script>console.log('sunday')</script>";
+						// 	$allowDays++;
+						// }
 
 						$subTotalAllowance = $empArr['allowance'] * $allowDays;
 						$totalAllowance = $subTotalAllowance;//for the Subtotal of Earnings
@@ -343,18 +343,20 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 					</tr>
 					<!-- COLA -->
 					<?php
-						$totalCola = $payrollArr['cola'] * $allowDays;
+						$totalCola = $payrollArr['cola'];
 						if($totalCola == 0)
 							$subTotalCola = "--";
 						else
 							$subTotalCola = numberExactFormat($totalCola, 2, '.', true);
 
+
 						if($payrollArr['cola'] != 0)
 						{
+							$currentCola = $payrollArr['cola']/$allowDays;
 							Print "
 								<tr>
 									<td>COLA</td>
-									<td>".$payrollArr['cola']."</td>
+									<td>".$currentCola."</td>
 									<td>".$allowDays."</td>
 									<td>".$subTotalCola."</td>
 								</tr>

@@ -70,6 +70,7 @@
 	$sundayBool = false;//Boolean to filter the sunday from the work days
 	if(!empty($_POST['sunWorkHrs']))
 	{
+		Print "<script>console.log('sunday pasok')</script>";
 		$sundayBool = true;
 		$sunExplode = explode('.',$_POST['sunWorkHrs']);
 		if(count($sunExplode) > 1)
@@ -84,10 +85,10 @@
 			$sunWorkHrs = $sunExplode[0];
 		}
 
-		Print "<script>console.log('sunWorkHrs: ". $sunWorkHrs."')</script>";
-		if($WorkHrsArr != "")
-			$WorkHrsArr .= ","; 
-		$WorkHrsArr .= $sunWorkHrs;
+		
+		// if($WorkHrsArr != "")
+		// 	$WorkHrsArr .= ","; 
+		// $WorkHrsArr .= $sunWorkHrs;
 
 //Computation for Sunday --------------------------------------------------------------
 		
@@ -111,33 +112,45 @@
 //Computes the Overall Work Days ------------------------------------------------------
 	$workHrs = explode("," ,$WorkHrsArr);
 	$overallWorkDays = 0;
+	$overallAllowance = 0;
 	$sunday_Att = 0;//Preset the sunday attendance to filter out the overal to the sunday
+	if($sundayBool)
+	{
+		$sunday_Att = 1;
+		$sundayBool = false;
+	}
+
 	foreach($workHrs as $hrsCheck)
 	{
-		if($sundayBool)
+		Print "<script>console.log('workhrs: ".$hrsCheck."')</script>";
+		// if($sundayBool)
+		// {
+		// 	// if($hrsCheck < 8)
+		// 	// {
+		// 	// 	$overallWorkDays = ($hrsCheck / 8) + $overallWorkDays;
+		// 	// 	Print '<script>console.log("less than 8hrs on a Sunday:"'.$overallWorkDays.');</script>';
+		// 	// }
+		// 	// else
+		// 	// {
+		// 	// 	$overallWorkDays++;
+		// 		$sunday_Att = 1;
+		// 	// }
+		// 	$sundayBool = false;
+		// 	$overallWorkDays++;
+		// }
+		if($hrsCheck < 8)
 		{
-			// if($hrsCheck < 8)
-			// {
-			// 	$overallWorkDays = ($hrsCheck / 8) + $overallWorkDays;
-			// 	Print '<script>console.log("less than 8hrs on a Sunday:"'.$overallWorkDays.');</script>';
-			// }
-			// else
-			// {
-			// 	$overallWorkDays++;
-				$sunday_Att = 1;
-			// }
-			$sundayBool = false;
-		}
-		else if($hrsCheck < 8)
-		{
+			Print "<script>console.log('under: ".$hrsCheck."')</script>";
 			$overallWorkDays = ($hrsCheck / 8) + $overallWorkDays;
 			$overallWorkDays = numberExactFormat($overallWorkDays,2,'.', false);
 			// $overallWorkDays++;
+			$overallAllowance = ($hrsCheck / 8) + $overallAllowance;
+			$overallAllowance = numberExactFormat($overallAllowance,2,'.', false);
 		}
 		else
 		{
 			$overallWorkDays++;
-
+			$overallAllowance++;
 		}
 	}
 
@@ -149,7 +162,7 @@
 	if(!empty($_POST['totalOverTime']))
 	{
 		$totalOT = $_POST['totalOverTime'];//Total Overtime by employee
-
+		Print "<script>console.log('totalOT: ".$totalOT."')</script>";
 		$compOT = $totalOT * $OtRatePerHour;//Computed Overtime
 	}
 
@@ -269,7 +282,7 @@
 					else//Regular Holiday
 					{
 						$addHoliday += $regHolidayInc; 
-						$regHolNum++;
+						// $regHolNum++;
 					}
 				}
 				// Print '<script>console.log("Total overall holidays: '.$regHolNum.'")</script>';
@@ -326,7 +339,7 @@
 						else//Regular Holiday
 						{
 							$addHoliday += $regHolidayInc;
-							$regHolNum+=2;
+							// $regHolNum+=2;
 							Print '<script>console.log("Went to work on the holiday: '.$regHolNum.'")</script>';
 						}
 					}
@@ -403,20 +416,30 @@
 	if(!empty($_POST['extra_allowance']))
 		$extraAllowance = $_POST['extra_allowance'];
 
-	$daysAllowance = $overallWorkDays;
+	$daysAllowance = $overallAllowance;
 	$checkRoundAllowance = explode(".", $daysAllowance);
-	if(count($checkRoundAllowance) > 1)
-	{
+	// if(count($checkRoundAllowance) > 1)
+	// {
 
-		if($checkRoundAllowance[1] != 0)
-			$daysAllowance = $checkRoundAllowance[0] + 1;
-		else
-			$daysAllowance = $checkRoundAllowance[0];
-	}
+	// 	// if($checkRoundAllowance[1] != 0)
+	// 	// 	$daysAllowance = $checkRoundAllowance[0] + 1;
+	// 	// else
+	// 	// 	$daysAllowance = $checkRoundAllowance[0];
+	// }
 
 	if(!empty($_POST['sunWorkHrs']))
 	{
-		$daysAllowance++;
+		Print "<script>console.log('allowDays1: ".$daysAllowance."')</script>";
+		if($_POST['sunWorkHrs'] < 8)
+		{
+			$daysAllowance = ($_POST['sunWorkHrs'] / 8) + $daysAllowance;
+			$daysAllowance = numberExactFormat($daysAllowance,2,'.', false);
+		}
+		else
+		{
+			$daysAllowance++;
+		}	
+		Print "<script>console.log('allowDays2: ".$daysAllowance."')</script>";
 	}
 
 	$compAllowance = (($daysAllowance * $dailyAllowance)  + $extraAllowance);
@@ -676,8 +699,8 @@
 	$contributions = $pagibig + $philhealth + $sss + $tax;
 
 	$totalLoans = $loan_pagibig + $loan_sss + $loan_oldVale + $loan_newVale;
-	// Print "<script>console.log('toDB - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".abs($tools_paid)."')</script>";
-	Print "<script>console.log('logic_payroll - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".$tools_paid."')</script>";
+	Print "<script>console.log('toDB - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".abs($tools_paid)."')</script>";
+	// Print "<script>console.log('logic_payroll - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".$tools_paid."')</script>";
 	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($tools_paid);
 	$grandTotal = abs(numberExactFormat($grandTotal, 2, '.', false));
 
@@ -691,6 +714,7 @@
 									ot_num,
 									ot_comp,
 									allow,
+									allow_days,
 									comp_allowance,
 									x_allowance,
 									cola,
@@ -727,9 +751,10 @@
 														'$totalOT',
 														'$compOT',
 														'$dailyAllowance',
+														'$daysAllowance',
 														'$compAllowance',
 														'$extraAllowance',
-														'$cola',
+														'$totalCola',
 														'$SundayRatePerHour',
 														'$sunWorkHrs',
 														'$sunday_Att',
@@ -766,9 +791,10 @@
 									ot_num = '$totalOT',
 									ot_comp = '$compOT',
 									allow = '$dailyAllowance',
+									allow_days = '$daysAllowance',
 									comp_allowance = '$compAllowance',
 									x_allowance = '$extraAllowance',
-									cola = '$cola',
+									cola = '$totalCola',
 									sunday_rate = '$SundayRatePerHour',
 									sunday_hrs = '$sunWorkHrs',
 									sunday_att = '$sunday_Att',

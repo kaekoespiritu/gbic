@@ -27,7 +27,7 @@ $activeSheet = $sheet -> createSheet(0);
 //Merge cells
 $activeSheet->mergeCells('A1:F1');//Requirements field
 $activeSheet->mergeCells('A2:F2');//Period
-$activeSheet->mergeCells('G1:Z2');//"PAYROLL"
+$activeSheet->mergeCells('G1:AC2');//"PAYROLL"
 
 //----------------- Header Contents ---------------------//
 //Title Contents
@@ -62,8 +62,14 @@ $activeSheet->setCellValue('U3', 'Philhealth');
 $activeSheet->setCellValue('V3', 'Pagibig');
 $activeSheet->setCellValue('W3', 'Old vale');
 $activeSheet->setCellValue('X3', 'Vale');
-$activeSheet->setCellValue('Y3', 'Tools');
-$activeSheet->setCellValue('Z3', 'Total Salary');
+
+$activeSheet->setCellValue('Y3', 'SSS loan');
+$activeSheet->setCellValue('Z3', 'P-ibig loan');
+
+$activeSheet->setCellValue('AA3', 'Tools');
+$activeSheet->setCellValue('AB3', 'Total Salary');
+
+$activeSheet->setCellValue('AC3', 'Signature');
 
 //----------------- Body ---------------------//
 
@@ -122,18 +128,25 @@ $rowCounter = 4; //start for the data in the row of excel
 	$activeSheet->setCellValue('V'.$rowCounter, $payrollArr['pagibig']);//Pagibig
 	$activeSheet->setCellValue('W'.$rowCounter, $payrollArr['old_vale']);//old vale
 	$activeSheet->setCellValue('X'.$rowCounter, $payrollArr['new_vale']);//vale
-	$activeSheet->setCellValue('Y'.$rowCounter, $payrollArr['tools_paid']);//tools
+
+	$activeSheet->setCellValue('Y'.$rowCounter, $payrollArr['loan_sss']);//SSS loan
+	$activeSheet->setCellValue('Z'.$rowCounter, $payrollArr['loan_pagibig']);//Pagibig loan
+
+	$activeSheet->setCellValue('AA'.$rowCounter, $payrollArr['tools_paid']);//tools
 
 	$totalSalary = numberExactFormat($payrollArr['total_salary'], 2, '.', true);
-	$activeSheet->setCellValue('Z'.$rowCounter, $totalSalary);//Total Salary
+	$activeSheet->setCellValue('AB'.$rowCounter, $totalSalary);//Total Salary
+
+	$activeSheet->setCellValue('AC'.$rowCounter, '1');//Total Salary
 
 	$rowCounter++; //Row counter
 
 //Style for the Spreadsheet
-$activeSheet->getStyle('A1:Z3')->applyFromArray($border_all_medium);//Header 
-$activeSheet->getStyle('A4:Z'.$rowCounter)->applyFromArray($border_all_thin);//Content
-$activeSheet->getStyle('G1:Z2')->applyFromArray($align_center);//Centered header text
+$activeSheet->getStyle('A1:AC3')->applyFromArray($border_all_medium);//Header 
+$activeSheet->getStyle('A4:AC'.$rowCounter)->applyFromArray($border_all_thin);//Content
+$activeSheet->getStyle('G1:AC2')->applyFromArray($align_center);//Centered header text
 $activeSheet->getStyle('A')->applyFromArray($align_center);//Centered period text
+$activeSheet->getStyle('AC4')->applyFromArray($signature);//Centered header text
 
 $activeSheet->getColumnDimension('A')->setAutoSize(true);
 $activeSheet->getColumnDimension('B')->setAutoSize(true);
@@ -160,6 +173,9 @@ $activeSheet->getColumnDimension('V')->setAutoSize(true);
 $activeSheet->getColumnDimension('W')->setAutoSize(true);
 $activeSheet->getColumnDimension('X')->setAutoSize(true);
 $activeSheet->getColumnDimension('Y')->setAutoSize(true);
+$activeSheet->getColumnDimension('Z')->setAutoSize(true);
+$activeSheet->getColumnDimension('AA')->setAutoSize(true);
+$activeSheet->getColumnDimension('AB')->setAutoSize(true);
 
 header('Content-Type: application/vnd.ms-excel');
 header('Content-Disposition: attachment; filename="'.$filename.'"');

@@ -257,11 +257,11 @@ function attendance ()
 									</td>";
 						Print	"<!-- AFTER BREAK Time In -->
 									<td>
-										<input type='text' onblur='timeValidation(this)' class='timein2 timepicker form-control input-sm' placeholder='Half Day' name='timein2[".$counter."]'>
+										<input type='text' onblur='timeValidation(this)' class='timein2 timepicker form-control input-sm' placeholder='' name='timein2[".$counter."]' readonly>
 									</td>
 								<!-- AFTER BREAK Time Out-->
 									<td>
-										<input type='text' onblur='timeValidation(this)' class='timeout2 timepicker form-control input-sm' placeholder='Half Day' name='timeout2[".$counter."]'>
+										<input type='text' onblur='timeValidation(this)' class='timeout2 timepicker form-control input-sm' placeholder='' name='timeout2[".$counter."]' readonly>
 									</td>";
 					}
 					else
@@ -547,8 +547,12 @@ function attendance ()
 		while($row_employee = mysql_fetch_assoc($employees_query))
 		{
 
+
 			Print 	"	
 				<tr id=\"". $row_employee['empid'] ."\">
+
+					<input type='hidden' class='driver' value='0' >
+
 					<input type='hidden' name='empid[".$counter."]' value=". $row_employee['empid'] .">
 					<td class='empName'>
 						". $row_employee['lastname'] .", ". $row_employee['firstname'] ."

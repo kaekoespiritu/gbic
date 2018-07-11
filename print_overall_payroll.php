@@ -24,7 +24,7 @@ $activeSheet = $sheet -> createSheet(0);
 //Merge cells
 $activeSheet->mergeCells('A1:F1');//site name
 $activeSheet->mergeCells('A2:F2');//date
-$activeSheet->mergeCells('G1:AA2');//"PAYROLL"
+$activeSheet->mergeCells('G1:AC2');//"PAYROLL"
 
 //----------------- Header Contents ---------------------//
 //Title Contents
@@ -62,9 +62,13 @@ $activeSheet->setCellValue('U3', 'Philhealth');
 $activeSheet->setCellValue('V3', 'Pagibig');
 $activeSheet->setCellValue('W3', 'old vale');
 $activeSheet->setCellValue('X3', 'vale');
-$activeSheet->setCellValue('Y3', 'tools');
-$activeSheet->setCellValue('Z3', 'Total Salary');
-$activeSheet->setCellValue('AA3', 'Signature');
+
+$activeSheet->setCellValue('Y3', 'SSS loan');
+$activeSheet->setCellValue('Z3', 'P-ibig loan');
+
+$activeSheet->setCellValue('AA3', 'tools');
+$activeSheet->setCellValue('AB3', 'Total Salary');
+$activeSheet->setCellValue('AC3', 'Signature');
 
 
 //----------------- Body ---------------------//
@@ -140,10 +144,16 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 		$activeSheet->setCellValue('V'.$rowCounter, $payrollArr['pagibig']);//Pagibig
 		$activeSheet->setCellValue('W'.$rowCounter, $payrollArr['old_vale']);//old vale
 		$activeSheet->setCellValue('X'.$rowCounter, $payrollArr['new_vale']);//vale
-		$activeSheet->setCellValue('Y'.$rowCounter, $payrollArr['tools_paid']);//tools
+
+		$activeSheet->setCellValue('Y'.$rowCounter, $payrollArr['loan_sss']);//SSS loan
+		$activeSheet->setCellValue('Z'.$rowCounter, $payrollArr['loan_pagibig']);//Pagibig loan
+
+		$activeSheet->setCellValue('AA'.$rowCounter, $payrollArr['tools_paid']);//tools
 
 		$totalSalary = numberExactFormat($payrollArr['total_salary'], 2, '.', true);
-		$activeSheet->setCellValue('Z'.$rowCounter, $totalSalary);//Total Salary
+		$activeSheet->setCellValue('AB'.$rowCounter, $totalSalary);//Total Salary
+
+		$activeSheet->setCellValue('AC'.$rowCounter, $counter);//tools
 
 		$GrandTotal += $payrollArr['total_salary'];// Gets the overall total salary
 
@@ -157,17 +167,45 @@ $rowCounter++;//to give space for clearer data
 $grandTotalRow = $rowCounter + 1;
 
 //Grandtotal Merge cell
-$activeSheet->mergeCells('Y'.$grandTotalRow.':Z'.$grandTotalRow);
+$activeSheet->mergeCells('AA'.$grandTotalRow.':AB'.$grandTotalRow);
 $GrandTotal = numberExactFormat($GrandTotal, 2, '.', true);
-$activeSheet->setCellValue('Y'.$grandTotalRow, 'Grand Total:        '.$GrandTotal);
+$activeSheet->setCellValue('AA'.$grandTotalRow, 'Grand Total:        '.$GrandTotal);
 
 //Style for the Spreadsheet
-$activeSheet->getStyle('A3:AA3')->applyFromArray($border_all_medium);//Header 
-$activeSheet->getStyle('A4:AA'.$rowCounter)->applyFromArray($border_all_thin);//Content
-$activeSheet->getStyle('Y'.$grandTotalRow.':Z'.$grandTotalRow)->applyFromArray($border_allsides_medium);//Grand Total
-$activeSheet->getStyle('G1:AA2')->applyFromArray($align_center);//Centered header text
-$activeSheet->getColumnDimension('B')->setAutoSize(true);//Lengthen cell to fit text for Employee name
-$activeSheet->getColumnDimension('Z')->setAutoSize(true);//Lengthen cell to fit text for Total Cost
+$activeSheet->getStyle('A3:AC3')->applyFromArray($border_all_medium);//Header 
+$activeSheet->getStyle('A4:AC'.$rowCounter)->applyFromArray($border_all_thin);//Content
+$activeSheet->getStyle('AA'.$grandTotalRow.':AB'.$grandTotalRow)->applyFromArray($border_allsides_medium);//Grand Total
+$activeSheet->getStyle('AC1:AC'.$rowCounter)->applyFromArray($signature);//Centered header text
+
+$activeSheet->getStyle('G1:AC2')->applyFromArray($align_center);//Centered header text
+$activeSheet->getColumnDimension('A')->setAutoSize(true);
+$activeSheet->getColumnDimension('B')->setAutoSize(true);
+$activeSheet->getColumnDimension('C')->setAutoSize(true);
+$activeSheet->getColumnDimension('D')->setAutoSize(true);
+$activeSheet->getColumnDimension('E')->setAutoSize(true);
+$activeSheet->getColumnDimension('F')->setAutoSize(true);
+$activeSheet->getColumnDimension('G')->setAutoSize(true);
+$activeSheet->getColumnDimension('H')->setAutoSize(true);
+$activeSheet->getColumnDimension('I')->setAutoSize(true);
+$activeSheet->getColumnDimension('J')->setAutoSize(true);
+$activeSheet->getColumnDimension('K')->setAutoSize(true);
+$activeSheet->getColumnDimension('L')->setAutoSize(true);
+$activeSheet->getColumnDimension('M')->setAutoSize(true);
+$activeSheet->getColumnDimension('N')->setAutoSize(true);
+$activeSheet->getColumnDimension('O')->setAutoSize(true);
+$activeSheet->getColumnDimension('P')->setAutoSize(true);
+$activeSheet->getColumnDimension('Q')->setAutoSize(true);
+$activeSheet->getColumnDimension('R')->setAutoSize(true);
+$activeSheet->getColumnDimension('S')->setAutoSize(true);
+$activeSheet->getColumnDimension('T')->setAutoSize(true);
+$activeSheet->getColumnDimension('U')->setAutoSize(true);
+$activeSheet->getColumnDimension('V')->setAutoSize(true);
+$activeSheet->getColumnDimension('W')->setAutoSize(true);
+$activeSheet->getColumnDimension('X')->setAutoSize(true);
+$activeSheet->getColumnDimension('Y')->setAutoSize(true);
+$activeSheet->getColumnDimension('Z')->setAutoSize(true);
+$activeSheet->getColumnDimension('AA')->setAutoSize(true);
+$activeSheet->getColumnDimension('AB')->setAutoSize(true);
 
 // header('Content-Type: application/vnd.ms-excel');
 // header('Content-Disposition: attachment; filename="'.$filename.'"');

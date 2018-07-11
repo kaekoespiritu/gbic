@@ -1,5 +1,12 @@
 <?php
 //Style of the spreadsheet
+$signature = array(
+                'alignment' => array(
+                  'horizontal' => 'right',
+                  'vertical' => 'center'
+                )
+              );
+
 $title_style = array(
            		 	'alignment' => array(
            		 		'horizontal' => 'center',

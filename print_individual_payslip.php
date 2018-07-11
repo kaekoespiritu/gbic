@@ -23,6 +23,24 @@ $filename =  $empArr['lastname'].", ".$empArr['firstname']." of ".$empArr['site'
 
 $dateDisplay = $startDay." - ".$endDay;
 
+function decimalPlaces($val) 
+{
+	$split = explode('.', $val);
+	if(count($split) > 1)
+	{
+		if($split[1] == 0)
+		{
+			return $split[0];
+		}
+		else
+		{
+			return $val;
+		}
+	}
+	else
+		return $val;
+}
+
 // Last Name, First Name of Site (Date) - Payroll.xls
 function monthConvert($month)
 {
@@ -51,8 +69,6 @@ $activeSheet = $sheet -> createSheet(0);
 //Merge cells
 $activeSheet->mergeCells('A1:D1');// Date
 $activeSheet->mergeCells('A2:D2');// Name
-
-$activeSheet->mergeCells('C16:D16');// Total
 
 //----------------- Header Contents ---------------------//
 $endDateExplode = explode(' ', $endDay);
@@ -86,7 +102,11 @@ $activeSheet->setCellValue('A12', 'PhilHealth');
 $activeSheet->setCellValue('A13', 'Pag-IBIG');
 $activeSheet->setCellValue('A14', 'Old vale');
 $activeSheet->setCellValue('A15', 'vale');
-$activeSheet->setCellValue('A16', 'tools');
+
+$activeSheet->setCellValue('A16', 'SSS loan');
+$activeSheet->setCellValue('A17', 'Pagibig loan');
+
+$activeSheet->setCellValue('A18', 'tools');
 
 $activeSheet->setCellValue('C11', 'X. All.');
 
@@ -99,38 +119,38 @@ $payrollArr = mysql_fetch_assoc($payrollQuery);
 
 //Rate
 $activeSheet->setCellValue('B3', $payrollArr['rate']);
-$activeSheet->setCellValue('C3', 'x '.$payrollArr['num_days']);
+$activeSheet->setCellValue('C3', 'x '.decimalPlaces($payrollArr['num_days']));
 
 $rateSubTotal = $payrollArr['rate'] * $payrollArr['num_days'];
 $activeSheet->setCellValue('D3', $rateSubTotal);
 
 //Overtime
 $activeSheet->setCellValue('B4', $payrollArr['overtime']);
-$activeSheet->setCellValue('C4', 'x '.$payrollArr['ot_num']);
+$activeSheet->setCellValue('C4', 'x '.decimalPlaces($payrollArr['ot_num']));
 
 $OTSubTotal = $payrollArr['ot_num'] * $payrollArr['overtime'];
 $activeSheet->setCellValue('D4', $OTSubTotal);
 
 //Allowance
 $daysAllowance = $payrollArr['num_days'];
-if(!empty($payrollArr['ot_num']))
-	$daysAllowance++;
+// if(!empty($payrollArr['ot_num']))
+// 	$daysAllowance++;
 $activeSheet->setCellValue('B5', $payrollArr['allow']);
-$activeSheet->setCellValue('C5', 'x '.$daysAllowance);
+$activeSheet->setCellValue('C5', 'x '.decimalPlaces($daysAllowance));
 
 $AllowSubTotal =  $payrollArr['allow'] * $daysAllowance;
 $activeSheet->setCellValue('D5', $AllowSubTotal);
 
 //Cola
 $activeSheet->setCellValue('B6', $payrollArr['cola']);
-$activeSheet->setCellValue('C6', 'x '.$daysAllowance);
+$activeSheet->setCellValue('C6', 'x '.decimalPlaces($daysAllowance));
 
 $colaSubTotal = $payrollArr['cola'] * $daysAllowance;
 $activeSheet->setCellValue('D6', $colaSubTotal);
 
 //Sunday
 $activeSheet->setCellValue('B7', $payrollArr['sunday_rate']);
-$activeSheet->setCellValue('C7', 'x '.$payrollArr['sunday_hrs']);
+$activeSheet->setCellValue('C7', 'x '.decimalPlaces($payrollArr['sunday_hrs']));
 
 $sundaySubTotal = $payrollArr['sunday_hrs'] * $payrollArr['sunday_rate'];
 $activeSheet->setCellValue('D7', $sundaySubTotal);
@@ -168,22 +188,26 @@ $activeSheet->setCellValue('D11', $payrollArr['x_allowance']);
 $activeSheet->setCellValue('B14', $payrollArr['old_vale']);
 $activeSheet->setCellValue('B15', $payrollArr['new_vale']);
 
+//Loans
+$activeSheet->setCellValue('B16', $payrollArr['loan_sss']);
+$activeSheet->setCellValue('B17', $payrollArr['loan_pagibig']);
+
 //Tools
-$activeSheet->setCellValue('B16', $payrollArr['tools_paid']);
+$activeSheet->setCellValue('B18', $payrollArr['tools_paid']);
 
 //Total
-$activeSheet->mergeCells('C17:D17');// Date
-$activeSheet->setCellValue('C17', $payrollArr['total_salary']);
+$activeSheet->mergeCells('C19:D19');
+$activeSheet->setCellValue('C19', $payrollArr['total_salary']);
 
 //------------ Style for the Spreadsheet ------------
-$activeSheet->getStyle('A1:D17')->applyFromArray($border_allsides_medium); 
+$activeSheet->getStyle('A1:D19')->applyFromArray($border_allsides_medium); 
 
 //extra Allowance
 $activeSheet->getStyle('C11')->applyFromArray($border_buttom_left_thin);
 $activeSheet->getStyle('D11')->applyFromArray($border_buttom_thin);
 
 //Total
-$activeSheet->getStyle('C17:D17')->applyFromArray($border_top_double);
+$activeSheet->getStyle('C19:D19')->applyFromArray($border_top_double);
 
 //Header
 $activeSheet->getStyle('A1:A2')->applyFromArray($align_left);

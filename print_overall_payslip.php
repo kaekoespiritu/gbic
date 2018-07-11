@@ -28,6 +28,24 @@ $filename =  $site." Payslip ".$weekBefore." - ".$endDate.".xls";
 
 $dateDisplay = $weekBefore." - ".$endDate;
 
+function decimalPlaces($val) //remove decimal places if 0
+{
+	$split = explode('.', $val);
+	if(count($split) > 1)
+	{
+		if($split[1] == 0)
+		{
+			return $split[0];
+		}
+		else
+		{
+			return $val;
+		}
+	}
+	else
+		return $val;
+}
+
 // Last Name, First Name of Site (Date) - Payroll.xls
 function monthConvert($month)
 {
@@ -89,7 +107,9 @@ $philhealthRowCounter = 12;
 $pagibigRowCounter = 13;
 $oldValeRowCounter = 14;
 $newValeRowCounter = 15;
-$toolsRowCounter = 16;
+$sssLoanRowCounter = 16;
+$pagibigLoanRowCounter = 17;
+$toolsRowCounter = 18;
 $extraAllowanceRowCounter = 11;
 
 //------ Counter for date ------//
@@ -111,22 +131,25 @@ $xAllowanceDataCounter = 11;//Allowance
 $oldValeDataCounter = 14;//Vale
 $newValeDataCounter = 15;
 
-$toolsDataCounter = 16;//Tools
-$totalDataCounter = 17;//Total
+$sssLoanDataCounter = 16;//sss loan
+$pagibigLoanDataCounter = 17;//pagibig loan
+
+$toolsDataCounter = 18;//Tools
+$totalDataCounter = 19;//Total
 
 //------ Counter Style ------//
 //Border
 $borderStyleCounter1 = 1;
-$borderStyleCounter2 = 17;
+$borderStyleCounter2 = 19;
 //Extra Allowance
 $allowanceStyleCounter = 11;
 //Total
-$totalStyleCounter = 17;
+$totalStyleCounter = 19;
 //Header
 $headerStyleCounter1 = 1;
 $headerStyleCounter2 = 2;
 
-$rowIncrement = 17;// increment by 17 inpreparation for the new horizontal data
+$rowIncrement = 19;// increment by 17 inpreparation for the new horizontal data
 
 $employee = "SELECT * FROM employee WHERE site = '$site' AND employment_status = '1'";
 $employeeQuery = mysql_query($employee) or die(mysql_error());
@@ -174,7 +197,7 @@ for($count = 0; $count <= $loopCount; $count++)
 				$activeSheet->mergeCells($cellA.$dateMergeCounter.':'.$cellD.$dateMergeCounter);// Date
 				$activeSheet->mergeCells($cellA.$nameMergeCounter.':'.$cellD.$nameMergeCounter);// Name
 
-				$activeSheet->mergeCells($cellC.$totalMergeCounter.':'.$cellD.$totalMergeCounter);// Total
+				// $activeSheet->mergeCells($cellC.$totalMergeCounter.':'.$cellD.$totalMergeCounter);// Total
 
 				$activeSheet->setCellValue($cellA.$dateCoveredRowCounter, 'Date Covered: '.$dateCovered);
 				$activeSheet->setCellValue($cellA.$nameRowCounter, $empRow['lastname'].", ".$empRow['firstname']);
@@ -193,6 +216,9 @@ for($count = 0; $count <= $loopCount; $count++)
 				$activeSheet->setCellValue($cellA.$oldValeRowCounter, 'Old vale');
 				$activeSheet->setCellValue($cellA.$newValeRowCounter, 'vale');
 				$activeSheet->setCellValue($cellA.$toolsRowCounter, 'tools');
+
+				$activeSheet->setCellValue($cellA.$sssLoanRowCounter, 'SSS loan');
+				$activeSheet->setCellValue($cellA.$pagibigLoanRowCounter, 'Pagibig loan');
 
 				$activeSheet->setCellValue($cellC.$extraAllowanceRowCounter, 'X. All.');
 
@@ -219,38 +245,38 @@ for($count = 0; $count <= $loopCount; $count++)
 
 				//Rate
 				$activeSheet->setCellValue($cellB.$rateDataCounter, $payrollArr['rate']);
-				$activeSheet->setCellValue($cellC.$rateDataCounter, 'x '.$payrollArr['num_days']);
+				$activeSheet->setCellValue($cellC.$rateDataCounter, 'x '.decimalPlaces($payrollArr['num_days']));
 
 				$rateSubTotal = $payrollArr['rate'] * $payrollArr['num_days'];
 				$activeSheet->setCellValue($cellD.$rateDataCounter, $rateSubTotal);
 
 				//Overtime
 				$activeSheet->setCellValue($cellB.$overtimeDataCounter, $payrollArr['overtime']);
-				$activeSheet->setCellValue($cellC.$overtimeDataCounter, 'x '.$payrollArr['ot_num']);
+				$activeSheet->setCellValue($cellC.$overtimeDataCounter, 'x '.decimalPlaces($payrollArr['ot_num']));
 
 				$OTSubTotal = $payrollArr['ot_num'] * $payrollArr['overtime'];
 				$activeSheet->setCellValue($cellD.$overtimeDataCounter, $OTSubTotal);
 
 				//Allowance
 				$daysAllowance = $payrollArr['num_days'];
-				if(!empty($payrollArr['sunday_hrs']))
-					$daysAllowance++;
+				// if(!empty($payrollArr['sunday_hrs']))
+				// 	$daysAllowance++;
 				$activeSheet->setCellValue($cellB.$allowDataCounter, $payrollArr['allow']);
-				$activeSheet->setCellValue($cellC.$allowDataCounter, 'x '.$daysAllowance);
+				$activeSheet->setCellValue($cellC.$allowDataCounter, 'x '.decimalPlaces($daysAllowance));
 
 				$allowSubTotal = $payrollArr['allow'] * $daysAllowance;
 				$activeSheet->setCellValue($cellD.$allowDataCounter, $allowSubTotal);
 
 				//Cola
 				$activeSheet->setCellValue($cellB.$colaDataCounter, $payrollArr['cola']);
-				$activeSheet->setCellValue($cellC.$colaDataCounter, 'x '.$daysAllowance);
+				$activeSheet->setCellValue($cellC.$colaDataCounter, 'x '.decimalPlaces($daysAllowance));
 
 				$colaSubTotal = $payrollArr['cola'] * $daysAllowance;
 				$activeSheet->setCellValue($cellD.$colaDataCounter, $colaSubTotal);
 
 				//Sunday
 				$activeSheet->setCellValue($cellB.$sundayDataCounter, $payrollArr['sunday_rate']);
-				$activeSheet->setCellValue($cellC.$sundayDataCounter, 'x '.$payrollArr['sunday_hrs']);
+				$activeSheet->setCellValue($cellC.$sundayDataCounter, 'x '.decimalPlaces($payrollArr['sunday_hrs']));
 
 				$sundaySubTotal = $payrollArr['sunday_hrs'] * $payrollArr['sunday_rate'];
 				$activeSheet->setCellValue($cellD.$sundayDataCounter, $sundaySubTotal);
@@ -288,6 +314,10 @@ for($count = 0; $count <= $loopCount; $count++)
 				$activeSheet->setCellValue($cellB.$oldValeDataCounter, $payrollArr['old_vale']);
 				$activeSheet->setCellValue($cellB.$newValeDataCounter, $payrollArr['new_vale']);
 
+				//Loans
+				$activeSheet->setCellValue($cellB.$sssLoanDataCounter, $payrollArr['loan_sss']);
+				$activeSheet->setCellValue($cellB.$pagibigLoanDataCounter, $payrollArr['loan_pagibig']);
+
 				//Tools
 				$activeSheet->setCellValue($cellB.$toolsDataCounter , $payrollArr['tools_paid']);
 
@@ -321,6 +351,10 @@ for($count = 0; $count <= $loopCount; $count++)
 		$pagibigRowCounter += $rowIncrement;
 		$oldValeRowCounter += $rowIncrement;
 		$newValeRowCounter += $rowIncrement;
+
+		$sssLoanRowCounter += $rowIncrement;
+		$pagibigLoanRowCounter += $rowIncrement;
+
 		$toolsRowCounter += $rowIncrement;
 		$extraAllowanceRowCounter += $rowIncrement;
 
@@ -340,6 +374,9 @@ for($count = 0; $count <= $loopCount; $count++)
 		$xAllowanceDataCounter += $rowIncrement;
 		$oldValeDataCounter += $rowIncrement;
 		$newValeDataCounter += $rowIncrement;
+
+		$sssLoanDataCounter += $rowIncrement;
+		$pagibigLoanDataCounter += $rowIncrement;
 
 		$toolsDataCounter += $rowIncrement;
 		$totalDataCounter+= $rowIncrement;
