@@ -1757,7 +1757,6 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					
 				}
 				//2nd Time in and Time out
-				useOnce = true;
 				if(Math.abs(checkTime2) >= 8)// if accumulated time is more than 8 hours 
 				{
 					
