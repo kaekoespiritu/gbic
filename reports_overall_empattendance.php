@@ -817,7 +817,7 @@
 								if($wedBoolHD)
 								{
 									Print	"<td colspan='4'>
-												H A L F  D A Y
+												HALF DAY / STRAIGHT
 											</td>";
 								}
 								else
@@ -858,7 +858,7 @@
 								if($thuBoolHD)
 								{
 									Print	"<td colspan='4'>
-												H A L F  D A Y
+												HALF DAY / STRAIGHT
 											</td>";
 								}
 								else
@@ -899,7 +899,7 @@
 								if($friBoolHD)
 								{
 									Print	"<td colspan='4'>
-												H A L F  D A Y
+												HALF DAY / STRAIGHT
 											</td>";
 								}
 								else
@@ -940,7 +940,7 @@
 								if($satBoolHD)
 								{
 									Print	"<td colspan='4'>
-												H A L F  D A Y
+												HALF DAY / STRAIGHT
 											</td>";
 								}
 								else
@@ -981,7 +981,7 @@
 								if($sunBoolHD)
 								{
 									Print	"<td colspan='4'>
-												H A L F  D A Y
+												HALF DAY / STRAIGHT
 											</td>";
 								}
 								else
@@ -1022,7 +1022,7 @@
 								if($monBoolHD)
 								{
 									Print	"<td colspan='4'>
-												H A L F  D A Y
+												HALF DAY / STRAIGHT
 											</td>";
 								}
 								else
@@ -1063,7 +1063,7 @@
 								if($tueBoolHD)
 								{
 									Print	"<td colspan='4'>
-												H A L F  D A Y
+												HALF DAY / STRAIGHT
 											</td>";
 								}
 								else
