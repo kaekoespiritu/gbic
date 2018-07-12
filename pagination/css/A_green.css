@@ -1,0 +1,25 @@
+	ul.pagination li.details{
+	   color:#10621e;
+	
+	}
+    
+    ul.pagination li a
+	{
+		border-radius:5px;	
+		-moz-border-radius:5px;
+		-webkit-border-radius:5px;
+		padding:6px 9px 6px 9px;
+	}
+
+	ul.pagination li a
+	{
+        color: white;
+		background:#2b823A;
+	}	
+	
+	ul.pagination li a:hover,
+	ul.pagination li a.current
+	{
+		color:white;
+		background:#1DB037;
+	}

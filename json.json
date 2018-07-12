@@ -1,0 +1,55 @@
+{
+"category": {
+    "_id": "591a888118dcb55191259171",
+    "__v": 0,
+    "name": "Automotive",
+    "default_image": "http:\/\/i.imgur.com\/2jcIXMK.png",
+    "child": [
+      {
+        "name": "Car Dealers",
+        "_id": "591a888118dcb55191259174",
+        "default_image": "http:\/\/i.imgur.com\/IRnxAgm.png"
+      },
+      {
+        "name": "Car Repair",
+        "_id": "591a888118dcb55191259177",
+        "default_image": "http:\/\/i.imgur.com\/NXD1y1l.png"
+      },
+      {
+        "name": "Car Wash",
+        "_id": "591a888118dcb55191259179",
+        "default_image": "http:\/\/i.imgur.com\/PXb215B.png"
+      },
+      {
+        "name": "Mechanic",
+        "_id": "591a888118dcb55191259172",
+        "default_image": "http:\/\/i.imgur.com\/fU8idWN.png"
+      },
+      {
+        "name": "Motorcycle Dealers",
+        "_id": "591a888118dcb55191259176",
+        "default_image": "http:\/\/i.imgur.com\/xGfG8wV.png"
+      },
+      {
+        "name": "Motorcycle Repair",
+        "_id": "591a888118dcb55191259178",
+        "default_image": "http:\/\/i.imgur.com\/TkotGhh.png"
+      },
+      {
+        "name": "Petrol & Service Stations",
+        "_id": "591a888118dcb5519125917a",
+        "default_image": "http:\/\/i.imgur.com\/SpKgiG5.png"
+      },
+      {
+        "name": "Towing",
+        "_id": "591a888118dcb55191259173",
+        "default_image": "http:\/\/i.imgur.com\/AohoxVx.png"
+      },
+      {
+        "name": "Trucks & Bus Dealers",
+        "_id": "591a888118dcb55191259175",
+        "default_image": "http:\/\/i.imgur.com\/KPSYNXd.png"
+      }
+    ]
+  }
+}

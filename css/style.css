@@ -1,0 +1,489 @@
+/* LOGIN PAGE */
+  img.bg {
+    /* Set rules to fill background */
+    min-height: 100%;
+    min-width: 1024px;
+    
+    /* Set up proportionate scaling */
+    width: auto;
+    height: 100%;
+    
+    /* Set up positioning */
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: -1;
+  }
+
+  .login {
+    background-color: #3c763d; color: white; font-family: Quicksand;
+  }
+
+  .clear-fix {
+    opacity: 0.8; margin-bottom: 0;
+  }
+
+  .login-text {
+    font-size: 20px;
+  }
+
+  .btn_loginSubmit:hover {
+    background-color:#426D6D !important;
+    border-color: #1A4848 !important;
+  }
+/* END OF LOGIN PAGE */
+
+/*--------------------------------*/
+
+/* NAVIGATION BAR */
+
+  /* NAVBAR BASE */
+    .menubar {
+      background-color: #2b823A;
+      height: 100px;
+    }
+    .center-block {
+      height: 40px !important;
+      width: 40px !important;
+    }
+    .center-image {
+      height: 100px !important;
+      width: 100px !important;
+    }
+  /* NAVBAR BASE */
+
+  /* NAVBAR ELEMENT CENTER  */
+    @media (min-width: 768) {
+    .navibar .col-md-1,
+      .navibar .col-sm-1,
+      .navibar .col-lg-1 {
+        width: 14.285714285714285714285714285714%;
+        *width: 14.285714285714285714285714285714%;
+        padding-top: 15px;
+      }
+    }
+
+    @media (min-width: 992px) {
+    .navibar .col-md-1,
+      .navibar .col-sm-1,
+      .navibar .col-lg-1 {
+        width: 14.285714285714285714285714285714%;
+        *width: 14.285714285714285714285714285714%;
+        padding-top: 15px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+    .navibar .col-md-1,
+      .navibar .col-sm-1,
+      .navibar .col-lg-1 {
+        width: 14.285714285714285714285714285714%;
+        *width: 14.285714285714285714285714285714%;
+        padding-top: 15px;
+      }
+    }
+  /* END OF NAVBAR ELEMENT CENTER */
+
+  /* DROPDOWN MENU */
+
+    .flipdown {
+      overflow: hidden;
+    }
+
+    .flipdown .flipbtn {
+        font-size: 16px;    
+        border: none;
+        outline: none;
+        color: black;
+        background-color: inherit;
+    }
+
+    .navibutton:hover {
+      background-color: #10621e;
+    }
+
+    .navibutton a:hover {
+      text-decoration: none;
+      color: white;
+    }
+  /* END OF DROPDOWN MENU */
+
+  /* DROPDOWN CONTENTS */
+    .flipdown-menu {
+        display: none;
+        background-color: #fff;
+        position: absolute;
+        left:0px;
+        min-width: 183px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 100;
+    }
+
+    .flipdown-menu a {
+        float: none;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        width: inherit;
+        text-align: left;
+        font-family: QuickSandMed !important;
+    }
+
+    .flipdown-menu a:hover {
+          background-color: #10621e;
+          color:white;
+    }
+
+    .flipdown:hover .flipdown-menu {
+      display:block;
+    }
+
+    .sub-flipdown-menu {
+      display: none;
+    }
+
+    .sub-flipdown:hover .sub-flipdown-menu {
+      left: 100%;
+      top: initial;
+      position: absolute;
+      display: block;
+      background-color: #fff;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    }
+
+    .sub-flipdown-menu:hover {
+      background-color: white !important;
+      color: black !important;
+    }
+  /* END OF DROPDOWN CONTENTS */
+
+  /* ANIMATION FOR NAVBAR BUTTONS */
+    @keyframes bounce {
+        1%{bottom:0;}
+        20%  {bottom:-3px;}
+        50%  {bottom:0px;}
+        70%  {bottom:0px;}
+        100% {bottom:0px;}
+    }
+    .navibutton:hover { 
+      transition: 1s; 
+      animation-name: bounce;
+      animation-duration: 1s;
+    }
+  /* END OF ANIMATION FOR NAVBAR BUTTONS */
+/* END OF NAVIGATION BAR */
+
+/*--------------------------------*/
+
+/* MODIFIED HTML ELEMENTS */
+  body {
+    text-align: center;
+    height:100% !important;
+  }
+  h1 {
+    font-size: 4vw !important;
+  }
+  h2 {
+    margin: 0px;
+  }
+  h6 {
+    font-family: Quicksand;
+    font-size: 1.5em !important;
+    color: white;
+  }
+  .table > tbody > tr > td {
+    vertical-align: middle;
+  }
+  hr {
+    margin-top: 5px;
+    margin-bottom:10px;
+  }
+/* END OF MODIFIED HTML ELEMENTS */
+
+/*--------------------------------*/
+
+/* MODIFIED BOOTSTRAP ELEMENTS */
+  .jumbotron {
+    background-color: transparent;
+  }
+/* END OF MODIFIED BOOTSTRAP ELEMENTS */
+
+/*--------------------------------*/
+
+/* SITE BOXES */
+  .card {
+    background: #2b823A;
+    opacity: 0.9;
+    border-radius: 2px;
+    margin-right: 5em;
+    margin-bottom: 1em;
+    color:white;
+  }
+  .card-1 {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  }
+  .card-1:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  }
+  .sitebox a
+  {
+    color: white !important;
+    text-decoration: none !important;
+  }
+  .sitebox
+  {
+    background-color: forestgreen;
+    border-width: 1px;
+    border-color: #d6e9c6;
+    border-style: solid;
+    border-radius: 5px;
+    margin: 2px;
+    padding: 5px;
+    height: 72px;
+    width: 143px;
+    float: left;
+  }
+/* END OF SITEBOXES */
+
+/*--------------------------------*/
+
+/* CUSTOM CLASSES */
+  .wrapper {
+    padding: 10% 30% 0% ;
+  }
+  .pull-down {
+    margin-top: 2em;
+  }
+  .pull-down-more {
+    margin-top: 4em;
+  }
+  .pull-down-even-more {
+    margin-top: 8em;
+  }
+  .pull-up {
+    margin-bottom: 2em;
+  }
+  .overflow {
+    overflow: auto;
+  }
+  .fixed-width {
+    width: 300px !important;
+  }
+   .autofit {
+    font-size:auto !important;
+  }
+  .smalltext {
+    white-space: nowrap;
+  }
+  .fixedWidth {
+    width: 120px !important;
+  }
+  .moveabit {
+    margin-left: 10px;
+  }
+  .header1 {
+    position:absolute;
+    float:left;
+    bottom-padding:100px;
+  }
+  .header2 {
+    position:absolute;
+    float:right;
+    bottom-padding:100px;
+  }
+  .mediumtext {
+    font-family: QuicksandMed !important;
+  }
+  .whitelink {
+    text-decoration:none;
+    color:white;
+  }
+
+  .whitelink:hover {
+    color:orange;
+    text-decoration: none;
+  }
+
+  .moveright {
+    margin-right: 15px;
+  }
+
+  .disabletotally {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  .nopadding {
+   padding:0px !important;
+  }
+
+  .marginbottom {
+    margin-bottom:30px;
+  }
+
+  .margin-separator {
+    margin-bottom: 10px;
+  }
+
+  .block {
+    display:block;
+  }
+
+  .btn-cornflowerblue {
+    background-color: cornflowerblue;
+    color:white;
+  }
+/* END OF CUSTOM CLASSES */
+
+/*--------------------------------*/
+
+
+/* CUSTOM FONTS */
+  @font-face {
+      font-family: 'Quicksand';
+      src: url('../fonts/Quicksand-Light.ttf');
+      font-style: normal;
+      font-weight: normal;
+      text-rendering: optimizeLegibility;
+  }
+  @font-face {
+      font-family: 'QuicksandMed';
+      src: url('../fonts/Quicksand-Medium.ttf');
+      text-rendering: optimizeLegibility;
+  }
+  @font-face {
+      font-family: 'QuicksandBold';
+      src: url('../fonts/Quicksand-Bold.ttf');
+      text-rendering: optimizeLegibility;
+  }
+/* END OF CUSTOM FONTS */
+
+/*--------------------------------*/
+
+/* REPORTS PAGE */
+  #search_result {
+    position:absolute;
+    margin-top: -3.3em;
+  }
+  .search-results-table {
+  margin-top: 15px !important;
+  margin-left: 89px;
+  }
+
+  .reports-table {
+  margin-left: -35px;
+  }
+/* END OF REPORTS PAGE */
+
+/*--------------------------------*/
+
+/* SEARCH RESULTS FOR LOANS */
+  .search-results-loans {
+    background-color: white;
+    z-index:100;
+    position:relative;
+    width:458px;
+    margin-left:21%;
+  }
+
+  .search-results-loans:hover {
+    background-color: lightblue;
+  }
+
+  .search-results-loans a:hover {
+    text-decoration: none;
+    color: black;
+  }
+
+  #search_result_loans {
+    position:absolute;
+    margin-top: -3.3em;
+  }
+/* END OF SEARCH RESULTS FOR LOANS  */
+
+/*--------------------------------*/
+
+/* SEARCH RESULTS FOR REHIRING EMPLOYEE */
+  .search-result-rehire {
+    margin-top: unset !important;
+    margin-left: -53% !important;
+  }
+
+  .search-result-rehire-employee {
+    background-color: white;
+    z-index:100;
+    position:relative;
+    width:65%;
+    margin-left:35%;
+    padding: 0;
+  }
+
+  .search-result-rehire-employee:hover {
+    background-color: lightblue;
+  }
+
+  .search-result-rehire-employee a:hover {
+    text-decoration: none;
+    color: black;
+  }
+/* END OF SEARCH RESULTS FOR REHIRING EMPLOYEE */
+
+/*--------------------------------*/
+
+/* OPTIONS PAGE */
+  .sitelist {
+    overflow: scroll;
+    background-color: white;
+    height: 200px;
+    width: 230px;
+    border: solid 1px #ddd;
+  }
+
+  .alignlist {
+    margin-left: 15px;
+    margin-top:10px;
+  }
+
+  .accountlist {
+    overflow: scroll;
+    background-color: white;
+    height: 100px;
+    width: 190px;
+    border: solid 1px black;
+  }
+/* END OF OPTIONS PAGE */
+
+/*--------------------------------*/
+
+/* SEARCH FOR REPORTS PAGE */
+  .report-search {
+
+      top: 6em;
+      width: fit-content;
+      z-index: 1000;
+      background-color: white;
+      border-left-style: solid;
+      border-left-color: #ddd;
+      border-left-width: 1px;
+      border-right-style: solid;
+      border-right-color: #ddd;
+      border-right-width: 1px;
+      border-bottom-style: solid;
+      border-bottom-color: #ddd;
+      border-bottom-width: 1px;
+  }
+
+  .report-search div:hover
+  {
+    background-color: lightblue;
+  }
+
+  .report-search div a:hover
+  {
+    text-decoration: none;
+    color: black;
+  }
+/* END OF SEARCH FOR REPORTS PAGE */
