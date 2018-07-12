@@ -13,7 +13,7 @@ include('directives/session.php');
 
 
 // $date = strftime("%B %d, %Y");
-$date = "May 16, 2018";
+$date = "July 11, 2018";
 // $date = "May 9, 2018";
 
 

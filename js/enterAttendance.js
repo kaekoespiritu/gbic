@@ -1553,7 +1553,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			else
 			{
 				console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1);
-				if((timeinhour1 <= 10 && timeouthour1 <= 18) || (timeinhour1 > timeouthour1))//night diff needs reconfiguration
+				if((timeinhour1 <= 10 && timeouthour1 <= 18) || (timeinhour1 >= timeouthour1))//night diff needs reconfiguration
 				{
 					console.log("ND")
 					var NDin;
@@ -1561,7 +1561,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					var workhrs;
 					var temp = null;
 
-					if(timeinhour1 > timeouthour1)
+					if(timeinhour1 >= timeouthour1)
 						temp = timeinhour1 - 12;
 
 					//Possibility 1: if 10pm is in before lunch

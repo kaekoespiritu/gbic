@@ -171,7 +171,7 @@
 									<label for="rate">Rate Per Day</label>
 								</div>
 								<div class="col-md-5 col-lg-5">
-									<input name="txt_addRatePerDay" onkeypress="validatenumber(event)" onchange="salaryDecimal()" type="text" autocomplete="off" class="form-control" id="rate" >
+									<input name="txt_addRatePerDay" onkeypress="validatenumber(event)" onchange="salaryDecimal()" type="text" autocomplete="off" class="form-control" id="rate" required>
 								</div>
 							</div><br>
 
