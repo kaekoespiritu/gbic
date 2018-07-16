@@ -932,7 +932,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				if(nightdiffBool == false && nightdiff == "")
 					nightdiffBool = true;
 
-				if(nightdiffBool)
+				if(nightdiffBool && nightdiffMins != 0)
 				{
 					row.querySelector('.nightdiff').value = nightdiffMins + "mins";
 					row.querySelector('.nightdiffH').value = nightdiffMins + "mins";
@@ -969,12 +969,13 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				}
 			}
 			else if ((timeinhour1 <= 22 && timeouthour1 <= 6) ||
-			   (timeinhour1 <= 22 && timeouthour1 <= 24) ||
+			   (timeinhour1 <= 22 && timeouthour1 >= 22) ||
 			   (timeinhour2 <= 22 && timeouthour2 <= 6) ||
-			   (timeinhour2 <= 22 && timeouthour2 <= 24) ||
+			   (timeinhour2 <= 22 && timeouthour2 >= 22) ||
 			   (timeouthour1 == 22 && timeoutmin1 != 0) ||
 			   (timeouthour2 == 22 && timeoutmin2 != 0))//night diff 
 			{
+				console.log(timeinhour1 +" : "+ timeouthour1+" | "+ timeinhour2+" : "+ timeouthour2)
 				var nightdiffBool = false;
 				var nightdiffMins = originalMins;
 				if(timeouthour1 == 22 && timeoutmin1 != 0)
@@ -1032,36 +1033,38 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				{
 				   	nightdiff = Math.abs(nightdiff);		
 				}
-			}
+				if(nightdiffBool == false && nightdiff == "")
+					nightdiffBool = true;
 
-			if(nightdiffBool == false && nightdiff == "")
-				nightdiffBool = true;
-
-			if(nightdiffBool)
-			{
-				row.querySelector('.nightdiff').value = nightdiffMins + "mins";
-				row.querySelector('.nightdiffH').value = nightdiffMins + "mins";
-			}
-			else if(nightdiff != "")
-			{
-				
-				if(nightdiffMins != 0)
+				if(nightdiffBool && nightdiffMins != 0)
 				{
-					row.querySelector('.nightdiff').value = nightdiff + " hrs, " + nightdiffMins + "mins";
-					row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + nightdiffMins + "mins";
+					row.querySelector('.nightdiff').value = nightdiffMins + "mins";
+					row.querySelector('.nightdiffH').value = nightdiffMins + "mins";
+				}
+				else if(nightdiff != "")
+				{
+					
+					if(nightdiffMins != 0)
+					{
+						row.querySelector('.nightdiff').value = nightdiff + " hrs, " + nightdiffMins + "mins";
+						row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + nightdiffMins + "mins";
+					}
+					else
+					{
+						row.querySelector('.nightdiff').value = nightdiff + " hrs";
+						row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+					}
 				}
 				else
 				{
-					row.querySelector('.nightdiff').value = nightdiff + " hrs";
-					row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+					
+					row.querySelector('.nightdiff').value = "";
+					row.querySelector('.nightdiffH').value = "";
 				}
+
 			}
-			else
-			{
-				
-				row.querySelector('.nightdiff').value = "";
-				row.querySelector('.nightdiffH').value = "";
-			}
+
+			
 			
 			
 			// If absent was initially placed, changed to success
@@ -1693,7 +1696,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			if(nightdiffBool == false && nightdiff == "")
 				nightdiffBool = true;
 
-			if(nightdiffBool)
+			if(nightdiffBool && nightdiffMins != 0)
 			{
 					row.querySelector('.nightdiff').value = nightdiffMins + "mins";
 					row.querySelector('.nightdiffH').value = nightdiffMins + "mins";
@@ -2446,7 +2449,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			if(nightdiffBool == false && nightdiff == "")
 				nightdiffBool = true;
 
-			if(nightdiffBool)
+			if(nightdiffBool && nightdiffMins != 0)
 			{
 				row.querySelector('.nightdiff').value = nightdiffMins + "mins";
 				row.querySelector('.nightdiffH').value = nightdiffMins + "mins";
@@ -3121,7 +3124,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			if(nightdiffBool == false && nightdiff == 0)//if nightdiff is zero 
 				nightdiffBool = true;
 
-			if(nightdiffBool)
+			if(nightdiffBool && nightdiffMins != 0)
 			{
 				row.querySelector('.nightdiff').value = originalMins + "mins";
 				row.querySelector('.nightdiffH').value = originalMins + "mins";
