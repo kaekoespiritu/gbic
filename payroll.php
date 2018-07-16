@@ -1710,16 +1710,20 @@ if($holidayExist > 0)
 					<!-- Tools deductions -->
 					<div class="col-md-1 col-lg-12">
 						<h4 class="text-left">Tools</h4>
+						<span class="col-md-4 col-lg-4">Name</span>
+						<span class="col-md-4 col-lg-4">Cost</span>
+						<span class="col-md-4 col-lg-4">Quantity</span>
 						<a class="btn btn-sm btn-primary col-md-1 col-lg-1" onclick="addRow()"><span class="glyphicon glyphicon-plus"></span></a>
 						<div class="form-group" id="toolform">
 							<div>
-								<label class="control-label col-md-2 col-lg-2" for="tools">Name</label>
 								<div class="col-md-4 col-lg-4">
 									<input type="text" id="tools" name="toolname[]" class="form-control input-sm" onchange="checkName(this)">
 								</div>
-								<label class="control-label col-md-1 col-lg-1" for="price">Cost</label>
 								<div class="col-md-4 col-lg-4">
 									<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">
+								</div>
+								<div class="col-md-3 col-lg-3">
+									<input type="text" id="quantity" name="toolquantity[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">
 								</div>
 							</div>	
 						</div>
@@ -1730,7 +1734,6 @@ if($holidayExist > 0)
 							<div class="col-md-6 col-lg-6">
 								<input type="text" class="form-control" id="totalcost" name="totalcost" value="" readonly>
 							</div>
-
 						</div>
 						<div class="col-md-1 col-lg-12">
 							<label class="col-md-5 col-lg-5">
