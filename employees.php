@@ -148,7 +148,7 @@ if(isset($_GET['search']))
 											firstname LIKE '%$search%' OR 
 											lastname LIKE '%$search%' OR
 											position LIKE '%$search%' OR
-											site LIKE '%$search%') AND employment_status = '1' ORDER BY position";
+											site LIKE '%$search%') AND employment_status = '1' ORDER BY firstname ASC, lastname ASC";
 
 							$res=mysql_query("select empid, firstname, lastname, position, site from {$statement} LIMIT {$startpoint} , {$limit}");
 							while($emp_row=mysql_fetch_array($res))
@@ -173,7 +173,7 @@ if(isset($_GET['search']))
 								$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
 						    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
 						    	$startpoint = ($page * $limit) - $limit;
-						        $statement = "employee WHERE position = '$positionReplaced' AND site = '$siteReplaced' AND employment_status = '1' ORDER BY position";
+						        $statement = "employee WHERE position = '$positionReplaced' AND site = '$siteReplaced' AND employment_status = '1' ORDER BY firstname ASC, lastname ASC";
 
 								$res=mysql_query("select * from {$statement} LIMIT {$startpoint} , {$limit}");
 								while($emp_row=mysql_fetch_array($res))
@@ -194,7 +194,7 @@ if(isset($_GET['search']))
 								$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
 						    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
 						    	$startpoint = ($page * $limit) - $limit;
-						        $statement = "employee WHERE site = '$siteReplaced' AND employment_status = '1' ORDER BY position";
+						        $statement = "employee WHERE site = '$siteReplaced' AND employment_status = '1' ORDER BY firstname ASC, lastname ASC";
 
 								$res=mysql_query("select * from {$statement} LIMIT {$startpoint} , {$limit}");
 								while($emp_row=mysql_fetch_array($res))
@@ -224,7 +224,7 @@ if(isset($_GET['search']))
 								$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
 						    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
 						    	$startpoint = ($page * $limit) - $limit;
-						        $statement = "employee WHERE position = '$positionReplaced' AND site = '$siteReplaced' AND employment_status = '1' ORDER BY site";
+						        $statement = "employee WHERE position = '$positionReplaced' AND site = '$siteReplaced' AND employment_status = '1' ORDER BY firstname ASC, lastname ASC";
 
 								$res=mysql_query("select * from {$statement} LIMIT {$startpoint} , {$limit}");
 								while($emp_row=mysql_fetch_array($res))
@@ -246,7 +246,7 @@ if(isset($_GET['search']))
 								$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
 						    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
 						    	$startpoint = ($page * $limit) - $limit;
-						        $statement = "employee WHERE position = '$positionReplaced' AND employment_status = '1' ORDER BY site";
+						        $statement = "employee WHERE position = '$positionReplaced' AND employment_status = '1' ORDER BY firstname ASC, lastname ASC";
 
 								$res=mysql_query("select * from {$statement} LIMIT {$startpoint} , {$limit}");
 								while($emp_row=mysql_fetch_array($res))
@@ -270,7 +270,7 @@ if(isset($_GET['search']))
 							$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
 					    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
 					    	$startpoint = ($page * $limit) - $limit;
-					        $statement = "employee WHERE employment_status = '1' ORDER BY site";
+					        $statement = "employee WHERE employment_status = '1' ORDER BY firstname ASC, lastname ASC";
 
 							$res=mysql_query("select * from {$statement} LIMIT {$startpoint} , {$limit}");
 							while($emp_row=mysql_fetch_array($res))
