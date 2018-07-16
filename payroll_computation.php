@@ -366,7 +366,7 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 
 					<?php
 						$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $totalCola;
-							Print "<script>console.log('payroll_computation.php - totalRegularHolidayRate: ".abs($totalRegularHolidayRate)." | totalSpecialHolidayRate: ".abs($totalSpecialHolidayRate)." | totalSundayRate: ".abs($totalSundayRate)." | totalNightDifferential: ".$totalNightDifferential." | totalAllowance: ".$totalAllowance." | totalOvertime: ".$totalOvertime." | totalRatePerDay: ".$totalRatePerDay." | xAllowance: ".$xAllowance." | totalCola: ".$totalCola. " | tools_quantity: ".$tools_quantity[0]."')</script>";"')</script>";
+							Print "<script>console.log('payroll_computation.php - totalRegularHolidayRate: ".abs($totalRegularHolidayRate)." | totalSpecialHolidayRate: ".abs($totalSpecialHolidayRate)." | totalSundayRate: ".abs($totalSundayRate)." | totalNightDifferential: ".$totalNightDifferential." | totalAllowance: ".$totalAllowance." | totalOvertime: ".$totalOvertime." | totalRatePerDay: ".$totalRatePerDay." | xAllowance: ".$xAllowance." | totalCola: ".$totalCola. "')</script>";"')</script>";
 
 					?>
 					<tr style="font-family: QuicksandMed;">
@@ -397,8 +397,6 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 				$displayToolSubTotal = null;
 				if(mysql_num_rows($toolsQuery) > 0)
 				{
-					$tools ="SELECT * FROM tools WHERE empid = '$empid' AND date = '$date'";
-					$toolsQuery = mysql_query($tools);
 					$Notools = false;
 					while($toolArr = mysql_fetch_assoc($toolsQuery))
 					{
@@ -412,6 +410,8 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 							";
 					}
 				}
+
+				Print "<script>console.log('tools query rows returned = '".mysql_num_rows($toolsQuery)."');</script>";
 				
 				if($Notools)
 				{
