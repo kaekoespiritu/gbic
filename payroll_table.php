@@ -7,8 +7,25 @@ if(!isset($_GET['site']) && !isset($_GET['position']))
 	header("location:payroll_login.php");
 }
 
-$site = $_GET['site'];
-$position = $_GET['position'];
+if(isset($_GET['site']))
+{
+	$site = $_GET['site'];
+	$siteCheck = "SELECT * FROM site WHERE location = '$site'";
+	$siteCheckerQuery = mysql_query($siteCheck);
+	if(mysql_num_rows($siteCheckerQuery) == 0)
+	{
+		Print "<script>window.location.assign('index.php')</script>";
+	}
+}
+else
+{
+	Print "<script>window.location.assign('index.php')</script>";
+}
+
+$position = (isset($_GET['position']) ? $_GET['position'] : "null");
+$documents = (isset($_GET['document']) ? $_GET['document'] : "null");
+$status = (isset($_GET['status']) ? $_GET['status'] : "null");
+
 // $date = strftime("%B %d, %Y"); 
 $date = "July 11, 2018";
 // $date = "May 9, 2018";
@@ -37,15 +54,10 @@ $date = "July 11, 2018";
 			<!-- BREAD CRUMBS -->
 			<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down">
 				<ol class="breadcrumb text-left">
-					<li><a href="payroll_position.php?site=<?php Print $site?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a></li>
+					<li><a href="payroll_site.php?site=<?php Print $site?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Sites</a></li>
 
 					<li class='active'>Payroll table</li>
 
-					<h4 class="pull-right">
-						<?php
-						Print $position . "s at " . $site;
-						?>
-					</h4>
 				</ol>
 			</div>
 
@@ -74,10 +86,26 @@ $date = "July 11, 2018";
 			<div class="col-md-4 col-lg-4 pull-left">
 				Filter by:
 
-
+				<!-- Documents status POSITION -->
+				<div class="btn-group">Position
+					<select class="form-control" id="documents" onchange="position(this.value)">
+						<option hidden>--</option>
+						<?php 
+							$positions = "SELECT * FROM job_position WHERE active = '1' ORDER BY position ASC";
+							$posQuery = mysql_query($positions);
+							while($posArray = mysql_fetch_array($posQuery))
+							{
+								if($position == $posArray['position'])
+									Print '	<option value="'.$posArray['position'].'" selected>'.$posArray['position'].'</option>';
+								else
+									Print '	<option value="'.$posArray['position'].'">'.$posArray['position'].'</option>';
+							}
+						?>
+					</select>
+				</div>
 				<!-- Documents status DROPDOWN -->
 				<div class="btn-group">Documents
-					<select class="form-control" id="documents" onchange="documents()">
+					<select class="form-control" id="documents" onchange="documents(this.value)">
 						<option hidden>--</option>
 						<?php 
 							if(isset($_GET['document']))
@@ -111,7 +139,7 @@ $date = "July 11, 2018";
 
 				<!-- Payroll status DRODOWN -->
 				<div class="btn-group">Payroll Status
-					<select class="form-control" id="status" onchange="status()">
+					<select class="form-control" id="status" onchange="status(this.value)">
 						<option hidden>--</option>
 						<?php 
 							if(isset($_GET['status']))
@@ -151,6 +179,7 @@ $date = "July 11, 2018";
 					<tr>
 						<td>Employee ID</td>
 						<td style='width:200px !important;'>Name</td>
+						<td>Position</td>
 						<td>Payroll status</td>
 						<td>Document status</td>
 						<td>Action</td>
@@ -159,13 +188,13 @@ $date = "July 11, 2018";
 					if(isset($_POST['txt_search']))
 					{
 						$find = $_POST['txt_search'];
-						$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site' AND position = '$position' AND (empid LIKE '%$find%' OR
+						$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site' AND (empid LIKE '%$find%' OR
 							firstname LIKE '%$find%' OR
-							lastname LIKE '%$find%') ORDER BY position";
-
+							lastname LIKE '%$find%' OR
+							position LIKE '%$find%') ORDER BY lastname";
 					}
 					// Document Filter and Status Filter
-					else if(isset($_GET['document']) && isset($_GET['status']))
+					else if(isset($_GET['document']) && isset($_GET['status']) && isset($_GET['position']))
 					{
 						if($_GET['document'] == "complete")
 						{
@@ -177,45 +206,81 @@ $date = "July 11, 2018";
 						}
 						//Print "<script>alert('".$documentFilter."')</script>";
 						$statusFilter = $_GET['document'];
+						
+						//========
 
-						if($_GET['document'] == "complete" || $_GET['document'] == "incomplete")
+
+						if($_GET['status'] != "null")
 						{
-							if($_GET['status'] == "complete")
+							$appendQuery = "";
+							if($_GET['position'] != "null")
 							{
-								$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname, e.position, e.site FROM employee AS e INNER JOIN payroll AS p ON e.empid = p.empid WHERE e.site = '$site' AND e.position = '$position' AND e.complete_doc = '$documentFilter' AND p.date = '$date'";
+								$appendQuery .= "AND e.position = '$position' ";
 							}
-							else if($_GET['status'] == "complete")
+							if($_GET['document'] != "null")	
 							{
-								$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'AND position = '$position' AND complete_doc = '$documentFilter'";
+								$appendQuery .= "AND e.complete_doc = '$documentFilter' ";
 							}
+							if($_GET['status'] == 'complete')
+								$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname, e.position, e.site FROM employee AS e INNER JOIN payroll AS p ON e.empid = p.empid WHERE e.employment_status = '1' AND e.site = '$site' $appendQuery AND p.date = '$date' ORDER BY lastname ASC";
 							else
-							{
-								$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'AND position = '$position' AND complete_doc = '$documentFilter'";
-							}
+								$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname, e.position, e.site FROM employee AS e LEFT OUTER JOIN payroll AS p ON e.empid != p.empid WHERE e.employment_status = '1' AND e.site = '$site' $appendQuery AND p.date = '$date' ORDER BY lastname ASC";
+							Print '<script>console.log("'.$employee.'")</script>';
 						}
-						else if($_GET['status'] == "complete" || $_GET['status'] == "incomplete")
+						else
 						{
-							if($_GET['document'] == "complete" || $_GET['document'] == "incomplete")
+							$appendQuery = "";
+							if($_GET['position'] != "null")
 							{
-								$employee = "SELECT * FROM employee WHERE empid NOT IN (SELECT empid FROM payroll WHERE date = '$date') AND site = '$site' AND position = '$position' AND complete_doc = '$documentFilter' AND date = '$date'";
+								$appendQuery .= "AND position = '$position' ";
 							}
-							else if($_GET['status'] == "incomplete")
+							if($_GET['document'] != "null")	
 							{
-								$employee = "SELECT * FROM employee WHERE empid NOT IN (SELECT empid FROM payroll WHERE date = '$date') AND site = '$site' AND position = '$position'";
+								$appendQuery .= "AND complete_doc = '$documentFilter' ";
 							}
-							//status = Complete
-							else 
-							{
-								$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname, e.position, e.site FROM employee AS e INNER JOIN payroll AS p ON e.empid = p.empid WHERE e.site = '$site' AND e.position = '$position' AND p.date = '$date'";
-							}
-
-
+							$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site' $appendQuery ORDER BY lastname ASC";
 						}
+
+						//========
+
+						// if($_GET['document'] == "complete" || $_GET['document'] == "incomplete")
+						// {
+						// 	if($_GET['status'] == "complete")
+						// 	{
+						// 		$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname, e.position, e.site FROM employee AS e INNER JOIN payroll AS p ON e.empid = p.empid WHERE e.site = '$site' AND e.position = '$position' AND e.complete_doc = '$documentFilter' AND p.date = '$date' ORDER BY lastname ASC";
+						// 	}
+						// 	else if($_GET['status'] == "complete")
+						// 	{
+						// 		$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'AND position = '$position' AND complete_doc = '$documentFilter' ORDER BY lastname ASC";
+						// 	}
+						// 	else
+						// 	{
+						// 		$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'AND position = '$position' AND complete_doc = '$documentFilter' ORDER BY lastname ASC";
+						// 	}
+						// }
+						// else if($_GET['status'] == "complete" || $_GET['status'] == "incomplete")
+						// {
+						// 	if($_GET['document'] == "complete" || $_GET['document'] == "incomplete")
+						// 	{
+						// 		$employee = "SELECT * FROM employee WHERE empid NOT IN (SELECT empid FROM payroll WHERE date = '$date') AND site = '$site' AND position = '$position' AND complete_doc = '$documentFilter' AND date = '$date' ORDER BY lastname ASC";
+						// 	}
+						// 	else if($_GET['status'] == "incomplete")
+						// 	{
+						// 		$employee = "SELECT * FROM employee WHERE empid NOT IN (SELECT empid FROM payroll WHERE date = '$date') AND site = '$site' AND position = '$position' ORDER BY lastname ASC";
+						// 	}
+						// 	//status = Complete
+						// 	else 
+						// 	{
+						// 		$employee = "SELECT e.empid, e.complete_doc, e.sss, e.pagibig, e.philhealth, e.firstname, e.lastname, e.position, e.site FROM employee AS e INNER JOIN payroll AS p ON e.empid = p.empid WHERE e.site = '$site' AND e.position = '$position' AND p.date = '$date' ORDER BY lastname ASC";
+						// 	}
+
+
+						// }
 					}
 					//Default
 					else 
 					{
-						$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'AND position = '$position'";
+						$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site' ORDER BY lastname ASC";
 					}
 					
 
@@ -284,6 +349,7 @@ $date = "July 11, 2018";
 							Print "	<tr id=".$empid.">
 										<td>".$empid."</td>
 										<td>".$row['lastname'].", ".$row['firstname']."</td>
+										<td>".$row['position']."</td>
 										<td class='payrollStatus'>".$payrollStatus."</td>
 										<td>". $document ."</td>
 										<td>";
@@ -332,46 +398,20 @@ $date = "July 11, 2018";
 			document.getElementById('search_form').submit();
 			}
 		}
+
+		//Position filter
+		function position(pos) {
+			window.location.assign("payroll_table.php?position="+pos+"&site=<?php Print $site ?>&status=<?php Print $status ?>&document=<?php Print $documents ?>");
+		}
+
 		// STATUS FILTER 
-		function status() {
-			if(document.URL.match(/documents=([0-9]+)/))
-			{
-				var arr = document.URL.match(/status=([0-9]+)/)
-				var siteUrl = arr[1];
-				if(siteUrl)
-				{
-				localStorage.setItem("counter", 0);
-				}
-				else if(localStorage.getItem('counter') > 2)
-				{
-					localStorage.clear();
-				}
-			}
-			var status = document.getElementById("status").value;
-			var statusReplaced = status.replace(/\s/g , "+");
-			localStorage.setItem("glob_status", statusReplaced);
-			window.location.assign("payroll_table.php?position=<?Print $position ?>&site=<?Print $site ?>&status="+statusReplaced+"&document="+localStorage.getItem('glob_document'));
+		function status(stat) {
+			window.location.assign("payroll_table.php?position=<?php Print $position ?>&site=<?php Print $site ?>&status="+stat+"&document=<?php Print $documents ?>");
 		}
 
 		// DOCUMENTS FILTER 
-		function documents() {
-			if(document.URL.match(/documents=([0-9]+)/))
-			{
-				var arr = document.URL.match(/documents=([0-9]+)/)
-				var documentUrl = arr[1];
-				if(documentUrl)
-				{
-					localStorage.setItem("counter", 0);
-				}
-				else if(localStorage.getItem('counter') > 2)
-				{
-					localStorage.clear();
-				}
-			}
-			var documents = document.getElementById("documents").value;
-			var documentReplaced = documents.replace(/\s/g , "+");
-			localStorage.setItem("glob_document", documentReplaced);
-			window.location.assign("payroll_table.php?position=<?Print $position ?>&site=<?Print $site ?>&status="+localStorage.getItem("glob_status")+"&document="+documentReplaced);
+		function documents(doc) {
+			window.location.assign("payroll_table.php?position=<?php Print $position ?>&site=<?php Print $site ?>&status=<?php Print $status ?>&document="+doc);
 		}
 
 
@@ -386,9 +426,6 @@ $date = "July 11, 2018";
 					if(status[i].innerText == 'Complete'){// Changing color of row to green when status is complete
 						status[i].parentNode.setAttribute('class','success');
 					}
-					// else if(status[i].innerText == 'Incomplete'){// Change button label if incomplete
-					// 	status[i].nextElementSibling.nextElementSibling.nextElementSibling.innerHTML = '<a class="btn btn-primary" href="payroll.php?site=<?php //Print $site?>&position=<?php //Print $position?>&empid=<?php //Print $empid?>">Start Payroll</a>';
-					// }
 				}
 			}
 		}
@@ -396,7 +433,7 @@ $date = "July 11, 2018";
 		// Clearing filters
 		function clearFilter() {
 			localStorage.clear();
-			window.location.assign("payroll_table.php?position=<?php Print $position?>&site=<?php Print $site?>");
+			window.location.assign("payroll_table.php?position=null&site=<?php Print $site?>");
 		}
 		//View the payroll computation
 		function viewPayrollComp(id, date) {

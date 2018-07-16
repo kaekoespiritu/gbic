@@ -195,7 +195,7 @@ include('directives/session.php');
 					{
 						if(!$weekComplete)
 						{
-							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important; pointer-events:none; cursor:not-allowed;" disabled>
+							Print '	<a href="payroll_table.php?position=null&site='. $row['location'] .'" style="color: white !important; text-decoration: none !important; pointer-events:none; cursor:not-allowed;" disabled>
 									<div class="sitebox" style="background-color:grey !important; ">
 										<span class="smalltext">'
 											. $row['location'] .'</span>
@@ -208,7 +208,7 @@ include('directives/session.php');
 						}
 						else
 						{
-							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important; ">
+							Print '	<a href="payroll_table.php?position=null&site='. $row['location'] .'" style="color: white !important; text-decoration: none !important; ">
 									<div class="sitebox" >
 										<span class="smalltext">'
 											. $row['location'] .'</span>
@@ -228,7 +228,7 @@ include('directives/session.php');
 						
 						if(!$weekComplete)
 						{
-							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important;  text-decoration: none !important; pointer-events:none; cursor:not-allowed;" disabled> 
+							Print '	<a href="payroll_table.php?position=null&site='. $row['location'] .'" style="color: white !important;  text-decoration: none !important; pointer-events:none; cursor:not-allowed;" disabled> 
 									<div class="sitebox" style="background-color:grey !important; ">
 										<span class="autofit">'
 											. $row['location'] .'<br>
@@ -240,7 +240,7 @@ include('directives/session.php');
 						}
 						else
 						{
-							Print '	<a href="payroll_position.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
+							Print '	<a href="payroll_table.php?position=null&site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
 									<div class="sitebox">
 									
 										<span class="autofit">'
