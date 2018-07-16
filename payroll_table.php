@@ -83,7 +83,7 @@ $date = "July 11, 2018";
 
 
 			<!-- Filters -->
-			<div class="col-md-4 col-lg-4 pull-left">
+			<div class="col-md-5 col-lg-5 pull-left col-md-pull-1 col-lg-pull-1">
 				Filter by:
 
 				<!-- Documents status POSITION -->
@@ -169,7 +169,7 @@ $date = "July 11, 2018";
 				</div>
 
 				<!-- Clear Filters button -->
-				<button type="button" class="btn btn-danger" onclick="clearFilter()">Clear Filters</button>
+				<button type="button" class="btn btn-danger" onclick="clearFilter()" style="margin-top: 20px;">Clear Filters</button>
 			</div>
 
 

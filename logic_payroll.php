@@ -589,8 +589,9 @@
 				$toolprice = $_POST['toolprice'][$counter];
 				$toolquantity = $_POST['toolquantity'][$counter];
 				$totalToolCost += ($toolprice * $toolquantity);//gets the total tool cost
+				Print "<script>console.log('toolquantity: ".$toolquantity."')</script>";
 
-				if($toolQuery != "INSERT INTO tools(empid, tools, cost, date) VALUES")
+				if($toolQuery != "INSERT INTO tools(empid, tools, cost, quantity, date) VALUES")
 				{
 					$toolQuery .= ",";//Add comma after every additional values
 				}
@@ -600,6 +601,7 @@
 								'$toolquantity',
 								'$date')"; 
 			}
+
 			if(!empty($_POST['previousPayable']))
 			{
 				//Gets the new Previous payable
@@ -620,7 +622,7 @@
 			$toolname = $_POST['toolname'][0];
 			$toolprice = $_POST['toolprice'][0];
 			$toolquantity = $_POST['toolquantity'][0];
-			Print "<script>console.log('toolquantity: ".$toolquantity."')</script>";
+			
 			if(!empty($_POST['previousPayable']))
 			{
 				//Gets the new Previous payable
