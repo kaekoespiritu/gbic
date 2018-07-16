@@ -18,17 +18,21 @@ $sunday = 1;//Pre-sets the value of Sunday to the database
 
 
 function first($array) { 
-if (!is_array($array)) return $array; 
-if (!count($array)) return null; 
-reset($array); 
-return $array[key($array)]; 
+	if (!is_array($array)) 
+		return $array; 
+	if (!count($array)) 
+		return null; 
+	reset($array); 
+	return $array[key($array)]; 
 } 
 
 function last($array) { 
-if (!is_array($array)) return $array; 
-if (!count($array)) return null; 
-end($array); 
-return $array[key($array)]; 
+	if (!is_array($array)) 
+		return $array; 
+	if (!count($array)) 
+		return null; 
+	end($array); 
+	return $array[key($array)]; 
 } 
 // Holiday
 if(isset($_SESSION['holidayDate']))
@@ -339,7 +343,7 @@ if(!empty($dateRows))// Updating attendance
 			$empid = $_POST['empid'][$counter];
 
 			//Make Algorithm that will check if this employee is AWOL
-			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 7";
+			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 8";
 			$AwolQuery = mysql_query($Awol) or die(mysql_error());
 			$AwolCounter = 0;
 			$absentCounter = 0;
@@ -612,8 +616,29 @@ else// NEW attendance
 			if(!empty($_POST['nightdiff'][$counter]))
 			{
 				$nightdiff = mysql_real_escape_string($_POST['nightdiff'][$counter]);
-				$nightdiff = $nightdiff[0].$nightdiff[1];
-				$nightdiff = str_replace(' ', '', $nightdiff);
+
+				$hasMins = strpos($nightdiff, ",");//Search the string if it has comma
+				$justMins = strpos($nightdiff, "mins");
+				if($justMins == true && $hasMins == false)
+				{
+					$nightdiff = "0.".$nightdiff[0].$nightdiff[1];//Gets the first 2 characters
+					$nightdiff = str_replace(' ', '', $nightdiff);//removes all the spaces
+				}
+				else if($hasMins == false)
+				{
+					$nightdiff = $nightdiff[0].$nightdiff[1];//Gets the first 2 characters
+					$nightdiff = str_replace(' ', '', $nightdiff);//removes all the spaces
+				}
+				else
+				{
+					$work = explode(",", $nightdiff);//Separates the string
+					$hrs = $work[0];//gets the Hours
+					$mins = $work[1];//Gets the minutes
+					
+					$nightdiff = $hrs[0].$hrs[1].".".$mins[1].$mins[2];
+					$nightdiff = str_replace(' ', '', $nightdiff);//removes all the spaces
+				}
+
 			}
 			else 
 			{

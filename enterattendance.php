@@ -54,7 +54,10 @@
 					<?php
 					
 					Print '<li class="active">Employee attendance sheet for '. $site_name .' on '. $date .' ('.$day.')</li>';
+					if($day ==  "Sunday")
+						Print '<input type="hidden" id="isSunday">';
 					?>
+
 					<button class="btn btn-success pull-right" onclick="save()">Save Changes</button>
 				</ol>
 
