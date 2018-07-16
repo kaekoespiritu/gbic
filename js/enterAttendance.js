@@ -440,6 +440,9 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 	var originalMins;
 	row.querySelector('.attendance').value = "";
 
+	var isSunday = document.getElementById('isSunday') ? true : false; 
+ 
+ 	console.log("sunday : "+ isSunday)
 	// Verifies that time in and time out input fields have value
 	if(timeinhour1 && timeouthour1 && timeinhour2 && timeouthour2)
 	{	
@@ -825,29 +828,32 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				row.querySelector('.workinghours').value = workinghours + " hrs, " + workingmins + " mins";	
 				row.querySelector('.workinghoursH').value = workinghours + " hrs, " + workingmins + " mins";
 			}
+			if(!isSunday)
+			{
+				// OVERTIME if Working Hours exceed 8
+				if(workinghours > 8 && workingmins == 0)
+				{
+					row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs";
+					row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs";
+				}
+				else if(workinghours == 8 && workingmins != 0)
+				{
+					row.querySelector('.overtime').value = workingmins + " mins";
+					row.querySelector('.overtimeH').value = workingmins + " mins";
+				}
+				else if (workinghours > 8)
+				{
+					row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
+					row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
+				}
+				else
+				{
+					row.querySelector('.overtime').value = "";
+					row.querySelector('.overtimeH').value = "";
+				}
 
-		// OVERTIME if Working Hours exceed 8
-			if(workinghours > 8 && workingmins == 0)
-			{
-				row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs";
-				row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs";
 			}
-			else if(workinghours == 8 && workingmins != 0)
-			{
-				row.querySelector('.overtime').value = workingmins + " mins";
-				row.querySelector('.overtimeH').value = workingmins + " mins";
-			}
-			else if (workinghours > 8)
-			{
-				row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
-				row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
-			}
-			else
-			{
-				row.querySelector('.overtime').value = "";
-				row.querySelector('.overtimeH').value = "";
-			}
-
+			
 		// UNDERTIME if Working Hours don't reach 8
 			if(workinghours < 8 && workingmins == 0)
 			{
@@ -899,25 +905,133 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			{
 				timeouthour2 = 24;
 			}
-			//If employee chooses halfday
-			if(timeinhour2 == "HD")//Night diff
+			if(!isSunday)
 			{
-
-				if ((timeinhour1 <= 22 && timeouthour1 <= 6) ||
-			   		(timeinhour1 <= 22 && timeouthour1 <= 24) || 
-			   		(timeouthour1 == 22 && timeoutmin1 != 0))//dito
+				//If employee chooses halfday
+				if(timeinhour2 == "HD")//Night diff
 				{
-					console.log(timeouthour1 +" :yo "+timeoutmin1);
-					var nightdiffMins = originalMins;
+
+					if ((timeinhour1 <= 22 && timeouthour1 <= 6) ||
+				   		(timeinhour1 <= 22 && timeouthour1 <= 24) || 
+				   		(timeouthour1 == 22 && timeoutmin1 != 0))//dito
+					{
+						console.log(timeouthour1 +" :yo "+timeoutmin1);
+						var nightdiffMins = originalMins;
+						var nightdiffBool = false;
+						if(timeouthour1 == 22 && timeoutmin1 != 0)// If employee's timeout time is 10:30pm 
+						{
+							nightdiffMins = timeoutmin1;
+							nightdiffBool = true;
+						}
+						else if(timeinhour1 <= 24 && timeouthour1 >= 22)
+						{
+							nightdiff = timeouthour1 - 22;
+						}
+						else
+						{
+							nightdiff = "";
+						}
+						if(Number.isInteger(nightdiff))
+						{
+						   	nightdiff = Math.abs(nightdiff);		
+						}
+					}
+
+					if(nightdiffBool == false && nightdiff == "")
+						nightdiffBool = true;
+
+					if(nightdiffBool && nightdiffMins != 0)
+					{
+						row.querySelector('.nightdiff').value = nightdiffMins + "mins";
+						row.querySelector('.nightdiffH').value = nightdiffMins + "mins";
+					}
+					else if(nightdiff != "")
+					{
+						if(nightdiffMins != 0)
+						{
+							row.querySelector('.nightdiff').value = nightdiff + " hrs, " + nightdiffMins + "mins";
+							row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + nightdiffMins + "mins";
+						}
+						else
+						{
+							row.querySelector('.nightdiff').value = nightdiff + " hrs";
+							row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+						}
+						
+					}
+					else
+					{
+						
+						row.querySelector('.nightdiff').value = "";
+						row.querySelector('.nightdiffH').value = "";
+					}
+					// If absent was initially placed, changed to success
+					if(row.classList.contains('danger'))
+					{
+						row.classList.remove('danger');
+						row.classList.add('success');
+					}
+					else 
+					{
+						row.classList.add('success');
+					}
+				}
+				else if ((timeinhour1 <= 22 && timeouthour1 <= 6) ||
+				   (timeinhour1 <= 22 && timeouthour1 >= 22) ||
+				   (timeinhour2 <= 22 && timeouthour2 <= 6) ||
+				   (timeinhour2 <= 22 && timeouthour2 >= 22) ||
+				   (timeouthour1 == 22 && timeoutmin1 != 0) ||
+				   (timeouthour2 == 22 && timeoutmin2 != 0))//night diff 
+				{
+					console.log(timeinhour1 +" : "+ timeouthour1+" | "+ timeinhour2+" : "+ timeouthour2)
 					var nightdiffBool = false;
-					if(timeouthour1 == 22 && timeoutmin1 != 0)// If employee's timeout time is 10:30pm 
+					var nightdiffMins = originalMins;
+					if(timeouthour1 == 22 && timeoutmin1 != 0)
 					{
 						nightdiffMins = timeoutmin1;
 						nightdiffBool = true;
 					}
-					else if(timeinhour1 <= 24 && timeouthour1 >= 22)
+					else if(timeouthour2 == 22 && timeoutmin2 != 0) 
 					{
+
+						nightdiffMins = timeoutmin2;
+						nightdiffBool = true;
+					}
+				//posibility 1
+					if(timeouthour2 <= 24 && timeouthour2 >= 22)
+					{
+						nightdiff = timeouthour2 - 22;
+					}
+				// possibility 2 -- When after break time is past 12AM (and started past 10PM)
+					else if(timeouthour2 >= 24 && timeouthour2 <= 6 && (timeinhour1 <= 22 || timeinhour1 >= 22 || timeinhour2 <= 22 || timeouthour2 >= 22))
+					{
+						nightdiffBool = false;
+						nightdiff = timeouthour1 - 22 + (timeouthour2 - timeinhour2);
+
+						// To retain night differential value, must retain computation based on boundary time
+						if(timeouthour2 > 6)
+						{
+
+							nightdiff = timeouthour1 - 22 + (6 - timeinhour2);
+						}
+
+					}
+					else if (timeinhour1 <= 22 && timeouthour1 >= 22)
+					{
+						nightdiffBool = false;
 						nightdiff = timeouthour1 - 22;
+
+						if(timeouthour2 > 6)
+						{
+							temp = (timeinhour2 - 6);
+							nightdiff += Math.abs(temp); 
+						}
+						else if(timeouthour2 <= 6)
+						{
+							temp = timeinhour2 - timeouthour2;
+							nightdiff += Math.abs(temp); 
+						}
+
 					}
 					else
 					{
@@ -927,142 +1041,38 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					{
 					   	nightdiff = Math.abs(nightdiff);		
 					}
-				}
+					if(nightdiffBool == false && nightdiff == "")
+						nightdiffBool = true;
 
-				if(nightdiffBool == false && nightdiff == "")
-					nightdiffBool = true;
-
-				if(nightdiffBool && nightdiffMins != 0)
-				{
-					row.querySelector('.nightdiff').value = nightdiffMins + "mins";
-					row.querySelector('.nightdiffH').value = nightdiffMins + "mins";
-				}
-				else if(nightdiff != "")
-				{
-					if(nightdiffMins != 0)
+					if(nightdiffBool && nightdiffMins != 0)
 					{
-						row.querySelector('.nightdiff').value = nightdiff + " hrs, " + nightdiffMins + "mins";
-						row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + nightdiffMins + "mins";
+						row.querySelector('.nightdiff').value = nightdiffMins + "mins";
+						row.querySelector('.nightdiffH').value = nightdiffMins + "mins";
+					}
+					else if(nightdiff != "")
+					{
+						
+						if(nightdiffMins != 0)
+						{
+							row.querySelector('.nightdiff').value = nightdiff + " hrs, " + nightdiffMins + "mins";
+							row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + nightdiffMins + "mins";
+						}
+						else
+						{
+							row.querySelector('.nightdiff').value = nightdiff + " hrs";
+							row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+						}
 					}
 					else
 					{
-						row.querySelector('.nightdiff').value = nightdiff + " hrs";
-						row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+						
+						row.querySelector('.nightdiff').value = "";
+						row.querySelector('.nightdiffH').value = "";
 					}
-					
-				}
-				else
-				{
-					
-					row.querySelector('.nightdiff').value = "";
-					row.querySelector('.nightdiffH').value = "";
-				}
-				// If absent was initially placed, changed to success
-				if(row.classList.contains('danger'))
-				{
-					row.classList.remove('danger');
-					row.classList.add('success');
-				}
-				else 
-				{
-					row.classList.add('success');
+
 				}
 			}
-			else if ((timeinhour1 <= 22 && timeouthour1 <= 6) ||
-			   (timeinhour1 <= 22 && timeouthour1 >= 22) ||
-			   (timeinhour2 <= 22 && timeouthour2 <= 6) ||
-			   (timeinhour2 <= 22 && timeouthour2 >= 22) ||
-			   (timeouthour1 == 22 && timeoutmin1 != 0) ||
-			   (timeouthour2 == 22 && timeoutmin2 != 0))//night diff 
-			{
-				console.log(timeinhour1 +" : "+ timeouthour1+" | "+ timeinhour2+" : "+ timeouthour2)
-				var nightdiffBool = false;
-				var nightdiffMins = originalMins;
-				if(timeouthour1 == 22 && timeoutmin1 != 0)
-				{
-					nightdiffMins = timeoutmin1;
-					nightdiffBool = true;
-				}
-				else if(timeouthour2 == 22 && timeoutmin2 != 0) 
-				{
-
-					nightdiffMins = timeoutmin2;
-					nightdiffBool = true;
-				}
-			//posibility 1
-				if(timeouthour2 <= 24 && timeouthour2 >= 22)
-				{
-					nightdiff = timeouthour2 - 22;
-				}
-			// possibility 2 -- When after break time is past 12AM (and started past 10PM)
-				else if(timeouthour2 >= 24 && timeouthour2 <= 6 && (timeinhour1 <= 22 || timeinhour1 >= 22 || timeinhour2 <= 22 || timeouthour2 >= 22))
-				{
-					nightdiffBool = false;
-					nightdiff = timeouthour1 - 22 + (timeouthour2 - timeinhour2);
-
-					// To retain night differential value, must retain computation based on boundary time
-					if(timeouthour2 > 6)
-					{
-
-						nightdiff = timeouthour1 - 22 + (6 - timeinhour2);
-					}
-
-				}
-				else if (timeinhour1 <= 22 && timeouthour1 >= 22)
-				{
-					nightdiffBool = false;
-					nightdiff = timeouthour1 - 22;
-
-					if(timeouthour2 > 6)
-					{
-						temp = (timeinhour2 - 6);
-						nightdiff += Math.abs(temp); 
-					}
-					else if(timeouthour2 <= 6)
-					{
-						temp = timeinhour2 - timeouthour2;
-						nightdiff += Math.abs(temp); 
-					}
-
-				}
-				else
-				{
-					nightdiff = "";
-				}
-				if(Number.isInteger(nightdiff))
-				{
-				   	nightdiff = Math.abs(nightdiff);		
-				}
-				if(nightdiffBool == false && nightdiff == "")
-					nightdiffBool = true;
-
-				if(nightdiffBool && nightdiffMins != 0)
-				{
-					row.querySelector('.nightdiff').value = nightdiffMins + "mins";
-					row.querySelector('.nightdiffH').value = nightdiffMins + "mins";
-				}
-				else if(nightdiff != "")
-				{
-					
-					if(nightdiffMins != 0)
-					{
-						row.querySelector('.nightdiff').value = nightdiff + " hrs, " + nightdiffMins + "mins";
-						row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + nightdiffMins + "mins";
-					}
-					else
-					{
-						row.querySelector('.nightdiff').value = nightdiff + " hrs";
-						row.querySelector('.nightdiffH').value = nightdiff + " hrs";
-					}
-				}
-				else
-				{
-					
-					row.querySelector('.nightdiff').value = "";
-					row.querySelector('.nightdiffH').value = "";
-				}
-
-			}
+				
 
 			
 			
@@ -1461,22 +1471,26 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				row.querySelector('.workinghours').value = workinghours + " hrs, " + workingmins + " mins";	
 				row.querySelector('.workinghoursH').value = workinghours + " hrs, " + workingmins + " mins";	
 			}
-		// OVERTIME if Working Hours exceed 8
-			if(workinghours > 8 && workingmins == 0)
+			if(!isSunday)
 			{
-				row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs";
-				row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs";
+				// OVERTIME if Working Hours exceed 8
+				if(workinghours > 8 && workingmins == 0)
+				{
+					row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs";
+					row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs";
+				}
+				else if (workinghours > 8)
+				{
+					row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
+					row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
+				}
+				else
+				{
+					row.querySelector('.overtime').value = "";
+					row.querySelector('.overtimeH').value = "";
+				}
 			}
-			else if (workinghours > 8)
-			{
-				row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
-				row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
-			}
-			else
-			{
-				row.querySelector('.overtime').value = "";
-				row.querySelector('.overtimeH').value = "";
-			}
+			
 
 		// UNDERTIME if Working Hours don't reach 8
 			if(workinghours < 8 && workingmins == 0)
@@ -1520,207 +1534,210 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		// 10 is 10pm and 18 is 6pm
 		// alert("yow timein: "+timeinhour+"timeout: "+ timeouthour);
 			var nightdiff = "";
-
-			//If employee chooses halfday
-			if(timeinhour2 != "HD")
+			if(!isSunday)
 			{
-
-				console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
-				if(	(timeinhour1 <= 10 && timeouthour1 <= 18) || 
-					(timeinhour2 <= 10 && timeouthour2 <= 18) || 
-					(timeouthour1 == 10 && timeoutmin1 != 0) ||
-					(timeouthour2 == 10 && timeoutmin2 != 0))//night diff needs reconfiguration
+				//If employee chooses halfday
+				if(timeinhour2 != "HD")
 				{
-					var NDin;
-					var NDout;
-					var workhrs;
-					var nightdiffMins = originalMins;
 
-					var nightdiffBool = false;
-					// console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
-					
-					// If employee only exceeded the nightdiff by minutes
-					if(timeouthour1 == 10 && timeoutmin1 != 0)
+					console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
+					if(	(timeinhour1 <= 10 && timeouthour1 <= 18) || 
+						(timeinhour2 <= 10 && timeouthour2 <= 18) || 
+						(timeouthour1 == 10 && timeoutmin1 != 0) ||
+						(timeouthour2 == 10 && timeoutmin2 != 0))//night diff needs reconfiguration
 					{
-						nightdiffMins = timeoutmin1;
-						nightdiffBool = true;
-					}
-					else if(timeouthour1 == 10 && timeoutmin2 != 0)
-					{
-						nightdiffMins = timeoutmin2;
-						nightdiffBool = true;
-					}
-					//Possibility 2: if 10pm is in after lunch
-					console.log("timeinhour2: "+timeinhour2+" | timeinhour1: "+timeinhour1);
-					if(timeinhour2 <= 10)
-					{ 
-						console.log("1");
-						nightdiffBool = false;
-						NDin = timeinhour2 - 10;
-						NDout = 0;
-						if(timeouthour2 >= 18)
+						var NDin;
+						var NDout;
+						var workhrs;
+						var nightdiffMins = originalMins;
+
+						var nightdiffBool = false;
+						// console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
+						
+						// If employee only exceeded the nightdiff by minutes
+						if(timeouthour1 == 10 && timeoutmin1 != 0)
 						{
-							NDout = timeouthour2 - 18;
+							nightdiffMins = timeoutmin1;
+							nightdiffBool = true;
 						}
-						workhrs = timeinhour2 - timeouthour2;
-						nightdiff = Math.abs(NDin) - Math.abs(workhrs);
-						nightdiff += NDout;
-					}
-					//Possibility 1: if 10pm is in before lunch
-					else if(timeinhour1 <= 10)
-					{
-						console.log("2");
-						nightdiffBool = false;
-						if(timeouthour1 >= 18)//If timein encapsulated all of the night diff
+						else if(timeouthour1 == 10 && timeoutmin2 != 0)
 						{
-
-							NDin = timeinhour1 - 10;
-							NDout = timeouthour1 - 18;
-							workhrs = timeinhour1 - timeouthour1;
-							nightdiff = (Math.abs(NDin) + Math.abs(NDout1)) - Math.abs(workhrs);
+							nightdiffMins = timeoutmin2;
+							nightdiffBool = true;
 						}
-						else//the normal night diff
+						//Possibility 2: if 10pm is in after lunch
+						console.log("timeinhour2: "+timeinhour2+" | timeinhour1: "+timeinhour1);
+						if(timeinhour2 <= 10)
+						{ 
+							console.log("1");
+							nightdiffBool = false;
+							NDin = timeinhour2 - 10;
+							NDout = 0;
+							if(timeouthour2 >= 18)
+							{
+								NDout = timeouthour2 - 18;
+							}
+							workhrs = timeinhour2 - timeouthour2;
+							nightdiff = Math.abs(NDin) - Math.abs(workhrs);
+							nightdiff += NDout;
+						}
+						//Possibility 1: if 10pm is in before lunch
+						else if(timeinhour1 <= 10)
 						{
+							console.log("2");
+							nightdiffBool = false;
+							if(timeouthour1 >= 18)//If timein encapsulated all of the night diff
+							{
 
-							workhrs1 = timeinhour1 - timeouthour1;
-							NDin1 = timeinhour1 - 10;
-							nightdiff1 = Math.abs(NDin1) - Math.abs(workhrs1);
+								NDin = timeinhour1 - 10;
+								NDout = timeouthour1 - 18;
+								workhrs = timeinhour1 - timeouthour1;
+								nightdiff = (Math.abs(NDin) + Math.abs(NDout1)) - Math.abs(workhrs);
+							}
+							else//the normal night diff
+							{
+
+								workhrs1 = timeinhour1 - timeouthour1;
+								NDin1 = timeinhour1 - 10;
+								nightdiff1 = Math.abs(NDin1) - Math.abs(workhrs1);
+								
+								NDin2 = timeinhour2 - 10;
+								if(timeouthour2 <=18)
+								{
+									var temp = 0;
+									if(timeouthour1 > 10)
+										temp = timeouthour1 - 10;
+									NDout2 = timeouthour2 - timeinhour2;
+									NDout2 = Math.abs(NDout2) + temp;
+								}
+								else
+								{
+									NDout2 = 8;
+								}
+								if(timeouthour2 <=18)
+									nightdiff = Math.abs(NDout2);
+								else
+								{
+									nightdiff2 = Math.abs(NDin2) - Math.abs(NDout2);
+									nightdiff = nightdiff1 + nightdiff2;
+									nightdiff = Math.abs(nightdiff);
+								}
+								
+							}
 							
-							NDin2 = timeinhour2 - 10;
-							if(timeouthour2 <=18)
+						}
+							
+						
+						if(Number.isInteger(nightdiff))
+						{
+						   	nightdiff = Math.abs(nightdiff);		
+						}
+					}
+				}
+				else
+				{
+					var nightdiffBool = false;
+					var nightdiffMins = originalMins;
+					console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1);
+					if((timeinhour1 <= 10 && timeouthour1 <= 18) || (timeinhour1 >= timeouthour1))//night diff needs reconfiguration
+					{
+						console.log("ND")
+						var NDin;
+						var NDout;
+						var workhrs;
+						var temp = null;
+						
+
+						
+
+						console.log()
+						if(timeinhour1 >= timeouthour1)
+							temp = timeinhour1 - 12;
+
+						// If employee only exceeded the nightdiff by minutes
+						if(timeouthour1 == 10 && timeoutmin1 != 0)
+						{
+							nightdiffMins = timeoutmin1;
+							nightdiffBool = true;
+						}
+						//Possibility 1: if 10pm is in before lunch
+						else if(timeinhour1 <= 10 || temp)
+						{
+							if(timeouthour1 >= 18)//If timein encapsulated all of the night diff
 							{
-								var temp = 0;
-								if(timeouthour1 > 10)
-									temp = timeouthour1 - 10;
-								NDout2 = timeouthour2 - timeinhour2;
-								NDout2 = Math.abs(NDout2) + temp;
+								if(timeinhour1 > timeouthour1)
+									NDin = temp - 10;
+								else
+									NDin = timeinhour1 - 10;
+								
+								NDout1 = timeouthour1 - 18;
+
+								if(timeinhour1 > timeouthour1)
+									workhrs = temp - timeouthour1;
+								else
+									workhrs = timeinhour1 - timeouthour1;
+								
+								nightdiff = (Math.abs(NDin) + Math.abs(NDout1)) - Math.abs(workhrs);
 							}
-							else
+							else//the normal night diff
 							{
-								NDout2 = 8;
-							}
-							if(timeouthour2 <=18)
-								nightdiff = Math.abs(NDout2);
-							else
-							{
-								nightdiff2 = Math.abs(NDin2) - Math.abs(NDout2);
-								nightdiff = nightdiff1 + nightdiff2;
+								if(timeinhour1 > timeouthour1) {
+									workhrs1 = temp - timeouthour1;
+									NDin1 = temp - 10;
+								}
+								else {
+									workhrs1 = timeinhour1 - timeouthour1;
+									NDin1 = timeinhour1 - 10;
+								}
+
+
+								
+								nightdiff1 = Math.abs(NDin1) - Math.abs(workhrs1);
+								nightdiff = nightdiff1;
+								
 								nightdiff = Math.abs(nightdiff);
 							}
 							
 						}
+							
 						
-					}
-						
-					
-					if(Number.isInteger(nightdiff))
-					{
-					   	nightdiff = Math.abs(nightdiff);		
+						if(Number.isInteger(nightdiff))
+						{
+						   	nightdiff = Math.abs(nightdiff);		
+						}
 					}
 				}
-			}
-			else
-			{
-				var nightdiffBool = false;
-				var nightdiffMins = originalMins;
-				console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1);
-				if((timeinhour1 <= 10 && timeouthour1 <= 18) || (timeinhour1 >= timeouthour1))//night diff needs reconfiguration
+				console.log("nightdiffBool: "+ nightdiffBool);
+				if(nightdiffBool == false && nightdiff == "")
+					nightdiffBool = true;
+
+				if(nightdiffBool && nightdiffMins != 0)
 				{
-					console.log("ND")
-					var NDin;
-					var NDout;
-					var workhrs;
-					var temp = null;
-					
-
-					
-
-					console.log()
-					if(timeinhour1 >= timeouthour1)
-						temp = timeinhour1 - 12;
-
-					// If employee only exceeded the nightdiff by minutes
-					if(timeouthour1 == 10 && timeoutmin1 != 0)
-					{
-						nightdiffMins = timeoutmin1;
-						nightdiffBool = true;
-					}
-					//Possibility 1: if 10pm is in before lunch
-					else if(timeinhour1 <= 10 || temp)
-					{
-						if(timeouthour1 >= 18)//If timein encapsulated all of the night diff
-						{
-							if(timeinhour1 > timeouthour1)
-								NDin = temp - 10;
-							else
-								NDin = timeinhour1 - 10;
-							
-							NDout1 = timeouthour1 - 18;
-
-							if(timeinhour1 > timeouthour1)
-								workhrs = temp - timeouthour1;
-							else
-								workhrs = timeinhour1 - timeouthour1;
-							
-							nightdiff = (Math.abs(NDin) + Math.abs(NDout1)) - Math.abs(workhrs);
-						}
-						else//the normal night diff
-						{
-							if(timeinhour1 > timeouthour1) {
-								workhrs1 = temp - timeouthour1;
-								NDin1 = temp - 10;
-							}
-							else {
-								workhrs1 = timeinhour1 - timeouthour1;
-								NDin1 = timeinhour1 - 10;
-							}
-
-
-							
-							nightdiff1 = Math.abs(NDin1) - Math.abs(workhrs1);
-							nightdiff = nightdiff1;
-							
-							nightdiff = Math.abs(nightdiff);
-						}
-						
-					}
-						
-					
-					if(Number.isInteger(nightdiff))
-					{
-					   	nightdiff = Math.abs(nightdiff);		
-					}
+						row.querySelector('.nightdiff').value = nightdiffMins + "mins";
+						row.querySelector('.nightdiffH').value = nightdiffMins + "mins";
 				}
-			}
-			console.log("nightdiffBool: "+ nightdiffBool);
-			if(nightdiffBool == false && nightdiff == "")
-				nightdiffBool = true;
-
-			if(nightdiffBool && nightdiffMins != 0)
-			{
-					row.querySelector('.nightdiff').value = nightdiffMins + "mins";
-					row.querySelector('.nightdiffH').value = nightdiffMins + "mins";
-			}
-			else if(nightdiff != "")
-			{
-				if(nightdiffMins != 0)
+				else if(nightdiff != "")
 				{
-					console.log("dito pala");
-					row.querySelector('.nightdiff').value = nightdiff + " hrs, " + nightdiffMins + "mins";
-					row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + nightdiffMins + "mins";
+					if(nightdiffMins != 0)
+					{
+						console.log("dito pala");
+						row.querySelector('.nightdiff').value = nightdiff + " hrs, " + nightdiffMins + "mins";
+						row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + nightdiffMins + "mins";
+					}
+					else
+					{
+						row.querySelector('.nightdiff').value = nightdiff + " hrs";
+						row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+					}
 				}
 				else
 				{
-					row.querySelector('.nightdiff').value = nightdiff + " hrs";
-					row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+					
+					row.querySelector('.nightdiff').value = "";
+					row.querySelector('.nightdiffH').value = "";
 				}
 			}
-			else
-			{
 				
-				row.querySelector('.nightdiff').value = "";
-				row.querySelector('.nightdiffH').value = "";
-			}
 			
 			// If absent was initially placed, changed to success
 			if(row.classList.contains('danger'))
@@ -1776,6 +1793,8 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 {
 	var originalMins;
 	row.querySelector('.attendance').value = "";
+
+	var isSunday = document.getElementById('isSunday') ? true : false; 
 
 	// Verifies that time in and time out input fields have value
 	if(timeinhour1 && timeouthour1 && timeinhour2 && timeouthour2 && timeinhour3 && timeouthour3)
@@ -2198,28 +2217,32 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				row.querySelector('.workinghoursH').value = workinghours + " hrs, " + workingmins + " mins";
 			}
 
-		// OVERTIME if Working Hours exceed 8
-			if(workinghours > 8 && workingmins == 0)
+			if(!isSunday)
 			{
-				row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs";
-				row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs";
-			}
-			else if(workinghours == 8 && workingmins != 0)
-			{
-				row.querySelector('.overtime').value = workingmins + " mins";
-				row.querySelector('.overtimeH').value = workingmins + " mins";
-			}
-			else if (workinghours > 8)
-			{
-				row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
-				row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
-			}
-			else
-			{
-				row.querySelector('.overtime').value = "";
-				row.querySelector('.overtimeH').value = "";
-			}
+				// OVERTIME if Working Hours exceed 8
+				if(workinghours > 8 && workingmins == 0)
+				{
+					row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs";
+					row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs";
+				}
+				else if(workinghours == 8 && workingmins != 0)
+				{
+					row.querySelector('.overtime').value = workingmins + " mins";
+					row.querySelector('.overtimeH').value = workingmins + " mins";
+				}
+				else if (workinghours > 8)
+				{
+					row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
+					row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
+				}
+				else
+				{
+					row.querySelector('.overtime').value = "";
+					row.querySelector('.overtimeH').value = "";
+				}
 
+			}
+			
 		// UNDERTIME if Working Hours don't reach 8
 			if(workinghours < 8 && workingmins == 0)
 			{
@@ -2282,200 +2305,203 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			var time3 = 0;
 
 			var nightdiffMins = originalMins;
-
-			if ((timeinhour1 <= 22 && timeouthour1 >= 22) ||// pos1 ~ 6
-				(timeinhour1 <= 22 && timeouthour1 <= 6) ||// pos7 ~ 8
-				(timeinhour2 <= 22 && timeouthour2 >= 22) ||// pos9 ~ 10
-				(timeinhour2 <= 22 && timeouthour2 <= 6) ||// pos 11 ~ 12
-				(timeinhour3 <= 22 && timeouthour3 >= 22) ||// pos 13
-				(timeinhour3 <= 22 && timeouthour3 <= 6) ||
-				(timeouthour1 == 22 && timeoutmin1 != 0) ||
-				(timeouthour2 == 22 && timeoutmin2 != 0) ||
-				(timeouthour3 == 22 && timeoutmin3 != 0))// pos 14
+			if(!isSunday)
 			{
-				console.log("Nightdiff3");
-				var nightdiffBool = false;
-
-				if(timeouthour1 == 22 && timeoutmin1 != 0)
+				if ((timeinhour1 <= 22 && timeouthour1 >= 22) ||// pos1 ~ 6
+					(timeinhour1 <= 22 && timeouthour1 <= 6) ||// pos7 ~ 8
+					(timeinhour2 <= 22 && timeouthour2 >= 22) ||// pos9 ~ 10
+					(timeinhour2 <= 22 && timeouthour2 <= 6) ||// pos 11 ~ 12
+					(timeinhour3 <= 22 && timeouthour3 >= 22) ||// pos 13
+					(timeinhour3 <= 22 && timeouthour3 <= 6) ||
+					(timeouthour1 == 22 && timeoutmin1 != 0) ||
+					(timeouthour2 == 22 && timeoutmin2 != 0) ||
+					(timeouthour3 == 22 && timeoutmin3 != 0))// pos 14
 				{
-					nightdiffMins = timeoutmin1;
-					nightdiffBool = true;
-				}
-				else if(timeouthour2 == 22 && timeoutmin2 != 0)
-				{
-					nightdiffMins = timeoutmin2;
-					nightdiffBool = true;
-				}
-				else if(timeouthour3 == 22 && timeoutmin3 != 0)	
-				{
-					nightdiffMins = timeoutmin3;
-					nightdiffBool = true;
-				}
-				if(timeinhour1 <= 22 && timeouthour1 >= 22)// pos1 ~ 6
-				{
-					nightdiffBool = false;
-					if((timeinhour2 >= 1 && timeouthour2 <= 6) && (timeinhour3 >= 1 && timeouthour3 <= 6))// pos 1
-					{
-						time1 = timeouthour1 - 22;
-						time2 = timeinhour2 - timeouthour2;
-						time3 = timeinhour3 - timeouthour3;
-						nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
-					}
-					else if((timeinhour2 >= 1 && timeouthour2 <= 6) && (timeinhour3 <= 6 && timeouthour3 >= 6))// pos 2
-					{
-						time1 = timeouthour1 - 22;
-						time2 = timeinhour2 - timeouthour2;
-						time3 = timeinhour3 - 6;
-						nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
-					}
-					else if((timeinhour2 >= 22 && timeouthour2 <= 6) && (timeinhour3 >= 1 && timeouthour3 <= 6))// pos 3
-					{
-						time1 = timeouthour1 - 22;
+					console.log("Nightdiff3");
+					var nightdiffBool = false;
 
-						var time2n1 = timeinhour2 - 24;
-						time2 = Math.abs(time2n1) + timeouthour2;
-
-						time3 = timeinhour3 - timeouthour3;
-						nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
-					}
-					else if((timeinhour2 >= 22 && timeouthour2 <= 6) && (timeinhour3 <= 6 && timeouthour3 >= 6))// pos 4
+					if(timeouthour1 == 22 && timeoutmin1 != 0)
 					{
-						time1 = timeouthour1 - 22;
-
-						var time2n1 = timeinhour2 - 24;
-						time2 = Math.abs(time2n1) + timeouthour2;
-
-						time3 = timeinhour3 - 6;
-						nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
+						nightdiffMins = timeoutmin1;
+						nightdiffBool = true;
 					}
-					else if((timeinhour2 >= 1 && timeouthour2 <= 6) && timeinhour3 >= 6)// pos 5
+					else if(timeouthour2 == 22 && timeoutmin2 != 0)
 					{
-						time1 = timeouthour1 - 22;
-						time2 = timeinhour2 - timeouthour2;
-						nightdiff = Math.abs(time1) + Math.abs(time2);
+						nightdiffMins = timeoutmin2;
+						nightdiffBool = true;
 					}
-					else// pos 6 -- 1st time is the only one inside nightdiff time
+					else if(timeouthour3 == 22 && timeoutmin3 != 0)	
 					{
-						time1 = timeouthour1 - 22;
-						nightdiff = Math.abs(time1);
+						nightdiffMins = timeoutmin3;
+						nightdiffBool = true;
 					}
+					if(timeinhour1 <= 22 && timeouthour1 >= 22)// pos1 ~ 6
+					{
+						nightdiffBool = false;
+						if((timeinhour2 >= 1 && timeouthour2 <= 6) && (timeinhour3 >= 1 && timeouthour3 <= 6))// pos 1
+						{
+							time1 = timeouthour1 - 22;
+							time2 = timeinhour2 - timeouthour2;
+							time3 = timeinhour3 - timeouthour3;
+							nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
+						}
+						else if((timeinhour2 >= 1 && timeouthour2 <= 6) && (timeinhour3 <= 6 && timeouthour3 >= 6))// pos 2
+						{
+							time1 = timeouthour1 - 22;
+							time2 = timeinhour2 - timeouthour2;
+							time3 = timeinhour3 - 6;
+							nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
+						}
+						else if((timeinhour2 >= 22 && timeouthour2 <= 6) && (timeinhour3 >= 1 && timeouthour3 <= 6))// pos 3
+						{
+							time1 = timeouthour1 - 22;
 
-				}
-				else if(timeinhour1 <= 22 && timeouthour1 <= 6)// pos7 ~ 8
-				{
-					nightdiffBool = false;
-					if((timeinhour2 >= 1 && timeouthour2 <= 6) && timeinhour3 > 6)// pos 7
-					{
-						var time1n1 = 24 - 22; //because in this possibility the time in is before 10 and will last until the next day.
-						time1 = Math.abs(time1n1) + timeouthour1;
+							var time2n1 = timeinhour2 - 24;
+							time2 = Math.abs(time2n1) + timeouthour2;
 
-						time2 = timeinhour2 - timeouthour2;
-						nightdiff = Math.abs(time1) + Math.abs(time2);
-					}
-					else if((timeinhour2 >= 1 && timeouthour2 <= 6) && (timeinhour3 <= 6 && timeouthour3 >= 6))// pos 8
-					{
-						var time1n1 = 24 - 22; //because in this possibility the time in is before 10 and will last until the next day.
-						time1 = Math.abs(time1n1) + timeouthour1;
+							time3 = timeinhour3 - timeouthour3;
+							nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
+						}
+						else if((timeinhour2 >= 22 && timeouthour2 <= 6) && (timeinhour3 <= 6 && timeouthour3 >= 6))// pos 4
+						{
+							time1 = timeouthour1 - 22;
 
-						time2 = timeinhour2 - timeouthour2;
-						time3 = timeinhour3 - 6;
-						nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
-					}
-				}
-				else if(timeinhour2 <= 22 && timeouthour2 >= 22)// pos9 ~ 10
-				{
-					nightdiffBool = false;
-					if(timeinhour3 >= 1 && timeouthour3 <= 6) // pos 9
-					{
-						time2 = timeouthour2 - 22;
-						time3 = timeinhour3 - timeouthour3;
-						nightdiff = Math.abs(time2) + Math.abs(time3);
-					}
-					else // pos 10
-					{
-						time2 = timeouthour2 - 22;
-						nightdiff = Math.abs(time2);
-					}
-				}
-				else if(timeinhour2 <= 22 && timeouthour2 <= 6)// pos 11 ~ 12
-				{
-					nightdiffBool = false;
-					if(timeinhour3 <= 6 && timeouthour3 >= 6)// pos 11
-					{
-						var time2n1 = 24 - 22; //because in this possibility the time in is before 10 and will last until the next day.
-						time2 = Math.abs(time2n1) + timeouthour2;;
+							var time2n1 = timeinhour2 - 24;
+							time2 = Math.abs(time2n1) + timeouthour2;
 
-						time3 = timeinhour3 - 6;
-						nightdiff = Math.abs(time2) + Math.abs(time3);
+							time3 = timeinhour3 - 6;
+							nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
+						}
+						else if((timeinhour2 >= 1 && timeouthour2 <= 6) && timeinhour3 >= 6)// pos 5
+						{
+							time1 = timeouthour1 - 22;
+							time2 = timeinhour2 - timeouthour2;
+							nightdiff = Math.abs(time1) + Math.abs(time2);
+						}
+						else// pos 6 -- 1st time is the only one inside nightdiff time
+						{
+							time1 = timeouthour1 - 22;
+							nightdiff = Math.abs(time1);
+						}
+
 					}
-					else if(timeinhour3 >= 1 && timeouthour3 <= 6)// pos 12
+					else if(timeinhour1 <= 22 && timeouthour1 <= 6)// pos7 ~ 8
 					{
-						var time2n1 = 24 - 22; //because in this possibility the time in is before 10 and will last until the next day.
-						time2 = Math.abs(time2n1) + timeouthour2;;
+						nightdiffBool = false;
+						if((timeinhour2 >= 1 && timeouthour2 <= 6) && timeinhour3 > 6)// pos 7
+						{
+							var time1n1 = 24 - 22; //because in this possibility the time in is before 10 and will last until the next day.
+							time1 = Math.abs(time1n1) + timeouthour1;
 
-						time3 = timeinhour3 - timeouthour3;
-						nightdiff = Math.abs(time2) + Math.abs(time3);
+							time2 = timeinhour2 - timeouthour2;
+							nightdiff = Math.abs(time1) + Math.abs(time2);
+						}
+						else if((timeinhour2 >= 1 && timeouthour2 <= 6) && (timeinhour3 <= 6 && timeouthour3 >= 6))// pos 8
+						{
+							var time1n1 = 24 - 22; //because in this possibility the time in is before 10 and will last until the next day.
+							time1 = Math.abs(time1n1) + timeouthour1;
+
+							time2 = timeinhour2 - timeouthour2;
+							time3 = timeinhour3 - 6;
+							nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
+						}
 					}
-				}
-				else if(timeinhour3 <= 22 && timeouthour3 >= 22)// pos 13
-				{
-					nightdiffBool = false;
-					time3 = timeouthour3 - 22;
-					nightdiff = Math.abs(time3);
-				}
-				else if(timeinhour3 <= 22 && timeouthour3 <= 6)// pos 14
-				{
-					nightdiffBool = false;
-					var time3n1 = 24 - 22; //because in this possibility the time in is before 10 and will last until the next day.
-					time3 = Math.abs(time3n1) + timeouthour3;
+					else if(timeinhour2 <= 22 && timeouthour2 >= 22)// pos9 ~ 10
+					{
+						nightdiffBool = false;
+						if(timeinhour3 >= 1 && timeouthour3 <= 6) // pos 9
+						{
+							time2 = timeouthour2 - 22;
+							time3 = timeinhour3 - timeouthour3;
+							nightdiff = Math.abs(time2) + Math.abs(time3);
+						}
+						else // pos 10
+						{
+							time2 = timeouthour2 - 22;
+							nightdiff = Math.abs(time2);
+						}
+					}
+					else if(timeinhour2 <= 22 && timeouthour2 <= 6)// pos 11 ~ 12
+					{
+						nightdiffBool = false;
+						if(timeinhour3 <= 6 && timeouthour3 >= 6)// pos 11
+						{
+							var time2n1 = 24 - 22; //because in this possibility the time in is before 10 and will last until the next day.
+							time2 = Math.abs(time2n1) + timeouthour2;;
 
-					nightdiff = Math.abs(time3);
+							time3 = timeinhour3 - 6;
+							nightdiff = Math.abs(time2) + Math.abs(time3);
+						}
+						else if(timeinhour3 >= 1 && timeouthour3 <= 6)// pos 12
+						{
+							var time2n1 = 24 - 22; //because in this possibility the time in is before 10 and will last until the next day.
+							time2 = Math.abs(time2n1) + timeouthour2;;
+
+							time3 = timeinhour3 - timeouthour3;
+							nightdiff = Math.abs(time2) + Math.abs(time3);
+						}
+					}
+					else if(timeinhour3 <= 22 && timeouthour3 >= 22)// pos 13
+					{
+						nightdiffBool = false;
+						time3 = timeouthour3 - 22;
+						nightdiff = Math.abs(time3);
+					}
+					else if(timeinhour3 <= 22 && timeouthour3 <= 6)// pos 14
+					{
+						nightdiffBool = false;
+						var time3n1 = 24 - 22; //because in this possibility the time in is before 10 and will last until the next day.
+						time3 = Math.abs(time3n1) + timeouthour3;
+
+						nightdiff = Math.abs(time3);
+					}
+					else
+					{
+						nightdiff = "";
+					}
 				}
 				else
 				{
 					nightdiff = "";
 				}
-			}
-			else
-			{
-				nightdiff = "";
-			}
 
-			if(Number.isInteger(nightdiff))
-			{
-			   	nightdiff = Math.abs(nightdiff);		
-			}
-
-			if(nightdiffBool == false && nightdiff == "")
-				nightdiffBool = true;
-
-			if(nightdiffBool && nightdiffMins != 0)
-			{
-				row.querySelector('.nightdiff').value = nightdiffMins + "mins";
-				row.querySelector('.nightdiffH').value = nightdiffMins + "mins";
-			}
-			else if(nightdiff != "")
-			{
-				console.log("1");
-				if(nightdiffMins != 0)
+				if(Number.isInteger(nightdiff))
 				{
-						console.log("2");
-					row.querySelector('.nightdiff').value = nightdiff + " hrs, " + nightdiffMins + "mins";
-					row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + nightdiffMins + "mins";
+				   	nightdiff = Math.abs(nightdiff);		
+				}
+
+				if(nightdiffBool == false && nightdiff == "")
+					nightdiffBool = true;
+
+				if(nightdiffBool && nightdiffMins != 0)
+				{
+					row.querySelector('.nightdiff').value = nightdiffMins + "mins";
+					row.querySelector('.nightdiffH').value = nightdiffMins + "mins";
+				}
+				else if(nightdiff != "")
+				{
+					console.log("1");
+					if(nightdiffMins != 0)
+					{
+							console.log("2");
+						row.querySelector('.nightdiff').value = nightdiff + " hrs, " + nightdiffMins + "mins";
+						row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + nightdiffMins + "mins";
+					}
+					else
+					{
+							console.log("3");
+						row.querySelector('.nightdiff').value = nightdiff + " hrs";
+						row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+					}
 				}
 				else
 				{
-						console.log("3");
-					row.querySelector('.nightdiff').value = nightdiff + " hrs";
-					row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+						console.log("4");
+					row.querySelector('.nightdiff').value = "";
+					row.querySelector('.nightdiffH').value = "";
 				}
 			}
-			else
-			{
-					console.log("4");
-				row.querySelector('.nightdiff').value = "";
-				row.querySelector('.nightdiffH').value = "";
-			}
+				
 			
 			
 			// If absent was initially placed, changed to success
@@ -2921,22 +2947,26 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				row.querySelector('.workinghours').value = workinghours + " hrs, " + workingmins + " mins";	
 				row.querySelector('.workinghoursH').value = workinghours + " hrs, " + workingmins + " mins";	
 			}
-		// OVERTIME if Working Hours exceed 8
-			if(workinghours > 8 && workingmins == 0)
+			if(isSunday)
 			{
-				row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs";
-				row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs";
+				// OVERTIME if Working Hours exceed 8
+				if(workinghours > 8 && workingmins == 0)
+				{
+					row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs";
+					row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs";
+				}
+				else if (workinghours > 8)
+				{
+					row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
+					row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
+				}
+				else
+				{
+					row.querySelector('.overtime').value = "";
+					row.querySelector('.overtimeH').value = "";
+				}
 			}
-			else if (workinghours > 8)
-			{
-				row.querySelector('.overtime').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
-				row.querySelector('.overtimeH').value = Math.abs(workinghours - 8) + " hrs, " + workingmins + " mins";
-			}
-			else
-			{
-				row.querySelector('.overtime').value = "";
-				row.querySelector('.overtimeH').value = "";
-			}
+			
 
 		// UNDERTIME if Working Hours don't reach 8
 			if(workinghours < 8 && workingmins == 0)
@@ -2974,180 +3004,184 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			var time1 = 0;
 			var time2 = 0;
 			var time3 = 0;
-
-			if ((timeinhour1 <= 10 && timeouthour1 >= 10) ||// pos1 ~ 6
-				(timeinhour1 <= 10 && timeouthour1 <= 18) ||// pos7 ~ 8
-				(timeinhour2 <= 10 && timeouthour2 >= 10) ||// pos9 ~ 10
-				(timeinhour2 <= 10 && timeouthour2 <= 18) ||// pos 11 ~ 12
-				(timeinhour3 <= 10 && timeouthour3 >= 10) ||// pos 13
-				(timeinhour3 <= 10 && timeouthour3 <= 18) ||
-				(timeouthour1 == 10 && timeoutmin1 != 0) ||
-				(timeouthour2 == 10 && timeoutmin2 != 0) ||
-				(timeouthour3 == 10 && timeoutmin3 != 0))// pos 14
+			
+			if(isSunday)
 			{
-				var nightdiffBool = false;//boolean if ND is just minutes
+				if ((timeinhour1 <= 10 && timeouthour1 >= 10) ||// pos1 ~ 6
+					(timeinhour1 <= 10 && timeouthour1 <= 18) ||// pos7 ~ 8
+					(timeinhour2 <= 10 && timeouthour2 >= 10) ||// pos9 ~ 10
+					(timeinhour2 <= 10 && timeouthour2 <= 18) ||// pos 11 ~ 12
+					(timeinhour3 <= 10 && timeouthour3 >= 10) ||// pos 13
+					(timeinhour3 <= 10 && timeouthour3 <= 18) ||
+					(timeouthour1 == 10 && timeoutmin1 != 0) ||
+					(timeouthour2 == 10 && timeoutmin2 != 0) ||
+					(timeouthour3 == 10 && timeoutmin3 != 0))// pos 14
+				{
+					var nightdiffBool = false;//boolean if ND is just minutes
 
-				if(timeouthour1 == 10 && timeoutmin1 != 0)
-				{
-					nightdiffMins = timeoutmin1;
-					nightdiffBool = true;
-				}
-				else if(timeouthour2 == 10 && timeoutmin2 != 0)
-				{
-					nightdiffMins = timeoutmin2;
-					nightdiffBool = true;
-				}
-				else if(timeouthour3 == 10 && timeoutmin3 != 0)
-				{
-					nightdiffMins = timeoutmin3;
-					nightdiffBool = true;
-				}
-				else if((timeinhour1 <= 10 && timeouthour1 >= 10) && timeouthour1 <= 12)// pos1 ~ 6
-				{
-					nightdiffBool = false;
-					if((timeinhour2 >= 12 && timeouthour2 <= 18) && (timeinhour3 >= 12 && timeouthour3 <= 18))// pos 1
+					if(timeouthour1 == 10 && timeoutmin1 != 0)
 					{
-						time1 = timeouthour1 - 10;
-						time2 = timeinhour2 - timeouthour2;
-						time3 = timeinhour3 - timeouthour3;
-						nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
+						nightdiffMins = timeoutmin1;
+						nightdiffBool = true;
 					}
-					else if((timeinhour2 >= 12 && timeouthour2 <= 18) && (timeinhour3 <= 18 && timeouthour3 >= 18))// pos 2
+					else if(timeouthour2 == 10 && timeoutmin2 != 0)
 					{
-						time1 = timeouthour1 - 10;
-						time2 = timeinhour2 - timeouthour2;
-						time3 = timeinhour3 - 18;
-						nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
+						nightdiffMins = timeoutmin2;
+						nightdiffBool = true;
 					}
-					if((timeinhour2 >= 10 && timeouthour2 <= 18) && (timeinhour3 >= 12 && timeouthour3 <= 18))// pos 3
+					else if(timeouthour3 == 10 && timeoutmin3 != 0)
 					{
-						time1 = timeouthour1 - 10;
-						time2 = timeinhour2 - timeouthour2;
-						time3 = timeinhour3 - timeouthour3;
-						nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
+						nightdiffMins = timeoutmin3;
+						nightdiffBool = true;
 					}
-					else if((timeinhour2 >= 10 && timeouthour2 <= 18) && (timeinhour3 <= 18 && timeouthour3 >= 18))// pos 4
+					else if((timeinhour1 <= 10 && timeouthour1 >= 10) && timeouthour1 <= 12)// pos1 ~ 6
 					{
-						time1 = timeouthour1 - 10;
-						time2 = timeinhour2 - timeouthour2;
-						time3 = timeinhour3 - 18;
-						nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
-					}
-					else if((timeinhour2 >= 12 && timeouthour2 <= 18) && timeinhour3 >= 18)// pos 5
-					{
-						time1 = timeouthour1 - 10;
-						time2 = timeinhour2 - timeouthour2;
-						nightdiff = Math.abs(time1) + Math.abs(time2);
-					}
-					else// pos 6 -- 1st time is the only one inside nightdiff time
-					{
-						time1 = timeouthour1 - 10;
-						nightdiff = Math.abs(time1);
-					}
+						nightdiffBool = false;
+						if((timeinhour2 >= 12 && timeouthour2 <= 18) && (timeinhour3 >= 12 && timeouthour3 <= 18))// pos 1
+						{
+							time1 = timeouthour1 - 10;
+							time2 = timeinhour2 - timeouthour2;
+							time3 = timeinhour3 - timeouthour3;
+							nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
+						}
+						else if((timeinhour2 >= 12 && timeouthour2 <= 18) && (timeinhour3 <= 18 && timeouthour3 >= 18))// pos 2
+						{
+							time1 = timeouthour1 - 10;
+							time2 = timeinhour2 - timeouthour2;
+							time3 = timeinhour3 - 18;
+							nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
+						}
+						if((timeinhour2 >= 10 && timeouthour2 <= 18) && (timeinhour3 >= 12 && timeouthour3 <= 18))// pos 3
+						{
+							time1 = timeouthour1 - 10;
+							time2 = timeinhour2 - timeouthour2;
+							time3 = timeinhour3 - timeouthour3;
+							nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
+						}
+						else if((timeinhour2 >= 10 && timeouthour2 <= 18) && (timeinhour3 <= 18 && timeouthour3 >= 18))// pos 4
+						{
+							time1 = timeouthour1 - 10;
+							time2 = timeinhour2 - timeouthour2;
+							time3 = timeinhour3 - 18;
+							nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
+						}
+						else if((timeinhour2 >= 12 && timeouthour2 <= 18) && timeinhour3 >= 18)// pos 5
+						{
+							time1 = timeouthour1 - 10;
+							time2 = timeinhour2 - timeouthour2;
+							nightdiff = Math.abs(time1) + Math.abs(time2);
+						}
+						else// pos 6 -- 1st time is the only one inside nightdiff time
+						{
+							time1 = timeouthour1 - 10;
+							nightdiff = Math.abs(time1);
+						}
 
-				}
-				else if(timeinhour1 <= 10 && timeouthour1 >= 10)// pos7 ~ 8
-				{
-					nightdiffBool = false;
-					if((timeinhour2 >= 12 && timeouthour2 <= 18) && timeinhour3 > 18)// pos 7
-					{
-						time1 = 10 - timeouthour1;
-						time2 = timeinhour2 - timeouthour2;
-						nightdiff = Math.abs(time1) + Math.abs(time2);
 					}
-					else if((timeinhour2 >= 12 && timeouthour2 <= 18) && (timeinhour3 <= 18 && timeouthour3 >= 18))// pos 8
+					else if(timeinhour1 <= 10 && timeouthour1 >= 10)// pos7 ~ 8
 					{
-						time1 = 10 - timeouthour1;
-						time2 = timeinhour2 - timeouthour2;
-						time3 = timeinhour3 - 18;
-						nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
+						nightdiffBool = false;
+						if((timeinhour2 >= 12 && timeouthour2 <= 18) && timeinhour3 > 18)// pos 7
+						{
+							time1 = 10 - timeouthour1;
+							time2 = timeinhour2 - timeouthour2;
+							nightdiff = Math.abs(time1) + Math.abs(time2);
+						}
+						else if((timeinhour2 >= 12 && timeouthour2 <= 18) && (timeinhour3 <= 18 && timeouthour3 >= 18))// pos 8
+						{
+							time1 = 10 - timeouthour1;
+							time2 = timeinhour2 - timeouthour2;
+							time3 = timeinhour3 - 18;
+							nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
+						}
 					}
-				}
-				else if(timeinhour2 <= 10 && timeouthour2 >= 10)// pos9 ~ 10
-				{
-					nightdiffBool = false;
-					if(timeinhour3 >= 12 && timeouthour3 <= 18) // pos 9
+					else if(timeinhour2 <= 10 && timeouthour2 >= 10)// pos9 ~ 10
 					{
-						time2 = timeouthour2 - 10;
-						time3 = timeinhour3 - timeouthour3;
-						nightdiff = Math.abs(time2) + Math.abs(time3);
+						nightdiffBool = false;
+						if(timeinhour3 >= 12 && timeouthour3 <= 18) // pos 9
+						{
+							time2 = timeouthour2 - 10;
+							time3 = timeinhour3 - timeouthour3;
+							nightdiff = Math.abs(time2) + Math.abs(time3);
+						}
+						else // pos 10
+						{
+							time2 = timeouthour2 - 10;
+							nightdiff = Math.abs(time2);
+						}
 					}
-					else // pos 10
+					else if((timeinhour2 <= 10 && timeouthour2 >= 10) && timeouthour2 >= 12)// pos 11 ~ 12
 					{
-						time2 = timeouthour2 - 10;
-						nightdiff = Math.abs(time2);
+						nightdiffBool = false;
+						if(timeinhour3 <= 18 && timeouthour3 >= 18)// pos 11
+						{
+							time2 = 10 - timeouthour2;
+							time3 = timeinhour3 - 18;
+							nightdiff = Math.abs(time2) + Math.abs(time3);
+						}
+						else if(timeinhour3 >= 12 && timeouthour3 <= 18)// pos 12
+						{
+							time2 = 10 - timeouthour2;
+							time3 = timeinhour3 - timeouthour3;
+							nightdiff = Math.abs(time2) + Math.abs(time3);
+						}
 					}
-				}
-				else if((timeinhour2 <= 10 && timeouthour2 >= 10) && timeouthour2 >= 12)// pos 11 ~ 12
-				{
-					nightdiffBool = false;
-					if(timeinhour3 <= 18 && timeouthour3 >= 18)// pos 11
+					else if(timeinhour3 <= 10 && timeouthour3 >= 10)// pos 13
 					{
-						time2 = 10 - timeouthour2;
-						time3 = timeinhour3 - 18;
-						nightdiff = Math.abs(time2) + Math.abs(time3);
+						nightdiffBool = false;
+						time3 = timeouthour3 - 10;
+						nightdiff = Math.abs(time3);
 					}
-					else if(timeinhour3 >= 12 && timeouthour3 <= 18)// pos 12
+					else if(timeinhour3 <= 10 && timeouthour3 <= 18)// pos 14
 					{
-						time2 = 10 - timeouthour2;
-						time3 = timeinhour3 - timeouthour3;
-						nightdiff = Math.abs(time2) + Math.abs(time3);
+						nightdiffBool = false;
+						time3 = 10 - timeouthour3;
+						nightdiff = Math.abs(time3);
 					}
-				}
-				else if(timeinhour3 <= 10 && timeouthour3 >= 10)// pos 13
-				{
-					nightdiffBool = false;
-					time3 = timeouthour3 - 10;
-					nightdiff = Math.abs(time3);
-				}
-				else if(timeinhour3 <= 10 && timeouthour3 <= 18)// pos 14
-				{
-					nightdiffBool = false;
-					time3 = 10 - timeouthour3;
-					nightdiff = Math.abs(time3);
+					else
+					{
+						nightdiff = "";
+					}
 				}
 				else
 				{
 					nightdiff = "";
 				}
-			}
-			else
-			{
-				nightdiff = "";
-			}
 
-			if(Number.isInteger(nightdiff))
-			{
-			   	nightdiff = Math.abs(nightdiff);		
-			}
-
-			if(nightdiffBool == false && nightdiff == 0)//if nightdiff is zero 
-				nightdiffBool = true;
-
-			if(nightdiffBool && nightdiffMins != 0)
-			{
-				row.querySelector('.nightdiff').value = originalMins + "mins";
-				row.querySelector('.nightdiffH').value = originalMins + "mins";
-			}
-			else if(nightdiff != "")
-			{
-				if(originalMins != 0)
+				if(Number.isInteger(nightdiff))
 				{
-					row.querySelector('.nightdiff').value = nightdiff + " hrs, " + originalMins + "mins";
-					row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + originalMins + "mins";
+				   	nightdiff = Math.abs(nightdiff);		
+				}
+
+				if(nightdiffBool == false && nightdiff == 0)//if nightdiff is zero 
+					nightdiffBool = true;
+
+				if(nightdiffBool && nightdiffMins != 0)
+				{
+					row.querySelector('.nightdiff').value = originalMins + "mins";
+					row.querySelector('.nightdiffH').value = originalMins + "mins";
+				}
+				else if(nightdiff != "")
+				{
+					if(originalMins != 0)
+					{
+						row.querySelector('.nightdiff').value = nightdiff + " hrs, " + originalMins + "mins";
+						row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + originalMins + "mins";
+					}
+					else
+					{
+						row.querySelector('.nightdiff').value = nightdiff + " hrs";
+						row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+					}
 				}
 				else
 				{
-					row.querySelector('.nightdiff').value = nightdiff + " hrs";
-					row.querySelector('.nightdiffH').value = nightdiff + " hrs";
+					
+					row.querySelector('.nightdiff').value = "";
+					row.querySelector('.nightdiffH').value = "";
 				}
 			}
-			else
-			{
 				
-				row.querySelector('.nightdiff').value = "";
-				row.querySelector('.nightdiffH').value = "";
-			}
 
 			
 			// If absent was initially placed, changed to success
