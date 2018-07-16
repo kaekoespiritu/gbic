@@ -573,7 +573,8 @@
 //Tools Computation -------------------------------------------------------------------
 	$tools_paid = 0;
 	$outStandingBalance = 0;
-	if(!empty($_POST['toolname'][0]))
+
+	if(!empty($_POST['toolname'][0])) // If there are more than 1 tools saved
 	{
 		$toolNum = count($_POST['toolname']);
 		
@@ -581,12 +582,13 @@
 		$BoolTool = false; //Boolean to if there is more than 2 tools
 		if($toolNum > 1)
 		{
-			$toolQuery = "INSERT INTO tools(empid, tools, cost, date) VALUES";
+			$toolQuery = "INSERT INTO tools(empid, tools, cost, quantity, date) VALUES";
 			for($counter = 0; $counter < $toolNum; $counter++)
 			{
 				$toolname = $_POST['toolname'][$counter];
 				$toolprice = $_POST['toolprice'][$counter];
-				$totalToolCost += $toolprice;//gets the total tool cost
+				$toolquantity = $_POST['toolquantity'][$counter];
+				$totalToolCost += ($toolprice * $toolquantity);//gets the total tool cost
 
 				if($toolQuery != "INSERT INTO tools(empid, tools, cost, date) VALUES")
 				{
@@ -595,6 +597,7 @@
 				$toolQuery .= "('$empid',
 								'$toolname',
 								'$toolprice',
+								'$toolquantity',
 								'$date')"; 
 			}
 			if(!empty($_POST['previousPayable']))
@@ -612,31 +615,32 @@
 				$outStandingBalance = abs($outStandingBalance);
 			}
 		}
-		else if(!empty($_POST['toolprice'][0]) && !empty($_POST['toolname'][0]))
+		else if(!empty($_POST['toolprice'][0]) && !empty($_POST['toolname'][0]) && !empty($_POST['toolquantity'][0]))// If there is only one tool saved
 		{
 			$toolname = $_POST['toolname'][0];
 			$toolprice = $_POST['toolprice'][0];
-
+			$toolquantity = $_POST['toolquantity'][0];
+			Print "<script>console.log('toolquantity: ".$toolquantity."')</script>";
 			if(!empty($_POST['previousPayable']))
 			{
 				//Gets the new Previous payable
 				if(($_POST['previousPayable'] + $toolprice) != $_POST['amountToPay'])
 				{
-					$outStandingBalance = ($_POST['previousPayable'] + $toolprice) - $_POST['amountToPay'];
+					$outStandingBalance = ($_POST['previousPayable'] + ($toolprice * $toolquantity)) - $_POST['amountToPay'];
 					$outStandingBalance = abs($outStandingBalance);
 				}
 			}
 			else if($toolprice != $_POST['amountToPay'])
 			{
-				//Print "<script>alert('".$toolprice."')</script>";
-				$outStandingBalance = $toolprice - $_POST['amountToPay'];
-
+				$outStandingBalance = ($toolprice * $toolquantity) - $_POST['amountToPay'];
 				$outStandingBalance = abs($outStandingBalance);
 			}
-			$toolQuery = "INSERT INTO tools(empid, tools, cost, date) VALUES(	'$empid',
+			$toolQuery = "INSERT INTO tools(empid, tools, cost, quantity, date) VALUES(	'$empid',
 																				'$toolname',
 																				'$toolprice',
+																				'$toolquantity',
 																				'$date')"; 
+
 		}
 		else if(!empty($_POST['previousPayable']))// If admin did not have any tools but have outstanding balance
 		{
@@ -700,7 +704,6 @@
 
 	$totalLoans = $loan_pagibig + $loan_sss + $loan_oldVale + $loan_newVale;
 	Print "<script>console.log('toDB - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".abs($tools_paid)."')</script>";
-	// Print "<script>console.log('logic_payroll - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".$tools_paid."')</script>";
 	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($tools_paid);
 	$grandTotal = abs(numberExactFormat($grandTotal, 2, '.', false));
 
