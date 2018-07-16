@@ -366,7 +366,7 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 
 					<?php
 						$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $totalCola;
-							Print "<script>console.log('payroll_computation.php - totalRegularHolidayRate: ".abs($totalRegularHolidayRate)." | totalSpecialHolidayRate: ".abs($totalSpecialHolidayRate)." | totalSundayRate: ".abs($totalSundayRate)." | totalNightDifferential: ".$totalNightDifferential." | totalAllowance: ".$totalAllowance." | totalOvertime: ".$totalOvertime." | totalRatePerDay: ".$totalRatePerDay." | xAllowance: ".$xAllowance." | totalCola: ".$totalCola."')</script>";
+							Print "<script>console.log('payroll_computation.php - totalRegularHolidayRate: ".abs($totalRegularHolidayRate)." | totalSpecialHolidayRate: ".abs($totalSpecialHolidayRate)." | totalSundayRate: ".abs($totalSundayRate)." | totalNightDifferential: ".$totalNightDifferential." | totalAllowance: ".$totalAllowance." | totalOvertime: ".$totalOvertime." | totalRatePerDay: ".$totalRatePerDay." | xAllowance: ".$xAllowance." | totalCola: ".$totalCola. " | tools_quantity: ".$tools_quantity[0]."')</script>";"')</script>";
 
 					?>
 					<tr style="font-family: QuicksandMed;">
@@ -383,8 +383,8 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 			<table class='table'>
 				<thead>
 					<tr>
-						<th>Name</th>
-						<td colspan='3'></td>
+						<th colspan="3">Name</th>
+						<th>Quantity</th>
 						<th>Cost</th>
 					</tr>
 				</thead>
@@ -399,25 +399,18 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 				{
 					$tools ="SELECT * FROM tools WHERE empid = '$empid' AND date = '$date'";
 					$toolsQuery = mysql_query($tools);
-					
-					if(mysql_num_rows($toolsQuery) > 0)
+					$Notools = false;
+					while($toolArr = mysql_fetch_assoc($toolsQuery))
 					{
-						$Notools = false;
-						while($toolArr = mysql_fetch_assoc($toolsQuery))
-						{
-							$toolSubTotal += $toolArr['cost'];
-							Print "
-								<tr>
-									<td>".$toolArr['tools']."</td>
-									<td colspan='3'></td>
-									<td>".$toolArr['cost']."</td>
-								</tr>
-								";
-							//Print "<script>alert('".$toolArr['tools']."')</script>";
-						}
+						$toolSubTotal += $toolArr['cost'];
+						Print "
+							<tr>
+								<td colspan='3'>".$toolArr['tools']."</td>
+								<td>".$toolArr['quantity']."</td>
+								<td>".$toolArr['cost']."</td>
+							</tr>
+							";
 					}
-
-					
 				}
 				
 				if($Notools)
