@@ -25,7 +25,7 @@
 		var template ='<div class="col-md-4 col-lg-4">' +
 		'<input type="text" id="toolstemp" name="toolname[]" class="form-control input-sm" onchange="checkName(this)">' +
 		'</div>' +
-		'<div class="col-md-4 col-lg-4"><input type="number" id="pricetemp" name="toolprice[]" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">' +
+		'<div class="col-md-4 col-lg-4"><input id="pricetemp" name="toolprice[]" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">' +
 		'</div>' + 
 		'<div class="col-md-3 col-lg-3">' + 
 		'<input type="text" id="quantity" name="toolquantity[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">' +
