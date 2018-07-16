@@ -22,12 +22,13 @@
 		'</button>'+
 		'</div>';
 
-		var template = '<label class="control-label col-md-2 col-lg-2" for="tools">Name</label>' +
-		'<div class="col-md-4 col-lg-4">' +
+		var template ='<div class="col-md-4 col-lg-4">' +
 		'<input type="text" id="toolstemp" name="toolname[]" class="form-control input-sm" onchange="checkName(this)">' +
 		'</div>' +
-		'<label class="control-label col-md-1 col-lg-1" for="price">Cost</label>' +
 		'<div class="col-md-4 col-lg-4"><input type="number" id="pricetemp" name="toolprice[]" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">' +
+		'</div>' + 
+		'<div class="col-md-3 col-lg-3">' + 
+		'<input type="text" id="quantity" name="toolquantity[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">' +
 		'</div>';
 
 		div1.innerHTML = delLink + template;
@@ -175,6 +176,7 @@
 	var length = document.getElementsByName('toolname[]').length;
 	var toolprices = document.getElementsByName('toolprice[]');
 	var names = document.getElementsByName('toolname[]');
+	var quantity = document.getElementsByName('toolquantity[]');
 	var amountToPay = document.getElementById('amountToPay');
 
 	// For the first tool
@@ -201,7 +203,7 @@
 	if( length > 1 ) { // If there are many tools 
 		for(var i = 1; i < length; i++) {
 			if(toolprices[i].value!="") {
-				totalcost += parseFloat(toolprices[i].value);
+				totalcost += (parseFloat(toolprices[i].value) * parseInt(quantity[i].value));
 				
 				// Require name if there is an amount placed
 				names[i].setAttribute('required','');
@@ -225,10 +227,10 @@
 			}
 		}
 
-		totalcost += parseFloat(document.getElementById('price').value);
+		totalcost += (parseFloat(document.getElementById('price').value) * parseInt(document.getElementById('quantity').value));
 	}
 	else if(length == 1) { // If only 1 tool was entered
-		totalcost = parseFloat(document.getElementById('price').value);
+		totalcost += (parseFloat(document.getElementById('price').value) * parseInt(document.getElementById('quantity').value));
 	}
 
 	// Only allowing numbers and null to be displayed
