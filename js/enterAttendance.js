@@ -610,6 +610,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 
 			if(row.querySelector('.driver').value == '1')
 			{
+				console.log("driver");
 				if(Math.abs(checkTime1) >= 8)// if accumulated time is more than 8 hours 
 				{
 					
@@ -680,6 +681,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			}
 			else
 			{
+				console.log("hindi driver");
 				if(Math.abs(checkTime1) >= 14)// if accumulated time is more than 14 hours 
 				{
 					if(workingmins == 0)// if no minutes are rendered

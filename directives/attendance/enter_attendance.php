@@ -546,12 +546,17 @@ function attendance ()
 		//Print "<script>alert('YEAH')</script>";
 		while($row_employee = mysql_fetch_assoc($employees_query))
 		{
-
+			$job = $row_employee['position'];
+			$driverCheck = mysql_query("SELECT * FROM job_position WHERE position = '$job'");//check if position is driver
+			$driverCheckArr = mysql_fetch_array($driverCheck);
+			$driverBool = false;//boolean for hidden input of driver
+			if($driverCheckArr['driver'] == '1')
+				$driverBool = true;
 
 			Print 	"	
 				<tr id=\"". $row_employee['empid'] ."\">
 
-					<input type='hidden' class='driver' value='0' >
+					<input type='hidden' class='driver' value='".$driverBool."' >
 
 					<input type='hidden' name='empid[".$counter."]' value=". $row_employee['empid'] .">
 					<td class='empName'>
