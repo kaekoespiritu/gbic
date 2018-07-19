@@ -3,30 +3,69 @@
 	include('directives/session.php');
 	include('directives/db.php');
 
-	$date = strftime("%B %d, %Y");//Current date
+	// $date = strftime("%B %d, %Y");//Current date
+	$date = "July 12, 2018";//Current date
 
-	// if(isset($_POST['password']))
-	// {
-	// 	$password = mysql_real_escape_string($_POST['password']);
-	// 	$username = $_SESSION['user_logged_in'];
-
-	// 	$admin = "SELECT * FROM administrator WHERE username = '$username' AND password = '$password'";
-	// 	$adminQuery = mysql_query($admin);
-
-	// 	if(mysql_num_rows($adminQuery) != 0)
-			header("location: payroll_site.php");
-	// 	else
-	// 		Print "<script>alert('You have entered a wrong password.')</script>";
-
-	// }
-
+	
 	//Checks if the current date is the closed payroll
 	$day = date('l', strtotime($date));
 	$payrollCheck = "SELECT * FROM payroll_day";
 	$payrollDayQuery = mysql_query($payrollCheck) or die(mysql_error());
 	$payrollArr = mysql_fetch_assoc($payrollDayQuery);
 
-	if($payrollArr['open'] == $day)
+	$payrollBool = false;// Boolean for unfinished payroll for the week
+	//Check if they did not do payroll for the week
+	$day1 = date('F d, Y', strtotime('-1 day', strtotime($date)));
+	$day2 = date('F d, Y', strtotime('-2 day', strtotime($date)));
+	$day3 = date('F d, Y', strtotime('-3 day', strtotime($date)));
+	$day4 = date('F d, Y', strtotime('-4 day', strtotime($date)));
+	$day5 = date('F d, Y', strtotime('-5 day', strtotime($date)));
+	$day6 = date('F d, Y', strtotime('-6 day', strtotime($date)));
+
+	$checkDays = array($day1, $day2, $day3, $day4, $day5, $day6);
+
+	foreach($checkDays as $days)
+	{
+		$dayName = date('l', strtotime($days));
+		if($payrollArr['open'] == $dayName)
+		{
+			$payCheck = "SELECT * FROM payroll WHERE date = '$days' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
+			$payCheckQuery = mysql_query($payCheck);
+			if(mysql_num_rows($payCheckQuery) == 0)// If they didn't finish the payroll for the week
+			{
+				$payrollBool = true;// Unaccomplished payroll
+			}
+		}
+	}
+	if(isset($_POST['password']))
+	{
+		if($payrollBool)//Pass Session variable to modify all the date involving the payroll
+			$_SESSION['payrollDate'] = $payrollArr['open'];
+		else
+		{
+			if(isset($_SESSION['payrollDate']))
+				unset($_SESSION['payrollDate']);
+		}
+		
+
+		$password = mysql_real_escape_string($_POST['password']);
+		$username = $_SESSION['user_logged_in'];
+
+		$admin = "SELECT * FROM administrator WHERE username = '$username' AND password = '$password'";
+		$adminQuery = mysql_query($admin);
+
+		if(mysql_num_rows($adminQuery) != 0)
+			header("location: payroll_site.php");
+		else
+			Print "<script>alert('You have entered a wrong password.')</script>";
+
+	}
+
+
+	
+	if($payrollBool)
+		$head = "You've missed the payroll day for this week, to access the payroll for last ".$payrollArr['open']." please enter your password.";
+	else if($payrollArr['open'] == $day)
 		$head = "Enter password to access payroll";
 	else
 		$head = "Payroll is currently disabled and can be only accessed on ".$payrollArr['open']."(Open payroll)";
@@ -60,12 +99,13 @@
 				<form action="" method="post">
 					<?php
 						//Checks if the current date is the closed payroll
-						$day = date('l', strtotime($date));
-						$payrollCheck = "SELECT * FROM payroll_day";
-						$payrollDayQuery = mysql_query($payrollCheck) or die(mysql_error());
-						$payrollArr = mysql_fetch_assoc($payrollDayQuery);
+						// $day = date('l', strtotime($date));
+						// $payrollCheck = "SELECT * FROM payroll_day";
+						// $payrollDayQuery = mysql_query($payrollCheck) or die(mysql_error());
+						// $payrollArr = mysql_fetch_assoc($payrollDayQuery);
 
-						if($payrollArr['open'] == $day)
+						
+						if($payrollArr['open'] == $day || $payrollBool)
 							Print '
 								<input type="password" class="form-control" id="payrollpass" name="password" placeholder="Password">
 								<input type="submit" value="Submit" class="btn btn-primary pull-down" >

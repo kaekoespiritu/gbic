@@ -4,7 +4,7 @@ require_once('directives/db.php');
 include('directives/session.php');
   date_default_timezone_set('Asia/Hong_Kong');
 
-// $date = strftime("%B %d, %Y");
+// $date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("%B %d, %Y")); // Gets the payroll date if admin didn't finish the payroll for the week
  $date = "July 11, 2018";
   // $date = "May 9, 2018";
 ?>

@@ -26,7 +26,7 @@ $position = (isset($_GET['position']) ? $_GET['position'] : "null");
 $documents = (isset($_GET['document']) ? $_GET['document'] : "null");
 $status = (isset($_GET['status']) ? $_GET['status'] : "null");
 
-// $date = strftime("%B %d, %Y"); 
+// $date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("%B %d, %Y")); // Gets the payroll date if admin didn't finish the payroll for the week
 $date = "July 11, 2018";
 // $date = "May 9, 2018";
 ?>

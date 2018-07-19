@@ -11,7 +11,7 @@ if(!isset($_GET['site']) && !isset($_GET['position']))
 $site = $_GET['site'];
 $position = $_GET['position'];
 $empid = $_GET['empid'];
-// $date = strftime("%B %d, %Y");
+// $date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("%B %d, %Y")); // Gets the payroll date if admin didn't finish the payroll for the week
 $date = "July 11, 2018";
 // $date = "May 9, 2018";
 
@@ -180,7 +180,6 @@ if($holidayExist > 0)
 					<?php
 				//Sample query for debugging purposes
 					$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 7";
-				// $payrollDate = "SELECT * FROM attendance WHERE empid = '2017-0000011' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  DESC LIMIT 7";
 					$payrollQuery = mysql_query($payrollDate);
 					//Boolean for the conditions not to repeat just incase the employee does't attend sundays
 					$monBool = true;
@@ -895,17 +894,7 @@ if($holidayExist > 0)
 						Print "<input type='hidden' name='holidayType[]' value='".$holidayType."'>";
 						Print "<input type='hidden' name='holidayDate[]' value='".$holidayDate."'>";
 					}
-					// $start_date = $date;
-					// $end_date = 'September 22, 2017';
-					// if ($end_date >= $start_date)
-					// {
-					//   for ($day = 0; $day < 7; $day++)
-					//   {
-					//     echo "<br />" . date("F d, Y", strtotime("$start_date +$day day"));
-					//     $yea = strtotime($start_date + $day);
-					//     echo $yea;
-					//   }
-					// }
+					
 					?>
 					<tr style="white-space: nowrap">
 						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $day7 ?></td>
