@@ -7,6 +7,8 @@
     	}
 	});
 
+	
+
 	function addRow(){
 		var toolsLength = document.getElementsByName('toolname[]').length;
 		

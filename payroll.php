@@ -43,6 +43,7 @@ if($holidayExist > 0)
 
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<link rel="stylesheet" href="css/jquery-ui.css">
 
 </head>
 <body style="font-family: Quicksand;" onload="checkloans()">
@@ -1779,9 +1780,115 @@ if($holidayExist > 0)
 
 <!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 <script rel="javascript" src="js/jquery.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script rel="javascript" src="js/timepicker/jquery.timepicker.js"></script>
 <script rel="javascript" src="js/bootstrap.min.js"></script>
 <script rel="javascript" src="js/payroll.js"></script>
+<script id="hidden-template" type="text/x-custom-template">	
+	<table class="table table-bordered table-responsive">
+		<tr>
+	              <td>Time In</td>
+	              <td>Time Out</td>
+	              <td>H.D. / Straight</td>
+	              <td>A.B. Time In</td>
+	              <td>A.B. Time Out</td>
+	              <td>N.S.</td>
+	              <td>Time In</td>
+	              <td>Time Out</td>
+	              <td>Working Hours</td>
+	              <td>Overtime</td>
+	              <td>Undertime</td>
+	              <td>Night Differential</td>
+	              <td colspan="2">Actions</td>
+	            </tr>
+		<tr id=\"". $row_employee['empid'] ."\">
+
+			<input type='hidden' class='driver' value='<?php $driverBool = ($empArr['position'] == 'Driver' ? true : false )?>' >
+
+			<!-- Time In -->
+			<td>
+				<input type='text' onblur='timeValidation(this)' class='timein1 timepicker form-control input-sm' value='' name='timein1[]'>
+			</td> 
+			<!-- Time Out-->
+			<td>
+				<input type='text' onblur='timeValidation(this)' class='timeout1 timepicker form-control input-sm' value='' name='timeout1[]'>
+			</td> 
+			<!-- Half Day Checkbox-->
+			<td>
+				<input type='checkbox' class='halfdayChk' name='halfday[]' onclick='halfDay(\"<?php $empArr['empid']?>\")' disabled>
+			</td>
+			<!-- AFTER BREAK Time In -->
+			<td>
+				<input type='text' onblur='timeValidation(this)' class='timein2 timepicker form-control input-sm' value=''  name='timein2[]'>
+			</td> 
+			<!-- AFTER BREAK Time Out-->
+			<td>
+				<input type='text' onblur='timeValidation(this)' class='timeout2 timepicker form-control input-sm' value='' name='timeout2[]'>
+			</td> 
+			<!-- Night Shift Checkbox-->
+			<td>
+				<input type='checkbox' class='nightshiftChk' name='nightshift[".$counter."]' onclick='nightshift_ChkBox(\"<?php $empArr['empid']?>"\")' disabled>
+			</td>
+			<!-- NIGHT SHIFT Time In -->
+			<td>
+				<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value=''  name='timein3[]' readonly>
+			</td> 
+			<!-- NIGHT SHIFT Time Out-->
+			<td>
+				<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='' name='timeout3[]' readonly>
+			</td> 
+			<!-- Working Hours -->
+			<td>
+				<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' disabled>
+				<input type='hidden' class='workinghoursH'  name='workinghrs[]' >
+			</td> 
+			<!-- Overtime -->
+			<td>
+				<input type='text' placeholder='--' class='form-control input-sm overtime' value=''  disabled>
+				<input type='hidden' class='overtimeH' name='othrs[]' >
+			</td> 
+			<!-- Undertime -->
+			<td>
+				<input type='text' placeholder='--' class='form-control input-sm undertime' value='' disabled>
+				<input type='hidden' class='undertimeH' name='undertime[]' >
+			</td>
+			<!-- Night Differential --> 
+			<td>
+				<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' disabled>
+				<input type='hidden' class='nightdiffH' name='nightdiff[]' >
+			</td>
+			<!-- Remarks Input --> 
+				<input type='hidden' name='remarks[]' class='hiddenRemarks'>
+
+			<!-- Attendance Status -->
+				<input type='hidden' name='attendance[]' class='attendance'>
+			<!-- Remarks Button --> 
+			<td>
+				<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\"); remarksValidation(\"". $row_employee['empid'] ."\")'>Remarks <span class='icon'></span></a>
+			</td>
+			
+		</tr>
+	</table>
+</script>
 <script>
+	var template = $('#hidden-template').html();
+
+	$("#dateValue").change(function() {
+
+		 $('#adjustmentFields').append(template);
+	});
+
+	//Date picker for adjustments
+	$("#dateValue").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: 'mm-dd-yy',
+			showAnim: 'blind',
+			maxDate:(0),
+			beforeShow: function(){    
+				$(".ui-datepicker").css('font-size', 15) 
+			}
+		});
 	$(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
