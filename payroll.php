@@ -57,6 +57,7 @@ if($holidayExist > 0)
 			<!-- MODALS -->
 			<?php
 			require_once('directives/modals/addNewVale.php');
+			require_once('directives/modals/payrollAdjustment.php');
 			?>
 
 			<!-- Breadcrumbs -->
@@ -69,6 +70,8 @@ if($holidayExist > 0)
 						<li class="active"><?php Print "Payroll for site " .$site." on ".$date ?></li>
 
 						<button type="submit" class="btn btn-success pull-right" style="margin-right:5px" href="#" data-toggle="tooltip" data-placement="bottom" title="Note: Proceeding will prevent you from editing values entered. If you need to come back here and change anything, you will have to redo everything.">Save and compute</button>
+
+						<input type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#attendanceAdjustment" value="Make attendance adjustment">
 					</ol>
 				</div>
 
