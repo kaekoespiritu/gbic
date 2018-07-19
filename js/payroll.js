@@ -5,6 +5,8 @@
     	if($('#outstandingPayable').val()){
     		$('#amountToPay').removeAttr("readonly");
     	}
+
+    	$('#adjustmentFields').
 	});
 
 	

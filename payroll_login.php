@@ -3,8 +3,8 @@
 	include('directives/session.php');
 	include('directives/db.php');
 
-	// $date = strftime("%B %d, %Y");//Current date
-	$date = "July 12, 2018";//Current date
+	$date = strftime("%B %d, %Y");//Current date
+	// $date = "July 12, 2018";//Current date
 
 	
 	//Checks if the current date is the closed payroll
@@ -37,29 +37,29 @@
 			}
 		}
 	}
-	if(isset($_POST['password']))
-	{
-		if($payrollBool)//Pass Session variable to modify all the date involving the payroll
-			$_SESSION['payrollDate'] = $payrollArr['open'];
-		else
-		{
-			if(isset($_SESSION['payrollDate']))
-				unset($_SESSION['payrollDate']);
-		}
+	// if(isset($_POST['password']))
+	// {
+	// 	if($payrollBool)//Pass Session variable to modify all the date involving the payroll
+	// 		$_SESSION['payrollDate'] = $payrollArr['open'];
+	// 	else
+	// 	{
+	// 		if(isset($_SESSION['payrollDate']))
+	// 			unset($_SESSION['payrollDate']);
+	// 	}
 		
 
-		$password = mysql_real_escape_string($_POST['password']);
-		$username = $_SESSION['user_logged_in'];
+	// 	$password = mysql_real_escape_string($_POST['password']);
+	// 	$username = $_SESSION['user_logged_in'];
 
-		$admin = "SELECT * FROM administrator WHERE username = '$username' AND password = '$password'";
-		$adminQuery = mysql_query($admin);
+	// 	$admin = "SELECT * FROM administrator WHERE username = '$username' AND password = '$password'";
+	// 	$adminQuery = mysql_query($admin);
 
-		if(mysql_num_rows($adminQuery) != 0)
+	// 	if(mysql_num_rows($adminQuery) != 0)
 			header("location: payroll_site.php");
-		else
-			Print "<script>alert('You have entered a wrong password.')</script>";
+	// 	else
+	// 		Print "<script>alert('You have entered a wrong password.')</script>";
 
-	}
+	// }
 
 
 	

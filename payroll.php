@@ -1771,10 +1771,18 @@ if($holidayExist > 0)
 <script rel="javascript" src="js/jquery.min.js"></script>
 <script src="js/jquery-ui.min.js"></script>
 <script rel="javascript" src="js/timepicker/jquery.timepicker.js"></script>
+<script src="js/jquery.tmpl.js"></script>
 <script rel="javascript" src="js/bootstrap.min.js"></script>
 <script rel="javascript" src="js/payroll.js"></script>
+
 <script id="hidden-template" type="text/x-custom-template">	
-	<table class="table table-bordered table-responsive">
+		<table class="table table-bordered table-responsive">
+			<tr>
+				<td colspan='13'>
+					<span class="dateheader text-center col-md-11">${date}</span>
+					<button class="btn btn-danger col-md-1">Remove</button>
+				</td>
+			</tr>
 			<tr class="attendance-header">
 		              <td>Time In</td>
 		              <td>Time Out</td>
@@ -1856,34 +1864,34 @@ if($holidayExist > 0)
 					<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\"); remarksValidation(\"". $row_employee['empid'] ."\")'>Remarks <span class='icon'></span></a>
 				</td>
 			</tr>
-	</table>
+		</table>
 </script>
 <script id="hidden-header" type="text/x-custom-template">
-	<tr>
-		<td>
-			<span class="dateheader text-center col-md-12"></span>
-			<button class="btn btn-danger col-md-1 col-md-pull-1">Remove</button>
-		</td>
-	</tr>
+	
 </script>
 <script>
-	var template = $('#hidden-template').html();
-	var header = $('#hidden-header').html();
+	// var template = $('#hidden-template').html();
+	// var header = $('#hidden-header').html();
 
 	$("#dateValue").change(function() {
-		 $('#adjustmentFields').append(template);
+		var day = $("#dateValue").val();
+		var data = [{
+						date: day
+					}];
+		$('#hidden-template').tmpl(data).appendTo('#adjustmentFields');
+		 // $('#adjustmentFields').append(template);
 		 // Add counter to attendance-header class
-		 $('.attendance-header').each(function(index) {
-		 	$(this).attr("id", "header"+index++);
-		 	$('#header'+index).before(header);
-		 });
+		 // $('.attendance-header').each(function(index) {
+		 // 	$(this).attr("id", "header"+index++);
+		 // 	$('#header'+index).before(header);
+		 // });
 	});
 
 	//Date picker for adjustments
 	$("#dateValue").datepicker({
 			changeMonth: true,
 			changeYear: true,
-			dateFormat: 'DD MM d',
+			dateFormat: 'MM d, yy',
 			showAnim: 'blind',
 			minDate:(-14),
 			maxDate:(0),
