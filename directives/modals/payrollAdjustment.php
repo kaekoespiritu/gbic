@@ -8,14 +8,10 @@
       <div class="modal-body">
         <div class="row">
           <!-- Insert date picker and call attendance row here -->
-          Please select date: <input type="text" onchange="attAdjustment(this.value)" id="dateValue">
+          Please the date to adjust: <input type="text" onchange="attAdjustment(this.value)" id="dateValue">
            <div id="adjustmentFields">
            </div>
           </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="addvale()" data-dismiss="modal">Add</button>
       </div>
     </div>
   </div>
