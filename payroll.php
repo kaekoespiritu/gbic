@@ -1884,6 +1884,7 @@ if($holidayExist > 0)
 			changeYear: true,
 			dateFormat: 'mm-dd-yy',
 			showAnim: 'blind',
+			minDate:(-14),
 			maxDate:(0),
 			beforeShow: function(){    
 				$(".ui-datepicker").css('font-size', 15) 
