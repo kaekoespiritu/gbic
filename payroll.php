@@ -1775,103 +1775,115 @@ if($holidayExist > 0)
 <script rel="javascript" src="js/payroll.js"></script>
 <script id="hidden-template" type="text/x-custom-template">	
 	<table class="table table-bordered table-responsive">
-		<tr>
-	              <td>Time In</td>
-	              <td>Time Out</td>
-	              <td>H.D. / Straight</td>
-	              <td>A.B. Time In</td>
-	              <td>A.B. Time Out</td>
-	              <td>N.S.</td>
-	              <td>Time In</td>
-	              <td>Time Out</td>
-	              <td>Working Hours</td>
-	              <td>Overtime</td>
-	              <td>Undertime</td>
-	              <td>Night Differential</td>
-	              <td colspan="2">Actions</td>
-	            </tr>
-		<tr id=\"". $row_employee['empid'] ."\">
+			<tr class="attendance-header">
+		              <td>Time In</td>
+		              <td>Time Out</td>
+		              <td>H.D. / Straight</td>
+		              <td>A.B. Time In</td>
+		              <td>A.B. Time Out</td>
+		              <td>N.S.</td>
+		              <td>Time In</td>
+		              <td>Time Out</td>
+		              <td>Working Hours</td>
+		              <td>Overtime</td>
+		              <td>Undertime</td>
+		              <td>Night Differential</td>
+		              <td colspan="2">Actions</td>
+		    </tr>
+			<tr id=\"". $row_employee['empid'] ."\">
 
-			<input type='hidden' class='driver' value='<?php $driverBool = ($empArr['position'] == 'Driver' ? true : false )?>' >
+				<input type='hidden' class='driver' value='<?php $driverBool = ($empArr['position'] == 'Driver' ? true : false )?>' >
 
-			<!-- Time In -->
-			<td>
-				<input type='text' onblur='timeValidation(this)' class='timein1 timepicker form-control input-sm' value='' name='timein1[]'>
-			</td> 
-			<!-- Time Out-->
-			<td>
-				<input type='text' onblur='timeValidation(this)' class='timeout1 timepicker form-control input-sm' value='' name='timeout1[]'>
-			</td> 
-			<!-- Half Day Checkbox-->
-			<td>
-				<input type='checkbox' class='halfdayChk' name='halfday[]' onclick='halfDay(\"<?php $empArr['empid']?>\")' disabled>
-			</td>
-			<!-- AFTER BREAK Time In -->
-			<td>
-				<input type='text' onblur='timeValidation(this)' class='timein2 timepicker form-control input-sm' value=''  name='timein2[]'>
-			</td> 
-			<!-- AFTER BREAK Time Out-->
-			<td>
-				<input type='text' onblur='timeValidation(this)' class='timeout2 timepicker form-control input-sm' value='' name='timeout2[]'>
-			</td> 
-			<!-- Night Shift Checkbox-->
-			<td>
-				<input type='checkbox' class='nightshiftChk' name='nightshift[".$counter."]' onclick='nightshift_ChkBox(\"<?php $empArr['empid']?>"\")' disabled>
-			</td>
-			<!-- NIGHT SHIFT Time In -->
-			<td>
-				<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value=''  name='timein3[]' readonly>
-			</td> 
-			<!-- NIGHT SHIFT Time Out-->
-			<td>
-				<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='' name='timeout3[]' readonly>
-			</td> 
-			<!-- Working Hours -->
-			<td>
-				<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' disabled>
-				<input type='hidden' class='workinghoursH'  name='workinghrs[]' >
-			</td> 
-			<!-- Overtime -->
-			<td>
-				<input type='text' placeholder='--' class='form-control input-sm overtime' value=''  disabled>
-				<input type='hidden' class='overtimeH' name='othrs[]' >
-			</td> 
-			<!-- Undertime -->
-			<td>
-				<input type='text' placeholder='--' class='form-control input-sm undertime' value='' disabled>
-				<input type='hidden' class='undertimeH' name='undertime[]' >
-			</td>
-			<!-- Night Differential --> 
-			<td>
-				<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' disabled>
-				<input type='hidden' class='nightdiffH' name='nightdiff[]' >
-			</td>
-			<!-- Remarks Input --> 
-				<input type='hidden' name='remarks[]' class='hiddenRemarks'>
+				<!-- Time In -->
+				<td>
+					<input type='text' onblur='timeValidation(this)' class='timein1 timepicker form-control input-sm' value='' name='timein1[]'>
+				</td> 
+				<!-- Time Out-->
+				<td>
+					<input type='text' onblur='timeValidation(this)' class='timeout1 timepicker form-control input-sm' value='' name='timeout1[]'>
+				</td> 
+				<!-- Half Day Checkbox-->
+				<td>
+					<input type='checkbox' class='halfdayChk' name='halfday[]' onclick='halfDay(\"<?php $empArr['empid']?>\")' disabled>
+				</td>
+				<!-- AFTER BREAK Time In -->
+				<td>
+					<input type='text' onblur='timeValidation(this)' class='timein2 timepicker form-control input-sm' value=''  name='timein2[]'>
+				</td> 
+				<!-- AFTER BREAK Time Out-->
+				<td>
+					<input type='text' onblur='timeValidation(this)' class='timeout2 timepicker form-control input-sm' value='' name='timeout2[]'>
+				</td> 
+				<!-- Night Shift Checkbox-->
+				<td>
+					<input type='checkbox' class='nightshiftChk' name='nightshift[".$counter."]' onclick='nightshift_ChkBox(\"<?php $empArr['empid']?>"\")' disabled>
+				</td>
+				<!-- NIGHT SHIFT Time In -->
+				<td>
+					<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value=''  name='timein3[]' readonly>
+				</td> 
+				<!-- NIGHT SHIFT Time Out-->
+				<td>
+					<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='' name='timeout3[]' readonly>
+				</td> 
+				<!-- Working Hours -->
+				<td>
+					<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' disabled>
+					<input type='hidden' class='workinghoursH'  name='workinghrs[]' >
+				</td> 
+				<!-- Overtime -->
+				<td>
+					<input type='text' placeholder='--' class='form-control input-sm overtime' value=''  disabled>
+					<input type='hidden' class='overtimeH' name='othrs[]' >
+				</td> 
+				<!-- Undertime -->
+				<td>
+					<input type='text' placeholder='--' class='form-control input-sm undertime' value='' disabled>
+					<input type='hidden' class='undertimeH' name='undertime[]' >
+				</td>
+				<!-- Night Differential --> 
+				<td>
+					<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' disabled>
+					<input type='hidden' class='nightdiffH' name='nightdiff[]' >
+				</td>
+				<!-- Remarks Input --> 
+					<input type='hidden' name='remarks[]' class='hiddenRemarks'>
 
-			<!-- Attendance Status -->
-				<input type='hidden' name='attendance[]' class='attendance'>
-			<!-- Remarks Button --> 
-			<td>
-				<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\"); remarksValidation(\"". $row_employee['empid'] ."\")'>Remarks <span class='icon'></span></a>
-			</td>
-			
-		</tr>
+				<!-- Attendance Status -->
+					<input type='hidden' name='attendance[]' class='attendance'>
+				<!-- Remarks Button --> 
+				<td>
+					<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\"); remarksValidation(\"". $row_employee['empid'] ."\")'>Remarks <span class='icon'></span></a>
+				</td>
+			</tr>
 	</table>
+</script>
+<script id="hidden-header" type="text/x-custom-template">
+	<tr>
+		<td>
+			<span class="dateheader text-center col-md-12"></span>
+			<button class="btn btn-danger col-md-1 col-md-pull-1">Remove</button>
+		</td>
+	</tr>
 </script>
 <script>
 	var template = $('#hidden-template').html();
+	var header = $('#hidden-header').html();
 
 	$("#dateValue").change(function() {
-
 		 $('#adjustmentFields').append(template);
+		 // Add counter to attendance-header class
+		 $('.attendance-header').each(function(index) {
+		 	$(this).attr("id", "header"+index++);
+		 	$('#header'+index).before(header);
+		 });
 	});
 
 	//Date picker for adjustments
 	$("#dateValue").datepicker({
 			changeMonth: true,
 			changeYear: true,
-			dateFormat: 'mm-dd-yy',
+			dateFormat: 'DD MM d',
 			showAnim: 'blind',
 			minDate:(-14),
 			maxDate:(0),
@@ -1879,9 +1891,12 @@ if($holidayExist > 0)
 				$(".ui-datepicker").css('font-size', 15) 
 			}
 		});
+
+	// Tooltip for computing payroll
 	$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
+  		$('[data-toggle="tooltip"]').tooltip()
+	});
+
 </script>
 </div>
 </form>
