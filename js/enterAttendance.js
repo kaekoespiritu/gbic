@@ -71,6 +71,81 @@ $(document).ready(function(){
 
 });
 
+//Payroll
+//jQuery for timepicker
+function timeVerify() {
+	$('input.timein1').timepicker({
+		timeFormat: 'hh:mm p',
+		dynamic: false,
+		scrollbar: false,
+		dropdown: false
+	});
+	
+	$('input.timeout1').timepicker({
+		timeFormat: 'hh:mm p',
+		dynamic: false,
+		scrollbar: false,
+		dropdown: false
+	});
+
+	//After break Timein Timeout
+	$('input.timein2').timepicker({
+		timeFormat: 'hh:mm p',
+		dynamic: false,
+		scrollbar: false,
+		dropdown: false
+	});
+	
+	$('input.timeout2').timepicker({
+		timeFormat: 'hh:mm p',
+		dynamic: false,
+		scrollbar: false,
+		dropdown: false
+	});
+	$('input.timein3').timepicker({
+		timeFormat: 'hh:mm p',
+		dynamic: false,
+		scrollbar: false,
+		dropdown: false
+	});
+	$('input.timeout3').timepicker({
+		timeFormat: 'hh:mm p',
+		dynamic: false,
+		scrollbar: false,
+		dropdown: false
+	});
+
+	//to compute the time, workhours,etc.
+	$('input.timein1').change(function(){
+		var id = $(this).parent().parent().attr('id');
+		timeIn(id);
+	});
+	$('input.timeout1').change(function(){
+		var id = $(this).parent().parent().attr('id');
+		timeOut(id);
+	});
+	$('input.timein2').change(function(){
+		var id = $(this).parent().parent().attr('id');
+		timeIn(id);
+	});
+	$('input.timeout2').change(function(){
+		var id = $(this).parent().parent().attr('id');
+		timeOut(id);
+	});
+	$('input.timein3').change(function(){
+		var id = $(this).parent().parent().attr('id');
+		timeIn(id);
+	});
+	$('input.timeout3').change(function(){
+		var id = $(this).parent().parent().attr('id');
+		timeOut(id);
+	});
+
+}
+	
+
+
+
 function halfDay(id){
 	var mainRow = document.getElementById(id); // Get row to be computed
 	if(mainRow.querySelector('.halfdayChk').checked == false) // enable checkbox)
@@ -150,6 +225,7 @@ function halfDay(id){
 //Time validation	
 function timeValidation(evt)
 {
+
 	var time = evt.value;
 	var validate = /^(?:(?:0?\d|1[0-2]):[0-5]\d\s[A|P]M)$/;
 	var valid = time.match(validate); 
@@ -160,6 +236,7 @@ function timeValidation(evt)
 		evt.value = "";
 	}
 }
+
 function timeIn(id) {
 	var mainRow = document.getElementById(id); // Get row to be computed
 	var timein1 = mainRow.querySelector('.timein1').value; // Get time in value

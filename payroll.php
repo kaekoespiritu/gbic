@@ -1774,13 +1774,14 @@ if($holidayExist > 0)
 <script src="js/jquery.tmpl.js"></script>
 <script rel="javascript" src="js/bootstrap.min.js"></script>
 <script rel="javascript" src="js/payroll.js"></script>
+<script src="js/enterAttendance.js"></script>
 
 <script id="hidden-template" type="text/x-custom-template">	
 		<table class="table table-bordered table-responsive">
 			<tr>
 				<td colspan='13'>
-					<span class="dateheader text-center col-md-11">${date}</span>
-					<button class="btn btn-danger col-md-1">Remove</button>
+					<h2 class="dateheader text-center col-md-11 col-md-push-1">${date}</h2>
+					<input type="button" class="btn btn-danger col-md-1" value="Remove" onclick="removeAdjustment(this)">
 				</td>
 			</tr>
 			<tr class="attendance-header">
@@ -1798,7 +1799,7 @@ if($holidayExist > 0)
 		              <td>Night Differential</td>
 		              <td colspan="2">Actions</td>
 		    </tr>
-			<tr id=\"". $row_employee['empid'] ."\">
+			<tr class="input-fields" id="input-field-${inputCounter}">
 
 				<input type='hidden' class='driver' value='<?php $driverBool = ($empArr['position'] == 'Driver' ? true : false )?>' >
 
@@ -1812,7 +1813,7 @@ if($holidayExist > 0)
 				</td> 
 				<!-- Half Day Checkbox-->
 				<td>
-					<input type='checkbox' class='halfdayChk' name='halfday[]' onclick='halfDay(\"<?php $empArr['empid']?>\")' disabled>
+					<input type='checkbox' class='halfdayChk' name='halfday[]' onclick="halfDay('input-field-${inputCounter}')" disabled>
 				</td>
 				<!-- AFTER BREAK Time In -->
 				<td>
@@ -1824,7 +1825,7 @@ if($holidayExist > 0)
 				</td> 
 				<!-- Night Shift Checkbox-->
 				<td>
-					<input type='checkbox' class='nightshiftChk' name='nightshift[".$counter."]' onclick='nightshift_ChkBox(\"<?php $empArr['empid']?>"\")' disabled>
+					<input type='checkbox' class='nightshiftChk' name='nightshift[${inputCounter}]' onclick="nightshift_ChkBox('input-field-${inputCounter}')" disabled>
 				</td>
 				<!-- NIGHT SHIFT Time In -->
 				<td>
@@ -1866,25 +1867,41 @@ if($holidayExist > 0)
 			</tr>
 		</table>
 </script>
-<script id="hidden-header" type="text/x-custom-template">
-	
-</script>
-<script>
-	// var template = $('#hidden-template').html();
-	// var header = $('#hidden-header').html();
+<script >
+
+	localStorage.setItem("inputcounter", 1);
+	localStorage.setItem("tablecounter", 1);
 
 	$("#dateValue").change(function() {
 		var day = $("#dateValue").val();
-		var data = [{
-						date: day
-					}];
+		
+		$('#adjustmentFields table').each(function(element){
+			localStorage.inputcounter++;
+
+			// // Input fields for attendance
+			// element = $(this).find('tr.input-fields');
+			// halfday = $(this).find('halfdayChk');
+			// if(typeof(element.attr('id')) === "undefined") {
+		 //        element.attr('id', 'inputfield-'+inputcounter++);
+		 //        halfday.attr('onclick', 'halfDay(ok)');
+		 //        localStorage.inputcounter++;
+		 //    }
+
+		 //    // For table removal
+		 //    tableElement = $(this);
+			// if(typeof(tableElement.attr('id')) === "undefined") {
+		 //        tableElement.attr('id', 'table-'+tablecounter++);
+		 //        localStorage.tablecounter++;
+		});
+		var inputcounter = localStorage.getItem("inputcounter");
+		var data = [{ 
+					date: day,
+					inputCounter: inputcounter
+				}];
 		$('#hidden-template').tmpl(data).appendTo('#adjustmentFields');
-		 // $('#adjustmentFields').append(template);
-		 // Add counter to attendance-header class
-		 // $('.attendance-header').each(function(index) {
-		 // 	$(this).attr("id", "header"+index++);
-		 // 	$('#header'+index).before(header);
-		 // });
+		
+
+		timeVerify();
 	});
 
 	//Date picker for adjustments
@@ -1904,6 +1921,60 @@ if($holidayExist > 0)
 	$(function () {
   		$('[data-toggle="tooltip"]').tooltip()
 	});
+
+	function removeAdjustment(date) {
+		date.parentNode.parentNode.parentNode.parentNode.remove();
+	}
+
+	function nightshift_ChkBox(id) {
+		var mainRow = document.getElementById(id);//gets the row of the user checked
+
+		if(mainRow.querySelector('.nightshiftChk').checked == true) {
+
+			mainRow.querySelector('.timein3').readOnly = false;
+			mainRow.querySelector('.timeout3').readOnly = false;
+
+			// disable halfday checkbox
+			mainRow.querySelector('.halfdayChk').disabled = true;
+
+			// delete values to prepare for the 3rd timein and timeout
+			mainRow.querySelector('.workinghours').value = "";
+			mainRow.querySelector('.overtime').value = "";
+			mainRow.querySelector('.undertime').value = "";
+			mainRow.querySelector('.nightdiff').value = "";
+			//for hidden rows
+			mainRow.querySelector('.workinghoursH').value = "";
+			mainRow.querySelector('.overtimeH').value = "";
+			mainRow.querySelector('.undertimeH').value = "";
+			mainRow.querySelector('.nightdiffH').value = "";
+
+			mainRow.querySelector('.attendance').value = "";//reset the attendance status
+			
+			// If absent was initially placed, changed to success
+			if(mainRow.classList.contains('danger'))
+			{
+				mainRow.classList.remove('danger');
+			}
+			else 
+			{
+				mainRow.classList.remove('success');
+			}
+		}
+		else {
+
+			// enable halfday checkbox
+			mainRow.querySelector('.halfdayChk').disabled = false;
+
+			mainRow.querySelector('.timein3').readOnly = true;
+			mainRow.querySelector('.timeout3').readOnly = true;
+			mainRow.querySelector('.timein3').value = '';
+			mainRow.querySelector('.timeout3').value = '';
+			timeIn(id);//call function to revert the results to just 4 inputs
+		}
+
+
+		
+	}
 
 </script>
 </div>
