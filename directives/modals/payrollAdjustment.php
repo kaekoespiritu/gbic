@@ -8,7 +8,7 @@
       <div class="modal-body">
         <div class="row">
           <!-- Insert date picker and call attendance row here -->
-          Please the date to adjust: <input type="text" id="dateValue">
+          Choose a date: <input type="text" id="dateValue" readonly>
           <div id="adjustmentFields" class="pull-down">
           </div>
           </div>

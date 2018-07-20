@@ -24,6 +24,84 @@ $day4 = date('F d, Y', strtotime('-4 day', strtotime($date)));
 $day5 = date('F d, Y', strtotime('-5 day', strtotime($date)));
 $day6 = date('F d, Y', strtotime('-6 day', strtotime($date)));
 $day7 = date('F d, Y', strtotime('-7 day', strtotime($date)));
+$day8 = date('F d, Y', strtotime('-8 day', strtotime($date)));
+$day9 = date('F d, Y', strtotime('-9 day', strtotime($date)));
+$day10 = date('F d, Y', strtotime('-10 day', strtotime($date)));
+$day11 = date('F d, Y', strtotime('-11 day', strtotime($date)));
+$day12 = date('F d, Y', strtotime('-12 day', strtotime($date)));
+$day13 = date('F d, Y', strtotime('-13 day', strtotime($date)));
+$day14 = date('F d, Y', strtotime('-14 day', strtotime($date)));
+
+// Validate 14 days prior to the payroll day for adjustments
+$validateDays = array($day1, $day2, $day3, $day4, $day5, $day6, $day7, $day8, $day9, $day10, $day11, $day12, $day13, $day14);
+$disabledDates = "";
+
+function getMonth($month)
+{
+	switch($month)
+	{
+		case "January": $output = "1";break;
+		case "February": $output = "2";break;
+		case "March": $output = "3";break;
+		case "April": $output = "4";break;
+		case "May": $output = "5";break;
+		case "June": $output = "6";break;
+		case "July": $output = "7";break;
+		case "August": $output = "8";break;
+		case "September": $output = "9";break;
+		case "October": $output = "10";break;
+		case "November": $output = "11";break;
+		case "December": $output = "12";break;
+	}
+	return $output;
+}
+function getDay($day)
+{
+	switch($day)
+	{
+		case "01": $output = "1";break;
+		case "02": $output = "2";break;
+		case "03": $output = "3";break;
+		case "04": $output = "4";break;
+		case "05": $output = "5";break;
+		case "06": $output = "6";break;
+		case "07": $output = "7";break;
+		case "08": $output = "8";break;
+		case "09": $output = "9";break;
+		default: $output = $day;
+	}
+
+	return $output;
+}
+
+foreach($validateDays as $validate)
+{
+	$attCheck = "SELECT * FROM attendance WHERE empid = '$empid' AND date = '$validate' AND attendance != '2'";
+	$attQuery = mysql_query($attCheck);
+	if(mysql_num_rows($attQuery) != 1)
+	{
+		Print "<script>console.log('validate: ".$validate."')</script>";
+		if($disabledDates != "")
+			$disabledDates .= "+";
+		$dateArr = explode(' ', $validate);
+		$dateMonth = $dateArr[0];// Gets the month
+		$dateDay = $dateArr[1];// Gets the day
+		$dateYear = $dateArr[2];// Gets the year
+
+		$dateMonth = getMonth($dateMonth);
+		$dateDay = substr($dateDay, 0, -1);
+		$dateDay = getDay($dateDay);
+		$validated = $dateMonth."-".$dateDay."-".$dateYear;
+		// Print "<script>console.log('month: ".$dateMonth." \ day: ".$dateDay." \ year: ".$dateYear."')</script>";
+		// Print "<script>console.log('disabled: ".$disabledDates."')</script>";
+		// $dateDay
+		$disabledDates .= $validated;
+	}
+}
+
+
+
+
 //Holiday Checker
 $holiday = "SELECT * FROM holiday WHERE date = '$date'";
 $holidayQuery = mysql_query($holiday);
@@ -1766,6 +1844,30 @@ if($holidayExist > 0)
 	</div>	
 </div>
 </div>
+<!-- Hidden inputs for disabled dates -->
+<input type="hidden" id="disabledDates" value="<?php Print $disabledDates?>">
+
+
+<!-- DUMMY MODAL FOR REMARKS -->
+
+<div class="modal fade" tabindex="-1" id="remarks" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="dito">Remarks</h4>
+			</div>
+			<div class="modal-body">
+				<input class="form-control" id="remark"  maxlength="100"onkeyup="remarksListener(this.value)">
+			</div>
+			<div class="modal-footer">
+				<h5 class="pull-left" >Characters left: &nbsp<span id="remarksCounter">100<span>&nbsp</h5>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal" id="saveRemarks">Save changes</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 <script rel="javascript" src="js/jquery.min.js"></script>
@@ -1805,23 +1907,23 @@ if($holidayExist > 0)
 
 				<!-- Time In -->
 				<td>
-					<input type='text' onblur='timeValidation(this)' class='timein1 timepicker form-control input-sm' value='' name='timein1[]'>
+					<input type='text' onblur='timeValidation(this)' class='timein1 timepicker form-control input-sm' value='' name='timein1[${inputCounter}]'>
 				</td> 
 				<!-- Time Out-->
 				<td>
-					<input type='text' onblur='timeValidation(this)' class='timeout1 timepicker form-control input-sm' value='' name='timeout1[]'>
+					<input type='text' onblur='timeValidation(this)' class='timeout1 timepicker form-control input-sm' value='' name='timeout1[${inputCounter}]'>
 				</td> 
 				<!-- Half Day Checkbox-->
 				<td>
-					<input type='checkbox' class='halfdayChk' name='halfday[]' onclick="halfDay('input-field-${inputCounter}')" disabled>
+					<input type='checkbox' class='halfdayChk' name='halfday[${inputCounter}]' onclick="halfDay('input-field-${inputCounter}')" disabled>
 				</td>
 				<!-- AFTER BREAK Time In -->
 				<td>
-					<input type='text' onblur='timeValidation(this)' class='timein2 timepicker form-control input-sm' value=''  name='timein2[]'>
+					<input type='text' onblur='timeValidation(this)' class='timein2 timepicker form-control input-sm' value=''  name='timein2[${inputCounter}]'>
 				</td> 
 				<!-- AFTER BREAK Time Out-->
 				<td>
-					<input type='text' onblur='timeValidation(this)' class='timeout2 timepicker form-control input-sm' value='' name='timeout2[]'>
+					<input type='text' onblur='timeValidation(this)' class='timeout2 timepicker form-control input-sm' value='' name='timeout2[${inputCounter}]'>
 				</td> 
 				<!-- Night Shift Checkbox-->
 				<td>
@@ -1829,45 +1931,50 @@ if($holidayExist > 0)
 				</td>
 				<!-- NIGHT SHIFT Time In -->
 				<td>
-					<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value=''  name='timein3[]' readonly>
+					<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value=''  name='timein3[${inputCounter}]' readonly>
 				</td> 
 				<!-- NIGHT SHIFT Time Out-->
 				<td>
-					<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='' name='timeout3[]' readonly>
+					<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='' name='timeout3[${inputCounter}]' readonly>
 				</td> 
 				<!-- Working Hours -->
 				<td>
 					<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' disabled>
-					<input type='hidden' class='workinghoursH'  name='workinghrs[]' >
+					<input type='hidden' class='workinghoursH'  name='workinghrs[${inputCounter}]' >
 				</td> 
 				<!-- Overtime -->
 				<td>
 					<input type='text' placeholder='--' class='form-control input-sm overtime' value=''  disabled>
-					<input type='hidden' class='overtimeH' name='othrs[]' >
+					<input type='hidden' class='overtimeH' name='othrs[${inputCounter}]' >
 				</td> 
 				<!-- Undertime -->
 				<td>
 					<input type='text' placeholder='--' class='form-control input-sm undertime' value='' disabled>
-					<input type='hidden' class='undertimeH' name='undertime[]' >
+					<input type='hidden' class='undertimeH' name='undertime[${inputCounter}]' >
 				</td>
 				<!-- Night Differential --> 
 				<td>
 					<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' disabled>
-					<input type='hidden' class='nightdiffH' name='nightdiff[]' >
+					<input type='hidden' class='nightdiffH' name='nightdiff[${inputCounter}]' >
 				</td>
 				<!-- Remarks Input --> 
-					<input type='hidden' name='remarks[]' class='hiddenRemarks'>
+					<input type='hidden' name='remarks[${inputCounter}]' class='hiddenRemarks'>
 
 				<!-- Attendance Status -->
-					<input type='hidden' name='attendance[]' class='attendance'>
+					<input type='hidden' name='attendance[${inputCounter}]' class='attendance'>
 				<!-- Remarks Button --> 
 				<td>
-					<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\"); remarksValidation(\"". $row_employee['empid'] ."\")'>Remarks <span class='icon'></span></a>
+					<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarksFunc("${inputCounter}")'>Remarks <span class='icon'></span></a>
 				</td>
 			</tr>
 		</table>
 </script>
 <script >
+
+	function remarksFunc(id) {
+		remarksPayroll("input-field-"+id);
+		remarksValidation("input-field-"+id);
+	}
 
 	localStorage.setItem("inputcounter", 1);
 	localStorage.setItem("tablecounter", 1);
@@ -1903,20 +2010,56 @@ if($holidayExist > 0)
 
 		timeVerify();
 	});
-
+	var currentDate = "<?php Print "$date"; ?>";
 	//Date picker for adjustments
 	$("#dateValue").datepicker({
 			changeMonth: true,
 			changeYear: true,
 			dateFormat: 'MM d, yy',
 			showAnim: 'blind',
-			minDate:(-14),
-			maxDate:(0),
+			// minDate:(-1),
+			maxDate: currentDate,
 			beforeShow: function(){    
 				$(".ui-datepicker").css('font-size', 15) 
-			}
+			},
+			// beforeShowDay: disabledDays
 		});
+	
+	$("#dateValue").datepicker("setDate", currentDate);
+	
+	
 
+	// function disabledDays(date){
+	// 	var disDates = document.getElementById('disabledDates').value;
+	// 	var disArr = disDates.split('+');
+		
+	// 	var month = date.getMonth();
+	// 	var day = date.getDate();
+	// 	var year = date.getFullYear();
+
+	// 	var currentDate = (month + 1) + '-' + day + '-' + year;
+	// 	// console.log(currentDate);
+	// 	// for(var count = 0; count < disArr.length ; count++) {
+	// 		if(localStorage.datesCounter != 0)
+	// 			localStorage.datesCounter--;
+	// 		console.log("local: "+localStorage.datesCounter);
+	// 		console.log("disDate: "+disArr[localStorage.datesCounter]);
+	// 		if( $.inArray(currentDate, disArr[localStorage.datesCounter]) != -1)
+	// 		{
+	// 			return [false];
+	// 		}
+	// 		else
+	// 		{
+	// 			return [true];
+	// 		}
+	// 	// }
+	// }
+	// $(document).ready(function(){
+	// 	var disDates = $('#disabledDates').val();
+	// 	var disArr = disDates.split('+');
+	// 	var counter = disArr.length;
+	// 	localStorage.setItem("datesCounter", counter);
+	// });
 	// Tooltip for computing payroll
 	$(function () {
   		$('[data-toggle="tooltip"]').tooltip()
@@ -1971,9 +2114,42 @@ if($holidayExist > 0)
 			mainRow.querySelector('.timeout3').value = '';
 			timeIn(id);//call function to revert the results to just 4 inputs
 		}
+	}
 
+	function remarksPayroll(id) {
+		// show modal here to input for remarks
+		console.log('in remarks: 123 '+id);
+		id = String(id);
+		var mainRow = document.getElementById(id);
+		if(mainRow.querySelector('.hiddenRemarks').value != null)
+		{
 
-		
+			var input = mainRow.querySelector('.hiddenRemarks').value;
+			input = input.replace(/\\/g, '');
+			document.getElementById('remark').value = input;
+		}
+		else
+		{
+			document.getElementById('remark').value = "";
+		}
+		document.getElementById('saveRemarks').setAttribute('onclick', "saveRemarksPayroll(\""+ id +"\")");
+	}
+
+	function saveRemarksPayroll(id) {
+		console.log('remark123: '+ id)
+		var mainRow = document.getElementById(id);
+		var remarks = document.getElementById('remark').value.trim();
+		var hiddenRemarks = mainRow.querySelector('.hiddenRemarks').setAttribute('value', remarks);
+
+		if(remarks !== null && remarks !== "")
+		{
+			mainRow.querySelector('.icon').classList.add('glyphicon', 'glyphicon-edit');
+		}
+		else
+		{
+			mainRow.querySelector('.icon').classList.remove('glyphicon', 'glyphicon-edit');
+		}
+
 	}
 
 </script>
