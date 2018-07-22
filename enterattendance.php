@@ -54,8 +54,8 @@
 					<?php
 					
 					Print '<li class="active">Employee attendance sheet for '. $site_name .' on '. $date .' ('.$day.')</li>';
-					if($day ==  "Sunday")
-						Print '<input type="hidden" id="isSunday">';
+					// if($day ==  "Sunday")
+					// 	Print '<input type="hidden" id="isSunday">';
 					?>
 
 					<button class="btn btn-success pull-right" onclick="save()">Save Changes</button>
@@ -167,6 +167,8 @@
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script src="js/enterAttendance.js"></script>
 	<script>
+
+		document.getElementById("attendance").setAttribute("style", "background-color: #10621e;");
 	// Clear Filter
 	function clearFilter() {
 		window.location.assign("enterattendance.php?site=<?php Print $site_name ?>&position=null");

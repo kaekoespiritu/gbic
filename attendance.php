@@ -429,6 +429,8 @@ include('directives/session.php');
 <script src="js/multiple-select.js"></script>
 <script src="js/attendance.js"></script>
 <script>
+
+	document.getElementById("attendance").setAttribute("style", "background-color: #10621e;");
 	$(function(){
 		$("select").multipleSelect({
 			placeholder: "Select site for attendance&#9662;",

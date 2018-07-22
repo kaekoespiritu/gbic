@@ -80,7 +80,7 @@ foreach($validateDays as $validate)
 	$attQuery = mysql_query($attCheck);
 	if(mysql_num_rows($attQuery) != 1)
 	{
-		Print "<script>console.log('validate: ".$validate."')</script>";
+		//Print "<script>console.log('validate: ".$validate."')</script>";
 		if($disabledDates != "")
 			$disabledDates .= "+";
 		$dateArr = explode(' ', $validate);
@@ -1904,7 +1904,10 @@ if($holidayExist > 0)
 			<tr class="input-fields" id="input-field-${inputCounter}">
 
 				<input type='hidden' class='driver' value='<?php $driverBool = ($empArr['position'] == 'Driver' ? true : false )?>' >
-
+				{{if sunday}}
+			      <input type="hidden" id="isSunday">
+			    {{else}}
+			    {{/if}}
 				<!-- Time In -->
 				<td>
 					<input type='text' onblur='timeValidation(this)' class='timein1 timepicker form-control input-sm' value='' name='timein1[${inputCounter}]'>
@@ -1976,34 +1979,26 @@ if($holidayExist > 0)
 		remarksValidation("input-field-"+id);
 	}
 
-	localStorage.setItem("inputcounter", 1);
-	localStorage.setItem("tablecounter", 1);
+	localStorage.setItem("inputcounter", 0);
+	localStorage.setItem("tablecounter", 0);
 
 	$("#dateValue").change(function() {
 		var day = $("#dateValue").val();
-		
-		$('#adjustmentFields table').each(function(element){
-			localStorage.inputcounter++;
+		var d = new Date(day);
+		var sundayBool = false;
 
-			// // Input fields for attendance
-			// element = $(this).find('tr.input-fields');
-			// halfday = $(this).find('halfdayChk');
-			// if(typeof(element.attr('id')) === "undefined") {
-		 //        element.attr('id', 'inputfield-'+inputcounter++);
-		 //        halfday.attr('onclick', 'halfDay(ok)');
-		 //        localStorage.inputcounter++;
-		 //    }
+		if(d.getDay()===0){
+		 	sundayBool = true;
+		 }
 
-		 //    // For table removal
-		 //    tableElement = $(this);
-			// if(typeof(tableElement.attr('id')) === "undefined") {
-		 //        tableElement.attr('id', 'table-'+tablecounter++);
-		 //        localStorage.tablecounter++;
-		});
+		localStorage.inputcounter = $('#adjustmentFields table').length;
 		var inputcounter = localStorage.getItem("inputcounter");
+
+		// if there are id's already available, add 1 otherwise retain number
 		var data = [{ 
 					date: day,
-					inputCounter: inputcounter
+					inputCounter: inputcounter,
+					sunday: d.getDay()===0 ? true : false
 				}];
 		$('#hidden-template').tmpl(data).appendTo('#adjustmentFields');
 		
@@ -2066,6 +2061,7 @@ if($holidayExist > 0)
 	});
 
 	function removeAdjustment(date) {
+		localStorage.inputcounter--;
 		date.parentNode.parentNode.parentNode.parentNode.remove();
 	}
 

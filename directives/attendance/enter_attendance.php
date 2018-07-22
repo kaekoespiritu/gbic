@@ -10,6 +10,9 @@ function attendance ()
 	{
 		$date = strftime("%B %d, %Y");
 	}
+
+	$day = date('l', strtotime($date));
+
 	if(!isset($_GET['position']))
 	{
 		header("location:enterattendance.php?site=".$site_name."&position=null");
@@ -91,6 +94,15 @@ function attendance ()
 					Print 	"<tr id=\"". $row_employee['empid'] ."\">";
 
 						Print "<input type='hidden' class='driver' value='".$driverBool."' >";//Boolean for driver
+						
+						if( $day == 'Sunday') {
+							Print '<input type="hidden" id="isSunday">';
+						}
+						else {
+							Print '<script>console.log("'.$day.'")</script>';
+						}
+
+						Print '<script>console.log("'.$day.'")</script>';
 
 						Print		"<!-- Employee ID -->
 									<td class='empName'>
@@ -154,14 +166,20 @@ function attendance ()
 									</td>
 								<!-- Attendance Status -->
 									<input type='hidden' name='attendance[".$counter."]' value='' class='attendance'>";
-
-
 				}
 				else if($empRow['attendance'] == 1)//Absent
 				{
 					Print 	"<tr id=\"". $row_employee['empid'] ."\" class='danger'>";
 
 						Print "<input type='hidden' class='driver' value='".$driverBool."' >";//Boolean for driver
+						if( $day == 'Sunday') {
+							Print '<input type="hidden" id="isSunday">';
+						}
+						else {
+							Print '<script>console.log("'.$day.'")</script>';
+						}
+
+						Print '<script>console.log("'.$day.'")</script>';
 
 						Print		"<!-- Employee ID -->
 									<td class='empName'>
@@ -231,6 +249,14 @@ function attendance ()
 					Print 	"<tr id=\"". $row_employee['empid'] ."\" class='success'>";
 					
 						Print "<input type='hidden' class='driver' value='".$driverBool."' >";//Boolean for driver
+						if( $day == 'Sunday') {
+							Print '<input type="hidden" id="isSunday">';
+						}
+						else {
+							Print '<script>console.log("'.$day.'")</script>';
+						}
+
+						Print '<script>console.log("'.$day.'")</script>';
 
 						Print	"<!-- Employee ID -->
 									<td class='empName'>
@@ -556,9 +582,17 @@ function attendance ()
 			Print 	"	
 				<tr id=\"". $row_employee['empid'] ."\">
 
-					<input type='hidden' class='driver' value='".$driverBool."' >
+					<input type='hidden' class='driver' value='".$driverBool."' >";
+					if( $day == 'Sunday') {
+							Print '<input type="hidden" id="isSunday">';
+						}
+						else {
+							Print '<script>console.log("'.$day.'")</script>';
+						}
 
-					<input type='hidden' name='empid[".$counter."]' value=". $row_employee['empid'] .">
+						Print '<script>console.log("'.$day.'")</script>';
+
+			Print "<input type='hidden' name='empid[".$counter."]' value=". $row_employee['empid'] .">
 					<td class='empName'>
 						". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
 					</td>

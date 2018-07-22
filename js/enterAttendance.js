@@ -1,5 +1,3 @@
-document.getElementById("attendance").setAttribute("style", "background-color: #10621e;");
-
 //jQuery for timepicker
 $(document).ready(function(){
 	$('input.timein1').timepicker({
@@ -517,9 +515,10 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 	var originalMins;
 	row.querySelector('.attendance').value = "";
 
-	var isSunday = document.getElementById('isSunday') ? true : false; 
+	var isSunday = row.querySelector('#isSunday') ? true : false; 
  
  	console.log("sunday : "+ isSunday)
+ 	console.dir(row)
 	// Verifies that time in and time out input fields have value
 	if(timeinhour1 && timeouthour1 && timeinhour2 && timeouthour2)
 	{	
@@ -1877,7 +1876,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 	var originalMins;
 	row.querySelector('.attendance').value = "";
 
-	var isSunday = document.getElementById('isSunday') ? true : false; 
+	var isSunday = row.getElementById('isSunday') ? true : false; 
 
 	// Verifies that time in and time out input fields have value
 	if(timeinhour1 && timeouthour1 && timeinhour2 && timeouthour2 && timeinhour3 && timeouthour3)
