@@ -150,7 +150,8 @@ if($holidayExist > 0)
 
 						<button type="submit" class="btn btn-success pull-right" style="margin-right:5px" href="#" data-toggle="tooltip" data-placement="bottom" title="Note: Proceeding will prevent you from editing values entered. If you need to come back here and change anything, you will have to redo everything.">Save and compute</button>
 
-						<input type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#attendanceAdjustment" value="Make attendance adjustment">
+						<!-- <input type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#attendanceAdjustment" value="Make attendance adjustment"> -->
+						<button class="btn btn-danger pull-right" data-toggle="modal" data-target="#attendanceAdjustment" onclick="cancelSubmit(event)">Make attendance adjustment <span class="badge" id="badge"></span></button>
 					</ol>
 				</div>
 
@@ -1884,7 +1885,7 @@ if($holidayExist > 0)
 				<td colspan='13'>
 					<input type="hidden" name="adjustmentDate[]" value="${date}">
 					<h2 class="dateheader text-center col-md-11 col-md-push-1">${date}</h2>
-					<input type="button" class="btn btn-danger col-md-1" value="Remove" onclick="removeAdjustment(this)">
+					<input type="button" class="btn btn-danger col-md-1" value="Remove" onclick="removeAdjustment(this, '${date}')">
 				</td>
 			</tr>
 			<tr class="attendance-header">
@@ -1999,6 +2000,7 @@ if($holidayExist > 0)
 
 		if($.inArray(day,adjustedDays) == -1) {
 			adjustedDays[inputcounter] = day;
+			console.log(adjustedDays[inputcounter]);
 		}
 		else {
 			alert("You have already selected " + day);
@@ -2013,6 +2015,9 @@ if($holidayExist > 0)
 				}];
 		$('#hidden-template').tmpl(data).appendTo('#adjustmentFields');
 		
+		var temp = document.getElementById('badge');
+		temp.innerHTML = adjustedDays.length;
+		console.log(temp);
 
 		timeVerify();
 	});
@@ -2033,48 +2038,22 @@ if($holidayExist > 0)
 	
 	$("#dateValue").datepicker("setDate", currentDate);
 	
-	
-
-	// function disabledDays(date){
-	// 	var disDates = document.getElementById('disabledDates').value;
-	// 	var disArr = disDates.split('+');
-		
-	// 	var month = date.getMonth();
-	// 	var day = date.getDate();
-	// 	var year = date.getFullYear();
-
-	// 	var currentDate = (month + 1) + '-' + day + '-' + year;
-	// 	// console.log(currentDate);
-	// 	// for(var count = 0; count < disArr.length ; count++) {
-	// 		if(localStorage.datesCounter != 0)
-	// 			localStorage.datesCounter--;
-	// 		console.log("local: "+localStorage.datesCounter);
-	// 		console.log("disDate: "+disArr[localStorage.datesCounter]);
-	// 		if( $.inArray(currentDate, disArr[localStorage.datesCounter]) != -1)
-	// 		{
-	// 			return [false];
-	// 		}
-	// 		else
-	// 		{
-	// 			return [true];
-	// 		}
-	// 	// }
-	// }
-	// $(document).ready(function(){
-	// 	var disDates = $('#disabledDates').val();
-	// 	var disArr = disDates.split('+');
-	// 	var counter = disArr.length;
-	// 	localStorage.setItem("datesCounter", counter);
-	// });
 	// Tooltip for computing payroll
 	$(function () {
   		$('[data-toggle="tooltip"]').tooltip()
 	});
 
-	function removeAdjustment(date) {
-		adjustedDays.splice(0,localStorage.inputcounter);
+	function removeAdjustment(date, array) {
+		var index = adjustedDays.indexOf(array);
+		adjustedDays.splice(index, 1);
 		localStorage.inputcounter--;
+		console.log(adjustedDays[localStorage.inputcounter]);
 		date.parentNode.parentNode.parentNode.parentNode.remove();
+
+		var badge = document.getElementById('badge');
+		var count = badge.innerHTML;
+		count -= 1;
+		badge.innerHTML = count;
 	}
 
 	function nightshift_ChkBox(id) {
@@ -2158,6 +2137,10 @@ if($holidayExist > 0)
 			mainRow.querySelector('.icon').classList.remove('glyphicon', 'glyphicon-edit');
 		}
 
+	}
+
+	function cancelSubmit(e) {
+		e.preventDefault();
 	}
 
 </script>
