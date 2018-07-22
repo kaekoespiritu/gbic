@@ -21,7 +21,6 @@
 											  	remarks='".$remarks."',
 											  	attendance='".$attendance."',
 											  	date='".$date."',
-											  	site='".$location."',
 											  	sunday='".$sunday."',
 											  	holiday='".$holidayDate."' WHERE date = '$date' AND empid = '$empid'";
 		}
@@ -42,7 +41,6 @@
 											  	remarks='".$remarks."',
 											  	attendance='". $attendance ."',
 											  	date='".$date."',
-											  	site='".$location."',
 											  	sunday='0',
 											  	holiday='".$holidayDate."' WHERE date = '$date' AND empid = '$empid'";
 		}
@@ -65,7 +63,6 @@
 												  	remarks='".$remarks."',
 												  	attendance='".$attendance."',
 												  	date='".$date."',
-												  	site='".$location."',
 												  	sunday='0',
 												  	holiday='".$holidayDate."' WHERE date = '$date' AND empid = '$empid'";
 			}
@@ -86,7 +83,6 @@
 												  	remarks='".$remarks."',
 												  	attendance='".$attendance."',
 												  	date='".$date."',
-												  	site='".$location."',
 												  	sunday='0',
 												  	holiday='0' WHERE date = '$date' AND empid = '$empid'";
 			}
@@ -113,7 +109,6 @@
 					  '".$remarks."',
 					  '".$attendance."',
 					  '".$date."',
-					  '".$location."',
 					  '".$sunday."',
 					  '".$holidayDate."')";
 		}
@@ -134,7 +129,6 @@
 					  '".$remarks."',
 					  '".$attendance."',
 					  '".$date."',
-					  '".$location."',
 					  '0',
 					  '0')";
 		}
@@ -157,7 +151,6 @@
 						  '".$remarks."',
 						  '".$attendance."',
 						  '".$date."',
-						  '".$location."',
 						  '0',
 						  '".$holidayDate."')";
 			}
@@ -178,7 +171,6 @@
 						  '".$remarks."',
 						  '".$attendance."',
 						  '".$date."',
-						  '".$location."',
 						  '0',
 						  '0')";
 			}

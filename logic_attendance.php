@@ -152,7 +152,6 @@ if(!empty($dateRows))// Updating attendance
 												remarks,
 												attendance,
 												date,
-												site,
 												sunday,
 												holiday) VALUES";//ADD HOLIDAY HERE
 	$AttQuery = "";
@@ -489,7 +488,6 @@ else// NEW attendance
 												remarks,
 												attendance,
 												date,
-												site,
 												sunday,
 												holiday) VALUES";//ADD HOLIDAY HERE
 	$AttQuery = "";
