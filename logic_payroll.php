@@ -11,6 +11,7 @@
 	$employee = "SELECT * FROM employee WHERE empid = '$empid'";
 	$empQuery = mysql_query($employee);
 	$empArr = mysql_fetch_assoc($empQuery);
+	$position = $empArr['position'];
 
 //Admin Info
 	$adminUser = $_SESSION['user_logged_in'];
@@ -26,11 +27,152 @@
 		Print "<script>window.location.assign('login.php')</script>";
 	}
 
+// Payroll Adjustment algorithm
+	$adjHolidayNum = 0; // Variable for adjusting the current holiday number
+	$adjWorkingDays = 0;// Variable for adjusting the current Working days number
+	$adjAllowDays = 0;
+	$adjSundayHrs = 0;
+	$adjustmentBool = false; // Boolean for querying adjusted dates for updates
+	if(isset($_POST['timein1']) && isset($_POST['timeout1']))
+	{
+		// Holiday check
+		$adjustmentCount = count($_POST['adjustmentDate']);
+		$adjustmentDates = "";// empty string for payroll_adjustment table reference of dates
+		for($adCount = 0; $adCount < $adjustmentCount; $adCount++)
+		{
+			if(!empty($_POST['workinghrs'][$adCount]))
+			{
+				$adjustmentBool = true;// Boolean set to true to update payroll_adjustment table in the database
+
+				$adjustDate = $_POST['adjustmentDate'][$adCount];
+				// Consolidates the payroll date adjustments
+				if($adjustmentDates != "") 
+					$adjustmentDates .= "+";
+				$adjustmentDates .= $adjustDate;
+
+				// Check if holiday
+				$checkHoliday = "SELECT * FROM holiday WHERE date = '$adjustDate'";
+				$checkHolidayQuery = mysql_query($checkHoliday);
+				$holiday = '0';
+				if(mysql_num_rows($checkHolidayQuery) != 0)
+				{
+					$holiday = '1';
+					$adjHolidayNum++;// Increment holiday num
+				}
+
+				//Check if sunday
+				$sunday = '0';
+				$sundayChecker = date('l', strtotime($adjustDate));// Gets the week name
+				if($sundayChecker == "Sunday")
+				{
+					$sunday = '1';
+					$adjSundayHrsExp = explode('.',$_POST['workinghrs'][$adCount]);
+					$adjSundayHrs = $adjSundayHrsExp[0];
+					if(count($adjSundayHrsExp) > 1)
+					{
+						$adjSunHrs = $adjSundayHrsExp[0];
+						$adjSunMins = $adjSundayHrsExp[1] / 60;
+
+						$adjSundayHrs = $adjSunHrs+$adjSunMins;
+					}
+				}
+
+
+				$timein1 = $_POST['timein1'][$adCount];
+				$timeout1 = $_POST['timeout1'][$adCount];
+				$timein2 = $_POST['timein2'][$adCount];
+				$timeout2 = $_POST['timeout2'][$adCount];
+				$timein3 = $_POST['timein3'][$adCount];
+				$timeout3 = $_POST['timeout3'][$adCount];
+
+				$workinghrs = $_POST['workinghrs'][$adCount];
+				$othrs = $_POST['othrs'][$adCount];
+				$undertime = $_POST['undertime'][$adCount];
+				$nightdiff = $_POST['nightdiff'][$adCount];
+				$remarks = $_POST['remarks'][$adCount];
+				$attendance = ($_POST['attendance'][$adCount] == 'PRESENT'? 2 : 0);
+
+				//Insert Query
+				$checkAdjAttendance = "SELECT * FROM attendance WHERE empid = '$empid' AND date = '$adjustDate'"; // Check if there's an existing date
+				$checkAdjAttendanceQuery = mysql_query($checkAdjAttendance);
+				if(mysql_num_rows($checkAdjAttendanceQuery))
+				{
+					mysql_query("UPDATE attendance SET 	timein = '$timein1',
+														timeout = '$timeout1',
+														afterbreak_timein = '$timein2',
+														afterbreak_timeout = '$timeout2',
+														nightshift_timein = '$timein3', 
+														nightshift_timeout = '$timeout3',
+														workhours = '$workinghrs',
+														overtime = '$othrs',
+														undertime = '$undertime',
+														nightdiff = '$nightdiff',
+														remarks = '$remarks',
+														attendance = '$attendance',
+														sunday = '$sunday',
+														holiday = '$holiday' WHERE empid = '$empid AND date = '$adjustDate'");
+				}
+				else
+				{
+					mysql_query("INSERT INTO attendance(	empid, 
+															position,
+															timein,
+															timeout,
+															afterbreak_timein,
+															afterbreak_timeout,
+															nightshift_timein,
+															nightshift_timeout,
+															workhours,
+															overtime,
+															undertime,
+															nightdiff,
+															remarks,
+															attendance,
+															date,
+															sunday,
+															holiday) VALUES(	'$empid',
+																				'$position',
+																				'$timein1',
+																				'$timeout1',
+																				'$timein2',
+																				'$timeout2',
+																				'$timein3',
+																				'$timeout3',
+																				'$workinghrs',
+																				'$othrs',
+																				'$undertime',
+																				'$nightdiff',
+																				'$remarks',
+																				'$attendance',
+																				'$adjustDate',
+																				'$sunday',
+																				'$holiday')");
+				}
+
+				$adjAllowDays++;
+				if($sundayChecker != "Sunday")
+					$adjWorkingDays++;// Increment Working days
+			}
+		}
+		// Insert Query to payroll_adjustment table [empid, payroll_date, dates]
+		if($adjustmentBool)
+		{
+			$payrollAdjustment = "INSERT INTO payroll_adjustment(	empid, 
+																payroll_date, 
+																dates) VALUES(	'$empid',
+																				'$date',
+																				'$adjustmentDates')";
+			$payrollAdjQuery = 	mysql_query($payrollAdjustment);												
+		}
+		
+
+	}
+
 //Daily rate of employee
 	$dailyRate = $empArr['rate'];
 
 //Days attended
-	$daysAttended = $_POST['daysAttended'];
+	$daysAttended = $_POST['daysAttended'] + $adjWorkingDays;
 
 //Daily Workhours ----------------------------------------------------------------------
 //if employee is absent on these days Post value will not be available
@@ -78,6 +220,35 @@
 			$sunMins = $sunExplode[1] / 60;
 
 			$sunWorkHrs = $sunHrs+$sunMins;
+
+			if($adjSundayHrs != 0 || $adjSundayHrs != 0.00)
+			{
+				$sunWorkHrs += $adjSundayHrs;
+				$sunExplode2 = explode('.',$sunWorkHrs);
+				if(count($sunExplode2) > 1)
+				{
+					if($sunExplode2[1] >= 60)
+					{
+						$sunMins2 = $sunExplode2[1] - 60;
+						$sunHours2 = $sunExplode2[0]++;
+
+						$sunWorkHrs = $sunHours2 + $sunMins2;
+					}
+					else
+					{
+						$sunMins2 = $sunExplode2[1];
+						$sunHours2 = $sunExplode2[0];
+
+						$sunWorkHrs = $sunExplode2[0] + $sunExplode2[1];
+					}
+				}
+				else
+				{
+
+					$sunWorkHrs = $sunExplode2[0];
+				}
+			}
+				
 		}
 		else
 		{
@@ -92,6 +263,34 @@
 //Computation for Sunday --------------------------------------------------------------
 		
 		$compSunday = $SundayRatePerHour * $sunWorkHrs;
+	}
+	else if($adjSundayHrs != 0)// If no employee did not attend sunday initially
+	{
+		$sunWorkHrs += $adjSundayHrs;
+		$sunExplode2 = explode('.',$sunWorkHrs);
+		if(count($sunExplode2) > 1)
+		{
+			if($sunExplode2[1] >= 60)
+			{
+				$sunMins2 = $sunExplode2[1] - 60;
+				$sunHours2 = $sunExplode2[0]++;
+
+				$sunWorkHrs = $sunHours2 + $sunMins2;
+			}
+			else
+			{
+				$sunMins2 = $sunExplode2[1];
+				$sunHours2 = $sunExplode2[0];
+
+				$sunWorkHrs = $sunExplode2[0] + $sunExplode2[1];
+			}
+		}
+		else
+		{
+
+			$sunWorkHrs = $sunExplode2[0];
+		}
+			
 	}
 	if(!empty($_POST['monWorkHrs']))
 	{
@@ -110,8 +309,8 @@
 
 //Computes the Overall Work Days ------------------------------------------------------
 	$workHrs = explode("," ,$WorkHrsArr);
-	$overallWorkDays = 0;
-	$overallAllowance = 0;
+	$overallWorkDays = $adjWorkingDays;
+	$overallAllowance = $adjAllowDays;
 	$sunday_Att = 0;//Preset the sunday attendance to filter out the overal to the sunday
 	if($sundayBool)
 	{

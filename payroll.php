@@ -1882,6 +1882,7 @@ if($holidayExist > 0)
 		<table class="table table-bordered table-responsive">
 			<tr>
 				<td colspan='13'>
+					<input type="hidden" name="adjustmentDate[]" value="${date}">
 					<h2 class="dateheader text-center col-md-11 col-md-push-1">${date}</h2>
 					<input type="button" class="btn btn-danger col-md-1" value="Remove" onclick="removeAdjustment(this)">
 				</td>
@@ -1910,61 +1911,61 @@ if($holidayExist > 0)
 			    {{/if}}
 				<!-- Time In -->
 				<td>
-					<input type='text' onblur='timeValidation(this)' class='timein1 timepicker form-control input-sm' value='' name='timein1[${inputCounter}]'>
+					<input type='text' onblur='timeValidation(this)' class='timein1 timepicker form-control input-sm' value='' name='timein1[]'>
 				</td> 
 				<!-- Time Out-->
 				<td>
-					<input type='text' onblur='timeValidation(this)' class='timeout1 timepicker form-control input-sm' value='' name='timeout1[${inputCounter}]'>
+					<input type='text' onblur='timeValidation(this)' class='timeout1 timepicker form-control input-sm' value='' name='timeout1[]'>
 				</td> 
 				<!-- Half Day Checkbox-->
 				<td>
-					<input type='checkbox' class='halfdayChk' name='halfday[${inputCounter}]' onclick="halfDay('input-field-${inputCounter}')" disabled>
+					<input type='checkbox' class='halfdayChk' name='halfday[]' onclick="halfDay('input-field-${inputCounter}')" disabled>
 				</td>
 				<!-- AFTER BREAK Time In -->
 				<td>
-					<input type='text' onblur='timeValidation(this)' class='timein2 timepicker form-control input-sm' value=''  name='timein2[${inputCounter}]'>
+					<input type='text' onblur='timeValidation(this)' class='timein2 timepicker form-control input-sm' value=''  name='timein2[]'>
 				</td> 
 				<!-- AFTER BREAK Time Out-->
 				<td>
-					<input type='text' onblur='timeValidation(this)' class='timeout2 timepicker form-control input-sm' value='' name='timeout2[${inputCounter}]'>
+					<input type='text' onblur='timeValidation(this)' class='timeout2 timepicker form-control input-sm' value='' name='timeout2[]'>
 				</td> 
 				<!-- Night Shift Checkbox-->
 				<td>
-					<input type='checkbox' class='nightshiftChk' name='nightshift[${inputCounter}]' onclick="nightshift_ChkBox('input-field-${inputCounter}')" disabled>
+					<input type='checkbox' class='nightshiftChk' name='nightshift[]' onclick="nightshift_ChkBox('input-field-${inputCounter}')" disabled>
 				</td>
 				<!-- NIGHT SHIFT Time In -->
 				<td>
-					<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value=''  name='timein3[${inputCounter}]' readonly>
+					<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value=''  name='timein3[]' readonly>
 				</td> 
 				<!-- NIGHT SHIFT Time Out-->
 				<td>
-					<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='' name='timeout3[${inputCounter}]' readonly>
+					<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='' name='timeout3[]' readonly>
 				</td> 
 				<!-- Working Hours -->
 				<td>
 					<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' disabled>
-					<input type='hidden' class='workinghoursH'  name='workinghrs[${inputCounter}]' >
+					<input type='hidden' class='workinghoursH'  name='workinghrs[]' >
 				</td> 
 				<!-- Overtime -->
 				<td>
 					<input type='text' placeholder='--' class='form-control input-sm overtime' value=''  disabled>
-					<input type='hidden' class='overtimeH' name='othrs[${inputCounter}]' >
+					<input type='hidden' class='overtimeH' name='othrs[]' >
 				</td> 
 				<!-- Undertime -->
 				<td>
 					<input type='text' placeholder='--' class='form-control input-sm undertime' value='' disabled>
-					<input type='hidden' class='undertimeH' name='undertime[${inputCounter}]' >
+					<input type='hidden' class='undertimeH' name='undertime[]' >
 				</td>
 				<!-- Night Differential --> 
 				<td>
 					<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' disabled>
-					<input type='hidden' class='nightdiffH' name='nightdiff[${inputCounter}]' >
+					<input type='hidden' class='nightdiffH' name='nightdiff[]' >
 				</td>
 				<!-- Remarks Input --> 
-					<input type='hidden' name='remarks[${inputCounter}]' class='hiddenRemarks'>
+					<input type='hidden' name='remarks[]' class='hiddenRemarks'>
 
 				<!-- Attendance Status -->
-					<input type='hidden' name='attendance[${inputCounter}]' class='attendance'>
+					<input type='hidden' name='attendance[]' class='attendance'>
 				<!-- Remarks Button --> 
 				<td>
 					<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarksFunc("${inputCounter}")'>Remarks <span class='icon'></span></a>
@@ -2005,7 +2006,7 @@ if($holidayExist > 0)
 
 		timeVerify();
 	});
-	var currentDate = "<?php Print "$date"; ?>";
+	var currentDate = "<?php Print $day8 ?>";
 	//Date picker for adjustments
 	$("#dateValue").datepicker({
 			changeMonth: true,
