@@ -3,8 +3,45 @@
 	include('directives/db.php');
 	$time = strftime("%X");//TIME
 
+
 	// $date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("%B %d, %Y")); // Gets the payroll date if admin didn't finish the payroll for the week
 	$date = "July 11, 2018";
+
+function GetExactRawTime($time) 
+{
+	$explodeTime = explode('.',$time);
+	if(count($explodeTime) > 1)
+	{
+		$getHrs = $explodeTime[0];
+		$getMins = $explodeTime[1] / 60;
+
+		$output = $getHrs+$getMins;
+	}
+	else
+	{
+		$output = $explodeTime[0];
+	}
+	return $output;
+}
+
+function getDay($day)
+{
+	switch($day)
+	{
+		case "1": $output = "01";break;
+		case "2": $output = "02";break;
+		case "3": $output = "03";break;
+		case "4": $output = "04";break;
+		case "5": $output = "05";break;
+		case "6": $output = "06";break;
+		case "7": $output = "07";break;
+		case "8": $output = "08";break;
+		case "9": $output = "09";break;
+		default: $output = $day;
+	}
+
+	return $output;
+}
 //Employee ID
 	$empid = $_POST['employeeID'];
 
@@ -28,10 +65,13 @@
 	}
 
 // Payroll Adjustment algorithm
-	$adjHolidayNum = 0; // Variable for adjusting the current holiday number
+	$adjHolidayRegNum = 0; // Variable for adjusting the current holiday number
+	$adjHolidaySpeNum = 0; // Variable for adjusting the current holiday number
 	$adjWorkingDays = 0;// Variable for adjusting the current Working days number
 	$adjAllowDays = 0;
 	$adjSundayHrs = 0;
+	$adjOthrs = 0;
+	$adjNightdiff = 0;
 	$adjustmentBool = false; // Boolean for querying adjusted dates for updates
 	if(isset($_POST['timein1']) && isset($_POST['timeout1']))
 	{
@@ -45,6 +85,13 @@
 				$adjustmentBool = true;// Boolean set to true to update payroll_adjustment table in the database
 
 				$adjustDate = $_POST['adjustmentDate'][$adCount];
+				$dateExplode = explode(' ', $adjustDate);
+				$month = $dateExplode[0];
+				$day = getDay(substr($dateExplode[1], 0, -1));
+				$year = $dateExplode[2];
+
+				$adjustDate = $month." ".$day.", ".$year;
+
 				// Consolidates the payroll date adjustments
 				if($adjustmentDates != "") 
 					$adjustmentDates .= "+";
@@ -56,8 +103,13 @@
 				$holiday = '0';
 				if(mysql_num_rows($checkHolidayQuery) != 0)
 				{
+					$adjHolidayArr = mysql_fetch_assoc($checkHolidayQuery);
+					if($adjHolidayArr['type'] == "special")
+						$adjHolidaySpeNum++;// Increment holiday num
+					else
+						$adjHolidayRegNum++;// Increment holiday num
 					$holiday = '1';
-					$adjHolidayNum++;// Increment holiday num
+					
 				}
 
 				//Check if sunday
@@ -86,11 +138,24 @@
 				$timeout3 = $_POST['timeout3'][$adCount];
 
 				$workinghrs = $_POST['workinghrs'][$adCount];
-				$othrs = $_POST['othrs'][$adCount];
-				$undertime = $_POST['undertime'][$adCount];
-				$nightdiff = $_POST['nightdiff'][$adCount];
+				if($sundayChecker == "Sunday")
+				{
+					$othrs = 0;
+					$undertime = 0;
+					$nightdiff = 0;
+				}
+				else
+				{
+					$othrs = $_POST['othrs'][$adCount];
+					$undertime = $_POST['undertime'][$adCount];
+					$nightdiff = $_POST['nightdiff'][$adCount];
+				}
+				
 				$remarks = $_POST['remarks'][$adCount];
 				$attendance = ($_POST['attendance'][$adCount] == 'PRESENT'? 2 : 0);
+
+				$adjOthrs += GetExactRawTime($othrs);//Gets overall OT
+				$adjNightdiff += GetExactRawTime($nightdiff);//Gets overall Nightdiff
 
 				//Insert Query
 				$checkAdjAttendance = "SELECT * FROM attendance WHERE empid = '$empid' AND date = '$adjustDate'"; // Check if there's an existing date
@@ -224,29 +289,29 @@
 			if($adjSundayHrs != 0 || $adjSundayHrs != 0.00)
 			{
 				$sunWorkHrs += $adjSundayHrs;
-				$sunExplode2 = explode('.',$sunWorkHrs);
-				if(count($sunExplode2) > 1)
-				{
-					if($sunExplode2[1] >= 60)
-					{
-						$sunMins2 = $sunExplode2[1] - 60;
-						$sunHours2 = $sunExplode2[0]++;
+				// $sunExplode2 = explode('.',$sunWorkHrs);
+				// if(count($sunExplode2) > 1)
+				// {
+				// 	if($sunExplode2[1] >= 60)
+				// 	{
+				// 		$sunMins2 = $sunExplode2[1] - 60;
+				// 		$sunHours2 = $sunExplode2[0]++;
 
-						$sunWorkHrs = $sunHours2 + $sunMins2;
-					}
-					else
-					{
-						$sunMins2 = $sunExplode2[1];
-						$sunHours2 = $sunExplode2[0];
+				// 		$sunWorkHrs = $sunHours2 + $sunMins2;
+				// 	}
+				// 	else
+				// 	{
+				// 		$sunMins2 = $sunExplode2[1];
+				// 		$sunHours2 = $sunExplode2[0];
 
-						$sunWorkHrs = $sunExplode2[0] + $sunExplode2[1];
-					}
-				}
-				else
-				{
+				// 		$sunWorkHrs = $sunExplode2[0] + $sunExplode2[1];
+				// 	}
+				// }
+				// else
+				// {
 
-					$sunWorkHrs = $sunExplode2[0];
-				}
+				// 	$sunWorkHrs = $sunExplode2[0];
+				// }
 			}
 				
 		}
@@ -267,29 +332,29 @@
 	else if($adjSundayHrs != 0)// If no employee did not attend sunday initially
 	{
 		$sunWorkHrs += $adjSundayHrs;
-		$sunExplode2 = explode('.',$sunWorkHrs);
-		if(count($sunExplode2) > 1)
-		{
-			if($sunExplode2[1] >= 60)
-			{
-				$sunMins2 = $sunExplode2[1] - 60;
-				$sunHours2 = $sunExplode2[0]++;
+		// $sunExplode2 = explode('.',$sunWorkHrs);
+		// if(count($sunExplode2) > 1)
+		// {
+		// 	if($sunExplode2[1] >= 60)
+		// 	{
+		// 		$sunMins2 = $sunExplode2[1] - 60;
+		// 		$sunHours2 = $sunExplode2[0]++;
 
-				$sunWorkHrs = $sunHours2 + $sunMins2;
-			}
-			else
-			{
-				$sunMins2 = $sunExplode2[1];
-				$sunHours2 = $sunExplode2[0];
+		// 		$sunWorkHrs = $sunHours2 + $sunMins2;
+		// 	}
+		// 	else
+		// 	{
+		// 		$sunMins2 = $sunExplode2[1];
+		// 		$sunHours2 = $sunExplode2[0];
 
-				$sunWorkHrs = $sunExplode2[0] + $sunExplode2[1];
-			}
-		}
-		else
-		{
+		// 		$sunWorkHrs = $sunExplode2[0] + $sunExplode2[1];
+		// 	}
+		// }
+		// else
+		// {
 
-			$sunWorkHrs = $sunExplode2[0];
-		}
+		// 	$sunWorkHrs = $sunExplode2[0];
+		// }
 			
 	}
 	if(!empty($_POST['monWorkHrs']))
@@ -359,8 +424,14 @@
 	$OtRatePerHour = numberExactFormat($OtRatePerHour, 2, '.', true);
 	if(!empty($_POST['totalOverTime']))
 	{
-		$totalOT = $_POST['totalOverTime'];//Total Overtime by employee
+		$totalOT = $_POST['totalOverTime'] + $adjOthrs;//Total Overtime by employee
+
 		Print "<script>console.log('totalOT: ".$totalOT."')</script>";
+		$compOT = $totalOT * $OtRatePerHour;//Computed Overtime
+	}
+	else if($adjOthrs != 0)
+	{
+		$totalOT = $adjOthrs;
 		$compOT = $totalOT * $OtRatePerHour;//Computed Overtime
 	}
 
@@ -370,7 +441,13 @@
 	$totalND = 0;
 	if(!empty($_POST['totalNightDiff']))
 	{
-		$totalND = $_POST['totalNightDiff'];
+		$totalND = $_POST['totalNightDiff'] + $adjNightdiff;
+
+		$compND = $totalND * $NdRatePerHour;//Computed Night Differential
+	}
+	else if($adjNightdiff != 0)
+	{
+		$totalND = $adjNightdiff;
 
 		$compND = $totalND * $NdRatePerHour;//Computed Night Differential
 	}
@@ -413,9 +490,9 @@
 	$regHolidayInc = $dailyRate;//Computation for Regular Holiday 
 	$speHolidayInc = $dailyRate * .30;//Special Holiday 
 	$addHoliday = 0;//Preset Additional holiday value for the grand total
-	$regHolNum = 0;//Preset number of regular holiday this payroll period
-	$speHolNum = 0;//Preset number of special holiday this payroll period
-	
+	$regHolNum = $adjHolidayRegNum;//Preset number of regular holiday this payroll period
+	$speHolNum = $adjHolidaySpeNum;//Preset number of special holiday this payroll period
+
 	if($empArr['complete_doc'] == 1) 
 	{
 
