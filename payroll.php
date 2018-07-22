@@ -1983,6 +1983,8 @@ if($holidayExist > 0)
 	localStorage.setItem("inputcounter", 0);
 	localStorage.setItem("tablecounter", 0);
 
+	var adjustedDays = [];
+
 	$("#dateValue").change(function() {
 		var day = $("#dateValue").val();
 		var d = new Date(day);
@@ -1994,6 +1996,14 @@ if($holidayExist > 0)
 
 		localStorage.inputcounter = $('#adjustmentFields table').length;
 		var inputcounter = localStorage.getItem("inputcounter");
+
+		if($.inArray(day,adjustedDays) == -1) {
+			adjustedDays[inputcounter] = day;
+		}
+		else {
+			alert("You have already selected " + day);
+			return 0;
+		}
 
 		// if there are id's already available, add 1 otherwise retain number
 		var data = [{ 
@@ -2062,6 +2072,7 @@ if($holidayExist > 0)
 	});
 
 	function removeAdjustment(date) {
+		adjustedDays.splice(0,localStorage.inputcounter);
 		localStorage.inputcounter--;
 		date.parentNode.parentNode.parentNode.parentNode.remove();
 	}
