@@ -238,6 +238,9 @@ else if($loanType == "newVale")
 					}
 					else
 					{
+						$statement = "";
+						$limit = "";
+						$page = "";
 						Print 
 						"
 						<tr><td colspan='6'><h3>No records found.</h3></td></tr>
