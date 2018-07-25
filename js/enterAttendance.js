@@ -1008,8 +1008,8 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 						}
 					}
 
-					if(nightdiffBool == false && nightdiff == "")
-						nightdiffBool = true;
+					// if(nightdiffBool == false && nightdiff == "")
+					// 	nightdiffBool = true;
 
 					if(nightdiffBool && nightdiffMins != 0)
 					{
