@@ -141,9 +141,6 @@ function timeVerify() {
 
 }
 	
-
-
-
 function halfDay(id){
 	var mainRow = document.getElementById(id); // Get row to be computed
 	if(mainRow.querySelector('.halfdayChk').checked == false) // enable checkbox)
@@ -219,7 +216,6 @@ function halfDay(id){
 	}
 	
 }
-
 //Time validation	
 function timeValidation(evt)
 {
@@ -331,166 +327,163 @@ function timeOut(id) {
 		computeTime(mainRow, timeinhour1, timeinmin1, timeouthour1, timeoutmin1, timeinhour2, timeinmin2, timeouthour2, timeoutmin2);
 }	
 
-	function halfDayCheckbox(id) {
-		var mainRow = document.getElementById(id); // Get row to be computed
-		mainRow.querySelector('.halfdayChk').disabled = false; // enable checkbox
+function halfDayCheckbox(id) {
+	var mainRow = document.getElementById(id); // Get row to be computed
+	mainRow.querySelector('.halfdayChk').disabled = false; // enable checkbox
+}
+
+//Submit the form
+function save() {
+	var a = confirm("Are you sure you want to save this attendance? All of the blank fields will remain empty.")
+	if(a)
+	{
+		document.getElementById('form').submit();
 	}
+}
 
 
+function remarksValidation(id) {
+	var mainRow = document.getElementById(id);
+	var remarks = mainRow.querySelector('.hiddenRemarks').value;
 
-	//Submit the form
-	function save() {
-		var a = confirm("Are you sure you want to save this attendance? All of the blank fields will remain empty.")
-		if(a)
-		{
-			document.getElementById('form').submit();
-		}
+	var remarksCounter = remarks.length - 100;
+	remarksCounter = Math.abs(remarksCounter);
+	
+	document.getElementById('remarksCounter').innerHTML = remarksCounter;
+
+}
+
+function remarksListener(val) {
+	var remarkInput = 100 - val.length;
+
+	if(remarkInput < 0)
+		document.getElementById('saveRemarks').classList.add('disabletotally');
+	else
+		document.getElementById('saveRemarks').classList.remove('disabletotally');
+
+	document.getElementById('remarksCounter').innerHTML = remarkInput;
+}
+
+function remarks(id) {	
+	// show modal here to input for remarks
+	var mainRow = document.getElementById(id);
+	if(mainRow.querySelector('.hiddenRemarks').value != null)
+	{
+
+		var input = mainRow.querySelector('.hiddenRemarks').value;
+		input = input.replace(/\\/g, '');
+		document.getElementById('remark').value = input;
 	}
-	function remarksValidation(id) {
-		var mainRow = document.getElementById(id);
-		var remarks = mainRow.querySelector('.hiddenRemarks').value;
+	else
+	{
+		document.getElementById('remark').value = "";
+	}
+	var empName = mainRow.querySelector('.empName').innerHTML.trim();
+	var modal = document.getElementById('dito').innerHTML = "Remarks for " + empName;
+	document.getElementById('saveRemarks').setAttribute('onclick', "saveRemarks(\""+ id +"\")");
+	
+}
+	
+// This triggers the submit of search Form ( 13 = Enter key )
+function enter(e) {
+	if (e.keyCode == 13) {
+		document.getElementById('search_form').submit();
+	}
+}
 
-		var remarksCounter = remarks.length - 100;
-		remarksCounter = Math.abs(remarksCounter);
+// Transfer content to hidden input field
+function saveRemarks(id) {
+	var mainRow = document.getElementById(id);
+	var remarks = document.getElementById('remark').value.trim();
+	var hiddenRemarks = mainRow.querySelector('.hiddenRemarks').setAttribute('value', remarks);
+
+	if(remarks !== null && remarks !== "")
+	{
 		
-		document.getElementById('remarksCounter').innerHTML = remarksCounter;
-
-	}
-
-	function remarksListener(val) {
-		var remarkInput = 100 - val.length;
-
-		if(remarkInput < 0)
-			document.getElementById('saveRemarks').classList.add('disabletotally');
-		else
-			document.getElementById('saveRemarks').classList.remove('disabletotally');
-
-		document.getElementById('remarksCounter').innerHTML = remarkInput;
-	}
-
-	function remarks(id) {	
-		// show modal here to input for remarks
-		var mainRow = document.getElementById(id);
-		if(mainRow.querySelector('.hiddenRemarks').value != null)
-		{
-
-			var input = mainRow.querySelector('.hiddenRemarks').value;
-			input = input.replace(/\\/g, '');
-			document.getElementById('remark').value = input;
-		}
-		else
-		{
-			document.getElementById('remark').value = "";
-		}
-		var empName = mainRow.querySelector('.empName').innerHTML.trim();
-		var modal = document.getElementById('dito').innerHTML = "Remarks for " + empName;
-		document.getElementById('saveRemarks').setAttribute('onclick', "saveRemarks(\""+ id +"\")");
+		mainRow.querySelector('.icon').classList.add('glyphicon', 'glyphicon-edit');
 		
-	}
-	// This triggers the submit of search Form ( 13 = Enter key )
-	function enter(e) {
-		if (e.keyCode == 13) {
-			document.getElementById('search_form').submit();
-		}
-	}
-	// Transfer content to hidden input field
-	function saveRemarks(id) {
-		var mainRow = document.getElementById(id);
-		var remarks = document.getElementById('remark').value.trim();
-		var hiddenRemarks = mainRow.querySelector('.hiddenRemarks').setAttribute('value', remarks);
-
-		if(remarks !== null && remarks !== "")
-		{
+		//alert("Time to add a badge here!");
+		//alert(remarks);
 			
-			mainRow.querySelector('.icon').classList.add('glyphicon', 'glyphicon-edit');
-			
-			//alert("Time to add a badge here!");
-			//alert(remarks);
-				
-		}
-		else
-		{
-			//alert("Nothing to do!");
-			mainRow.querySelector('.icon').classList.remove('glyphicon', 'glyphicon-edit');
-		}
-
+	}
+	else
+	{
+		//alert("Nothing to do!");
+		mainRow.querySelector('.icon').classList.remove('glyphicon', 'glyphicon-edit');
 	}
 
-	function absent(id) {
-		var mainRow = document.getElementById(id); // Get row to be computed
+}
 
-		// change color of row to shade of red
-		mainRow.classList.add('danger');
-		// set attendance status to ABSENT
-		mainRow.querySelector('.attendance').value = "ABSENT";
-		// add text ABSENT to time in and time out
-		mainRow.querySelector('.timein1').placeholder = "ABSENT";
-		mainRow.querySelector('.timeout1').placeholder = "ABSENT";
-		mainRow.querySelector('.timein2').placeholder = "ABSENT";
-		mainRow.querySelector('.timeout2').placeholder = "ABSENT";
-		mainRow.querySelector('.timein3').placeholder = "ABSENT";
-		mainRow.querySelector('.timeout3').placeholder = "ABSENT";
+function absent(id) {
+	var mainRow = document.getElementById(id); // Get row to be computed
 
-		//Checkboxes
-		if(mainRow.querySelector('.nightshiftChk').checked == true)//Nightdiff
-			mainRow.querySelector('.nightshiftChk').checked = false;
-		if(mainRow.querySelector('.halfdayChk').checked == true)//HalfDay
-			mainRow.querySelector('.halfdayChk').checked = false;
-		
-		// delete values
-		mainRow.querySelector('.timein1').value = "";
-		mainRow.querySelector('.timeout1').value = "";
-		mainRow.querySelector('.timein2').value = "";
-		mainRow.querySelector('.timeout2').value = "";
-		mainRow.querySelector('.timein3').value = "";
-		mainRow.querySelector('.timeout3').value = "";
-		mainRow.querySelector('.workinghours').value = "";
-		mainRow.querySelector('.overtime').value = "";
-		mainRow.querySelector('.undertime').value = "";
+	// change color of row to shade of red
+	mainRow.classList.add('danger');
+	// set attendance status to ABSENT
+	mainRow.querySelector('.attendance').value = "ABSENT";
+	// add text ABSENT to time in and time out
+	mainRow.querySelector('.timein1').placeholder = "ABSENT";
+	mainRow.querySelector('.timeout1').placeholder = "ABSENT";
+	mainRow.querySelector('.timein2').placeholder = "ABSENT";
+	mainRow.querySelector('.timeout2').placeholder = "ABSENT";
+	mainRow.querySelector('.timein3').placeholder = "ABSENT";
+	mainRow.querySelector('.timeout3').placeholder = "ABSENT";
 
-		mainRow.querySelector('.timein3').disabled = true;
-		mainRow.querySelector('.timeout3').disabled = true;
-		//for hidden rows
-		mainRow.querySelector('.workinghoursH').value = "";
-		mainRow.querySelector('.overtimeH').value = "";
-		mainRow.querySelector('.undertimeH').value = "";
-		mainRow.querySelector('.nightdiffH').value = "";
+	//Checkboxes
+	if(mainRow.querySelector('.nightshiftChk').checked == true)//Nightdiff
+		mainRow.querySelector('.nightshiftChk').checked = false;
+	if(mainRow.querySelector('.halfdayChk').checked == true)//HalfDay
+		mainRow.querySelector('.halfdayChk').checked = false;
+	
+	// delete values
+	mainRow.querySelector('.timein1').value = "";
+	mainRow.querySelector('.timeout1').value = "";
+	mainRow.querySelector('.timein2').value = "";
+	mainRow.querySelector('.timeout2').value = "";
+	mainRow.querySelector('.timein3').value = "";
+	mainRow.querySelector('.timeout3').value = "";
+	mainRow.querySelector('.workinghours').value = "";
+	mainRow.querySelector('.overtime').value = "";
+	mainRow.querySelector('.undertime').value = "";
 
-		//for nightshift
-		mainRow.querySelector('.nightshiftChk').disabled = true;
+	mainRow.querySelector('.timein3').disabled = true;
+	mainRow.querySelector('.timeout3').disabled = true;
+	//for hidden rows
+	mainRow.querySelector('.workinghoursH').value = "";
+	mainRow.querySelector('.overtimeH').value = "";
+	mainRow.querySelector('.undertimeH').value = "";
+	mainRow.querySelector('.nightdiffH').value = "";
 
-		//for halfday
-		if(mainRow.querySelector('.halfdayChk').checked = true)
-			mainRow.querySelector('.halfdayChk').checked = false;
-	}
+	//for nightshift
+	mainRow.querySelector('.nightshiftChk').disabled = true;
 
-	function getHour(time) {
-		if(time)
-		{
+	//for halfday
+	if(mainRow.querySelector('.halfdayChk').checked = true)
+		mainRow.querySelector('.halfdayChk').checked = false;
+}
+
+function getHour(time) {
+	if(time) {
 		var hour = time.split(":"); // Split hour + min + AM/PM
 		var min = hour[1].split(" "); // Split min + AM/PM
 		var diff; // Determine if AM/PM
 
-		if(min[1] == "AM" && parseInt(hour[0],10) == 12)
-		{
+		if(min[1] == "AM" && parseInt(hour[0],10) == 12) {
 			hr = 24;
 			return hr;
 		}
-		if(min[1] == "PM" && parseInt(hour[0],10) != 12)
-		{
+		if(min[1] == "PM" && parseInt(hour[0],10) != 12) {
 			diff = 12; // Add 12hrs if PM
 			var hr = parseInt(hour[0],10) + diff;
 			return hr;
 		}
-		else
-		{
+		else {
 			var hr = parseInt(hour[0]);
 			return hr;
 		}
 
 	}	
-	else
-	{
+	else {
 		return 0;
 	}		
 }
@@ -617,7 +610,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		if(workinghours >= 1)
 		{
 			console.log("Morning shift1");
-		// Computing minutes
+			// Computing minutes
 			//Before break
 			//If employee chooses halfday
 
@@ -1876,7 +1869,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 	var originalMins;
 	row.querySelector('.attendance').value = "";
 
-	var isSunday = row.getElementById('isSunday') ? true : false; 
+	var isSunday = row.querySelector('#isSunday') ? true : false; 
 
 	// Verifies that time in and time out input fields have value
 	if(timeinhour1 && timeouthour1 && timeinhour2 && timeouthour2 && timeinhour3 && timeouthour3)
@@ -3029,7 +3022,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				row.querySelector('.workinghours').value = workinghours + " hrs, " + workingmins + " mins";	
 				row.querySelector('.workinghoursH').value = workinghours + " hrs, " + workingmins + " mins";	
 			}
-			if(isSunday)
+			if(!isSunday)
 			{
 				// OVERTIME if Working Hours exceed 8
 				if(workinghours > 8 && workingmins == 0)
@@ -3087,7 +3080,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			var time2 = 0;
 			var time3 = 0;
 			
-			if(isSunday)
+			if(!isSunday)
 			{
 				if ((timeinhour1 <= 10 && timeouthour1 >= 10) ||// pos1 ~ 6
 					(timeinhour1 <= 10 && timeouthour1 <= 18) ||// pos7 ~ 8
