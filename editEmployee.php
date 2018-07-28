@@ -183,7 +183,7 @@ $cola = $employee_info['cola'];
 						<div class="col-md-5 col-lg-5">
 							<div class="dropdown">
 								<select class="form-control" name="position" aria-labelledby="dropdownMenu1">
-									<option hidden>Select a position</option>
+									<option disabled value="" selected>Select a position</option>
 									<?php
 									$query = "SELECT position FROM job_position WHERE active = '1'";
 									$job_query = mysql_query($query);
@@ -212,7 +212,7 @@ $cola = $employee_info['cola'];
 						<div class="col-md-5 col-lg-5">
 							<div class="dropdown">
 								<select name="site" class="form-control">
-									<option hidden>Select a site</option>
+									<option disabled value="" selected>Select a site</option>
 									<?php
 									$site_query = "SELECT location FROM site WHERE active = '1'";
 									$location_query = mysql_query($site_query);
