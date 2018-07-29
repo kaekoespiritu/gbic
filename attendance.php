@@ -249,6 +249,8 @@ include('directives/session.php');
 
 				$empNum = mysql_num_rows($empCheckerQuery);// gets the number of employees in the query
 				$count = 1;// counter for number of loops
+				$employeeNum = mysql_num_rows($empCheckerQuery);//Number of employee on site
+				Print "<script>console.log('employeeNum: ".$employeeNum."')</script>";
 				$checkerBuilder = "";
 				if($empNum != 0)
 				{
@@ -276,6 +278,8 @@ include('directives/session.php');
 					//Check if overall attendance for a certain site is done
 					$attendanceChecker = "SELECT * FROM attendance WHERE date = '$date' $checkerBuilder";
 					$attendanceQuery = mysql_query($attendanceChecker);
+					$attendanceNum = mysql_num_rows($attendanceQuery);// Number of attendance of employee
+					Print "<script>console.log('attendanceNum: ".$attendanceNum."')</script>";
 					if($attendanceQuery)
 					{
 						$attNum = mysql_num_rows($attendanceQuery);
@@ -293,7 +297,7 @@ include('directives/session.php');
 									$checker++;//counter
 								}
 							}
-							if($checker == $attNum)//check if number of attendance and the counter are the same
+							if($checker == $attNum  && $employeeNum == $attendanceNum)//check if number of attendance and the counter are the same
 							{
 								$attendanceStatus = 1;//Trigger for completing the attendance for the site
 							}
