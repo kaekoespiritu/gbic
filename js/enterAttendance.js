@@ -1719,6 +1719,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1);
 					if(	(timeinhour1 <= 10 && timeouthour1 <= 18) || 
 						(timeinhour1 <= 10 && timeouthour1 >= 18) || 
+						(timeinhour1 >= 10 && timeinhour1 <= 18 && timeouthour1 >= 10 && timeouthour1 <= 18) ||
 						(timeinhour1 >= timeouthour1 && timeInPeriod == timeOutPeriod))//night diff needs reconfiguration
 					{
 						console.log("ND")
@@ -1802,6 +1803,11 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 								console.log("possibility 3.1");
 								nightdiff = 8;
 							}
+						}
+						// If time in hour and time out hour is inside the nightdiff
+						else if(timeinhour1 >= 10 && timeinhour1 <= 18 && timeouthour1 >= 10 && timeouthour1 <= 18)
+						{
+							nightdiff = timeinhour1 - timeouthour1;
 						}
 
 						if(originalMins != null)
