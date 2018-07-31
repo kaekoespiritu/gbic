@@ -508,7 +508,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 	var originalMins;
 	row.querySelector('.attendance').value = "";
 
-	var isSunday = row.querySelector('#isSunday') ? true : false; 
+	var isSunday = (row.querySelector('#isSunday') ? true : false); 
  
  	console.log("sunday : "+ isSunday)
  	console.dir(row)
@@ -677,10 +677,10 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			var checkTime2 = timeinhour2 - timeouthour2;
 			var useOnce = true;
 
-			if(row.querySelector('.driver').value == '1')
+			if(row.querySelector('.driver').value == '1' && isSunday)
 			{
 				console.log("driver");
-				if(Math.abs(checkTime1) >= 8)// if accumulated time is more than 8 hours 
+				if(Math.abs(checkTime1) >= 14)// if accumulated time is more than 8 hours 
 				{
 					
 					if(workingmins == 0)
@@ -715,7 +715,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				//2nd Time in and Time out
 				// useOnce = true;
 				workingmins = Math.abs(workingmins);
-				if(Math.abs(checkTime2) >= 8)// if accumulated time is more than 8 hours 
+				if(Math.abs(checkTime2) >= 14)// if accumulated time is more than 8 hours 
 				{
 					console.log("5");
 					if(workingmins == 0)
@@ -1320,11 +1320,11 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 
 			console.log("checkTime1: "+timeinhour1+" | "+timeouthour1);
 			
-			if(row.querySelector('.driver').value == '1')
+			if(row.querySelector('.driver').value == '1' && isSunday)
 			{
 				console.log("1: "+useOnce);
 				console.log("checkTime1: "+checkTime1);
-				if(Math.abs(checkTime1) >= 8)// if accumulated time is more than 8 hours 
+				if(Math.abs(checkTime1) >= 14)// if accumulated time is more than 8 hours 
 				{
 					
 					if(workingmins == 0)
@@ -1355,7 +1355,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				//2nd Time in and Time out
 				// useOnce = true;
 				workingmins = Math.abs(workingmins);
-				if(Math.abs(checkTime2) >= 8)// if accumulated time is more than 8 hours 
+				if(Math.abs(checkTime2) >= 14)// if accumulated time is more than 8 hours 
 				{
 					if(workingmins == 0)
 					{
@@ -1370,7 +1370,6 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					{
 						workingmins = workingmins - 30;//minus 30mins
 					}
-					
 					if(workingmins < 0)
 					{
 						if(useOnce)
@@ -1381,9 +1380,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 						else
 							workingmins = 60 - Math.abs(workingmins);
 					}
-					
 				}
-
 			}
 			else
 			{
@@ -1910,7 +1907,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 	var originalMins;
 	row.querySelector('.attendance').value = "";
 
-	var isSunday = row.querySelector('#isSunday') ? true : false; 
+	var isSunday = (row.querySelector('#isSunday') ? true : false); 
 
 	// Verifies that time in and time out input fields have value
 	if(timeinhour1 && timeouthour1 && timeinhour2 && timeouthour2 && timeinhour3 && timeouthour3)
@@ -2037,10 +2034,10 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			var useOnce = true;
 
 			//if employee is a driver or pahinante
-			if(row.querySelector('.driver').value == 1)
+			if(row.querySelector('.driver').value == 1 && isSunday)
 			{
 				console.log("driver");
-				if(Math.abs(checkTime1) >= 8)// if accumulated time is more than 8 hours 
+				if(Math.abs(checkTime1) >= 14)// if accumulated time is more than 8 hours 
 				{
 					
 					if(workingmins == 0)
@@ -2070,7 +2067,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					
 				}
 				//2nd Time in and Time out
-				if(Math.abs(checkTime2) >= 8)// if accumulated time is more than 8 hours 
+				if(Math.abs(checkTime2) >= 14)// if accumulated time is more than 8 hours 
 				{
 					
 					if(workingmins == 0)
@@ -2101,7 +2098,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				}
 				//3nd Time in  and Time out
 				workingmins = Math.abs(workingmins);
-				if(Math.abs(checkTime3) >= 8)// if accumulated time is more than 8 hours 
+				if(Math.abs(checkTime3) >= 14)// if accumulated time is more than 8 hours 
 				{
 					
 					if(workingmins == 0)
@@ -2762,10 +2759,10 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			var useOnce = true;
 
 			//if employee is a driver or pahinante
-			if(row.querySelector('.driver').value == 1)
+			if(row.querySelector('.driver').value == 1 && isSunday)
 			{
 				console.log("driver");
-				if(Math.abs(checkTime1) >= 8)// if accumulated time is more than 8 hours 
+				if(Math.abs(checkTime1) >= 14)// if accumulated time is more than 8 hours 
 				{
 					
 					if(workingmins == 0)
@@ -2795,7 +2792,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					
 				}
 				//2nd Time in and Time out
-				if(Math.abs(checkTime2) >= 8)// if accumulated time is more than 8 hours 
+				if(Math.abs(checkTime2) >= 14)// if accumulated time is more than 8 hours 
 				{
 					
 					if(workingmins == 0)
@@ -2826,7 +2823,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				}
 				//3nd Time in  and Time out
 				workingmins = Math.abs(workingmins);
-				if(Math.abs(checkTime3) >= 8)// if accumulated time is more than 8 hours 
+				if(Math.abs(checkTime3) >= 14)// if accumulated time is more than 8 hours 
 				{
 					
 					if(workingmins == 0)
