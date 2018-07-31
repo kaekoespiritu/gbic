@@ -420,7 +420,12 @@ function getDay($day)
 //Computation for OVER TIME -----------------------------------------------------------
 	$compOT = 0;
 	$totalOT = 0;
-	$OtRatePerHour = (($dailyRate + ($dailyRate * .25))/8);//Overtime Hourly Rate
+
+	if(!empty($_POST['sss']) && !empty($_POST['pagibig']) && !empty($_POST['philhealth']))
+		$OtRatePerHour = (($dailyRate + ($dailyRate * .25))/8);//Overtime Hourly Rate
+	else
+		$OtRatePerHour = (($dailyRate + $empArr['allowance'])/8);//Overtime Hourly Rate
+
 	$OtRatePerHour = numberExactFormat($OtRatePerHour, 2, '.', true);
 	if(!empty($_POST['totalOverTime']))
 	{
