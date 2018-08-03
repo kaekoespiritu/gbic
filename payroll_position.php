@@ -13,8 +13,9 @@ include('directives/session.php');
 
 
 // $date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("%B %d, %Y")); // Gets the payroll date if admin didn't finish the payroll for the week
-$date = "July 25, 2018";
+// $date = "July 25, 2018";
 // $date = "May 9, 2018";
+$date = "August 1, 2018";
 
 
 $dayToday = date('l, F d, Y', time());
