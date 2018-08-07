@@ -79,7 +79,7 @@ error_reporting(0);
 		// $monthlySalary = $ratePerDay * 25;//6days working days * 4 weeks
 		
 		//Contributions
-		if($sssEE && $philhealthEE && $pagibigEE)//checks if the employee has all the documents needed
+		if(isset($_POST['sssCheckbox']) && isset($_POST['philhealthCheckbox']) && isset($_POST['pagibigCheckbox']))//checks if the employee has all the documents needed
 			$complete_doc = 1;
 		else
 			$complete_doc = 0;

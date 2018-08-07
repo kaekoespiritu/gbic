@@ -271,93 +271,73 @@ function getDay($day)
 			$WorkHrsArr .= ","; 
 		$WorkHrsArr .= $satWorkHrs;
 	}
+
+//Computation for Sunday --------------------------------------------------------------
 	$compSunday = 0;//Pre set value for Sunday Computation
 	$SundayRatePerHour = (($dailyRate + ($dailyRate * .30))/8);//Sunday Hourly Rate
 	$sunWorkHrs = 0;
 	$sundayBool = false;//Boolean to filter the sunday from the work days
 	if(!empty($_POST['sunWorkHrs']))
 	{
-		Print "<script>console.log('sunday pasok')</script>";
-		$sundayBool = true;
-		$sunExplode = explode('.',$_POST['sunWorkHrs']);
-		if(count($sunExplode) > 1)
+		if($empArr['complete_doc'] == '1')// If employee has complete requirements
 		{
-			$sunHrs = $sunExplode[0];
-			$sunMins = $sunExplode[1] / 60;
+			Print "<script>console.log('sunday pasok')</script>";
+			$sundayBool = true;
+			$sunExplode = explode('.',$_POST['sunWorkHrs']);
+			if(count($sunExplode) > 1)
+			{
+				$sunHrs = $sunExplode[0];
+				$sunMins = $sunExplode[1] / 60;
 
-			$sunWorkHrs = $sunHrs+$sunMins;
+				$sunWorkHrs = $sunHrs+$sunMins;
 
+				if($adjSundayHrs != 0 || $adjSundayHrs != 0.00)
+				{
+					$sunWorkHrs += $adjSundayHrs;
+				}
+			}
+			else
+			{
+				$sunWorkHrs = $sunExplode[0];
+			}
+			// $compSunday = $SundayRatePerHour * $sunWorkHrs;
+		}
+		else// Incomplete requirements
+		{
+			$overallWorkDays++;
+			if($_POST['sunWorkHrs'] >= 8)
+			{
+				$sunOT = $_POST['sunWorkHrs'] - 8;
+				$sunExplode = explode('.',$sunOT);
+				if(count($sunExplode) > 1)
+				{
+					$sunHrs = $sunExplode[0];
+					$sunMins = $sunExplode[1] / 60;
+
+					$adjOthrs += $sunHrs + $sunMins;
+				}
+				else
+				{
+					$adjOthrs += $sunExplode[0];
+				}
+			}
 			if($adjSundayHrs != 0 || $adjSundayHrs != 0.00)
 			{
-				$sunWorkHrs += $adjSundayHrs;
-				// $sunExplode2 = explode('.',$sunWorkHrs);
-				// if(count($sunExplode2) > 1)
-				// {
-				// 	if($sunExplode2[1] >= 60)
-				// 	{
-				// 		$sunMins2 = $sunExplode2[1] - 60;
-				// 		$sunHours2 = $sunExplode2[0]++;
-
-				// 		$sunWorkHrs = $sunHours2 + $sunMins2;
-				// 	}
-				// 	else
-				// 	{
-				// 		$sunMins2 = $sunExplode2[1];
-				// 		$sunHours2 = $sunExplode2[0];
-
-				// 		$sunWorkHrs = $sunExplode2[0] + $sunExplode2[1];
-				// 	}
-				// }
-				// else
-				// {
-
-				// 	$sunWorkHrs = $sunExplode2[0];
-				// }
+				$overallWorkDays++;
 			}
-				
-		}
-		else
-		{
-			$sunWorkHrs = $sunExplode[0];
-		}
-
-		
-		// if($WorkHrsArr != "")
-		// 	$WorkHrsArr .= ","; 
-		// $WorkHrsArr .= $sunWorkHrs;
-
-//Computation for Sunday --------------------------------------------------------------
-		
-		$compSunday = $SundayRatePerHour * $sunWorkHrs;
+		}	
 	}
 	else if($adjSundayHrs != 0)// If no employee did not attend sunday initially
 	{
-		$sunWorkHrs += $adjSundayHrs;
-		// $sunExplode2 = explode('.',$sunWorkHrs);
-		// if(count($sunExplode2) > 1)
-		// {
-		// 	if($sunExplode2[1] >= 60)
-		// 	{
-		// 		$sunMins2 = $sunExplode2[1] - 60;
-		// 		$sunHours2 = $sunExplode2[0]++;
-
-		// 		$sunWorkHrs = $sunHours2 + $sunMins2;
-		// 	}
-		// 	else
-		// 	{
-		// 		$sunMins2 = $sunExplode2[1];
-		// 		$sunHours2 = $sunExplode2[0];
-
-		// 		$sunWorkHrs = $sunExplode2[0] + $sunExplode2[1];
-		// 	}
-		// }
-		// else
-		// {
-
-		// 	$sunWorkHrs = $sunExplode2[0];
-		// }
+		$overallWorkDays++;// Increment workdays for no requirements employee
+		if($adjSundayHrs >= 8)
+		{
+			$sunOT = $_POST['sunWorkHrs'] - 8;
+			$adjOthrs += $sunOT;
 			
+		}
 	}
+
 	if(!empty($_POST['monWorkHrs']))
 	{
 		$monWorkHrs = $_POST['monWorkHrs'];
@@ -422,10 +402,10 @@ function getDay($day)
 	$compOT = 0;
 	$totalOT = 0;
 
-	if(!empty($_POST['sss']) && !empty($_POST['pagibig']) && !empty($_POST['philhealth']))
-		$OtRatePerHour = (($dailyRate + ($dailyRate * .25))/8);//Overtime Hourly Rate
+	if($empArr['complete_doc'] == '1')
+		$OtRatePerHour = (($dailyRate + ($dailyRate * .25))/8);//Overtime Hourly Rate complete requirements
 	else
-		$OtRatePerHour = (($dailyRate + $empArr['allowance'])/8);//Overtime Hourly Rate
+		$OtRatePerHour = (($dailyRate + $empArr['allowance'])/8);//Overtime Hourly Rate incomplete requirements
 
 	$OtRatePerHour = numberExactFormat($OtRatePerHour, 2, '.', true);
 	if(!empty($_POST['totalOverTime']))
