@@ -53,29 +53,33 @@
 							</div><br>
 
 							<h4 class="modal-title">New Loan Details</h4><hr>
-							<div class="row">
-								<div class="col-md-3 col-lg-3">
-									<label for="loanType">Loan Type</label>
+
+							<div class="form-group" id="loanform">
+								<div class="row">
+									<div class="form-group col-md-4 col-lg-4 col-md-push-1 col-lg-push-1">
+										<select class="form-control" name="loanType[]" required id="loanType" onchange="validateOption('loanType')">
+											<option disabled value="" selected>Loan type</option>
+											<option value="SSS">SSS</option>
+											<option value="PagIBIG">PagIBIG</option>
+											<option value="oldVale">Old vale</option>
+											<option value="newVale">New vale</option>
+										</select>
+									</div>
+									<div class="col-md-5 col-lg-5 col-md-push-1 col-lg-push-1">
+										<input type="text" class="form-control" required name="loanAmount[]" id="loanAmount" placeholder="Amount of loan" onchange="validateLoanAmount('loanAmount')">
+									</div>
 								</div>
-								<div class="form-group col-md-4 col-lg-4">
-									<select class="form-control" name="loanType" required id="loanType" onchange="validateOption('loanType')">
-										<option selected disabled>Loan type</option>
-										<option value="SSS">SSS</option>
-										<option value="PagIBIG">PagIBIG</option>
-										<option value="oldVale">Old vale</option>
-										<option value="newVale">New vale</option>
-									</select>
-								</div>
-								<div class="col-md-5 col-lg-5">
-									<input type="text" class="form-control" required name="loanAmount" id="loanAmount" placeholder="Amount of loan" onchange="validateLoanAmount('loanAmount')">
+								<div class="row">
+									<div class="col-md-offset-1 col-lg-offset-1">
+										<textarea class="form-control" rows="2" required id="reason" name="reason[]" placeholder="Reason for getting a loan" onchange="validateReason('reason')"></textarea>
+									</div><br>
 								</div>
 							</div>
 
-							<div class="row">
-								<div class="col-md-offset-1 col-lg-offset-1">
-									<textarea class="form-control" rows="2" required id="reason" name="reason" placeholder="Reason for getting a loan" onchange="validateReason('reason')"></textarea>
-								</div><br>
+							<div class="row marginbottom">
+								<a class="btn btn-success pull-right" onclick="addRow()"><span class="glyphicon glyphicon-plus"></span> Add more loans</a>
 							</div>
+							
 						</div>
 
 						<div class="col-md-6 col-lg-6">
@@ -89,15 +93,6 @@
 								<div class="col-md-5 col-lg-5" id="position&site">
 								</div>
 							</div><br>
-
-							<!-- <div class="row">
-								<div class="col-md-5 col-lg-5">
-									<label for="rate">Monthly Salary</label>
-								</div>
-								<div class="col-md-5 col-lg-5">
-									<input name="txt_addMonthlySalary" name="monthlysalary" type="text" class="form-control" id="monthlysalary" readonly >
-								</div>
-							</div><br> -->
 
 							<div class="row">
 								<div class="col-md-5 col-lg-5">
@@ -145,7 +140,7 @@
 
 				</div>	
 				<div class="modal-footer">
-					<input type="submit" name="add_submit" id="add_submit" class="btn btn-primary" value="Add new loan">
+					<input type="submit" name="add_submit" id="add_submit" class="btn btn-primary" value="Add new loan" onclick="formcheck(); return false;">
 				</div>			
 				</form>
 			</div>
