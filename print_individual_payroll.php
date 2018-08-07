@@ -147,6 +147,7 @@ $activeSheet->getStyle('A4:AC'.$rowCounter)->applyFromArray($border_all_thin);//
 $activeSheet->getStyle('G1:AC2')->applyFromArray($align_center);//Centered header text
 $activeSheet->getStyle('A')->applyFromArray($align_center);//Centered period text
 $activeSheet->getStyle('AC4')->applyFromArray($signature);//Centered header text
+$activeSheet->getStyle('B4')->applyFromArray($align_left);// Left align employee name
 
 $activeSheet->getColumnDimension('A')->setAutoSize(true);
 $activeSheet->getColumnDimension('B')->setAutoSize(true);
