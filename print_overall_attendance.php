@@ -705,6 +705,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 		$activeSheet->getStyle("A1:AE7")->applyFromArray($border_all_medium);
 		$activeSheet->getStyle("A4:AE".$rowCounter)->applyFromArray($border_all_thin);
 		$activeSheet->getStyle("D1:AE3")->applyFromArray($align_center);
+		$activeSheet->getStyle("B8:B".$rowCounter)->applyFromArray($align_left);
 		$activeSheet->getColumnDimension("B")->setAutoSize(true);
 		$activeSheet->getColumnDimension("C")->setAutoSize(true);
 	}	
@@ -714,6 +715,7 @@ for($siteSwitch = 1; $siteSwitch <= 2; $siteSwitch++)//interchanging sheets
 		// $activeSheet->getStyle("A4:X7")->applyFromArray($border_all_thin);
 		$activeSheet->getStyle("A4:X".$rowCounter)->applyFromArray($border_all_thin);
 		$activeSheet->getStyle("D1:X3")->applyFromArray($align_center);
+		$activeSheet->getStyle("B8:B".$rowCounter)->applyFromArray($align_left);
 		$activeSheet->getColumnDimension("B")->setAutoSize(true);
 		$activeSheet->getColumnDimension("C")->setAutoSize(true);
 	}
