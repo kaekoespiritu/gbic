@@ -176,6 +176,8 @@ $activeSheet->getStyle('A3:AC3')->applyFromArray($border_all_medium);//Header
 $activeSheet->getStyle('A4:AC'.$rowCounter)->applyFromArray($border_all_thin);//Content
 $activeSheet->getStyle('AA'.$grandTotalRow.':AB'.$grandTotalRow)->applyFromArray($border_allsides_medium);//Grand Total
 $activeSheet->getStyle('AC1:AC'.$rowCounter)->applyFromArray($signature);//Centered header text
+$activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($align_left); // Left align employee name
+
 
 $activeSheet->getStyle('G1:AC2')->applyFromArray($align_center);//Centered header text
 $activeSheet->getColumnDimension('A')->setAutoSize(true);
@@ -207,21 +209,21 @@ $activeSheet->getColumnDimension('Z')->setAutoSize(true);
 $activeSheet->getColumnDimension('AA')->setAutoSize(true);
 $activeSheet->getColumnDimension('AB')->setAutoSize(true);
 
-// header('Content-Type: application/vnd.ms-excel');
-// header('Content-Disposition: attachment; filename="'.$filename.'"');
-// header('Cache-Control: max-age=0');
-
-// $objWriter = PHPExcel_IOFactory::createWriter($sheet, 'Excel5');
-// $objWriter->save('php://output');
-// exit;
-
-header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Type: application/vnd.ms-excel');
 header('Content-Disposition: attachment; filename="'.$filename.'"');
 header('Cache-Control: max-age=0');
 
-$objWriter = PHPExcel_IOFactory::createWriter($sheet,'Excel2007');
+$objWriter = PHPExcel_IOFactory::createWriter($sheet, 'Excel5');
 $objWriter->save('php://output');
 exit;
+
+// header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+// header('Content-Disposition: attachment; filename="'.$filename.'"');
+// header('Cache-Control: max-age=0');
+
+// $objWriter = PHPExcel_IOFactory::createWriter($sheet,'Excel2007');
+// $objWriter->save('php://output');
+// exit;
 
 ?>
 
