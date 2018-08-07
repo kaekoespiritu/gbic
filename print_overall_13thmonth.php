@@ -189,6 +189,7 @@ if(mysql_num_rows($empQuery) != 0)
 $activeSheet->getStyle('A1:E2')->applyFromArray($border_all_medium);//Header 
 $activeSheet->getStyle('A3:E'.$rowCounter)->applyFromArray($border_all_thin);//Content
 $activeSheet->getStyle('A1:E'.$rowCounter)->applyFromArray($align_center);//Centered header text
+$activeSheet->getStyle('B3:B'.$rowCounter)->applyFromArray($align_left); // Left align employee name
 
 $activeSheet->getColumnDimension('A')->setAutoSize(true);
 $activeSheet->getColumnDimension('B')->setAutoSize(true);
