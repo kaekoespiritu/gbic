@@ -157,15 +157,6 @@
 								</div>
 							</div><br> 
 
-							<!-- <div class="row">
-								<div class="col-md-5 col-lg-5">
-									<label for="rate">Monthly Salary</label>
-								</div>
-								<div class="col-md-5 col-lg-5">
-									<input name="txt_addMonthlySalary"  type="text" class="form-control" id="monthlysalary" onkeypress="validatenumber(event)" onkeyup="monthlySalary()" onchange="salaryDecimal()" required>
-								</div>
-							</div><br> -->
-
 							<div class="row">
 								<div class="col-md-5 col-lg-5">
 									<label for="rate">Rate Per Day</label>
