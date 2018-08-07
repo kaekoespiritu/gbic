@@ -224,15 +224,19 @@ else
 //Style for the Spreadsheet
 if($loansBool)// if period is set to All
 {
+	$empCounter = $rowCounter - 3;
 	$activeSheet->getStyle('A1:G2')->applyFromArray($border_all_medium);//Header 
 	$activeSheet->getStyle('A3:G'.$rowCounter)->applyFromArray($border_all_thin);//Content
 	$activeSheet->getStyle('A1:G'.$rowCounter)->applyFromArray($align_center);//Centered header text
+	$activeSheet->getStyle('A3:A'.$empCounter)->applyFromArray($align_left);
 }
 else
 {
+	$empCounter = $rowCounter - 3;
 	$activeSheet->getStyle('A1:G3')->applyFromArray($border_all_medium);//Header 
 	$activeSheet->getStyle('A4:G'.$rowCounter)->applyFromArray($border_all_thin);//Content
 	$activeSheet->getStyle('A1:G'.$rowCounter)->applyFromArray($align_center);//Centered header text
+	$activeSheet->getStyle('A4:A'.$empCounter)->applyFromArray($align_left);
 }
 $activeSheet->getColumnDimension('A')->setAutoSize(true);
 $activeSheet->getColumnDimension('B')->setAutoSize(true);
