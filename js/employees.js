@@ -8,11 +8,11 @@ function sssCheckboxFunc() {
 		//Employee
 		sssEERow.readOnly = false;
 		sssEERow.placeholder = "";
+		sssEERow.setAttribute("required", "");
 		//Employer
 		sssERRow.readOnly = false;
 		sssERRow.placeholder = "";
-
-		// sssbox();
+		sssERRow.setAttribute("required", "");
 	}
 	else
 	{
@@ -20,10 +20,12 @@ function sssCheckboxFunc() {
 		sssEERow.placeholder = "No document";
 		sssEERow.readOnly = true;
 		sssEERow.value = "";
+		sssEERow.removeAttribute('required');
 		//Employer
 		sssERRow.placeholder = "No document";
 		sssERRow.readOnly = true;
 		sssERRow.value = "";
+		sssERRow.removeAttribute('required');
 	}
 }
 function philhealthCheckboxFunc() {
@@ -36,10 +38,12 @@ function philhealthCheckboxFunc() {
 		philhealthEERow.readOnly = false;
 		philhealthEERow.required = true;
 		philhealthEERow.placeholder = "";
+		philhealthEERow.setAttribute('required', '');
 		//Employer
 		philhealthERRow.readOnly = false;
 		philhealthERRow.required = true;
 		philhealthERRow.placeholder = "";
+		philhealthERRow.setAttribute('required', '');
 	}
 	else
 	{
@@ -48,11 +52,13 @@ function philhealthCheckboxFunc() {
 		philhealthEERow.readOnly = true;
 		philhealthEERow.required = false;
 		philhealthEERow.value = "";
+		philhealthEERow.removeAttribute('required');
 		//Employer
 		philhealthERRow.placeholder = "No document";
 		philhealthERRow.readOnly = true;
 		philhealthERRow.required = false;
 		philhealthERRow.value = "";
+		philhealthERRow.removeAttribute('required');
 	}
 }
 function pagibigCheckboxFunc() {
@@ -65,10 +71,12 @@ function pagibigCheckboxFunc() {
 		pagibigEERow.readOnly = false;
 		pagibigEERow.required = true;
 		pagibigEERow.placeholder = "";
+		pagibigEERow.setAttribute('required', '');
 		//Employer
 		pagibigERRow.readOnly = false;
 		pagibigERRow.required = true;
 		pagibigERRow.placeholder = "";
+		pagibigERRow.setAttribute('required', '');
 	}
 	else
 	{
@@ -77,11 +85,13 @@ function pagibigCheckboxFunc() {
 		pagibigEERow.readOnly = true;
 		pagibigEERow.required = false;
 		pagibigEERow.value = "";
+		pagibigEERow.removeAttribute('required');
 		//Employer
 		pagibigERRow.placeholder = "No document";
 		pagibigERRow.readOnly = true;
 		pagibigERRow.required = false;
 		pagibigERRow.value = "";
+		pagibigERRow.removeAttribute('required');
 	}
 }
 
