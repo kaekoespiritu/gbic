@@ -30,7 +30,7 @@ else
 	$balance = $loanAmount; 
 }
 
-
+// Must add a way here to save multiple loans for a single person depending on the number of entries they filled up
 
 $loanAmount = number_format($loanAmount, 2, '.', '');//for 2 decimal places
 $query = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time,action, admin) VALUES('$empid', 
