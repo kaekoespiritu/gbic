@@ -955,6 +955,7 @@ else {
 		
 
 		$activeSheet->getStyle('A'.$rowCounter)->applyFromArray($align_right); // Centered header text	
+		$activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($align_left);
 	// END OF DATA FEEDING...
 
 
