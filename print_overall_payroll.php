@@ -209,21 +209,21 @@ $activeSheet->getColumnDimension('Z')->setAutoSize(true);
 $activeSheet->getColumnDimension('AA')->setAutoSize(true);
 $activeSheet->getColumnDimension('AB')->setAutoSize(true);
 
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment; filename="'.$filename.'"');
-header('Cache-Control: max-age=0');
-
-$objWriter = PHPExcel_IOFactory::createWriter($sheet, 'Excel5');
-$objWriter->save('php://output');
-exit;
-
-// header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+// header('Content-Type: application/vnd.ms-excel');
 // header('Content-Disposition: attachment; filename="'.$filename.'"');
 // header('Cache-Control: max-age=0');
 
-// $objWriter = PHPExcel_IOFactory::createWriter($sheet,'Excel2007');
+// $objWriter = PHPExcel_IOFactory::createWriter($sheet, 'Excel5');
 // $objWriter->save('php://output');
 // exit;
+
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment; filename="'.$filename.'"');
+header('Cache-Control: max-age=0');
+
+$objWriter = PHPExcel_IOFactory::createWriter($sheet,'Excel2007');
+$objWriter->save('php://output');
+exit;
 
 ?>
 
