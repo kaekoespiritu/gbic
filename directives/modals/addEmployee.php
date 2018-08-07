@@ -192,7 +192,7 @@
 									<!-- SSS -->
 									<div class="col-md-12 col-lg-12">
 										<div class="col-md-3 col-lg-3">
-											<input type="checkbox" id="sssCheckbox" onchange="sssCheckboxFunc()">
+											<input type="checkbox" id="sssCheckbox" name="sssCheckbox" onchange="sssCheckboxFunc()">
 											<label for="sss">SSS</label>
 										</div>
 										<div class="col-md-9 col-lg-9">
@@ -218,7 +218,7 @@
 									<!-- PhilHealth -->
 									<div class="col-md-12 col-lg-12 pull-down">
 										<div class="col-md-3 col-lg-3">
-											<input type="checkbox" id="philhealthCheckbox" onchange="philhealthCheckboxFunc()">
+											<input type="checkbox" id="philhealthCheckbox" name="philhealthCheckbox" onchange="philhealthCheckboxFunc()">
 											<label for="philhealth" class="nowrap">Philhealth</label>
 										</div>
 										<div class="col-md-9 col-lg-9">
@@ -242,7 +242,7 @@
 									<!-- PagIBIG-->
 									<div class="col-md-12 col-lg-12 pull-down">
 										<div class="col-md-3 col-lg-3">
-											<input type="checkbox" id="pagibigCheckbox" onchange="pagibigCheckboxFunc()">
+											<input type="checkbox" id="pagibigCheckbox" name="pagibigCheckbox" onchange="pagibigCheckboxFunc()">
 											<label for="pagibig" class="nowrap">Pagibig</label>
 										</div>
 										<div class="col-md-9 col-lg-9">

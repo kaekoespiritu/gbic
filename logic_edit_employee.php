@@ -146,7 +146,8 @@
 	$checker = "SELECT sss, philhealth, pagibig FROM employee WHERE empid = '$empid' AND employment_status = '1' ";
 	$checker_query = mysql_query($checker) or die (mysql_error());
 	$row = mysql_fetch_assoc($checker_query);
-	if($row['sss'] != 0 && $row['philhealth'] != 0 && $row['pagibig'] != 0 )
+	
+	if(isset($_POST['sssCheckbox']) && isset($_POST['philhealthCheckbox']) && isset($_POST['pagibigCheckbox']))
 	{	
 		$not_complete = "UPDATE employee SET complete_doc = '1' WHERE empid = '$empid'";
 		mysql_query($not_complete) or die (mysql_error());
