@@ -667,6 +667,7 @@ else// 2
 		$activeSheet->getStyle("A4:AE7")->applyFromArray($border_all_thin);
 		$activeSheet->getStyle("A4:AE".$rowCounter)->applyFromArray($border_all_thin);
 		$activeSheet->getStyle("D1:AE3")->applyFromArray($align_center);
+		$activeSheet->getStyle('B8')->applyFromArray($align_left);
 		$activeSheet->getColumnDimension("B")->setAutoSize(true);
 		$activeSheet->getColumnDimension("C")->setAutoSize(true);
 	}	
@@ -675,6 +676,7 @@ else// 2
 		$activeSheet->getStyle("A4:X7")->applyFromArray($border_all_thin);
 		$activeSheet->getStyle("A4:X".$rowCounter)->applyFromArray($border_all_thin);
 		$activeSheet->getStyle("D1:X3")->applyFromArray($align_center);
+		$activeSheet->getStyle('B8')->applyFromArray($align_left);
 		$activeSheet->getColumnDimension("B")->setAutoSize(true);
 		$activeSheet->getColumnDimension("C")->setAutoSize(true);
 	}
