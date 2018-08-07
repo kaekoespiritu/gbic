@@ -274,6 +274,78 @@ require_once("directives/modals/addLoan.php");
 			document.getElementById('newvale').value = accounting.formatNumber(newvale, 2, ",");
 
 		}
+
+		function addRow() {
+			var loansLength = document.getElementsByName('loanAmount[]').length;
+
+			var ct = parseInt(loansLength);
+		
+			var div1 = document.createElement('div');
+			div1.id = ct;
+			div1.setAttribute('name','loansRow[]');
+
+			var delLink = '<div class="col-md-1 col-lg-1 nopadding">'+
+			'<button class="btn-sm btn btn-danger" name="rowDelete[]" onclick="deleteRow('+ ct +')">'+
+			'<span class="glyphicon glyphicon-minus"></span>'+
+			'</button>'+
+			'</div>';
+
+			var template = '<div class="row">'  +
+									'<div class="form-group col-md-4 col-lg-4">' +
+										"<select class='form-control' name='loanType[]' required id='loanType' onchange='validateOption('loanType')'>" +
+											'<option disabled value="" selected>Loan type</option>' +
+											'<option value="SSS">SSS</option>' +
+											'<option value="PagIBIG">PagIBIG</option>' +
+											'<option value="oldVale">Old vale</option>' +
+											'<option value="newVale">New vale</option>' +
+										'</select>' +
+									'</div>' +
+									'<div class="col-md-5 col-lg-5">' +
+										"<input type='text' class='form-control' required name='loanAmount[]' id='loanAmount' placeholder='Amount of loan' onchange='validateLoanAmount('loanAmount')'>" +
+									'</div>' +
+								'</div>' +
+								'<div class="row">' +
+									'<div class="col-md-offset-1 col-lg-offset-1">' +
+										"<textarea class='form-control' rows='2' required id='reason' name='reason[]' placeholder='Reason for getting a loan' onchange='validateReason('reason')'></textarea>" +
+									'</div><br>' +
+								'</div>';
+
+			div1.innerHTML = delLink + template;
+			document.getElementById('loanform').appendChild(div1);
+		}
+
+		function deleteRow(eleId) {
+			var ele = document.getElementById(eleId);
+			var parentEle = document.getElementById('loanform');
+			parentEle.removeChild(ele);
+
+			var toolsLength = document.getElementsByName('loansRow[]').length;
+			if(toolsLength > 1)
+			{
+				for(var count = 0; count < toolsLength; count++)
+				{
+
+					document.getElementsByName('toolsRow[]')[count].setAttribute('id',count+1);
+					document.getElementsByName('rowDelete[]')[count].setAttribute('onclick','deleteRow('+(count+1)+')');
+				}
+			}
+		}
+
+		function formcheck() {
+			var fields = document.getElementById('loanform').querySelectorAll("[required]");
+			console.log('There are ' + fields.length + ' fields.');
+			if(fields.length > 3) {
+				var noInput = document.getElementById('loanform').querySelectorAll('input[required]:not([value=""])');
+				var noTextarea = document.getElementById('loanform').querySelectorAll('textarea[required]:not([value=""])');
+				var noOption = document.getElementById('loanform').querySelectorAll('option[required]:not([value=""])');
+			}
+			console.log('There are ' + noInput.length + ' empty fields.');
+			console.log(noInput);
+			console.log(noTextarea);
+			console.log(noOption);
+			if(noInput.length !== 0)
+				console.log('You have not finished filling up the form!');
+		}
 	</script>
 </body>
 </html>
