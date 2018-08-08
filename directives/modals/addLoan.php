@@ -57,7 +57,7 @@
 							<div class="form-group" id="loanform">
 								<div class="row">
 									<div class="form-group col-md-4 col-lg-4 col-md-push-1 col-lg-push-1">
-										<select class="form-control" name="loanType[]" required id="loanType" onchange="validateOption('loanType')">
+										<select class="form-control check-input" name="loanType[]" required id="loanType" onchange="validateLoanFields(this)">
 											<option disabled value="" selected>Loan type</option>
 											<option value="SSS">SSS</option>
 											<option value="PagIBIG">PagIBIG</option>
@@ -66,18 +66,18 @@
 										</select>
 									</div>
 									<div class="col-md-5 col-lg-5 col-md-push-1 col-lg-push-1">
-										<input type="text" class="form-control" required name="loanAmount[]" id="loanAmount" placeholder="Amount of loan" onchange="validateLoanAmount('loanAmount')">
+										<input type="text" class="form-control check-input" required name="loanAmount[]" id="loanAmount" placeholder="Amount of loan" onchange="validateLoanFields(this)" onblur="formcheck()">
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-offset-1 col-lg-offset-1">
-										<textarea class="form-control" rows="2" required id="reason" name="reason[]" placeholder="Reason for getting a loan" onchange="validateReason('reason')"></textarea>
+										<textarea class="form-control check-input" rows="2" required id="reason" name="reason[]" placeholder="Reason for getting a loan" onchange="validateLoanFields(this)" onblur="formcheck()"></textarea>
 									</div><br>
 								</div>
 							</div>
 
 							<div class="row marginbottom">
-								<a class="btn btn-success pull-right" onclick="addRow()"><span class="glyphicon glyphicon-plus"></span> Add more loans</a>
+								<a class="btn btn-success pull-right" id="add_more_loans" onclick="addRow(); validateLoanFields(this)"><span class="glyphicon glyphicon-plus"></span> Add more loans</a>
 							</div>
 							
 						</div>
@@ -140,7 +140,7 @@
 
 				</div>	
 				<div class="modal-footer">
-					<input type="submit" name="add_submit" id="add_submit" class="btn btn-primary" value="Add new loan" onclick="formcheck(); return false;">
+					<input type="submit" name="add_submit" id="add_submit" class="btn btn-primary" value="Add new loan" disabled>
 				</div>			
 				</form>
 			</div>
