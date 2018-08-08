@@ -187,53 +187,39 @@ require_once("directives/modals/addLoan.php");
 		 });
 		});
 
-		function validateLoanAmount(element) {
-			var object = document.getElementById(element);
+		function validateLoanFields(row) {
+			var addMoreLoans = document.getElementById('add_more_loans');
+			var loanType = document.getElementsByName('loanType[]');
+			var element;
+			var loanTypeSelected = [];
 
-			// If it has an entry, change state to green
-			var parent = object.parentElement;
-
-			// If left empty, change state to red
-			if(object.value > 0) {
-				parent.classList.add('has-success');
-				parent.classList.remove('has-error');
-			}
-			else {
-				parent.classList.remove('has-success');
-				parent.classList.add('has-error');
+			for(var a = 0; a < loanType.length; a++) { 
+				element = document.getElementsByName('loanType[]')[a];
+				loanTypeSelected[a] = element.options[element.selectedIndex].value;
+				console.log('Selected values: '+loanTypeSelected);
 			}
 
-		}
+			var sorted_arr = loanTypeSelected.slice().sort();
 
-		function validateOption(element) {
-			var object = document.getElementById(element);
-
-			// If it has an entry, change state to green
-			var parent = object.parentElement;
-
-			if(object.value != '') {
-				parent.classList.add('has-success');
-				parent.classList.remove('has-error');
+			var results = [];
+			for (var i = 0; i < sorted_arr.length - 1; i++) {
+			    if (sorted_arr[i + 1] == sorted_arr[i]) {
+			        results.push(sorted_arr[i]);
+			    }
 			}
-			else {
-				parent.classList.remove('has-success');
-				parent.classList.add('has-error');
-			}
-		}
 
-		function validateReason(element) {
-			var object = document.getElementById(element);
+			console.log('Duplicate values: '+results);
 
-			// If it has an entry, change state to green
-			var parent = object.parentElement;
-
-			if(object.value != '') {
-				parent.classList.add('has-success');
-				parent.classList.remove('has-error');
-			}
-			else {
-				parent.classList.remove('has-success');
-				parent.classList.add('has-error');
+			if(loanType.length >= 1 && loanType.length < 4 && results.length === 0) {
+				console.log('You have just enough forms.');
+				addMoreLoans.removeAttribute('disabled');
+			} if(loanType.length == 4) {
+				console.log('You have reached the maximum amount of loans to add for today.');
+				addMoreLoans.setAttribute('disabled', '');
+			} if(results.length > 0) {
+				alert('You have duplicate loan types: ' + results);
+				if(row.id == 'loanType')
+				   	row.value = '';
 			}
 		}
 
@@ -292,7 +278,7 @@ require_once("directives/modals/addLoan.php");
 
 			var template = '<div class="row">'  +
 									'<div class="form-group col-md-4 col-lg-4">' +
-										"<select class='form-control' name='loanType[]' required id='loanType' onchange='validateOption('loanType')'>" +
+										"<select class='form-control check-input' name='loanType[]' required id='loanType' onchange='validateLoanFields(this)'>" +
 											'<option disabled value="" selected>Loan type</option>' +
 											'<option value="SSS">SSS</option>' +
 											'<option value="PagIBIG">PagIBIG</option>' +
@@ -301,12 +287,12 @@ require_once("directives/modals/addLoan.php");
 										'</select>' +
 									'</div>' +
 									'<div class="col-md-5 col-lg-5">' +
-										"<input type='text' class='form-control' required name='loanAmount[]' id='loanAmount' placeholder='Amount of loan' onchange='validateLoanAmount('loanAmount')'>" +
+										"<input type='text' class='form-control check-input' required name='loanAmount[]' id='loanAmount' placeholder='Amount of loan' onchange='validateLoanFields(this)' onblur='formcheck()'>" +
 									'</div>' +
 								'</div>' +
 								'<div class="row">' +
 									'<div class="col-md-offset-1 col-lg-offset-1">' +
-										"<textarea class='form-control' rows='2' required id='reason' name='reason[]' placeholder='Reason for getting a loan' onchange='validateReason('reason')'></textarea>" +
+										"<textarea class='form-control check-input' rows='2' required id='reason' name='reason[]' placeholder='Reason for getting a loan' onchange='validateLoanFields(this)' onblur='formcheck()'></textarea>" +
 									'</div><br>' +
 								'</div>';
 
@@ -325,27 +311,33 @@ require_once("directives/modals/addLoan.php");
 				for(var count = 0; count < toolsLength; count++)
 				{
 
-					document.getElementsByName('toolsRow[]')[count].setAttribute('id',count+1);
+					document.getElementsByName('loansRow[]')[count].setAttribute('id',count+1);
 					document.getElementsByName('rowDelete[]')[count].setAttribute('onclick','deleteRow('+(count+1)+')');
+					document.getElementById('add_more_loans').removeAttribute('disabled');
 				}
 			}
 		}
 
 		function formcheck() {
-			var fields = document.getElementById('loanform').querySelectorAll("[required]");
-			console.log('There are ' + fields.length + ' fields.');
-			if(fields.length > 3) {
-				var noInput = document.getElementById('loanform').querySelectorAll('input[required]:not([value=""])');
-				var noTextarea = document.getElementById('loanform').querySelectorAll('textarea[required]:not([value=""])');
-				var noOption = document.getElementById('loanform').querySelectorAll('option[required]:not([value=""])');
-			}
-			console.log('There are ' + noInput.length + ' empty fields.');
-			console.log(noInput);
-			console.log(noTextarea);
-			console.log(noOption);
-			if(noInput.length !== 0)
-				console.log('You have not finished filling up the form!');
+			// var blankFields = document.getElementById('loanform').querySelectorAll("input:required, textarea:required, select:required");
+			// var fields = document.getElementById('loanform').querySelectorAll(".check-input[value]");
+			// var submit = document.getElementById('add_submit');
+			// console.log('There are ' + blankFields.length + ' blank fields.');
+			// console.log('There are ' + fields.length + ' fields to fill up.');
+			// console.log(blankFields);
+			// console.log(fields);
+
+			// // Check if value exists, if so, remove disabled button on add loan modal
+
+			// if(fields.length > 0) { 
+			// 	console.log('You have not finished filling up the form!');
+			// 	submit.setAttribute('disabled', '');
+			// }
+			// else {
+			// 	submit.removeAttribute('disabled');
+			// }
 		}
+
 	</script>
 </body>
 </html>
