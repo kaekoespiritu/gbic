@@ -216,7 +216,7 @@ require_once("directives/modals/addLoan.php");
 			} if(loanType.length == 4) {
 				console.log('You have reached the maximum amount of loans to add for today.');
 				addMoreLoans.setAttribute('disabled', '');
-			} if(results.length > 0) {
+			} if(results.length > 0 && results.every(function(element) {return !!element;})) {
 				alert('You have duplicate loan types: ' + results);
 				if(row.id == 'loanType')
 				   	row.value = '';
