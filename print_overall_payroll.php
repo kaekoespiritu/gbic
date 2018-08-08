@@ -120,6 +120,10 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 		//Sunday
 		$sundayBool = (!empty($payrollArr['sunday_hrs']) ? true : false);// employee didn't attend sunday
 		// Removing zeros from payroll
+		$NDnumBool = (intval($payrollArr['nightdiff_num'] == 0) ? true : false);
+		$regHolBool = (intval($regHolidayNum == 0) ? true : false);
+		$speHolBool = (intval($payrollArr['spe_holiday_num'] == 0) ? true : false);
+		$AllowBool = (intval($payrollArr['allow'] == 0) ? true : false);
 		$colaBool = (intval($payrollArr['cola'] == 0) ? true : false);
 		$XallowBool = (intval($payrollArr['x_allowance'] == 0) ? true : false);
 		$SSSBool = (intval($payrollArr['sss'] == 0) ? true : false);
@@ -135,21 +139,23 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 		$activeSheet->setCellValue('E'.$rowCounter, $payrollArr['num_days']);//ofDays
 		$activeSheet->setCellValue('F'.$rowCounter, $payrollArr['overtime']);//O.T.
 		$activeSheet->setCellValue('G'.$rowCounter, $payrollArr['ot_num']);//#ofHrs
-		$activeSheet->setCellValue('H'.$rowCounter, $payrollArr['allow']);//Allow.
+		if(!$AllowBool)
+			$activeSheet->setCellValue('H'.$rowCounter, $payrollArr['allow']);//Allow.
 		if(!$colaBool)
 			$activeSheet->setCellValue('I'.$rowCounter, $payrollArr['cola']);//cola
 		$activeSheet->setCellValue('J'.$rowCounter, $payrollArr['sunday_rate']);//Sun
 		if($sundayBool)
 			$activeSheet->setCellValue('K'.$rowCounter, '1');//D
-		else
-			$activeSheet->setCellValue('K'.$rowCounter, '0');
 		$activeSheet->setCellValue('L'.$rowCounter, $payrollArr['sunday_hrs']);//hrs
 		$activeSheet->setCellValue('M'.$rowCounter, $payrollArr['nightdiff_rate']);//N.D
-		$activeSheet->setCellValue('N'.$rowCounter, $payrollArr['nightdiff_num']);//#
+		if(!$NDnumBool)
+			$activeSheet->setCellValue('N'.$rowCounter, $payrollArr['nightdiff_num']);//#
 		$activeSheet->setCellValue('O'.$rowCounter, $payrollArr['reg_holiday']);//Reg.Hol
-		$activeSheet->setCellValue('P'.$rowCounter, $regHolidayNum);//#
+		if(!$regHolBool)
+			$activeSheet->setCellValue('P'.$rowCounter, $regHolidayNum);//#
 		$activeSheet->setCellValue('Q'.$rowCounter, $payrollArr['spe_holiday']);//Spe.Hol
-		$activeSheet->setCellValue('R'.$rowCounter, $payrollArr['spe_holiday_num']);//#
+		if(!$speHolBool)
+			$activeSheet->setCellValue('R'.$rowCounter, $payrollArr['spe_holiday_num']);//#
 
 		if(!$XallowBool)
 			$activeSheet->setCellValue('S'.$rowCounter, $payrollArr['x_allowance']);//X All.
