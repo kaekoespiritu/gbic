@@ -77,7 +77,7 @@
 							</div>
 
 							<div class="row marginbottom">
-								<a class="btn btn-success pull-right" id="add_more_loans" onclick="addRow(); validateLoanFields(this)"><span class="glyphicon glyphicon-plus"></span> Add more loans</a>
+								<a class="btn btn-success pull-right" id="add_more_loans" onclick="addRow()"><span class="glyphicon glyphicon-plus"></span> Add more loans</a>
 							</div>
 							
 						</div>
