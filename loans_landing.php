@@ -205,7 +205,7 @@ require_once("directives/modals/addLoan.php");
 
 		}
 
-		function validateOption(element) {
+		function validateOption(val) {
 			var object = document.getElementById(element);
 
 			// If it has an entry, change state to green
@@ -279,39 +279,46 @@ require_once("directives/modals/addLoan.php");
 			var loansLength = document.getElementsByName('loanAmount[]').length;
 
 			var ct = parseInt(loansLength);
-		
-			var div1 = document.createElement('div');
-			div1.id = ct;
-			div1.setAttribute('name','loansRow[]');
+			if(ct != 4)// If added loans is not equal to 3 
+			{
+				var div1 = document.createElement('div');
+				div1.id = ct;
+				div1.setAttribute('name','loansRow[]');
 
-			var delLink = '<div class="col-md-1 col-lg-1 nopadding">'+
-			'<button class="btn-sm btn btn-danger" name="rowDelete[]" onclick="deleteRow('+ ct +')">'+
-			'<span class="glyphicon glyphicon-minus"></span>'+
-			'</button>'+
-			'</div>';
+				var delLink = '<div class="col-md-1 col-lg-1 nopadding">'+
+				'<button class="btn-sm btn btn-danger" name="rowDelete[]" onclick="deleteRow('+ ct +')">'+
+				'<span class="glyphicon glyphicon-minus"></span>'+
+				'</button>'+
+				'</div>';
 
-			var template = '<div class="row">'  +
-									'<div class="form-group col-md-4 col-lg-4">' +
-										"<select class='form-control' name='loanType[]' required id='loanType' onchange='validateOption('loanType')'>" +
-											'<option disabled value="" selected>Loan type</option>' +
-											'<option value="SSS">SSS</option>' +
-											'<option value="PagIBIG">PagIBIG</option>' +
-											'<option value="oldVale">Old vale</option>' +
-											'<option value="newVale">New vale</option>' +
-										'</select>' +
+				var template = '<div class="row">'  +
+										'<div class="form-group col-md-4 col-lg-4">' +
+											"<select class='form-control' name='loanType[]' required id='loanType' onchange='validateOption(this.value)'>" +
+												'<option disabled value="" selected>Loan type</option>' +
+												'<option class="dd_sss" value="SSS">SSS</option>' +
+												'<option class="dd_pagibig" value="PagIBIG">PagIBIG</option>' +
+												'<option class="dd_oldvale" value="oldVale">Old vale</option>' +
+												'<option class="dd_newvale" value="newVale">New vale</option>' +
+											'</select>' +
+										'</div>' +
+										'<div class="col-md-5 col-lg-5">' +
+											"<input type='text' class='form-control' required name='loanAmount[]' id='loanAmount' placeholder='Amount of loan' onchange='validateLoanAmount('loanAmount')'>" +
+										'</div>' +
 									'</div>' +
-									'<div class="col-md-5 col-lg-5">' +
-										"<input type='text' class='form-control' required name='loanAmount[]' id='loanAmount' placeholder='Amount of loan' onchange='validateLoanAmount('loanAmount')'>" +
-									'</div>' +
-								'</div>' +
-								'<div class="row">' +
-									'<div class="col-md-offset-1 col-lg-offset-1">' +
-										"<textarea class='form-control' rows='2' required id='reason' name='reason[]' placeholder='Reason for getting a loan' onchange='validateReason('reason')'></textarea>" +
-									'</div><br>' +
-								'</div>';
+									'<div class="row">' +
+										'<div class="col-md-offset-1 col-lg-offset-1">' +
+											"<textarea class='form-control' rows='2' required id='reason' name='reason[]' placeholder='Reason for getting a loan' onchange='validateReason('reason')'></textarea>" +
+										'</div><br>' +
+									'</div>';
 
-			div1.innerHTML = delLink + template;
-			document.getElementById('loanform').appendChild(div1);
+				div1.innerHTML = delLink + template;
+				document.getElementById('loanform').appendChild(div1);
+			}
+			else
+			{
+				alert("You have reached the limit for adding loans");
+			}
+				
 		}
 
 		function deleteRow(eleId) {
