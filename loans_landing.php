@@ -297,13 +297,12 @@ require_once("directives/modals/addLoan.php");
 										"<textarea class='form-control check-input' rows='2' required id='reason' name='reason[]' placeholder='Reason for getting a loan' onchange='validateLoanFields(this)' onblur='formcheck()'></textarea>" +
 									'</div><br>' +
 								'</div>';
+			div1.innerHTML = delLink + template;
+			document.getElementById('loanform').appendChild(div1);								
 								
 			} else {
 				alert("You have reached the limit for adding loans");
 			}
-
-			div1.innerHTML = delLink + template;
-			document.getElementById('loanform').appendChild(div1);
 		}
 
 		function deleteRow(eleId) {
@@ -322,26 +321,6 @@ require_once("directives/modals/addLoan.php");
 					document.getElementById('add_more_loans').removeAttribute('disabled');
 				}
 			}
-		}
-
-		function formcheck() {
-			// var blankFields = document.getElementById('loanform').querySelectorAll("input:required, textarea:required, select:required");
-			// var fields = document.getElementById('loanform').querySelectorAll(".check-input[value]");
-			// var submit = document.getElementById('add_submit');
-			// console.log('There are ' + blankFields.length + ' blank fields.');
-			// console.log('There are ' + fields.length + ' fields to fill up.');
-			// console.log(blankFields);
-			// console.log(fields);
-
-			// // Check if value exists, if so, remove disabled button on add loan modal
-
-			// if(fields.length > 0) { 
-			// 	console.log('You have not finished filling up the form!');
-			// 	submit.setAttribute('disabled', '');
-			// }
-			// else {
-			// 	submit.removeAttribute('disabled');
-			// }
 		}
 
 	</script>
