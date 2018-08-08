@@ -59,10 +59,10 @@
 									<div class="form-group col-md-4 col-lg-4 col-md-push-1 col-lg-push-1">
 										<select class="form-control check-input" name="loanType[]" required id="loanType" onchange="validateLoanFields(this)">
 											<option disabled value="" selected>Loan type</option>
-											<option value="SSS">SSS</option>
-											<option value="PagIBIG">PagIBIG</option>
-											<option value="oldVale">Old vale</option>
-											<option value="newVale">New vale</option>
+											<option class="dd_sss sss1" value="SSS">SSS</option>
+											<option class="dd_pagibig pagibig1" value="PagIBIG">PagIBIG</option>
+											<option class="dd_oldvale oldvale1" value="oldVale">Old vale</option>
+											<option class="dd_newvale newvale1" value="newVale">New vale</option>
 										</select>
 									</div>
 									<div class="col-md-5 col-lg-5 col-md-push-1 col-lg-push-1">

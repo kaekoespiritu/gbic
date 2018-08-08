@@ -270,6 +270,8 @@ require_once("directives/modals/addLoan.php");
 			div1.id = ct;
 			div1.setAttribute('name','loansRow[]');
 
+			if(ct != 4) {// If added loans is not equal to 3 
+			
 			var delLink = '<div class="col-md-1 col-lg-1 nopadding">'+
 			'<button class="btn-sm btn btn-danger" name="rowDelete[]" onclick="deleteRow('+ ct +')">'+
 			'<span class="glyphicon glyphicon-minus"></span>'+
@@ -295,6 +297,10 @@ require_once("directives/modals/addLoan.php");
 										"<textarea class='form-control check-input' rows='2' required id='reason' name='reason[]' placeholder='Reason for getting a loan' onchange='validateLoanFields(this)' onblur='formcheck()'></textarea>" +
 									'</div><br>' +
 								'</div>';
+								
+			} else {
+				alert("You have reached the limit for adding loans");
+			}
 
 			div1.innerHTML = delLink + template;
 			document.getElementById('loanform').appendChild(div1);
