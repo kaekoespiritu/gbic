@@ -140,7 +140,7 @@
 
 				</div>	
 				<div class="modal-footer">
-					<input type="submit" name="add_submit" id="add_submit" class="btn btn-primary" value="Add new loan" disabled>
+					<input type="submit" name="add_submit" id="add_submit" class="btn btn-primary" value="Add new loan">
 				</div>			
 				</form>
 			</div>
