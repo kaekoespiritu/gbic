@@ -6,9 +6,6 @@ date_default_timezone_set('Asia/Hong_Kong');
 
 $date = strftime("%B %d, %Y");// Gets the current date
 $empid = $_POST['empid'];
-$position = $_POST['position'];
-$site = $_POST['site'];
-$rate = $_POST['rate'];
 
 if(count($_POST['loanType']) == 1)
 {
@@ -45,11 +42,14 @@ if(count($_POST['loanType']) == 1)
 																	'1',
 																	'$adminName')";
 	mysql_query($query);
+
+	$loanDisplay = $loanType;
 }
 else
 {
 	$initialQuery = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action, admin) VALUES";
 	$secondaryQuery = "";
+	$loanDisplay = "";
 	$loanNum = count($_POST['loanType']);// Number of loan
 	for($counter = 0; $counter < $loanNum; $counter++)
 	{
@@ -73,23 +73,26 @@ else
 			$balance = $loanAmount; 
 		}
 
+		//Query Builder
 		if($secondaryQuery != "")
 			$secondaryQuery .= ",";
 		$secondaryQuery .= "('$empid', '$loanType','$balance', '$loanAmount', '$reason', '$date', '$time', '1', '$adminName')";
 		$primaryQuery = $initialQuery.$secondaryQuery;
+		
+		// Loan type display for alert 
+		if($secondaryQuery != "")
+			$loanDisplay .= ", ";
+		$loanDisplay .= $loanType;
 	}
 
 	mysql_query($primaryQuery);
-	// Print "<script>console.log('$primaryQuery')</script>";
 }	
 
 $employee = "SELECT * FROM employee WHERE empid = '$empid'";
 $empQuery = mysql_query($employee);
 $empArr = mysql_fetch_assoc($empQuery);
-Print "<script>alert('You have successfully processed ".$empArr['lastname'].", ".$empArr['firstname']."  loan')</script>";
+Print "<script>alert('You have successfully processed ".$empArr['lastname'].", ".$empArr['firstname']." ".$loanDisplay." loan')</script>";
 Print "<script>window.location.assign('loans_landing.php')</script>";
-
-
 
 ?>
 
