@@ -239,7 +239,7 @@ function getDay($day)
 
 //Days attended
 	$daysAttended = $_POST['daysAttended'] + $adjWorkingDays;
-
+	$overallWorkDays = $adjWorkingDays;
 //Daily Workhours ----------------------------------------------------------------------
 //if employee is absent on these days Post value will not be available
 	$WorkHrsArr = "";//This is to array all these values
@@ -271,7 +271,8 @@ function getDay($day)
 			$WorkHrsArr .= ","; 
 		$WorkHrsArr .= $satWorkHrs;
 	}
-
+	
+	
 //Computation for Sunday --------------------------------------------------------------
 	$compSunday = 0;//Pre set value for Sunday Computation
 	$SundayRatePerHour = (($dailyRate + ($dailyRate * .30))/8);//Sunday Hourly Rate
@@ -355,7 +356,7 @@ function getDay($day)
 
 //Computes the Overall Work Days ------------------------------------------------------
 	$workHrs = explode("," ,$WorkHrsArr);
-	$overallWorkDays = $adjWorkingDays;
+	
 	$overallAllowance = $adjAllowDays;
 	$sunday_Att = 0;//Preset the sunday attendance to filter out the overal to the sunday
 	if($sundayBool)
