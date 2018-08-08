@@ -234,15 +234,6 @@ $contributions = $employee_info['complete_doc'];
 						</div>
 					</div><br> 
 
-					<!-- <div class="row">
-						<div class="col-md-5 col-lg-5">
-							<label for="rate">Monthly Salary</label>
-						</div>
-						<div class="col-md-5 col-lg-5">
-							<input name="salary"  type="number" class="form-control" id="monthlysalary" onkeyup="monthlySalary()" placeholder="<?php //Print "$salary"?>" onchange="salaryDecimal()">
-						</div>
-					</div><br> -->
-
 					<div class="row">
 						<div class="col-md-5 col-lg-5">
 							<label for="rate">Rate Per Day</label>
