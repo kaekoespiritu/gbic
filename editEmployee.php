@@ -30,6 +30,7 @@ $empid = $employee_info['empid'];
 $emergency = $employee_info['emergency'];
 $reference = $employee_info['reference'];
 $cola = $employee_info['cola'];
+$contributions = $employee_info['complete_doc'];
 
 ?>
 <html>
@@ -263,7 +264,7 @@ $cola = $employee_info['cola'];
 						<h4 class="modal-title"><br>Contributions</h4><hr>
 						<!-- /////////////////////////// -->
 						<?php
-						if($sssEE != 0)
+						if($sssEE != 0 || $contributions == 1)
 							Print  '
 								<div class="col-md-1 col-lg-12">
 									<div class="col-md-3 col-lg-3">
@@ -314,7 +315,7 @@ $cola = $employee_info['cola'];
 						?>
 
 						<?php
-						if($philhealthEE != 0)
+						if($philhealthEE != 0  || $contributions == 1)
 							Print '
 								<div class="col-md-1 col-lg-12 pull-down">
 									<div class="col-md-3 col-lg-3">
@@ -365,7 +366,7 @@ $cola = $employee_info['cola'];
 						?>
 						
 						<?php
-						if($pagibigEE != 0)
+						if($pagibigEE != 0  || $contributions == 1)
 							Print  '
 								<div class="col-md-1 col-lg-12 pull-down">
 									<div class="col-md-3 col-lg-3">
