@@ -31,12 +31,12 @@ if(isset($_POST["search"]))
         if($position_page != "null")
         {
             $statement = "employee WHERE (firstname LIKE '%".$search."%' 
-        OR lastname LIKE '%".$search."%' OR empid LIKE '%".$search."%') AND position = '$position_page' AND site = '$site_page' AND employment_status = '1' ORDER BY site ASC, position ASC, lastname ASC";
+        OR lastname LIKE '%".$search."%' OR empid LIKE '%".$search."%') AND position = '$position_page' AND site = '$site_page' AND employment_status = '1' ORDER BY lastname ASC, site ASC, position ASC";
         }
         else
         {
             $statement = "employee WHERE (firstname LIKE '%".$search."%' 
-        OR lastname LIKE '%".$search."%' OR empid LIKE '%".$search."%') AND site = '$site_page' AND employment_status = '1' ORDER BY site ASC, position ASC, lastname ASC";
+        OR lastname LIKE '%".$search."%' OR empid LIKE '%".$search."%') AND site = '$site_page' AND employment_status = '1' ORDER BY lastname ASC, site ASC, position ASC";
         }
     }
     else if($position_page != "null")
@@ -44,18 +44,18 @@ if(isset($_POST["search"]))
         if($site_page != "null")
         {
              $statement = "employee WHERE (firstname LIKE '%".$search."%' 
-        OR lastname LIKE '%".$search."%' OR empid LIKE '%".$search."%') AND position = '$position_page' AND site = '$site_page' AND employment_status = '1' ORDER BY site ASC, position ASC, lastname ASC";
+        OR lastname LIKE '%".$search."%' OR empid LIKE '%".$search."%') AND position = '$position_page' AND site = '$site_page' AND employment_status = '1' ORDER BY lastname ASC, site ASC, position ASC";
         }
         else
         {
              $statement = "employee WHERE (firstname LIKE '%".$search."%' 
-        OR lastname LIKE '%".$search."%' OR empid LIKE '%".$search."%') AND position = '$position_page'  AND employment_status = '1' ORDER BY site ASC, position ASC, lastname ASC";
+        OR lastname LIKE '%".$search."%' OR empid LIKE '%".$search."%') AND position = '$position_page'  AND employment_status = '1' ORDER BY lastname ASC, site ASC, position ASC";
         }
     }
     else
     {
         $statement = "employee WHERE (firstname LIKE '%".$search."%' 
-        OR lastname LIKE '%".$search."%' OR empid LIKE '%".$search."%') AND employment_status = '1' ORDER BY site ASC, position ASC, lastname ASC";
+        OR lastname LIKE '%".$search."%' OR empid LIKE '%".$search."%') AND employment_status = '1' ORDER BY lastname ASC, site ASC, position ASC";
     }
     
         $res=mysql_query("select * from {$statement} LIMIT {$startpoint} , {$limit}");
@@ -66,7 +66,7 @@ if(isset($_POST["search"]))
                 
                 <tr>
                     <td style='vertical-align: inherit'>".$empArr['empid']."</td>
-                    <td style='vertical-align: inherit'>".$empArr['lastname'].", ".$empArr['firstname']."</td>
+                    <td style='vertical-align: inherit' align='left'>".$empArr['lastname'].", ".$empArr['firstname']."</td>
                     <td style='vertical-align: inherit'>".$empArr['position']."</td>
                     <td style='vertical-align: inherit'>".$empArr['site']."</td>
                     <td style='vertical-align: inherit'>";

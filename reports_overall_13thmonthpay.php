@@ -257,7 +257,7 @@
 						<td>
 							".$empid."
 						</td>
-						<td>
+						<td align='left'>
 							".$empArr['lastname'].", ".$empArr['firstname']."
 						</td>
 						<td>

@@ -160,7 +160,7 @@
 								
 								<tr>
 									<td style='vertical-align: inherit'>".$empArr['empid']."</td>
-									<td style='vertical-align: inherit'>".$empArr['lastname'].", ".$empArr['firstname']."</td>
+									<td style='vertical-align: inherit' align='left'>".$empArr['lastname'].", ".$empArr['firstname']."</td>
 									<td style='vertical-align: inherit'>".$empArr['position']."</td>
 									<td style='vertical-align: inherit'>".$empArr['site']."</td>
 									<td style='vertical-align: inherit'>

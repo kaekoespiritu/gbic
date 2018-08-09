@@ -282,7 +282,7 @@
 												<td><!-- # -->
 													'.$rowNum.'
 												</td>
-												<td><!-- Name -->
+												<td align="left"><!-- Name -->
 													'.$employeeArr['lastname'].', '.$employeeArr['firstname'].'
 												</td>
 												<td><!-- Position -->

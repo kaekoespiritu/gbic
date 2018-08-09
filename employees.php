@@ -155,7 +155,7 @@ if(isset($_GET['search']))
 							{
 								Print "	<tr>
 										<td style='vertical-align: inherit'>".$emp_row['empid']."</td>
-										<td style='vertical-align: inherit'>".$emp_row ['firstname']." ".$emp_row['lastname']."</td>
+										<td style='vertical-align: inherit' align='left'>".$emp_row ['firstname']." ".$emp_row['lastname']."</td>
 										<td style='vertical-align: inherit'>".$emp_row['position']."</td>
 										<td style='vertical-align: inherit'>".$emp_row['site']."</td>
 										<td>

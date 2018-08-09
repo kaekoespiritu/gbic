@@ -105,7 +105,7 @@ function attendance ()
 						Print '<script>console.log("'.$day.'")</script>';
 
 						Print		"<!-- Employee ID -->
-									<td class='empName'>
+									<td class='empName' align='left'>
 										". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
 									</td>
 								<!-- Position -->
@@ -182,7 +182,7 @@ function attendance ()
 						Print '<script>console.log("'.$day.'")</script>';
 
 						Print		"<!-- Employee ID -->
-									<td class='empName'>
+									<td class='empName' align='left'>
 										". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
 									</td>
 								<!-- Position -->
@@ -259,7 +259,7 @@ function attendance ()
 						Print '<script>console.log("'.$day.'")</script>';
 
 						Print	"<!-- Employee ID -->
-									<td class='empName'>
+									<td class='empName' align='left'>
 										". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
 									</td>
 								<!-- Position -->
@@ -593,7 +593,7 @@ function attendance ()
 						Print '<script>console.log("'.$day.'")</script>';
 
 			Print "<input type='hidden' name='empid[".$counter."]' value=". $row_employee['empid'] .">
-					<td class='empName'>
+					<td class='empName' align='left'>
 						". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
 					</td>
 					<td>

@@ -428,7 +428,7 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="myModalLabel"><?php Print $empArr['lastname'].", ".$empArr['firstname']?>'s 13th Month Pay</h4>
+	        <h4 class="modal-title" id="myModalLabel" align='left'><?php Print $empArr['lastname'].", ".$empArr['firstname']?>'s 13th Month Pay</h4>
 	      </div>
 	      <div class="modal-body">
 	        <table class='table table-bordered'>

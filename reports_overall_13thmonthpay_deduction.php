@@ -138,7 +138,7 @@
 										<input type='hidden' value='".numberExactFormat($thirteenthMonth, 2, '.',false)."' name='onetri[]'>
 										<input type='hidden' value='".$startDate."' name='startDate[]'>
 										<input type='hidden' value='".$endDate."' name='endDate[]'>
-										<td>
+										<td align='left'>
 											".$empArr['lastname'].", ".$empArr['firstname']."
 										</td>
 										<td>

@@ -273,7 +273,7 @@
 														<td>
 															".$startDate." - ".$endDate."
 														</td>
-														<td>
+														<td align='left'>
 															".$empArr['lastname'].", ".$empArr['firstname']."
 														</td>
 														<td>

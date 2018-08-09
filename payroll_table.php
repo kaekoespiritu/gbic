@@ -349,7 +349,7 @@ $date = "August 1, 2018";
 							}
 							Print "	<tr id=".$empid.">
 										<td>".$empid."</td>
-										<td>".$row['lastname'].", ".$row['firstname']."</td>
+										<td align='left'>".$row['lastname'].", ".$row['firstname']."</td>
 										<td>".$row['position']."</td>
 										<td class='payrollStatus'>".$payrollStatus."</td>
 										<td>". $document ."</td>

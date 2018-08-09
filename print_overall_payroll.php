@@ -118,7 +118,8 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 		}
 
 		//Sunday
-		$sundayBool = (!empty($payrollArr['sunday_hrs']) ? true : false);// employee didn't attend sunday
+		$sundayBool = ($payrollArr['sunday_hrs'] == 0 ? true : false);// employee didn't attend sunday
+
 		// Removing zeros from payroll
 		$NDnumBool = (intval($payrollArr['nightdiff_num'] == 0) ? true : false);
 		$regHolBool = (intval($regHolidayNum == 0) ? true : false);
@@ -144,16 +145,21 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 		if(!$colaBool)
 			$activeSheet->setCellValue('I'.$rowCounter, $payrollArr['cola']);//cola
 		$activeSheet->setCellValue('J'.$rowCounter, $payrollArr['sunday_rate']);//Sun
-		if($sundayBool)
+		if(!$sundayBool)
+		{
 			$activeSheet->setCellValue('K'.$rowCounter, '1');//D
-		$activeSheet->setCellValue('L'.$rowCounter, $payrollArr['sunday_hrs']);//hrs
-		$activeSheet->setCellValue('M'.$rowCounter, $payrollArr['nightdiff_rate']);//N.D
+			$activeSheet->setCellValue('L'.$rowCounter, $payrollArr['sunday_hrs']);//hrs
+		}
+		if($payrollArr['nightdiff_rate'] != 0)
+			$activeSheet->setCellValue('M'.$rowCounter, $payrollArr['nightdiff_rate']);//N.D
 		if(!$NDnumBool)
 			$activeSheet->setCellValue('N'.$rowCounter, $payrollArr['nightdiff_num']);//#
-		$activeSheet->setCellValue('O'.$rowCounter, $payrollArr['reg_holiday']);//Reg.Hol
+		if($payrollArr['reg_holiday'] != 0)
+			$activeSheet->setCellValue('O'.$rowCounter, $payrollArr['reg_holiday']);//Reg.Hol
 		if(!$regHolBool)
 			$activeSheet->setCellValue('P'.$rowCounter, $regHolidayNum);//#
-		$activeSheet->setCellValue('Q'.$rowCounter, $payrollArr['spe_holiday']);//Spe.Hol
+		if($payrollArr['spe_holiday'] != 0)
+			$activeSheet->setCellValue('Q'.$rowCounter, $payrollArr['spe_holiday']);//Spe.Hol
 		if(!$speHolBool)
 			$activeSheet->setCellValue('R'.$rowCounter, $payrollArr['spe_holiday_num']);//#
 
