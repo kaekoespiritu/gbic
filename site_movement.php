@@ -171,7 +171,7 @@ $location = $_GET['site'];
 										<input type='checkbox' name='chkbox_chosen[]' value=".$row['empid']." onclick='selectMany()''>
 									</td>
 									<td>".$row['empid']."</td>
-									<td>".$row['lastname'].", ".$row['firstname']."</td>
+									<td align='left'>".$row['lastname'].", ".$row['firstname']."</td>
 									<td>".$row['position']."</td>
 									<td>".$row['site']."</td>
 									<td>
