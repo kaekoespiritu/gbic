@@ -10,9 +10,9 @@ $empid = $_POST['empid'];
 if(count($_POST['loanType']) == 1)
 {
 	
-	$loanType = $_POST['loanType'];
-	$loanAmount = $_POST['loanAmount'];
-	$reason = mysql_real_escape_string($_POST['reason']);
+	$loanType = $_POST['loanType'][0];
+	$loanAmount = $_POST['loanAmount'][0];
+	$reason = mysql_real_escape_string($_POST['reason'][0]);
 	$time = strftime("%X");//TIME
 
 	//Check if they already have balance for that type of loan
