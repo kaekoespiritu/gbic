@@ -216,6 +216,15 @@ $activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($align_left); // Left
 $activeSheet->getStyle('AB4:AB'.$rowCounter)->applyFromArray($align_left); // Left align employee name
 $activeSheet->getStyle('AB'.$grandTotalRow)->applyFromArray($align_left); // Left align employee name
 
+//Font sizes
+
+$activeSheet->getStyle('A1:A2')->applyFromArray($font_size_15);// ALL except employee name and PAYROLL header
+$activeSheet->getStyle('A4:AC'.$grandTotalRow)->applyFromArray($font_size_15);// ALL except employee name and PAYROLL header
+$activeSheet->getStyle('G1')->applyFromArray($font_size_40);// Payroll
+$activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($font_size_13);// Employee name
+
+
+
 $activeSheet->getStyle('G1:AC2')->applyFromArray($align_center);//Centered header text
 $activeSheet->getColumnDimension('A')->setAutoSize(true);
 $activeSheet->getColumnDimension('B')->setAutoSize(true);
