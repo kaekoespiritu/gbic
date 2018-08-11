@@ -1674,7 +1674,7 @@ if($holidayExist > 0)
 							<span class="pull-right">
 								<?php 
 								if($oldVale != "N/A")
-									Print "<span class='pull-right' id='oldvaleValue'>".number_format($oldVale, 2, '.', ',')."</span";
+									Print "<span class='pull-right' id='oldvaleValue'>".numberExactFormat($oldVale, 2, '.', true)."</span";
 								else
 									Print $oldVale;	
 								?>
@@ -1762,7 +1762,7 @@ if($holidayExist > 0)
 				if(!empty($empArr['allowance']))
 				{
 					$overallAllow = $empArr['allowance'] * $allowCounter;
-					$overallAllow = number_format($overallAllow, 2, '.', ',');
+					$overallAllow = numberExactFormat($overallAllow, 2, '.', true);
 				}
 				?>
 				<!-- Days the employee came to work -->
