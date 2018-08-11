@@ -151,7 +151,13 @@ $headerStyleCounter2 = 2;
 
 $rowIncrement = 19;// increment by 17 inpreparation for the new horizontal data
 
-$employee = "SELECT * FROM employee WHERE site = '$site' AND employment_status = '1'";
+$appendQuery = "";
+if($require == "withReq")
+	$appendQuery = "AND complete_doc = '1'";
+else if($require == "withOReq")
+	$appendQuery = "AND complete_doc = '0'";
+
+$employee = "SELECT * FROM employee WHERE site = '$site' AND employment_status = '1' $appendQuery";
 $employeeQuery = mysql_query($employee) or die(mysql_error());
 
 $rowNum = mysql_num_rows($employeeQuery);
@@ -172,7 +178,7 @@ $cellArray = 	array(
 // $empCounter = 1;
 for($count = 0; $count <= $loopCount; $count++)
 {
-	$emp = "SELECT * FROM employee WHERE site = '$site' AND employment_status = '1' LIMIT {$startCounter}, {$endCounter}";
+	$emp = "SELECT * FROM employee WHERE site = '$site' AND employment_status = '1' $appendQuery LIMIT {$startCounter}, {$endCounter}";
 	
 	$empQuery = mysql_query($emp) or die(mysql_error());
 	if(mysql_num_rows($empQuery) != 0)
