@@ -1627,27 +1627,32 @@ if($holidayExist > 0)
 						<label class="control-label col-md-3 col-lg-3" for="sss" >SSS</label>
 						<div class="col-md-9 col-lg-9">
 							<?php
+							$sssDisplay = "";
 							if($sss != "N/A")
 							{
 								Print "<span class='pull-right' id='sssValue'>".number_format($sss, 2, '.', ',')."</span>";
+								$sssDisplay = number_format($sss, 2, '.', ',')/4;
 							}
 							else
 							{
 								Print "--";
 							}
+
 							?>
 						</div>
 						<div class="col-md-1 col-lg-12">
-							<input type="text" class="form-control" id="sssDeduct" name="sssDeduct" placeholder="To deduct" onblur="addDecimal(this)" onchange="setsssLimit(this)">
+							<input type="text" class="form-control" id="sssDeduct" name="sssDeduct" placeholder="To deduct" onblur="addDecimal(this)" value="<?php Print $sssDisplay?>" onchange="setsssLimit(this)">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="control-label col-md-3 col-lg-3" for="pagibig" style="white-space: nowrap;">Pag-IBIG</label>
 						<div class="col-md-9 col-lg-9">
 							<?php
+							$pagibigDisplay = "";
 							if($pagibig != "N/A")
 							{
 								Print "<span class='pull-right' id='pagibigValue'>".number_format($pagibig, 2, '.', ',')."</span>";
+								$pagibigDisplay = number_format($pagibig, 2, '.', ',')/4;
 							}
 							else
 							{
@@ -1656,7 +1661,7 @@ if($holidayExist > 0)
 							?>
 						</div>
 						<div class="col-md-1 col-lg-12">
-							<input type="text" class="form-control" id="pagibigDeduct" name="pagibigDeduct" placeholder="To deduct" onblur="addDecimal(this)" onchange="setpagibigLimit(this)">
+							<input type="text" class="form-control" id="pagibigDeduct" name="pagibigDeduct" placeholder="To deduct" onblur="addDecimal(this)" value="<?php Print $pagibigDisplay?> onchange="setpagibigLimit(this)">
 						</div>
 					</div>
 				</div>

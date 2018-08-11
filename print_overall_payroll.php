@@ -68,7 +68,7 @@ $activeSheet->setCellValue('Z3', 'P-ibig loan');
 
 $activeSheet->setCellValue('AA3', 'tools');
 $activeSheet->setCellValue('AB3', 'Total Salary');
-$activeSheet->setCellValue('AC3', 'Signature');
+$activeSheet->setCellValue('AC3', 'Employee Signature');
 
 
 //----------------- Body ---------------------//
@@ -138,8 +138,10 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 
 		$activeSheet->setCellValue('D'.$rowCounter, $siteArr['rate']);//Rate
 		$activeSheet->setCellValue('E'.$rowCounter, $payrollArr['num_days']);//ofDays
-		$activeSheet->setCellValue('F'.$rowCounter, $payrollArr['overtime']);//O.T.
-		$activeSheet->setCellValue('G'.$rowCounter, $payrollArr['ot_num']);//#ofHrs
+		if($payrollArr['overtime'] != 0)
+			$activeSheet->setCellValue('F'.$rowCounter, $payrollArr['overtime']);//O.T.
+		if($payrollArr['ot_num'] != 0)
+			$activeSheet->setCellValue('G'.$rowCounter, $payrollArr['ot_num']);//#ofHrs
 		if(!$AllowBool)
 			$activeSheet->setCellValue('H'.$rowCounter, $payrollArr['allow']);//Allow.
 		if(!$colaBool)
@@ -199,17 +201,20 @@ $rowCounter++;//to give space for clearer data
 $grandTotalRow = $rowCounter + 1;
 
 //Grandtotal Merge cell
-$activeSheet->mergeCells('AA'.$grandTotalRow.':AB'.$grandTotalRow);
+// $activeSheet->mergeCells('AA'.$grandTotalRow.':AB'.$grandTotalRow);
 $GrandTotal = numberExactFormat($GrandTotal, 2, '.', true);
-$activeSheet->setCellValue('AA'.$grandTotalRow, 'Grand Total:        '.$GrandTotal);
+$activeSheet->setCellValue('AA'.$grandTotalRow, 'Grand Total:');
+$activeSheet->setCellValue('AB'.$grandTotalRow, $GrandTotal);
+
 
 //Style for the Spreadsheet
 $activeSheet->getStyle('A3:AC3')->applyFromArray($border_all_medium);//Header 
 $activeSheet->getStyle('A4:AC'.$rowCounter)->applyFromArray($border_all_thin);//Content
-$activeSheet->getStyle('AA'.$grandTotalRow.':AB'.$grandTotalRow)->applyFromArray($border_allsides_medium);//Grand Total
+$activeSheet->getStyle('AA'.$grandTotalRow.':AB'.$grandTotalRow)->applyFromArray($border_all_medium);//Grand Total
 $activeSheet->getStyle('AC1:AC'.$rowCounter)->applyFromArray($signature);//Centered header text
 $activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($align_left); // Left align employee name
-
+$activeSheet->getStyle('AB4:AB'.$rowCounter)->applyFromArray($align_left); // Left align employee name
+$activeSheet->getStyle('AB'.$grandTotalRow)->applyFromArray($align_left); // Left align employee name
 
 $activeSheet->getStyle('G1:AC2')->applyFromArray($align_center);//Centered header text
 $activeSheet->getColumnDimension('A')->setAutoSize(true);
@@ -240,6 +245,7 @@ $activeSheet->getColumnDimension('Y')->setAutoSize(true);
 $activeSheet->getColumnDimension('Z')->setAutoSize(true);
 $activeSheet->getColumnDimension('AA')->setAutoSize(true);
 $activeSheet->getColumnDimension('AB')->setAutoSize(true);
+$activeSheet->getColumnDimension('AC')->setAutoSize(true);
 
 // header('Content-Type: application/vnd.ms-excel');
 // header('Content-Disposition: attachment; filename="'.$filename.'"');
