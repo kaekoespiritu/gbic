@@ -1630,8 +1630,8 @@ if($holidayExist > 0)
 							$sssDisplay = "";
 							if($sss != "N/A")
 							{
-								Print "<span class='pull-right' id='sssValue'>".true($sss, 2, '.', ',')."</span>";
-								$sssDisplay = numberExactFormat($true, 2, '.', false)/4;
+								Print "<span class='pull-right' id='sssValue'>".numberExactFormat($sss, 2, '.', true)."</span>";
+								$sssDisplay = numberExactFormat($sss, 2, '.', false)/4;
 							}
 							else
 							{
@@ -1651,7 +1651,7 @@ if($holidayExist > 0)
 							$pagibigDisplay = "";
 							if($pagibig != "N/A")
 							{
-								Print "<span class='pull-right' id='pagibigValue'>".number_format($pagibig, 2, '.', ',')."</span>";
+								Print "<span class='pull-right' id='pagibigValue'>".numberExactFormat($pagibig, 2, '.', true)."</span>";
 								$pagibigDisplay =  numberExactFormat($pagibig, 2, '.', false)/4;
 							}
 							else
