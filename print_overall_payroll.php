@@ -218,8 +218,8 @@ $activeSheet->getStyle('A4:AC'.$rowCounter)->applyFromArray($border_all_thin);//
 $activeSheet->getStyle('AA'.$grandTotalRow.':AB'.$grandTotalRow)->applyFromArray($border_all_medium);//Grand Total
 $activeSheet->getStyle('AC1:AC'.$rowCounter)->applyFromArray($signature);//Centered header text
 $activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($align_left); // Left align employee name
-$activeSheet->getStyle('AB4:AB'.$rowCounter)->applyFromArray($align_left); // Left align employee name
-$activeSheet->getStyle('AB'.$grandTotalRow)->applyFromArray($align_left); // Left align employee name
+$activeSheet->getStyle('AB4:AB'.$rowCounter)->applyFromArray($align_right); // Left align employee name
+$activeSheet->getStyle('AB'.$grandTotalRow)->applyFromArray($align_right); // Left align employee name
 
 //Font sizes
 
