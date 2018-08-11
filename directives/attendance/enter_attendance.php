@@ -95,11 +95,13 @@ function attendance ()
 
 						Print "<input type='hidden' class='driver' value='".$driverBool."' >";//Boolean for driver
 						
-						if( $day == 'Sunday') {
+						if( $day == 'Sunday') 
+						{
 							Print '<input type="hidden" id="isSunday">';
 						}
-						else {
-							Print '<script>console.log("'.$day.'")</script>';
+						if($row_employee['complete_doc'] == '1')
+						{
+							Print '<input type="hidden" id="completeReq">';
 						}
 
 						Print '<script>console.log("'.$day.'")</script>';
@@ -175,8 +177,9 @@ function attendance ()
 						if( $day == 'Sunday') {
 							Print '<input type="hidden" id="isSunday">';
 						}
-						else {
-							Print '<script>console.log("'.$day.'")</script>';
+						if($row_employee['complete_doc'] == '1')
+						{
+							Print '<input type="hidden" id="completeReq">';
 						}
 
 						Print '<script>console.log("'.$day.'")</script>';
@@ -252,8 +255,9 @@ function attendance ()
 						if( $day == 'Sunday') {
 							Print '<input type="hidden" id="isSunday">';
 						}
-						else {
-							Print '<script>console.log("'.$day.'")</script>';
+						if($row_employee['complete_doc'] == '1')
+						{
+							Print '<input type="hidden" id="completeReq">';
 						}
 
 						Print '<script>console.log("'.$day.'")</script>';
@@ -584,13 +588,12 @@ function attendance ()
 
 					<input type='hidden' class='driver' value='".$driverBool."' >";
 					if( $day == 'Sunday') {
-							Print '<input type="hidden" id="isSunday">';
-						}
-						else {
-							Print '<script>console.log("'.$day.'")</script>';
-						}
-
-						Print '<script>console.log("'.$day.'")</script>';
+						Print '<input type="hidden" id="isSunday">';
+					}
+					if($row_employee['complete_doc'] == '1')
+					{
+						Print '<input type="hidden" id="completeReq">';
+					}
 
 			Print "<input type='hidden' name='empid[".$counter."]' value=". $row_employee['empid'] .">
 					<td class='empName' align='left'>
