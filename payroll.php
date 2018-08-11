@@ -1661,7 +1661,7 @@ if($holidayExist > 0)
 							?>
 						</div>
 						<div class="col-md-1 col-lg-12">
-							<input type="text" class="form-control" id="pagibigDeduct" name="pagibigDeduct" placeholder="To deduct" onblur="addDecimal(this)" value="<?php Print $pagibigDisplay?> onchange="setpagibigLimit(this)">
+							<input type="text" class="form-control" id="pagibigDeduct" name="pagibigDeduct" placeholder="To deduct" onblur="addDecimal(this)" value="<?php Print $pagibigDisplay?>" onchange="setpagibigLimit(this)">
 						</div>
 					</div>
 				</div>
