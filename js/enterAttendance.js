@@ -511,7 +511,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 	var isSunday = (row.querySelector('#isSunday') ? true : false); 
  	var compReq = (row.querySelector('#completeReq') ? true : false); 
 
- 	console.log("sunday : "+ isSunday)
+ 	// console.log("sunday : "+ isSunday)
  	console.dir(row)
 	// Verifies that time in and time out input fields have value
 	if(timeinhour1 && timeouthour1 && timeinhour2 && timeouthour2)
@@ -677,19 +677,19 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			var checkTime1 = timeinhour1 - timeouthour1;
 			var checkTime2 = timeinhour2 - timeouthour2;
 			var useOnce = true;
-
+			console.log("Time stamp: "+timeinhour1+" | "+timeouthour1);
 			if(row.querySelector('.driver').value == '1' && isSunday)
 			{
 				console.log("driver");
-				if(Math.abs(checkTime1) >= 13)// if accumulated time is more than 13 hours 
+				if(timeouthour1 >= 21)// If employee timeout at 9pm onward 
 				{
 					
 					if(workingmins == 0)
 					{
-						console.log("1");
+						// console.log("1");
 						if(useOnce)
 						{
-							console.log("2");
+							// console.log("2");
 							useOnce = false;
 							workinghours -= 1;
 						}
@@ -697,13 +697,13 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					}
 					else
 					{
-						console.log("3");
+						// console.log("3");
 						workingmins = workingmins - 30;//minus 30mins
 					}
 					
 					if(workingmins < 0)
 					{
-						console.log("4");
+						// console.log("4");
 						if(useOnce)
 							workinghours -= 1;
 						
@@ -716,14 +716,14 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				//2nd Time in and Time out
 				// useOnce = true;
 				workingmins = Math.abs(workingmins);
-				if(Math.abs(checkTime2) >= 13)// if accumulated time is more than 13 hours 
+				if(timeouthour2 >= 21)// If employee timeout at 9pm onward 
 				{
-					console.log("5");
+					// console.log("5");
 					if(workingmins == 0)
 					{
 						if(useOnce)
 						{
-							console.log("6");
+							// console.log("6");
 							useOnce = false;
 							workinghours -= 1;
 						}
@@ -731,7 +731,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					}
 					else if(useOnce)
 					{
-						console.log("7");
+						// console.log("7");
 						workingmins = workingmins - 30;//minus 30mins
 					}
 					
@@ -752,8 +752,9 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			else
 			{
 				console.log("hindi driver");
-				if(Math.abs(checkTime1) >= 13)// if accumulated time is more than 13 hours 
+				if(timeouthour1 >= 21)// If employee timeout at 9pm onward 
 				{
+					console.log("9pm mark");
 					if(workingmins == 0)// if no minutes are rendered
 					{
 						useOnce = false;
@@ -777,9 +778,10 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				}
 				console.log(workinghours+" : "+workingmins)
 				workingmins = Math.abs(workingmins);
-				if(Math.abs(checkTime1) >= 8)// if accumulated time is more than 8 hours 
+				
+				if(timeinhour1 <= 12 && timeouthour1 >= 13)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
 				{
-					
+					console.log("12pm-1pm mark");
 					if(workingmins == 0)
 					{
 						if(useOnce)
@@ -808,8 +810,9 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				}
 				//2nd Time in and Time out
 				useOnce = true;
-				if(Math.abs(checkTime2) >= 13)// if accumulated time is more than 13 hours 
+				if(timeouthour2 >= 21)// If employee timeout at 9pm onward 
 				{
+					console.log("9pm mark");
 					if(workingmins == 0)// if no minutes are rendered
 					{
 						useOnce = false;
@@ -833,9 +836,9 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				}
 				console.log(workinghours+" : "+workingmins)
 				workingmins = Math.abs(workingmins);
-				if(Math.abs(checkTime2) >= 8)// if accumulated time is more than 8 hours 
+				if(timeinhour2 <= 12 && timeouthour2 >= 13)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
 				{
-					
+					console.log("9pm mark");
 					if(workingmins == 0)
 					{
 						if(useOnce)
@@ -872,7 +875,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				 workingmins = Math.abs(workingmins) - 60;
 			}
 
-			console.log("time: "+workinghours);
+			// console.log("time: "+workinghours);
 			//alert(workinghours);
 			//set the attendance status to PRESENT
 			row.querySelector('.attendance').value = "PRESENT";
@@ -883,6 +886,11 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				{
 					row.querySelector('.workinghours').value = workinghours + " hrs";
 					row.querySelector('.workinghoursH').value = workinghours + " hrs";
+				}
+				else if(workinghours == 0)
+				{
+					row.querySelector('.workinghours').value = workingmins + " mins";
+					row.querySelector('.workinghoursH').value = workingmins + " mins";
 				}
 				else
 				{
@@ -986,10 +994,10 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					{
 
 						if ((timeinhour1 <= 22 && timeouthour1 <= 6) ||
-					   		(timeinhour1 <= 22 && timeouthour1 <= 24) || 
-					   		(timeouthour1 == 22 && timeoutmin1 != 0))//dito
+					   		(timeinhour1 <= 22 && timeouthour1 <= 24) ||
+					   		(timeouthour1 == 22 && timeoutmin1 != 0))
 						{
-							console.log(timeouthour1 +" :yo "+timeoutmin1);
+							// console.log(timeouthour1 +" :yo "+timeoutmin1);
 							var nightdiffMins = originalMins;
 							var nightdiffBool = false;
 							if(timeouthour1 == 22 && timeoutmin1 != 0)// If employee's timeout time is 10:30pm 
@@ -1057,7 +1065,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					   (timeouthour1 == 22 && timeoutmin1 != 0) ||
 					   (timeouthour2 == 22 && timeoutmin2 != 0))//night diff 
 					{
-						console.log(timeinhour1 +" : "+ timeouthour1+" | "+ timeinhour2+" : "+ timeouthour2)
+						// console.log(timeinhour1 +" : "+ timeouthour1+" | "+ timeinhour2+" : "+ timeouthour2)
 						var nightdiffBool = false;
 						var nightdiffMins = originalMins;
 						if(timeouthour1 == 22 && timeoutmin1 != 0)
@@ -1313,6 +1321,21 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			}
 			
 			//Undeclared break
+			var timeinEx1 = null;
+			var timeoutEx1 = null;
+			var timeinEx2 = null;
+			var timeoutEx2 = null;
+
+			if(timeinhour1 >= timeouthour1)
+			{
+				timeinEx1 = timeouthour1;
+				timeoutEx1 = timeinhour1;
+			}
+			if(timeinhour2 >= timeouthour2)
+			{
+				timeinEx2 = timeouthour2;
+				timeoutEx2 = timeinhour2;
+			}
 
 			//1st Time in and Time out
 			var checkTime1 = workinghours1;
@@ -1323,11 +1346,10 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			
 			if(row.querySelector('.driver').value == '1' && isSunday)
 			{
-				console.log("1: "+useOnce);
-				console.log("checkTime1: "+checkTime1);
-				if(Math.abs(checkTime1) >= 13)// if accumulated time is more than 13 hours 
+				// console.log("1: "+useOnce);
+				// console.log("checkTime1: "+checkTime1);
+				if((timeinhour1 >= timeouthour1 && timeinhour1 >= 9) || (timeouthour1 <= timeinhour1 && timeouthour1 <= 9))// if employee timed out at 9pm onward
 				{
-					
 					if(workingmins == 0)
 					{
 						if(useOnce)
@@ -1356,8 +1378,9 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				//2nd Time in and Time out
 				// useOnce = true;
 				workingmins = Math.abs(workingmins);
-				if(Math.abs(checkTime2) >= 13)// if accumulated time is more than 13 hours 
+				if((timeinhour1 >= timeouthour1 && timeinhour1 >= 9) || (timeouthour1 <= timeinhour1 && timeouthour1 <= 9))// if employee timed out at 9pm onward
 				{
+
 					if(workingmins == 0)
 					{
 						if(useOnce)
@@ -1385,8 +1408,10 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 			}
 			else
 			{
-				if(Math.abs(checkTime1) >= 13)// if accumulated time is more than 13 hours 
+				//if( (timeinhour1 <= 9 && timeouthour1 >= 9) && !(timeinEx1 < 9 && timeoutEx1 > 9) )// if employee timed out at 9pm onward
+				if((timeinhour1 >= timeouthour1 && timeinhour1 >= 9) || (timeouthour1 <= timeinhour1 && timeouthour1 <= 9))// if employee timed out at 9pm onward
 				{
+					console.log("yow");
 					if(workingmins == 0)// if no minutes are rendered
 					{
 						useOnce = false;
@@ -1410,9 +1435,11 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				}
 				// console.log(workinghours+" : "+workingmins)
 				workingmins = Math.abs(workingmins);
-				if(Math.abs(checkTime1) >= 8)// if accumulated time is more than 8 hours 
+
+				// if(timeinhour1 <= 24 && timeouthour1 >= 1)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
+				if((timeinhour1 >= timeouthour1) && timeouthour1 >= 1)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
 				{
-					
+					console.log("yow1");
 					if(workingmins == 0)
 					{
 						if(useOnce)
@@ -1441,7 +1468,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				}
 				//2nd Time in and Time out
 				useOnce = true;
-				if(Math.abs(checkTime2) >= 13)// if accumulated time is more than 13 hours 
+				if((timeinhour2 >= timeouthour2 && timeinhour2 >= 9) || (timeouthour2 <= timeinhour2 && timeouthour2 <= 9))// if employee timed out at 9pm onward
 				{
 					if(workingmins == 0)// if no minutes are rendered
 					{
@@ -1466,7 +1493,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				}
 				// console.log(workinghours+" : "+workingmins)
 				workingmins = Math.abs(workingmins);
-				if(Math.abs(checkTime2) >= 8)// if accumulated time is more than 8 hours 
+				if((timeinhour2 >= timeouthour2) && timeouthour2 >= 1)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
 				{
 					
 					if(workingmins == 0)
@@ -1513,10 +1540,15 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					row.querySelector('.workinghours').value = workinghours + " hrs";
 					row.querySelector('.workinghoursH').value = workinghours + " hrs";
 				}
+				else if(workinghours == 0)
+				{
+					row.querySelector('.workinghours').value = workingmins + " mins";
+					row.querySelector('.workinghoursH').value = workingmins + " mins";
+				}
 				else
 				{
 					row.querySelector('.workinghours').value = workinghours + " hrs, " + workingmins + " mins";
-					row.querySelector('.workinghoursH').value = workinghours + " hrs, " +  + workingmins + " mins";
+					row.querySelector('.workinghoursH').value = workinghours + " hrs, " +  workingmins + " mins";
 				}
 			}
 			else if(workingmins == 0)
@@ -1566,7 +1598,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				}
 				else
 				{
-					console.log("yes: "+workinghours);
+					// console.log("yes: "+workinghours);
 					var Uworkinghour = workinghours + 1;
 					var Uworkingmins = 60 - workingmins;
 					if(Uworkinghour != 8)
@@ -1600,7 +1632,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					if(timeinhour2 != "HD")
 					{
 
-						console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
+						// console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
 						if(	(timeinhour1 <= 10 && timeouthour1 <= 18) || 
 							(timeinhour2 <= 10 && timeouthour2 <= 18) || 
 							(timeouthour1 == 10 && timeoutmin1 != 0) ||
@@ -1626,10 +1658,10 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 								nightdiffBool = true;
 							}
 							//Possibility 2: if 10pm is in after lunch
-							console.log("timeinhour2: "+timeinhour2+" | timeinhour1: "+timeinhour1);
+							// console.log("timeinhour2: "+timeinhour2+" | timeinhour1: "+timeinhour1);
 							if(timeinhour2 <= 10)
 							{ 
-								console.log("1");
+								// console.log("1");
 								nightdiffBool = false;
 								NDin = timeinhour2 - 10;
 								NDout = 0;
@@ -1644,7 +1676,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 							//Possibility 1: if 10pm is in before lunch
 							else if(timeinhour1 <= 10)
 							{
-								console.log("2");
+								// console.log("2");
 								nightdiffBool = false;
 								if(timeouthour1 >= 18)//If timein encapsulated all of the night diff
 								{
@@ -1716,13 +1748,13 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 						// if(overlapCheck > 24)
 						// 	overlapRange = overlapCheck - 24;
 
-						console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1);
+						// console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1);
 						if(	(timeinhour1 <= 10 && timeouthour1 <= 18) || 
 							(timeinhour1 <= 10 && timeouthour1 >= 18) || 
 							(timeinhour1 >= 10 && timeinhour1 <= 18 && timeouthour1 >= 10 && timeouthour1 <= 18) ||
 							(timeinhour1 >= timeouthour1 && timeInPeriod == timeOutPeriod))//night diff needs reconfiguration
 						{
-							console.log("ND")
+							// console.log("ND")
 							var NDin;
 							var NDout;
 							var workhrs;
@@ -1740,36 +1772,36 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 							//timein is before 10pm
 							if(timeinhour1 <= 10 && temp)
 							{ 
-								console.log("pasok");
+								// console.log("pasok");
 								//Possibility 2 : timein and timeout covers the whole nightdiff
 								if(timeouthour1 >= 18)//If timein encapsulated all of the night diff
 								{
-									console.log("possibility 2");
+									// console.log("possibility 2");
 									nightdiff = 8;
 								}
 								//Posibility 1: time out is inside the nightdiff
 								else if(timeouthour1 <= 18 && timeouthour1 >= 10)
 								{
-									console.log("possibility 1");
+									// console.log("possibility 1");
 									nightdiff = 10 - timeouthour1;
 								}
 								//Possibility 3: timein hour is before 10pm but employee timed out at more than 12hours 
 								else if(timeouthour1 <= timeinhour1 && temp)
 								{
-									console.log("possibility 3");
+									// console.log("possibility 3");
 									nightdiff = 8;
 								}
 							}
 							// Possibility 4: timein hour is after 6am but employee timed out at more than 12hours and managed to time out inside the nightdiff hours
 							else if(timeinhour1 >= 18 && timeouthour1 <= 18 && timeouthour1 >= 10)
 							{
-								console.log("possibility 4");
+								// console.log("possibility 4");
 								nightdiff = 10 - timeouthour1;
 							}
 							// Possibility 5: timein hour is after 6am and employee timed out at more than 12hours and also timed out after 6am but not greater than 6am
 							else if(timeinhour1 >= 18 && timeinhour1 >= timeouthour1 && timeouthour1 >= 18) 
 							{
-								console.log("possibility 5");
+								// console.log("possibility 5");
 								nightdiff = 8;
 							}
 							// Possibility 6: Timein hour is inside the nightdiff range but employee timed out more than 12 hours and is also inside the nightdiff range
@@ -1779,28 +1811,28 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 									timeouthour1 >= 10 && 
 									timeouthour1 <= 18)
 							{
-								console.log("possibility 6");
+								// console.log("possibility 6");
 								nightdiff = timeouthour1 - 10;
 							}
 							else if(timeinhour1 <= 10)
 							{ 
-								console.log("pasok");
+								// console.log("pasok");
 								//Possibility 2 : timein and timeout covers the whole nightdiff
 								if(timeouthour1 >= 18)//If timein encapsulated all of the night diff
 								{
-									console.log("possibility 2.1");
+									// console.log("possibility 2.1");
 									nightdiff = 8;
 								}
 								//Posibility 1: time out is inside the nightdiff
 								else if(timeouthour1 <= 18 && timeouthour1 >= 10)
 								{
-									console.log("possibility 1.1");
+									// console.log("possibility 1.1");
 									nightdiff = 10 - timeouthour1;
 								}
 								//Possibility 3: timein hour is before 10pm but employee timed out at more than 12hours 
 								else if(timeouthour1 <= timeinhour1 && temp)
 								{
-									console.log("possibility 3.1");
+									// console.log("possibility 3.1");
 									nightdiff = 8;
 								}
 							}
@@ -1812,7 +1844,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 
 							if(originalMins != null)
 							{
-								console.log("nightdiff mins");
+								// console.log("nightdiff mins");
 								nightdiffMins = originalMins;
 								nightdiffBool = true;
 							}
@@ -1823,7 +1855,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 						}
 						
 					}
-					console.log("nightdiffBool: "+ nightdiffBool);
+					// console.log("nightdiffBool: "+ nightdiffBool);
 					// if(nightdiffBool == false && nightdiff == "")
 					// 	nightdiffBool = true;
 
@@ -1836,7 +1868,6 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					{
 						if(nightdiffMins != 0)
 						{
-							console.log("dito pala : " + nightdiffMins);
 							row.querySelector('.nightdiff').value = nightdiff + " hrs, " + nightdiffMins + "mins";
 							row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + nightdiffMins + "mins";
 						}
@@ -2041,7 +2072,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			if(row.querySelector('.driver').value == 1 && isSunday)
 			{
 				console.log("driver");
-				if(Math.abs(checkTime1) >= 13)// if accumulated time is more than 8 hours 
+				if(timeinhour1 <= 12 && timeouthour1 >= 13)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
 				{
 					
 					if(workingmins == 0)
@@ -2071,7 +2102,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					
 				}
 				//2nd Time in and Time out
-				if(Math.abs(checkTime2) >= 13)// if accumulated time is more than 8 hours 
+				if(timeinhour2 <= 12 && timeouthour2 >= 13)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
 				{
 					
 					if(workingmins == 0)
@@ -2102,7 +2133,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				}
 				//3nd Time in  and Time out
 				workingmins = Math.abs(workingmins);
-				if(Math.abs(checkTime3) >= 13)// if accumulated time is more than 8 hours 
+				if(timeinhour3 <= 12 && timeouthour3 >= 13)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
 				{
 					
 					if(workingmins == 0)
@@ -2134,7 +2165,8 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			else
 			{
 				console.log("hindi driver");
-				if(Math.abs(checkTime1) >= 13)// if accumulated time is more than 13 hours 
+				if(timeouthour1 >= 21)// If employee timeout at 9pm onward 
+				// if(Math.abs(checkTime1) >= 13)// if accumulated time is more than 13 hours 
 				{
 					if(workingmins == 0)// if no minutes are rendered
 					{
@@ -2157,10 +2189,11 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 							workingmins = 60 - Math.abs(workingmins);
 					}
 				}
-				console.log(workinghours+" : "+workingmins)
+				// console.log(workinghours+" : "+workingmins)
 				workingmins = Math.abs(workingmins);
 
-				if(Math.abs(checkTime1) >= 8)// if accumulated time is more than 8 hours 
+				if(timeinhour1 <= 12 && timeouthour1 >= 13)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
+				// if(Math.abs(checkTime1) >= 8)// if accumulated time is more than 8 hours 
 				{
 					
 					if(workingmins == 0)
@@ -2191,7 +2224,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				}
 				//2nd Time in and Time out
 				useOnce = true;
-				if(Math.abs(checkTime2) >= 13)// if accumulated time is more than 13 hours 
+				if(timeouthour2 >= 21)// If employee timeout at 9pm onward 
 				{
 					if(workingmins == 0)// if no minutes are rendered
 					{
@@ -2214,9 +2247,10 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 							workingmins = 60 - Math.abs(workingmins);
 					}
 				}
-				console.log(workinghours+" : "+workingmins)
+				// console.log(workinghours+" : "+workingmins)
 				workingmins = Math.abs(workingmins);
-				if(Math.abs(checkTime2) >= 8)// if accumulated time is more than 8 hours 
+				if(timeinhour2 <= 12 && timeouthour2 >= 13)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
+				// if(Math.abs(checkTime2) >= 8)// if accumulated time is more than 8 hours 
 				{
 					
 					if(workingmins == 0)
@@ -2248,7 +2282,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 
 				//3nd Time in and Time out
 				useOnce = true;
-				if(Math.abs(checkTime3) >= 13)// if accumulated time is more than 13 hours 
+				if(timeouthour3 >= 21)// If employee timeout at 9pm onward 
 				{
 					if(workingmins == 0)// if no minutes are rendered
 					{
@@ -2272,7 +2306,8 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					}
 				}
 				workingmins = Math.abs(workingmins);
-				if(Math.abs(checkTime3) >= 8)// if accumulated time is more than 8 hours 
+				if(timeinhour3 <= 12 && timeouthour3 >= 13)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
+				// if(Math.abs(checkTime3) >= 8)// if accumulated time is more than 8 hours 
 				{
 					
 					if(workingmins == 0)
@@ -2593,23 +2628,23 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					}
 					else if(nightdiff != "")
 					{
-						console.log("1");
+						// console.log("1");
 						if(nightdiffMins != 0)
 						{
-								console.log("2");
+								// console.log("2");
 							row.querySelector('.nightdiff').value = nightdiff + " hrs, " + nightdiffMins + "mins";
 							row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + nightdiffMins + "mins";
 						}
 						else
 						{
-								console.log("3");
+								// console.log("3");
 							row.querySelector('.nightdiff').value = nightdiff + " hrs";
 							row.querySelector('.nightdiffH').value = nightdiff + " hrs";
 						}
 					}
 					else
 					{
-							console.log("4");
+							// console.log("4");
 						row.querySelector('.nightdiff').value = "";
 						row.querySelector('.nightdiffH').value = "";
 					}
@@ -2768,7 +2803,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			if(row.querySelector('.driver').value == 1 && isSunday)
 			{
 				console.log("driver");
-				if(Math.abs(checkTime1) >= 13)// if accumulated time is more than 8 hours 
+				if((timeinhour1 >= timeouthour1 && timeinhour1 >= 9) || (timeouthour1 <= timeinhour1 && timeouthour1 <= 9))// if employee timed out at 9pm onward
 				{
 					
 					if(workingmins == 0)
@@ -2798,7 +2833,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					
 				}
 				//2nd Time in and Time out
-				if(Math.abs(checkTime2) >= 13)// if accumulated time is more than 8 hours 
+				if((timeinhour2 >= timeouthour2 && timeinhour2 >= 9) || (timeouthour2 <= timeinhour2 && timeouthour2 <= 9))// if employee timed out at 9pm onward
 				{
 					
 					if(workingmins == 0)
@@ -2829,7 +2864,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				}
 				//3nd Time in  and Time out
 				workingmins = Math.abs(workingmins);
-				if(Math.abs(checkTime3) >= 13)// if accumulated time is more than 8 hours 
+				if((timeinhour2 >= timeouthour2 && timeinhour2 >= 9) || (timeouthour2 <= timeinhour2 && timeouthour2 <= 9))// if employee timed out at 9pm onward
 				{
 					
 					if(workingmins == 0)
@@ -2861,7 +2896,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			else
 			{
 				console.log("hindi driver");
-				if(Math.abs(checkTime1) >= 13)// if accumulated time is more than 13 hours 
+				if((timeinhour1 >= timeouthour1 && timeinhour1 >= 9) || (timeouthour1 <= timeinhour1 && timeouthour1 <= 9))// if employee timed out at 9pm onward
 				{
 					if(workingmins == 0)// if no minutes are rendered
 					{
@@ -2884,10 +2919,10 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 							workingmins = 60 - Math.abs(workingmins);
 					}
 				}
-				console.log(workinghours+" : "+workingmins)
+				// console.log(workinghours+" : "+workingmins)
 				workingmins = Math.abs(workingmins);
 
-				if(Math.abs(checkTime1) >= 8)// if accumulated time is more than 8 hours 
+				if((timeinhour1 >= timeouthour1) && timeouthour1 >= 1)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
 				{
 					
 					if(workingmins == 0)
@@ -2918,7 +2953,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				}
 				//2nd Time in and Time out
 				useOnce = true;
-				if(Math.abs(checkTime2) >= 13)// if accumulated time is more than 13 hours 
+				if((timeinhour2 >= timeouthour2 && timeinhour2 >= 9) || (timeouthour2 <= timeinhour2 && timeouthour2 <= 9))// if employee timed out at 9pm onward
 				{
 					if(workingmins == 0)// if no minutes are rendered
 					{
@@ -2941,9 +2976,9 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 							workingmins = 60 - Math.abs(workingmins);
 					}
 				}
-				console.log(workinghours+" : "+workingmins)
+				// console.log(workinghours+" : "+workingmins)
 				workingmins = Math.abs(workingmins);
-				if(Math.abs(checkTime2) >= 8)// if accumulated time is more than 8 hours 
+				if((timeinhour2 >= timeouthour2) && timeouthour2 >= 1)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
 				{
 					
 					if(workingmins == 0)
@@ -2975,7 +3010,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 
 				//3nd Time in and Time out
 				useOnce = true;
-				if(Math.abs(checkTime3) >= 13)// if accumulated time is more than 13 hours 
+				if((timeinhour3 >= timeouthour3 && timeinhour3 >= 9) || (timeouthour3 <= timeinhour3 && timeouthour3 <= 9))// if employee timed out at 9pm onward
 				{
 					if(workingmins == 0)// if no minutes are rendered
 					{
@@ -2999,7 +3034,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					}
 				}
 				workingmins = Math.abs(workingmins);
-				if(Math.abs(checkTime3) >= 8)// if accumulated time is more than 8 hours 
+				if((timeinhour3 >= timeouthour3) && timeouthour3 >= 1)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
 				{
 					
 					if(workingmins == 0)
