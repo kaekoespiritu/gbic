@@ -1728,6 +1728,8 @@ if($holidayExist > 0)
 						?>
 						<h4>COLA</h4>
 						<input type="text" value="<?php Print $colaValue?>" name="cola" class="form-control">
+						<h4>Insurance</h4>
+						<input type="text" value="" name="insurance" class="form-control">
 					</div>
 				</div>
 

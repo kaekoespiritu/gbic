@@ -70,14 +70,37 @@ include_once('directives/db.php');
 			</td>
 		</tr>
 	</table>
+	<div>
+		<h2 align="left">
+			Notifications :
+		</h2>
+	</div>
 			<!-- TODO: Change this alert to modal -->
 			<?php
-			$awol = "SELECT * FROM awol_employees";
+			$notifBool = true;// Boolean for notification for displaying "No notifications"
+			// Notification for AWOL Employees
+			$awol = "SELECT * FROM awol_employees awol INNER JOIN employee emp ON emp.empid = awol.empid ORDER BY emp.lastname ASC, emp.firstname ";
 			$awolQuery = mysql_query($awol);
 			$awolCount = mysql_num_rows($awolQuery);
 			if($awolCount > 0)
 			{
+				$notifBool = false;// disable display of "No notification"
+				if($awolCount > 2)
+				{
+					$awolNum = $awolCount / 2;
+					$awolNum = round($awolNum);// Rounds off the result of awol num
+					$appendAwolQuery1 = "LIMIT 0, ".$awolNum;
+						$appendAwolQuery2 = "LIMIT ".$awolNum.", ".($awolCount+1);
 
+					$awol1 = $awol;
+					$awol2 = $awol;
+					$awol1 .= $appendAwolQuery1;
+					$awol2 .= $appendAwolQuery2;
+
+
+					$awolQuery1 = mysql_query($awol1);
+					$awolQuery2 = mysql_query($awol2);
+				}
 				// Call modal to show  
 
 				Print "<script>
@@ -91,16 +114,305 @@ include_once('directives/db.php');
 					<a href='applications.php'>
 							<div class='panel panel-danger'>
 								<div class='panel-heading'>
-									<h3 class='panel-title'>ABSENCE NOTICE: There are ".$awolCount." employee(s) absent for a week.</h3>
+									<h3 class='panel-title'>ABSENCE NOTICE: Employees that accumulated 7 DAYS of absences: </h3>
+									<div class='row'>";
+
+				if($awolCount > 2)// Separate in 2 columns
+				{
+					Print			"<div class='col-lg-8 col-lg-offset-2'>";
+					// 1st Column
+					Print				"<div class='col-lg-6'>
+											<ul align='left'>";
+									while($awolArr1 = mysql_fetch_assoc($awolQuery1))
+									{	
+										Print "<li>".$awolArr1['lastname'].", ".$awolArr1['firstname']."(".$awolArr1['position'].") - [".$awolArr1['site']."] </li>";
+									}
+
+					Print				"	</ul>
+										</div>";
+					// 2nd Column
+					Print				"<div class='col-lg-6'>
+											<ul align='left'>";
+									while($awolArr2 = mysql_fetch_assoc($awolQuery2))
+									{	
+										Print "<li>".$awolArr2['lastname'].", ".$awolArr2['firstname']."(".$awolArr2['position'].") - [".$awolArr2['site']."] </li>";
+									}
+
+					Print				"	</ul>
+										</div>";
+					Print 			"</div>";
+				}		
+				else
+				{
+					Print			"<div class='col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3'>
+										<ul align='left'>";
+									while($awolArr = mysql_fetch_assoc($awolQuery))
+									{	
+										Print "<li>".$awolArr['lastname'].", ".$awolArr['firstname']."(".$awolArr['position'].") - [".$awolArr['site']."] </li>";
+									}
+
+					Print			"	</ul>
+									</div>";
+				}		
+				
+
+				Print			"	</div>
 								</div>
 							</div>
 						</a>";
 			}
+
+			// Notification for employees that accumulated 4 consecutive absences
+			$absence = "SELECT * FROM absence_notif ab INNER JOIN employee emp ON emp.empid = ab.empid ORDER BY emp.lastname ASC, emp.firstname ";
+			$absenceQuery = mysql_query($absence);
+			$absenceCount = mysql_num_rows($absenceQuery);
+			if($absenceCount > 0)
+			{
+				$notifBool = false;// disable display of "No notification"
+				if($absenceCount > 3)
+				{
+					$absenceNum = $absenceCount / 2;
+					$absenceNum = round($absenceNum);// Rounds off the result of awol num
+					$appendAbsenceQuery1 = "LIMIT 0, ".$absenceNum;
+					$appendAbsenceQuery1 = "LIMIT ".$absenceNum.", ".($absenceCount+1);
+
+					$absence1 = $absence;
+					$absence2 = $absence;
+					$absence1 .= $appendAbsenceQuery1;
+					$absence2 .= $appendAbsenceQuery1;
+
+					$absenceQuery1 = mysql_query($absence1);
+					$absenceQuery2 = mysql_query($absence2);
+				}
+				
+				Print "
+						<div class='panel panel-danger'>
+							<div class='panel-heading'>
+								<h3 class='panel-title'>ABSENCE NOTICE: Employees that accumulated 4 DAYS of absences: 
+									<span>
+										<input type='button' class='btn btn-danger pull-right' onclick='clearAbsenceRecord()' value='OK'>
+									</span>
+								</h3>
+								<div class='row'>";
+
+				if($absenceCount > 3)// Separate in 2 columns
+				{
+					Print			"<div class='col-lg-8 col-lg-offset-2'>";
+					// 1st Column
+					Print				"<div class='col-lg-6'>
+											<ul align='left'>";
+									while($absenceArr1 = mysql_fetch_assoc($awolQuery1))
+									{	
+										Print "<li>".$absenceArr1['lastname'].", ".$absenceArr1['firstname']."(".$absenceArr1['position'].") - [".$absenceArr1['site']."] </li>";
+									}
+
+					Print				"	</ul>
+										</div>";
+					// 2nd Column
+					Print				"<div class='col-lg-6'>
+											<ul align='left'>";
+									while($absenceArr2 = mysql_fetch_assoc($absenceQuery2))
+									{	
+										Print "<li>".$absenceArr2['lastname'].", ".$absenceArr2['firstname']."(".$absenceArr2['position'].") - [".$absenceArr2['site']."] </li>";
+									}
+
+					Print				"	</ul>
+										</div>";
+					Print 			"</div>";
+				}		
+				else
+				{
+					Print			"<div class='col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3'>
+										<ul align='left'>";
+									while($absenceArr = mysql_fetch_assoc($absenceQuery))
+									{	
+										Print "<li>".$absenceArr['lastname'].", ".$absenceArr['firstname']."(".$absenceArr['position'].") - [".$absenceArr['site']."] </li>";
+									}
+
+					Print			"</ul>";
+				}		
+				
+
+				Print			"	</div>
+								</div>
+							</div>";
+			}
+
+			// Notification for 13th month pay tenure
+			$tenureChecker = "SELECT * FROM employee WHERE employment_status = '1'";
+			$tenureQuery = mysql_query($tenureChecker) or die(mysql_error());
+			$tenureArrWithReq = array();
+			$tenureArrWithOReq = array();
+			while($empArr = mysql_fetch_assoc($tenureQuery))
+			{
+				if($empArr['complete_doc'] == '1')// Complete Req
+				{
+					$dateToday = strtotime('now');
+					$dateHired = strtotime('+6 month', strtotime($empArr['datehired']));
+					$dateHiredLimit = strtotime('+7 month', strtotime($empArr['datehired']));
+					// if($dateToday >= $dateHired && $dateToday <= $dateHiredLimit)// Check if employee exceeded 6 months of tenure but dismisses the notif if the tenure entered 7months
+					// {
+						$toArr = $empArr['lastname'].', '.$empArr['firstname'].'('.$empArr['position'].') - ['.$empArr['site'].']';
+						array_push($tenureArrWithReq, $toArr);
+					// }
+						
+
+				}
+				else // Incomplete Req
+				{
+					$dateToday = strtotime('now');
+					$dateHired = strtotime('+5 month', strtotime($empArr['datehired']));
+					$dateHiredLimit = strtotime('+6 month', strtotime($empArr['datehired']));
+					// if($dateToday >= $dateHired && $dateToday <= $dateHiredLimit)// Check if employee exceeded 5 months of tenure but dismisses the notif if the tenure entered 6months
+					// {
+						$toArr = $empArr['lastname'].', '.$empArr['firstname'].'('.$empArr['position'].') - ['.$empArr['site'].']';
+						array_push($tenureArrWithOReq, $toArr);
+					// }
+				}
+			}
+			// $tenureArrWithReq = array($tenureArrWithReq);
+			// $tenureArrWithOReq = array($tenureArrWithOReq);
+			if(!empty($tenureArrWithReq) || !empty($tenureArrWithOReq))
+			{
+				$notifBool = false;// disable display of "No notification"
+				Print "		<div class='panel panel-warning'>
+								<div class='panel-heading'>
+									<h3 class='panel-title font-weight-bold'>13th Month pay notice: </h3>
+									<div class='row'>";
+
+									if(!empty($tenureArrWithReq))// With req
+									{
+										Print "<h3 class='panel-title'>Employees with Complete Requirements that stayed in the company for 6 Months</h3>
+											<div class='col-md-8 col-md-offset-2'>";
+										$wReqCount = count($tenureArrWithReq);
+										$wReqHalf = $wReqCount / 2;
+										$wReqHalf = round($wReqHalf);
+										$loopCounter = 1; 
+										$wReqArr1 = array();// 1st column
+										$wReqArr2 = array();// 2nd column
+										foreach($tenureArrWithReq as $tenureReq)
+										{
+											if($wReqCount > 2)
+											{
+												if($loopCounter >= $wReqHalf)
+													array_push($wReqArr1, $tenureReq);
+												else
+													array_push($wReqArr2, $tenureReq);
+											$loopCounter++;// Increment loop counter
+											}
+											else
+												array_push($wReqArr1, $tenureReq);
+										}
+
+										if($wReqCount > 2)
+										{
+											Print "	<div class='col-md-6'>
+														<ul>";
+												foreach($wReqArr1 as $withReq)
+												{
+													Print "<li align='left'>".$withReq."</li>";
+												}
+											Print "		</ul>
+													</div>";
+											Print "	<div class='col-md-6'>	
+														<ul>";
+												foreach($wReqArr2 as $withReq)
+												{
+													Print "<li align='left'>".$withReq."</li>";
+												}
+											Print "		</ul>
+													</div>";
+										}
+										else
+										{
+											Print "<ul>";
+											foreach($wReqArr1 as $withReq)
+												{
+													Print "<li align='left'>".$withReq."</li>";
+												}
+											Print "</ul>";
+										}
+
+										Print "</div>";
+									}
+									if(!empty($tenureArrWithOReq)) //Without req
+									{
+										Print "<div class='col-md-12'>
+											<h3 class='panel-title'>Employees with No/Incomplete Requirements that stayed in the company for 5 Months</h3>";
+										$wOReqCount = count($tenureArrWithOReq);
+										$wOReqHalf = $wOReqCount / 2;
+										$wOReqHalf = round($wOReqHalf);
+										$loopCounter = 1; 
+										$wOReqArr1 = array();// 1st column
+										$wOReqArr2 = array();// 2nd column
+										foreach($tenureArrWithOReq as $tenureWOReq)
+										{
+											if($wOReqCount > 2)
+											{
+												if($loopCounter >= $wOReqHalf)
+													array_push($wOReqArr1, $tenureWOReq);
+												else
+													array_push($wOReqArr2, $tenureWOReq);
+											$loopCounter++;// Increment loop counter
+											}
+											else
+												array_push($wOReqArr1, $tenureWOReq);
+										}
+										Print "<div class='row'>";
+										if($wOReqCount > 2)
+										{
+											Print "	<div class='col-md-6'>
+														<ul>";
+												foreach($wOReqArr1 as $withWOReq)
+												{
+													Print "<li align='left'>".$withWOReq."</li>";
+												}
+											Print "		</ul>
+													</div>";
+											Print "	<div class='col-md-6'>	
+														<ul>";
+												foreach($wOReqArr2 as $withWOReq)
+												{
+													Print "<li align='left'>".$withWOReq."</li>";
+												}
+											Print "		</ul>
+													</div>";
+										}
+										else
+										{
+											Print "	<div class='col-md-6 col-md-offset-3'>";
+											Print "<ul>";
+											foreach($wOReqArr1 as $withWOReq)
+												{
+													Print "<li align='left'>".$withWOReq."</li>";
+												}
+											Print "</ul>";
+											Print "</div>";
+										}
+										Print "</div>";
+										Print "</div>";
+									}
+				Print			"	</div>
+								</div>
+							</div>";
+			}
+				
+			if($notifBool)
+				Print "	<div class='panel panel-info'>
+							<div class='panel-heading'>
+								<h3 class='panel-title font-weight-bold'>No notifications</h3>
+							</div>
+						</div>";
 			?>
-	
+	<div>
+		<h2 align='left' >
+			Sites :
+		</h2>
+	</div>
 </div>
 
 <!-- SITES -->
+
 <?php
 $query = "SELECT location FROM site WHERE active = '1'";
 $site_query = mysql_query($query);
@@ -197,10 +509,8 @@ else
 	// Change main row color to Home
 	document.getElementById("home").setAttribute("style", "background-color: #10621e;");
 
-	
-    function loadAwol(num){
-		// $('#awolNumber').val(num);
-		// $('#show').modal('show');
+	function clearAbsenceRecord() {
+		window.location.assign('logic_clear_absence.php')
 	}
 
 	function shortcut(sitename) {

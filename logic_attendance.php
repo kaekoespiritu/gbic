@@ -351,7 +351,6 @@ if(!empty($dateRows))// Updating attendance
 			{
 				if($AwolChecker['attendance'] == 1)
 				{
-					
 					$AwolCounter++;
 				}
 				if($loopCounter == 0)
@@ -365,7 +364,6 @@ if(!empty($dateRows))// Updating attendance
 
 			if($AwolCounter >= 6)
 			{
-				
 				$checkAwol = "SELECT * FROM awol_employees WHERE empid = '$empid'";
 				$checkAwolQuery = mysql_query($checkAwol) or die(mysql_error());
 				if(mysql_num_rows($checkAwolQuery) == 0)
@@ -385,7 +383,22 @@ if(!empty($dateRows))// Updating attendance
 				//update employment status of employee to 2 = pending
 				$empAwolPending = "UPDATE employee SET employment_status = '2' WHERE empid = '$empid'";
 				mysql_query($empAwolPending) or die(mysql_error());//update employment status of employee to 3 = pending
-				
+			}
+
+			if($AwolCounter == 3 || $AwolCounter == 4)// Notification if employee accumulated 4 absences
+			{
+				$checkAbsence = "SELECT * FROM absence_notif WHERE empid = '$empid'";
+				$checkAbsenceQuery = mysql_query($checkAbsence) or die(mysql_error());
+				if(mysql_num_rows($checkAbsenceQuery) == 0)
+				{
+					$AbsenceNotif = "INSERT absence_notif(empid) 
+												VALUES('$empid')";
+					mysql_query($AbsenceNotif) or die(mysql_error());
+				}
+				$emp = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1'";
+				$empQuery = mysql_query($emp) or die(mysql_error());
+				$empArr = mysql_fetch_assoc($empQuery);
+				Print "<script>alert('ABSENCE NOTICE: [".$empArr['lastname'].", ".$empArr['firstname']."] has already accumulated 4 consecutive Absences.')</script>";
 			}
 
 			
@@ -703,6 +716,22 @@ else// NEW attendance
 				
 				$empAwolPending = "UPDATE employee SET employment_status = '2' WHERE empid = '$empid'";
 				mysql_query($empAwolPending) or die(mysql_error());//update employment status of employee to 2 = pending
+			}
+
+			if($AwolCounter == 3)// Notification if employee accumulated 4 absences
+			{
+				$checkAbsence = "SELECT * FROM absence_notif WHERE empid = '$empid'";
+				$checkAbsenceQuery = mysql_query($checkAbsence) or die(mysql_error());
+				if(mysql_num_rows($checkAbsenceQuery) == 0)
+				{
+					$AbsenceNotif = "INSERT absence_notif(empid) 
+												VALUES('$empid')";
+					mysql_query($AbsenceNotif) or die(mysql_error());
+				}
+				$emp = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1'";
+				$empQuery = mysql_query($emp) or die(mysql_error());
+				$empArr = mysql_fetch_assoc($empQuery);
+				Print "<script>alert('ABSENCE NOTICE: [".$empArr['lastname'].", ".$empArr['firstname']."] has already accumulated 4 consecutive Absences.')</script>";
 			}
 
 			$timein1 = "";
