@@ -176,6 +176,7 @@ $activeSheet->getStyle('G1:AC2')->applyFromArray($align_center);//Centered heade
 $activeSheet->getStyle('A')->applyFromArray($align_center);//Centered period text
 $activeSheet->getStyle('AC4')->applyFromArray($signature);//Centered header text
 $activeSheet->getStyle('B4')->applyFromArray($align_left);// Left align employee name
+$activeSheet->getStyle('AB4')->applyFromArray($font_bold);// Make total value bold
 
 $activeSheet->getColumnDimension('A')->setAutoSize(true);
 $activeSheet->getColumnDimension('B')->setAutoSize(true);

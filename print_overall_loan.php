@@ -229,6 +229,7 @@ if($loansBool)// if period is set to All
 	$activeSheet->getStyle('A3:G'.$rowCounter)->applyFromArray($border_all_thin);//Content
 	$activeSheet->getStyle('A1:G'.$rowCounter)->applyFromArray($align_center);//Centered header text
 	$activeSheet->getStyle('A3:A'.$empCounter)->applyFromArray($align_left);
+	$activeSheet->getStyle('A'.($rowCounter-2).':G'.$rowCounter)->applyFromArray($font_bold);// Make total value bold
 }
 else
 {
@@ -237,6 +238,7 @@ else
 	$activeSheet->getStyle('A4:G'.$rowCounter)->applyFromArray($border_all_thin);//Content
 	$activeSheet->getStyle('A1:G'.$rowCounter)->applyFromArray($align_center);//Centered header text
 	$activeSheet->getStyle('A4:A'.$empCounter)->applyFromArray($align_left);
+	$activeSheet->getStyle('A'.($rowCounter-2).':G'.$rowCounter)->applyFromArray($font_bold);// Make total value bold
 }
 $activeSheet->getColumnDimension('A')->setAutoSize(true);
 $activeSheet->getColumnDimension('B')->setAutoSize(true);

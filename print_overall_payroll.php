@@ -227,8 +227,7 @@ $activeSheet->getStyle('A1:A2')->applyFromArray($font_size_15);// ALL except emp
 $activeSheet->getStyle('A4:AC'.$grandTotalRow)->applyFromArray($font_size_15);// ALL except employee name and PAYROLL header
 $activeSheet->getStyle('G1')->applyFromArray($font_size_40);// Payroll
 $activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($font_size_13);// Employee name
-
-
+$activeSheet->getStyle('AA'.$grandTotalRow.':AB'.$grandTotalRow)->applyFromArray($font_bold);// Make total value bold
 
 $activeSheet->getStyle('G1:AC2')->applyFromArray($align_center);//Centered header text
 $activeSheet->getColumnDimension('A')->setAutoSize(true);
@@ -261,21 +260,21 @@ $activeSheet->getColumnDimension('AA')->setAutoSize(true);
 $activeSheet->getColumnDimension('AB')->setAutoSize(true);
 $activeSheet->getColumnDimension('AC')->setAutoSize(true);
 
-// header('Content-Type: application/vnd.ms-excel');
-// header('Content-Disposition: attachment; filename="'.$filename.'"');
-// header('Cache-Control: max-age=0');
-
-// $objWriter = PHPExcel_IOFactory::createWriter($sheet, 'Excel5');
-// $objWriter->save('php://output');
-// exit;
-
-header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Type: application/vnd.ms-excel');
 header('Content-Disposition: attachment; filename="'.$filename.'"');
 header('Cache-Control: max-age=0');
 
-$objWriter = PHPExcel_IOFactory::createWriter($sheet,'Excel2007');
+$objWriter = PHPExcel_IOFactory::createWriter($sheet, 'Excel5');
 $objWriter->save('php://output');
 exit;
+
+// header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+// header('Content-Disposition: attachment; filename="'.$filename.'"');
+// header('Cache-Control: max-age=0');
+
+// $objWriter = PHPExcel_IOFactory::createWriter($sheet,'Excel2007');
+// $objWriter->save('php://output');
+// exit;
 
 ?>
 
