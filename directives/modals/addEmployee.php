@@ -111,6 +111,14 @@
 									<input name="txt_cola" type="text" autocomplete="off" onchange="colaDecimal()" class="form-control">
 								</div>
 							</div>
+							<div class="row pull-down">
+								<div class="col-md-4 col-lg-4">
+									<label for="insurance" class="no-wrap">Insurance:</label>
+								</div>
+								<div class="col-md-4 col-lg-4">
+									<input name="txt_insurance" type="text" autocomplete="off" onchange="colaDecimal()" class="form-control">
+								</div>
+							</div>
 						</div>
 
 						<div class="col-md-6 col-lg-6">

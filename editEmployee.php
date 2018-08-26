@@ -30,6 +30,7 @@ $empid = $employee_info['empid'];
 $emergency = $employee_info['emergency'];
 $reference = $employee_info['reference'];
 $cola = $employee_info['cola'];
+$insurance = $employee_info['insurance'];
 $contributions = $employee_info['complete_doc'];
 
 ?>
@@ -171,6 +172,14 @@ $contributions = $employee_info['complete_doc'];
 						</div>
 						<div class="col-md-4 col-lg-4">
 							<input name="cola" type="text" autocomplete="off" placeholder="<?php Print $cola?>" class="form-control">
+						</div>
+					</div>
+					<div class="row pull-down">
+						<div class="col-md-4 col-lg-4">
+							<label for="insurance" class="no-wrap">Insurance:</label>
+						</div>
+						<div class="col-md-4 col-lg-4">
+							<input name="insurance" type="text" autocomplete="off" placeholder="<?php Print $insurance?>" class="form-control">
 						</div>
 					</div>
 				</div>

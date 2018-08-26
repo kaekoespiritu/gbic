@@ -137,7 +137,7 @@
 									<td colspan="6">
 										'.$reqMessage .'
 									</td>
-									<td colspan="21" rowspan="2" class="vertical-align">
+									<td colspan="23" rowspan="2" class="vertical-align">
 										PAYROLL
 									</td>
 								</tr>
@@ -220,6 +220,15 @@
 										vale
 									</td>
 									<td>
+										SSS loan
+									</td>
+									<td>
+										P-ibig loan
+									</td>
+									<td>
+										Ins.
+									</td>
+									<td>
 										tools
 									</td>
 									<td>
@@ -231,15 +240,15 @@
 
 							if($req == 'all')
 							{
-								$employee = "SELECT * FROM employee WHERE site = '$location' ORDER BY lastname ASC, position ASC";
+								$employee = "SELECT * FROM employee WHERE site = '$location' AND employment_status = '1' ORDER BY lastname ASC, position ASC";
 							}
 							else if($req == 'withReq')
 							{
-								$employee = "SELECT * FROM employee WHERE site = '$location' AND complete_doc = '1'ORDER BY lastname ASC, position ASC";
+								$employee = "SELECT * FROM employee WHERE site = '$location' AND employment_status = '1' AND complete_doc = '1'ORDER BY lastname ASC, position ASC";
 							}
 							else if($req == 'withOReq')
 							{
-								$employee = "SELECT * FROM employee WHERE site = '$location' AND complete_doc = '0'ORDER BY lastname ASC, position ASC";
+								$employee = "SELECT * FROM employee WHERE site = '$location' AND employment_status = '1' AND complete_doc = '0'ORDER BY lastname ASC, position ASC";
 							}
 
 						$printBool = 1;
@@ -350,6 +359,15 @@
 												</td>
 												<td><!-- vale -->
 													'.$payrollArr['new_vale'].'
+												</td>
+												<td><!-- sss loan -->
+													'.$payrollArr['loan_sss'].'
+												</td>
+												<td><!-- pagibig loan -->
+													'.$payrollArr['loan_pagibig'].'
+												</td>
+												<td><!-- insurance -->
+													'.$payrollArr['insurance'].'
 												</td>
 												<td><!-- tools -->
 													'.$payrollArr['tools_paid'].'

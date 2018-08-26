@@ -97,6 +97,7 @@ $activeSheet->setCellValue('A7', 'Sun');
 $activeSheet->setCellValue('A8', 'N.D');
 $activeSheet->setCellValue('A9', 'Reg. Hol');
 $activeSheet->setCellValue('A10', 'Spe. Hol');
+$activeSheet->setCellValue('C12', 'Ins.');
 $activeSheet->setCellValue('A11', 'SSS');
 $activeSheet->setCellValue('A12', 'PhilHealth');
 $activeSheet->setCellValue('A13', 'Pag-IBIG');
@@ -177,6 +178,7 @@ $speHolSubTotal = $payrollArr['spe_holiday_num'] * $payrollArr['spe_holiday'];
 $activeSheet->setCellValue('D10', $speHolSubTotal);
 
 //Contribution
+$activeSheet->setCellValue('D12', $payrollArr['insurance']);
 $activeSheet->setCellValue('B11', $payrollArr['sss']);
 $activeSheet->setCellValue('B12', $payrollArr['philhealth']);
 $activeSheet->setCellValue('B13', $payrollArr['pagibig']);

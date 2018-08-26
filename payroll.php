@@ -1721,15 +1721,20 @@ if($holidayExist > 0)
 					<div class="col-md-1 col-lg-12">
 						<?php
 						$colaValue = $empArr['cola'];
-						if($colaValue == NULL)
+						if($colaValue == 0)
 						{
-							$colaValue = "N/A";
+							$colaValue = "";
+						}
+						$insurance = $empArr['insurance'];
+						if($insurance == 0)
+						{
+							$insurance = "";
 						}
 						?>
 						<h4>COLA</h4>
 						<input type="text" value="<?php Print $colaValue?>" name="cola" class="form-control">
 						<h4>Insurance</h4>
-						<input type="text" value="" name="insurance" class="form-control">
+						<input type="text" value="<?php Print $insurance?>" name="insurance"  class="form-control">
 					</div>
 				</div>
 

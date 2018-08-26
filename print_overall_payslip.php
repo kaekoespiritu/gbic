@@ -111,6 +111,7 @@ $sssLoanRowCounter = 16;
 $pagibigLoanRowCounter = 17;
 $toolsRowCounter = 18;
 $extraAllowanceRowCounter = 11;
+$insuranceRowCounter = 12;
 
 //------ Counter for date ------//
 $rateDataCounter = 3;//Rate
@@ -122,10 +123,10 @@ $NDDataCounter = 8;//Night differential
 $regHolDataCounter = 9;//Regular Holiday
 $speHolDataCounter = 10;//Special Holiday
 
-
 $sssDataCounter = 11;//sss
 $philhealthDataCounter = 12;//philhealth
 $pagibigDataCounter = 13;//pagibig
+$insuranceDataCounter = 12;//insurance
 
 $xAllowanceDataCounter = 11;//Allowance
 $oldValeDataCounter = 14;//Vale
@@ -216,6 +217,7 @@ for($count = 0; $count <= $loopCount; $count++)
 				$activeSheet->setCellValue($cellA.$nightDiffRowCounter, 'N.D');
 				$activeSheet->setCellValue($cellA.$regHolRowCounter, 'Reg. Hol');
 				$activeSheet->setCellValue($cellA.$speHolRowCounter, 'Spe. Hol');
+				$activeSheet->setCellValue($cellC.$insuranceRowCounter, 'Ins.');
 				$activeSheet->setCellValue($cellA.$sssRowCounter, 'SSS');
 				$activeSheet->setCellValue($cellA.$philhealthRowCounter, 'PhilHealth');
 				$activeSheet->setCellValue($cellA.$pagibigRowCounter, 'Pag-IBIG');
@@ -356,6 +358,10 @@ for($count = 0; $count <= $loopCount; $count++)
 				if($payrollArr['loan_pagibig'] != 0)
 					$activeSheet->setCellValue($cellB.$pagibigLoanDataCounter, $payrollArr['loan_pagibig']);
 
+				//Insurance
+				if($payrollArr['insurance'] != 0)
+					$activeSheet->setCellValue($cellD.$insuranceDataCounter, $payrollArr['insurance']);
+
 				//Tools
 				if($payrollArr['tools_paid'] != 0)
 					$activeSheet->setCellValue($cellB.$toolsDataCounter , $payrollArr['tools_paid']);
@@ -387,6 +393,7 @@ for($count = 0; $count <= $loopCount; $count++)
 		$nightDiffRowCounter += $rowIncrement;
 		$regHolRowCounter += $rowIncrement;
 		$speHolRowCounter += $rowIncrement;
+		$insuranceRowCounter += $rowIncrement;
 		$sssRowCounter += $rowIncrement;
 		$philhealthRowCounter += $rowIncrement;
 		$pagibigRowCounter += $rowIncrement;
@@ -409,6 +416,7 @@ for($count = 0; $count <= $loopCount; $count++)
 		$regHolDataCounter += $rowIncrement;
 		$speHolDataCounter += $rowIncrement;
 
+		$insuranceDataCounter += $rowIncrement;
 		$sssDataCounter += $rowIncrement;
 		$philhealthDataCounter += $rowIncrement;
 		$pagibigDataCounter += $rowIncrement;

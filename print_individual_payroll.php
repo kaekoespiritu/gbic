@@ -66,10 +66,12 @@ $activeSheet->setCellValue('X3', 'Vale');
 $activeSheet->setCellValue('Y3', 'SSS loan');
 $activeSheet->setCellValue('Z3', 'P-ibig loan');
 
-$activeSheet->setCellValue('AA3', 'Tools');
-$activeSheet->setCellValue('AB3', 'Total Salary');
+$activeSheet->setCellValue('AA3', 'Ins.');
 
-$activeSheet->setCellValue('AC3', 'Signature');
+$activeSheet->setCellValue('AB3', 'Tools');
+$activeSheet->setCellValue('AC3', 'Total Salary');
+
+$activeSheet->setCellValue('AD3', 'Signature');
 
 //----------------- Body ---------------------//
 
@@ -116,6 +118,7 @@ $rowCounter = 4; //start for the data in the row of excel
 	$LoanSSSBool = (intval($payrollArr['loan_sss'] == 0) ? true : false);
 	$LoanPagibigBool = (intval($payrollArr['loan_pagibig'] == 0) ? true : false);
 	$ToolsBool = (intval($payrollArr['tools_paid'] == 0) ? true : false);
+	$InsuranceBool = (intval($payrollArr['insurance'] == 0) ? true : false);
 
 	$activeSheet->setCellValue('A'.$rowCounter, '1');//#
 	$activeSheet->setCellValue('B'.$rowCounter, $employeeName);// Name
@@ -159,22 +162,24 @@ $rowCounter = 4; //start for the data in the row of excel
 		$activeSheet->setCellValue('Y'.$rowCounter, $payrollArr['loan_sss']);//SSS loan
 	if(!$LoanPagibigBool)
 		$activeSheet->setCellValue('Z'.$rowCounter, $payrollArr['loan_pagibig']);//Pagibig loan
+	if(!$InsuranceBool)
+		$activeSheet->setCellValue('AA'.$rowCounter, $payrollArr['insurance']);//Pagibig loan
 	if(!$ToolsBool)
-		$activeSheet->setCellValue('AA'.$rowCounter, $payrollArr['tools_paid']);//tools
+		$activeSheet->setCellValue('AB'.$rowCounter, $payrollArr['tools_paid']);//tools
 
 	$totalSalary = numberExactFormat($payrollArr['total_salary'], 2, '.', true);
-	$activeSheet->setCellValue('AB'.$rowCounter, $totalSalary);//Total Salary
+	$activeSheet->setCellValue('AC'.$rowCounter, $totalSalary);//Total Salary
 
-	$activeSheet->setCellValue('AC'.$rowCounter, '1');//Total Salary
+	$activeSheet->setCellValue('AD'.$rowCounter, '1');//Total Salary
 
 	$rowCounter++; //Row counter
 
 //Style for the Spreadsheet
-$activeSheet->getStyle('A1:AC3')->applyFromArray($border_all_medium);//Header 
-$activeSheet->getStyle('A4:AC'.$rowCounter)->applyFromArray($border_all_thin);//Content
-$activeSheet->getStyle('G1:AC2')->applyFromArray($align_center);//Centered header text
+$activeSheet->getStyle('A1:AD3')->applyFromArray($border_all_medium);//Header 
+$activeSheet->getStyle('A4:AD'.$rowCounter)->applyFromArray($border_all_thin);//Content
+$activeSheet->getStyle('G1:AD2')->applyFromArray($align_center);//Centered header text
 $activeSheet->getStyle('A')->applyFromArray($align_center);//Centered period text
-$activeSheet->getStyle('AC4')->applyFromArray($signature);//Centered header text
+$activeSheet->getStyle('AD4')->applyFromArray($signature);//Centered header text
 $activeSheet->getStyle('B4')->applyFromArray($align_left);// Left align employee name
 
 $activeSheet->getColumnDimension('A')->setAutoSize(true);
@@ -205,6 +210,8 @@ $activeSheet->getColumnDimension('Y')->setAutoSize(true);
 $activeSheet->getColumnDimension('Z')->setAutoSize(true);
 $activeSheet->getColumnDimension('AA')->setAutoSize(true);
 $activeSheet->getColumnDimension('AB')->setAutoSize(true);
+$activeSheet->getColumnDimension('AC')->setAutoSize(true);
+$activeSheet->getColumnDimension('AD')->setAutoSize(true);
 
 header('Content-Type: application/vnd.ms-excel');
 header('Content-Disposition: attachment; filename="'.$filename.'"');

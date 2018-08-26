@@ -27,6 +27,7 @@ error_reporting(0);
 		$emergencyContact = mysql_real_escape_string($_POST['txt_emergencyContact']);
 		$characterReference = mysql_real_escape_string($_POST['txt_characterReference']);
 		$cola = mysql_real_escape_string($_POST['txt_cola']);
+		$insurance = mysql_real_escape_string($_POST['txt_insurance']);
 
 		$firstName = ucwords($firstName);
 		$lastName = ucwords($lastName);
@@ -109,7 +110,8 @@ error_reporting(0);
 												employment_status,
 												complete_doc,
 												reference,
-												emergency) VALUES('$empid',
+												emergency,
+												insurance) VALUES('$empid',
 																	'$firstName',
 																	'$lastName',
 																	'$address',
@@ -131,7 +133,8 @@ error_reporting(0);
 																	'$employment_status',
 																	'$complete_doc',
 																	'$characterReference',
-																	'$emergencyContact')") or die(mysql_error());//adds values to employee table
+																	'$emergencyContact',
+																	'$insurance')") or die(mysql_error());//adds values to employee table
 		// //Set historical for Position
 		mysql_query("INSERT INTO position_history(empid, position, date, admin) VALUES('$empid', '$position', '$date', '$adminName')");	
 		//Set historical for Site

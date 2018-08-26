@@ -109,7 +109,7 @@
 								Print "Without Requirements";
 						
 					Print "	</td>
-								<td colspan='18' rowspan='2' class='vertical-align'>
+								<td colspan='20' rowspan='2' class='vertical-align'>
 									PAYROLL
 								</td>
 							</tr>";
@@ -146,7 +146,7 @@
 								<input type='hidden' id='payrollDate' value='".$payrollArr['date']."'>
 								<tr>
 								<tr>
-									<td colspan='24' bgcolor='#AAB7B8'>
+									<td colspan='26' bgcolor='#AAB7B8'>
 										<strong>
 											Period: ".$startDate." - ".$endDate."
 										</strong>
@@ -216,6 +216,12 @@
 								</td>
 								<td>
 									vale
+								</td>
+								<td>
+									SSS loan
+								</td>
+								<td>
+									P-ibig loan
 								</td>
 								<td>
 									tools
@@ -288,6 +294,12 @@
 								</td>
 								<td><!-- vale -->
 									".$payrollArr['new_vale']."
+								</td>
+								<td><!-- sss loan -->
+									".$payrollArr['loan_sss']."
+								</td>
+								<td><!-- pagibig loan -->
+									".$payrollArr['loan_pagibig']."
 								</td>
 								<td><!-- tools -->
 									".$payrollArr['tools_paid']."

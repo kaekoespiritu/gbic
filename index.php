@@ -250,11 +250,11 @@ include_once('directives/db.php');
 					$dateToday = strtotime('now');
 					$dateHired = strtotime('+6 month', strtotime($empArr['datehired']));
 					$dateHiredLimit = strtotime('+7 month', strtotime($empArr['datehired']));
-					// if($dateToday >= $dateHired && $dateToday <= $dateHiredLimit)// Check if employee exceeded 6 months of tenure but dismisses the notif if the tenure entered 7months
-					// {
+					if($dateToday >= $dateHired && $dateToday <= $dateHiredLimit)// Check if employee exceeded 6 months of tenure but dismisses the notif if the tenure entered 7months
+					{
 						$toArr = $empArr['lastname'].', '.$empArr['firstname'].'('.$empArr['position'].') - ['.$empArr['site'].']';
 						array_push($tenureArrWithReq, $toArr);
-					// }
+					}
 						
 
 				}
@@ -263,11 +263,11 @@ include_once('directives/db.php');
 					$dateToday = strtotime('now');
 					$dateHired = strtotime('+5 month', strtotime($empArr['datehired']));
 					$dateHiredLimit = strtotime('+6 month', strtotime($empArr['datehired']));
-					// if($dateToday >= $dateHired && $dateToday <= $dateHiredLimit)// Check if employee exceeded 5 months of tenure but dismisses the notif if the tenure entered 6months
-					// {
+					if($dateToday >= $dateHired && $dateToday <= $dateHiredLimit)// Check if employee exceeded 5 months of tenure but dismisses the notif if the tenure entered 6months
+					{
 						$toArr = $empArr['lastname'].', '.$empArr['firstname'].'('.$empArr['position'].') - ['.$empArr['site'].']';
 						array_push($tenureArrWithOReq, $toArr);
-					// }
+					}
 				}
 			}
 			// $tenureArrWithReq = array($tenureArrWithReq);

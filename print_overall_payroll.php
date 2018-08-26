@@ -24,7 +24,7 @@ $activeSheet = $sheet -> createSheet(0);
 //Merge cells
 $activeSheet->mergeCells('A1:F1');//site name
 $activeSheet->mergeCells('A2:F2');//date
-$activeSheet->mergeCells('G1:AC2');//"PAYROLL"
+$activeSheet->mergeCells('G1:AD2');//"PAYROLL"
 
 //----------------- Header Contents ---------------------//
 //Title Contents
@@ -66,9 +66,11 @@ $activeSheet->setCellValue('X3', 'vale');
 $activeSheet->setCellValue('Y3', 'SSS loan');
 $activeSheet->setCellValue('Z3', 'P-ibig loan');
 
-$activeSheet->setCellValue('AA3', 'tools');
-$activeSheet->setCellValue('AB3', 'Total Salary');
-$activeSheet->setCellValue('AC3', 'Employee Signature');
+$activeSheet->setCellValue('AA3', 'Ins.');
+
+$activeSheet->setCellValue('AB3', 'tools');
+$activeSheet->setCellValue('AC3', 'Total Salary');
+$activeSheet->setCellValue('AD3', 'Employee Signature');
 
 
 //----------------- Body ---------------------//
@@ -135,6 +137,7 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 		$LoanSSSBool = (intval($payrollArr['loan_sss'] == 0) ? true : false);
 		$LoanPagibigBool = (intval($payrollArr['loan_pagibig'] == 0) ? true : false);
 		$ToolsBool = (intval($payrollArr['tools_paid'] == 0) ? true : false);
+		$InsuranceBool = (intval($payrollArr['insurance'] == 0) ? true : false);
 
 		$activeSheet->setCellValue('D'.$rowCounter, $siteArr['rate']);//Rate
 		$activeSheet->setCellValue('E'.$rowCounter, $payrollArr['num_days']);//ofDays
@@ -186,13 +189,15 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 			$activeSheet->setCellValue('Y'.$rowCounter, $payrollArr['loan_sss']);//SSS loan
 		if(!$LoanPagibigBool)
 			$activeSheet->setCellValue('Z'.$rowCounter, $payrollArr['loan_pagibig']);//Pagibig loan
+		if(!$InsuranceBool)
+			$activeSheet->setCellValue('AA'.$rowCounter, $payrollArr['insurance']);//Insurance
 		if(!$ToolsBool)
-			$activeSheet->setCellValue('AA'.$rowCounter, $payrollArr['tools_paid']);//tools
+			$activeSheet->setCellValue('AB'.$rowCounter, $payrollArr['tools_paid']);//tools
 
 		$totalSalary = numberExactFormat($payrollArr['total_salary'], 2, '.', true);
-		$activeSheet->setCellValue('AB'.$rowCounter, $totalSalary);//Total Salary
+		$activeSheet->setCellValue('AC'.$rowCounter, $totalSalary);//Total Salary
 
-		$activeSheet->setCellValue('AC'.$rowCounter, $counter);//tools
+		$activeSheet->setCellValue('AD'.$rowCounter, $counter);//tools
 
 		$GrandTotal += $payrollArr['total_salary'];// Gets the overall total salary
 
@@ -208,23 +213,23 @@ $grandTotalRow = $rowCounter + 1;
 //Grandtotal Merge cell
 // $activeSheet->mergeCells('AA'.$grandTotalRow.':AB'.$grandTotalRow);
 $GrandTotal = numberExactFormat($GrandTotal, 2, '.', true);
-$activeSheet->setCellValue('AA'.$grandTotalRow, 'Grand Total:');
-$activeSheet->setCellValue('AB'.$grandTotalRow, $GrandTotal);
+$activeSheet->setCellValue('AB'.$grandTotalRow, 'Grand Total:');
+$activeSheet->setCellValue('AC'.$grandTotalRow, $GrandTotal);
 
 
 //Style for the Spreadsheet
-$activeSheet->getStyle('A3:AC3')->applyFromArray($border_all_medium);//Header 
-$activeSheet->getStyle('A4:AC'.$rowCounter)->applyFromArray($border_all_thin);//Content
-$activeSheet->getStyle('AA'.$grandTotalRow.':AB'.$grandTotalRow)->applyFromArray($border_all_medium);//Grand Total
-$activeSheet->getStyle('AC1:AC'.$rowCounter)->applyFromArray($signature);//Centered header text
+$activeSheet->getStyle('A3:AD3')->applyFromArray($border_all_medium);//Header 
+$activeSheet->getStyle('A4:AD'.$rowCounter)->applyFromArray($border_all_thin);//Content
+$activeSheet->getStyle('AB'.$grandTotalRow.':AC'.$grandTotalRow)->applyFromArray($border_all_medium);//Grand Total
+$activeSheet->getStyle('AD1:AD'.$rowCounter)->applyFromArray($signature);//Centered header text
 $activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($align_left); // Left align employee name
-$activeSheet->getStyle('AB4:AB'.$rowCounter)->applyFromArray($align_right); // Left align employee name
-$activeSheet->getStyle('AB'.$grandTotalRow)->applyFromArray($align_right); // Left align employee name
+$activeSheet->getStyle('AC4:AC'.$rowCounter)->applyFromArray($align_right); // right align employee name
+$activeSheet->getStyle('AC'.$grandTotalRow)->applyFromArray($align_right); // right align employee name
 
 //Font sizes
 
 $activeSheet->getStyle('A1:A2')->applyFromArray($font_size_15);// ALL except employee name and PAYROLL header
-$activeSheet->getStyle('A4:AC'.$grandTotalRow)->applyFromArray($font_size_15);// ALL except employee name and PAYROLL header
+$activeSheet->getStyle('A4:AD'.$grandTotalRow)->applyFromArray($font_size_15);// ALL except employee name and PAYROLL header
 $activeSheet->getStyle('G1')->applyFromArray($font_size_40);// Payroll
 $activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($font_size_13);// Employee name
 
@@ -260,6 +265,7 @@ $activeSheet->getColumnDimension('Z')->setAutoSize(true);
 $activeSheet->getColumnDimension('AA')->setAutoSize(true);
 $activeSheet->getColumnDimension('AB')->setAutoSize(true);
 $activeSheet->getColumnDimension('AC')->setAutoSize(true);
+$activeSheet->getColumnDimension('AD')->setAutoSize(true);
 
 // header('Content-Type: application/vnd.ms-excel');
 // header('Content-Disposition: attachment; filename="'.$filename.'"');

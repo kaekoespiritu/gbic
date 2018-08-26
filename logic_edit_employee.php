@@ -66,6 +66,11 @@
 		$cola = mysql_real_escape_string($_POST['cola']);
 		mysql_query("UPDATE employee SET cola = '$cola' WHERE empid = '$empid'") or die (mysql_error());	
 	}
+	if($_POST['insurance'] != null)
+	{
+		$insurance = mysql_real_escape_string($_POST['insurance']);
+		mysql_query("UPDATE employee SET insurance = '$insurance' WHERE empid = '$empid'") or die (mysql_error());	
+	}
 
 
 	$sssEE = mysql_real_escape_string($_POST['sssEE']);

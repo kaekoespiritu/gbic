@@ -467,9 +467,15 @@ function getDay($day)
 
 //COLA incrementation -----------------------------------------------------------------
 	$cola = 0;
-	if($_POST['cola'] != "N/A")
+	if(!empty($_POST['cola']))
 	{
 		$cola = $_POST['cola'];
+	}
+// Insurance ---------------------------------------------------------------
+	$insurance = 0;
+	if(!empty($_POST['insurance']))
+	{
+		$insurance = $_POST['insurance'];
 	}
 
 //Holiday Computation ----------------------------------------------------- 
@@ -964,7 +970,7 @@ function getDay($day)
 	$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $totalCola;
 	Print "<script>console.log('logic_payroll - totalRegularHolidayRate: ".abs($totalRegularHolidayRate)." | totalSpecialHolidayRate: ".abs($totalSpecialHolidayRate)." | totalSundayRate: ".abs($totalSundayRate)." | totalNightDifferential: ".$totalNightDifferential." | totalAllowance: ".$totalAllowance." | totalOvertime: ".$totalOvertime." | totalRatePerDay: ".$totalRatePerDay." | xAllowance: ".$xAllowance." | totalCola: ".$totalCola."')</script>";
 
-	$contributions = $pagibig + $philhealth + $sss + $tax;
+	$contributions = $pagibig + $philhealth + $sss + $tax + $insurance;
 
 	$totalLoans = $loan_pagibig + $loan_sss + $loan_oldVale + $loan_newVale;
 	Print "<script>console.log('toDB - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".abs($tools_paid)."')</script>";
@@ -1011,7 +1017,8 @@ function getDay($day)
 									loan_sss,
 									loan_pagibig,
 									new_vale,
-									old_vale) VALUES(	'$empid',
+									old_vale,
+									insurance) VALUES(	'$empid',
 														'$dailyRate',
 														'$overallWorkDays',
 														'$OtRatePerHour',
@@ -1048,7 +1055,8 @@ function getDay($day)
 														'$loan_sss',
 														'$loan_pagibig',
 														'$loan_newVale',
-														'$loan_oldVale')";
+														'$loan_oldVale',
+														'$insurance')";
 
 
 	$updateQuery = "UPDATE payroll SET	
@@ -1087,7 +1095,8 @@ function getDay($day)
 									loan_sss = '$loan_sss',
 									loan_pagibig = '$loan_pagibig',
 									new_vale = '$loan_newVale',
-									old_vale = '$loan_oldVale' WHERE empid = '$empid' AND date = '$date'";
+									old_vale = '$loan_oldVale',
+									insurance = '$insurance' WHERE empid = '$empid' AND date = '$date'";
 	
 	$mainChecker = mysql_query("SELECT * FROM payroll WHERE empid='$empid' AND date='$date'");
 	if(mysql_num_rows($mainChecker) == 0)

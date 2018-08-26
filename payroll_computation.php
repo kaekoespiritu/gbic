@@ -494,7 +494,7 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 			<h3>Contributions</h3>
 			<table class="table">
 				<?php 
-					$contributions = $payrollArr['pagibig']+$payrollArr['philhealth']+$payrollArr['sss']+$payrollArr['tax'];
+					$contributions = $payrollArr['pagibig']+$payrollArr['philhealth']+$payrollArr['sss']+$payrollArr['tax']+$payrollArr['insurance'];
 				?>
 				<thead>
 					<tr>
@@ -540,6 +540,17 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 								Print "--";
 							else
 								Print numberExactFormat($payrollArr['pagibig'], 2, '.', true);
+							?>
+						</td>
+					</tr>
+					<tr>
+						<td>Insurance</td>
+						<td>
+							<?php 
+							if($payrollArr['insurance'] == 0)
+								Print "--";
+							else
+								Print numberExactFormat($payrollArr['insurance'], 2, '.', true);
 							?>
 						</td>
 					</tr>
