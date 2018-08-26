@@ -224,6 +224,9 @@
 									P-ibig loan
 								</td>
 								<td>
+									Ins.
+								</td>
+								<td>
 									tools
 								</td>
 								<td colspan='2'>
@@ -300,6 +303,9 @@
 								</td>
 								<td><!-- pagibig loan -->
 									".$payrollArr['loan_pagibig']."
+								</td>
+								<td><!-- insurance -->
+									".$payrollArr['insurance']."
 								</td>
 								<td><!-- tools -->
 									".$payrollArr['tools_paid']."
