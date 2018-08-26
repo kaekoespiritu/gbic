@@ -249,6 +249,7 @@ if($contributionType == 'all') //Overall
 			$activeSheet->mergeCells('H'.$rowCounter.':I'.$rowCounter); 
 			$activeSheet->setCellValue('H'.$rowCounter, 'Grand Total');
 			$activeSheet->setCellValue('J'.$rowCounter, numberExactFormat($overallContributions, 2, '.', true));
+			$activeSheet->getStyle('H'.$rowCounter.':J'.$rowCounter)->applyFromArray($font_bold);// Make total value bold
 		}
 		if(!$contBool)
 		{
@@ -455,6 +456,7 @@ if($contributionType == 'all') //Overall
 			$activeSheet->mergeCells('H'.$rowCounter.':I'.$rowCounter); 
 			$activeSheet->setCellValue('H'.$rowCounter, 'Grand Total');
 			$activeSheet->setCellValue('J'.$rowCounter, numberExactFormat($totalContribution, 2, '.', true));
+			$activeSheet->getStyle('H'.$rowCounter.':J'.$rowCounter)->applyFromArray($font_bold);// Make total value bold
 		}
 		if(!$contBool)
 		{
@@ -647,6 +649,7 @@ if($contributionType == 'all') //Overall
 			$activeSheet->mergeCells('H'.$rowCounter.':I'.$rowCounter); 
 			$activeSheet->setCellValue('H'.$rowCounter, 'Grand Total');
 			$activeSheet->setCellValue('J'.$rowCounter, numberExactFormat($totalContribution, 2, '.', true));
+			$activeSheet->getStyle('H'.$rowCounter.':J'.$rowCounter)->applyFromArray($font_bold);// Make total value bold
 		}
 		if(!$contBool)
 		{
@@ -949,6 +952,7 @@ else {
 		$activeSheet->setCellValue('F'.$rowCounter, numberExactFormat($GrandTotalContribution, 2, ".", true)); // Total
 		$activeSheet->getStyle('A1:F'.$rowCounter)->applyFromArray($border_all_medium); 
 		$activeSheet->getStyle('A4:F'.$rowCounter)->applyFromArray($border_all_thin); 
+		$activeSheet->getStyle('A'.$rowCounter.':F'.$rowCounter)->applyFromArray($font_bold);// Make total value bold
 		}
 
 		

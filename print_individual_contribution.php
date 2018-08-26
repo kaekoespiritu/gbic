@@ -324,6 +324,7 @@ $activeSheet->setCellValue('A'.$rowCounter, 'Grand Total');
 $activeSheet->setCellValue('D'.$rowCounter, $GrandTotal); // Total
 $activeSheet->getStyle('A1:D'.$rowCounter)->applyFromArray($border_all_thin); 
 $activeSheet->getStyle('A'.$rowCounter)->applyFromArray($align_right); // Centered header text
+$activeSheet->getStyle('C'.$rowCounter.':D'.$rowCounter)->applyFromArray($font_bold);// Make total value bold
 
 header('Content-Type: application/vnd.ms-excel');
 header('Content-Disposition: attachment; filename="'.$filename.'"');

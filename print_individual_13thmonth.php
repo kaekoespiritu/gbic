@@ -341,6 +341,7 @@ $activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($overallPayment, 2
 $activeSheet->getStyle('A1:B2')->applyFromArray($border_all_medium);//Header 
 $activeSheet->getStyle('A3:B'.$rowCounter)->applyFromArray($border_all_thin);//Content
 $activeSheet->getStyle('A1:B'.$rowCounter)->applyFromArray($align_center);//Centered header text
+$activeSheet->getStyle('A'.$rowCounter.':B'.$rowCounter)->applyFromArray($font_bold);// Make total value bold
 
 $activeSheet->getColumnDimension('A')->setAutoSize(false);
 $activeSheet->getColumnDimension('B')->setAutoSize(false);
