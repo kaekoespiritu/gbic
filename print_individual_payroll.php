@@ -27,7 +27,7 @@ $activeSheet = $sheet -> createSheet(0);
 //Merge cells
 $activeSheet->mergeCells('A1:F1');//Requirements field
 $activeSheet->mergeCells('A2:F2');//Period
-$activeSheet->mergeCells('G1:AC2');//"PAYROLL"
+$activeSheet->mergeCells('G1:AD2');//"PAYROLL"
 
 //----------------- Header Contents ---------------------//
 //Title Contents
