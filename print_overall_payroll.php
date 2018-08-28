@@ -232,7 +232,7 @@ $activeSheet->getStyle('A1:A2')->applyFromArray($font_size_15);// ALL except emp
 $activeSheet->getStyle('A4:AD'.$grandTotalRow)->applyFromArray($font_size_15);// ALL except employee name and PAYROLL header
 $activeSheet->getStyle('G1')->applyFromArray($font_size_40);// Payroll
 $activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($font_size_13);// Employee name
-$activeSheet->getStyle('AA'.$grandTotalRow.':AB'.$grandTotalRow)->applyFromArray($font_bold);// Make total value bold
+$activeSheet->getStyle('AB'.$grandTotalRow.':AC'.$grandTotalRow)->applyFromArray($font_bold);// Make total value bold
 
 $activeSheet->getStyle('G1:AC2')->applyFromArray($align_center);//Centered header text
 $activeSheet->getColumnDimension('A')->setAutoSize(true);
