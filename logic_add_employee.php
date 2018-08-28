@@ -5,6 +5,27 @@ error_reporting(0);
 	include_once('directives/db.php');
 	include('directives/admin_historical.php');
 
+	function getMonth($month)
+	{
+		switch($month)
+		{
+			case "01": $output = "January";break;
+			case "02": $output = "February";break;
+			case "03": $output = "March";break;
+			case "04": $output = "April";break;
+			case "05": $output = "May";break;
+			case "06": $output = "June";break;
+			case "07": $output = "July";break;
+			case "08": $output = "August";break;
+			case "09": $output = "September";break;
+			case "10": $output = "October";break;
+			case "11": $output = "November";break;
+			case "12": $output = "December";break;
+		}
+		return $output;
+	}
+	
+
 	$date = strftime("%B %d, %Y");//Get the current date
 
 		$firstName = mysql_real_escape_string($_POST['txt_addFirstName']);
@@ -34,7 +55,8 @@ error_reporting(0);
 		$address = ucwords($address);
 
 		$yearHired = substr($dateHired, -4); //get the year 
-	
+
+
 		$random_number = $yearHired."-".rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9); // random(ish) 7 digit 
 		
 		$empidChecker = "SELECT empid FROM employee WHERE empid = '$random_number'";

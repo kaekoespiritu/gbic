@@ -245,6 +245,7 @@ include_once('directives/db.php');
 			$tenureArrWithOReq = array();
 			while($empArr = mysql_fetch_assoc($tenureQuery))
 			{
+				
 				if($empArr['complete_doc'] == '1')// Complete Req
 				{
 					$dateToday = strtotime('now');
@@ -255,10 +256,8 @@ include_once('directives/db.php');
 						$toArr = $empArr['lastname'].', '.$empArr['firstname'].'('.$empArr['position'].') - ['.$empArr['site'].']';
 						array_push($tenureArrWithReq, $toArr);
 					}
-						
-
 				}
-				else // Incomplete Req
+				else if($empArr['complete_doc'] == '0') // Incomplete Req
 				{
 					$dateToday = strtotime('now');
 					$dateHired = strtotime('+5 month', strtotime($empArr['datehired']));

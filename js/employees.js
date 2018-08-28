@@ -432,7 +432,7 @@ function pagibigDecimal(evt){
 $( "#dtpkr_addEmployee" ).datepicker({
 	changeMonth: true,
 	changeYear: true,
-	dateFormat: 'mm-dd-yy',
+	dateFormat: 'MM dd, yy',
 	showAnim: 'blind',
 	defaultDate: new Date(),
 	yearRange: "-50:+0",
@@ -444,7 +444,7 @@ $( "#dtpkr_addEmployee" ).datepicker({
 $( "#dtpkr_addDOB").datepicker({
 	changeMonth: true,
 	changeYear: true,
-	dateFormat: 'mm-dd-yy',
+	dateFormat: 'MM dd, yy',
 	showAnim: 'blind',
 	defaultDate: new Date(),
 	yearRange: "-70:+0",

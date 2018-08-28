@@ -526,7 +526,7 @@ $contributions = $employee_info['complete_doc'];
 		$("#dtpkr_datehired").datepicker({
 			changeMonth: true,
 			changeYear: true,
-			dateFormat: 'mm-dd-yy',
+			dateFormat: 'MM dd, yy',
 			showAnim: 'blind',
 			beforeShow: function(){    
 				$(".ui-datepicker").css('font-size', 15) 
