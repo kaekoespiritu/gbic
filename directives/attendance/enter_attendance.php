@@ -114,6 +114,10 @@ function attendance ()
 									<td>
 										". $row_employee['position'] ."
 									</td>
+								<!-- Automatic timin -->
+									<td>
+										<input type='checkbox' value='' class='auto' onclick='AutoTimeIn(\"". $row_employee['empid'] ."\")'>
+									</td>
 								<!-- Time In -->
 									<td>
 										<input type='text' onblur='timeValidation(this)' value='". $empRow['timein'] ."' class='timein1 timepicker form-control input-sm' name='timein1[".$counter."]'>
@@ -192,6 +196,10 @@ function attendance ()
 									<td>
 										". $row_employee['position'] ."
 									</td>
+								<!-- Automatic timin -->
+									<td>
+										<input type='checkbox' value='' class='auto' onclick='AutoTimeIn(\"". $row_employee['empid'] ."\")'>
+									</td>
 								<!-- Time In -->
 									<td>
 										<input type='text' onblur='timeValidation(this)' placeholder='ABSENT' class='timein1 timepicker form-control input-sm' value='' name='timein1[".$counter."]'>
@@ -269,6 +277,10 @@ function attendance ()
 								<!-- Position -->
 									<td>
 										". $row_employee['position'] ."
+									</td>
+								<!-- Automatic timin -->
+									<td>
+										<input type='checkbox' value='' class='auto' onclick='AutoTimeIn(\"". $row_employee['empid'] ."\")'>
 									</td>
 								<!-- Time In -->
 									<td>

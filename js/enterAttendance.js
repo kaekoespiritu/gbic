@@ -3378,7 +3378,43 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 	}
 }	
 
+function AutoTimeIn(id) {
+	var mainRow = document.getElementById(id);
 
+	if(mainRow.querySelector('.auto').checked == true) {
+		mainRow.querySelector('.timein1').value = '08:00 AM';
+		mainRow.querySelector('.timeout1').value = '12:00 PM';
+		mainRow.querySelector('.timein2').value = '01:00 PM';
+		mainRow.querySelector('.timeout2').value = '05:00 PM';
+		mainRow.querySelector('.workinghours').value = '8 hrs';
+		mainRow.querySelector('.workinghoursH').value = '8 hrs';
+
+		mainRow.querySelector('.attendance').value = 'PRESENT'; 
+		mainRow.classList.add('success');
+		if(mainRow.classList.contains('danger'))
+		{
+			mainRow.classList.remove('danger');
+		}
+	}
+	else {
+		mainRow.querySelector('.timein1').value = '';
+		mainRow.querySelector('.timeout1').value = '';
+		mainRow.querySelector('.timein2').value = '';
+		mainRow.querySelector('.timeout2').value = '';
+		mainRow.querySelector('.workinghours').value = '';
+		mainRow.querySelector('.workinghoursH').value = '';
+
+		mainRow.querySelector('.attendance').value = ''; 
+		if(mainRow.classList.contains('success'))
+		{
+			mainRow.classList.remove('success');
+		}
+		if(mainRow.classList.contains('danger'))
+		{
+			mainRow.classList.remove('danger');
+		}
+	}
+}
 
 
 
