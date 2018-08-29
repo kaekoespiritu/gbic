@@ -114,9 +114,9 @@ function attendance ()
 									<td>
 										". $row_employee['position'] ."
 									</td>
-								<!-- Automatic timin -->
+								<!-- Automatic timein -->
 									<td>
-										<input type='checkbox' value='' class='auto' onclick='AutoTimeIn(\"". $row_employee['empid'] ."\")'>
+										<input type='button' value='X' class='btn btn-primary auto' onclick='AutoTimeIn(\"". $row_employee['empid'] ."\")'>
 									</td>
 								<!-- Time In -->
 									<td>
@@ -196,9 +196,9 @@ function attendance ()
 									<td>
 										". $row_employee['position'] ."
 									</td>
-								<!-- Automatic timin -->
+								<!-- Automatic timein -->
 									<td>
-										<input type='checkbox' value='' class='auto' onclick='AutoTimeIn(\"". $row_employee['empid'] ."\")'>
+										<input type='button' value='X' class='btn btn-primary auto' onclick='AutoTimeIn(\"". $row_employee['empid'] ."\")'>
 									</td>
 								<!-- Time In -->
 									<td>
@@ -278,9 +278,9 @@ function attendance ()
 									<td>
 										". $row_employee['position'] ."
 									</td>
-								<!-- Automatic timin -->
+								<!-- Automatic timein -->
 									<td>
-										<input type='checkbox' value='' class='auto' onclick='AutoTimeIn(\"". $row_employee['empid'] ."\")'>
+										<input type='button' value='X' class='btn btn-primary auto' onclick='AutoTimeIn(\"". $row_employee['empid'] ."\")'>
 									</td>
 								<!-- Time In -->
 									<td>
@@ -613,6 +613,10 @@ function attendance ()
 					</td>
 					<td>
 						". $row_employee['position'] ."
+					</td>
+					<!-- Automatic timein -->
+					<td>
+						<input type='button' value='X' class='btn btn-primary auto' onclick='AutoTimeIn(\"". $row_employee['empid'] ."\")'>
 					</td>
 					<!-- Time In -->
 					<td>
