@@ -148,14 +148,14 @@ if(isset($_GET['search']))
 											firstname LIKE '%$search%' OR 
 											lastname LIKE '%$search%' OR
 											position LIKE '%$search%' OR
-											site LIKE '%$search%') AND employment_status = '1' ORDER BY firstname ASC, lastname ASC";
+											site LIKE '%$search%') AND employment_status = '1' ORDER BY lastname ASC, firstname ASC";
 
 							$res=mysql_query("select empid, firstname, lastname, position, site from {$statement} LIMIT {$startpoint} , {$limit}");
 							while($emp_row=mysql_fetch_array($res))
 							{
 								Print "	<tr>
 										<td style='vertical-align: inherit'>".$emp_row['empid']."</td>
-										<td style='vertical-align: inherit' align='left'>".$emp_row ['firstname']." ".$emp_row['lastname']."</td>
+										<td style='vertical-align: inherit' align='left'>".$emp_row ['lastname'].", ".$emp_row['firstname']."</td>
 										<td style='vertical-align: inherit'>".$emp_row['position']."</td>
 										<td style='vertical-align: inherit'>".$emp_row['site']."</td>
 										<td>
@@ -173,14 +173,14 @@ if(isset($_GET['search']))
 								$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
 						    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
 						    	$startpoint = ($page * $limit) - $limit;
-						        $statement = "employee WHERE position = '$positionReplaced' AND site = '$siteReplaced' AND employment_status = '1' ORDER BY firstname ASC, lastname ASC";
+						        $statement = "employee WHERE position = '$positionReplaced' AND site = '$siteReplaced' AND employment_status = '1' ORDER BY lastname ASC, firstname ASC";
 
 								$res=mysql_query("select * from {$statement} LIMIT {$startpoint} , {$limit}");
 								while($emp_row=mysql_fetch_array($res))
 								{
 									Print "	<tr>
 											<td style='vertical-align: inherit'>".$emp_row['empid']."</td>
-											<td style='vertical-align: inherit' align='left'>".$emp_row ['firstname']." ".$emp_row['lastname']."</td>
+											<td style='vertical-align: inherit' align='left'>".$emp_row ['lastname'].", ".$emp_row['firstname']."</td>
 											<td style='vertical-align: inherit'>".$emp_row['position']."</td>
 											<td style='vertical-align: inherit'>".$emp_row['site']."</td>
 											<td>
@@ -194,14 +194,14 @@ if(isset($_GET['search']))
 								$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
 						    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
 						    	$startpoint = ($page * $limit) - $limit;
-						        $statement = "employee WHERE site = '$siteReplaced' AND employment_status = '1' ORDER BY firstname ASC, lastname ASC";
+						        $statement = "employee WHERE site = '$siteReplaced' AND employment_status = '1' ORDER BY lastname ASC, firstname ASC";
 
 								$res=mysql_query("select * from {$statement} LIMIT {$startpoint} , {$limit}");
 								while($emp_row=mysql_fetch_array($res))
 								{
 									Print "	<tr>
 											<td style='vertical-align: inherit'>".$emp_row['empid']."</td>
-											<td style='vertical-align: inherit' align='left'>".$emp_row ['firstname']." ".$emp_row['lastname']."</td>
+											<td style='vertical-align: inherit' align='left'>".$emp_row ['lastname'].", ".$emp_row['firstname']."</td>
 											<td style='vertical-align: inherit'>".$emp_row['position']."</td>
 											<td style='vertical-align: inherit'>".$emp_row['site']."</td>
 											<td>
@@ -224,14 +224,14 @@ if(isset($_GET['search']))
 								$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
 						    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
 						    	$startpoint = ($page * $limit) - $limit;
-						        $statement = "employee WHERE position = '$positionReplaced' AND site = '$siteReplaced' AND employment_status = '1' ORDER BY firstname ASC, lastname ASC";
+						        $statement = "employee WHERE position = '$positionReplaced' AND site = '$siteReplaced' AND employment_status = '1' ORDER BY lastname ASC, firstname ASC";
 
 								$res=mysql_query("select * from {$statement} LIMIT {$startpoint} , {$limit}");
 								while($emp_row=mysql_fetch_array($res))
 								{
 									Print "	<tr>
 											<td style='vertical-align: inherit'>".$emp_row['empid']."</td>
-											<td style='vertical-align: inherit' align='left'>".$emp_row ['firstname']." ".$emp_row['lastname']."</td>
+											<td style='vertical-align: inherit' align='left'>".$emp_row ['lastname'].", ".$emp_row['firstname']."</td>
 											<td style='vertical-align: inherit'>".$emp_row['position']."</td>
 											<td style='vertical-align: inherit'>".$emp_row['site']."</td>
 											<td>
@@ -246,14 +246,14 @@ if(isset($_GET['search']))
 								$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
 						    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
 						    	$startpoint = ($page * $limit) - $limit;
-						        $statement = "employee WHERE position = '$positionReplaced' AND employment_status = '1' ORDER BY firstname ASC, lastname ASC";
+						        $statement = "employee WHERE position = '$positionReplaced' AND employment_status = '1' ORDER BY lastname ASC, firstname ASC";
 
 								$res=mysql_query("select * from {$statement} LIMIT {$startpoint} , {$limit}");
 								while($emp_row=mysql_fetch_array($res))
 								{
 									Print "	<tr>
 											<td style='vertical-align: inherit'>".$emp_row['empid']."</td>
-											<td style='vertical-align: inherit' align='left'>".$emp_row ['firstname']." ".$emp_row['lastname']."</td>
+											<td style='vertical-align: inherit' align='left'>".$emp_row ['lastname'].", ".$emp_row['firstname']."</td>
 											<td style='vertical-align: inherit'>".$emp_row['position']."</td>
 											<td style='vertical-align: inherit'>".$emp_row['site']."</td>
 											<td>
@@ -270,14 +270,14 @@ if(isset($_GET['search']))
 							$page = (int) (!isset($_GET["page"]) ? 1 : $_GET["page"]);
 					    	$limit = 20; //if you want to dispaly 10 records per page then you have to change here
 					    	$startpoint = ($page * $limit) - $limit;
-					        $statement = "employee WHERE employment_status = '1' ORDER BY firstname ASC, lastname ASC";
+					        $statement = "employee WHERE employment_status = '1' ORDER BY lastname ASC, firstname ASC";
 
 							$res=mysql_query("select * from {$statement} LIMIT {$startpoint} , {$limit}");
 							while($emp_row=mysql_fetch_array($res))
 							{
 								Print "	<tr>
 										<td style='vertical-align: inherit'>".$emp_row['empid']."</td>
-										<td style='vertical-align: inherit' align='left'>".$emp_row ['firstname']." ".$emp_row['lastname']."</td>
+										<td style='vertical-align: inherit' align='left'>".$emp_row ['lastname'].", ".$emp_row['firstname']."</td>
 										<td style='vertical-align: inherit'>".$emp_row['position']."</td>
 										<td style='vertical-align: inherit'>".$emp_row['site']."</td>
 										<td>
