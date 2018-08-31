@@ -80,8 +80,10 @@ if($period == "week")
 	{
 		if($thirteenthRemainder != 0)
 		{
+			$remainderWeeklyBool = (intval($thirteenthRemainder == 0) ? true : false);
 			$activeSheet->setCellValue('A'.$rowCounter, '13th Month Pay remaining balance');
-			$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthRemainder, 2, '.', true));
+			if(!$remainderWeeklyBool)
+				$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthRemainder, 2, '.', true));
 			$rowCounter++;//increment row
 			$remainderBool = false;
 
@@ -127,9 +129,10 @@ if($period == "week")
 		}
 		
 		$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
-
+		$amountWeeklyBool = (intval($thirteenthRemainder == 0) ? true : false);
 		$activeSheet->setCellValue('A'.$rowCounter, $startDate." - ".$endDate);
-		$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthMonth, 2, '.', true));
+		if(!$amountWeeklyBool)
+			$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthMonth, 2, '.', true));
 
 		$overallPayment += $thirteenthMonth;
 		$rowCounter++;//increment row
@@ -149,8 +152,10 @@ else if($period == "month")
 	{
 		if($thirteenthRemainder != 0)
 		{
+			$remainderMonthlyBool = (intval($thirteenthRemainder == 0) ? true : false);
 			$activeSheet->setCellValue('A'.$rowCounter, '13th Month Pay remaining balance');
-			$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthRemainder, 2, '.', true));
+			if(!$remainderMonthlyBool)
+				$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthRemainder, 2, '.', true));
 			$rowCounter++;//increment row
 			$remainderBool = false;
 		}
@@ -188,9 +193,10 @@ else if($period == "month")
 				}
 			}
 			$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
-
+			$amountMonthlyBool = (intval($thirteenthMonth == 0) ? true : false);
 			$activeSheet->setCellValue('A'.$rowCounter, $month." ".$year);
-			$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthMonth, 2, '.', true));
+			if(!$amountMonthlyBool)
+				$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthMonth, 2, '.', true));
 			
 			$overallPayment += $thirteenthMonth;
 			$rowCounter++;//increment row
@@ -216,8 +222,10 @@ else if($period == "year")
 	{
 		if($thirteenthRemainder != 0)
 		{
+			$remainderYearlyBool = (intval($thirteenthRemainder == 0) ? true : false);
 			$activeSheet->setCellValue('A'.$rowCounter, '13th Month Pay remaining balance');
-			$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthRemainder, 2, '.', true));
+			if(!$remainderYearlyBool)
+				$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthRemainder, 2, '.', true));
 			$rowCounter++;//increment row
 			$remainderBool = false;
 		}
@@ -255,11 +263,12 @@ else if($period == "year")
 				}
 			}
 			$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
-
+			$amountYearlyBool = (intval($thirteenthMonth == 0) ? true : false);
 			$yearBefore = $year - 1;
 
 			$activeSheet->setCellValue('A'.$rowCounter, $yearBefore." - ".$year);
-			$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthMonth, 2, '.', true));
+			if(!$amountYearlyBool)
+				$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthMonth, 2, '.', true));
 			
 			$overallPayment += $thirteenthMonth;
 			$rowCounter++;//increment row

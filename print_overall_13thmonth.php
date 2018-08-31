@@ -175,7 +175,10 @@ if(mysql_num_rows($empQuery) != 0)
 		$activeSheet->setCellValue('B'.$rowCounter, $empArr['lastname'].", ".$empArr['firstname']);
 		$activeSheet->setCellValue('C'.$rowCounter, $empArr['position']);
 		$activeSheet->setCellValue('D'.$rowCounter, $pastToDateThirteenthPay." - ".$finalDate);
-		$activeSheet->setCellValue('E'.$rowCounter, numberExactFormat($overallPayment, 2, '.', true));
+
+		$overallBool = (intval($overallPayment == 0) ? true : false);
+		if(!$overallBool)
+			$activeSheet->setCellValue('E'.$rowCounter, numberExactFormat($overallPayment, 2, '.', true));
 		
 		$rowCounter++;
 		$overall13thMonth += $overallPayment;
