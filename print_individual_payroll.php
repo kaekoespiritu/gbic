@@ -119,14 +119,19 @@ $rowCounter = 4; //start for the data in the row of excel
 	$LoanPagibigBool = (intval($payrollArr['loan_pagibig'] == 0) ? true : false);
 	$ToolsBool = (intval($payrollArr['tools_paid'] == 0) ? true : false);
 	$InsuranceBool = (intval($payrollArr['insurance'] == 0) ? true : false);
+	$OTBool = (intval($payrollArr['overtime'] == 0) ? true : false);
+	$OTHrsBool = (intval($payrollArr['ot_num'] == 0) ? true : false);
+	$AttendanceBool = (intval($payrollArr['num_days'] == 0) ? true : false);
 
 	$activeSheet->setCellValue('A'.$rowCounter, '1');//#
 	$activeSheet->setCellValue('B'.$rowCounter, $employeeName);// Name
 	$activeSheet->setCellValue('C'.$rowCounter, $siteArr['position']);//Position
-
 	$activeSheet->setCellValue('D'.$rowCounter, $payrollArr['rate']);//Rate
+	if(!$AttendanceBool)
 	$activeSheet->setCellValue('E'.$rowCounter, $payrollArr['num_days']);//ofDays
+	if(!$OTBool)
 	$activeSheet->setCellValue('F'.$rowCounter, $payrollArr['overtime']);//O.T.
+	if(!$OTHrsBool)
 	$activeSheet->setCellValue('G'.$rowCounter, $payrollArr['ot_num']);//#ofHrs
 	if(!$AllowBool)
 		$activeSheet->setCellValue('H'.$rowCounter, $payrollArr['allow']);//Allow.
@@ -145,7 +150,6 @@ $rowCounter = 4; //start for the data in the row of excel
 	$activeSheet->setCellValue('Q'.$rowCounter, $payrollArr['spe_holiday']);//Spe.Hol
 	if(!$speHolBool)
 		$activeSheet->setCellValue('R'.$rowCounter, $payrollArr['spe_holiday_num']);//#
-
 	if(!$XallowBool)
 		$activeSheet->setCellValue('S'.$rowCounter, $payrollArr['x_allowance']);//X All.
 	if(!$SSSBool)
