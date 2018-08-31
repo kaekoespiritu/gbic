@@ -17,19 +17,19 @@
 
 							<div class="row">
 								<div class="col-md-3 col-lg-3">
-									<label for="fname">First name</label>
+									<label for="lname">Last name</label>
 								</div>
 								<div class="col-md-9 col-lg-9">
-									<input name="txt_addFirstName" onkeypress="validateletter(event)" type="text" autocomplete="off" class="form-control" id="fname" required>
+									<input name="txt_addLastName" autocomplete="off" onkeypress="validateletter(event)" type="text" class="form-control" id="lname" required>
 								</div>
 							</div><br>
 
 							<div class="row">
 								<div class="col-md-3 col-lg-3">
-									<label for="lname">Last name</label>
+									<label for="fname">First name</label>
 								</div>
 								<div class="col-md-9 col-lg-9">
-									<input name="txt_addLastName" autocomplete="off" onkeypress="validateletter(event)" type="text" class="form-control" id="lname" required>
+									<input name="txt_addFirstName" onkeypress="validateletter(event)" type="text" autocomplete="off" class="form-control" id="fname" required>
 								</div>
 							</div><br>
 

@@ -200,6 +200,7 @@ $activeSheet->setCellValue('B18', $payrollArr['tools_paid']);
 //Total
 $activeSheet->mergeCells('C19:D19');
 $activeSheet->setCellValue('C19', $payrollArr['total_salary']);
+$activeSheet->getStyle('C19')->applyFromArray($font_bold);
 
 //------------ Style for the Spreadsheet ------------
 $activeSheet->getStyle('A1:D19')->applyFromArray($border_allsides_medium); 

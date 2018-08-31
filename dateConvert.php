@@ -27,17 +27,17 @@ $empQuery = mysql_query($employee);
 
 while($row = mysql_fetch_array($empQuery)) 
 {
-	if($row['empid'] != '2018-7769187')
-	{
-		$dateHiredEx = explode('-', $row['datehired']);// convert the format
-		$month = $dateHiredEx[0];
-		$day = $dateHiredEx[1];
-		$year = $dateHiredEx[2];
+	$dateHiredEx = explode('-', $row['datehired']);// convert the format
+	$month = $dateHiredEx[0];
+	$day = $dateHiredEx[1];
+	$year = $dateHiredEx[2];
 
-		$dateHired = getMonth($month)." ".$day.", ".$year;
-		$update = "UPDATE employee SET datehired = '$dateHired'";
-		mysql_query($update);
-	}
+	$dateHired = getMonth($month)." ".$day.", ".$year;
+	$empid = $row['empid'];
+	$update = "UPDATE employee SET datehired = '$dateHired' WHERE empid = '$empid'";
+	Print $update."<br>";
+	mysql_query($update);
+	
 }
 
 

@@ -75,18 +75,18 @@ $contributions = $employee_info['complete_doc'];
 					<h4 class="modal-title">Personal Information</h4><hr>
 					<div class="row">
 						<div class="col-md-3 col-lg-3">
-							<label for="fname">First name</label>
-						</div>
-						<div class="col-md-9 col-lg-9">
-							<input type="text" autocomplete="off" class="form-control" id="fname" name = "firstname" value="<?php Print "$firstname"?>" disabled>
-						</div>
-					</div><br>
-					<div class="row">
-						<div class="col-md-3 col-lg-3">
 							<label for="lname">Last name</label>
 						</div>
 						<div class="col-md-9 col-lg-9">
 							<input type="text" autocomplete="off" class="form-control" id="lname" name = "lastname" value="<?php Print "$lastname"?>" disabled>
+						</div>
+					</div><br>
+					<div class="row">
+						<div class="col-md-3 col-lg-3">
+							<label for="fname">First name</label>
+						</div>
+						<div class="col-md-9 col-lg-9">
+							<input type="text" autocomplete="off" class="form-control" id="fname" name = "firstname" value="<?php Print "$firstname"?>" disabled>
 						</div>
 					</div><br>
 					<div class="row">

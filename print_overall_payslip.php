@@ -371,6 +371,7 @@ for($count = 0; $count <= $loopCount; $count++)
 
 				if($payrollArr['total_salary'] != 0)
 					$activeSheet->setCellValue($cellC.$totalDataCounter, $payrollArr['total_salary']);
+					$activeSheet->getStyle($cellC.$totalDataCounter)->applyFromArray($font_bold);
 
 				$counter++;//Increment counter for horizontal inputs
 			}
