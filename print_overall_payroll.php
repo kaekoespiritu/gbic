@@ -225,13 +225,16 @@ $activeSheet->getStyle('AD1:AD'.$rowCounter)->applyFromArray($signature);//Cente
 $activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($align_left); // Left align employee name
 $activeSheet->getStyle('AC4:AC'.$rowCounter)->applyFromArray($align_right); // right align employee name
 $activeSheet->getStyle('AC'.$grandTotalRow)->applyFromArray($align_right); // right align employee name
+$activeSheet->getStyle('B3:AB3')->applyFromArray($column_header_font);
+$activeSheet->getStyle('A4:AD'.$rowCounter)->applyFromArray($data_font);
+
 
 //Font sizes
 
-$activeSheet->getStyle('A1:A2')->applyFromArray($font_size_15);// ALL except employee name and PAYROLL header
-$activeSheet->getStyle('A4:AD'.$grandTotalRow)->applyFromArray($font_size_15);// ALL except employee name and PAYROLL header
-$activeSheet->getStyle('G1')->applyFromArray($font_size_40);// Payroll
-$activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($font_size_13);// Employee name
+$activeSheet->getStyle('A1:A2')->applyFromArray($grand_total_font);// ALL except employee name and PAYROLL header
+$activeSheet->getStyle('A4:AD'.$grandTotalRow)->applyFromArray($grand_total_font);// ALL except employee name and PAYROLL header
+$activeSheet->getStyle('G1')->applyFromArray($payroll_font);// Payroll
+$activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($data_font);// Employee name
 $activeSheet->getStyle('AB'.$grandTotalRow.':AC'.$grandTotalRow)->applyFromArray($font_bold);// Make total value bold
 
 $activeSheet->getStyle('G1:AC2')->applyFromArray($align_center);//Centered header text
