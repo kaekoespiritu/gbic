@@ -487,21 +487,6 @@ else
 	</div>
 </div>
 
-<!-- Modal for showing AWOL employees -->
-	<div class="modal fade" id="show" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-body">
-					<h4>
-					Absence Notice: There are <span id="awolNumber"></span> employee(s) that have accumulated 7 days of absences and are now pending for AWOL.
-					</h4>
-					<br/>
-					<h5><i>Click anywhere to close this notification.</i></h5>
-				</div>
-			</div>
-		</div>
-	</div>	
-
 
 </div>
 <script>
