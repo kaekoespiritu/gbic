@@ -167,11 +167,18 @@ $contributions = $employee_info['complete_doc'];
 					</div>
 
 					<div class="row pull-down">
-						<div class="col-md-4 col-lg-4">
+						<div class="col-md-3 col-lg-3">
 							<label for="cola" class="no-wrap">COLA:</label>
 						</div>
 						<div class="col-md-4 col-lg-4">
 							<input name="cola" type="text" autocomplete="off" placeholder="<?php Print $cola?>" class="form-control">
+						</div>
+
+						<div class="col-md-1 col-lg-1">
+							<label for="contact">Bank</label>
+						</div>
+						<div class="col-md-4 col-lg-4">
+							<input name="txt_bank" type="text" autocomplete="off" class="form-control">
 						</div>
 					</div>
 					<div class="row pull-down">
@@ -418,7 +425,7 @@ $contributions = $employee_info['complete_doc'];
 					</div>
 
 					<div class="col-sm-10 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down text-center well well-sm">
-						Note: Check boxes if employee has document for<br>SSS / PhilHealth / Pagibig.
+						Note: Check the boxes above if employee has document for SSS / PhilHealth / Pagibig.<br>Input must be on a monthly basis.
 					</div>
 					<div class="col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4">
 						<input type='submit' class='btn btn-primary pull-down' value='Save Changes'>

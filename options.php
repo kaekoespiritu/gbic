@@ -37,6 +37,7 @@ $adminRole = $adminArr['role'];
 		require_once("directives/modals/addCola.php");
 		require_once("directives/modals/addPosition.php");
 		require_once("directives/modals/removePosition.php");
+		require_once("directives/modals/addBank.php");
 		?>
 
 		<!-- Open/Close payroll options-->
@@ -184,7 +185,6 @@ $adminRole = $adminArr['role'];
 						<div class="col-md-5 col-lg-5">
 							<a data-target="#addPosition" data-toggle="modal" class="btn btn-success col-md-1 col-lg-12 pull-down">ADD POSITION</a>
 							<a data-target="#removePosition" data-toggle="modal" class="btn btn-danger col-md-1 col-lg-12 pull-down disabletotally" id="removePositionButton" onclick="removeSite()">REMOVE POSITION</a>
-							<!-- <a class="btn btn-danger col-md-1 col-lg-12 pull-down disabletotally"  onclick="removeSite()">REMOVE POSITION</a> -->
 						</div>
 
 						<div class="col-md-7 col-lg-7 text-left">
@@ -202,6 +202,41 @@ $adminRole = $adminArr['role'];
 										</label>
 										</div>';
 									}
+									?>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Bank Management -->
+			<div class="col-md-6 col-lg-6 <?php Print $positionManagement?>">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Bank management</h3>
+					</div>
+					<div class="panel-body">
+						<div class="col-md-5 col-lg-5">
+							<a data-target="#addBank" data-toggle="modal" class="btn btn-success col-md-1 col-lg-12 pull-down">ADD BANK</a>
+							<a data-target="#removePosition" data-toggle="modal" class="btn btn-danger col-md-1 col-lg-12 pull-down disabletotally" id="removeBankButton" onclick="removeBank()">REMOVE BANK</a>
+						</div>
+
+						<div class="col-md-7 col-lg-7 text-left">
+							<div class="sitelist">
+								<form id="bankForm" method="post" action="">
+									<?php 
+									// $position = "SELECT * FROM job_position WHERE active = '1'";
+									// $positionQuery = mysql_query($position);
+									// while($positionRow = mysql_fetch_assoc($positionQuery))
+									// {
+									// 	Print '	<div class="alignlist">
+									// 	<label>
+									// 	<input type="checkbox" name="position[]" onclick="trackCheckbox()" value="'.$positionRow['position'].'">
+									// 	'.$positionRow['position'].'
+									// 	</label>
+									// 	</div>';
+									// }
 									?>
 								</form>
 							</div>

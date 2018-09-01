@@ -454,6 +454,31 @@
     width: 190px;
     border: solid 1px black;
   }
+
+  .swatch_1 {
+    display: inline-block;
+    border: 10px solid #0074D9;
+    background-color: #0074D9;
+    width: 55px;
+  }
+
+  .swatch_2 {
+    display: inline-block;
+    border: 10px solid #2ECC40;
+    background-color: #2ECC40;
+    width: 55px;
+  }
+
+  .swatch_3 {
+    display: inline-block;
+    border: 10px solid #FF851B;
+    background-color: #FF851B;
+    width: 55px;
+  }
+
+  .color_font {
+    line-height: 2;
+  }
 /* END OF OPTIONS PAGE */
 
 /*--------------------------------*/
