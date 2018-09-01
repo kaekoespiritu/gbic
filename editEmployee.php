@@ -78,7 +78,7 @@ $contributions = $employee_info['complete_doc'];
 							<label for="lname">Last name</label>
 						</div>
 						<div class="col-md-9 col-lg-9">
-							<input type="text" autocomplete="off" class="form-control" id="lname" name = "lastname" value="<?php Print "$lastname"?>" disabled>
+							<input type="text" autocomplete="off" class="form-control" id="lname" name = "lastname" placeholder="<?php Print "$lastname"?>">
 						</div>
 					</div><br>
 					<div class="row">
@@ -86,7 +86,7 @@ $contributions = $employee_info['complete_doc'];
 							<label for="fname">First name</label>
 						</div>
 						<div class="col-md-9 col-lg-9">
-							<input type="text" autocomplete="off" class="form-control" id="fname" name = "firstname" value="<?php Print "$firstname"?>" disabled>
+							<input type="text" autocomplete="off" class="form-control" id="fname" name = "firstname" placeholder="<?php Print "$firstname"?>">
 						</div>
 					</div><br>
 					<div class="row">

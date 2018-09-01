@@ -11,6 +11,16 @@
 	$adminName = $adminArr['firstname']." ".$adminArr['lastname'];
 
 	$empid = $_GET['empid'];
+	if($_POST['lastname'] != null)
+	{
+		$lastname = mysql_real_escape_string($_POST['lastname']);
+		mysql_query("UPDATE employee SET lastname = '$lastname' WHERE empid = '$empid'") or die (mysql_error());
+	}
+	if($_POST['firstname'] != null)
+	{
+		$firstname = mysql_real_escape_string($_POST['firstname']);
+		mysql_query("UPDATE employee SET firstname = '$firstname' WHERE empid = '$empid'") or die (mysql_error());
+	}
 	if($_POST['address'] != null)
 	{
 		$address = mysql_real_escape_string($_POST['address']);
