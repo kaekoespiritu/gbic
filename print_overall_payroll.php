@@ -72,7 +72,6 @@ $activeSheet->setCellValue('AB3', 'tools');
 $activeSheet->setCellValue('AC3', 'Total Salary');
 $activeSheet->setCellValue('AD3', 'Employee Signature');
 
-
 //----------------- Body ---------------------//
 $appendQuery = "";
 if($req == "withReq")
@@ -201,6 +200,15 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 
 		$GrandTotal += $payrollArr['total_salary'];// Gets the overall total salary
 
+		if($payrollArr['bank'] != '')
+		{
+			 $activeSheet-> 
+			 		getStyle('A'.$rowCounter.':AD'.$rowCounter)->
+                    getFill()->
+                    setFillType(PHPExcel_Style_Fill::FILL_SOLID)->
+                    getStartColor()->
+                    setRGB($payrollArr['bank']);
+		}
 		$rowCounter++; //Row counter
 	}
 }

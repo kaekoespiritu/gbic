@@ -171,7 +171,15 @@ $rowCounter = 4; //start for the data in the row of excel
 	$activeSheet->setCellValue('AC'.$rowCounter, $totalSalary);//Total Salary
 
 	$activeSheet->setCellValue('AD'.$rowCounter, '1');//Total Salary
-
+	if($payrollArr['bank'] != '')
+	{
+		 $activeSheet-> 
+		 		getStyle('A'.$rowCounter.':AD'.$rowCounter)->
+                getFill()->
+                setFillType(PHPExcel_Style_Fill::FILL_SOLID)->
+                getStartColor()->
+                setRGB($payrollArr['bank']);
+	}
 	$rowCounter++; //Row counter
 
 //Style for the Spreadsheet

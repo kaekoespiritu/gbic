@@ -1,6 +1,6 @@
 <?php
 include_once 'modules/Classes/PHPExcel.php';
-try{
+// try{
 
   /* Some test data */
   $data = array(
@@ -9,7 +9,8 @@ try{
   );
 
   $objPHPExcel = new PHPExcel();
-  $objPHPExcel->setActiveSheetIndex(0);
+  $activeSheet = $objPHPExcel -> createSheet(0);
+  // $activeSheet->setActiveSheetIndex(0);
 
   /* Fill the excel sheet with the data */
   $rowI = 0;
@@ -18,19 +19,47 @@ try{
     foreach($row as $v){
       $colChar = PHPExcel_Cell::stringFromColumnIndex($colI++);
       $cellId = $colChar.($rowI+1);
-      $objPHPExcel->getActiveSheet()->SetCellValue($cellId, $v);
+      $activeSheet->SetCellValue($cellId, $v);
     }
     $rowI++;
   }
 
-  header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-  header('Content-Disposition: attachment;filename="export.xlsx"');
+  // $styleArr = array( 'borders' => array(
+  //                       'allborders' => array(
+  //                                 'style' => 'medium',
+  //                                 'color' => array('rgb' => 'FF0000FF')
+  //                               )
+  //                           ));
+
+     // $styleArr = array( 'fill' => array(
+     //                    'color' => 
+     //                            array(
+     //                              'rgb' => 'FF0000FF')
+     //                            )
+     //                        );
+     $activeSheet-> getStyle('A1:C2')->
+                    getFill()->
+                    setFillType(PHPExcel_Style_Fill::FILL_SOLID)->
+                    getStartColor()->
+                    setRGB('FF851B');//Header 
+    
+
+  // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  // header('Content-Disposition: attachment;filename="export.xlsx"');
+  // header('Cache-Control: max-age=0');
+
+  // $objWriter = PHPExcel_IOFactory::createWriter($activeSheet, 'Excel2007');
+  // $objWriter->save('php://output');
+
+  header('Content-Type: application/vnd.ms-excel');
+  header('Content-Disposition: attachment; filename="sample.xls"');
   header('Cache-Control: max-age=0');
 
-  $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+  $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
   $objWriter->save('php://output');
+  exit;
 
-}catch(Exception $e){
-  echo $e->__toString();
-}
+// }catch(Exception $e){
+//   echo $e->__toString();
+// }
 ?>

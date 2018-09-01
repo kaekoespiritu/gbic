@@ -167,18 +167,37 @@ $contributions = $employee_info['complete_doc'];
 					</div>
 
 					<div class="row pull-down">
-						<div class="col-md-4 col-lg-4">
+						<div class="col-md-3 col-lg-3">
 							<label for="cola" class="no-wrap">COLA:</label>
 						</div>
-						<div class="col-md-4 col-lg-4">
+						<div class="col-md-3 col-lg-3">
 							<input name="cola" type="text" autocomplete="off" placeholder="<?php Print $cola?>" class="form-control">
+						</div>
+					
+						<div class="col-md-3 col-lg-3">
+							<label for="bank" class="no-wrap">Bank:</label>
+						</div>
+						<div class="col-md-3 col-lg-3">
+							<select class="form-control">
+								<option value='' hidden>N/A</option>
+								<?php
+									$bank = "SELECT * FROM banks ORDER BY name ASC";
+									$bankQuery = mysql_query($bank);
+									while($bankArr = mysql_fetch_assoc($bankQuery));
+									{
+										Print "<option value='".$bankArr['color']."'>".$bankArr['name']."</option>";
+									}
+								?>
+								
+							</select>
+							
 						</div>
 					</div>
 					<div class="row pull-down">
-						<div class="col-md-4 col-lg-4">
+						<div class="col-md-3 col-lg-3">
 							<label for="insurance" class="no-wrap">Insurance:</label>
 						</div>
-						<div class="col-md-4 col-lg-4">
+						<div class="col-md-3 col-lg-3">
 							<input name="insurance" type="text" autocomplete="off" placeholder="<?php Print $insurance?>" class="form-control">
 						</div>
 					</div>
