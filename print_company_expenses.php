@@ -231,18 +231,39 @@ if(mysql_num_rows($empQuery) != 0)
 				{
 					$employeeTotal = $totalSalary + $sssEE + $sssER + $pagibigEE + $pagibigER + $philhealthEE + $philhealthER + $OldValeBalance  + $NewValeBalance;
 
+					$totalSalaryBool = (intval($totalSalary == 0) ? true : false);
+					$sssEEBool = (intval($sssEE == 0) ? true : false);
+					$sssERBool = (intval($sssER == 0) ? true : false);
+					$pagibigEEBool = (intval($pagibigEE == 0) ? true : false);
+					$pagibigERBool = (intval($pagibigER == 0) ? true : false);
+					$philhealthEEBool = (intval($philhealthEE == 0) ? true : false);
+					$philhealthERBool = (intval($philhealthER == 0) ? true : false);
+					$OldValeBool = (intval($OldValeBalance == 0) ? true : false);
+					$NewValeBool = (intval($NewValeBalance == 0) ? true : false);
+					$employeeTotalBool = (intval($employeeTotal == 0) ? true : false);
+
 					$activeSheet->setCellValue('A'.$rowCounter, $empArr['lastname'].", ".$empArr['firstname']);
 					$activeSheet->setCellValue('B'.$rowCounter, $empArr['position']);
-					$activeSheet->setCellValue('C'.$rowCounter, numberExactFormat($totalSalary, 2, '.', true));
-					$activeSheet->setCellValue('D'.$rowCounter, numberExactFormat($sssEE, 2, '.', true));
-					$activeSheet->setCellValue('E'.$rowCounter, numberExactFormat($sssER, 2, '.', true));
-					$activeSheet->setCellValue('F'.$rowCounter, numberExactFormat($pagibigEE, 2, '.', true));
-					$activeSheet->setCellValue('G'.$rowCounter, numberExactFormat($pagibigER, 2, '.', true));
-					$activeSheet->setCellValue('H'.$rowCounter, numberExactFormat($philhealthEE, 2, '.', true));
-					$activeSheet->setCellValue('I'.$rowCounter, numberExactFormat($philhealthER, 2, '.', true));
-					$activeSheet->setCellValue('J'.$rowCounter, numberExactFormat($OldValeBalance, 2, '.', true));
-					$activeSheet->setCellValue('K'.$rowCounter, numberExactFormat($NewValeBalance, 2, '.', true));
-					$activeSheet->setCellValue('L'.$rowCounter, numberExactFormat($employeeTotal, 2, '.', true));
+					if(!$totalSalaryBool)
+						$activeSheet->setCellValue('C'.$rowCounter, numberExactFormat($totalSalary, 2, '.', true));
+					if(!$sssEEBool)
+						$activeSheet->setCellValue('D'.$rowCounter, numberExactFormat($sssEE, 2, '.', true));
+					if(!$sssERBool)
+						$activeSheet->setCellValue('E'.$rowCounter, numberExactFormat($sssER, 2, '.', true));
+					if(!$pagibigEEBool)
+						$activeSheet->setCellValue('F'.$rowCounter, numberExactFormat($pagibigEE, 2, '.', true));
+					if(!$pagibigERBool)
+						$activeSheet->setCellValue('G'.$rowCounter, numberExactFormat($pagibigER, 2, '.', true));
+					if(!$philhealthEEBool)
+						$activeSheet->setCellValue('H'.$rowCounter, numberExactFormat($philhealthEE, 2, '.', true));
+					if(!$philhealthERBool)
+						$activeSheet->setCellValue('I'.$rowCounter, numberExactFormat($philhealthER, 2, '.', true));
+					if(!$OldValeBool)
+						$activeSheet->setCellValue('J'.$rowCounter, numberExactFormat($OldValeBalance, 2, '.', true));
+					if(!$NewValeBool)
+						$activeSheet->setCellValue('K'.$rowCounter, numberExactFormat($NewValeBalance, 2, '.', true));
+					if(!$employeeTotalBool)
+						$activeSheet->setCellValue('L'.$rowCounter, numberExactFormat($employeeTotal, 2, '.', true));
 
 					$GrandTotal += $employeeTotal;
 

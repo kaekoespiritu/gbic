@@ -110,21 +110,23 @@
 								<div class="col-md-3 col-lg-3">
 									<input name="txt_cola" type="text" autocomplete="off" onchange="colaDecimal()" class="form-control">
 								</div>
+
 								<div class="col-md-3 col-lg-3">
 									<label for="bank" class="no-wrap">Bank:</label>
 								</div>
 								<div class="col-md-3 col-lg-3">
-									<select class="form-control">
+									<select class="form-control" name="bank">
 										<option value='' hidden>N/A</option>
 									<?php
 										$bank = "SELECT * FROM banks ORDER BY name ASC";
 										$bankQuery = mysql_query($bank);
-										while($bankArr = mysql_fetch_assoc($bankQuery));
+										while($bankArr = mysql_fetch_assoc($bankQuery))
 										{
-											Print "<option value='".$bankArr['color']."'>".$bankArr['name']."</option>";
+											Print "<option value='".$bankArr['name']."'>".$bankArr['name']."</option>";
 										}
 									?>
 									</select>
+
 							</div>
 						</div>
 							<div class="row pull-down">
@@ -279,7 +281,7 @@
 									</div>
 
 									<div class="col-sm-10 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down text-center well well-sm">
-										Note: Check boxes if employee has document for<br>SSS / PhilHealth / Pagibig.
+										Note: Check the boxes above if employee has document for SSS / PhilHealth / Pagibig.<br>Input must be on a monthly basis.
 									</div>
 								</div>
 							</div>

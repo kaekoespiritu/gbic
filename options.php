@@ -37,6 +37,7 @@ $adminRole = $adminArr['role'];
 		require_once("directives/modals/addCola.php");
 		require_once("directives/modals/addPosition.php");
 		require_once("directives/modals/removePosition.php");
+		require_once("directives/modals/addBank.php");
 		?>
 
 		<!-- Open/Close payroll options-->
@@ -184,7 +185,6 @@ $adminRole = $adminArr['role'];
 						<div class="col-md-5 col-lg-5">
 							<a data-target="#addPosition" data-toggle="modal" class="btn btn-success col-md-1 col-lg-12 pull-down">ADD POSITION</a>
 							<a data-target="#removePosition" data-toggle="modal" class="btn btn-danger col-md-1 col-lg-12 pull-down disabletotally" id="removePositionButton" onclick="removeSite()">REMOVE POSITION</a>
-							<!-- <a class="btn btn-danger col-md-1 col-lg-12 pull-down disabletotally"  onclick="removeSite()">REMOVE POSITION</a> -->
 						</div>
 
 						<div class="col-md-7 col-lg-7 text-left">
@@ -202,6 +202,51 @@ $adminRole = $adminArr['role'];
 										</label>
 										</div>';
 									}
+									?>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Bank Management -->
+			<div class="col-md-6 col-lg-6 <?php Print $positionManagement?>">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Bank management</h3>
+					</div>
+					<div class="panel-body">
+						<div class="col-md-5 col-lg-5">
+							<a data-target="#addBank" data-toggle="modal" class="btn btn-success col-md-1 col-lg-12 pull-down">ADD BANK</a>
+							<a class="btn btn-danger col-md-1 col-lg-12 pull-down disabletotally" id="removeBankButton" onclick="removeBank()">REMOVE BANK</a>
+						</div>
+
+						<div class="col-md-7 col-lg-7 text-left">
+							<div class="sitelist">
+								<form id="bankForm" method="post" action="">
+									<?php
+									 $bank = 'SELECT * FROM banks ORDER BY name ASC';
+									 $bankQuery = mysql_query($bank);
+									 while($bankArr = mysql_fetch_assoc($bankQuery))
+									 {
+									 	Print '	<div class="alignlist">
+									 				<input type="checkbox" name="bankCheck[]" onclick="removeBankCheckbox(this)" value="'.$bankArr['name'].'">
+													'.$bankArr['name'].'
+
+												</div>';
+									 }
+									// $position = "SELECT * FROM job_position WHERE active = '1'";
+									// $positionQuery = mysql_query($position);
+									// while($positionRow = mysql_fetch_assoc($positionQuery))
+									// {
+									// 	Print '	<div class="alignlist">
+									// 	<label>
+									// 	<input type="checkbox" name="position[]" onclick="trackCheckbox()" value="'.$positionRow['position'].'">
+									// 	'.$positionRow['position'].'
+									// 	</label>
+									// 	</div>';
+									// }
 									?>
 								</form>
 							</div>
@@ -292,6 +337,34 @@ $adminRole = $adminArr['role'];
 <script rel="javascript" src="js/bootstrap.min.js"></script>
 <script rel="javascript" src="js/options.js"></script>
 <script>
+	function removeBankCheckbox(bank) {
+		if(bank.checked == true)
+			document.getElementById('removeBankButton').classList.remove('disabletotally');
+		else
+			document.getElementById('removeBankButton').classList.add('disabletotally');
+	}
+
+	function removeBank() {
+		var bank = document.getElementsByName('bankCheck[]');
+		var loopNum = bank.length;
+
+		var removeBank = "";
+		for(var counter = 0; counter < loopNum; counter++) {
+			if(bank[counter].checked == true){
+				if(removeBank != "") {
+					removeBank += ",";
+				}
+				removeBank += bank[counter].value;
+
+			}
+		}
+
+		var q = confirm('Are you sure you want to remove this bank from the list?');
+		if(q) {
+			window.location.assign('logic_options_removeBank.php?bank='+removeBank);
+		}
+
+	}
 
 	function trackCheckbox(){
 		var position = document.getElementsByName('position[]');

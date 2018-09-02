@@ -32,6 +32,7 @@ $reference = $employee_info['reference'];
 $cola = $employee_info['cola'];
 $insurance = $employee_info['insurance'];
 $contributions = $employee_info['complete_doc'];
+$bank = $employee_info['bank'];
 
 ?>
 <html>
@@ -78,7 +79,7 @@ $contributions = $employee_info['complete_doc'];
 							<label for="lname">Last name</label>
 						</div>
 						<div class="col-md-9 col-lg-9">
-							<input type="text" autocomplete="off" class="form-control" id="lname" name = "lastname" value="<?php Print "$lastname"?>" disabled>
+							<input type="text" autocomplete="off" class="form-control" id="lname" name = "lastname" placeholder="<?php Print "$lastname"?>">
 						</div>
 					</div><br>
 					<div class="row">
@@ -86,7 +87,7 @@ $contributions = $employee_info['complete_doc'];
 							<label for="fname">First name</label>
 						</div>
 						<div class="col-md-9 col-lg-9">
-							<input type="text" autocomplete="off" class="form-control" id="fname" name = "firstname" value="<?php Print "$firstname"?>" disabled>
+							<input type="text" autocomplete="off" class="form-control" id="fname" name = "firstname" placeholder="<?php Print "$firstname"?>">
 						</div>
 					</div><br>
 					<div class="row">
@@ -178,19 +179,24 @@ $contributions = $employee_info['complete_doc'];
 							<label for="bank" class="no-wrap">Bank:</label>
 						</div>
 						<div class="col-md-3 col-lg-3">
-							<select class="form-control">
+							<select class="form-control" name="bank">
 								<option value='' hidden>N/A</option>
 								<?php
-									$bank = "SELECT * FROM banks ORDER BY name ASC";
-									$bankQuery = mysql_query($bank);
-									while($bankArr = mysql_fetch_assoc($bankQuery));
+									$banks = "SELECT * FROM banks ORDER BY name ASC";
+									$bankQuery = mysql_query($banks);
+									while($banksArray = mysql_fetch_assoc($bankQuery))
 									{
-										Print "<option value='".$bankArr['color']."'>".$bankArr['name']."</option>";
+										if($banksArray['name'] == $bank)
+											Print "<option value='".$banksArray['color']."' selected='selected'>".$banksArray['name']."</option>";
+										else
+											Print "<option value='".$banksArray['name']."'>".$banksArray['name']."</option>";
+
 									}
 								?>
 								
 							</select>
 							
+
 						</div>
 					</div>
 					<div class="row pull-down">
@@ -437,7 +443,7 @@ $contributions = $employee_info['complete_doc'];
 					</div>
 
 					<div class="col-sm-10 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down text-center well well-sm">
-						Note: Check boxes if employee has document for<br>SSS / PhilHealth / Pagibig.
+						Note: Check the boxes above if employee has document for SSS / PhilHealth / Pagibig.<br>Input must be on a monthly basis.
 					</div>
 					<div class="col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4">
 						<input type='submit' class='btn btn-primary pull-down' value='Save Changes'>

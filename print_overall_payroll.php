@@ -137,12 +137,16 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 		$LoanPagibigBool = (intval($payrollArr['loan_pagibig'] == 0) ? true : false);
 		$ToolsBool = (intval($payrollArr['tools_paid'] == 0) ? true : false);
 		$InsuranceBool = (intval($payrollArr['insurance'] == 0) ? true : false);
+		$OTBool = (intval($payrollArr['overtime'] == 0) ? true : false);
+		$OTHrsBool = (intval($payrollArr['ot_num'] == 0) ? true : false);
+		$AttendanceBool = (intval($payrollArr['num_days'] == 0) ? true : false);
 
 		$activeSheet->setCellValue('D'.$rowCounter, $siteArr['rate']);//Rate
-		$activeSheet->setCellValue('E'.$rowCounter, $payrollArr['num_days']);//ofDays
-		if($payrollArr['overtime'] != 0)
+		if(!$AttendanceBool)
+			$activeSheet->setCellValue('E'.$rowCounter, $payrollArr['num_days']);//ofDays
+		if(!$OTBool)
 			$activeSheet->setCellValue('F'.$rowCounter, $payrollArr['overtime']);//O.T.
-		if($payrollArr['ot_num'] != 0)
+		if(!$OTHrsBool)
 			$activeSheet->setCellValue('G'.$rowCounter, $payrollArr['ot_num']);//#ofHrs
 		if(!$AllowBool)
 			$activeSheet->setCellValue('H'.$rowCounter, $payrollArr['allow']);//Allow.
@@ -157,16 +161,13 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 				$activeSheet->setCellValue('K'.$rowCounter, '1');//D
 				$activeSheet->setCellValue('L'.$rowCounter, $payrollArr['sunday_hrs']);//hrs
 			}
-			if($payrollArr['nightdiff_rate'] != 0)
-				$activeSheet->setCellValue('M'.$rowCounter, $payrollArr['nightdiff_rate']);//N.D
+			$activeSheet->setCellValue('M'.$rowCounter, $payrollArr['nightdiff_rate']);//N.D
 			if(!$NDnumBool)
 				$activeSheet->setCellValue('N'.$rowCounter, $payrollArr['nightdiff_num']);//#
-			if($payrollArr['reg_holiday'] != 0)
-				$activeSheet->setCellValue('O'.$rowCounter, $payrollArr['reg_holiday']);//Reg.Hol
+			$activeSheet->setCellValue('O'.$rowCounter, $payrollArr['reg_holiday']);//Reg.Hol
 			if(!$regHolBool)
 				$activeSheet->setCellValue('P'.$rowCounter, $regHolidayNum);//#
-			if($payrollArr['spe_holiday'] != 0)
-				$activeSheet->setCellValue('Q'.$rowCounter, $payrollArr['spe_holiday']);//Spe.Hol
+			$activeSheet->setCellValue('Q'.$rowCounter, $payrollArr['spe_holiday']);//Spe.Hol
 			if(!$speHolBool)
 				$activeSheet->setCellValue('R'.$rowCounter, $payrollArr['spe_holiday_num']);//#
 		}
@@ -233,13 +234,16 @@ $activeSheet->getStyle('AD1:AD'.$rowCounter)->applyFromArray($signature);//Cente
 $activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($align_left); // Left align employee name
 $activeSheet->getStyle('AC4:AC'.$rowCounter)->applyFromArray($align_right); // right align employee name
 $activeSheet->getStyle('AC'.$grandTotalRow)->applyFromArray($align_right); // right align employee name
+$activeSheet->getStyle('B3:AB3')->applyFromArray($column_header_font);
+$activeSheet->getStyle('A4:AD'.$rowCounter)->applyFromArray($data_font);
+
 
 //Font sizes
 
-$activeSheet->getStyle('A1:A2')->applyFromArray($font_size_15);// ALL except employee name and PAYROLL header
-$activeSheet->getStyle('A4:AD'.$grandTotalRow)->applyFromArray($font_size_15);// ALL except employee name and PAYROLL header
-$activeSheet->getStyle('G1')->applyFromArray($font_size_40);// Payroll
-$activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($font_size_13);// Employee name
+$activeSheet->getStyle('A1:A2')->applyFromArray($grand_total_font);// ALL except employee name and PAYROLL header
+$activeSheet->getStyle('A4:AD'.$grandTotalRow)->applyFromArray($grand_total_font);// ALL except employee name and PAYROLL header
+$activeSheet->getStyle('G1')->applyFromArray($payroll_font);// Payroll
+$activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($data_font);// Employee name
 $activeSheet->getStyle('AB'.$grandTotalRow.':AC'.$grandTotalRow)->applyFromArray($font_bold);// Make total value bold
 
 $activeSheet->getStyle('G1:AC2')->applyFromArray($align_center);//Centered header text

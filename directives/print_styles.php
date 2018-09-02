@@ -131,22 +131,28 @@ $border_top_double = array(
                     )
                 )
         );
-$font_size_40 = array(
+$payroll_font = array(
                   'font' => array(
                     'name' => 'Calibri',
                     'size' => 40
                   )
                 );
-$font_size_15 = array(
+$grand_total_font = array(
                   'font' => array(
                     'name' => 'Calibri',
                     'size' => 15
                   )
                 );
-$font_size_13 = array(
+$data_font = array(
                   'font' => array(
                     'name' => 'Calibri',
                     'size' => 13
+                  )
+                );
+$column_header_font = array(
+                  'font' => array(
+                    'name' => 'Calibri',
+                    'size' => 11
                   )
                 );
 ?>

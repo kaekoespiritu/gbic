@@ -11,6 +11,16 @@
 	$adminName = $adminArr['firstname']." ".$adminArr['lastname'];
 
 	$empid = $_GET['empid'];
+	if($_POST['lastname'] != null)
+	{
+		$lastname = mysql_real_escape_string($_POST['lastname']);
+		mysql_query("UPDATE employee SET lastname = '$lastname' WHERE empid = '$empid'") or die (mysql_error());
+	}
+	if($_POST['firstname'] != null)
+	{
+		$firstname = mysql_real_escape_string($_POST['firstname']);
+		mysql_query("UPDATE employee SET firstname = '$firstname' WHERE empid = '$empid'") or die (mysql_error());
+	}
 	if($_POST['address'] != null)
 	{
 		$address = mysql_real_escape_string($_POST['address']);
@@ -70,6 +80,11 @@
 	{
 		$insurance = mysql_real_escape_string($_POST['insurance']);
 		mysql_query("UPDATE employee SET insurance = '$insurance' WHERE empid = '$empid'") or die (mysql_error());	
+	}
+	if($_POST['bank'] != null)
+	{
+		$bank = mysql_real_escape_string($_POST['bank']);
+		mysql_query("UPDATE employee SET bank = '$bank' WHERE empid = '$empid'") or die (mysql_error());	
 	}
 
 
