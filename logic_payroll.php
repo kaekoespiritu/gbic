@@ -50,6 +50,18 @@ function getDay($day)
 	$empQuery = mysql_query($employee);
 	$empArr = mysql_fetch_assoc($empQuery);
 	$position = $empArr['position'];
+	$bank_name = $empArr['bank'];
+
+// Check Bank color
+	$banks = "SELECT * FROM banks WHERE name = '$bank_name' LIMIT 1";
+	$banksQuery = mysql_query($banks);
+	$bank_color = '';// Preset bank color
+	if(mysql_num_rows($banksQuery) == 1)
+	{
+		$bankArr = mysql_fetch_assoc($banksQuery);
+		$bank_color = $bankArr['color'];
+	}
+
 
 //Admin Info
 	$adminUser = $_SESSION['user_logged_in'];
@@ -1018,7 +1030,8 @@ function getDay($day)
 									loan_pagibig,
 									new_vale,
 									old_vale,
-									insurance) VALUES(	'$empid',
+									insurance,
+									bank) VALUES(	'$empid',
 														'$dailyRate',
 														'$overallWorkDays',
 														'$OtRatePerHour',
@@ -1056,7 +1069,8 @@ function getDay($day)
 														'$loan_pagibig',
 														'$loan_newVale',
 														'$loan_oldVale',
-														'$insurance')";
+														'$insurance',
+														'$bank_color')";
 
 
 	$updateQuery = "UPDATE payroll SET	
@@ -1096,7 +1110,8 @@ function getDay($day)
 									loan_pagibig = '$loan_pagibig',
 									new_vale = '$loan_newVale',
 									old_vale = '$loan_oldVale',
-									insurance = '$insurance' WHERE empid = '$empid' AND date = '$date'";
+									insurance = '$insurance'
+									bank = '$bank_color' WHERE empid = '$empid' AND date = '$date'";
 	
 	$mainChecker = mysql_query("SELECT * FROM payroll WHERE empid='$empid' AND date='$date'");
 	if(mysql_num_rows($mainChecker) == 0)
