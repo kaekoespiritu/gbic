@@ -455,24 +455,83 @@
     border: solid 1px black;
   }
 
+  /* Light cornflower blue */
   .swatch_1 {
     display: inline-block;
-    border: 10px solid #0074D9;
-    background-color: #0074D9;
+    border: 10px solid #94D0EA;
+    background-color: #94D0EA;
     width: 55px;
   }
 
+  /* Flavescent */
   .swatch_2 {
     display: inline-block;
-    border: 10px solid #2ECC40;
-    background-color: #2ECC40;
+    border: 10px solid #FAEE8A;
+    background-color: #FAEE8A;
     width: 55px;
   }
 
+  /* Middle Green Yellow */
   .swatch_3 {
     display: inline-block;
-    border: 10px solid #FF851B;
-    background-color: #FF851B;
+    border: 10px solid #A6C26D;
+    background-color: #A6C26D;
+    width: 55px;
+  }
+
+  /* Middle Red */
+  .swatch_4 {
+    display: inline-block;
+    border: 10px solid #E3866E;
+    background-color: #E3866E;
+    width: 55px;
+  }
+
+  /* Sandy Brown */
+  .swatch_5 {
+    display: inline-block;
+    border: 10px solid #F79A5E;
+    background-color: #F79A5E;
+    width: 55px;
+  }
+
+  /* Tulip */
+  .swatch_6 {
+    display: inline-block;
+    border: 10px solid #FE938C;
+    background-color: #FE938C;
+    width: 55px;
+  }
+
+  /* Pale Gold */
+  .swatch_7 {
+    display: inline-block;
+    border: 10px solid #E6B89C;
+    background-color: #E6B89C;
+    width: 55px;
+  }
+
+  /* Desert Sand */
+  .swatch_8 {
+    display: inline-block;
+    border: 10px solid #EAD2AC;
+    background-color: #EAD2AC;
+    width: 55px;
+  }
+
+  /* Pewter Blue */
+  .swatch_9 {
+    display: inline-block;
+    border: 10px solid #9CAFB7;
+    background-color: #9CAFB7;
+    width: 55px;
+  }
+
+  /* Steel Blue */
+  .swatch_10 {
+    display: inline-block;
+    border: 10px solid #4281A4;
+    background-color: #4281A4;
     width: 55px;
   }
 
