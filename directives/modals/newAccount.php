@@ -162,6 +162,12 @@
 													Access to position management
 												</label>
 											</li>
+											<li>
+												<label>
+													<input type="checkbox" name="res_BankManage" disabled>
+													Access to bank management
+												</label>
+											</li>
 										</ul>
 									</li>
 								</ul>

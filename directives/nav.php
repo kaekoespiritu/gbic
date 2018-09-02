@@ -40,6 +40,7 @@
 	$companyExpensesReport = "";// 11 	   
 	$siteManagement = "";// 12	           
 	$positionManagement = "";// 13	
+	$bankManagement = "";// 14	
 
 	//Main tabs
 	$employeesTab = "";
@@ -67,6 +68,7 @@
 		$companyExpensesReport = "disabletotally";// 11 	   
 		$siteManagement = "disabletotally";// 12	           
 		$positionManagement = "disabletotally";// 13	
+		$bankManagement = "disabletotally";// 14	
 		
 		//Change opening and closing payroll
 		$openNclosingPayroll = "disabletotally";
@@ -97,6 +99,7 @@
 				case "11": $companyExpensesReport = ""; break;
 				case "12": $siteManagement = ""; break;
 				case "13": $positionManagement = ""; break;
+				case "14": $bankManagement = ""; break;
 			}
 		}
 

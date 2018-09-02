@@ -211,7 +211,7 @@ $adminRole = $adminArr['role'];
 			</div>
 
 			<!-- Bank Management -->
-			<div class="col-md-6 col-lg-6 <?php Print $positionManagement?>">
+			<div class="col-md-6 col-lg-6 <?php Print $bankManagement?>">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">Bank management</h3>

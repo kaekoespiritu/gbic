@@ -136,6 +136,7 @@ else//admin role is Employee
 	$CompanyExpensesReport = "";// 11 - company expenses report
 	$SiteManage = "";// 12 - site management
 	$PositionManage = "";// 13 - position management
+	$BankManage = "";// 14 - bank management
 
 	$employeeTab = "";
 	$reportsTab = "";
@@ -159,6 +160,7 @@ else//admin role is Employee
 			case "11": $CompanyExpensesReport = "checked";break;
 			case "12": $SiteManage = "checked";break;
 			case "13": $PositionManage = "checked";break;
+			case "14": $BankManage = "checked";break;
 		}
 	}
 
@@ -170,7 +172,7 @@ else//admin role is Employee
 	{
 		$reportsTab = "checked";
 	}
-	if($SiteManage == "checked" && $PositionManage == "checked")
+	if($SiteManage == "checked" && $PositionManage == "checked" && $BankManage == "checked")
 	{
 		$optionsTab = "checked";
 	}
@@ -276,6 +278,12 @@ else//admin role is Employee
 								<label>
 									<input type="checkbox" name="res_PositionManageEdit" '.$PositionManage.'>
 									Access to position management
+								</label>
+							</li>
+							<li>
+								<label>
+									<input type="checkbox" name="res_BankManageEdit" '.$BankManage.'>
+									Access to bank management
 								</label>
 							</li>
 						</ul>

@@ -194,10 +194,12 @@
 			if(optionsTab.checked == true){
 				document.getElementsByName('res_SiteManage')[0].checked = true;
 				document.getElementsByName('res_PositionManage')[0].checked = true;
+				document.getElementsByName('res_BankManage')[0].checked = true;
 			}
 			else{
 				document.getElementsByName('res_SiteManage')[0].checked = false;
 				document.getElementsByName('res_PositionManage')[0].checked = false;
+				document.getElementsByName('res_BankManage')[0].checked = false;
 			}
 		}
 
@@ -249,10 +251,12 @@
 			if(optionsTab.checked == true){
 				document.getElementsByName('res_SiteManageEdit')[0].checked = true;
 				document.getElementsByName('res_PositionManageEdit')[0].checked = true;
+				document.getElementsByName('res_BankManageEdit')[0].checked = true;
 			}
 			else{
 				document.getElementsByName('res_SiteManageEdit')[0].checked = false;
 				document.getElementsByName('res_PositionManageEdit')[0].checked = false;
+				document.getElementsByName('res_BankManageEdit')[0].checked = false;
 			}
 		}
 

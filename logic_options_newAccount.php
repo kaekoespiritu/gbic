@@ -134,6 +134,14 @@
 			$restrictionSet .= "13";
 			$restrictionBool = false;
 		}
+		if(isset($_POST['res_BankManage']))
+		{
+			if($restrictionSet != "")
+				$restrictionSet .= "-";
+
+			$restrictionSet .= "14";
+			$restrictionBool = false;
+		}
 
 		if($restrictionBool)//if this is true then admin didn't choose any restrictions
 		{
