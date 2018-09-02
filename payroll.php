@@ -11,10 +11,10 @@ if(!isset($_GET['site']) && !isset($_GET['position']))
 $site = $_GET['site'];
 $position = $_GET['position'];
 $empid = $_GET['empid'];
-// $date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("%B %d, %Y")); // Gets the payroll date if admin didn't finish the payroll for the week
+$date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("%B %d, %Y")); // Gets the payroll date if admin didn't finish the payroll for the week
 // $date = "July 25, 2018";
 // $date = "September 5, 2018";
-$date = "July 11, 2018";
+// $date = "July 11, 2018";
 
 $time = strftime("%X");//TIME
 
