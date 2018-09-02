@@ -7,7 +7,7 @@ include('directives/session.php');
 // $date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("%B %d, %Y")); // Gets the payroll date if admin didn't finish the payroll for the week
 // $date = "July 25, 2018";
   // $date = "May 9, 2018";
-$date = "September 5, 2018";
+$date = "July 11, 2018";
 ?>
 <html>
 <head>
@@ -157,6 +157,7 @@ $date = "September 5, 2018";
 					}
 				}
 				$weekComplete = false; // boolean to check if attendance is complete for the whole week
+		
 				if($attendanceStatus >= 7)
 				{
 					$weekComplete = true;
@@ -180,7 +181,7 @@ $date = "September 5, 2018";
 				// check if all employees are done in the site
 				$siteBool = false;
 				$siteEmpNum = 0;
-				$siteChecker = "SELECT p.empid FROM payroll AS p LEFT OUTER JOIN employee AS e ON p.empid = e.empid WHERE e.site = '$site_num' AND p.date = '$date'";
+				$siteChecker = "SELECT p.empid FROM payroll AS p LEFT OUTER JOIN employee AS e ON p.empid = e.empid WHERE e.site = '$site_num' AND p.date = '$date' AND e.employment_status = '1'";
 				$checkerQuery = mysql_query($siteChecker) or die(mysql_error());
 
 				$siteEmpNum = mysql_num_rows($checkerQuery); // gets the number of emp that has finished payroll
@@ -188,7 +189,6 @@ $date = "September 5, 2018";
 				{
 					$siteBool = true;//site is finish with payroll
 				}
-
 				if($employee_num != 0)
 				{
 					/* If location is long, font-size to smaller */
@@ -246,8 +246,11 @@ $date = "September 5, 2018";
 									
 										<span class="autofit">'
 											. $row['location'] .'<br>';
-						if($siteBool)
-							Print		'<span class="glyphicon glyphicon-ok"></span>';
+							if($siteBool)
+							{
+								Print		'<span class="glyphicon glyphicon-ok"></span>';
+							}
+							
 
 							Print			'<br>Employees: '. $employee_num .
 										'</span>

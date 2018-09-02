@@ -5,7 +5,7 @@
 
 	// $date = strftime("%B %d, %Y");//Current date
 	// $date = "July 12, 2018";//Current date
-	$date = "September 5, 2018";
+$date = "July 11, 2018";
 
 	
 	//Checks if the current date is the closed payroll
