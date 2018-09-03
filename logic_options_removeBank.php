@@ -22,6 +22,6 @@
 	}
 
 	Print "<script>alert('Successfully removed banks from the list.');
-					// window.location.assign('options.php')</script>"
+					window.location.assign('options.php')</script>"
 
 ?>
