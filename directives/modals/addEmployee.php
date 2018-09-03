@@ -80,7 +80,7 @@
 									<label for="contact">Date of Hire</label>
 								</div>
 								<div class="col-md-9 col-lg-9">
-									<input name="txt_addDateHired" autocomplete="off" type="text" size="10" style="width:150px" class="form-control" id="dtpkr_addEmployee" placeholder="mm-dd-yyyy" required>
+									<input name="txt_addDateHired" autocomplete="off" type="text" size="10" style="width:150px" class="form-control" id="dtpkr_addEmployee" placeholder="mm-dd-yyyy" required readonly>
 								</div>
 							</div>
 

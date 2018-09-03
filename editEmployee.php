@@ -145,7 +145,7 @@ $bank = $employee_info['bank'];
 							<label for="contact">Date of Hire</label>
 						</div>
 						<div class="col-md-9 col-lg-9">
-							<input type="text" size="10" style="width:150px" autocomplete="off" name = "datehired" class="form-control" placeholder="<?php Print "$datehired"?>" id="dtpkr_datehired" >
+							<input type="text" size="10" style="width:150px" autocomplete="off" name = "datehired" class="form-control" placeholder="<?php Print "$datehired"?>" id="dtpkr_datehired" readonly>
 						</div>
 					</div>
 
