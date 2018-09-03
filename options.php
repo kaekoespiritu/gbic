@@ -22,10 +22,8 @@ $adminRole = $adminArr['role'];
 		<!-- Navigation bar -->
 		<?php
 		require_once("directives/nav.php");
-		?>
-
-		<!-- MODALS -->
-		<?php
+		
+		// <!-- MODALS -->
 		require_once("directives/modals/accountOptions.php");
 		require_once("directives/modals/newAccount.php");
 		require_once("directives/modals/manageAccount.php");
@@ -232,7 +230,7 @@ $adminRole = $adminArr['role'];
 									 {
 									 	Print '	<div class="alignlist">
 									 				<input type="checkbox" name="bankCheck[]" onclick="removeBankCheckbox(this)" value="'.$bankArr['name'].'">
-													'.$bankArr['name'].'
+													<span style="background-color:#'.$bankArr['color'].'; width: 55px; display: inline-block; border: 10px solid #'.$bankArr['color'].';"></span> '.$bankArr['name'].'
 
 												</div>';
 									 }
