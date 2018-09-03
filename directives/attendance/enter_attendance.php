@@ -116,7 +116,10 @@ function attendance ()
 									</td>
 								<!-- Automatic timein -->
 									<td>
-										<input type='button' value='X' class='btn btn-primary auto' onclick='AutoTimeIn(\"". $row_employee['empid'] ."\")'>
+										<input type='button' value='8-5' class='btn btn-primary auto' onclick='AutoTimeIn85(\"". $row_employee['empid'] ."\")'>
+									</td>
+									<td>
+										<input type='button' value='7-4' class='btn btn-primary auto' onclick='AutoTimeIn74(\"". $row_employee['empid'] ."\")'>
 									</td>
 								<!-- Time In -->
 									<td>
@@ -198,7 +201,10 @@ function attendance ()
 									</td>
 								<!-- Automatic timein -->
 									<td>
-										<input type='button' value='X' class='btn btn-primary auto' onclick='AutoTimeIn(\"". $row_employee['empid'] ."\")'>
+										<input type='button' value='8-5' class='btn btn-primary auto' onclick='AutoTimeIn85(\"". $row_employee['empid'] ."\")'>
+									</td>
+									<td>
+										<input type='button' value='7-4' class='btn btn-primary auto' onclick='AutoTimeIn74(\"". $row_employee['empid'] ."\")'>
 									</td>
 								<!-- Time In -->
 									<td>
@@ -280,7 +286,10 @@ function attendance ()
 									</td>
 								<!-- Automatic timein -->
 									<td>
-										<input type='button' value='X' class='btn btn-primary auto' onclick='AutoTimeIn(\"". $row_employee['empid'] ."\")'>
+										<input type='button' value='8-5' class='btn btn-primary auto' onclick='AutoTimeIn85(\"". $row_employee['empid'] ."\")'>
+									</td>
+									<td>
+										<input type='button' value='7-4' class='btn btn-primary auto' onclick='AutoTimeIn74(\"". $row_employee['empid'] ."\")'>
 									</td>
 								<!-- Time In -->
 									<td>
@@ -616,7 +625,10 @@ function attendance ()
 					</td>
 					<!-- Automatic timein -->
 					<td>
-						<input type='button' value='X' class='btn btn-primary auto' onclick='AutoTimeIn(\"". $row_employee['empid'] ."\")'>
+						<input type='button' value='8-5' class='btn btn-primary auto' onclick='AutoTimeIn85(\"". $row_employee['empid'] ."\")'>
+					</td>
+					<td>
+						<input type='button' value='7-4' class='btn btn-primary auto' onclick='AutoTimeIn74(\"". $row_employee['empid'] ."\")'>
 					</td>
 					<!-- Time In -->
 					<td>

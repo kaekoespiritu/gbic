@@ -111,7 +111,7 @@
 				<tr>
 					<td style='width:200px !important;'>Name</td>
 					<td>Position</td>
-					<td>Auto</td>
+					<td colspan='2'>Auto</td>
 					<td>Time In</td>
 					<td>Time Out</td>
 					<td>H.D. / Straight</td>
