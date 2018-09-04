@@ -40,7 +40,7 @@ include('directives/session.php');
 
 	<!-- SEARCH BAR, ADD EMPLOYEE, FILTER EMPLOYEES -->
 	<div class="row pull-down">
-		<div class="row">
+		<div class="row" style="width:99%">
 			<div class="col-md-4 col-lg-4 col-md-offset-2 col-lg-offset-2" style="border-right: 1px solid black;">
 				<h2 id='holidayTitle'>
 					<?php 
