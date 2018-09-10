@@ -155,4 +155,9 @@ $column_header_font = array(
                     'size' => 11
                   )
                 );
+$font_red = array(
+              'font'  => array(
+                  'color' => array('rgb' => 'FF0000'),
+            ));
+
 ?>

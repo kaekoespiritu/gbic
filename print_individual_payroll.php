@@ -195,6 +195,14 @@ $activeSheet->getStyle('AD4')->applyFromArray($signature);//Centered header text
 $activeSheet->getStyle('B4')->applyFromArray($align_left);// Left align employee name
 $activeSheet->getStyle('AC4')->applyFromArray($font_bold);// Make total value bold
 
+// Set the text color to RED
+$activeSheet->getStyle('E4:E4')->applyFromArray($font_red); // # of days
+$activeSheet->getStyle('G4:G4')->applyFromArray($font_red); // # of Hours
+$activeSheet->getStyle('K4:L4')->applyFromArray($font_red); // Sunday
+$activeSheet->getStyle('N4:N4')->applyFromArray($font_red); // # Nightdiff
+$activeSheet->getStyle('P4:P4')->applyFromArray($font_red); // # Regular holiday
+$activeSheet->getStyle('R4:AB4')->applyFromArray($font_red); // # Specialholiday to tools column
+
 $activeSheet->getColumnDimension('A')->setAutoSize(true);
 $activeSheet->getColumnDimension('B')->setAutoSize(true);
 $activeSheet->getColumnDimension('C')->setAutoSize(true);

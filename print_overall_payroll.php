@@ -240,6 +240,14 @@ $GrandTotal = numberExactFormat($GrandTotal, 2, '.', true);
 $activeSheet->setCellValue('AB'.$grandTotalRow, 'Grand Total:');
 $activeSheet->setCellValue('AC'.$grandTotalRow, $GrandTotal);
 
+// Set the text color to RED
+$activeSheet->getStyle('E4:E'.$rowCounter)->applyFromArray($font_red); // # of days
+$activeSheet->getStyle('G4:G'.$rowCounter)->applyFromArray($font_red); // # of Hours
+$activeSheet->getStyle('K4:L'.$rowCounter)->applyFromArray($font_red); // Sunday
+$activeSheet->getStyle('N4:N'.$rowCounter)->applyFromArray($font_red); // # Nightdiff
+$activeSheet->getStyle('P4:P'.$rowCounter)->applyFromArray($font_red); // # Regular holiday
+$activeSheet->getStyle('R4:AB'.$rowCounter)->applyFromArray($font_red); // # Specialholiday to tools column
+
 
 //Style for the Spreadsheet
 $activeSheet->getStyle('A3:AD3')->applyFromArray($border_all_medium);//Header 
