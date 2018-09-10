@@ -79,14 +79,15 @@ if($req == "withReq")
 else if($req == "withOReq")
 	$appendQuery = " AND complete_doc = '0' ";
 
-$site = "SELECT * FROM employee WHERE site = '$location' AND employment_status = '1' $appendQuery ORDER BY lastname ASC, position ASC";
+$site = "SELECT * FROM employee WHERE site = '$location' AND employment_status = '1' $appendQuery ORDER BY position ASC, lastname ASC";
 $siteQuery = mysql_query($site) or die (mysql_error());
 $counter = 0;
 $rowCounter = 4; //start for the data in the row of excel
 $GrandTotal = 0;
+$positionSort = '';
+$positionSortOnceBool = true;
 while($siteArr = mysql_fetch_assoc($siteQuery))
 {
-	
 	$employeeName = $siteArr['lastname'].", ".$siteArr['firstname'];
 	$employeePosition = $siteArr['position'];
 	$empid = $siteArr['empid'];
@@ -96,6 +97,20 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 	if(mysql_num_rows($payrollQuery) != 0)
 	{
 		$counter++;
+
+		if($positionSortOnceBool)//pass this only once to start the sorting process
+		{
+			$positionSort = $siteArr['position'];// change the position
+			$positionSortOnceBool = false;
+		}
+
+		// Add space when new position is seen
+		if($positionSort != $siteArr['position'])
+		{
+			$positionSort = $siteArr['position'];// Change the position
+			$rowCounter++;// Add one space
+			$counter = 1;
+		}
 		$payrollArr = mysql_fetch_assoc($payrollQuery);
 
 		$activeSheet->setCellValue('A'.$rowCounter, $counter);//#
