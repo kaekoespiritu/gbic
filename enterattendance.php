@@ -124,7 +124,7 @@
 					<td>Overtime</td>
 					<td>Undertime</td>
 					<td>Night Differential</td>
-					<td colspan="3">Actions</td>
+					<td colspan="4">Actions</td>
 				</tr>
 				<?php
 				require "directives/attendance/enter_attendance.php";
@@ -144,7 +144,7 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title" id="dito">Remarks for...</h4>
+							<h4 class="modal-title" id="dito"></h4>
 						</div>
 						<div class="modal-body">
 							<input class="form-control" id="remark"  maxlength="100"onkeyup="remarksListener(this.value)">
@@ -157,6 +157,28 @@
 					</div><!-- /.modal-content -->
 				</div><!-- /.modal-dialog -->
 			</div><!-- /.modal -->
+
+			<!-- DUMMY MODAL FOR EXTRA ALLOWANCE -->
+			<div class="modal fade" tabindex="-1" id="XAllowanceModal" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="AllowDisplay"></h4>
+						</div>
+						<div class="modal-body">
+							<center>
+								<input class="form-control" pattern="^[1-9]\d*(\.\d+)?$" style="width:50%;"id="xAllowanceInput"  maxlength="20">
+							</center>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							<button type="button" class="btn btn-primary" data-dismiss="modal" id="saveXAllow">Save changes</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+
 
 		</div>
 	</div>

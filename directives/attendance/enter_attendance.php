@@ -561,6 +561,27 @@ function attendance ()
 				}
 				Print 	
 					"<input type='hidden' name='empid[".$counter."]' value=". $row_employee['empid'] .">";
+
+			// Extra allowance	
+				if($empRow['xallow'] != 0)
+				{
+					// Print "<script>alert('".$empRow['remarks']."')</script>";
+					Print '<!-- Extra allowance Input --> 
+						<input type="hidden" value="'. $empRow['xallow'] .'" name="xallow['.$counter.']" class="hiddenXAllow">';
+					Print "<!-- Extra Allowance Button --> 
+					<td>
+						<a class='btn btn-sm btn-primary xallowance' data-toggle='modal' data-target='#XAllowanceModal' onclick='xAllowance(\"". $row_employee['empid'] ."\")>X Allow <span class='xall-icon glyphicon glyphicon-edit'></span></a>
+					</td>";
+				}
+				else
+				{
+					Print "<!-- Extra allowance Input --> 
+						<input type='hidden' name='xallow[".$counter."]' class='hiddenXAllow'>";
+					Print "<!-- Extra Allowance Button --> 
+					<td>
+						<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#XAllowanceModal' onclick='xAllowance(\"". $row_employee['empid'] ."\")'>X Allow <span class='xall-icon'></span></a>
+					</td>";
+				}
 			// REMARKS	
 				if($empRow['remarks'] != "")
 				{
@@ -569,7 +590,7 @@ function attendance ()
 						<input type="hidden" value="'. $empRow['remarks'] .'" name="remarks['.$counter.']" class="hiddenRemarks">';
 					Print "<!-- Remarks Button --> 
 					<td>
-						<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\"); remarksValidation(\"". $row_employee['empid'] ."\")'>Remarks <span class='icon glyphicon glyphicon-edit'></span></a>
+						<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\"); remarksValidation(\"". $row_employee['empid'] ."\")'>Remarks <span class='remarks-icon glyphicon glyphicon-edit'></span></a>
 					</td>";
 				}
 				else
@@ -578,7 +599,7 @@ function attendance ()
 						<input type='hidden' name='remarks[".$counter."]' class='hiddenRemarks'>";
 					Print "<!-- Remarks Button yow--> 
 					<td>
-						<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\"); remarksValidation(\"". $row_employee['empid'] ."\");'>Remarks <span class='icon'></span></a>
+						<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\"); remarksValidation(\"". $row_employee['empid'] ."\");'>Remarks <span class='remarks-icon'></span></a>
 					</td>";
 				}
 					Print 
@@ -682,14 +703,21 @@ function attendance ()
 						<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' disabled>
 						<input type='hidden' class='nightdiffH' name='nightdiff[".$counter."]' >
 					</td>
+					<!-- Extra allowance Input --> 
+						<input type='hidden' name='xallow[".$counter."]' class='hiddenXAllow'>
 					<!-- Remarks Input --> 
 						<input type='hidden' name='remarks[".$counter."]' class='hiddenRemarks'>
 
 					<!-- Attendance Status -->
 						<input type='hidden' name='attendance[".$counter."]' class='attendance'>
+					
+					<!-- Extra allowance Button --> 
+					<td>
+						<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#XAllowanceModal' onclick='xAllowance(\"". $row_employee['empid'] ."\")>X Allow <span class='xall-icon'></span></a>
+					</td>	
 					<!-- Remarks Button --> 
 					<td>
-						<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\"); remarksValidation(\"". $row_employee['empid'] ."\")'>Remarks <span class='icon'></span></a>
+						<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\"); remarksValidation(\"". $row_employee['empid'] ."\")'>Remarks <span class='remarks-icon'></span></a>
 					</td>
 					<td>
 						<a class='btn btn-sm btn-danger absent' onclick='absent(\"". $row_employee['empid'] ."\")'>Absent</a>

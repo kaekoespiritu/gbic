@@ -383,6 +383,26 @@ function remarks(id) {
 	document.getElementById('saveRemarks').setAttribute('onclick', "saveRemarks(\""+ id +"\")");
 	
 }
+
+function xAllowance(id) {	
+	// show modal here to input for remarks
+	var mainRow = document.getElementById(id);
+	if(mainRow.querySelector('.hiddenXAllow').value != null)
+	{
+
+		var input = mainRow.querySelector('.hiddenXAllow').value;
+		input = input.replace(/\\/g, '');
+		document.getElementById('xAllowanceInput').value = input;
+	}
+	else
+	{
+		document.getElementById('xAllowanceInput').value = "";
+	}
+	var empName = mainRow.querySelector('.empName').innerHTML.trim();
+	var modal = document.getElementById('AllowDisplay').innerHTML = "Extra allowance for " + empName;
+	document.getElementById('saveXAllow').setAttribute('onclick', "saveXAllow(\""+ id +"\")");
+	
+}
 	
 // This triggers the submit of search Form ( 13 = Enter key )
 function enter(e) {
@@ -400,7 +420,7 @@ function saveRemarks(id) {
 	if(remarks !== null && remarks !== "")
 	{
 		
-		mainRow.querySelector('.icon').classList.add('glyphicon', 'glyphicon-edit');
+		mainRow.querySelector('.remarks-icon').classList.add('glyphicon', 'glyphicon-edit');
 		
 		//alert("Time to add a badge here!");
 		//alert(remarks);
@@ -409,7 +429,30 @@ function saveRemarks(id) {
 	else
 	{
 		//alert("Nothing to do!");
-		mainRow.querySelector('.icon').classList.remove('glyphicon', 'glyphicon-edit');
+		mainRow.querySelector('.remarks-icon').classList.remove('glyphicon', 'glyphicon-edit');
+	}
+
+}
+
+// Transfer content to hidden input field
+function saveXAllow(id) {
+	var mainRow = document.getElementById(id);
+	var xAllow = document.getElementById('xAllowanceInput').value.trim();
+	var hiddenXAllow = mainRow.querySelector('.hiddenXAllow').setAttribute('value', xAllow);
+
+	if(xAllow !== null && xAllow !== "")
+	{
+		
+		mainRow.querySelector('.xall-icon').classList.add('glyphicon', 'glyphicon-edit');
+		
+		//alert("Time to add a badge here!");
+		//alert(remarks);
+			
+	}
+	else
+	{
+		//alert("Nothing to do!");
+		mainRow.querySelector('.xall-icon').classList.remove('glyphicon', 'glyphicon-edit');
 	}
 
 }
