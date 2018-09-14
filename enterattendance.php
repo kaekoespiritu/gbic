@@ -168,7 +168,7 @@
 						</div>
 						<div class="modal-body">
 							<center>
-								<input class="form-control" pattern="^[1-9]\d*(\.\d+)?$" style="width:50%;"id="xAllowanceInput"  maxlength="20">
+								<input class="form-control" onkeypress="validatenumber(event)" style="width:50%;"id="xAllowanceInput"  maxlength="20">
 							</center>
 						</div>
 						<div class="modal-footer">
@@ -190,6 +190,18 @@
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script src="js/enterAttendance.js"></script>
 	<script>
+
+		function validatenumber(evt) {
+	  		var theEvent = evt || window.event;
+	 		var key = theEvent.keyCode || theEvent.which;
+	 		key = String.fromCharCode( key );
+	  		var regex = /[0-9]|\./;
+	  		if( !regex.test(key) ) {
+	   			 theEvent.returnValue = false;
+	   		if(theEvent.preventDefault) 
+	   			theEvent.preventDefault();
+	 		}
+		}
 
 		document.getElementById("attendance").setAttribute("style", "background-color: #10621e;");
 	// Clear Filter
