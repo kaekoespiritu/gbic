@@ -301,6 +301,8 @@ if($holidayExist > 0)
 					$holidayDate = '';
 					$holidayDay = '';
 					$holidayCounter = 0;//count the days of holiday
+					$AttExtraAllowance = 0;// extra allowance that has accumulated through the attendance
+
 					while($dateRow = mysql_fetch_assoc($payrollQuery))
 					{
 						$holDateChecker = $dateRow['date'];
@@ -399,6 +401,8 @@ if($holidayExist > 0)
 								$sunWorkHrs = $dateRow['workhours'];//Get the workhours
 								$sunNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$sunOTHrs = $dateRow['overtime'];//Get the Overtime
+
+								$AttExtraAllowance += $dateRow['xallow'];// Gets the extra allowance
 								//For badge of Night diff and Overtime
 								if($dateRow['nightdiff'] != 0)
 									$NdSun = true;
@@ -480,6 +484,8 @@ if($holidayExist > 0)
 								$monWorkHrs = $dateRow['workhours'];//Get the workhours
 								$monNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$monOTHrs = $dateRow['overtime'];//Get the Overtime
+
+								$AttExtraAllowance += $dateRow['xallow'];// Gets the extra allowance
 								//For badge of Night diff and Overtime
 								if($dateRow['nightdiff'] != 0)
 									$NdMon = true;
@@ -561,6 +567,8 @@ if($holidayExist > 0)
 								$tueWorkHrs = $dateRow['workhours'];//Get the workhours
 								$tueNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$tueOTHrs = $dateRow['overtime'];//Get the Overtime
+
+								$AttExtraAllowance += $dateRow['xallow'];// Gets the extra allowance
 								//For badge of Night diff and Overtime
 								if($dateRow['nightdiff'] != 0){
 									$NdTue = true;
@@ -643,6 +651,8 @@ if($holidayExist > 0)
 								$wedWorkHrs = $dateRow['workhours'];//Get the workhours
 								$wedNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$wedOTHrs = $dateRow['overtime'];//Get the Overtime
+
+								$AttExtraAllowance += $dateRow['xallow'];// Gets the extra allowance
 								//For badge of Night diff and Overtime
 								if(!empty($dateRow['nightdiff']))
 									$NdWed = true;
@@ -725,6 +735,8 @@ if($holidayExist > 0)
 								$thuWorkHrs = $dateRow['workhours'];//Get the workhours
 								$thuNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$thuOTHrs = $dateRow['overtime'];//Get the Overtime
+
+								$AttExtraAllowance += $dateRow['xallow'];// Gets the extra allowance
 								//For badge of Night diff and Overtime
 								if($dateRow['nightdiff'] != 0)
 									$NdThu = true;
@@ -806,6 +818,8 @@ if($holidayExist > 0)
 								$friWorkHrs = $dateRow['workhours'];//Get the workhours
 								$friNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$friOTHrs = $dateRow['overtime'];//Get the Overtime
+
+								$AttExtraAllowance += $dateRow['xallow'];// Gets the extra allowance
 								//For badge of Night diff and Overtime
 								if($dateRow['nightdiff'] != 0)
 									$NdFri = true;
@@ -887,6 +901,8 @@ if($holidayExist > 0)
 								$satWorkHrs = $dateRow['workhours'];//Get the workhours
 								$satNDHrs = $dateRow['nightdiff'];//Get the night diff
 								$satOTHrs = $dateRow['overtime'];//Get the Overtime
+
+								$AttExtraAllowance += $dateRow['xallow'];// Gets the extra allowance
 								//For badge of Night diff and Overtime
 								if($dateRow['nightdiff'] != 0)
 									$NdSat = true;
@@ -1772,6 +1788,8 @@ if($holidayExist > 0)
 					$overallAllow = $empArr['allowance'] * $allowCounter;
 					$overallAllow = numberExactFormat($overallAllow, 2, '.', true);
 				}
+				if($AttExtraAllowance == 0)// If extra allowance accumulated from attendance is Zero 
+					$AttExtraAllowance = "";
 				?>
 				<!-- Days the employee came to work -->
 				<input type="hidden" name="daysAttended" value="<?php Print $allowCounter?>">
@@ -1788,7 +1806,7 @@ if($holidayExist > 0)
 						</div>
 						<label class="control-label col-md-2 col-lg-2">Extra</label>
 						<div class="col-md-2 col-lg-2 nopadding">
-							<input type="text" id="allowance" name="extra_allowance" name="extra_allowance" class="form-control input-sm" onblur="addDecimal(this)">
+							<input type="text" id="allowance" name="extra_allowance" name="extra_allowance" class="form-control input-sm" value="<?php Print $AttExtraAllowance?>" onblur="addDecimal(this)">
 						</div>
 					</div>
 

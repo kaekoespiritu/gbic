@@ -1,7 +1,7 @@
 <?php
 
 
-	function updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate)
+	function updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate, $xAllowance)
 	{
 		$remarks = mysql_real_escape_string($remarks);
 		if((!empty($timein) && !empty($timeout)) && $day == "Sunday")
@@ -22,7 +22,8 @@
 											  	attendance='".$attendance."',
 											  	date='".$date."',
 											  	sunday='".$sunday."',
-											  	holiday='".$holidayDate."' WHERE date = '$date' AND empid = '$empid'";
+											  	holiday='".$holidayDate."',
+											  	xallow='".$xAllowance."' WHERE date = '$date' AND empid = '$empid'";
 		}
 		else if((empty($timein) && empty($timeout)) && $day == "Sunday")
 		{
@@ -42,7 +43,8 @@
 											  	attendance='". $attendance ."',
 											  	date='".$date."',
 											  	sunday='0',
-											  	holiday='".$holidayDate."' WHERE date = '$date' AND empid = '$empid'";
+											  	holiday='".$holidayDate."',
+											  	xallow='".$xAllowance."' WHERE date = '$date' AND empid = '$empid'";
 		}
 		else
 		{
@@ -64,7 +66,8 @@
 												  	attendance='".$attendance."',
 												  	date='".$date."',
 												  	sunday='0',
-												  	holiday='".$holidayDate."' WHERE date = '$date' AND empid = '$empid'";
+												  	holiday='".$holidayDate."',
+											  		xallow='".$xAllowance."' WHERE date = '$date' AND empid = '$empid'";
 			}
 			else
 			{
@@ -84,13 +87,14 @@
 												  	attendance='".$attendance."',
 												  	date='".$date."',
 												  	sunday='0',
-												  	holiday='0' WHERE date = '$date' AND empid = '$empid'";
+												  	holiday='0',
+											  		xallow='".$xAllowance."' WHERE date = '$date' AND empid = '$empid'";
 			}
 		}
 		return $AttQuery;
 	}
 
-	function newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate)
+	function newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate, $xAllowance)
 	{
 		if((!empty($timein) && !empty($timeout)) && $day == "Sunday")
 		{
@@ -110,7 +114,8 @@
 					  '".$attendance."',
 					  '".$date."',
 					  '".$sunday."',
-					  '".$holidayDate."')";
+					  '".$holidayDate."',
+					  '".$xAllowance."')";
 		}
 		else if((empty($timein) && empty($timeout)) && $day == "Sunday")
 		{
@@ -130,7 +135,8 @@
 					  '".$attendance."',
 					  '".$date."',
 					  '0',
-					  '0')";
+					  '0',
+					  '".$xAllowance."')";
 		}
 		else
 		{
@@ -152,7 +158,8 @@
 						  '".$attendance."',
 						  '".$date."',
 						  '0',
-						  '".$holidayDate."')";
+						  '".$holidayDate."',
+					  	  '".$xAllowance."')";
 			}
 			else
 			{
@@ -172,7 +179,8 @@
 						  '".$attendance."',
 						  '".$date."',
 						  '0',
-						  '0')";
+						  '0',
+					  	  '".$xAllowance."')";
 			}
 		}
 		//Print "<script>alert('".$AttQuery."')</script>";

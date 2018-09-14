@@ -153,7 +153,8 @@ if(!empty($dateRows))// Updating attendance
 												attendance,
 												date,
 												sunday,
-												holiday) VALUES";//ADD HOLIDAY HERE
+												holiday,
+												xallow) VALUES";//ADD HOLIDAY HERE
 	$AttQuery = "";
 	for($counter = 0; $counter < $empNum; $counter++)
 	{
@@ -317,6 +318,15 @@ if(!empty($dateRows))// Updating attendance
 				$remarks = "";
 			}
 
+			if(!empty($_POST['xallow'][$counter]))
+			{
+				$xAllowance = mysql_real_escape_string($_POST['xallow'][$counter]);
+			}
+			else 
+			{
+				$xAllowance = "";
+			}
+
 			$attendance = 2;// 0 - no input / 1 - Absent / 2 - Present
 			$employee = "SELECT * FROM employee WHERE empid = '$empid' ";
 			$employeeQuery = mysql_query($employee) or die(mysql_error());
@@ -327,11 +337,11 @@ if(!empty($dateRows))// Updating attendance
 			$attCheckerQuery = mysql_query($attChecker) or die (mysql_error());
 			if(mysql_num_rows($attCheckerQuery) != 0)//update
 			{
-				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate);
+				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate, $xAllowance);
 			}
 			else//new attendance
 			{
-				$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, "",$holidayDate);
+				$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, "",$holidayDate, $xAllowance);
 
 				$AttQuery = $initialQuery.$AttQuery; 
 			}
@@ -413,10 +423,16 @@ if(!empty($dateRows))// Updating attendance
 			$undertime = "";
 			$nightdiff = "";
 			$remarks = "";
+			$xAllowance = "";
 			if(isset($_POST['remarks'][$counter]))
 			{
 				$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
 			}
+			if(isset($_POST['xallow'][$counter]))
+			{
+				$xAllowance = mysql_real_escape_string($_POST['xallow'][$counter]);
+			}
+
 			$attendance = 1;// 0 - no input / 1 - Absent / 2 - Present
 			$employee = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1'";
 			$employeeQuery = mysql_query($employee) or die(mysql_error());
@@ -428,11 +444,11 @@ if(!empty($dateRows))// Updating attendance
 			$attCheckerQuery = mysql_query($attChecker) or die (mysql_error());
 			if(mysql_num_rows($attCheckerQuery) != 0)//update
 			{
-				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate);
+				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate, $xAllowance);
 			}
 			else//new attendance
 			{
-				$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, "",$holidayDate);
+				$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, "",$holidayDate, $xAllowance);
 				
 				$AttQuery = $initialQuery.$AttQuery;
 
@@ -453,9 +469,14 @@ if(!empty($dateRows))// Updating attendance
 			$undertime = "";
 			$nightdiff = "";
 			$remarks = "";
+			$xAllowance = "";
 			if(isset($_POST['remarks'][$counter]))
 			{
 				$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+			}
+			if(isset($_POST['xallow'][$counter]))
+			{
+				$xAllowance = mysql_real_escape_string($_POST['xallow'][$counter]);
 			}
 			$attendance = 0;// 0 - no input / 1 - Absent / 2 - Present
 			$employee = "SELECT * FROM employee WHERE empid = '$empid'";
@@ -469,12 +490,12 @@ if(!empty($dateRows))// Updating attendance
 
 			if(mysql_num_rows($attCheckerQuery) != 0)//update
 			{
-				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate);
+				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate, $xAllowance);
 
 			}
 			else//new attendance
 			{
-				$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, "",$holidayDate);
+				$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, "",$holidayDate, $xAllowance);
 
 				$AttQuery = $initialQuery.$AttQuery; 
 
@@ -502,7 +523,8 @@ else// NEW attendance
 												attendance,
 												date,
 												sunday,
-												holiday) VALUES";//ADD HOLIDAY HERE
+												holiday,
+												xallow) VALUES";//ADD HOLIDAY HERE
 	$AttQuery = "";
 	for($counter = 0; $counter < $empNum; $counter++)
 	{
@@ -663,6 +685,14 @@ else// NEW attendance
 			{
 				$remarks = "";
 			}
+			if(!empty($_POST['xallow'][$counter]))
+			{
+				$xAllowance = mysql_real_escape_string($_POST['xallow'][$counter]);
+			}
+			else 
+			{
+				$xAllowance = "";
+			}
 
 			$attendance = 2;// 0 - no input / 1 - Absent / 2 - Present
 			$employee = "SELECT * FROM employee WHERE empid = '$empid'";
@@ -670,7 +700,7 @@ else// NEW attendance
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
 			
-			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
+			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate, $xAllowance);
 			
 			
 		}
@@ -745,9 +775,14 @@ else// NEW attendance
 			$undertime = "";
 			$nightdiff = "";
 			$remarks = "";
+			$xAllowance = "";
 			if(isset($_POST['remarks'][$counter]))
 			{
 				$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+			}
+			if(isset($_POST['xallow'][$counter]))
+			{
+				$xAllowance = mysql_real_escape_string($_POST['xallow'][$counter]);
 			}
 			$attendance = 1;// 0 - no input / 1 - Absent / 2 - Present
 			$employee = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1' ";
@@ -759,7 +794,7 @@ else// NEW attendance
 			$attChecker = "SELECT * from attendance WHERE date = '$date' AND empid = '$empid' LIMIT 1";
 			$attCheckerQuery = mysql_query($attChecker) or die (mysql_error());
 
-			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
+			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate, $xAllowance);
 		
 			
 		}
@@ -777,9 +812,14 @@ else// NEW attendance
 			$undertime = "";
 			$nightdiff = "";
 			$remarks = "";
+			$xAllowance = "";
 			if(isset($_POST['remarks'][$counter]))
 			{
 				$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+			}
+			if(isset($_POST['xallow'][$counter]))
+			{
+				$xAllowance = mysql_real_escape_string($_POST['xallow'][$counter]);
 			}
 			$attendance = 0;// 0 - no input / 1 - Absent / 2 - Present
 			$employee = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1' ";
@@ -791,7 +831,7 @@ else// NEW attendance
 			$attChecker = "SELECT * from attendance WHERE date = '$date' AND empid = '$empid' LIMIT 1";
 			$attCheckerQuery = mysql_query($attChecker) or die (mysql_error());
 
-			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate);
+			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate, $xAllowance );
 			
 		}
 	}

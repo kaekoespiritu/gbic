@@ -565,21 +565,20 @@ function attendance ()
 			// Extra allowance	
 				if($empRow['xallow'] != 0)
 				{
-					// Print "<script>alert('".$empRow['remarks']."')</script>";
 					Print '<!-- Extra allowance Input --> 
 						<input type="hidden" value="'. $empRow['xallow'] .'" name="xallow['.$counter.']" class="hiddenXAllow">';
 					Print "<!-- Extra Allowance Button --> 
 					<td>
-						<a class='btn btn-sm btn-primary xallowance' data-toggle='modal' data-target='#XAllowanceModal' onclick='xAllowance(\"". $row_employee['empid'] ."\")>X Allow <span class='xall-icon glyphicon glyphicon-edit'></span></a>
+						<a class='btn btn-sm btn-primary xallowance' data-toggle='modal' data-target='#XAllowanceModal' onclick='xAllowance(\"". $row_employee['empid'] ."\")'>X Allow <span class='xall-icon glyphicon glyphicon-edit'></span></a>
 					</td>";
 				}
-				else
+				else 
 				{
 					Print "<!-- Extra allowance Input --> 
 						<input type='hidden' name='xallow[".$counter."]' class='hiddenXAllow'>";
 					Print "<!-- Extra Allowance Button --> 
 					<td>
-						<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#XAllowanceModal' onclick='xAllowance(\"". $row_employee['empid'] ."\")'>X Allow <span class='xall-icon'></span></a>
+						<a class='btn btn-sm btn-primary xallowance' data-toggle='modal' data-target='#XAllowanceModal' onclick='xAllowance(\"". $row_employee['empid'] ."\")'>X Allow <span class='xall-icon'></span></a>
 					</td>";
 				}
 			// REMARKS	
@@ -713,8 +712,10 @@ function attendance ()
 					
 					<!-- Extra allowance Button --> 
 					<td>
-						<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#XAllowanceModal' onclick='xAllowance(\"". $row_employee['empid'] ."\")>X Allow <span class='xall-icon'></span></a>
+						<a class='btn btn-sm btn-primary xallowance' data-toggle='modal' data-target='#XAllowanceModal' onclick='xAllowance(\"". $row_employee['empid'] ."\")'>X Allow <span class='xall-icon'></span></a>
 					</td>	
+					
+
 					<!-- Remarks Button --> 
 					<td>
 						<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarks(\"". $row_employee['empid'] ."\"); remarksValidation(\"". $row_employee['empid'] ."\")'>Remarks <span class='remarks-icon'></span></a>
