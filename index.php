@@ -201,7 +201,7 @@ include_once('directives/db.php');
 					// 1st Column
 					Print				"<div class='col-lg-6'>
 											<ul align='left'>";
-									while($absenceArr1 = mysql_fetch_assoc($awolQuery1))
+									while($absenceArr1 = mysql_fetch_assoc($absenceQuery1))
 									{	
 										Print "<li>".$absenceArr1['lastname'].", ".$absenceArr1['firstname']."(".$absenceArr1['position'].") - [".$absenceArr1['site']."] </li>";
 									}
