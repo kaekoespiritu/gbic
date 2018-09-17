@@ -32,22 +32,39 @@ if(count($_POST['loanType']) == 1)
 
 
 	$loanAmount = number_format($loanAmount, 2, '.', '');//for 2 decimal places
-	$query = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time,action, admin) VALUES('$empid', 
-																	'$loanType',
-																	'$balance',
-																	'$loanAmount',
-																	'$reason',
-																	'$date',
-																	'$time',
-																	'1',
-																	'$adminName')";
+	if($loanType == 'SSS' || $loanType == 'PagIBIG')
+	{
+		$query = "INSERT INTO loans(empid, type, monthly, balance, amount, remarks, date, time,action, admin) VALUES('$empid', 
+																		'$loanType',
+																		'$loanAmount',
+																		'0',
+																		'0',
+																		'$reason',
+																		'$date',
+																		'$time',
+																		'1',
+																		'$adminName')";
+	}
+	else
+	{
+		$query = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time,action, admin) VALUES('$empid', 
+																		'$loanType',
+																		'$balance',
+																		'$loanAmount',
+																		'$reason',
+																		'$date',
+																		'$time',
+																		'1',
+																		'$adminName')";
+	}
+		
 	mysql_query($query);
 
 	$loanDisplay = $loanType;
 }
 else
 {
-	$initialQuery = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action, admin) VALUES";
+	$initialQuery = "INSERT INTO loans(empid, type, monthly, balance, amount, remarks, date, time, action, admin) VALUES";
 	$secondaryQuery = "";
 	$loanDisplay = "";
 	$loanNum = count($_POST['loanType']);// Number of loan
@@ -76,7 +93,12 @@ else
 		//Query Builder
 		if($secondaryQuery != "")
 			$secondaryQuery .= ",";
-		$secondaryQuery .= "('$empid', '$loanType','$balance', '$loanAmount', '$reason', '$date', '$time', '1', '$adminName')";
+
+		if($loanType == 'SSS' || $loanType == 'PagIBIG')
+			$secondaryQuery .= "('$empid', '$loanType', '$loanAmount', '0', '0', '$reason', '$date', '$time', '1', '$adminName')";
+		else
+			$secondaryQuery .= "('$empid', '$loanType', '', '$balance', '$loanAmount', '$reason', '$date', '$time', '1', '$adminName')";
+
 		$primaryQuery = $initialQuery.$secondaryQuery;
 		
 		// Loan type display for alert 

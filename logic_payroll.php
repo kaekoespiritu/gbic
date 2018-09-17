@@ -741,13 +741,26 @@ function getDay($day)
 		$Loan = "SELECT * FROM loans WHERE type='$loanType' AND empid='$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
 		$Query = mysql_query($Loan);
 		$loanArr = mysql_fetch_assoc($Query);
-		$LoanBalance = $DeductedLoan - $loanArr['balance'];
+		if($loanType == "SSS" || $loanType == "PagIBIG")
+		{
+			$monthlyDues = $loanArr['monthly'];
+			$LoanBalance = $DeductedLoan + $loanArr['balance'];
+		}
+		else
+			$LoanBalance = $DeductedLoan - $loanArr['balance'];
 		$LoanBalance = abs($LoanBalance);//make it positive if ever it is negative
 
-		
-
-		$Update = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action, admin) 
-						VALUES('$empid', '$loanType', '$LoanBalance', '$DeductedLoan', 'deducted', '$date', '$time', '0', '$admin')";
+		if($loanType == "SSS" || $loanType == "PagIBIG")
+		{
+			$Update = "INSERT INTO loans(empid, type, monthly, balance, amount, remarks, date, time, action, admin) 
+							VALUES('$empid', '$loanType', '$monthlyDues', '$LoanBalance', '$DeductedLoan', 'deducted', '$date', '$time', '0', '$admin')";
+		}
+		else
+		{
+			$Update = "INSERT INTO loans(empid, type, balance, amount, remarks, date, time, action, admin) 
+							VALUES('$empid', '$loanType', '$LoanBalance', '$DeductedLoan', 'deducted', '$date', '$time', '0', '$admin')";
+		}	
+			
 		mysql_query($Update);
 	}
 
@@ -860,7 +873,7 @@ function getDay($day)
 		
 		$totalToolCost = 0;
 		$BoolTool = false; //Boolean to if there is more than 2 tools
-		
+
 		$checkPrevTools = "SELECT * FROM tools WHERE empid = '$empid' AND date = '$date'";
 		$checkPrevToolsQuery = mysql_query($checkPrevTools);
 		if(mysql_num_rows($checkPrevToolsQuery) > 0)

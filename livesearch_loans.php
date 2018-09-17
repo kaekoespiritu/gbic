@@ -48,12 +48,12 @@ if(!empty($result))
         if(!empty($sssNum))
         {
             $sssRow = mysql_fetch_assoc($sssQuery);
-            $employeeSSS = $sssRow['balance'];
+            $employeeSSS = $sssRow['monthly'];
         }
         if(!empty($pagibigNum))
         {
             $pagibigRow = mysql_fetch_assoc($pagibigQuery);
-            $employeePAGIBIG = $pagibigRow['balance'];
+            $employeePAGIBIG = $pagibigRow['monthly'];
         }
         if(!empty($oldValeNum))
         {

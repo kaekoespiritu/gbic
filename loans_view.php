@@ -134,8 +134,8 @@ else if($loanType == "newVale")
 					<td style='width:200px !important;'>Name</td>
 					<td>Position</td>
 					<td>Site</td>
-					<td>Amount to be paid</td>
-					<td>History</td>
+					<td><?php Print ($loanType == 'SSS' || $loanType == 'PAGIBIG' ? "Monthly Dues" : "Amount to be paid")?></td>
+					<td>Actions</td>
 				</tr>
 				<?php 
 					$loans = "SELECT DISTINCT * FROM loans WHERE type = '$loanType'  GROUP BY empid ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC, time ASC";
@@ -199,33 +199,85 @@ else if($loanType == "newVale")
 							$noLoanChecker = true;
 							if(mysql_num_rows($employeeQuery) != 0)
 							{
-								if($checkerArr['balance'] > 0)
+								if($loanType == 'SSS' || $loanType == 'PAGIBIG')
 								{
-									Print "
-										<tr>
-											<input type='hidden' name='empid[]' value='". $empid ."'>
-											<td style='vertical-align: inherit'>
-												".$empid."
-											</td>
-											<td style='vertical-align: inherit'>
-												".$empArr['lastname'].", ".$empArr['firstname']."
-											</td>
-											<td style='vertical-align: inherit'>
-												".$empArr['position']."
-											</td>
-											<td style='vertical-align: inherit'>
-												".$empArr['site']."
-											</td>
-											<td style='vertical-align: inherit'>
-												".number_format($checkerArr['balance'], 2, '.', ',')."
-											</td>
-											<td>
-												<a class='btn btn-primary' data-toggle='modal' data-target='#viewLoanHistory' onclick='load_history(\"".$empid."\", \"".$loanType."\")'><span class='glyphicon glyphicon-list-alt'></span> View</a>
-											</td>
-										</tr>
-										";
-									$noLoanChecker = false;
+									if($checkerArr['action'] == 1)
+									{
+										Print "
+											<tr>
+												<input type='hidden' name='empid[]' value='". $empid ."'>
+												<td style='vertical-align: inherit'>
+													".$empid."
+												</td>
+												<td style='vertical-align: inherit'>
+													".$empArr['lastname'].", ".$empArr['firstname']."
+												</td>
+												<td style='vertical-align: inherit'>
+													".$empArr['position']."
+												</td>
+												<td style='vertical-align: inherit'>
+													".$empArr['site']."
+												</td>
+												<td style='vertical-align: inherit'>
+													".($loanType == "SSS" || $loanType == "PAGIBIG" ? 
+														number_format($checkerArr['monthly'], 2, '.', ',')
+													 :  number_format($checkerArr['balance'], 2, '.', ','))."
+												</td>
+												<td>";
+												if($loanType == 'SSS' || $loanType == 'PAGIBIG')
+												{
+													Print	"<a class='btn btn-danger' onclick='endLoan(\"".$empid."\", \"".$loanType."\")'><span class='glyphicon glyphicon-minus-sign'></span> End Loan</a>";
+												}
+
+
+												Print	
+													"&nbsp<a class='btn btn-primary' data-toggle='modal' data-target='#viewLoanHistory' onclick='load_history(\"".$empid."\", \"".$loanType."\")'><span class='glyphicon glyphicon-list-alt'></span> History</a>
+												
+												</td>
+											</tr>
+											";
+										$noLoanChecker = false;
+									}
 								}
+								else
+								{
+									if($checkerArr['balance'] > 0)
+									{
+										Print "
+											<tr>
+												<input type='hidden' name='empid[]' value='". $empid ."'>
+												<td style='vertical-align: inherit'>
+													".$empid."
+												</td>
+												<td style='vertical-align: inherit'>
+													".$empArr['lastname'].", ".$empArr['firstname']."
+												</td>
+												<td style='vertical-align: inherit'>
+													".$empArr['position']."
+												</td>
+												<td style='vertical-align: inherit'>
+													".$empArr['site']."
+												</td>
+												<td style='vertical-align: inherit'>
+													".number_format($checkerArr['balance'], 2, '.', ',')."
+												</td>
+												<td>";
+												if($loanType == 'SSS' || $loanType == 'PAGIBIG')
+												{
+													Print	"<a class='btn btn-danger' onclick='endLoan(\"".$empid."\", \"".$loanType."\")'><span class='glyphicon glyphicon-minus-sign'></span> End Loan</a>";
+												}
+
+
+												Print	
+													"&nbsp<a class='btn btn-primary' data-toggle='modal' data-target='#viewLoanHistory' onclick='load_history(\"".$empid."\", \"".$loanType."\")'><span class='glyphicon glyphicon-list-alt'></span> History</a>
+												
+												</td>
+											</tr>
+											";
+										$noLoanChecker = false;
+									}
+								}
+									
 							}
 						}
 						if($noLoanChecker)
@@ -351,6 +403,12 @@ function deleteLoan(id, loan) {
 	var a = confirm("Are you sure you want to remove this loan?");
 	if(a)
 		window.location.assign("logic_loans_delete.php?id="+id+"&loan="+loan);
+}
+
+function endLoan(id, loan) {
+	var a = confirm("Are you sure you want to end this employee's loan?")
+	if(a)
+		window.location.assign("logic_loans_end.php?id="+id+"&loan="+loan);
 }
 </script>
 </body>

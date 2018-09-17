@@ -15,20 +15,41 @@ $employeeQuery = mysql_query($employee);
 $empArr = mysql_fetch_assoc($employeeQuery);
 $output = "";//this is the object that will be fetch to the loans_view.php
 
-$output .= "<div class='col-md-1 col-lg-12'>
-					<h4 class='modal-title'>".$empArr['lastname'].", ".$empArr['firstname']."'s loan history</h4>
-				</div>
-				<div class='modal-body pull-down'>
-					<table class='table table-bordered'>
-					<tr>
-						<td>Balance</td>
-						<td>Amount</td>
-						<td>Action</td>
-						<td>Remarks</td>
-						<td>Date</td>
-						<td>Approved by</td>
-						<td>Options</td>
-					</tr>";
+if($type == "SSS" || $type == "PAGIBIG")
+{
+	$output .= "<div class='col-md-1 col-lg-12'>
+						<h4 class='modal-title'>".$empArr['lastname'].", ".$empArr['firstname']."'s loan history</h4>
+					</div>
+					<div class='modal-body pull-down'>
+						<table class='table table-bordered'>
+						<tr>
+							<td>Overall Balance</td>
+							<td>Monthly Due</td>
+							<td>Amount paid on payroll</td>
+							<td>Remarks</td>
+							<td>Date</td>
+							<td>Approved by</td>
+							<td>Options</td>
+						</tr>";
+}
+else
+{
+	$output .= "<div class='col-md-1 col-lg-12'>
+						<h4 class='modal-title'>".$empArr['lastname'].", ".$empArr['firstname']."'s loan history</h4>
+					</div>
+					<div class='modal-body pull-down'>
+						<table class='table table-bordered'>
+						<tr>
+							<td>Balance</td>
+							<td>Amount</td>
+							<td>Action</td>
+							<td>Remarks</td>
+							<td>Date</td>
+							<td>Approved by</td>
+							<td>Options</td>
+						</tr>";
+}
+	
 if(mysql_num_rows($historyQuery) > 0)
 {
 	$numRows = mysql_num_rows($historyQuery);
@@ -36,36 +57,57 @@ if(mysql_num_rows($historyQuery) > 0)
 	Print "<script>console.log('".$numRows."')</script>";
 	while($row = mysql_fetch_assoc($historyQuery))
 	{
-		$counter++;
-		Print "<script>console.log('".$counter."')</script>";
-		$output .= "
-					<tr>
-						<td>".number_format($row['balance'], 2, '.', ',')."</td>";
-		if($row['action'] == '1')
+		if($type == "SSS" || $type == "PAGIBIG")
 		{
-			$output .= "<td> +".number_format($row['amount'], 2, '.', ',')."</td>
-						<td>Loaned</td>";
+			$counter++;
+			Print "<script>console.log('".$counter."')</script>";
+			$output .= "
+						<tr>
+							<td>".number_format($row['balance'], 2, '.', ',')."</td>";
+				$output .= "<td>".number_format($row['monthly'], 2, '.', ',')."</td>
+							<td>".number_format($row['amount'], 2, '.', ',')."</td>";
+			
+			$output .= 	"	<td>".$row['remarks']."</td>
+							<td>".$row['date']."</td>
+							<td>".$row['admin']."</td>";
+
+			if($numRows == $counter && $row['action'] == '1')
+				$output .= '<td><button type="button" class="btn btn-danger" onclick="deleteLoan('.$row['id'].',\''.$type.'\')">Remove</button></td>';
+			else
+				$output .= "<td></td>";
+
+			$output .=	"</tr>";
 		}
 		else
 		{
-			$output .= "<td> -".number_format($row['amount'], 2, '.', ',')."</td>
-						<td>Paid</td>";
+			$counter++;
+			Print "<script>console.log('".$counter."')</script>";
+			$output .= "
+						<tr>
+							<td>".number_format($row['balance'], 2, '.', ',')."</td>";
+			if($row['action'] == '1')
+			{
+				$output .= "<td> +".number_format($row['amount'], 2, '.', ',')."</td>
+							<td>Loaned</td>";
+			}
+			else
+			{
+				$output .= "<td> -".number_format($row['amount'], 2, '.', ',')."</td>
+							<td>Paid</td>";
+			}
+			
+			$output .= 	"	<td>".$row['remarks']."</td>
+							<td>".$row['date']."</td>
+							<td>".$row['admin']."</td>";
+
+			if($numRows == $counter && $row['action'] == '1')
+				$output .= '<td><button type="button" class="btn btn-danger" onclick="deleteLoan('.$row['id'].',\''.$type.'\')">Remove</button></td>';
+			else
+				$output .= "<td></td>";
+
+			$output .=	"</tr>";
 		}
-		
-		$output .= 	"	<td>".$row['remarks']."</td>
-						<td>".$row['date']."</td>
-						<td>".$row['admin']."</td>";
-
-		if($numRows == $counter && $row['action'] == '1')
-			$output .= '<td><button type="button" class="btn btn-danger" onclick="deleteLoan('.$row['id'].',\''.$type.'\')">Remove</button></td>';
-		else
-			$output .= "<td></td>";
-
-		$output .=	"</tr>";
-
-
-	}
-	
+	}	
 }
 $output .= "
 					</table>
