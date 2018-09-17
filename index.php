@@ -174,12 +174,12 @@ include_once('directives/db.php');
 					$absenceNum = $absenceCount / 2;
 					$absenceNum = round($absenceNum);// Rounds off the result of awol num
 					$appendAbsenceQuery1 = "LIMIT 0, ".$absenceNum;
-					$appendAbsenceQuery1 = "LIMIT ".$absenceNum.", ".($absenceCount+1);
+					$appendAbsenceQuery2 = "LIMIT ".$absenceNum.", ".($absenceCount+1);
 
 					$absence1 = $absence;
 					$absence2 = $absence;
 					$absence1 .= $appendAbsenceQuery1;
-					$absence2 .= $appendAbsenceQuery1;
+					$absence2 .= $appendAbsenceQuery2;
 
 					$absenceQuery1 = mysql_query($absence1);
 					$absenceQuery2 = mysql_query($absence2);
