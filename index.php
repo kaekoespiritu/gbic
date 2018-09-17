@@ -253,7 +253,7 @@ include_once('directives/db.php');
 					$dateHiredLimit = strtotime('+7 month', strtotime($empArr['datehired']));
 					if($dateToday >= $dateHired && $dateToday <= $dateHiredLimit)// Check if employee exceeded 6 months of tenure but dismisses the notif if the tenure entered 7months
 					{
-						$toArr = $empArr['lastname'].', '.$empArr['firstname'].'('.$empArr['position'].') - ['.$empArr['site'].']('.$dateHired.')';
+						$toArr = $empArr['lastname'].', '.$empArr['firstname'].'('.$empArr['position'].') - ['.$empArr['site'].']('.date('F j, Y',$dateHired).')';
 						array_push($tenureArrWithReq, $toArr);
 					}
 				}
@@ -264,7 +264,7 @@ include_once('directives/db.php');
 					$dateHiredLimit = strtotime('+6 month', strtotime($empArr['datehired']));
 					if($dateToday >= $dateHired && $dateToday <= $dateHiredLimit)// Check if employee exceeded 5 months of tenure but dismisses the notif if the tenure entered 6months
 					{
-						$toArr = $empArr['lastname'].', '.$empArr['firstname'].'('.$empArr['position'].') - ['.$empArr['site'].']('.$dateHired.')';
+						$toArr = $empArr['lastname'].', '.$empArr['firstname'].'('.$empArr['position'].') - ['.$empArr['site'].']('.date('F j, Y',$dateHired).')';
 						array_push($tenureArrWithOReq, $toArr);
 					}
 				}
@@ -282,7 +282,7 @@ include_once('directives/db.php');
 									if(!empty($tenureArrWithReq))// With req
 									{
 										Print "<h3 class='panel-title'>Employees with Complete Requirements that stayed in the company for 6 Months</h3>
-											<div class='col-md-8 col-md-offset-2'>";
+											<div class='col-md-10 col-md-offset-1'>";
 										$wReqCount = count($tenureArrWithReq);
 										$wReqHalf = $wReqCount / 2;
 										$wReqHalf = round($wReqHalf);
