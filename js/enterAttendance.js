@@ -3457,6 +3457,8 @@ function AutoTimeIn85(id) {
 	mainRow.querySelector('.workinghours').value = '8 hrs';
 	mainRow.querySelector('.workinghoursH').value = '8 hrs';
 
+	mainRow.querySelector('.nightshiftChk').disabled = false;
+
 	mainRow.querySelector('.attendance').value = 'PRESENT'; 
 	mainRow.classList.add('success');
 	if(mainRow.classList.contains('danger'))
@@ -3482,6 +3484,7 @@ function AutoTimeIn74(id) {
 	mainRow.querySelector('.workinghours').value = '8 hrs';
 	mainRow.querySelector('.workinghoursH').value = '8 hrs';
 
+	mainRow.querySelector('.nightshiftChk').disabled = false;
 	mainRow.querySelector('.attendance').value = 'PRESENT'; 
 	mainRow.classList.add('success');
 	if(mainRow.classList.contains('danger'))
