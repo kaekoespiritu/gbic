@@ -19,9 +19,9 @@
 		div1.setAttribute('name','toolsRow[]');
 
 		var delLink = '<div class="col-md-1 col-lg-1 nopadding">'+
-		'<button class="btn-sm btn btn-danger" name="rowDelete[]" onclick="deleteRow('+ ct +')">'+
+		'<a class="btn-sm btn btn-danger" name="rowDelete[]" onclick="deleteRow('+ ct +')">'+
 		'<span class="glyphicon glyphicon-minus"></span>'+
-		'</button>'+
+		'</a>'+
 		'</div>';
 
 		var template ='<div class="col-md-4 col-lg-4">' +

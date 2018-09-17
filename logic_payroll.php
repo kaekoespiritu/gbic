@@ -860,6 +860,12 @@ function getDay($day)
 		
 		$totalToolCost = 0;
 		$BoolTool = false; //Boolean to if there is more than 2 tools
+		
+		$checkPrevTools = "SELECT * FROM tools WHERE empid = '$empid' AND date = '$date'";
+		$checkPrevToolsQuery = mysql_query($checkPrevTools);
+		if(mysql_num_rows($checkPrevToolsQuery) > 0)
+			mysql_query("DELETE FROM tools WHERE empid = '$empid' AND date = '$date'");
+		
 		if($toolNum > 1)
 		{
 			$toolQuery = "INSERT INTO tools(empid, tools, cost, quantity, date) VALUES";

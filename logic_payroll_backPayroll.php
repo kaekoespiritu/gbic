@@ -19,13 +19,13 @@
 	$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND date = '$date' AND action = '0'";
 	$loansQuery = mysql_query($loanChecker);
 
-	$toolsChecker = "SELECT * FROM tools WHERE empid = '$empid' AND date = '$date'";
-	$toolsQuery = mysql_query($toolsChecker);
+	// $toolsChecker = "SELECT * FROM tools WHERE empid = '$empid' AND date = '$date'";
+	// $toolsQuery = mysql_query($toolsChecker);
 
 	if(mysql_num_rows($loansQuery) != 0)// Delete Loans
 		mysql_query("DELETE FROM loans WHERE empid = '$empid' AND date = '$date'");
-	if(mysql_num_rows($toolsQuery) != 0)// Delete tools
-		mysql_query("DELETE FROM tools WHERE empid = '$empid' AND date = '$date'");
+	// if(mysql_num_rows($toolsQuery) != 0)// Delete tools
+	// 	mysql_query("DELETE FROM tools WHERE empid = '$empid' AND date = '$date'");
 // Delete payroll
 	mysql_query("DELETE FROM payroll WHERE empid = '$empid' AND date = '$date'");
 // Delete Adjusted attendance

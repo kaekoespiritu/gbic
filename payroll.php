@@ -1816,9 +1816,78 @@ if($holidayExist > 0)
 						<span class="col-md-4 col-lg-4">Name</span>
 						<span class="col-md-4 col-lg-4">Cost</span>
 						<span class="col-md-4 col-lg-4">Quantity</span>
-						<a class="btn btn-sm btn-primary col-md-1 col-lg-1" onclick="addRow()"><span class="glyphicon glyphicon-plus"></span></a>
+						
 						<div class="form-group" id="toolform">
-							<div>
+							<a class="btn btn-sm btn-primary col-md-1 col-lg-1" onclick="addRow()"><span class="glyphicon glyphicon-plus"></span></a>
+							<?php
+							$toolsChecker = "SELECT * FROM tools WHERE empid = '$empid' AND date = '$date'";
+							$toolsCheckerQuery = mysql_query($toolsChecker);
+							$overallToolCost = 0;
+							if(mysql_num_rows($toolsCheckerQuery) == 0)
+							{
+								Print '	<div>
+											<div class="col-md-4 col-lg-4">
+												<input type="text" id="tools" name="toolname[]" class="form-control input-sm" onchange="checkName(this)">
+											</div>
+											<div class="col-md-4 col-lg-4">
+												<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">
+											</div>
+											<div class="col-md-3 col-lg-3">
+												<input type="text" id="quantity" name="toolquantity[]" class="form-control input-sm" onchange="getTotal(this)" onblur="addDecimal(this)">
+											</div>
+										</div>	';
+							}
+							else
+							{
+								$toolsCounter = 1;
+								$toolsBoolOnce = true;
+								while($toolsArr = mysql_fetch_assoc($toolsCheckerQuery))
+								{
+									if($toolsBoolOnce)
+									{
+										$toolsBoolOnce = false;
+										Print '	<div>
+													<div class="col-md-4 col-lg-4">
+														<input type="text" id="tools" name="toolname[]" class="form-control input-sm" onchange="checkName(this)" value="'.$toolsArr['tools'].'">
+													</div>
+													<div class="col-md-4 col-lg-4">
+														<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)" value="'.$toolsArr['cost'].'">
+													</div>
+													<div class="col-md-3 col-lg-3">
+														<input type="text" id="quantity" name="toolquantity[]" class="form-control input-sm" onchange="getTotal(this)" onblur="addDecimal(this)" value="'.$toolsArr['quantity'].'">
+													</div>
+												</div>	';
+											$overallToolCost += $toolsArr['cost'];
+									}
+									else
+									{
+										Print '
+											<div name="toolsRow[]" id="'.$toolsCounter.'">
+												<div class="col-md-1 col-lg-1 nopadding">
+													<a class="btn-sm btn btn-danger" name="rowDelete[]" onclick="deleteRow('.$toolsCounter.')">
+														<span class="glyphicon glyphicon-minus"></span>
+													</a>
+												</div>
+
+												<div class="col-md-4 col-lg-4">
+													<input type="text" id="toolstemp" name="toolname[]" class="form-control input-sm" onchange="checkName(this)" value="'.$toolsArr['tools'].'">
+												</div>
+												<div class="col-md-4 col-lg-4">
+													<input id="pricetemp" name="toolprice[]" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)" value="'.$toolsArr['cost'].'">
+												</div> 
+												<div class="col-md-3 col-lg-3">
+													<input type="text" id="quantity" name="toolquantity[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)" value="'.$toolsArr['quantity'].'">
+												</div>
+											</div>';
+										$toolsCounter++;
+										$overallToolCost += $toolsArr['cost'];
+									}
+								}
+								
+							}
+
+							?>
+							<!-- <div>
 								<div class="col-md-4 col-lg-4">
 									<input type="text" id="tools" name="toolname[]" class="form-control input-sm" onchange="checkName(this)">
 								</div>
@@ -1828,14 +1897,15 @@ if($holidayExist > 0)
 								<div class="col-md-3 col-lg-3">
 									<input type="text" id="quantity" name="toolquantity[]" class="form-control input-sm" onchange="getTotal(this)" onblur="addDecimal(this)">
 								</div>
-							</div>	
+							</div>	 -->
+
 						</div>
 						<div class="col-md-1 col-lg-12 pull-down">
 							<label class="col-md-5 col-lg-5">
 								Total Cost
 							</label>
 							<div class="col-md-6 col-lg-6">
-								<input type="text" class="form-control" id="totalcost" name="totalcost" value="" readonly>
+								<input type="text" class="form-control" id="totalcost" name="totalcost" value="<?php Print $overallToolCost?>" readonly>
 							</div>
 						</div>
 						<div class="col-md-1 col-lg-12">
@@ -1866,7 +1936,12 @@ if($holidayExist > 0)
 								Amount to Pay
 							</label>
 							<div class="col-md-6 col-lg-6">
-								<input type="text" id="amountToPay" name="amountToPay" class="form-control" onblur="addDecimal(this)" onchange="settotalLimit(this)" readonly>
+								<?php 
+								
+									$toolsToPay = ($overallToolCost != 0 ? "" : "readonly");
+								
+								?>
+								<input type="text" id="amountToPay" name="amountToPay" class="form-control" onblur="addDecimal(this)" onchange="settotalLimit(this)" <?php Print $toolsToPay?>>
 							</div>
 						</div>
 					</div>
