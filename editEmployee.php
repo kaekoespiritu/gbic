@@ -187,7 +187,7 @@ $bank = $employee_info['bank'];
 									while($banksArray = mysql_fetch_assoc($bankQuery))
 									{
 										if($banksArray['name'] == $bank)
-											Print "<option value='".$banksArray['color']."' selected='selected'>".$banksArray['name']."</option>";
+											Print "<option value='".$banksArray['name']."' selected='selected'>".$banksArray['name']."</option>";
 										else
 											Print "<option value='".$banksArray['name']."'>".$banksArray['name']."</option>";
 
