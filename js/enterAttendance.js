@@ -1997,11 +1997,16 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 	// Verifies that time in and time out input fields have value
 	if(timeinhour1 && timeouthour1 && timeinhour2 && timeouthour2 && timeinhour3 && timeouthour3)
 	{
-		if(timeinhour1 < timeouthour3)
+		var employeeName = row.querySelector('.empName').innerHTML.trim();
+		if(timeinhour1 < timeouthour3 && timeinhour1 < 12 && timeouthour3 < 12)
 		{
-			var employeeName = row.querySelector('.empName').innerHTML.trim();
 			alert("You have exceeded the 24hour mark for "+employeeName+"'s attendance.");
 		}
+		else if(timeinhour1 < timeouthour3 && timeinhour1 < 24 && timeouthour3 < 24 && timeinhour1 > 12 && timeouthour3 > 12)
+		{
+			alert("You have exceeded the 24hour mark for "+employeeName+"'s attendance.");
+		}
+
 		//alert("timein: "+timeinhour+"timeout: "+ timeouthour);
 		var workinghours;
 		var workingmins;
