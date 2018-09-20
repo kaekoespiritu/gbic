@@ -45,14 +45,14 @@ if(isset($_SESSION['holidayDate']))
 		$holidayDate = $_SESSION['holidayDate'];
 		
 		$holidayChecker = "SELECT * FROM holiday WHERE date = '$holidayDate'";
-		$holidayCheckerQuery = mysql_query($holidayChecker) or die(mysql_error());
+		$holidayCheckerQuery = mysql_query($holidayChecker);
 		if($holidayCheckerQuery)
 		{
 			$holidayCheckernum = mysql_num_rows($holidayCheckerQuery);
 			if($holidayCheckernum < 1)
 			{
 				$holiday = "INSERT INTO holiday(holiday, date, type) VALUES('$holidayName','$holidayDate','$holidayType')";
-				$holidayQuery = mysql_query($holiday) or die(mysql_error());
+				$holidayQuery = mysql_query($holiday);
 			}
 		}
 	}
@@ -69,7 +69,7 @@ else
 
 $site = "SELECT * FROM employee WHERE site = '$location'";
 
-$siteQuery = mysql_query($site) or die(mysql_error());
+$siteQuery = mysql_query($site);
 $empNum = mysql_num_rows($siteQuery);
 // Checker if there are inputs in the attendance
 $count = 0;
@@ -120,7 +120,7 @@ if($empNum != 0)
 if($siteBool)
 {
 	$dateChecker = "SELECT * FROM attendance WHERE date = '$date' $checkerBuilder";
-	$checkerQuery = mysql_query($dateChecker) or die(mysql_error());
+	$checkerQuery = mysql_query($dateChecker);
 	if($checkerQuery)
 	{
 		$dateRows = mysql_num_rows($checkerQuery);
@@ -329,12 +329,12 @@ if(!empty($dateRows))// Updating attendance
 
 			$attendance = 2;// 0 - no input / 1 - Absent / 2 - Present
 			$employee = "SELECT * FROM employee WHERE empid = '$empid' ";
-			$employeeQuery = mysql_query($employee) or die(mysql_error());
+			$employeeQuery = mysql_query($employee);
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
 
 			$attChecker = "SELECT * from attendance WHERE date = '$date' AND empid = '$empid' LIMIT 1";
-			$attCheckerQuery = mysql_query($attChecker) or die (mysql_error());
+			$attCheckerQuery = mysql_query($attChecker);
 			if(mysql_num_rows($attCheckerQuery) != 0)//update
 			{
 				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate, $xAllowance);
@@ -353,7 +353,7 @@ if(!empty($dateRows))// Updating attendance
 
 			//Make Algorithm that will check if this employee is AWOL
 			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 8";
-			$AwolQuery = mysql_query($Awol) or die(mysql_error());
+			$AwolQuery = mysql_query($Awol);
 			$AwolCounter = 0;
 			$absentCounter = 0;
 			$loopCounter = 0;
@@ -375,7 +375,7 @@ if(!empty($dateRows))// Updating attendance
 			if($AwolCounter >= 6)
 			{
 				$checkAwol = "SELECT * FROM awol_employees WHERE empid = '$empid'";
-				$checkAwolQuery = mysql_query($checkAwol) or die(mysql_error());
+				$checkAwolQuery = mysql_query($checkAwol);
 				if(mysql_num_rows($checkAwolQuery) == 0)
 				{
 					$AwolPending = "INSERT awol_employees(empid, start_date, end_date, status) 
@@ -383,30 +383,30 @@ if(!empty($dateRows))// Updating attendance
 														'$start',
 														'$end',
 														'Pending')";
-					mysql_query($AwolPending) or die(mysql_error());
+					mysql_query($AwolPending);
 				}
 				$emp = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1'";
-				$empQuery = mysql_query($emp) or die(mysql_error());
+				$empQuery = mysql_query($emp);
 				$empArr = mysql_fetch_assoc($empQuery);
 				Print "<script>alert('[".$empArr['lastname'].", ".$empArr['firstname']."] has already accumulated 7 Absences and is now pending for AWOL. Go to Employees tab > Absence Notification')</script>";
 
 				//update employment status of employee to 2 = pending
 				$empAwolPending = "UPDATE employee SET employment_status = '2' WHERE empid = '$empid'";
-				mysql_query($empAwolPending) or die(mysql_error());//update employment status of employee to 3 = pending
+				mysql_query($empAwolPending);//update employment status of employee to 3 = pending
 			}
 
 			if($AwolCounter == 3 || $AwolCounter == 4)// Notification if employee accumulated 4 absences
 			{
 				$checkAbsence = "SELECT * FROM absence_notif WHERE empid = '$empid'";
-				$checkAbsenceQuery = mysql_query($checkAbsence) or die(mysql_error());
+				$checkAbsenceQuery = mysql_query($checkAbsence);
 				if(mysql_num_rows($checkAbsenceQuery) == 0)
 				{
 					$AbsenceNotif = "INSERT absence_notif(empid) 
 												VALUES('$empid')";
-					mysql_query($AbsenceNotif) or die(mysql_error());
+					mysql_query($AbsenceNotif);
 				}
 				$emp = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1'";
-				$empQuery = mysql_query($emp) or die(mysql_error());
+				$empQuery = mysql_query($emp);
 				$empArr = mysql_fetch_assoc($empQuery);
 				Print "<script>alert('ABSENCE NOTICE: [".$empArr['lastname'].", ".$empArr['firstname']."] has already accumulated 4 consecutive Absences.')</script>";
 			}
@@ -435,13 +435,13 @@ if(!empty($dateRows))// Updating attendance
 
 			$attendance = 1;// 0 - no input / 1 - Absent / 2 - Present
 			$employee = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1'";
-			$employeeQuery = mysql_query($employee) or die(mysql_error());
+			$employeeQuery = mysql_query($employee);
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
 			//require "directives/attendance/attendance_query.php";
 
 			$attChecker = "SELECT * from attendance WHERE date = '$date' AND empid = '$empid' LIMIT 1";
-			$attCheckerQuery = mysql_query($attChecker) or die (mysql_error());
+			$attCheckerQuery = mysql_query($attChecker);
 			if(mysql_num_rows($attCheckerQuery) != 0)//update
 			{
 				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate, $xAllowance);
@@ -453,6 +453,52 @@ if(!empty($dateRows))// Updating attendance
 				$AttQuery = $initialQuery.$AttQuery;
 
 			}
+		}
+		else if($_POST['attendance'][$counter] == "NOWORK")
+		{
+			$empid = $_POST['empid'][$counter];
+			$timein1 = "";
+			$timeout1 = "";
+			$timein2 = "";
+			$timeout2 = "";
+			$timein3 = "";
+			$timeout3 = "";
+			$workinghrs = "";
+			$OtHrs = "";
+			$undertime = "";
+			$nightdiff = "";
+			$remarks = "";
+			$xAllowance = "";
+			if(isset($_POST['remarks'][$counter]))
+			{
+				$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+			}
+			if(isset($_POST['xallow'][$counter]))
+			{
+				$xAllowance = mysql_real_escape_string($_POST['xallow'][$counter]);
+			}
+			$attendance = 3;// 0 - no input / 1 - Absent / 2 - Present / 3 - No work
+			$employee = "SELECT * FROM employee WHERE empid = '$empid'";
+			$employeeQuery = mysql_query($employee);
+			$employeeArr = mysql_fetch_assoc($employeeQuery);
+			$position = $employeeArr['position'];
+			//require "directives/attendance/attendance_query.php";
+
+			$attChecker = "SELECT * from attendance WHERE date = '$date' AND empid = '$empid' LIMIT 1";
+			$attCheckerQuery = mysql_query($attChecker) or die (mysql_error());
+
+			if(mysql_num_rows($attCheckerQuery) != 0)//update
+			{
+				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate, $xAllowance);
+
+			}
+			else//new attendance
+			{
+				$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, "",$holidayDate, $xAllowance);
+
+				$AttQuery = $initialQuery.$AttQuery; 
+
+			}					  	
 		}
 		else if(empty($_POST['attendance'][$counter]))// NO INPUT
 		{
@@ -480,7 +526,7 @@ if(!empty($dateRows))// Updating attendance
 			}
 			$attendance = 0;// 0 - no input / 1 - Absent / 2 - Present
 			$employee = "SELECT * FROM employee WHERE empid = '$empid'";
-			$employeeQuery = mysql_query($employee) or die(mysql_error());
+			$employeeQuery = mysql_query($employee);
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
 			//require "directives/attendance/attendance_query.php";
@@ -502,7 +548,7 @@ if(!empty($dateRows))// Updating attendance
 			}					  	
 		}
 
-		mysql_query($AttQuery) or die(mysql_error());//query
+		mysql_query($AttQuery);//query
 	}
 }
 else// NEW attendance
@@ -694,7 +740,7 @@ else// NEW attendance
 				$xAllowance = "";
 			}
 
-			$attendance = 2;// 0 - no input / 1 - Absent / 2 - Present
+			$attendance = 2;// 0 - no input / 1 - Absent / 2 - Present / 3 - No work
 			$employee = "SELECT * FROM employee WHERE empid = '$empid'";
 			$employeeQuery = mysql_query($employee);
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
@@ -712,7 +758,7 @@ else// NEW attendance
 
 			//Make Algorithm that will check if this employee is AWOL
 			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 7";
-			$AwolQuery = mysql_query($Awol) or die(mysql_error());
+			$AwolQuery = mysql_query($Awol);
 			$AwolCounter = 0;
 			$start = null;
 			$end = $date;
@@ -737,29 +783,29 @@ else// NEW attendance
 														'$start',
 														'$end',
 														'Pending')";
-				mysql_query($AwolPending) or die(mysql_error());//insert AWOL pending to awol_employees
+				mysql_query($AwolPending);//insert AWOL pending to awol_employees
 				$emp = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1'";
-				$empQuery = mysql_query($emp) or die(mysql_error());
+				$empQuery = mysql_query($emp);
 				$empArr = mysql_fetch_assoc($empQuery);
 				Print "<script>alert('[".$empArr['lastname'].", ".$empArr['firstname']."] has already accumulated 7 Absences and is now pending for AWOL. Go to Employees tab > Absence Notification')</script>";
 
 				
 				$empAwolPending = "UPDATE employee SET employment_status = '2' WHERE empid = '$empid'";
-				mysql_query($empAwolPending) or die(mysql_error());//update employment status of employee to 2 = pending
+				mysql_query($empAwolPending);//update employment status of employee to 2 = pending
 			}
 
 			if($AwolCounter == 3)// Notification if employee accumulated 4 absences
 			{
 				$checkAbsence = "SELECT * FROM absence_notif WHERE empid = '$empid'";
-				$checkAbsenceQuery = mysql_query($checkAbsence) or die(mysql_error());
+				$checkAbsenceQuery = mysql_query($checkAbsence);
 				if(mysql_num_rows($checkAbsenceQuery) == 0)
 				{
 					$AbsenceNotif = "INSERT absence_notif(empid) 
 												VALUES('$empid')";
-					mysql_query($AbsenceNotif) or die(mysql_error());
+					mysql_query($AbsenceNotif);
 				}
 				$emp = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1'";
-				$empQuery = mysql_query($emp) or die(mysql_error());
+				$empQuery = mysql_query($emp);
 				$empArr = mysql_fetch_assoc($empQuery);
 				Print "<script>alert('ABSENCE NOTICE: [".$empArr['lastname'].", ".$empArr['firstname']."] has already accumulated 4 consecutive Absences.')</script>";
 			}
@@ -784,9 +830,9 @@ else// NEW attendance
 			{
 				$xAllowance = mysql_real_escape_string($_POST['xallow'][$counter]);
 			}
-			$attendance = 1;// 0 - no input / 1 - Absent / 2 - Present
+			$attendance = 1;// 0 - no input / 1 - Absent / 2 - Present / 3 - No work
 			$employee = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1' ";
-			$employeeQuery = mysql_query($employee) or die(mysql_error());
+			$employeeQuery = mysql_query($employee);
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
 			//require "directives/attendance/attendance_query.php";
@@ -795,8 +841,41 @@ else// NEW attendance
 			$attCheckerQuery = mysql_query($attChecker) or die (mysql_error());
 
 			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate, $xAllowance);
-		
-			
+		}
+		else if($_POST['attendance'][$counter] == "NOWORK")
+		{
+			$empid = $_POST['empid'][$counter];
+			$timein1 = "";
+			$timeout1 = "";
+			$timein2 = "";
+			$timeout2 = "";
+			$timein3 = "";
+			$timeout3 = "";
+			$workinghrs = "";
+			$OtHrs = "";
+			$undertime = "";
+			$nightdiff = "";
+			$remarks = "";
+			$xAllowance = "";
+			if(isset($_POST['remarks'][$counter]))
+			{
+				$remarks = mysql_real_escape_string($_POST['remarks'][$counter]);
+			}
+			if(isset($_POST['xallow'][$counter]))
+			{
+				$xAllowance = mysql_real_escape_string($_POST['xallow'][$counter]);
+			}
+			$attendance = 3;// 0 - no input / 1 - Absent / 2 - Present / 3 - No work
+			$employee = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1' ";
+			$employeeQuery = mysql_query($employee);
+			$employeeArr = mysql_fetch_assoc($employeeQuery);
+			$position = $employeeArr['position'];
+			//require "directives/attendance/attendance_query.php";
+
+			$attChecker = "SELECT * from attendance WHERE date = '$date' AND empid = '$empid' LIMIT 1";
+			$attCheckerQuery = mysql_query($attChecker) or die (mysql_error());
+
+			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate, $xAllowance );
 		}
 		else if(empty($_POST['attendance'][$counter]))
 		{
@@ -823,20 +902,20 @@ else// NEW attendance
 			}
 			$attendance = 0;// 0 - no input / 1 - Absent / 2 - Present
 			$employee = "SELECT * FROM employee WHERE empid = '$empid' AND employment_status = '1' ";
-			$employeeQuery = mysql_query($employee) or die(mysql_error());
+			$employeeQuery = mysql_query($employee);
 			$employeeArr = mysql_fetch_assoc($employeeQuery);
 			$position = $employeeArr['position'];
 			//require "directives/attendance/attendance_query.php";
 
 			$attChecker = "SELECT * from attendance WHERE date = '$date' AND empid = '$empid' LIMIT 1";
-			$attCheckerQuery = mysql_query($attChecker) or die (mysql_error());
+			$attCheckerQuery = mysql_query($attChecker);
 
 			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate, $xAllowance );
 			
 		}
 	}
 	$FinalQuery = $initialQuery . $AttQuery;
-	$queryAttendance = mysql_query($FinalQuery) or die(mysql_error());
+	$queryAttendance = mysql_query($FinalQuery);
 }
 
 //require "directives/attendance/attendance_query.php";

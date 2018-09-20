@@ -411,7 +411,7 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 					}
 				}
 
-				Print "<script>console.log('tools query rows returned = '".mysql_num_rows($toolsQuery)."');</script>";
+				
 				
 				if($Notools)
 				{

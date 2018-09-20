@@ -182,9 +182,10 @@
 	var amountToPay = document.getElementById('amountToPay');
 
 	// For the first tool
-	if(document.getElementById('price').value!==""){ // If there is a cost
+	if(document.getElementById('price').value !== ""){ // If there is a cost
 		names[0].setAttribute('required','');
-		if(names[0].value!==""){
+		if(names[0].value !== ""){
+			quantity[0].setAttribute('required','');
 			names[0].parentElement.classList.add('has-success');
 		}
 		else {
@@ -192,7 +193,8 @@
 		}
 	}
 	else { // If there is no cost added
-		names[0].removeAttribute('required','');
+		names[0].removeAttribute('required');
+		quantity[0].removeAttribute('required');
 		if(names[0].parentElement.classList.contains('has-error')){
 			names[0].parentElement.classList.remove('has-error');
 		}
@@ -209,6 +211,7 @@
 				
 				// Require name if there is an amount placed
 				names[i].setAttribute('required','');
+				quantity[i].setAttribute('required','');
 				if(names[i].value!=""){
 					names[i].parentElement.classList.add('has-success');
 				}
@@ -218,7 +221,8 @@
 
 			}
 			else {
-				names[i].removeAttribute('required','');
+				names[i].removeAttribute('required');
+				quantity[i].removeAttribute('required');
 					if(names[i].parentElement.classList.contains('has-error')){
 						names[i].parentElement.classList.remove('has-error');
 					}

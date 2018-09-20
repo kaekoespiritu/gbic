@@ -290,14 +290,19 @@ include('directives/session.php');
 						else
 						{
 							$checker = null;
+							$noWorkBool = false;// Boolean for no work
 							while($attRow = mysql_fetch_assoc($attendanceQuery))
 							{
+								if($attRow['attendance'] == 3)// 3 is for No work
+								{
+									$noWorkBool = true;
+								}
 								if($attRow['attendance'] != 0)//0 is for no input
 								{
 									$checker++;//counter
 								}
 							}
-							if($checker == $attNum  && $employeeNum == $attendanceNum)//check if number of attendance and the counter are the same
+							if($checker == $attNum  && $employeeNum == $attendanceNum || $noWorkBool)//check if number of attendance and the counter are the same
 							{
 								$attendanceStatus = 1;//Trigger for completing the attendance for the site
 							}
@@ -469,7 +474,6 @@ include('directives/session.php');
 		$( "#cancel").on("click",function(){
 			window.location.href = "attendance_unset.php";
 		});
-		
 	});
 	function txtHoliday(e)
 	{
@@ -566,6 +570,10 @@ include('directives/session.php');
 
 		// Adding cancel button
 		document.getElementById('dynamicForm').appendChild(cancelButton);
+	}
+	function noWorkDay(id)
+	{
+
 	}
 </script>
 

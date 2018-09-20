@@ -139,9 +139,12 @@ $date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("
 								else
 								{
 									$checker = null;
+									$noWorkBool = false;// Boolean for no work
 									while($attRow = mysql_fetch_assoc($attendanceQuery))
 									{
-										if($attRow['attendance'] != 0)//0 is for no input
+										if($attRow['attendance'] == 3)
+											$noWorkBool = true;
+										if($attRow['attendance'] != 0 || $noWorkBool)//0 is for no input
 										{
 											$checker++;//counter
 										}

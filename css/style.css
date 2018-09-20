@@ -336,6 +336,10 @@
     background-color: cornflowerblue;
     color:white;
   }
+
+  .spacer {
+    margin-right: 10px;
+  }
 /* END OF CUSTOM CLASSES */
 
 /*--------------------------------*/
