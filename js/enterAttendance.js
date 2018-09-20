@@ -797,7 +797,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				console.log("hindi driver");
 				if(timeouthour1 >= 21)// If employee timeout at 9pm onward 
 				{
-					console.log("9pm mark");
+					console.log("9pm mark-1");
 					if(workingmins == 0)// if no minutes are rendered
 					{
 						useOnce = false;
@@ -821,10 +821,14 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				}
 				console.log(workinghours+" : "+workingmins)
 				workingmins = Math.abs(workingmins);
-				
-				if(timeinhour1 <= 12 && timeouthour1 >= 13)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
+
+				// This is to prevent it to deduct 30mins from employee on 12pm to 1pm straight
+				var deduction1211 = true;
+				if(timeinhour1 == 12 && timeinmin1 > 0)
+					deduction1211 = false;
+				if(timeinhour1 <= 12 && timeouthour1 >= 13 && deduction1211)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
 				{
-					console.log("12pm-1pm mark");
+					console.log("12pm-1pm mark-1");
 					if(workingmins == 0)
 					{
 						if(useOnce)
@@ -855,7 +859,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				useOnce = true;
 				if(timeouthour2 >= 21)// If employee timeout at 9pm onward 
 				{
-					console.log("9pm mark");
+					console.log("9pm mark-2");
 					if(workingmins == 0)// if no minutes are rendered
 					{
 						useOnce = false;
@@ -879,9 +883,15 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				}
 				console.log(workinghours+" : "+workingmins)
 				workingmins = Math.abs(workingmins);
-				if(timeinhour2 <= 12 && timeouthour2 >= 13)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
+
+				// This is to prevent it to deduct 30mins from employee on 12pm to 1pm straight
+				var deduction1212 = true;
+				if(timeinhour2 == 12 && timeinmin2 > 0)
+					deduction1212 = false;
+
+				if(timeinhour2 <= 12 && timeouthour2 >= 13 && deduction1212)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
 				{
-					console.log("9pm mark");
+					console.log("12pm-1pm mark-2");
 					if(workingmins == 0)
 					{
 						if(useOnce)
@@ -1033,6 +1043,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 				if(!isSunday)// If today is Sunday
 				{
 					console.log("ND1");
+					console.log(timeinhour1 +" : "+ timeouthour1+" | "+ timeinhour2+" : "+ timeouthour2)
 					//If employee chooses halfday
 					if(timeinhour2 == "HD")//Night diff
 					{
@@ -1111,7 +1122,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					   (timeouthour1 == 22 && timeoutmin1 != 0) ||
 					   (timeouthour2 == 22 && timeoutmin2 != 0))//night diff 
 					{
-						// console.log(timeinhour1 +" : "+ timeouthour1+" | "+ timeinhour2+" : "+ timeouthour2)
+						console.log(timeinhour1 +" : "+ timeouthour1+" | "+ timeinhour2+" : "+ timeouthour2)
 						var nightdiffBool = false;
 						var nightdiffMins = originalMins;
 						if(timeouthour1 == 22 && timeoutmin1 != 0)
@@ -2132,7 +2143,11 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			if(row.querySelector('.driver').value == 1 && isSunday)
 			{
 				console.log("driver");
-				if(timeinhour1 <= 12 && timeouthour1 >= 13)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
+				// This is to prevent it to deduct 30mins from employee on 12pm to 1pm straight
+				var deduction1211 = true;
+				if(timeinhour1 == 12 && timeinmin1 > 0)
+					deduction1211 = false;
+				if(timeinhour1 <= 12 && timeouthour1 >= 13 && deduction1211)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
 				{
 					
 					if(workingmins == 0)
@@ -2161,8 +2176,13 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					}
 					
 				}
+
+				// This is to prevent it to deduct 30mins from employee on 12pm to 1pm straight
+				var deduction1212 = true;
+				if(timeinhour2 == 12 && timeinmin2 > 0)
+					deduction1212 = false;
 				//2nd Time in and Time out
-				if(timeinhour2 <= 12 && timeouthour2 >= 13)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
+				if(timeinhour2 <= 12 && timeouthour2 >= 13 && deduction1212)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
 				{
 					
 					if(workingmins == 0)
@@ -2193,7 +2213,10 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				}
 				//3nd Time in  and Time out
 				workingmins = Math.abs(workingmins);
-				if(timeinhour3 <= 12 && timeouthour3 >= 13)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
+				var deduction1213 = true;
+				if(timeinhour1 == 12 && timeinmin1 > 0)
+					deduction1213 = false;
+				if(timeinhour3 <= 12 && timeouthour3 >= 13 && deduction1213)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
 				{
 					
 					if(workingmins == 0)
@@ -2252,7 +2275,10 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				// console.log(workinghours+" : "+workingmins)
 				workingmins = Math.abs(workingmins);
 
-				if(timeinhour1 <= 12 && timeouthour1 >= 13)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
+				var deduction1211 = true;
+				if(timeinhour1 == 12 && timeinmin1 > 0)
+					deduction1211 = false;
+				if(timeinhour1 <= 12 && timeouthour1 >= 13 && deduction1211)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
 				// if(Math.abs(checkTime1) >= 8)// if accumulated time is more than 8 hours 
 				{
 					
@@ -2309,7 +2335,12 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 				}
 				// console.log(workinghours+" : "+workingmins)
 				workingmins = Math.abs(workingmins);
-				if(timeinhour2 <= 12 && timeouthour2 >= 13)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
+
+				// This is to prevent it to deduct 30mins from employee on 12pm to 1pm straight
+				var deduction1212 = true;
+				if(timeinhour2 == 12 && timeinmin2 > 0)
+					deduction1212 = false;
+				if(timeinhour2 <= 12 && timeouthour2 >= 13 && deduction1212)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
 				// if(Math.abs(checkTime2) >= 8)// if accumulated time is more than 8 hours 
 				{
 					
@@ -2366,7 +2397,10 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					}
 				}
 				workingmins = Math.abs(workingmins);
-				if(timeinhour3 <= 12 && timeouthour3 >= 13)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
+				var deduction1213 = true;
+				if(timeinhour1 == 12 && timeinmin1 > 0)
+					deduction1213 = false;
+				if(timeinhour3 <= 12 && timeouthour3 >= 13 && deduction1213)// If time in and time out encapsulates the 12pm-1pm mark deduct 30mins
 				// if(Math.abs(checkTime3) >= 8)// if accumulated time is more than 8 hours 
 				{
 					
