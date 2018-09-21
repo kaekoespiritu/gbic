@@ -106,7 +106,14 @@ function attendance ()
 
 						Print '<script>console.log("'.$day.'")</script>';
 
-						Print		"<!-- Employee ID -->
+						Print		"
+								<!-- Work Status -->
+									<td class='status' align='left'>
+										<div class='pull-right spacer'>
+											<input type='button' id='workstatus-".$row_employee['empid']."' class='btn btn-info' autocomplete='off' value='Working'>
+										</div>
+									</td>
+								<!-- Employee ID -->
 									<td class='empName' align='left'>
 										". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
 									</td>
@@ -191,7 +198,14 @@ function attendance ()
 
 						Print '<script>console.log("'.$day.'")</script>';
 
-						Print		"<!-- Employee ID -->
+						Print		"
+								<!-- Work Status -->
+									<td class='status' align='left'>
+										<div class='pull-right spacer'>
+											<input type='button' id='workstatus-".$row_employee['empid']."' class='btn btn-info' autocomplete='off' value='Working'>
+										</div>
+									</td>
+								<!-- Employee ID -->
 									<td class='empName' align='left'>
 										". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
 									</td>
@@ -261,10 +275,10 @@ function attendance ()
 								<!-- Attendance Status -->
 									<input type='hidden' name='attendance[".$counter."]' value='ABSENT' class='attendance'>";
 				}
-				else if($empRow['attendance'] == 2)//Present
+				else if($empRow['attendance'] == 2)// Present
 				{
 					Print 	"<tr id=\"". $row_employee['empid'] ."\" class='success'>";
-					
+							
 						Print "<input type='hidden' class='driver' value='".$driverBool."' >";//Boolean for driver
 						if( $day == 'Sunday') {
 							Print '<input type="hidden" id="isSunday">';
@@ -276,7 +290,14 @@ function attendance ()
 
 						Print '<script>console.log("'.$day.'")</script>';
 
-						Print	"<!-- Employee ID -->
+						Print	"
+								<!-- Work Status -->
+									<td class='status' align='left'>
+										<div class='pull-right spacer'>
+											<input type='button' id='workstatus-".$row_employee['empid']."' class='btn btn-info' autocomplete='off' value='Working'>
+										</div>
+									</td>
+								<!-- Employee ID -->
 									<td class='empName' align='left'>
 										". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
 									</td>
@@ -368,7 +389,7 @@ function attendance ()
 					}
 					
 
-				// Working hours
+					// Working hours
 					if($empRow['workhours'] <= 5)
 					{
 						$workhours = $empRow['workhours'];
@@ -429,7 +450,7 @@ function attendance ()
 						}
 						
 					}
-				// Overtime
+					// Overtime
 					if($empRow['overtime'] != 0)
 					{
 						$overtime = $empRow['overtime'];
@@ -472,7 +493,7 @@ function attendance ()
 							<input type='hidden' class='overtimeH' name='othrs[".$counter."]' >
 						</td>";
 					}
-				// Undertime
+					// Undertime
 					if($empRow['undertime'] != 0)
 					{
 						$undertime = $empRow['undertime'];
@@ -514,7 +535,7 @@ function attendance ()
 								<input type='hidden' class='undertimeH' name='undertime[".$counter."]' >
 							</td>";
 					}
-				// NightDiff
+					// NightDiff
 					if($empRow['nightdiff'] != 0)
 					{
 						$nightdiff = $empRow['nightdiff'];
@@ -555,9 +576,103 @@ function attendance ()
 								<input type='hidden' class='nightdiffH' name='nightdiff[".$counter."]' >
 							</td>";
 					}
-				// Attendance Status
+					// Attendance Status
 					Print "<!-- Attendance Status -->
 						<input type='hidden' name='attendance[".$counter."]' value='PRESENT' class='attendance'>";
+				}
+				else if($empRow['attendance'] == 3)// No Work
+				{
+					Print 	"<tr id=\"". $row_employee['empid'] ."\">";
+
+						Print "<input type='hidden' class='driver' value='".$driverBool."' >";//Boolean for driver
+						
+						if( $day == 'Sunday') 
+						{
+							Print '<input type="hidden" id="isSunday">';
+						}
+						if($row_employee['complete_doc'] == '1')
+						{
+							Print '<input type="hidden" id="completeReq">';
+						}
+
+						Print '<script>console.log("'.$day.'")</script>';
+
+						Print		"
+								<!-- Work Status -->
+									<td class='status' align='left'>
+										<div class='pull-right spacer'>
+											<input type='button' id='workstatus-".$row_employee['empid']."' class='btn btn-default' autocomplete='off' value='No Work'>
+										</div>
+									</td>
+								<!-- Employee ID -->
+									<td class='empName' align='left'>
+										". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
+									</td>
+								<!-- Position -->
+									<td>
+										". $row_employee['position'] ."
+									</td>
+								<!-- Automatic timein -->
+									<td>
+										<input type='button' value='8-5' class='btn btn-primary auto' onclick='AutoTimeIn85(\"". $row_employee['empid'] ."\")'>
+									</td>
+									<td>
+										<input type='button' value='7-4' class='btn btn-primary auto' onclick='AutoTimeIn74(\"". $row_employee['empid'] ."\")'>
+									</td>
+								<!-- Time In -->
+									<td>
+										<input type='text' onblur='timeValidation(this)' value='". $empRow['timein'] ."' class='timein1 timepicker form-control input-sm' name='timein1[".$counter."]'>
+									</td>
+								<!-- Time Out-->
+									<td>
+										<input type='text' onblur='timeValidation(this)' class='timeout1 timepicker form-control input-sm' value='' name='timeout1[".$counter."]'>
+									</td>
+								<!-- Half Day Checkbox-->
+									<td>
+										<input type='checkbox' value='' class='halfdayChk' onclick='halfDay(\"". $row_employee['empid'] ."\")' name='halfday[".$counter."]' disabled>
+									</td>
+								<!-- AFTER BREAK Time In -->
+									<td>
+										<input type='text' onblur='timeValidation(this)' value='". $empRow['timein'] ."' class='timein2 timepicker form-control input-sm' name='timein2[".$counter."]'>
+									</td>
+								<!-- AFTER BREAK Time Out-->
+									<td>
+										<input type='text' onblur='timeValidation(this)' class='timeout2 timepicker form-control input-sm' value='' name='timeout2[".$counter."]'>
+									</td>
+								<!-- Night Shift Checkbox-->
+								<td>
+									<input type='checkbox' class='nightshiftChk' name='nightshift[".$counter."]' onclick='nightshift_ChkBox(\"". $row_employee['empid'] ."\")' disabled>
+								</td>
+								<!-- NIGHT SHIFT Time In -->
+								<td>
+									<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value=''  name='timein3[".$counter."]' readonly>
+								</td> 
+								<!-- NIGHT SHIFT Time Out-->
+								<td>
+									<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='' name='timeout3[".$counter."]' readonly>
+								</td> 
+								<!-- Working Hours -->
+									<td>
+										<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' disabled>
+										<input type='hidden' class='workinghoursH'  name='workinghrs[".$counter."]' >
+									</td>
+								<!-- Overtime -->
+									<td>
+										<input type='text' placeholder='--' class='form-control input-sm overtime' value=''  disabled>
+										<input type='hidden' class='overtimeH' name='othrs[".$counter."]' >
+									</td>
+								<!-- Undertime -->
+									<td>
+										<input type='text' placeholder='--' class='form-control input-sm undertime' value='' disabled>
+										<input type='hidden' class='undertimeH' name='undertime[".$counter."]' >
+									</td>
+								<!-- Night Differential --> 
+									<td>
+										<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' disabled>
+										<input type='hidden' class='nightdiffH' name='nightdiff[".$counter."]' >
+									</td>
+								<!-- Attendance Status -->
+									<input type='hidden' name='attendance[".$counter."]' value='NOWORK' class='attendance'>";
 				}
 				Print 	
 					"<input type='hidden' name='empid[".$counter."]' value=". $row_employee['empid'] .">";
@@ -637,6 +752,12 @@ function attendance ()
 					}
 
 			Print "<input type='hidden' name='empid[".$counter."]' value=". $row_employee['empid'] .">
+					<!-- Work Status -->
+					<td class='status' align='left'>
+						<div class='pull-right spacer'>
+							<input type='button' id='workstatus-".$row_employee['empid']."' class='btn btn-info' autocomplete='off' value='Working'>
+						</div>
+					</td>
 					<td class='empName' align='left'>
 						". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
 					</td>

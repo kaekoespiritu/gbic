@@ -67,7 +67,107 @@ $(document).ready(function(){
 		timeOut(id);
 	});
 
+	$('input[id^=workstatus-]').click(function () {
+		
+		// console.log("Button clicked.");
+	    // if($(this).val() === 'Working' && !$(this).hasClass('saved')) {
+	    if($(this).val() === 'Working') {
+	    	console.log("Button Not Working");
+	    	// console.log(!$(this).hasClass('saved'));
+	    	// $(this).button('offwork'); // button text will be "No Work"
+	    	// $(this).attr('class', 'btn btn-default');
+	    	$(this).attr('value', 'No Work')
+	    	$(this).attr('class', 'btn btn-default');
+
+	    	// Call function to remove all inputs from row
+	    	removeInputsFromRow(this);
+	    }
+	    // else if ($(this).hasClass('saved')) { 
+	    // 	console.log("Button is SAVED");
+	    // 	console.log($(this).button('offwork'));
+    	// 	$(this).button('offwork'); // button text will be "Working"
+    	// 	$(this).attr('class', 'btn btn-info');
+	    // } 
+	    else {
+    		// Call function to set button to Working when any input is added
+    		allowInputsFromRow(this);
+	    }
+	});
+
 });
+
+function allowInputsFromRow(row) {
+	if(row.length === 12) // If it only has numbers add CSS selector
+		var id = 'input[id^=workstatus-'+row;
+	else
+		var id = row;
+
+	if($(id).val() === 'No Work' && !$(id).hasClass('saved')) {
+		console.log("Button has Working");
+		// $(id).button('offwork');
+		// $(id).attr('class', 'btn btn-info');
+		$(id).attr('value', 'Working')
+	    $(id).attr('class', 'btn btn-info');
+		// console.log(id);
+		// console.log($(id).parent().parent().parent().find('.attendance').val(''));
+		$(id).parent().parent().parent().find('.attendance').val('')
+	} 
+	// else if ($(id).hasClass('saved')) {
+	// 	console.log("Button is SAVED");
+	// 	$(id).button('reset');
+	// 	$(id).attr('class', 'btn btn-default');
+	// }
+}
+ 
+function removeInputsFromRow(row) {
+
+	if(row.length === 12) // if it has only numbers, leave it be
+		var id = row;
+	else
+		var id = (row.id).substring(11);
+
+	var mainRow = document.getElementById(id);
+
+	mainRow.querySelector('.timein1').placeholder = "";
+	mainRow.querySelector('.timeout1').placeholder = "";
+	mainRow.querySelector('.timein2').placeholder = "";
+	mainRow.querySelector('.timeout2').placeholder = "";
+	mainRow.querySelector('.timein3').placeholder = "";
+	mainRow.querySelector('.timeout3').placeholder = "";
+	// delete values
+	mainRow.querySelector('.timein1').value = "";
+	mainRow.querySelector('.timeout1').value = "";
+	mainRow.querySelector('.timein2').value = "";
+	mainRow.querySelector('.timeout2').value = "";
+	mainRow.querySelector('.timein3').value = "";
+	mainRow.querySelector('.timeout3').value = "";
+	mainRow.querySelector('.workinghours').value = "";
+	mainRow.querySelector('.overtime').value = "";
+	mainRow.querySelector('.undertime').value = "";
+	mainRow.querySelector('.nightdiff').value = "";
+	//for hidden rows
+	mainRow.querySelector('.workinghoursH').value = "";
+	mainRow.querySelector('.overtimeH').value = "";
+	mainRow.querySelector('.undertimeH').value = "";
+	mainRow.querySelector('.nightdiffH').value = "";
+
+	mainRow.querySelector('.timein2').readOnly = false; // unset the textbox to readonly
+	mainRow.querySelector('.timeout2').readOnly = false; // Unset the textbox to readonly
+	mainRow.querySelector('.nightshiftChk').checked = false;// Uncheck ND checkbox
+
+	mainRow.querySelector('.attendance').value = "NOWORK"; // Unset the attendance status to 
+	// If absent was initially placed, changed to success
+	if(mainRow.classList.contains('danger'))
+	{
+		mainRow.classList.remove('danger');
+	}
+	if (mainRow.classList.contains('success'))
+	{
+		mainRow.classList.remove('success');
+	}
+}
+
+
 
 //Payroll
 //jQuery for timepicker
@@ -168,6 +268,7 @@ function halfDay(id){
 
 		mainRow.querySelector('.timein2').readOnly = false; // unset the textbox to readonly
 		mainRow.querySelector('.timeout2').readOnly = false; // Unset the textbox to readonly
+		mainRow.querySelector('.nightshiftChk').checked = false;// Uncheck ND checkbox
 
 		mainRow.querySelector('.attendance').value = ""; // Unset the attendance status to 
 		// If absent was initially placed, changed to success
@@ -232,6 +333,7 @@ function timeValidation(evt)
 }
 
 function timeIn(id) {
+	allowInputsFromRow(id);
 	var mainRow = document.getElementById(id); // Get row to be computed
 	var timein1 = mainRow.querySelector('.timein1').value; // Get time in value
 	var timein2 = mainRow.querySelector('.timein2').value; // Get time in value of afterbreak
@@ -270,15 +372,16 @@ function timeIn(id) {
 	if(mainRow.querySelector('.halfdayChk').checked == true)//eto
 		halfDay(id);
 
-	else if(timein3 && timeout3)//if there is value inside nightshift
+	else if(timein3 !== '' && timeout3 !== '')//if there is value inside nightshift
 		computeTimeNightshift( mainRow, timeinhour1, timeinmin1, timeouthour1, timeoutmin1, timeinhour2, timeinmin2, timeouthour2, timeoutmin2, timeinhour3, timeinmin3, timeouthour3, timeoutmin3);
 	
 	// Function call to compute for working hours, undertime and overtime
-	else if(!nightShiftAuth) 
+	else if(!nightShiftAuth && timein3 === '' && timeout3 === '')
 		computeTime( mainRow, timeinhour1, timeinmin1, timeouthour1, timeoutmin1, timeinhour2, timeinmin2, timeouthour2, timeoutmin2);
 }
 
 function timeOut(id) {
+	allowInputsFromRow(id);
 	var mainRow = document.getElementById(id); // Get row to be computed
 	var timein1 = mainRow.querySelector('.timein1').value; // Get time in value
 	var timein2 = mainRow.querySelector('.timein2').value; // Get time in value of afterbreak
@@ -319,11 +422,11 @@ function timeOut(id) {
 	if(mainRow.querySelector('.halfdayChk').checked == true)//eto
 		halfDay(id);
 
-	else if(timein3 && timeout3)//if there is value inside nightshift
+	else if(timein3 !== '' && timeout3 !== '')//if there is value inside nightshift
 		computeTimeNightshift( mainRow, timeinhour1, timeinmin1, timeouthour1, timeoutmin1, timeinhour2, timeinmin2, timeouthour2, timeoutmin2, timeinhour3, timeinmin3, timeouthour3, timeoutmin3);
 	
 	// Function call to compute for working hours, undertime and overtime
-	else if(!nightShiftAuth)
+	else if(!nightShiftAuth && timein3 === '' && timeout3 === '')
 		computeTime(mainRow, timeinhour1, timeinmin1, timeouthour1, timeoutmin1, timeinhour2, timeinmin2, timeouthour2, timeoutmin2);
 }	
 
@@ -365,6 +468,7 @@ function remarksListener(val) {
 }
 
 function remarks(id) {	
+	allowInputsFromRow(id);
 	// show modal here to input for remarks
 	var mainRow = document.getElementById(id);
 	if(mainRow.querySelector('.hiddenRemarks').value != null)
@@ -385,6 +489,7 @@ function remarks(id) {
 }
 
 function xAllowance(id) {	
+	allowInputsFromRow(id);
 	// show modal here to input for remarks
 	var mainRow = document.getElementById(id);
 	if(mainRow.querySelector('.hiddenXAllow').value != null)
@@ -458,6 +563,8 @@ function saveXAllow(id) {
 }
 
 function absent(id) {
+	allowInputsFromRow(id);
+	removeInputsFromRow(id);
 	var mainRow = document.getElementById(id); // Get row to be computed
 
 	// change color of row to shade of red
@@ -548,6 +655,7 @@ function getMin(time) {
 
 function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timeinhour2,timeinmin2,timeouthour2,timeoutmin2) 
 {
+	console.log("COMPUTE TIME");
 	var originalMins;
 	row.querySelector('.attendance').value = "";
 
@@ -1683,7 +1791,6 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 		
 		// NIGHT DIFF if Working Hours is in between 10pm - 6am
 		// 10 is 10pm and 18 is 6pm
-		// alert("yow timein: "+timeinhour+"timeout: "+ timeouthour);
 			var nightdiff = "";
 			if(compReq)// If Employee has complete requirements. Employees that have no requirements dont have nightdiff
 			{
@@ -1999,6 +2106,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 // For night shift
 function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, timeoutmin1, timeinhour2, timeinmin2, timeouthour2, timeoutmin2, timeinhour3, timeinmin3, timeouthour3, timeoutmin3)
 {
+	console.log("COMPUTE TIME NIGHT SHIFT");
 	var originalMins;
 	row.querySelector('.attendance').value = "";
 
@@ -3510,6 +3618,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 }	
 
 function AutoTimeIn85(id) {
+	allowInputsFromRow(id);
 	var mainRow = document.getElementById(id);
 
 	mainRow.querySelector('.timein1').value = '08:00 AM';
@@ -3537,6 +3646,7 @@ function AutoTimeIn85(id) {
 }
 
 function AutoTimeIn74(id) {
+	allowInputsFromRow(id);
 	var mainRow = document.getElementById(id);
 
 	mainRow.querySelector('.timein1').value = '07:00 AM';

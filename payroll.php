@@ -277,6 +277,14 @@ if($holidayExist > 0)
 					$friAbsent = false;
 					$satAbsent = false;
 					$sunAbsent = false;
+					//for no work dates
+					$monNoWork = false;
+					$tueNoWork = false;
+					$wedNoWork = false;
+					$thuNoWork = false;
+					$friNoWork = false;
+					$satNoWork = false;
+					$sunNoWork = false;
 					$totalHours = 0;//for total work hours
 					$totalNightDiff = 0;//for Total night diff
 					$totalOT = 0;// for total Overtime
@@ -410,9 +418,13 @@ if($holidayExist > 0)
 									$OtSun = true;
 								$allowCounter++; //Counter for allowance
 							}
-							else
+							else if($dateRow['attendance'] == 1)// absent
 							{
 								$sunAbsent = true;
+							}
+							else if($dateRow['attendance'] == 3)// no work
+							{
+								$sunNoWork = true;
 							}
 							$sunBool = false;
 						}
@@ -496,6 +508,10 @@ if($holidayExist > 0)
 							else if($dateRow['attendance'] == 1)//Absent
 							{
 								$monAbsent = true;
+							}
+							else if($dateRow['attendance'] == 3)// no work
+							{
+								$monNoWork = true;
 							}
 							$monBool = false;
 							
@@ -582,6 +598,10 @@ if($holidayExist > 0)
 							{
 								$tueAbsent = true;
 							}
+							else if($dateRow['attendance'] == 3)// no work
+							{
+								$tueNoWork = true;
+							}
 							$tueBool = false;
 						}
 						else if($day == "Wednesday" && $wedBool)//Wednesday
@@ -663,6 +683,10 @@ if($holidayExist > 0)
 							else if($dateRow['attendance'] == 1)//Absent
 							{
 								$wedAbsent = true;
+							}
+							else if($dateRow['attendance'] == 3)// no work
+							{
+								$wedNoWork = true;
 							}
 							$wedBool = false;
 							
@@ -749,6 +773,10 @@ if($holidayExist > 0)
 							{
 								$thuAbsent = true;
 							}
+							else if($dateRow['attendance'] == 3)// no work
+							{
+								$thuNoWork = true;
+							}
 							$thuBool = false;
 						}
 						else if($day == "Friday" && $friBool)//Friday
@@ -830,6 +858,10 @@ if($holidayExist > 0)
 							else if($dateRow['attendance'] == 1)//Absent
 							{
 								$friAbsent = true;
+							}
+							else if($dateRow['attendance'] == 3)// no work
+							{
+								$friNoWork = true;
 							}
 							$friBool = false;
 						}
@@ -914,6 +946,10 @@ if($holidayExist > 0)
 							else if($dateRow['attendance'] == 1)//Absent
 							{
 								$satAbsent = true;
+							}
+							else if($dateRow['attendance'] == 3)// no work
+							{
+								$satNoWork = true;
 							}
 							$satBool = false;
 						}	
@@ -1029,12 +1065,16 @@ if($holidayExist > 0)
 									Print "<input type='hidden' name='wedOTHrs' value='".$wedOTHrs."'>";
 								}
 							}
+							else if($wedNoWork)
+							{
+								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
+							}
 							else
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
 						}
-						else
+						else if($wedAbsen)
 						{
 							Print 	"	<td colspan='2' rowspan='".$payrollRow."' class='danger'> Absent </td>";
 						}
@@ -1054,12 +1094,16 @@ if($holidayExist > 0)
 									Print "<input type='hidden' name='thuOTHrs' value='".$thuOTHrs."'>";
 								}
 							}
+							else if($thuNoWork)
+							{
+								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
+							}
 							else
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
 						}
-						else
+						else if($thuAbsent)
 						{
 							Print 	"	<td colspan='2' rowspan='".$payrollRow."' class='danger'> Absent </td>";
 						}
@@ -1079,12 +1123,16 @@ if($holidayExist > 0)
 									Print "<input type='hidden' name='friOTHrs' value='".$friOTHrs."'>";
 								}
 							}
+							else if($friNoWork)
+							{
+								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
+							}
 							else
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
 						}
-						else
+						else if($friAbsent)
 						{
 							Print 	"	<td colspan='2' rowspan='".$payrollRow."' class='danger'> Absent </td>";
 						}
@@ -1104,12 +1152,16 @@ if($holidayExist > 0)
 									Print "<input type='hidden' name='satOTHrs' value='".$satOTHrs."'>";
 								}
 							}
+							else if($satNoWork)
+							{
+								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
+							}
 							else
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
 						}
-						else
+						else if($satAbsent)
 						{
 							Print 	"	<td colspan='2' rowspan='".$payrollRow."' class='danger'> Absent </td>";
 						}
@@ -1129,13 +1181,16 @@ if($holidayExist > 0)
 									Print "<input type='hidden' name='sunOTHrs' value='".$sunOTHrs."'>";
 								}
 							}
+							else if($sunNoWork)
+							{
+								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
+							}
 							else
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Day off </td>";
 							}
-							
 						}
-						else
+						else if($sunAbsent)
 						{
 							Print 	"	<td colspan='2' rowspan='".$payrollRow."' class='danger'> Day off </td>";
 						}
@@ -1155,12 +1210,16 @@ if($holidayExist > 0)
 									Print "<input type='hidden' name='monOTHrs' value='".$monOTHrs."'>";
 								}
 							}
+							else if($monNoWork)
+							{
+								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
+							}
 							else
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
 						}
-						else
+						else if($monAbsent)
 						{
 							Print 	"	<td colspan='2' rowspan='".$payrollRow."' class='danger'> Absent </td>";
 						}
@@ -1180,12 +1239,16 @@ if($holidayExist > 0)
 									Print "<input type='hidden' name='tueOTHrs' value='".$tueOTHrs."'>";
 								}
 							}
+							else if($tueNoWork)
+							{
+								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
+							}
 							else
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
 						}
-						else
+						else if($tueAbsent)// Absent
 						{
 							Print 	"	<td colspan='2' rowspan='".$payrollRow."' class='danger'> Absent </td>";
 						}
@@ -1833,7 +1896,7 @@ if($holidayExist > 0)
 												<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">
 											</div>
 											<div class="col-md-3 col-lg-3">
-												<input type="text" id="quantity" name="toolquantity[]" class="form-control input-sm" onchange="getTotal(this)" onblur="addDecimal(this)" required>
+												<input type="text" id="quantity" name="toolquantity[]" class="form-control input-sm" onchange="getTotal(this)" onblur="addDecimal(this)">
 											</div>
 										</div>	';
 							}
@@ -1880,7 +1943,7 @@ if($holidayExist > 0)
 												</div>
 											</div>';
 										$toolsCounter++;
-										$overallToolCost += $toolsArr['cost'];
+										$overallToolCost += $toolsArr['cost'] * $toolsArr['quantity'];
 									}
 								}
 								

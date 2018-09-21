@@ -37,6 +37,7 @@
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 	<link rel="stylesheet" href="js/jquery-ui/jquery-ui.min.css" type="text/css">
 	<link rel="stylesheet" href="js/timepicker/jquery.timepicker.min.css">
+	<link rel="stylesheet" href="bower_components/bootstrap-toggle/css/bootstrap-toggle.min.css">
 
 </head>
 <body style="font-family: QuicksandMed">
@@ -109,6 +110,7 @@
 		<div class="col-md-1 col-lg-12">
 			<table class="table table-condensed table-bordered" style="background-color:white;">
 				<tr>
+					<td>Status</td>
 					<td style='width:200px !important;'>Name</td>
 					<td>Position</td>
 					<td colspan='2'>Auto</td>
@@ -279,6 +281,7 @@
 		
 	}
 	</script>
+	<script src="bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
 </body>
 </html>
 

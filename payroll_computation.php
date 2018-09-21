@@ -411,7 +411,7 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 					}
 				}
 
-				Print "<script>console.log('tools query rows returned = '".mysql_num_rows($toolsQuery)."');</script>";
+				
 				
 				if($Notools)
 				{
@@ -683,7 +683,7 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 	document.getElementById("payroll").setAttribute("style", "background-color: #10621e;");
 
 	function EditPayroll(id){
-		var res = confirm("Editing the payroll will remove all previously inputted data for this employee. Are you sure you want to proceed?");
+		var res = confirm("Editing the payroll will remove previously inputted data for this employee. Are you sure you want to proceed?");
 		if(res)
 			window.location.assign('logic_payroll_backPayroll.php?e='+id);
 	}
