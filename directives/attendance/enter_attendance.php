@@ -110,8 +110,7 @@ function attendance ()
 								<!-- Work Status -->
 									<td class='status' align='left'>
 										<div class='pull-right spacer'>
-											<!-- <input type='checkbox' id='workstatus-".$row_employee['empid']."' class='workingStatus' data-toggle='toggle' data-on='Working' data-onstyle='info' data-off='No Work'> -->
-												<input type='button' id='workstatus-".$row_employee['empid']."' class='btn btn-info' autocomplete='off' value='Working'>
+											<input type='button' id='workstatus-".$row_employee['empid']."' class='btn btn-info' autocomplete='off' value='Working'>
 										</div>
 									</td>
 								<!-- Employee ID -->
@@ -203,8 +202,7 @@ function attendance ()
 								<!-- Work Status -->
 									<td class='status' align='left'>
 										<div class='pull-right spacer'>
-											<!-- <input type='checkbox' id='workstatus-".$row_employee['empid']."' class='workingStatus' data-toggle='toggle' data-on='Working' data-onstyle='info' data-off='No Work'> -->
-												<input type='button' id='workstatus-".$row_employee['empid']."' class='btn btn-info' autocomplete='off' value='Working'>
+											<input type='button' id='workstatus-".$row_employee['empid']."' class='btn btn-info' autocomplete='off' value='Working'>
 										</div>
 									</td>
 								<!-- Employee ID -->
@@ -296,8 +294,7 @@ function attendance ()
 								<!-- Work Status -->
 									<td class='status' align='left'>
 										<div class='pull-right spacer'>
-											<!-- <input type='checkbox' id='workstatus-".$row_employee['empid']."' class='workingStatus' data-toggle='toggle' data-on='Working' data-onstyle='info' data-off='No Work'> -->
-												<input type='button' id='workstatus-".$row_employee['empid']."' class='btn btn-info' autocomplete='off' value='Working'>
+											<input type='button' id='workstatus-".$row_employee['empid']."' class='btn btn-info' autocomplete='off' value='Working'>
 										</div>
 									</td>
 								<!-- Employee ID -->
@@ -604,8 +601,7 @@ function attendance ()
 								<!-- Work Status -->
 									<td class='status' align='left'>
 										<div class='pull-right spacer'>
-											<!-- <input type='checkbox' id='workstatus-".$row_employee['empid']."' class='workingStatus' data-toggle='toggle' data-on='Working' data-onstyle='info' data-off='No Work'> -->
-												<input type='button' id='workstatus-".$row_employee['empid']."' class='btn btn-default' autocomplete='off' value='No Work'>
+											<input type='button' id='workstatus-".$row_employee['empid']."' class='btn btn-default' autocomplete='off' value='No Work'>
 										</div>
 									</td>
 								<!-- Employee ID -->
@@ -756,6 +752,12 @@ function attendance ()
 					}
 
 			Print "<input type='hidden' name='empid[".$counter."]' value=". $row_employee['empid'] .">
+					<!-- Work Status -->
+					<td class='status' align='left'>
+						<div class='pull-right spacer'>
+							<input type='button' id='workstatus-".$row_employee['empid']."' class='btn btn-info' autocomplete='off' value='Working'>
+						</div>
+					</td>
 					<td class='empName' align='left'>
 						". $row_employee['lastname'] .", ". $row_employee['firstname'] ."
 					</td>
