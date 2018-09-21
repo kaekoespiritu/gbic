@@ -1074,7 +1074,7 @@ if($holidayExist > 0)
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
 						}
-						else if($wedAbsen)
+						else if($wedAbsent)
 						{
 							Print 	"	<td colspan='2' rowspan='".$payrollRow."' class='danger'> Absent </td>";
 						}
@@ -1370,7 +1370,7 @@ if($holidayExist > 0)
 									Print 	"	<td>Time In:<br>". trim($NSwedTimeIn) ."</td>
 									<td>Time Out:<br>". trim($NSwedTimeOut) ."</td>";
 								}
-								else if($payrollRow == '3')
+								else if($payrollRow == '3' && !$holWed && !$wedAbsent && !$wedNoWork)
 								{
 									Print 	"	<td colspan='2'></td>";
 								}
@@ -1384,7 +1384,7 @@ if($holidayExist > 0)
 									Print 	"	<td>Time In:<br>". trim($NSthuTimeIn) ."</td>
 									<td>Time Out:<br>". trim($NSthuTimeOut) ."</td>";
 								}
-								else if($payrollRow == '3')
+								else if($payrollRow == '3' && !$holThu && !$thuAbsent && !$thuNoWork)
 								{
 									Print 	"	<td colspan='2'></td>";
 								}
@@ -1397,7 +1397,7 @@ if($holidayExist > 0)
 									Print 	"	<td>Time In:<br>". trim($NSfriTimeIn) ."</td>
 									<td>Time Out:<br>". trim($NSfriTimeOut) ."</td>";
 								}
-								else if($payrollRow == '3')
+								else if($payrollRow == '3' && !$holFri && !$friAbsent && !$friNoWork)
 								{
 									Print 	"	<td colspan='2'></td>";
 								}
@@ -1410,7 +1410,7 @@ if($holidayExist > 0)
 									Print 	"	<td>Time In:<br>". trim($NSsatTimeIn) ."</td>
 									<td>Time Out:<br>". trim($NSsatTimeOut) ."</td>";
 								}
-								else if($payrollRow == '3')
+								else if($payrollRow == '3' && !$holSat && !$satAbsent && !$satNoWork)
 								{
 									Print 	"	<td colspan='2'></td>";
 								}
@@ -1426,7 +1426,7 @@ if($holidayExist > 0)
 										Print 	"	<td>Time In:<br>". trim($NSsunTimeIn) ."</td>
 										<td>Time Out:<br>". trim($NSsunTimeOut) ."</td>";
 									}
-									else if($payrollRow == '3')
+									else if($payrollRow == '3' && !$holSun && !$sunAbsent && !$sunNoWork)
 									{
 										Print 	"	<td colspan='2'></td>";
 									}
@@ -1441,7 +1441,7 @@ if($holidayExist > 0)
 									Print 	"	<td>Time In:<br>". trim($NSmonTimeIn) ."</td>
 									<td>Time Out:<br>". trim($NSmonTimeOut) ."</td>";
 								}
-								else if($payrollRow == '3')
+								else if($payrollRow == '3' && !$holMon && !$monAbsent && !$monNoWork)
 								{
 									Print 	"	<td colspan='2'></td>";
 								}
@@ -1454,7 +1454,7 @@ if($holidayExist > 0)
 									Print 	"	<td>Time In:<br>". trim($NStueTimeIn) ."</td>
 									<td>Time Out:<br>". trim($NStueTimeOut) ."</td>";
 								}
-								else if($payrollRow == '3')
+								else if($payrollRow == '3' && !$holTue && !$tueAbsent && !$tueNoWork)
 								{
 									Print 	"	<td colspan='2'></td>";
 								}
