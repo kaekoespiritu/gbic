@@ -88,7 +88,7 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 	$activeSheet->setCellValue('D'.$rowCounter, $siteArr['rate']);//Rate
 	$activeSheet->setCellValue('E'.$rowCounter, $payrollArr['num_days']);//ofDays
 	$activeSheet->setCellValue('F'.$rowCounter, $payrollArr['overtime']);//O.T.
-	$activeSheet->setCellValue('G'.$rowCounter, $payrollArr['ot_num']);//#ofHrs
+	$activeSheet->setCellValue('G'.$rowCounter, abs($payrollArr['ot_num']));//#ofHrs
 	$activeSheet->setCellValue('H'.$rowCounter, $payrollArr['allow']);//Allow.
 	$activeSheet->setCellValue('I'.$rowCounter, $payrollArr['cola']);//cola
 	$activeSheet->setCellValue('J'.$rowCounter, $payrollArr['sunday_rate']);//Sun

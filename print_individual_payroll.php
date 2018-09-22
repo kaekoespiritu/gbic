@@ -132,7 +132,7 @@ $rowCounter = 4; //start for the data in the row of excel
 	if(!$OTBool)
 	$activeSheet->setCellValue('F'.$rowCounter, $payrollArr['overtime']);//O.T.
 	if(!$OTHrsBool)
-	$activeSheet->setCellValue('G'.$rowCounter, $payrollArr['ot_num']);//#ofHrs
+	$activeSheet->setCellValue('G'.$rowCounter, abs($payrollArr['ot_num']));//#ofHrs
 	if(!$AllowBool)
 		$activeSheet->setCellValue('H'.$rowCounter, $payrollArr['allow']);//Allow.
 	if(!$colaBool)
