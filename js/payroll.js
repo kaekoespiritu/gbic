@@ -18,20 +18,23 @@
 		div1.id = ct;
 		div1.setAttribute('name','toolsRow[]');
 
-		var delLink = '<div class="col-md-1 col-lg-1 nopadding">'+
-		'<a class="btn-sm btn btn-danger" name="rowDelete[]" onclick="deleteRow('+ ct +')">'+
-		'<span class="glyphicon glyphicon-minus"></span>'+
-		'</a>'+
-		'</div>';
+		var delLink = 
+		'<a class="btn-sm btn btn-danger col-md-1 col-lg-1" name="rowDelete[]" onclick="deleteRow('+ ct +')">'+
+			'<span class="glyphicon glyphicon-minus"></span>'+
+		'</a>';
 
-		var template ='	<div class="col-md-4 col-lg-4">' +
-							'<input type="text" id="toolstemp" name="toolname[]" class="form-control input-sm" onchange="checkName(this)">' +
-						'</div>' +
-						'<div class="col-md-4 col-lg-4"><input id="pricetemp" name="toolprice[]" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">' +
-						'</div>' + 
-						'<div class="col-md-3 col-lg-3">' + 
-							'<input type="text" id="quantity" name="toolquantity[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)" required>' +
-						'</div>';
+		var template = 
+		'<div class="row">'+
+			'<div class="col-md-4 col-lg-4">' +
+				'<input type="text" id="toolstemp" name="toolname[]" class="form-control input-sm" onchange="checkName(this)">' +
+			'</div>' +
+			'<div class="col-md-3 col-lg-3">'+
+				'<input id="pricetemp" name="toolprice[]" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">' +
+			'</div>' + 
+			'<div class="col-md-3 col-lg-3">' + 
+				'<input type="text" id="quantity" name="toolquantity[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)" required>' +
+			'</div>'+
+		'</div>';
 
 		div1.innerHTML = delLink + template;
 		document.getElementById('toolform').appendChild(div1);
