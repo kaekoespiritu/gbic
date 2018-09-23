@@ -188,7 +188,7 @@ include_once('directives/db.php');
 				Print "
 						<div class='panel panel-danger'>
 							<div class='panel-heading'>
-								<h3 class='panel-title'>ABSENCE NOTICE: Employees that accumulated 4 DAYS of absences: 
+								<h3 class='panel-title'>ABSENCE NOTICE: Employees that accumulated 4 DAYS of absences:
 									<span>
 										<input type='button' class='btn btn-danger pull-right' onclick='clearAbsenceRecord()' value='OK'>
 									</span>

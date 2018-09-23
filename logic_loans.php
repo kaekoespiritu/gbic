@@ -5,6 +5,8 @@ include('directives/admin_historical.php');
 date_default_timezone_set('Asia/Hong_Kong');
 
 $date = strftime("%B %d, %Y");// Gets the current date
+// $date = strftime('September 15, 2018');// Gets the current date
+
 $empid = $_POST['empid'];
 
 if(count($_POST['loanType']) == 1)

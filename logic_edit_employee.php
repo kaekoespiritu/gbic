@@ -45,6 +45,33 @@
 	{
 		$datehired = mysql_real_escape_string($_POST['datehired']);
 		mysql_query("UPDATE employee SET datehired = '$datehired' WHERE empid = '$empid'") or die (mysql_error());	
+		// Update all date of hire base on the random number
+		$explodeEmpid = explode('-', $empid);
+		$randomNum = $explodeEmpid[1];
+		$explodeDateHire = explode(' ', $datehired);
+		$year = $explodeEmpid[2];
+		$newEmpid = $year."-".$randomNum;
+
+		// Query for loans
+		mysql_query("UPDATE loans SET empid = '$newEmpid' WHERE empid LIKE '%$randomNum'") or die (mysql_error());	
+		// Query for attendance
+		mysql_query("UPDATE attendance SET empid = '$newEmpid' WHERE empid LIKE '%$randomNum'") or die (mysql_error());	
+		// Query for awol employee
+		mysql_query("UPDATE awol_employee SET empid = '$newEmpid' WHERE empid LIKE '%$randomNum'") or die (mysql_error());
+		// Query for employee	
+		mysql_query("UPDATE employee SET empid = '$newEmpid' WHERE empid LIKE '%$randomNum'") or die (mysql_error());
+		// Query for payroll
+		mysql_query("UPDATE payroll SET empid = '$newEmpid' WHERE empid LIKE '%$randomNum'") or die (mysql_error());
+		// Query for payroll_adjustment
+		mysql_query("UPDATE payroll_adjustment SET empid = '$newEmpid' WHERE empid LIKE '%$randomNum'") or die (mysql_error());	
+		// Query for position_history
+		mysql_query("UPDATE position_history SET empid = '$newEmpid' WHERE empid LIKE '%$randomNum'") or die (mysql_error());	
+		// Query for site_history
+		mysql_query("UPDATE site_history SET empid = '$newEmpid' WHERE empid LIKE '%$randomNum'") or die (mysql_error());
+		// Query for thirteenth_pay
+		mysql_query("UPDATE thirteenth_pay SET empid = '$newEmpid' WHERE empid LIKE '%$randomNum'") or die (mysql_error());	
+		// Query for tools
+		mysql_query("UPDATE tools SET empid = '$newEmpid' WHERE empid LIKE '%$randomNum'") or die (mysql_error());		
 	}
 	if($_POST['position'] != null)
 	{
@@ -177,7 +204,7 @@
 		$complete = "UPDATE employee SET complete_doc = '0' WHERE empid = '$empid'";
 		mysql_query($complete) or die (mysql_error());
 	}
-	Print "<script>window.location.assign('editEmployee.php?empid=".$empid."')</script>";
+	// Print "<script>window.location.assign('editEmployee.php?empid=".$empid."')</script>";
 ?>
 
 

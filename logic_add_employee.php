@@ -58,43 +58,37 @@ error_reporting(0);
 		$yearHired = substr($dateHired, -4); //get the year 
 
 
-		$random_number = $yearHired."-".rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9); // random(ish) 7 digit 
+		$random_number = rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9); // random(ish) 7 digit 
 		
-		$empidChecker = "SELECT empid FROM employee WHERE empid = '$random_number'";
+		$empidChecker = "SELECT empid FROM employee WHERE empid LIKE '%$random_number'";
 		$queryChecker = mysql_query($empidChecker);
 //empid
 		$success = false;
 		do
 		{
-			
 			if($queryChecker)
 			{
-				
 				$exist = mysql_num_rows($queryChecker);
 				do
 				{	
-					
 					if($exist > 0)
 					{
-					
-						$random_number = $yearHired."-".rand(1,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9);
-						$empidChecker = "SELECT empid FROM employee WHERE empid = '$random_number'";
+						$random_number = rand(1,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9);
+						$empidChecker = "SELECT empid FROM employee WHERE empid LIKE '%$random_number'";
 						$queryChecker = mysql_query($empidChecker);
 						$exist = mysql_num_rows($queryChecker);
 					}
 					else
 					{
-					
 						$success = true;
 						$empid = $random_number;
-						
 					}
 				}while($success == false);
 			}
 			else
 			{
 				$success = true;
-				$empid = $random_number;
+				$empid = $yearHired."-".$random_number;
 
 			}
 		}while($success == false);
