@@ -168,9 +168,9 @@ function getDay($day)
 				$attendance = ($_POST['attendance'][$adCount] == 'PRESENT'? 2 : 0);
 
 				$adjOthrs += GetExactRawTime($othrs);//Gets overall OT
+				$adjOthrs = abs($adjOthrs);
 				$adjNightdiff += GetExactRawTime($nightdiff);//Gets overall Nightdiff
-
-
+				$adjNightdiff = abs($adjNightdiff);
 
 				//Insert Query
 				$checkAdjAttendance = "SELECT * FROM attendance WHERE empid = '$empid' AND date = '$adjustDate'"; // Check if there's an existing date
@@ -359,7 +359,7 @@ function getDay($day)
 		$overallWorkDays++;// Increment workdays for no requirements employee
 		if($adjSundayHrs >= 8)
 		{
-			$sunOT = $_POST['sunWorkHrs'] - 8;
+			$sunOT = $adjSundayHrs - 8;
 			$adjOthrs += $sunOT;
 			
 		}

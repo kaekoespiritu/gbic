@@ -192,7 +192,7 @@ if($holidayExist > 0)
 					          					$adjDateArr .= ',';
 					          				$adjDateArr .= '"'.$adjDate['date'].'"';
 					          				$isSunday = (date('l', strtotime($adjDate['date'])) == 'Sunday' ? true : false);
-					          				$isDriver = (strtolower($empPosition['position']) == 'driver' || strtolower($empArr['position']) == 'pahinante' ? 1 : 0);
+					          				$isDriver = (strtolower($empPosition['position']) == 'driver' || strtolower($empPosition['position']) == 'pahinante' ? 1 : 0);
 					          				
 					          				$workingHours = '';
 					          				$overtimeHours = '';
