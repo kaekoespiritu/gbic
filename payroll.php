@@ -139,10 +139,213 @@ if($holidayExist > 0)
 			require_once('directives/modals/addNewVale.php');
 			require_once('directives/modals/payrollAdjustment.php');
 			?>
-
+			
 			<!-- Breadcrumbs -->
 			<input type="hidden" name="employeeID" value="<?php Print $empid?>">
 			<div class="row pull-down">
+				
+				<!-- DUMMY MODAL FOR Attendance adjustments -->
+				<div class="modal fade" id="attendanceAdjustment">
+					<div class="modal-dialog modal-lg" role="document" style="width: 100% !important; height: 100% !important; margin: 10; padding: 10;">
+					    <div class="modal-content" >
+					      	<div class="modal-header">
+					        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					        		<span aria-hidden="true">&times;</span>
+					        	</button>
+					        	<h4 class="modal-title" id="myModalLabel">Attendance Adjustment</h4>
+					      	</div>
+					      	<div class="modal-body">
+					        	<div class="row">
+					          	<!-- Insert date picker and call attendance row here -->
+					          		Choose a date: <input type="text" id="dateValue" readonly>
+					          	<div id="adjustmentFields" class="pull-down"></div>
+					          	</div>
+					          	<?php
+					          		$badgeCounter = 0;// this is for the adjust attendance badge
+					          		$adjDateArr = "";
+					          		$checkAttAdjustments = "SELECT * FROM payroll_adjustment WHERE payroll_date = '$date' AND empid = '$empid'";
+					          		// Print $checkAttAdjustments;
+					          		$checkAttAdjustmentQuery = mysql_query($checkAttAdjustments);
+					          		if(mysql_num_rows($checkAttAdjustmentQuery) > 0)
+					          		{
+					          			$counter = 20;// this is for the ID of the table
+					          			 
+					          			$checkAdjArr = mysql_fetch_assoc($checkAttAdjustmentQuery);
+					          			$persistAdjustDate = explode('+', $checkAdjArr['dates']);
+
+					          			$attendanceAdjDates = "";
+					          			foreach($persistAdjustDate as $adjDate)
+					          			{
+					          				if($attendanceAdjDates != "")
+					          					$attendanceAdjDates .= " OR ";
+					          				$attendanceAdjDates .= " date = '".$adjDate."'";
+					          			}
+					          			// Gets the position of the employee being payrolled
+					          			$empPositionQuery = mysql_query("SELECT position FROM employee WHERE empid = '$empid'");
+					          			$empPosition = mysql_fetch_assoc($empPositionQuery);
+
+					          			$attendanceDate = "SELECT * FROM attendance WHERE empid = '$empid' AND ($attendanceAdjDates)";
+					          			$attendanceDateQuery = mysql_query($attendanceDate);
+					          			while($adjDate = mysql_fetch_assoc($attendanceDateQuery))
+					          			{
+					          				if($adjDateArr != "")
+					          					$adjDateArr .= ',';
+					          				$adjDateArr .= '"'.$adjDate['date'].'"';
+					          				$isSunday = (date('l', strtotime($adjDate['date'])) == 'Sunday' ? true : false);
+					          				$isDriver = (strtolower($empPosition['position']) == 'driver' || strtolower($empPosition['position']) == 'pahinante' ? 1 : 0);
+					          				
+					          				$workingHours = '';
+					          				$overtimeHours = '';
+					          				$undertimeHours = '';
+					          				$nightdiffHours = '';
+
+					          				$workingHoursDisp = explode('.',$adjDate['workhours']);
+					          				if(Count($workingHoursDisp) > 1)
+					          					$workingHours = $workingHoursDisp[0]." hrs, ".$workingHoursDisp[1]."mins";
+					          				else
+					          				{
+					          					if($workingHoursDisp[0] != 0)
+					          						$workingHours = $workingHoursDisp[0]." hrs";
+					          				}
+
+					          				$overtimeDisp = explode('.',$adjDate['overtime']);
+					          				if(Count($overtimeDisp) > 1)
+					          					$overtimeHours = $overtimeDisp[0]." hrs, ".$overtimeDisp[1]."mins";
+					          				else
+					          				{
+					          					if($overtimeDisp[0] != 0)
+					          						$overtimeHours = $overtimeDisp[0]." hrs";
+					          				}
+
+					          				$undertimeDisp = explode('.',$adjDate['undertime']);
+					          				if(Count($undertimeDisp) > 1)
+					          					$undertimeHours = $undertimeDisp[0]." hrs, ".$undertimeDisp[1]."mins";
+					          				else
+					          				{
+					          					if($undertimeDisp[0] != 0)
+					          						$undertimeHours = $undertimeDisp[0]." hrs";
+					          				}
+
+					          				$nightdiffDisp = explode('.',$adjDate['nightdiff']);
+					          				if(Count($nightdiffDisp) > 1)
+					          					$nightdiffHours = $nightdiffDisp[0]." hrs, ".$nightdiffDisp[1]."mins";
+					          				else
+					          				{
+					          					if($nightdiffDisp[0] != 0)
+					          						$nightdiffHours = $nightdiffDisp[0]." hrs";
+					          				}
+
+					          				// Attendance status
+					          				switch($adjDate['attendance'])
+					          				{
+					          					case 1: $attendanceStatus = "ABSENT"; break;
+					          					case 2: $attendanceStatus = "PRESENT"; break;
+					          					case 3: $attendanceStatus = "NOWORK"; break;
+					          					default: $attendanceStatus = "";
+					          				}
+					          				
+					          				Print "
+						          			<table class='table table-bordered table-responsive'>
+												<tr>
+													<td colspan='13'>
+														<input type='hidden' name='adjustmentDate[]' value='".$adjDate['date']."'>
+														<h2 class='dateheader text-center col-md-11 col-md-push-1'>".$adjDate['date']."</h2>
+														<input type='button' class='btn btn-danger col-md-1' value='Remove' onclick='removeAdjustment(this, \"".$adjDate['date']."\")'>
+													</td>
+												</tr>
+												<tr class='attendance-header'>
+											              <td>Time In</td>
+											              <td>Time Out</td>
+											              <td>H.D. / Straight</td>
+											              <td>A.B. Time In</td>
+											              <td>A.B. Time Out</td>
+											              <td>N.S.</td>
+											              <td>Time In</td>
+											              <td>Time Out</td>
+											              <td>Working Hours</td>
+											              <td>Overtime</td>
+											              <td>Undertime</td>
+											              <td>Night Differential</td>
+											              <td colspan='2'>Actions</td>
+											    </tr>
+												<tr class='input-fields success' id='input-field-".$counter."'>
+
+													<input type='hidden' class='driver' value='".$isDriver."' >";
+												if($isSunday)
+												    Print "<input type='hidden' id='isSunday'>";
+													Print"
+													<!-- Time In -->
+													<td>
+														<input type='text' onblur='timeValidation(this)' class='timein1 timepicker form-control input-sm' value='".$adjDate['timein']."' name='timein1[]'>
+													</td> 
+													<!-- Time Out-->
+													<td>
+														<input type='text' onblur='timeValidation(this)' class='timeout1 timepicker form-control input-sm' value='".$adjDate['timeout']."' name='timeout1[]'>
+													</td> 
+													<!-- Half Day Checkbox-->
+													<td>
+														<input type='checkbox' class='halfdayChk' name='halfday[]' onclick='halfDay('input-field-".$counter."')' disabled>
+													</td>
+													<!-- AFTER BREAK Time In -->
+													<td>
+														<input type='text' onblur='timeValidation(this)' class='timein2 timepicker form-control input-sm' value='".$adjDate['afterbreak_timein']."'  name='timein2[]'>
+													</td> 
+													<!-- AFTER BREAK Time Out-->
+													<td>
+														<input type='text' onblur='timeValidation(this)' class='timeout2 timepicker form-control input-sm' value='".$adjDate['afterbreak_timeout']."' name='timeout2[]'>
+													</td> 
+													<!-- Night Shift Checkbox-->
+													<td>
+														<input type='checkbox' class='nightshiftChk' name='nightshift[]' onclick='nightshift_ChkBox('input-field-".$counter."')' disabled>
+													</td>
+													<!-- NIGHT SHIFT Time In -->
+													<td>
+														<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value='".$adjDate['nightshift_timein']."'  name='timein3[]' readonly>
+													</td> 
+													<!-- NIGHT SHIFT Time Out-->
+													<td>
+														<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='".$adjDate['nightshift_timeout']."' name='timeout3[]' readonly>
+													</td> 
+													<!-- Working Hours -->
+													<td>
+														<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='".($adjDate['workhours'])."' disabled>
+														<input type='hidden' value='".$adjDate['workhours']."' class='workinghoursH'  name='workinghrs[]' >
+													</td> 
+													<!-- Overtime -->
+													<td>
+														<input type='text' placeholder='--' class='form-control input-sm overtime' value='".$overtimeHours."'  disabled>
+														<input type='hidden' class='overtimeH' name='othrs[]' value='".$overtimeHours."'>
+													</td> 
+													<!-- Undertime -->
+													<td>
+														<input type='text' placeholder='--' class='form-control input-sm undertime' value='".$undertimeHours."' disabled>
+														<input type='hidden' class='undertimeH' name='undertime[]' value='".$undertimeHours."'>
+													</td>
+													<!-- Night Differential --> 
+													<td>
+														<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='".$nightdiffHours."' disabled>
+														<input type='hidden' class='nightdiffH' name='nightdiff[]' value='".$nightdiffHours."'>
+													</td>
+													<!-- Remarks Input --> 
+														<input type='hidden' name='remarks[]' class='hiddenRemarks' value='".$adjDate['remarks']."'>
+
+													<!-- Attendance Status -->
+														<input type='hidden' name='attendance[]' class='attendance' value='".$attendanceStatus."'>
+													<!-- Remarks Button --> 
+													<td>
+														<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarksFunc(".$counter.")'>Remarks <span class='icon'></span></a>
+													</td>
+												</tr>
+											</table>";
+											$counter++;
+											$badgeCounter++;
+					          			}	
+					          		}
+					          	?>
+					      	</div>
+					    </div>
+					</div>
+				</div>
 				<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 					<ol class="breadcrumb text-left" style="margin-bottom: 0px">
 
@@ -152,10 +355,9 @@ if($holidayExist > 0)
 						<button type="submit" class="btn btn-success pull-right" style="margin-right:5px" href="#" data-toggle="tooltip" data-placement="bottom" title="Note: Proceeding will prevent you from editing values entered. If you need to come back here and change anything, you will have to redo everything.">Save and compute</button>
 
 						<!-- <input type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#attendanceAdjustment" value="Make attendance adjustment"> -->
-						<button class="btn btn-danger pull-right" data-toggle="modal" data-target="#attendanceAdjustment" onclick="cancelSubmit(event)">Make attendance adjustment <span class="badge" id="badge"></span></button>
+						<a class="btn btn-danger pull-right" data-toggle="modal" data-target="#attendanceAdjustment">Make attendance adjustment <span class="badge" id="badge"><?php Print $badgeCounter?></span></a>
 					</ol>
 				</div>
-
 				<!-- Employee information -->
 				<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 					<?php
@@ -2028,6 +2230,8 @@ if($holidayExist > 0)
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+
 <!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 <script rel="javascript" src="js/jquery.min.js"></script>
 <script src="js/jquery-ui.min.js"></script>
@@ -2142,7 +2346,9 @@ if($holidayExist > 0)
 	localStorage.setItem("inputcounter", 0);
 	localStorage.setItem("tablecounter", 0);
 
-	var adjustedDays = [];
+	//var adjustedDays = [];
+	var adjustedDays = [<?php Print $adjDateArr?>];
+	console.log(adjustedDays);
 
 	$("#dateValue").change(function() {
 		var day = $("#dateValue").val();
@@ -2158,7 +2364,8 @@ if($holidayExist > 0)
 
 		if($.inArray(day,adjustedDays) == -1) {
 			adjustedDays[inputcounter] = day;
-			console.log(adjustedDays[inputcounter]);
+			console.log("ADDING: "+adjustedDays[inputcounter]);
+			console.log(adjustedDays);
 		}
 		else {
 			alert("You have already selected " + day);

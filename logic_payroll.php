@@ -168,14 +168,19 @@ function getDay($day)
 				$attendance = ($_POST['attendance'][$adCount] == 'PRESENT'? 2 : 0);
 
 				$adjOthrs += GetExactRawTime($othrs);//Gets overall OT
+				$adjOthrs = abs($adjOthrs);
 				$adjNightdiff += GetExactRawTime($nightdiff);//Gets overall Nightdiff
+				$adjNightdiff = abs($adjNightdiff);
 
 				//Insert Query
 				$checkAdjAttendance = "SELECT * FROM attendance WHERE empid = '$empid' AND date = '$adjustDate'"; // Check if there's an existing date
 				$checkAdjAttendanceQuery = mysql_query($checkAdjAttendance);
+
+				
+
 				if(mysql_num_rows($checkAdjAttendanceQuery))
 				{
-					mysql_query("UPDATE attendance SET 	timein = '$timein1',
+					$testing = "UPDATE attendance SET 	timein = '$timein1',
 														timeout = '$timeout1',
 														afterbreak_timein = '$timein2',
 														afterbreak_timeout = '$timeout2',
@@ -188,7 +193,9 @@ function getDay($day)
 														remarks = '$remarks',
 														attendance = '$attendance',
 														sunday = '$sunday',
-														holiday = '$holiday' WHERE empid = '$empid AND date = '$adjustDate'");
+														holiday = '$holiday' WHERE empid = '$empid' AND date = '$adjustDate'";
+					$test = mysql_query($testing) or die();
+					
 				}
 				else
 				{
@@ -224,7 +231,8 @@ function getDay($day)
 																				'$attendance',
 																				'$adjustDate',
 																				'$sunday',
-																				'$holiday')");
+																				'$holiday')") or die(mysql_error());
+					// Print "<script>alert('adjNew1')</script>";
 				}
 
 				$adjAllowDays++;
@@ -235,6 +243,12 @@ function getDay($day)
 		// Insert Query to payroll_adjustment table [empid, payroll_date, dates]
 		if($adjustmentBool)
 		{
+			// Remove the adjustment payroll and add the new one
+			$checkPastAdjAtt = "SELECT * FROM payroll_adjustment WHERE empid = '$empid' AND payroll_date = '$date'";
+			$checkPastAdjQuery = mysql_query($checkPastAdjAtt);
+			if(mysql_num_rows($checkPastAdjQuery) > 0)
+				mysql_query("DELETE FROM payroll_adjustment WHERE empid = '$empid' AND payroll_date = '$date'");
+			// Add the new one
 			$payrollAdjustment = "INSERT INTO payroll_adjustment(	empid, 
 																payroll_date, 
 																dates) VALUES(	'$empid',
@@ -345,7 +359,7 @@ function getDay($day)
 		$overallWorkDays++;// Increment workdays for no requirements employee
 		if($adjSundayHrs >= 8)
 		{
-			$sunOT = $_POST['sunWorkHrs'] - 8;
+			$sunOT = $adjSundayHrs - 8;
 			$adjOthrs += $sunOT;
 			
 		}
@@ -1009,7 +1023,43 @@ function getDay($day)
 	$grandTotal = abs(numberExactFormat($grandTotal, 2, '.', false));
 
 
-
+	// Absolute all computational variables
+	$dailyRate = abs($dailyRate);
+	$overallWorkDays = abs($overallWorkDays);
+	$OtRatePerHour = abs($OtRatePerHour);
+	$totalOT = abs($totalOT);
+	$compOT = abs($compOT);
+	$dailyAllowance = abs($dailyAllowance);
+	$daysAllowance = abs($daysAllowance);
+	$compAllowance = abs($compAllowance);
+	$extraAllowance = abs($extraAllowance);
+	$totalCola = abs($totalCola);
+	$SundayRatePerHour = abs($SundayRatePerHour);
+	$sunWorkHrs = abs($sunWorkHrs);
+	$sunday_Att = abs($sunday_Att);
+	$NdRatePerHour = abs($NdRatePerHour);
+	$totalND = abs($totalND);
+	$compND = abs($compND);
+	$regHolidayInc = abs($regHolidayInc);
+	$speHolidayInc = abs($speHolidayInc);
+	$addHoliday = abs($addHoliday);
+	$speHolNum  = abs($speHolNum);
+	$regHolNum = abs($regHolNum);
+	$tax = abs($tax);
+	$sss = abs($sss);
+	$pagibig = abs($pagibig);
+	$philhealth = abs($philhealth);
+	$sssER = abs($sssER);
+	$pagibigER = abs($pagibigER);
+	$philhealthER = abs($philhealthER);
+	$tools_paid = abs($tools_paid);
+	$outStandingBalance = abs($outStandingBalance);
+	$grandTotal = abs($grandTotal);
+	$loan_sss = abs($loan_sss);
+	$loan_pagibig = abs($loan_pagibig);
+	$loan_newVale = abs($loan_newVale);
+	$loan_oldVale = abs($loan_oldVale);
+	$insurance = abs($insurance);
 
 	$query = "INSERT INTO payroll(	empid,
 									rate,
@@ -1129,17 +1179,17 @@ function getDay($day)
 									loan_pagibig = '$loan_pagibig',
 									new_vale = '$loan_newVale',
 									old_vale = '$loan_oldVale',
-									insurance = '$insurance'
+									insurance = '$insurance',
 									bank = '$bank_color' WHERE empid = '$empid' AND date = '$date'";
 	
 	$mainChecker = mysql_query("SELECT * FROM payroll WHERE empid='$empid' AND date='$date'");
 	if(mysql_num_rows($mainChecker) == 0)
 	{
-		mysql_query($query)or die(mysql_error());;
+		mysql_query($query)or die(mysql_error());
 	}					
 	else
 	{
-		mysql_query($updateQuery)or die(mysql_error());;
+		mysql_query($updateQuery)or die("yow1 ".mysql_error());
 	}
 	 
 
