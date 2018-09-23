@@ -293,16 +293,13 @@ include('directives/session.php');
 							$noWorkBool = false;// Boolean for no work
 							while($attRow = mysql_fetch_assoc($attendanceQuery))
 							{
-								if($attRow['attendance'] == 3)// 3 is for No work
-								{
-									$noWorkBool = true;
-								}
 								if($attRow['attendance'] != 0)//0 is for no input
 								{
 									$checker++;//counter
 								}
 							}
-							if($checker == $attNum  && $employeeNum == $attendanceNum || $noWorkBool)//check if number of attendance and the counter are the same
+							Print "<script>console.log('checker: ".$checker." | attNum: ".$attNum."')</script>"; 
+							if($checker == $attNum  && $employeeNum == $attendanceNum)//check if number of attendance and the counter are the same
 							{
 								$attendanceStatus = 1;//Trigger for completing the attendance for the site
 							}

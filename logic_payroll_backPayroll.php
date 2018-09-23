@@ -35,24 +35,24 @@
 	// Print "<script>alert('".mysql_num_rows($adjAttQuery)."')</script>";
 	if(mysql_num_rows($adjAttQuery) != 0)
 	{
-		// Print "<script>alert('yow')</script>";
-		$adjustedArr = mysql_fetch_assoc($adjAttQuery);
+		// // Print "<script>alert('yow')</script>";
+		// $adjustedArr = mysql_fetch_assoc($adjAttQuery);
 
-		$adjustedDates = explode('+',$adjustedArr['dates']);
-		$appendAdjQuery = "(date = ";
+		// $adjustedDates = explode('+',$adjustedArr['dates']);
+		// $appendAdjQuery = "(date = ";
 
-		$adjDatesNum = count($adjustedDates);
-		for($counter = 0; $counter < $adjDatesNum; $counter++)
-		{
-			if($appendAdjQuery != "(date = ")
-				$appendAdjQuery .= " OR date = ";
-			$appendAdjQuery .= "'".$adjustedDates[$counter]."'";
+		// $adjDatesNum = count($adjustedDates);
+		// for($counter = 0; $counter < $adjDatesNum; $counter++)
+		// {
+		// 	if($appendAdjQuery != "(date = ")
+		// 		$appendAdjQuery .= " OR date = ";
+		// 	$appendAdjQuery .= "'".$adjustedDates[$counter]."'";
 			
-		}
-		$appendAdjQuery .= ")";
-		// Print $appendAdjQuery;
-		mysql_query("DELETE FROM attendance WHERE empid = '$empid' AND $appendAdjQuery");
-		mysql_query("DELETE FROM payroll_adjustment WHERE empid = '$empid' AND payroll_date = '$date'");
+		// }
+		// $appendAdjQuery .= ")";
+		// // Print $appendAdjQuery;
+		// mysql_query("DELETE FROM attendance WHERE empid = '$empid' AND $appendAdjQuery");
+		// mysql_query("DELETE FROM payroll_adjustment WHERE empid = '$empid' AND payroll_date = '$date'");
 	}
 		
 	Print "<script>window.location.assign('payroll.php?site=".$site."&position=".$position."&empid=".$empid."')</script>";
