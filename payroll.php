@@ -1880,7 +1880,7 @@ if($holidayExist > 0)
 						<span class="col-md-4 col-lg-4">Cost</span>
 						<span class="col-md-4 col-lg-4">Quantity</span>
 						
-						<div class="form-group" id="toolform">
+						<div class="form-group container-fluid" id="toolform">
 							<a class="btn btn-sm btn-primary col-md-1 col-lg-1" onclick="addRow()"><span class="glyphicon glyphicon-plus"></span></a>
 							<?php
 							$toolsChecker = "SELECT * FROM tools WHERE empid = '$empid' AND date = '$date'";
@@ -1892,7 +1892,7 @@ if($holidayExist > 0)
 											<div class="col-md-4 col-lg-4">
 												<input type="text" id="tools" name="toolname[]" class="form-control input-sm" onchange="checkName(this)">
 											</div>
-											<div class="col-md-4 col-lg-4">
+											<div class="col-md-3 col-lg-3">
 												<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">
 											</div>
 											<div class="col-md-3 col-lg-3">
@@ -1909,11 +1909,11 @@ if($holidayExist > 0)
 									if($toolsBoolOnce)
 									{
 										$toolsBoolOnce = false;
-										Print '	<div>
+										Print '	<div class="row">
 													<div class="col-md-4 col-lg-4">
 														<input type="text" id="tools" name="toolname[]" class="form-control input-sm" onchange="checkName(this)" value="'.$toolsArr['tools'].'">
 													</div>
-													<div class="col-md-4 col-lg-4">
+													<div class="col-md-3 col-lg-3">
 														<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)" value="'.$toolsArr['cost'].'">
 													</div>
 													<div class="col-md-3 col-lg-3">
@@ -1925,21 +1925,21 @@ if($holidayExist > 0)
 									else
 									{
 										Print '
-											<div name="toolsRow[]" id="'.$toolsCounter.'">
-												<div class="col-md-1 col-lg-1 nopadding">
-													<a class="btn-sm btn btn-danger" name="rowDelete[]" onclick="deleteRow('.$toolsCounter.')">
+											<a class="btn-sm btn btn-danger col-md-1 col-lg-1" name="rowDelete[]" onclick="deleteRow('.$toolsCounter.')">
 														<span class="glyphicon glyphicon-minus"></span>
 													</a>
-												</div>
+											<div class="row">
+												<div name="toolsRow[]" id="'.$toolsCounter.'">
 
-												<div class="col-md-4 col-lg-4">
-													<input type="text" id="toolstemp" name="toolname[]" class="form-control input-sm" onchange="checkName(this)" value="'.$toolsArr['tools'].'">
-												</div>
-												<div class="col-md-4 col-lg-4">
-													<input id="pricetemp" name="toolprice[]" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)" value="'.$toolsArr['cost'].'">
-												</div> 
-												<div class="col-md-3 col-lg-3">
-													<input type="text" id="quantity" name="toolquantity[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)" value="'.$toolsArr['quantity'].'">
+													<div class="col-md-4 col-lg-4">
+														<input type="text" id="toolstemp" name="toolname[]" class="form-control input-sm" onchange="checkName(this)" value="'.$toolsArr['tools'].'">
+													</div>
+													<div class="col-md-3 col-lg-3">
+														<input id="pricetemp" name="toolprice[]" class="form-control input-sm toolpricetemp" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)" value="'.$toolsArr['cost'].'">
+													</div> 
+													<div class="col-md-3 col-lg-3">
+														<input type="text" id="quantity" name="toolquantity[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)" value="'.$toolsArr['quantity'].'">
+													</div>
 												</div>
 											</div>';
 										$toolsCounter++;
@@ -1950,17 +1950,6 @@ if($holidayExist > 0)
 							}
 
 							?>
-							<!-- <div>
-								<div class="col-md-4 col-lg-4">
-									<input type="text" id="tools" name="toolname[]" class="form-control input-sm" onchange="checkName(this)">
-								</div>
-								<div class="col-md-4 col-lg-4">
-									<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">
-								</div>
-								<div class="col-md-3 col-lg-3">
-									<input type="text" id="quantity" name="toolquantity[]" class="form-control input-sm" onchange="getTotal(this)" onblur="addDecimal(this)">
-								</div>
-							</div>	 -->
 
 						</div>
 						<div class="col-md-1 col-lg-12 pull-down">
