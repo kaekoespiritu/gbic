@@ -229,7 +229,8 @@ include_once('directives/db.php');
 										Print "<li>".$absenceArr['lastname'].", ".$absenceArr['firstname']."(".$absenceArr['position'].") - [".$absenceArr['site']."] </li>";
 									}
 
-					Print			"</ul>";
+					Print				"</ul>
+									</div>";
 				}		
 				
 
