@@ -45,12 +45,27 @@ require_once("directives/modals/addLoan.php");
 						<div class="form-group col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3" style="float:none">
 							<input placeholder="Search for employee (can look up any part of employees name)" class="form-control" id="search_text">
 						</div>
-
+						 <h4>Loan date:</h4>
+						 <div class="form-group col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3" style="float:none">
+						 	<input name="txt_attendance" type="text" size="10" class="form-control" value = <?php
+							if(isset($_SESSION['date']))
+							{
+								$date = $_SESSION['date'];
+								Print "'". $date ."'";
+							}
+							else
+							{
+								$date = strftime("%B %d, %Y");
+								Print '""';
+							}
+							?> id="dtpkr_loan" placeholder="mm-dd-yyyy">
+						</div>
 					</div>
 				</div>
 
 				<div id="search_result_loans" class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1"></div>
 				 
+				
 
 		</div>
 
@@ -157,6 +172,9 @@ require_once("directives/modals/addLoan.php");
 	<script rel="javascript" src="js/jquery.min.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
 	<script rel="javascript" src="js/accounting.min.js"></script>
+	<script rel="javascript" src="js/timepicker/jquery.timepicker.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/multiple-select.js"></script>
 	<script>
 		// Setting active color of menu to Employees
 		document.getElementById("employees").setAttribute("style", "background-color: #10621e;");
@@ -185,6 +203,34 @@ require_once("directives/modals/addLoan.php");
 		   load_data();
 		  }
 		 });
+
+		 $("select").multipleSelect({
+			placeholder: "Select site for attendance&#9662;",
+			selectAll: false,
+			width: 200,
+			multiple: true,
+			multipleWidth: 200
+		});
+
+		var currentDate = "<?php Print "$date"; ?>";
+		var dateToday = new Date();
+		var twoWeeksAgo = new Date(dateToday.getFullYear(), dateToday.getMonth(), dateToday.getDate() - 14);
+
+		/* DATE PICKER CONFIGURATIONS*/
+		$( "#dtpkr_loan" ).datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: 'MM dd, yy',
+			showAnim: 'blind',
+			maxDate: dateToday,
+			minDate: twoWeeksAgo,
+			beforeShow: function(){    
+				$(".ui-datepicker").css('font-size', 15) 
+			}
+		});
+
+		$("#dtpkr_loan").datepicker("setDate", currentDate);
+
 		});
 
 		function validateLoanFields(row) {
