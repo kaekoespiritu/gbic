@@ -236,8 +236,8 @@
 
 		if(mainRow.querySelector('.nightshiftChk').checked == true) {
 
-			mainRow.querySelector('.timein3').readOnly = false;
-			mainRow.querySelector('.timeout3').readOnly = false;
+			mainRow.querySelector('.timein3').disabled = false;
+			mainRow.querySelector('.timeout3').disabled = false;
 
 			// disable halfday checkbox
 			mainRow.querySelector('.halfdayChk').disabled = true;
@@ -270,8 +270,8 @@
 			// enable halfday checkbox
 			mainRow.querySelector('.halfdayChk').disabled = false;
 
-			mainRow.querySelector('.timein3').readOnly = true;
-			mainRow.querySelector('.timeout3').readOnly = true;
+			mainRow.querySelector('.timein3').disabled = true;
+			mainRow.querySelector('.timeout3').disabled = true;
 			mainRow.querySelector('.timein3').value = '';
 			mainRow.querySelector('.timeout3').value = '';
 			timeIn(id);//call function to revert the results to just 4 inputs

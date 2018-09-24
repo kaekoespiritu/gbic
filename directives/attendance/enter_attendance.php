@@ -154,11 +154,11 @@ function attendance ()
 								</td>
 								<!-- NIGHT SHIFT Time In -->
 								<td>
-									<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value=''  name='timein3[".$counter."]' readonly>
+									<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value=''  name='timein3[".$counter."]' disabled>
 								</td> 
 								<!-- NIGHT SHIFT Time Out-->
 								<td>
-									<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='' name='timeout3[".$counter."]' readonly>
+									<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='' name='timeout3[".$counter."]' disabled>
 								</td> 
 								<!-- Working Hours -->
 									<td>
@@ -246,11 +246,11 @@ function attendance ()
 								</td>
 								<!-- NIGHT SHIFT Time In -->
 								<td>
-									<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value='' placeholder='ABSENT' name='timein3[".$counter."]'readonly>
+									<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value='' placeholder='ABSENT' name='timein3[".$counter."]'disabled>
 								</td> 
 								<!-- NIGHT SHIFT Time Out-->
 								<td>
-									<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='' placeholder='ABSENT' name='timeout3[".$counter."]' readonly>
+									<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='' placeholder='ABSENT' name='timeout3[".$counter."]' disabled>
 								</td> 
 								<!-- Working Hours -->
 									<td>
@@ -329,11 +329,11 @@ function attendance ()
 									</td>";
 						Print	"<!-- AFTER BREAK Time In -->
 									<td>
-										<input type='text' onblur='timeValidation(this)' class='timein2 timepicker form-control input-sm' placeholder='' name='timein2[".$counter."]' readonly>
+										<input type='text' onblur='timeValidation(this)' class='timein2 timepicker form-control input-sm' placeholder='' name='timein2[".$counter."]' disabled>
 									</td>
 								<!-- AFTER BREAK Time Out-->
 									<td>
-										<input type='text' onblur='timeValidation(this)' class='timeout2 timepicker form-control input-sm' placeholder='' name='timeout2[".$counter."]' readonly>
+										<input type='text' onblur='timeValidation(this)' class='timeout2 timepicker form-control input-sm' placeholder='' name='timeout2[".$counter."]' disabled>
 									</td>";
 					}
 					else
@@ -379,11 +379,11 @@ function attendance ()
 									</td>
 								<!-- NIGHT SHIFT Time In -->
 									<td>
-										<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value=''  name='timein3[".$counter."]' readonly>
+										<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value=''  name='timein3[".$counter."]' disabled>
 									</td> 
 								<!-- NIGHT SHIFT Time Out-->
 									<td>
-										<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='' name='timeout3[".$counter."]' readonly>
+										<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='' name='timeout3[".$counter."]' disabled>
 									</td> 
 						";
 					}
@@ -645,11 +645,11 @@ function attendance ()
 								</td>
 								<!-- NIGHT SHIFT Time In -->
 								<td>
-									<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value=''  name='timein3[".$counter."]' readonly>
+									<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value=''  name='timein3[".$counter."]' disabled>
 								</td> 
 								<!-- NIGHT SHIFT Time Out-->
 								<td>
-									<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='' name='timeout3[".$counter."]' readonly>
+									<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='' name='timeout3[".$counter."]' disabled>
 								</td> 
 								<!-- Working Hours -->
 									<td>
@@ -797,11 +797,11 @@ function attendance ()
 					</td>
 					<!-- NIGHT SHIFT Time In -->
 					<td>
-						<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value=''  name='timein3[".$counter."]' readonly>
+						<input type='text' onblur='timeValidation(this)' class='timein3 timepicker form-control input-sm' value=''  name='timein3[".$counter."]' disabled>
 					</td> 
 					<!-- NIGHT SHIFT Time Out-->
 					<td>
-						<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='' name='timeout3[".$counter."]' readonly>
+						<input type='text' onblur='timeValidation(this)' class='timeout3 timepicker form-control input-sm' value='' name='timeout3[".$counter."]' disabled>
 					</td> 
 					<!-- Working Hours -->
 					<td>

@@ -3378,6 +3378,10 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 						(timeinhour2 <= 10 && timeouthour2 <= 18) ||// pos 11 ~ 12
 						(timeinhour3 <= 10 && timeouthour3 >= 10) ||// pos 13
 						(timeinhour3 <= 10 && timeouthour3 <= 18) ||
+
+						(timeinhour2 >= 10 && (timeinhour2 <= 18 && timeouthour2 >= 18)) || /// If timeinhour3  is 1am onwards but not greater than 6 
+						(timeinhour3 >= 10 && (timeinhour3 <= 18 && timeouthour3 >= 18)) || /// If timeinhour3  is 1am onwards but not greater than 6 
+
 						(timeouthour1 == 10 && timeoutmin1 != 0) ||
 						(timeouthour2 == 10 && timeoutmin2 != 0) ||
 						(timeouthour3 == 10 && timeoutmin3 != 0))// pos 14
@@ -3501,6 +3505,14 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 								time3 = timeinhour3 - timeouthour3;
 								nightdiff = Math.abs(time2) + Math.abs(time3);
 							}
+						}
+						else if(timeinhour2 >= 10 && (timeinhour2 <= 18 && timeouthour2 >= 18))
+						{
+							nightdiff = timeinhour2 - 18;
+						}
+						else if(timeinhour3 >= 10 && (timeinhour3 <= 18 && timeouthour3 >= 18))
+						{
+							nightdiff = timeinhour3 - 18;
 						}
 						else if(timeinhour3 <= 10 && timeouthour3 >= 10 && timeouthour3 <= 18)// pos 13
 						{
