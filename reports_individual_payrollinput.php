@@ -2110,6 +2110,558 @@
 							</div>
 							
 					';
+
+
+					//------------------ PAYROLL COMPUTATION ---------------------------
+
+					Print "
+					<div class='col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down'>
+						<ol class='breadcrumb text-left' style='margin-bottom: 0px'>
+
+							<li>
+								<h3>Payroll Computation</h3>";
+							
+							Print '
+							</li>
+							
+
+						</ol>
+					</div>
+
+					<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
+
+						<!-- Earnings -->
+						<div class="col-md-6 col-lg-6 text-left">
+							<h3>Earnings</h3>
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Type</th>
+										<th>Amount</th>
+										<th>Days / Hours</th>
+										<th>Total</th>
+									</tr>
+								</thead>
+								<tbody>';
+										
+										$numDays = $payrollArr['num_days']." Day(s)";
+
+										$ratePerDaySub = 0;
+										
+										$ratePerDaySub = $payrollArr['num_days'];//for computation
+										$numDaysArr = explode('.', $ratePerDaySub);
+										if(count($numDaysArr) == 2)
+										{
+											if($numDaysArr[1] == 0)
+												$ratePerDaySub = $numDaysArr[0];
+										}
+										else
+											$ratePerDaySub = $numDaysArr[0];
+
+										$ratePerDayDisp = $ratePerDaySub." Day(s)";// for display
+										
+										$subTotalRatePerDay = $ratePerDaySub * numberExactFormat($empArr['rate'],2,'.', true);
+										// Print "<script>console.log('ratePerDaySub: ". $ratePerDaySub." | dailyRate: ".numberExactFormat($empArr['rate'],2,'.', true)."')</script>";//dito
+										$totalRatePerDay = $subTotalRatePerDay;//for the Subtotal of Earnings
+
+										if($subTotalRatePerDay == 0)
+											$subTotalRatePerDay = "--";
+										else
+											$subTotalRatePerDay = numberExactFormat($subTotalRatePerDay, 2, '.', true);
+										if($numDays == 0)
+											$numDays = "--";
+										Print "<script>console.log('num_days: ".$payrollArr['num_days']."')</script>";
+									Print '
+									<tr>
+										<td>Rate per day</td>
+										<td>'.$payrollArr['rate'].'</td>
+										<td>'.$ratePerDayDisp.'</td>
+										<td>'.$subTotalRatePerDay.'</td>
+									</tr>';
+
+										$allowDays =  $payrollArr['allow_days'];
+
+										$subTotalAllowance = $payrollArr['allow'] * $allowDays;
+										$totalAllowance = $subTotalAllowance;//for the Subtotal of Earnings
+
+										if($subTotalAllowance == 0)
+											$subTotalAllowance = "--";
+										else
+											$subTotalAllowance = numberExactFormat($subTotalAllowance, 2, '.', true);
+
+										if($allowDays == 0)
+											$allowDays = "--";
+										else
+											$allowDays = $allowDays." Day(s)";
+										
+									?>
+									<tr>
+										<td>Allowance</td>
+										<td><?php Print $payrollArr['allow']?></td>
+										<td><?php Print $allowDays?></td>
+										<td><?php Print $subTotalAllowance?></td>
+									</tr>
+
+									<!-- Extra Allowance -->
+
+									<?php
+									$xAllowance = 0;
+									if($payrollArr['x_allowance'] != 0)
+									{
+									Print "
+											<tr>
+												<td>Extra Allowance</td>
+												<td>".numberExactFormat($payrollArr['x_allowance'], 2, '.', true)."</td>
+												<td>--</td>
+												<td>".numberExactFormat($payrollArr['x_allowance'], 2, '.', true)."</td>
+											</tr>
+											";
+									$xAllowance = $payrollArr['x_allowance'];
+									}
+									
+									
+									
+										$subTotalOvertime = $payrollArr['ot_num']*$payrollArr['overtime'];
+										$totalOvertime = $subTotalOvertime;//for the Subtotal of Earnings
+										$ot_num = $payrollArr['ot_num']." Hour(s)";
+										if($subTotalOvertime == 0)
+											$subTotalOvertime = "--";
+										else
+											$subTotalOvertime = numberExactFormat($subTotalOvertime, 2, '.', true);
+										if($ot_num == 0)
+											$ot_num = "--";
+									Print '
+									<tr>
+										<td>Overtime</td>
+										<td>'.$payrollArr['overtime'].'</td>
+										<td>'.$ot_num.'</td>
+										<td>'.$subTotalOvertime.'</td>
+									</tr>';
+
+										$subTotalNightDifferential = $payrollArr['nightdiff_rate'] * $payrollArr['nightdiff_num'];
+										$totalNightDifferential = $subTotalNightDifferential;//for the Subtotal of Earnings
+										$nightdiffNum = $payrollArr['nightdiff_num']." Hour(s)";
+										if($subTotalNightDifferential == 0)
+											$subTotalNightDifferential = "--";
+										else
+											$subTotalNightDifferential = numberExactFormat($subTotalNightDifferential, 2, '.', true);
+										if($nightdiffNum == 0)
+											$nightdiffNum = "--";
+									Print '
+									<tr>
+										<td>Night Differential</td>
+										<td>'.$payrollArr['nightdiff_rate'].'</td>
+										<td>'.$nightdiffNum.'</td>
+										<td>'.$subTotalNightDifferential.'</td>
+									</tr>';
+									
+										$sundayHrs = $payrollArr['sunday_hrs'];
+										$sundayHoursComp = 0;
+										if($sundayHrs == 0)
+											$sundayHrs = "--";
+										else
+										{
+											
+											$sundayHoursComp = $sundayHrs;
+											$sundayHrs =  $sundayHrs." Hour(s)";
+											
+										}
+
+										$subTotalSundayRate = $payrollArr['sunday_rate'] * $payrollArr['sunday_hrs'];
+										$totalSundayRate = $subTotalSundayRate;//for the Subtotal of Earnings
+										
+										if($subTotalSundayRate == 0)
+											$subTotalSundayRate = "--";
+										else
+											$subTotalSundayRate = numberExactFormat($subTotalSundayRate, 2, '.', true);
+											
+									Print '
+									<tr>
+										<td>Sunday Rate</td>
+										<td>'. $payrollArr['sunday_rate'].'</td>
+										<td>'. $sundayHrs.'</td>
+										<td>'. $subTotalSundayRate.'</td>
+									</tr>';
+
+										if($payrollArr['reg_holiday_num'] > 1)
+										{
+											$holidayRegChecker = "SELECT * FROM holiday AS h INNER JOIN attendance AS a ON h.date = a.date WHERE a.empid = '$empid' AND a.attendance = '2' AND h.type = 'regular'";
+											$holidayRegQuery = mysql_query($holidayRegChecker);
+											$regHolidayNum = mysql_num_rows($holidayRegQuery);
+										}
+										else if($payrollArr['reg_holiday_num'] == 1)
+										{
+											$regHolidayNum = 1;
+										}
+										else
+										{
+											$regHolidayNum = 0;
+										}
+
+										$subTotalRegularHolidayRate = ($payrollArr['reg_holiday_num'] * $payrollArr['reg_holiday']) ;
+
+										$totalRegularHolidayRate = $subTotalRegularHolidayRate;//for the Subtotal of Earnings
+										$regHolNum = $regHolidayNum." Day(s)";
+										if($subTotalRegularHolidayRate == 0)
+											$subTotalRegularHolidayRate = "--";
+										else
+											$subTotalRegularHolidayRate = numberExactFormat($subTotalRegularHolidayRate, 2, '.', true);
+										if($regHolNum == 0)
+											$regHolNum = "--";
+									Print '
+									<tr>
+										<td>Regular Holiday</td>
+										<td>'.numberExactFormat($payrollArr['reg_holiday'], 2, '.', true) .'</td>
+										<td>'.$regHolNum.'</td>
+										<td>'.$subTotalRegularHolidayRate.'</td>
+									</tr>';
+									
+										if($payrollArr['spe_holiday_num'] > 0)
+											$subTotalSpecialHolidayRate = ($payrollArr['spe_holiday_num'] * $payrollArr['spe_holiday']);
+										else
+											$subTotalSpecialHolidayRate = 0;
+										$totalSpecialHolidayRate = $subTotalSpecialHolidayRate;//for the Subtotal of Earnings
+										$speHolNum = $payrollArr['spe_holiday_num']." Day(s)";
+										if($subTotalSpecialHolidayRate == 0)
+											$subTotalSpecialHolidayRate = "--";
+										else
+											$subTotalSpecialHolidayRate = numberExactFormat($subTotalSpecialHolidayRate, 2, '.', true);
+										if($speHolNum == 0)
+											$speHolNum = "--";
+										
+									Print '
+									<tr>
+										<td>Special Holiday</td>
+										<td>'.numberExactFormat($payrollArr['spe_holiday'], 2, '.', true).'</td>
+										<td>'.$speHolNum.'</td>
+										<td>'.$subTotalSpecialHolidayRate.'</td>
+									</tr>';
+									
+										$totalCola = $payrollArr['cola'];
+										if($totalCola == 0)
+											$subTotalCola = "--";
+										else
+											$subTotalCola = numberExactFormat($totalCola, 2, '.', true);
+
+
+										if($payrollArr['cola'] != 0)
+										{
+											$currentCola = $payrollArr['cola']/$allowDays;
+											Print "
+												<tr>
+													<td>COLA</td>
+													<td>".$currentCola."</td>
+													<td>".$allowDays."</td>
+													<td>".$subTotalCola."</td>
+												</tr>
+											";
+										}
+								
+										$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $totalCola;
+											Print "<script>console.log('payroll_computation.php - totalRegularHolidayRate: ".abs($totalRegularHolidayRate)." | totalSpecialHolidayRate: ".abs($totalSpecialHolidayRate)." | totalSundayRate: ".abs($totalSundayRate)." | totalNightDifferential: ".$totalNightDifferential." | totalAllowance: ".$totalAllowance." | totalOvertime: ".$totalOvertime." | totalRatePerDay: ".$totalRatePerDay." | xAllowance: ".$xAllowance." | totalCola: ".$totalCola. "')</script>";"')</script>";
+
+									Print '
+									<tr style="font-family: QuicksandMed;">
+										<td colspan="2" class="active">Subtotal</td>
+										<td class="active"></td>
+										<td class="active">'. numberExactFormat($totalEarnings, 2, '.', true).'</td>
+
+									</tr>
+								</tbody>
+							</table>
+
+							<!-- Tools -->
+							<h3>Tools</h3>
+							<table class="table">
+								<thead>
+									<tr>
+										<th colspan="3">Name</th>
+										<th>Quantity</th>
+										<th>Cost</th>
+									</tr>
+								</thead>
+								<tbody>';
+							
+								$tools = "SELECT * FROM tools WHERE empid = '$empid' AND date = '$date'";
+								$toolsQuery = mysql_query($tools);
+								$toolSubTotal = 0;
+								$Notools = true;// if theres no tools
+								$displayToolSubTotal = null;
+								if(mysql_num_rows($toolsQuery) > 0)
+								{
+									$Notools = false;
+									while($toolArr = mysql_fetch_assoc($toolsQuery))
+									{
+										$toolSubTotal += $toolArr['cost'];
+										Print "
+											<tr>
+												<td colspan='3'>".$toolArr['tools']."</td>
+												<td>".$toolArr['quantity']."</td>
+												<td>".$toolArr['cost']."</td>
+											</tr>
+											";
+									}
+								}
+
+								
+								
+								if($Notools)
+								{
+									Print "	<tr>
+												<td>No Tools</td>
+												<td colspan='3'></td>
+												<td>--</td>
+											</tr>";
+								}
+
+								if($toolSubTotal == 0)
+								{
+									$displayToolSubTotal = "--";
+								}
+								else
+								{
+									$displayToolSubTotal = numberExactFormat($toolSubTotal, 2, '.', true);
+								}
+								if($payrollArr['tools_paid'] != 0)
+								{
+									$displayToolPayed = numberExactFormat($payrollArr['tools_paid'], 2, '.', true);
+								}
+								else if($payrollArr['tools_paid'] == 0)//if employee didnot input any amount to pay
+								{
+									$displayToolPayed = numberExactFormat($toolSubTotal, 2, '.', true);
+								}
+								else
+								{
+									$displayToolPayed = "--";
+								}
+
+								$prevPayCheck = "SELECT * FROM payroll WHERE empid = '$empid' AND date <> '$date' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
+								$prevPayQuery = mysql_query($prevPayCheck) or die (mysql_error());
+
+									//Previous payable
+									if(mysql_num_rows($prevPayQuery) > 0)
+									{
+										$prevPayArr = mysql_fetch_assoc($prevPayQuery);
+										if($prevPayArr['tools_outstanding'] > 0)
+										Print 
+											"<tr>
+												<td>Previous Payable</td>
+												<td colspan='3' ></td>
+												<td>".$prevPayArr['tools_outstanding']."</td>
+											</tr>";
+									}
+									$toolsSubTotal = "--";
+									if($payrollArr['tools_paid'] != 0)//Tools paid
+									{
+										Print 
+											"<tr>
+												<td>Amount Paid</td>
+												<td colspan='3' ></td>
+												<td>".$displayToolPayed."</td>
+											</tr>";
+										$toolsSubTotal = numberExactFormat($payrollArr['tools_paid'], 2, '.', true);
+									}
+									if($payrollArr['tools_outstanding'] != 0)//outstanding Payable
+									{
+										Print 
+											"<tr>
+												<td>Outstanding Payable</td>
+												<td colspan='3' ></td>
+												<td>".numberExactFormat($payrollArr['tools_outstanding'], 2, '.', true)."</td>
+											</tr>";
+									}
+									Print '
+									<tr style="font-family: QuicksandMed;">
+										<td class="active">Subtotal</td>
+										<td colspan="3" class="active"></td>
+										<td class="active">'.$toolsSubTotal.'</td>
+									</tr>
+								</tbody>
+							</table>
+							
+						</div>
+
+						<!-- Contributions -->
+						<div class="col-md-6 col-lg-6 text-left">
+							<h3>Contributions</h3>
+							<table class="table">';
+							
+								$contributions = $payrollArr['pagibig']+$payrollArr['philhealth']+$payrollArr['sss']+$payrollArr['tax']+$payrollArr['insurance'];
+								Print '
+								<thead>
+									<tr>
+										<td>TAX</td>
+										<td>';
+											
+											if($payrollArr['tax'] == 0)
+												Print "--";
+											else
+												Print numberExactFormat($payrollArr['tax'], 2, '.', true);
+										Print '
+										</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>SSS</td>
+										<td>';
+											 
+											if($payrollArr['sss'] == 0)
+												Print "--";
+											else
+												Print numberExactFormat($payrollArr['sss'], 2, '.', true);
+										Print '
+										</td>
+									</tr>
+									<tr>
+										<td>PhilHealth</td>
+										<td>'; 
+											if($payrollArr['philhealth'] == 0)
+												Print "--";
+											else
+												Print numberExactFormat($payrollArr['philhealth'], 2, '.', true);
+										Print '
+										</td>
+									</tr>
+									<tr>
+										<td>PagIBIG</td>
+										<td>'; 
+											if($payrollArr['pagibig'] == 0)
+												Print "--";
+											else
+												Print numberExactFormat($payrollArr['pagibig'], 2, '.', true);
+										Print '	
+										</td>
+									</tr>
+									<tr>
+										<td>Insurance</td>
+										<td>';
+											if($payrollArr['insurance'] == 0)
+												Print "--";
+											else
+												Print numberExactFormat($payrollArr['insurance'], 2, '.', true);
+										Print '
+										</td>
+									</tr>
+									<tr class="active" style="font-family: QuicksandMed;">
+										<td>Subtotal</td>
+										<td>'.numberExactFormat($contributions, 2, '.', true).'</td>
+									</tr>
+								</tbody>
+							</table>';
+								$totalLoans = $payrollArr['loan_pagibig'] + $payrollArr['loan_sss'] + $payrollArr['old_vale'] + $payrollArr['new_vale'];
+							Print '
+							<h3>Loans</h3>
+							<table class="table">
+								<thead>
+									<tr>
+										<td>New Vale</td>
+										<td>';
+											
+											if($payrollArr['new_vale'] == 0)
+												Print "--";
+											else
+												Print numberExactFormat($payrollArr['new_vale'], 2, '.', true);
+										Print '	
+										</td>
+									</tr>
+									<tr>
+										<td>Old Vale</td>
+										<td>';
+											if($payrollArr['old_vale'] == 0)
+												Print "--";
+											else
+												Print numberExactFormat($payrollArr['old_vale'], 2, '.', true);
+										Print '
+										</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>SSS</td>
+										<td>'; 
+											if($payrollArr['loan_sss'] == 0)
+												Print "--";
+											else
+												Print numberExactFormat($payrollArr['loan_sss'], 2, '.', true);
+										Print '
+										</td>
+									</tr>
+									<tr>
+										<td>PagIBIG</td>
+										<td>';
+											if($payrollArr['loan_pagibig'] == 0)
+												Print "--";
+											else
+												Print numberExactFormat($payrollArr['loan_pagibig'], 2, '.', true);
+										Print '
+										</td>
+									</tr>
+									<tr class="active" style="font-family: QuicksandMed;">
+										<td>Subtotal</td>
+										<td>';
+											
+											if($totalLoans  == 0)
+												Print "--";
+											else
+												Print numberExactFormat($totalLoans, 2, '.', true);
+										Print '
+										</td>
+									</tr>
+							</table>
+						</div>
+
+						<!-- Overall Computation -->
+						<div class="col-md-1 col-lg-12">
+							<div class="panel panel-primary">
+							  <div class="panel-heading">
+							    <h3 style="margin:0px">Overall Computation</h3>
+							  </div>
+							  <div class="panel-body text-center">
+							  	<div class="col-md-3 col-lg-3">
+							  		<h4><span class="glyphicon glyphicon-plus" style="color:green;"></span> Total Earnings:<br>
+							  			<b>
+							  				'.numberExactFormat($totalEarnings, 2, '.', true).'
+							  			</b>
+							  		</h4>
+							  	</div>
+							    <div class="col-md-3 col-lg-3">
+							    	<h4><span class="glyphicon glyphicon-minus" style="color:red;"></span> Total Contributions:<br>
+							    		<strong>
+							    			'.numberExactFormat($contributions, 2, '.', true).'
+							    		</strong>
+							    	</h4>
+							    </div>
+							    <div class="col-md-3 col-lg-3">
+							    	<h4><span class="glyphicon glyphicon-minus" style="color:red;"></span> Total Loans:
+							    	<br>
+							    		<strong>
+							    			'.numberExactFormat($totalLoans, 2, '.', true).'
+							    		</strong>
+							    	</h4>
+							    </div>
+							    <div class="col-md-3 col-lg-3">
+							    	<h4><span class="glyphicon glyphicon-minus" style="color:red;"></span> Total Tools:
+							    	<br> 
+							    		<b>
+							    			'.numberExactFormat($payrollArr['tools_paid'], 2, '.', true).'
+							    		</b>
+							    	</h4>
+							    </div>';
+							    
+							    	Print "<script>console.log('logic_payroll - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".abs($payrollArr['tools_paid'])."')</script>";
+							    	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($payrollArr['tools_paid']);
+							    	
+							    	$grandTotal = abs($grandTotal);
+							    Print '
+							    <div class="col-md-1 col-lg-12">
+							    	<h3><u>Grand total: '.numberExactFormat($grandTotal, 2, '.', true).'</u></h3>
+								</div>
+							  </div>
+							</div>
+						</div>
+					</div>';
+
 				}
 
 				?>
