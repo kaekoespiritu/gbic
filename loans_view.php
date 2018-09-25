@@ -140,6 +140,7 @@ else if($loanType == "newVale")
 				<?php 
 					$loans = "SELECT DISTINCT * FROM loans l INNER JOIN employee e ON l.empid = e.empid WHERE type = '$loanType' AND e.employment_status = '1' GROUP BY l.empid ORDER BY e.lastname ASC, STR_TO_DATE(l.date, '%M %e, %Y') ASC, l.time ASC ";
 					$loansQuery = mysql_query($loans) or die (mysql_error());
+					$noLoanChecker = true;
 					if(mysql_num_rows($loansQuery) > 0)
 					{
 						//Print "<script>alert('1')</script>";
@@ -187,13 +188,14 @@ else if($loanType == "newVale")
 					    	$startpoint = ($page * $limit) - $limit;
 					        $statement = $employees;
 
-							$employeeQuery=mysql_query("SELECT * FROM {$statement} LIMIT {$startpoint}, {$limit}");
+							$employeeQuery = mysql_query("SELECT * FROM {$statement} LIMIT {$startpoint}, {$limit}");
 
 							//---
 							$empArr = mysql_fetch_assoc($employeeQuery);
 							//Print "<script>alert(".mysql_num_rows($employeeQuery).")</script>";
 							//Check if employee has already fully paid his/her loan
 							$checker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
+				
 							$checkerQuery = mysql_query($checker);
 							$checkerArr = mysql_fetch_assoc($checkerQuery);
 
@@ -242,8 +244,10 @@ else if($loanType == "newVale")
 								}
 								else
 								{
+
 									if($checkerArr['balance'] > 0)
 									{
+
 										Print "
 											<tr>
 												<input type='hidden' name='empid[]' value='". $empid ."'>

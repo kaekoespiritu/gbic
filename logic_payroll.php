@@ -767,7 +767,7 @@ function getDay($day)
 		if($loanType == "SSS" || $loanType == "PagIBIG")
 		{
 			$Update = "INSERT INTO loans(empid, type, monthly, balance, amount, remarks, date, time, action, admin) 
-							VALUES('$empid', '$loanType', '$monthlyDues', '$LoanBalance', '$DeductedLoan', 'deducted', '$date', '$time', '0', '$admin')";
+							VALUES('$empid', '$loanType', '$monthlyDues', '$LoanBalance', '$DeductedLoan', 'deducted', '$date', '$time', '1', '$admin')";
 		}
 		else
 		{
