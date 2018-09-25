@@ -343,6 +343,10 @@
   .spacer {
     margin-right: 10px;
   }
+
+  .pull-up-more {
+    margin-top: -3.5%;
+  }
 /* END OF CUSTOM CLASSES */
 
 /*--------------------------------*/

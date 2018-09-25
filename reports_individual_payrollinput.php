@@ -329,14 +329,14 @@
 									</div>
 								</div>
 								<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
-									<ol class="breadcrumb text-left" style="margin-bottom: 0px">
-										<li>	
-											<a class="btn btn-danger pull-right" data-toggle="modal" data-target="#attendanceAdjustment">View Attendance Adjustments &nbsp<span class="badge" id="badge">'.$badgeCounter.'</span></a>
-										</li>
-										<li>	
-											<h3>Payroll Inputs for <br>'.$day7.' - '.$day1.'</h3>
-										</li>
-									</ol>
+									<div class="panel panel-primary">
+									  <div class="panel-heading">
+									    <h3>Payroll Inputs for <br>'.$day7.' - '.$day1.'</h3>
+									    <a class="btn btn-danger pull-right pull-up-more" data-toggle="modal" data-target="#attendanceAdjustment">View Attendance Adjustments &nbsp<span class="badge" id="badge">'.$badgeCounter.'</span></a>
+									  </div>
+									</div>
+
+
 								</div>
 								<!-- Employee information -->
 								<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">';
@@ -2116,16 +2116,15 @@
 
 					Print "
 					<div class='col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1 pull-down'>
-						<ol class='breadcrumb text-left' style='margin-bottom: 0px'>
+						
+						<div class='panel panel-success'>
+						  <div class='panel-heading'>
+						    <h3>Payroll Computation for <br>$day7 - $day1</h3>
+						  </div>
+						</div>";
 
-							<li>
-								<h3>Payroll Computation</h3>";
-							
-							Print '
-							</li>
-							
 
-						</ol>
+					Print '
 					</div>
 
 					<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
