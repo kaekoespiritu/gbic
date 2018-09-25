@@ -188,6 +188,9 @@
   h2 {
     margin: 0px;
   }
+  h3 {
+    margin: 0px;
+  }
   h6 {
     font-family: Quicksand;
     font-size: 1.5em !important;
@@ -339,10 +342,6 @@
 
   .spacer {
     margin-right: 10px;
-  }
-
-  .font-weight-bold {
-    font-weight: bold;
   }
 /* END OF CUSTOM CLASSES */
 
