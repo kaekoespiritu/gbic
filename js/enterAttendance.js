@@ -97,12 +97,12 @@ $(document).ready(function(){
 });
 
 function allowInputsFromRow(row) {
-	// if(row.length === 12) // If it only has numbers add CSS selector
-	// 	var id = 'input[id^=workstatus-'+row;
-	// else
-	// 	var id = row;
+	if(row.length <= 12 || row.length >= 7) // If it only has numbers add CSS selector
+		var id = 'input[id^=workstatus-'+row+']';
+	else
+		var id = row;
 
-	var id = 'input[id^=workstatus-'+row;
+	console.log("Allow inputs from row" + row);
 
 	if($(id).val() === 'No Work' && !$(id).hasClass('saved')) {
 		console.log("Button has Working");
@@ -123,8 +123,11 @@ function allowInputsFromRow(row) {
  
 function removeInputsFromRow(row) {
 
-
-	var id = row;
+	// Get empid without workstatus- prefix
+	if(row.length <= 12 || row.length >= 7)
+		var id = row;
+	else
+		var id = (row.id).substring(11);
 
 	var mainRow = document.getElementById(id);
 
