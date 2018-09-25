@@ -204,7 +204,7 @@
 		$complete = "UPDATE employee SET complete_doc = '0' WHERE empid = '$empid'";
 		mysql_query($complete) or die (mysql_error());
 	}
-	// Print "<script>window.location.assign('editEmployee.php?empid=".$empid."')</script>";
+	Print "<script>window.location.assign('editEmployee.php?empid=".$empid."')</script>";
 ?>
 
 
