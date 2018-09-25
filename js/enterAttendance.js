@@ -97,10 +97,12 @@ $(document).ready(function(){
 });
 
 function allowInputsFromRow(row) {
-	if(row.length === 12) // If it only has numbers add CSS selector
-		var id = 'input[id^=workstatus-'+row;
-	else
-		var id = row;
+	// if(row.length === 12) // If it only has numbers add CSS selector
+	// 	var id = 'input[id^=workstatus-'+row;
+	// else
+	// 	var id = row;
+
+	var id = 'input[id^=workstatus-'+row;
 
 	if($(id).val() === 'No Work' && !$(id).hasClass('saved')) {
 		console.log("Button has Working");
@@ -121,10 +123,8 @@ function allowInputsFromRow(row) {
  
 function removeInputsFromRow(row) {
 
-	if(row.length === 12) // if it has only numbers, leave it be
-		var id = row;
-	else
-		var id = (row.id).substring(11);
+
+	var id = row;
 
 	var mainRow = document.getElementById(id);
 
