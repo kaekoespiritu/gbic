@@ -1994,7 +1994,7 @@
 															$overallToolCost = 0;
 															if(mysql_num_rows($toolsCheckerQuery) == 0)
 															{
-																Print '	<div>
+																Print '	<div class="row">
 																			<div class="col-md-4 col-lg-4">
 																				<input type="text" id="tools" name="toolname[]" class="form-control input-sm" onchange="checkName(this)" disabled>
 																			</div>
