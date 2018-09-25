@@ -52,7 +52,8 @@
 								</div>
 							</div><br>
 
-							<h4 class="modal-title">New Loan Details</h4><hr>
+							<h4 class="modal-title">New Loan Details for [<?php echo $_SESSION["loandate"] ?>]</h4><hr>
+							<input type="hidden" id="loandate" name="loandate" value="<?php echo $_SESSION["loandate"] ?>" >
 
 							<div class="form-group" id="loanform">
 								<div class="row">

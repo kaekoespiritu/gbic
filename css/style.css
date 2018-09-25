@@ -340,6 +340,10 @@
   .spacer {
     margin-right: 10px;
   }
+
+  .font-weight-bold {
+    font-weight: bold;
+  }
 /* END OF CUSTOM CLASSES */
 
 /*--------------------------------*/
@@ -404,7 +408,7 @@
 
   #search_result_loans {
     position:absolute;
-    margin-top: -3.3em;
+    margin-top: -8.9em;
   }
 /* END OF SEARCH RESULTS FOR LOANS  */
 

@@ -144,6 +144,7 @@ else if($loanType == "newVale")
 					if(mysql_num_rows($loansQuery) > 0)
 					{
 						//Print "<script>alert('1')</script>";
+						$noLoanChecker = true;
 						while($row = mysql_fetch_assoc($loansQuery))
 						{
 							$empid = $row['empid'];
