@@ -333,6 +333,9 @@
 										<li>	
 											<a class="btn btn-danger pull-right" data-toggle="modal" data-target="#attendanceAdjustment">View Attendance Adjustments &nbsp<span class="badge" id="badge">'.$badgeCounter.'</span></a>
 										</li>
+										<li>	
+											<h3>Payroll Inputs for <br>'.$day7.' - '.$day1.'</h3>
+										</li>
 									</ol>
 								</div>
 								<!-- Employee information -->
