@@ -568,10 +568,6 @@ include('directives/session.php');
 		// Adding cancel button
 		document.getElementById('dynamicForm').appendChild(cancelButton);
 	}
-	function noWorkDay(id)
-	{
-
-	}
 </script>
 
 	
