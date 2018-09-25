@@ -143,6 +143,7 @@ else if($loanType == "newVale")
 					if(mysql_num_rows($loansQuery) > 0)
 					{
 						//Print "<script>alert('1')</script>";
+						$noLoanChecker = true;
 						while($row = mysql_fetch_assoc($loansQuery))
 						{
 							$empid = $row['empid'];
@@ -196,7 +197,7 @@ else if($loanType == "newVale")
 							$checkerQuery = mysql_query($checker);
 							$checkerArr = mysql_fetch_assoc($checkerQuery);
 
-							$noLoanChecker = true;
+							
 							if(mysql_num_rows($employeeQuery) != 0)
 							{
 								if($loanType == 'SSS' || $loanType == 'PAGIBIG')

@@ -2,6 +2,15 @@
 include_once('directives/db.php');
 include('directives/session.php');
 require_once("directives/modals/addLoan.php");
+
+if(isset($_SESSION['loandate']))
+{
+	$date = $_SESSION['loandate'];
+}
+else
+{
+	$date = strftime("%B %d, %Y");
+}
 ?>
 		<!DOCTYPE html>
 <html>
@@ -48,16 +57,7 @@ require_once("directives/modals/addLoan.php");
 						 <h4>Loan date:</h4>
 						 <div class="form-group col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3" style="float:none">
 						 	<input name="txt_attendance" type="text" size="10" class="form-control" value = <?php
-							if(isset($_SESSION['date']))
-							{
-								$date = $_SESSION['date'];
-								Print "'". $date ."'";
-							}
-							else
-							{
-								$date = strftime("%B %d, %Y");
-								Print '""';
-							}
+							echo $_SESSION["loandate"]
 							?> id="dtpkr_loan" placeholder="mm-dd-yyyy">
 						</div>
 					</div>
@@ -174,7 +174,6 @@ require_once("directives/modals/addLoan.php");
 	<script rel="javascript" src="js/accounting.min.js"></script>
 	<script rel="javascript" src="js/timepicker/jquery.timepicker.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
-	<script src="js/multiple-select.js"></script>
 	<script>
 		// Setting active color of menu to Employees
 		document.getElementById("employees").setAttribute("style", "background-color: #10621e;");
@@ -204,15 +203,7 @@ require_once("directives/modals/addLoan.php");
 		  }
 		 });
 
-		 $("select").multipleSelect({
-			placeholder: "Select site for attendance&#9662;",
-			selectAll: false,
-			width: 200,
-			multiple: true,
-			multipleWidth: 200
-		});
-
-		var currentDate = "<?php Print "$date"; ?>";
+		var currentDate = "<?php echo $date; ?>";
 		var dateToday = new Date();
 		var twoWeeksAgo = new Date(dateToday.getFullYear(), dateToday.getMonth(), dateToday.getDate() - 14);
 
@@ -230,6 +221,11 @@ require_once("directives/modals/addLoan.php");
 		});
 
 		$("#dtpkr_loan").datepicker("setDate", currentDate);
+
+		$("#dtpkr_loan").change(function(){
+			var date = $(this).val();
+			window.location.href = "date_loan.php?loandate="+date;
+		});
 
 		});
 
@@ -271,6 +267,7 @@ require_once("directives/modals/addLoan.php");
 
 		function sendToModal(id){
 			var parent = document.getElementById(id);
+
 			// Getting values from the searched employee
 			var empid = parent.querySelector('#empid').value;
 			var firstname = parent.querySelector('#firstname').value;
@@ -279,12 +276,13 @@ require_once("directives/modals/addLoan.php");
 			var contactnum = parent.querySelector('#contactnum').value;
 			var position = parent.querySelector('#position').value;
 			var site = parent.querySelector('#site').value;
-			// var monthly = parent.querySelector('#monthly').value;
 			var rate = parent.querySelector('#rate').value;
 			var sss = parent.querySelector('#sss').value;
 			var pagibig = parent.querySelector('#pagibig').value;
 			var oldvale = parent.querySelector('#oldvale').value;
 			var newvale = parent.querySelector('#newvale').value;
+			var loandate = parent.querySelector('#loandate').value;
+
 			// Move values to modal
 			document.getElementById('empid').value = empid;
 			document.getElementById('fname').value = firstname;
@@ -295,6 +293,10 @@ require_once("directives/modals/addLoan.php");
 			document.getElementById('position').value = position;
 			document.getElementById('site').value = site;
 			document.getElementById('rate').value = accounting.formatNumber(rate, 2, ",");
+			document.getElementById('loandate').value = "<?php echo $date; ?>";
+
+			console.log(loandate);
+
 			//done display if value is equal to Zero
 			if(sss != 0)
 			document.getElementById('sss').value = accounting.formatNumber(sss, 2, ",");

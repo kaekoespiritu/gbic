@@ -83,6 +83,7 @@ if(!empty($result))
       <input type="hidden" id="pagibig" value="'.$employeePAGIBIG.'">
       <input type="hidden" id="oldvale" value="'.$employeeOldVale.'">
       <input type="hidden" id="newvale" value="'.$employeeNewVale.'">
+      <input type="hidden" id="loandate" value="">
       </div>
       ';
     //Pre-requisite is the loan to be able to finish the data display on the modal
