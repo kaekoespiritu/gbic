@@ -114,7 +114,7 @@ include_once('directives/db.php');
 					<a href='applications.php'>
 							<div class='panel panel-danger'>
 								<div class='panel-heading'>
-									<h3 class='panel-title'>ABSENCE NOTICE: Employees that accumulated 7 DAYS of absences: </h3>
+									<h3>ABSENCE NOTICE: Employees that accumulated 7 DAYS of absences: </h3>
 									<div class='row'>";
 
 				if($awolCount > 2)// Separate in 2 columns
@@ -188,7 +188,7 @@ include_once('directives/db.php');
 				Print "
 						<div class='panel panel-danger'>
 							<div class='panel-heading'>
-								<h3 class='panel-title'>ABSENCE NOTICE: Employees that accumulated 4 DAYS of absences:
+								<h3>ABSENCE NOTICE: Employees that accumulated 4 DAYS of absences:
 									<span>
 										<input type='button' class='btn btn-danger pull-right' onclick='clearAbsenceRecord()' value='OK'>
 									</span>
@@ -277,12 +277,12 @@ include_once('directives/db.php');
 				$notifBool = false;// disable display of "No notification"
 				Print "		<div class='panel panel-warning'>
 								<div class='panel-heading'>
-									<h3 class='panel-title font-weight-bold'>13th Month pay notice: </h3>
+									<h3>13th Month pay notice: </h3>
 									<div class='row'>";
 
 									if(!empty($tenureArrWithReq))// With req
 									{
-										Print "<h3 class='panel-title'>Employees with Complete Requirements that stayed in the company for 6 Months</h3>
+										Print "<h3 class='col-md-12'>Employees with Complete Requirements that stayed in the company for 6 Months</h3>
 											<div class='col-md-10 col-md-offset-1'>";
 										$wReqCount = count($tenureArrWithReq);
 										$wReqHalf = $wReqCount / 2;
@@ -337,8 +337,8 @@ include_once('directives/db.php');
 									}
 									if(!empty($tenureArrWithOReq)) //Without req
 									{
-										Print "<div class='col-md-12'>
-											<h3 class='panel-title'>Employees with No/Incomplete Requirements that stayed in the company for 5 Months</h3>";
+										Print "<div class='col-md-10 col-md-offset-1'>
+											<h3 class='col-md-12'>Employees with No/Incomplete Requirements that stayed in the company for 5 Months</h3>";
 										$wOReqCount = count($tenureArrWithOReq);
 										$wOReqHalf = $wOReqCount / 2;
 										$wOReqHalf = round($wOReqHalf);
@@ -361,7 +361,7 @@ include_once('directives/db.php');
 										Print "<div class='row'>";
 										if($wOReqCount > 2)
 										{
-											Print "	<div class='col-md-6'>
+											Print "	<div class='col-md-6 smalltext'>
 														<ul>";
 												foreach($wOReqArr1 as $withWOReq)
 												{
@@ -400,7 +400,7 @@ include_once('directives/db.php');
 			if($notifBool)
 				Print "	<div class='panel panel-info'>
 							<div class='panel-heading'>
-								<h3 class='panel-title font-weight-bold'>No notifications</h3>
+								<h3>No notifications</h3>
 							</div>
 						</div>";
 			?>

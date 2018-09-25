@@ -1923,7 +1923,7 @@ if($holidayExist > 0)
 							?>
 						</div>
 						<div class="col-md-1 col-lg-12">
-							<input type="text" class="form-control" id="sssDeduct" name="sssDeduct" placeholder="To deduct" onblur="addDecimal(this)" value="<?php Print $sssDisplay?>" onchange="setsssLimit(this)">
+							<input type="number" class="form-control" id="sssDeduct" name="sssDeduct" placeholder="To deduct" onblur="addDecimal(this)" value="<?php Print $sssDisplay?>" onchange="setsssLimit(this)">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -1943,7 +1943,7 @@ if($holidayExist > 0)
 							?>
 						</div>
 						<div class="col-md-1 col-lg-12">
-							<input type="text" class="form-control" id="pagibigDeduct" name="pagibigDeduct" placeholder="To deduct" onblur="addDecimal(this)" value="<?php Print $pagibigDisplay?>" onchange="setpagibigLimit(this)">
+							<input type="number" class="form-control" id="pagibigDeduct" name="pagibigDeduct" placeholder="To deduct" onblur="addDecimal(this)" value="<?php Print $pagibigDisplay?>" onchange="setpagibigLimit(this)">
 						</div>
 					</div>
 				</div>
@@ -1963,7 +1963,7 @@ if($holidayExist > 0)
 							</span>
 						</h5>
 						<div class="row">
-							<input type='text' placeholder='Deduct' id='oldValeDeduct' name='oldValeDeduct'class='form-control input-sm pull-down' onchange='setoldvaleLimit(this)'>
+							<input type='number' placeholder='Deduct' id='oldValeDeduct' name='oldValeDeduct'class='form-control input-sm pull-down' onchange='setoldvaleLimit(this)'>
 						</div>
 					</div>
 
@@ -2014,9 +2014,9 @@ if($holidayExist > 0)
 						}
 						?>
 						<h4>COLA</h4>
-						<input type="text" value="<?php Print $colaValue?>" name="cola" class="form-control">
+						<input type="number" value="<?php Print $colaValue?>" name="cola" class="form-control">
 						<h4>Insurance</h4>
-						<input type="text" value="<?php Print $insurance?>" name="insurance"  class="form-control">
+						<input type="number" value="<?php Print $insurance?>" name="insurance"  class="form-control">
 					</div>
 				</div>
 
@@ -2071,7 +2071,7 @@ if($holidayExist > 0)
 						</div>
 						<label class="control-label col-md-2 col-lg-2">Extra</label>
 						<div class="col-md-2 col-lg-2 nopadding">
-							<input type="text" id="allowance" name="extra_allowance" name="extra_allowance" class="form-control input-sm" value="<?php Print $AttExtraAllowance?>" onblur="addDecimal(this)">
+							<input type="number" id="allowance" name="extra_allowance" name="extra_allowance" class="form-control input-sm" value="<?php Print $AttExtraAllowance?>" onblur="addDecimal(this)">
 						</div>
 					</div>
 
@@ -2098,7 +2098,7 @@ if($holidayExist > 0)
 												<input type="text" id="price" name="toolprice[]" class="form-control input-sm" onkeypress="validateprice(event)" onchange="getTotal(this)" onblur="addDecimal(this)">
 											</div>
 											<div class="col-md-3 col-lg-3">
-												<input type="text" id="quantity" name="toolquantity[]" class="form-control input-sm" onchange="getTotal(this)" onblur="addDecimal(this)">
+												<input type="number" id="quantity" name="toolquantity[]" class="form-control input-sm" onchange="getTotal(this)" onblur="addDecimal(this)">
 											</div>
 										</div>	';
 							}

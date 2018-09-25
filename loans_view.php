@@ -254,7 +254,7 @@ else if($loanType == "newVale")
 												<td style='vertical-align: inherit'>
 													".$empid."
 												</td>
-												<td style='vertical-align: inherit'>
+												<td style='vertical-align: inherit; text-align: left;'>
 													".$empArr['lastname'].", ".$empArr['firstname']."
 												</td>
 												<td style='vertical-align: inherit'>
