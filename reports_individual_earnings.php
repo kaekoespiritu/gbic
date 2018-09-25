@@ -181,6 +181,9 @@
 			  	
 			});
 		});
+		function payrollInputHistory(id) {
+			window.location.assign("reports_individual_payrollinput.php?empid="+id);
+		}
 
 		function viewPayrollBtn(id) {
 			window.location.assign("reports_individual_payroll.php?empid="+id);

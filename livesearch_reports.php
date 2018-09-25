@@ -74,6 +74,9 @@ if(isset($_POST["search"]))
             if($reportType == "Earnings")//for Earnings tab
             {
                 Print    " 
+                             <button class='btn btn-default' onclick='payrollInputHistory(\"".$empArr['empid']."\")'>
+                                Payroll Input History
+                            </button>
                             <button class='btn btn-default' onclick='viewPayrollBtn(\"".$empArr['empid']."\")'>
                                 Payroll
                             </button>
