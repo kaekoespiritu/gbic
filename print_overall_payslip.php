@@ -272,7 +272,7 @@ for($count = 0; $count <= $loopCount; $count++)
 					$activeSheet->setCellValue($cellD.$overtimeDataCounter, $OTSubTotal);
 
 				//Allowance
-				$daysAllowance = $payrollArr['num_days'];
+				$daysAllowance = $payrollArr['allow_days'];
 				// if(!empty($payrollArr['sunday_hrs']))
 				// 	$daysAllowance++;
 				if($payrollArr['allow'] != 0)

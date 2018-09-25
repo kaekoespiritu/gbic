@@ -86,7 +86,7 @@ require_once("directives/modals/addLoan.php");
 		function loanDashboard($type)
 		{
 			if($type == 'empVale')//Employees with vale
-			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE loans.type = 'oldVale' OR loans.type = 'newVale'";
+			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE loans.type = 'oldVale' OR loans.type = 'newVale' ";
 			if($type == 'newVale')//Employees with new vale
 			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE loans.type = 'newVale'";
 			if($type == 'oldVale')//Employees with old vale
@@ -106,7 +106,7 @@ require_once("directives/modals/addLoan.php");
 					if($type == 'empVale')//Employees with vale
 					{
 						Print "<script>console.log('".$empid."')</script>";
-						$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' OR type = 'newVale' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1") or die(mysql_error());
+						$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND (type = 'oldVale' OR type = 'newVale') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1") or die(mysql_error());
 					}
 					else if($type == 'newVale')//Employees with new vale
 						$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND type = 'newVale' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1") or die(mysql_error());

@@ -133,7 +133,7 @@ $OTSubTotal = $payrollArr['ot_num'] * $payrollArr['overtime'];
 $activeSheet->setCellValue('D4', $OTSubTotal);
 
 //Allowance
-$daysAllowance = $payrollArr['num_days'];
+$daysAllowance = $payrollArr['allow_days'];
 // if(!empty($payrollArr['ot_num']))
 // 	$daysAllowance++;
 $activeSheet->setCellValue('B5', $payrollArr['allow']);
