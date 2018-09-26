@@ -140,13 +140,13 @@ $payroll_font = array(
 $grand_total_font = array(
                   'font' => array(
                     'name' => 'Calibri',
-                    'size' => 15
+                    'size' => 18
                   )
                 );
 $data_font = array(
                   'font' => array(
                     'name' => 'Calibri',
-                    'size' => 13
+                    'size' => 15
                   )
                 );
 $column_header_font = array(
