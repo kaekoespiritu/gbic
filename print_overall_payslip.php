@@ -343,8 +343,8 @@ for($count = 0; $count <= $loopCount; $count++)
 					$activeSheet->setCellValue($cellB.$pagibigDataCounter, $payrollArr['pagibig']);
 
 				//Allowance
-				if($payrollArr['x_allowance'] != 0)
-					$activeSheet->setCellValue($cellD.$xAllowanceDataCounter, $payrollArr['x_allowance']);
+				if($payrollArr['x_allowance'] != 0 || $payrollArr['x_allow_weekly'] != 0|| $payrollArr['x_allow_daily'] != 0)
+					$activeSheet->setCellValue($cellD.$xAllowanceDataCounter, ($payrollArr['x_allowance'] + $payrollArr['x_allow_weekly'] + ($payrollArr['x_allow_daily'] * $payrollArr['allow_days'])));
 
 				//Vale
 				if($payrollArr['old_vale'] != 0)

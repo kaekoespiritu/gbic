@@ -142,7 +142,9 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 		$speHolBool = (intval($payrollArr['spe_holiday_num'] == 0) ? true : false);
 		$AllowBool = (intval($payrollArr['allow'] == 0) ? true : false);
 		$colaBool = (intval($payrollArr['cola'] == 0) ? true : false);
-		$XallowBool = (intval($payrollArr['x_allowance'] == 0) ? true : false);
+		$XallowBool = (	intval($payrollArr['x_allowance']) == 0 || 
+						intval($payrollArr['x_allow_daily']) == 0 || 
+						intval($payrollArr['x_allow_weekly']) == 0 ? true : false);
 		$SSSBool = (intval($payrollArr['sss'] == 0) ? true : false);
 		$PhilHealthBool = (intval($payrollArr['philhealth'] == 0) ? true : false);
 		$PagibigBool = (intval($payrollArr['pagibig'] == 0) ? true : false);
@@ -189,7 +191,7 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 			
 		//---
 		if(!$XallowBool)
-			$activeSheet->setCellValue('S'.$rowCounter, $payrollArr['x_allowance']);//X All.
+			$activeSheet->setCellValue('S'.$rowCounter, ($payrollArr['x_allowance'] + $payrollArr['x_allow_weekly'] + ($payrollArr['x_allow_daily'] * $payrollArr['allow_days'])));//X All.
 		if(!$SSSBool)
 			$activeSheet->setCellValue('T'.$rowCounter, $payrollArr['sss']);//SSS
 		if(!$PhilHealthBool)
@@ -293,7 +295,7 @@ $activeSheet->getColumnDimension('T')->setAutoSize(true);
 $activeSheet->getColumnDimension('U')->setAutoSize(true);
 $activeSheet->getColumnDimension('V')->setAutoSize(true);
 $activeSheet->getColumnDimension('W')->setAutoSize(true);
-$activeSheet->getColumnDimension('X')->setAutoSize(true);
+$activeSheet->getColumnDimension('X')->setWidth(9);
 $activeSheet->getColumnDimension('Y')->setAutoSize(true);
 $activeSheet->getColumnDimension('Z')->setAutoSize(true);
 $activeSheet->getColumnDimension('AA')->setAutoSize(true);

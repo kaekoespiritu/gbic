@@ -184,7 +184,7 @@ $activeSheet->setCellValue('B12', $payrollArr['philhealth']);
 $activeSheet->setCellValue('B13', $payrollArr['pagibig']);
 
 //Allowance
-$activeSheet->setCellValue('D11', $payrollArr['x_allowance']);
+$activeSheet->setCellValue('D11', ($payrollArr['x_allowance'] + $payrollArr['x_allow_weekly'] + ($payrollArr['x_allow_daily'] * $payrollArr['allow_days'])));
 
 //Vale
 $activeSheet->setCellValue('B14', $payrollArr['old_vale']);

@@ -200,6 +200,24 @@
 									<input name="txt_addAllowance" onkeypress="validatenumber(event)" type="text" class="form-control" autocomplete="off" onchange="allowanceDecimal()" id="allowance">
 								</div>
 							</div>
+							
+							<div class="row">
+								<div class="col-md-5 col-lg-5">
+									<label for="allowance">Extra Allowance Daily</label>
+								</div>
+								<div class="col-md-5 col-lg-5">
+									<input name="txt_addXAllowanceDaily" onkeypress="validatenumber(event)" type="text" class="form-control" autocomplete="off" onchange="allowanceDecimal()" id="allowance">
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-5 col-lg-5">
+									<label for="allowance">Extra Allowance Weekly</label>
+								</div>
+								<div class="col-md-5 col-lg-5">
+									<input name="txt_addXAllowanceWeekly" onkeypress="validatenumber(event)" type="text" class="form-control" autocomplete="off" onchange="allowanceDecimal()" id="allowance">
+								</div>
+							</div>
 
 							<div class="row">
 								<h4 class="modal-title"><br>Contributions</h4><hr>

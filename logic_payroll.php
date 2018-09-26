@@ -705,10 +705,21 @@ function getDay($day)
 	$dailyAllowance = 0;
 	$extraAllowance = 0;
 
+	$extraAllowanceDaily = 0;
+	$extraAllowanceDailyOverall = 0;
+	$extraAllowanceWeekly = 0;
+
 	if(!empty($_POST['allowance']))
 		$dailyAllowance = $_POST['allowance'];// for database use
 	if(!empty($_POST['extra_allowance']))
 		$extraAllowance = $_POST['extra_allowance'];
+
+	if(!empty($_POST['xAllowanceDaily']))
+		$extraAllowanceDaily = $_POST['xAllowanceDaily'];
+	if(!empty($_POST['xAllowanceDailyOverall']))
+		$extraAllowanceDailyOverall = $_POST['xAllowanceDailyOverall'];//extra
+	if(!empty($_POST['xAllowanceWeekly']))
+		$extraAllowanceWeekly = $_POST['xAllowanceWeekly'];
 
 	$daysAllowance = $overallAllowance;
 	$checkRoundAllowance = explode(".", $daysAllowance);
@@ -737,6 +748,8 @@ function getDay($day)
 	}
 
 	$compAllowance = (($daysAllowance * $dailyAllowance)  + $extraAllowance);
+	Print "<script>console.log('extraAllowanceDailyOverall: ".$extraAllowanceDailyOverall." | extraAllowanceWeekly: ".$extraAllowanceWeekly."')</script>";
+	$xAllowancesComp = $extraAllowanceDailyOverall + $extraAllowanceWeekly;
 //Loans deduction --------------------------------------------------------------------- Incomplete
 //*query to loans table the deduction
 	function loanQuery($loanType , $empid, $DeductedLoan, $date, $admin) //function for loans query
@@ -1012,7 +1025,8 @@ function getDay($day)
 	$xAllowance = $extraAllowance;
 
 	$totalCola = $cola * $daysAllowance;
-	$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $totalCola;
+	$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $totalCola + $xAllowancesComp;
+	Print "<script>console.log('xAllowancesComp: ". $xAllowancesComp."')</script>";
 	Print "<script>console.log('logic_payroll - totalRegularHolidayRate: ".abs($totalRegularHolidayRate)." | totalSpecialHolidayRate: ".abs($totalSpecialHolidayRate)." | totalSundayRate: ".abs($totalSundayRate)." | totalNightDifferential: ".$totalNightDifferential." | totalAllowance: ".$totalAllowance." | totalOvertime: ".$totalOvertime." | totalRatePerDay: ".$totalRatePerDay." | xAllowance: ".$xAllowance." | totalCola: ".$totalCola."')</script>";
 
 	$contributions = $pagibig + $philhealth + $sss + $tax + $insurance;
@@ -1071,6 +1085,8 @@ function getDay($day)
 									allow_days,
 									comp_allowance,
 									x_allowance,
+									x_allow_daily,
+									x_allow_weekly,
 									cola,
 									sunday_rate,
 									sunday_hrs,
@@ -1110,6 +1126,8 @@ function getDay($day)
 														'$daysAllowance',
 														'$compAllowance',
 														'$extraAllowance',
+														'$extraAllowanceDaily',
+														'$extraAllowanceWeekly',
 														'$totalCola',
 														'$SundayRatePerHour',
 														'$sunWorkHrs',
@@ -1152,6 +1170,8 @@ function getDay($day)
 									allow_days = '$daysAllowance',
 									comp_allowance = '$compAllowance',
 									x_allowance = '$extraAllowance',
+									x_allow_daily = '$extraAllowanceDaily',
+									x_allow_weekly = '$extraAllowanceWeekly',
 									cola = '$totalCola',
 									sunday_rate = '$SundayRatePerHour',
 									sunday_hrs = '$sunWorkHrs',

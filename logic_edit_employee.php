@@ -98,6 +98,16 @@
 		$allowance = mysql_real_escape_string($_POST['allowance']);
 		mysql_query("UPDATE employee SET allowance = '$allowance' WHERE empid = '$empid'") or die (mysql_error());	
 	}
+	if($_POST['xAllowanceDaily'] != null)
+	{
+		$xAllowanceDaily = mysql_real_escape_string($_POST['xAllowanceDaily']);
+		mysql_query("UPDATE employee SET x_allow_daily = '$xAllowanceDaily' WHERE empid = '$empid'") or die (mysql_error());	
+	}
+	if($_POST['xAllowanceWeekly'] != null)
+	{
+		$xAllowanceWeekly = mysql_real_escape_string($_POST['xAllowanceWeekly']);
+		mysql_query("UPDATE employee SET x_allow_weekly = '$xAllowanceWeekly' WHERE empid = '$empid'") or die (mysql_error());	
+	}
 	if($_POST['cola'] != null)
 	{
 		$cola = mysql_real_escape_string($_POST['cola']);

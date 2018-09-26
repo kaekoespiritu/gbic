@@ -201,6 +201,42 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 					}
 					
 					?>
+					<!-- Extra Allowance Daily -->
+
+					<?php
+					$xAllowanceDaily = 0;
+					if($payrollArr['x_allow_daily'] != 0)
+					{
+						$overallXAllowDaily = $allowDays * $payrollArr['x_allow_daily'];
+					Print "
+							<tr>
+								<td>Extra Allowance</td>
+								<td>".numberExactFormat($payrollArr['x_allow_daily'], 2, '.', true)."</td>
+								<td>".$allowDays."</td>
+								<td>".numberExactFormat($overallXAllowDaily, 2, '.', true)."</td>
+							</tr>
+							";
+					}
+					
+					?>
+					<!-- Extra Allowance Weekly -->
+
+					<?php
+					$xAllowanceWeekly = 0;
+					if($payrollArr['x_allow_weekly'] != 0)
+					{
+					Print "
+							<tr>
+								<td>Extra Allowance</td>
+								<td>".numberExactFormat($payrollArr['x_allow_weekly'], 2, '.', true)."</td>
+								<td>--</td>
+								<td>".numberExactFormat($payrollArr['x_allow_weekly'], 2, '.', true)."</td>
+							</tr>
+							";
+					$xAllowanceWeekly = $payrollArr['x_allow_weekly'];
+					}
+					
+					?>
 					<!-- Overtime -->
 					<?php
 						$subTotalOvertime = $payrollArr['ot_num']*$payrollArr['overtime'];
@@ -365,7 +401,7 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 					?>
 
 					<?php
-						$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $totalCola;
+						$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $totalCola + $overallXAllowDaily + $xAllowanceWeekly;
 							Print "<script>console.log('payroll_computation.php - totalRegularHolidayRate: ".abs($totalRegularHolidayRate)." | totalSpecialHolidayRate: ".abs($totalSpecialHolidayRate)." | totalSundayRate: ".abs($totalSundayRate)." | totalNightDifferential: ".$totalNightDifferential." | totalAllowance: ".$totalAllowance." | totalOvertime: ".$totalOvertime." | totalRatePerDay: ".$totalRatePerDay." | xAllowance: ".$xAllowance." | totalCola: ".$totalCola. "')</script>";"')</script>";
 
 					?>

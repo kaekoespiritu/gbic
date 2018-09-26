@@ -343,7 +343,7 @@
 													'.$payrollArr['spe_holiday_num'].'
 												</td>
 												<td><!-- X.All -->
-													'.$payrollArr['x_allowance'].'
+													'.($payrollArr['x_allowance'] + $payrollArr['x_allow_weekly'] + ($payrollArr['x_allow_daily'] * $payrollArr['allow_days'])).'
 												</td>
 												<td><!-- SSS -->
 													'.$payrollArr['sss'].'

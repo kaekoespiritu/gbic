@@ -2046,7 +2046,7 @@ if($holidayExist > 0)
 
 				<!-- Allowance computation -->
 				<?php
-						//Computation for overall allowance
+				//Computation for overall allowance
 				$overallAllow = "";
 				if(!empty($empArr['allowance']))
 				{
@@ -2055,6 +2055,19 @@ if($holidayExist > 0)
 				}
 				if($AttExtraAllowance == 0)// If extra allowance accumulated from attendance is Zero 
 					$AttExtraAllowance = "";
+				// Extra allowance daily
+				$overallXAllowDaily = "";
+				$xAllowDaily = "";
+				if($empArr['x_allow_daily'] != 0)
+				{
+					$overallXAllowDaily = $empArr['x_allow_daily'] * $allowCounter;
+					$xAllowDaily = $empArr['x_allow_daily'];
+				}
+				$xAllowWeekly = "";
+				if($empArr['x_allow_weekly'] != 0)
+				{
+					$xAllowWeekly = $empArr['x_allow_weekly'];
+				}
 				?>
 				<!-- Days the employee came to work -->
 				<input type="hidden" name="daysAttended" value="<?php Print $allowCounter?>">
@@ -2065,13 +2078,33 @@ if($holidayExist > 0)
 						<div class="col-md-2 col-lg-2 nopadding">
 							<input type="text" id="allowance" name="allowance" class="form-control input-sm" placeholder="Daily allowance" value="<?php Print $empArr['allowance']?>" readonly>
 						</div>
-						<label class="control-label col-md-2 col-lg-2">Overall</label>
+						<label class="control-label col-md-2 col-lg-2">Overall Daily</label>
 						<div class="col-md-2 col-lg-2 nopadding">
 							<input type="text" id="OverallAllowance" name="OverallAllowance" class="form-control input-sm" placeholder="Overall Allow."  value="<?php Print $overallAllow?>" readonly>
 						</div>
+					</div>
+
+					
+					<div class="col-md-1 col-lg-12">
+						<h4 class="text-left">Extra Allowance</h4>
 						<label class="control-label col-md-2 col-lg-2">Extra</label>
 						<div class="col-md-2 col-lg-2 nopadding">
 							<input type="number" id="allowance" name="extra_allowance" name="extra_allowance" class="form-control input-sm" value="<?php Print $AttExtraAllowance?>" onblur="addDecimal(this)">
+						</div>
+						<label class="control-label col-md-2 col-lg-2">Extra Daily</label>
+						<div class="col-md-2 col-lg-2 nopadding">
+							<input type="text" name="xAllowanceDaily" class="form-control input-sm" 
+							value="<?php Print $xAllowDaily?>" readonly>
+						</div>
+						<label class="control-label col-md-2 col-lg-2">Overall Extra Daily</label>
+						<div class="col-md-2 col-lg-2 nopadding">
+							<input type="text" id="xAllowanceDailyOverall" name="xAllowanceDailyOverall" class="form-control input-sm"  value="<?php Print $overallXAllowDaily?>" readonly>
+						</div>
+					</div>
+					<div class="col-md-1 col-lg-12">
+						<label class="control-label col-md-2 col-lg-2">Extra Weekly</label>
+						<div class="col-md-2 col-lg-2 nopadding">
+							<input type="text" id="xAllowanceWeekly" name="xAllowanceWeekly" class="form-control input-sm"   value="<?php Print $xAllowWeekly?>" readonly>
 						</div>
 					</div>
 

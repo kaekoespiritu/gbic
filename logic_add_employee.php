@@ -38,6 +38,8 @@ error_reporting(0);
 		$position = mysql_real_escape_string($_POST['dd_addPosition']);
 		$ratePerDay = mysql_real_escape_string($_POST['txt_addRatePerDay']);
 		$allowance = mysql_real_escape_string($_POST['txt_addAllowance']);
+		$xAllowanceDaily = mysql_real_escape_string($_POST['txt_addXAllowanceDaily']);
+		$xAllowanceWeekly = mysql_real_escape_string($_POST['txt_addXAllowanceWeekly']);
 		$site = mysql_real_escape_string($_POST['dd_site']);
 		$sssEE = mysql_real_escape_string($_POST['txt_addSSSEE']);
 		$sssER = mysql_real_escape_string($_POST['txt_addSSSER']);
@@ -116,6 +118,8 @@ error_reporting(0);
 												position,
 												rate,
 												allowance,
+												x_allow_daily,
+												x_allow_weekly,
 												site,
 												sss,
 												sss_er,
@@ -140,6 +144,8 @@ error_reporting(0);
 																	'$position',
 																	'$ratePerDay',
 																	'$allowance',
+																	'$xAllowanceDaily',
+																	'$xAllowanceWeekly',
 																	'$site',
 																	'$sssEE',
 																	'$sssER',

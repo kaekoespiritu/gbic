@@ -19,6 +19,8 @@ $civilstatus = $employee_info['civilstatus'];
 $position = $employee_info['position'];
 $rate = $employee_info['rate'];
 $allowance = $employee_info['allowance'];
+$xAllowanceDaily = $employee_info['x_allow_daily'];
+$xAllowanceWeekly = $employee_info['x_allow_weekly'];
 $site = $employee_info['site'];
 $sssEE = $employee_info['sss'];
 $sssER = $employee_info['sss_er'];
@@ -33,6 +35,7 @@ $cola = $employee_info['cola'];
 $insurance = $employee_info['insurance'];
 $contributions = $employee_info['complete_doc'];
 $bank = $employee_info['bank'];
+
 
 ?>
 <html>
@@ -283,6 +286,24 @@ $bank = $employee_info['bank'];
 						</div>
 						<div class="col-md-5 col-lg-5">
 							<input type="number" name="allowance" placeholder="<?php Print "$allowance"?>" class="form-control" onchange="allowanceDecimal()" id="allowance">
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-5 col-lg-5">
+							<label for="allowance">Extra Allowance Daily</label>
+						</div>
+						<div class="col-md-5 col-lg-5">
+							<input type="number" name="xAllowanceDaily" placeholder="<?php Print "$xAllowanceDaily"?>" class="form-control" onchange="allowanceDecimal()" id="allowance">
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-5 col-lg-5">
+							<label for="allowance">Extra Allowance Weekly</label>
+						</div>
+						<div class="col-md-5 col-lg-5">
+							<input type="number" name="xAllowanceWeekly" placeholder="<?php Print "$xAllowanceWeekly"?>" class="form-control" onchange="allowanceDecimal()" id="allowance">
 						</div>
 					</div>
 					<div class="row">

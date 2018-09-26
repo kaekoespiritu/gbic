@@ -341,13 +341,10 @@
 								<!-- Employee information -->
 								<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">';
 									
-									$employee = "SELECT * FROM employee WHERE empid = '$empid'";
-									$employeeQuery = mysql_query($employee);
-									$empArr = mysql_fetch_assoc($employeeQuery);
 							//For deduction section 4 for 4 weeks in a month
-									$deductionSSS = $empArr['sss']/4;
-									$deductionPagibig = $empArr['pagibig']/4;
-									$deductionPhilhealth = $empArr['philhealth']/4;
+									$deductionSSS = $payrollArr['sss']/4;
+									$deductionPagibig = $payrollArr['pagibig']/4;
+									$deductionPhilhealth = $payrollArr['philhealth']/4;
 									
 							//2 decimal places
 									$deductionSSS =  numberExactFormat($deductionSSS, 2, '.', true);
@@ -406,7 +403,7 @@
 									</div>";
 									Print "
 									<div class='col-md-4 col-lg-4 text-right'>";
-									if($empArr['philhealth'] != 0)//Phil Health Display
+									if($payrollArr['philhealth'] != 0)//Phil Health Display
 									{
 										Print "<h4><span class='glyphicon glyphicon-ok'></span> PhilHealth documents</h4>";
 									}
@@ -414,7 +411,7 @@
 									{
 										Print "<h4><span class='glyphicon glyphicon-remove'></span> PhilHealth documents</h4>";
 									}
-									if($empArr['pagibig'] != 0)//Pagibig Display
+									if($payrollArr['pagibig'] != 0)//Pagibig Display
 									{
 										Print "<h4><span class='glyphicon glyphicon-ok'></span> Pag-IBIG documents</h4>";
 									}
@@ -422,7 +419,7 @@
 									{
 										Print "<h4><span class='glyphicon glyphicon-remove'></span> Pag-IBIG documents</h4>";
 									}
-									if($empArr['sss'] != 0)//SSS Display
+									if($payrollArr['sss'] != 0)//SSS Display
 									{
 										Print "<h4><span class='glyphicon glyphicon-ok'></span> SSS documents</h4>";
 									}
@@ -1954,14 +1951,27 @@
 												
 												//Computation for overall allowance
 												$overallAllow = "";
-												if(!empty($empArr['allowance']))
+												if(!empty($payrollArr['allow']))
 												{
-													$overallAllow = $empArr['allowance'] * $allowCounter;
+													$overallAllow = $payrollArr['allow'] * $allowCounter;
 													$overallAllow = numberExactFormat($overallAllow, 2, '.', true);
 												}
 												if($AttExtraAllowance == 0)// If extra allowance accumulated from attendance is Zero 
 													$AttExtraAllowance = "";
 												
+												// Extra allowance daily
+												$overallXAllowDaily = "";
+												$xAllowDaily = "";
+												if($payrollArr['x_allow_daily'] != 0)
+												{
+													$overallXAllowDaily = $payrollArr['x_allow_daily'] * $allowCounter;
+													$xAllowDaily = $payrollArr['x_allow_daily'];
+												}
+												$xAllowWeekly = "";
+												if($payrollArr['x_allow_weekly'] != 0)
+												{
+													$xAllowWeekly = $payrollArr['x_allow_weekly'];
+												}
 												Print '
 												<!-- Days the employee came to work -->
 												<input type="hidden" name="daysAttended" value="'.$allowCounter.'">
@@ -1970,15 +1980,34 @@
 													<div class="form-group">
 														<label class="control-label col-md-2 col-lg-2">Daily</label>
 														<div class="col-md-2 col-lg-2 nopadding">
-															<input type="text" id="allowance" name="allowance" class="form-control input-sm" placeholder="Daily allowance" value="'.$empArr['allowance'].'" disabled>
+															<input type="text" id="allowance" name="allowance" class="form-control input-sm" placeholder="Daily allowance" value="'.$payrollArr['allow'].'" disabled>
 														</div>
 														<label class="control-label col-md-2 col-lg-2">Overall</label>
 														<div class="col-md-2 col-lg-2 nopadding">
 															<input type="text" id="OverallAllowance" name="OverallAllowance" class="form-control input-sm" placeholder="Overall Allow."  value="'.$overallAllow.'" disabled>
 														</div>
+														
+													</div>
+													<div class="col-md-1 col-lg-12">
+														<h4 class="text-left">Extra Allowance</h4>
 														<label class="control-label col-md-2 col-lg-2">Extra</label>
 														<div class="col-md-2 col-lg-2 nopadding">
-															<input type="text" id="allowance" name="extra_allowance" name="extra_allowance" class="form-control input-sm" value="'.($payrollArr['x_allowance'] != 0 ? $payrollArr['x_allowance'] : "").'" onblur="addDecimal(this)" disabled>
+															<input type="number" id="allowance" name="extra_allowance" name="extra_allowance" class="form-control input-sm" value="'. ($payrollArr['x_allowance'] != 0 ? $payrollArr['x_allowance'] : "").'" onblur="addDecimal(this)" readonly>
+														</div>
+														<label class="control-label col-md-2 col-lg-2">Extra Daily</label>
+														<div class="col-md-2 col-lg-2 nopadding">
+															<input type="text" name="xAllowanceDaily" class="form-control input-sm" 
+															value="'. $xAllowDaily.'" readonly>
+														</div>
+														<label class="control-label col-md-2 col-lg-2">Overall Extra Daily</label>
+														<div class="col-md-2 col-lg-2 nopadding">
+															<input type="text" id="xAllowanceDailyOverall" name="xAllowanceDailyOverall" class="form-control input-sm"  value="'. $overallXAllowDaily.'" readonly>
+														</div>
+													</div>
+													<div class="col-md-1 col-lg-12">
+														<label class="control-label col-md-2 col-lg-2">Extra Weekly</label>
+														<div class="col-md-2 col-lg-2 nopadding">
+															<input type="text" id="xAllowanceWeekly" name="xAllowanceWeekly" class="form-control input-sm"   value="'. $xAllowWeekly.'" readonly>
 														</div>
 													</div>
 
@@ -2159,7 +2188,7 @@
 
 										$ratePerDayDisp = $ratePerDaySub." Day(s)";// for display
 										
-										$subTotalRatePerDay = $ratePerDaySub * numberExactFormat($empArr['rate'],2,'.', true);
+										$subTotalRatePerDay = $ratePerDaySub * numberExactFormat($payrollArr['rate'],2,'.', true);
 										// Print "<script>console.log('ratePerDaySub: ". $ratePerDaySub." | dailyRate: ".numberExactFormat($empArr['rate'],2,'.', true)."')</script>";//dito
 										$totalRatePerDay = $subTotalRatePerDay;//for the Subtotal of Earnings
 
@@ -2217,7 +2246,39 @@
 											";
 									$xAllowance = $payrollArr['x_allowance'];
 									}
+									$xAllowanceDaily = 0;
+									if($payrollArr['x_allow_daily'] != 0)
+									{
+										$overallXAllowDaily = $allowDays * $payrollArr['x_allow_daily'];
+									Print "
+											<tr>
+												<td>Extra Allowance</td>
+												<td>".numberExactFormat($payrollArr['x_allow_daily'], 2, '.', true)."</td>
+												<td>".$allowDays."</td>
+												<td>".numberExactFormat($overallXAllowDaily, 2, '.', true)."</td>
+											</tr>
+											";
+									}
 									
+									?>
+									<!-- Extra Allowance Weekly -->
+
+									<?php
+									$xAllowanceWeekly = 0;
+									if($payrollArr['x_allow_weekly'] != 0)
+									{
+									Print "
+											<tr>
+												<td>Extra Allowance</td>
+												<td>".numberExactFormat($payrollArr['x_allow_weekly'], 2, '.', true)."</td>
+												<td>--</td>
+												<td>".numberExactFormat($payrollArr['x_allow_weekly'], 2, '.', true)."</td>
+											</tr>
+											";
+									$xAllowanceWeekly = $payrollArr['x_allow_weekly'];
+									}
+					
+					
 									
 									
 										$subTotalOvertime = $payrollArr['ot_num']*$payrollArr['overtime'];
@@ -2356,8 +2417,8 @@
 											";
 										}
 								
-										$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $totalCola;
-											Print "<script>console.log('payroll_computation.php - totalRegularHolidayRate: ".abs($totalRegularHolidayRate)." | totalSpecialHolidayRate: ".abs($totalSpecialHolidayRate)." | totalSundayRate: ".abs($totalSundayRate)." | totalNightDifferential: ".$totalNightDifferential." | totalAllowance: ".$totalAllowance." | totalOvertime: ".$totalOvertime." | totalRatePerDay: ".$totalRatePerDay." | xAllowance: ".$xAllowance." | totalCola: ".$totalCola. "')</script>";"')</script>";
+										$totalEarnings = $totalRegularHolidayRate + $totalSpecialHolidayRate + $totalSundayRate + $totalNightDifferential + $totalAllowance + $totalOvertime + $totalRatePerDay + $xAllowance + $totalCola + $overallXAllowDaily + $xAllowanceWeekly;
+											
 
 									Print '
 									<tr style="font-family: QuicksandMed;">
@@ -2648,7 +2709,6 @@
 							    	</h4>
 							    </div>';
 							    
-							    	Print "<script>console.log('logic_payroll - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".abs($payrollArr['tools_paid'])."')</script>";
 							    	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($payrollArr['tools_paid']);
 							    	
 							    	$grandTotal = abs($grandTotal);
