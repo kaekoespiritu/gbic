@@ -17,6 +17,15 @@ $day = date('l', strtotime($date));// This gets the day of the week
 $sunday = 1;//Pre-sets the value of Sunday to the database
 
 
+$day1 = date('F d, Y', strtotime('-1 day', strtotime($date)));
+$day2 = date('F d, Y', strtotime('-2 day', strtotime($date)));
+$day3 = date('F d, Y', strtotime('-3 day', strtotime($date)));
+$day4 = date('F d, Y', strtotime('-4 day', strtotime($date)));
+$day5 = date('F d, Y', strtotime('-5 day', strtotime($date)));
+$day6 = date('F d, Y', strtotime('-6 day', strtotime($date)));
+$day7 = date('F d, Y', strtotime('-7 day', strtotime($date)));
+
+
 function first($array) { 
 	if (!is_array($array)) 
 		return $array; 
@@ -352,16 +361,25 @@ if(!empty($dateRows))// Updating attendance
 			$empid = $_POST['empid'][$counter];
 
 			//Make Algorithm that will check if this employee is AWOL
-			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 8";
+			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC LIMIT 7";
+
+			// $Awol = "SELECT * FROM attendance WHERE empid = '$empid' and date != '$date' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC LIMIT 7";
 			$AwolQuery = mysql_query($Awol);
 			$AwolCounter = 0;
 			$absentCounter = 0;
 			$loopCounter = 0;
 			while($AwolChecker = mysql_fetch_assoc($AwolQuery))
 			{
-				if($AwolChecker['attendance'] == 1)
+				if(date('l', strtotime($AwolChecker['date'])) != "Sunday")
 				{
-					$AwolCounter++;
+					if($AwolChecker['attendance'] == 1)
+					{
+						$AwolCounter++;
+					}
+					else
+					{
+						$AwolCounter = 0;
+					}
 				}
 				if($loopCounter == 0)
 					$end = $AwolChecker['date'];
@@ -369,7 +387,6 @@ if(!empty($dateRows))// Updating attendance
 					$start = $AwolChecker['date'];
 
 				$loopCounter++;
-
 			}
 
 			if($AwolCounter >= 6)
@@ -755,9 +772,9 @@ else// NEW attendance
 			//Make algorithm that will check if this employee is AWOL
 			$empid = $_POST['empid'][$counter];
 
-
 			//Make Algorithm that will check if this employee is AWOL
-			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 7";
+			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC LIMIT 7";
+
 			$AwolQuery = mysql_query($Awol);
 			$AwolCounter = 0;
 			$start = null;
@@ -765,13 +782,21 @@ else// NEW attendance
 			$absentCounter = 0;
 			while($AwolChecker = mysql_fetch_assoc($AwolQuery))
 			{
-				if($AwolChecker['attendance'] == 1)
+				if(date('l', strtotime($AwolChecker['date'])) != "Sunday")
 				{
-					
-					$AwolCounter++;
+					if($AwolChecker['attendance'] == 1)
+					{
+						$AwolCounter++;
+					}
+					else
+					{
+						$AwolCounter = 0;
+					}
 				}
+					
 				if($AwolCounter >= 6)
 					$start = $AwolChecker['date'];
+				Print "<script>alert('".$AwolCounter."')</script>";
 			}
 
 			if($AwolCounter >= 6)
