@@ -7,7 +7,7 @@ include('directives/admin_historical.php');
 //employee History
 $empid = $_POST['empid'];
 $type = $_POST['type'];
-$history = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$type' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC, time ASC";
+$history = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$type' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC, id ASC";
 $historyQuery = mysql_query($history);
 
 $employee = "SELECT * FROM employee WHERE empid = '$empid'";

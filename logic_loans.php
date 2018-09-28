@@ -18,7 +18,7 @@ if(count($_POST['loanType']) == 1)
 	$time = strftime("%X");//TIME
 
 	//Check if they already have balance for that type of loan
-	$loanCheck = "SELECT * FROM loans WHERE empid = '$empid' AND type='$loanType' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC  LIMIT 1";
+	$loanCheck = "SELECT * FROM loans WHERE empid = '$empid' AND type='$loanType' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1";
 	$checkQuery = mysql_query($loanCheck);
 	$balance = 0;
 	if(mysql_num_rows($checkQuery) > 0)
@@ -33,19 +33,19 @@ if(count($_POST['loanType']) == 1)
 	}
 
 
-	$loanAmount = number_format($loanAmount, 2, '.', '');//for 2 decimal places
+	$loanAmount = numberExactFormat($loanAmount, 2, '.', false);//for 2 decimal places
 	if($loanType == 'SSS' || $loanType == 'PagIBIG')
 	{
 		$query = "INSERT INTO loans(empid, type, monthly, balance, amount, remarks, date, time,action, admin) VALUES('$empid', 
-																		'$loanType',
-																		'$loanAmount',
-																		'0',
-																		'0',
-																		'$reason',
-																		'$date',
-																		'$time',
-																		'1',
-																		'$adminName')";
+							'$loanType',
+							'$loanAmount',
+							'0',
+							'0',
+							'$reason',
+							'$date',
+							'$time',
+							'1',
+							'$adminName')";
 	}
 	else
 	{
@@ -78,7 +78,7 @@ else
 		$time = strftime("%X");//TIME
 
 		//Check if they already have balance for that type of loan
-		$loanCheck = "SELECT * FROM loans WHERE empid = '$empid' AND type='$loanType' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC  LIMIT 1";
+		$loanCheck = "SELECT * FROM loans WHERE empid = '$empid' AND type='$loanType' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC  LIMIT 1";
 		$checkQuery = mysql_query($loanCheck);
 		$balance = 0;
 		if(mysql_num_rows($checkQuery) > 0)
