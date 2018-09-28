@@ -86,11 +86,14 @@ else
 		function loanDashboard($type)
 		{
 			if($type == 'empVale')//Employees with vale
-			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE loans.type = 'oldVale' OR loans.type = 'newVale' ";
+			{
+				$empVale = "SELECT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE employee.employment_status = '1' AND (loans.type = 'newVale' OR loans.type = 'oldVale')";
+			}
+				
 			if($type == 'newVale')//Employees with new vale
-			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE loans.type = 'newVale'";
+			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE loans.type = 'newVale' AND employee.employment_status = '1' ";
 			if($type == 'oldVale')//Employees with old vale
-			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE loans.type = 'oldVale'";
+			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE loans.type = 'oldVale' AND employee.employment_status = '1' ";
 
 			$empValeQuery = mysql_query($empVale)or die(mysql_error());
 			$ValeNum = mysql_num_rows($empValeQuery);
@@ -109,9 +112,13 @@ else
 						$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND (type = 'oldVale' OR type = 'newVale') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1") or die(mysql_error());
 					}
 					else if($type == 'newVale')//Employees with new vale
+					{
 						$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND type = 'newVale' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1") or die(mysql_error());
+					}
 					else if($type == 'oldVale')//Employees with old vale
+					{
 						$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1")or die(mysql_error());
+					}
 
 					// Print "<script>console.log('checkerQuery: ".mysql_num_rows($checkerQuery)."')</script>";
 
@@ -120,11 +127,17 @@ else
 
 						$checkRow = mysql_fetch_assoc($checkerQuery);
 						if($type == 'empVale' && $checkRow['balance'] != 0)//Employees with vale
+						{
 							$counter++;
-						else if($type == 'newVale')//Company cost to newvale
+						}
+						else if($type == 'newVale' && $checkRow['balance'] != 0)//Company cost to newvale
+						{
 							$newValeComputation += $checkRow['balance'];
-						else if($type == 'oldVale')//Company cost to oldvale
+						}
+						else if($type == 'oldVale' && $checkRow['balance'] != 0)//Company cost to oldvale
+						{
 							$oldValeComputation += $checkRow['balance'];
+						}
 					}
 				}
 			}

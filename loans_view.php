@@ -60,8 +60,12 @@ else if($loanType == "newVale")
 				</ol>
 			</div>
 
+			<div class="col-md-3 col-md-offset-1 col-lg-5 text-left">
+				<h3>Overall Payable: <span id="overallPlacing"></span></h3>
+			</div>
 
-			<div class="col-md-1 col-lg-11 text-right">
+
+			<div class="col-md-1 col-lg-5 text-right">
 				Filter by:
 
 
@@ -145,6 +149,7 @@ else if($loanType == "newVale")
 					{
 						//Print "<script>alert('1')</script>";
 						$noLoanChecker = true;
+						$overallPayable = 0;
 						while($row = mysql_fetch_assoc($loansQuery))
 						{
 							$empid = $row['empid'];
@@ -206,6 +211,7 @@ else if($loanType == "newVale")
 								{
 									if($checkerArr['action'] == 1)
 									{
+										$overallPayable += $checkerArr['monthly'];// Accumulates the overall monthly
 										Print "
 											<tr>
 												<input type='hidden' name='empid[]' value='". $empid ."'>
@@ -222,9 +228,7 @@ else if($loanType == "newVale")
 													".$empArr['site']."
 												</td>
 												<td style='vertical-align: inherit'>
-													".($loanType == "SSS" || $loanType == "PAGIBIG" ? 
-														number_format($checkerArr['monthly'], 2, '.', ',')
-													 :  number_format($checkerArr['balance'], 2, '.', ','))."
+													".numberExactFormat($checkerArr['monthly'], 2, '.', true)."
 												</td>
 												<td>";
 												if($loanType == 'SSS' || $loanType == 'PAGIBIG')
@@ -247,7 +251,7 @@ else if($loanType == "newVale")
 
 									if($checkerArr['balance'] > 0)
 									{
-
+										$overallPayable += $checkerArr['balance'];// Accumulates the overall monthly
 										Print "
 											<tr>
 												<input type='hidden' name='empid[]' value='". $empid ."'>
@@ -264,7 +268,7 @@ else if($loanType == "newVale")
 													".$empArr['site']."
 												</td>
 												<td style='vertical-align: inherit'>
-													".number_format($checkerArr['balance'], 2, '.', ',')."
+													".numberExactFormat($checkerArr['balance'], 2, '.', true)."
 												</td>
 												<td>";
 												if($loanType == 'SSS' || $loanType == 'PAGIBIG')
@@ -316,6 +320,8 @@ else if($loanType == "newVale")
 			echo "</div>";
 		?>
 </div>
+
+<input type="hidden" id="overallPayable" value="<?php Print numberExactFormat($overallPayable, 2, '.', true) ?>">
 
 <!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 
@@ -380,6 +386,9 @@ function position() {
 
 // Setting active color of menu to Employees
 document.getElementById("employees").setAttribute("style", "background-color: #10621e;");
+
+var overall = document.getElementById("overallPayable").value;
+document.getElementById("overallPlacing").innerHTML = overall;//dito
 
 // Clearing filters
 function clearFilter() {
