@@ -808,7 +808,6 @@ else// NEW attendance
 					
 				if($AwolCounter >= 6)
 					$start = $AwolChecker['date'];
-				Print "<script>alert('".$AwolCounter."')</script>";
 			}
 
 			if($AwolCounter >= 6)
