@@ -26,6 +26,18 @@ $day6 = date('F d, Y', strtotime('-6 day', strtotime($date)));
 $day7 = date('F d, Y', strtotime('-7 day', strtotime($date)));
 
 
+//Checks if there is a sunday on the days of attendance
+$daysChecker = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
+$isSunday = 6;
+foreach($daysChecker as $checkSun)
+{
+	if(date('l', strtotime($checkSun)) == "Sunday")
+	{
+		$isSunday = 7;
+	}
+}
+
+
 function first($array) { 
 	if (!is_array($array)) 
 		return $array; 
@@ -361,7 +373,7 @@ if(!empty($dateRows))// Updating attendance
 			$empid = $_POST['empid'][$counter];
 
 			//Make Algorithm that will check if this employee is AWOL
-			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC LIMIT 7";
+			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC LIMIT $isSunday";
 
 			// $Awol = "SELECT * FROM attendance WHERE empid = '$empid' and date != '$date' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC LIMIT 7";
 			$AwolQuery = mysql_query($Awol);
@@ -773,7 +785,7 @@ else// NEW attendance
 			$empid = $_POST['empid'][$counter];
 
 			//Make Algorithm that will check if this employee is AWOL
-			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC LIMIT 7";
+			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC LIMIT $isSunday";
 
 			$AwolQuery = mysql_query($Awol);
 			$AwolCounter = 0;
