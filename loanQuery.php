@@ -9,7 +9,7 @@
 	while($empArr = mysql_fetch_assoc($employee))
 	{
 		$empid = $empArr['empid'];
-		$loansLoaned = "SELECT * FROM loans WHERE type = 'oldVale' AND empid = '$empid' AND action = '1' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
+		$loansLoaned = "SELECT * FROM loans WHERE type = 'oldVale' AND empid = '$empid' AND action = '1' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1";
 
 		$loansLoanedQuery = mysql_query($loansLoaned);
 		// Print mysql_num_rows($loansLoanedQuery);
@@ -22,7 +22,7 @@
 
 			// get the Deduction amount
 
-			$loansDeduct = "SELECT * FROM loans WHERE type = 'oldVale' AND empid = '$empid' AND action = '0' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
+			$loansDeduct = "SELECT * FROM loans WHERE type = 'oldVale' AND empid = '$empid' AND action = '0' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1";
 			$loansDeductQuery = mysql_query($loansDeduct);
 			$deductArr = mysql_fetch_assoc($loansDeductQuery);
 

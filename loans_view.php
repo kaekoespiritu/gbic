@@ -142,7 +142,7 @@ else if($loanType == "newVale")
 					<td>Actions</td>
 				</tr>
 				<?php 
-					$loans = "SELECT DISTINCT * FROM loans l INNER JOIN employee e ON l.empid = e.empid WHERE type = '$loanType' AND e.employment_status = '1' GROUP BY l.empid ORDER BY e.lastname ASC, STR_TO_DATE(l.date, '%M %e, %Y') ASC, l.time ASC ";
+					$loans = "SELECT DISTINCT * FROM loans l INNER JOIN employee e ON l.empid = e.empid WHERE type = '$loanType' AND e.employment_status = '1' GROUP BY l.empid ORDER BY e.lastname ASC, STR_TO_DATE(l.date, '%M %e, %Y') ASC, l.id ASC ";
 					$loansQuery = mysql_query($loans) or die (mysql_error());
 					$noLoanChecker = true;
 					if(mysql_num_rows($loansQuery) > 0)

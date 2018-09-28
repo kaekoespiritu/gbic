@@ -106,7 +106,7 @@
 						</td>
 					</tr>
 					<?php
-					$history = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$type' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC, time ASC";
+					$history = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$type' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC, id ASC";
 					$historyQuery = mysql_query($history);
 
 					if(mysql_num_rows($historyQuery) > 0)

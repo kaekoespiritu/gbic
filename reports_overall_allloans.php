@@ -304,16 +304,16 @@
 								{
 
 									if($_POST['date'] == "all")
-										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY date DESC, time DESC LIMIT 1";
+										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY date DESC, id DESC LIMIT 1";
 									else if($_POST['numLen'] == 3)//weekly
-										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY date DESC, time DESC LIMIT 1";
+										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY date DESC, id DESC LIMIT 1";
 									else if($_POST['numLen'] == 2)//monthly
-										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND (date LIKE '$month%' AND date LIKE '%$year') ORDER BY date DESC, time DESC LIMIT 1";
+										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND (date LIKE '$month%' AND date LIKE '%$year') ORDER BY date DESC, id DESC LIMIT 1";
 									else if($_POST['numLen'] == 1)//yearly
-										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND date LIKE '%$year' ORDER BY date DESC, time DESC LIMIT 1";
+										$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' AND date LIKE '%$year' ORDER BY date DESC, id DESC LIMIT 1";
 								}
 								else
-									$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY date DESC, time DESC LIMIT 1";
+									$loanChecker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY date DESC, id DESC LIMIT 1";
 								
 								
 								$loanCheckQuery = mysql_query($loanChecker) or die (mysql_error());

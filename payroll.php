@@ -1836,11 +1836,11 @@ if($holidayExist > 0)
 						// }
 					// }
 					
-					$getSSS = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' AND STR_TO_DATE(date, '%M %e, %Y') <= STR_TO_DATE('$date', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
-					$getPAGIBIG = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' AND STR_TO_DATE(date, '%M %e, %Y') <= STR_TO_DATE('$date', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
+					$getSSS = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' AND STR_TO_DATE(date, '%M %e, %Y') <= STR_TO_DATE('$date', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1";
+					$getPAGIBIG = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' AND STR_TO_DATE(date, '%M %e, %Y') <= STR_TO_DATE('$date', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1";
 					
-					$getOldVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' AND STR_TO_DATE(date, '%M %e, %Y') <= STR_TO_DATE('$date', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
-					$getNewVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'newVale' AND STR_TO_DATE(date, '%M %e, %Y') <= STR_TO_DATE('$date', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
+					$getOldVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' AND STR_TO_DATE(date, '%M %e, %Y') <= STR_TO_DATE('$date', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1";
+					$getNewVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'newVale' AND STR_TO_DATE(date, '%M %e, %Y') <= STR_TO_DATE('$date', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1";
 							//Query
 					$sssQuery = mysql_query($getSSS);
 					$pagibigQuery = mysql_query($getPAGIBIG);

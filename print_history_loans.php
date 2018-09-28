@@ -39,7 +39,7 @@ $activeSheet->setCellValue('E2', 'Date');
 $activeSheet->setCellValue('F2', 'Approved by');
 
 
-$history = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC";
+$history = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC";
 $historyQuery = mysql_query($history);
 
 $rowCounter = 3;//this is where the row of data starts

@@ -30,10 +30,10 @@ if(!empty($result))
         $employeeOldVale = 0;
         $employeeNewVale = 0;
         $empid = $row['empid'];
-        $sss = "SELECT * FROM loans WHERE type = 'SSS' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
-        $pagibig = "SELECT * FROM loans WHERE type = 'PagIBIG' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
-        $oldVale = "SELECT * FROM loans WHERE type = 'oldVale' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
-        $newVale = "SELECT * FROM loans WHERE type = 'newVale' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, time DESC LIMIT 1";
+        $sss = "SELECT * FROM loans WHERE type = 'SSS' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1";
+        $pagibig = "SELECT * FROM loans WHERE type = 'PagIBIG' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1";
+        $oldVale = "SELECT * FROM loans WHERE type = 'oldVale' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1";
+        $newVale = "SELECT * FROM loans WHERE type = 'newVale' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1";
     //Query the statement above
         $sssQuery = mysql_query($sss);
         $pagibigQuery = mysql_query($pagibig);
