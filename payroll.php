@@ -1769,13 +1769,13 @@ if($holidayExist > 0)
 			<table class="table table-bordered table-responsive">
 				<tr>
 					<td style="background-color: peachpuff">
-						<h4>Total hours rendered: <?php Print $totalHours ?></h4>
+						<h4>Total hours rendered: <?php Print numberExactFormat($totalHours, 2, '.', false)?></h4>
 					</td>
 					<td style="background-color: lemonchiffon">
-						<h4>Total overtime: <?php Print $totalOT ?></h4>
+						<h4>Total overtime: <?php Print numberExactFormat($totalOT, 2, '.', false) ?></h4>
 					</td>
 					<td style="background-color: powderblue">
-						<h4>Total night differential: <?php Print $totalNightDiff ?></h4>
+						<h4>Total night differential: <?php Print numberExactFormat($totalNightDiff, 2, '.', false) ?></h4>
 					</td>
 					<input type="hidden" name="totalOverTime" value="<?php Print $totalOT?>">
 					<input type="hidden" name="totalNightDiff" value="<?php Print $totalNightDiff?>">

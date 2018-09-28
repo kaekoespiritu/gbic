@@ -205,6 +205,7 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 
 					<?php
 					$xAllowanceDaily = 0;
+					$overallXAllowDaily = 0;
 					if($payrollArr['x_allow_daily'] != 0)
 					{
 						$overallXAllowDaily = $allowDays * $payrollArr['x_allow_daily'];
