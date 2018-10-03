@@ -119,7 +119,8 @@ $empCheckerQuery = mysql_query($employees);
 
 $siteBool = false;
 
-$empNum = mysql_num_rows($empCheckerQuery);// gets the number of employees in the query
+$empNum = count($_POST['empid']);
+// $empNum = mysql_num_rows($empCheckerQuery);// gets the number of employees in the query
 $count = 1;// counter for number of loops
 $checkerBuilder = "";
 if($empNum != 0)
