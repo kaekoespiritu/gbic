@@ -16,6 +16,12 @@
 	{
 		header("location:enterattendance.php?site=".$site_name."&position=null");
 	}
+	else
+	{
+		$filter_position = $_GET['position'];
+	}
+		
+
 	if(isset($_SESSION['holidayDate']))
 	{
 		if($_SESSION['holidayDate'] == $date)
@@ -106,7 +112,7 @@
 				</div>
 			
 			<!-- Attendance table -->
-			<form id="form" method="post" action="logic_attendance.php?site=<?php Print $site_name;?>">
+			<form id="form" method="post" action="logic_attendance.php?site=<?php Print $site_name;?>&filter=<?php Print $filter_position;?>">
 		<div class="col-md-1 col-lg-12">
 			<table class="table table-condensed table-bordered" style="background-color:white;">
 				<tr>

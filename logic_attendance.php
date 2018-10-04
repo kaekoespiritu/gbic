@@ -114,13 +114,20 @@ for($count; $count <= $empNum; $count++)
 	}
 }
 
-$employees = "SELECT * FROM employee WHERE site = '$location' AND employment_status = '1'";
+$filterQuery = ''; 
+if($_GET['filter'] != 'null')
+{
+	$filterQuery = "AND position = '".$_GET['filter']."'";
+}
+
+$employees = "SELECT * FROM employee WHERE site = '$location' AND employment_status = '1' $filterQuery";
 $empCheckerQuery = mysql_query($employees);
 
 $siteBool = false;
 
 $empNum = count($_POST['empid']);
 // $empNum = mysql_num_rows($empCheckerQuery);// gets the number of employees in the query
+// Print "<script>alert('".$empNum."')</script>";
 $count = 1;// counter for number of loops
 $checkerBuilder = "";
 if($empNum != 0)
