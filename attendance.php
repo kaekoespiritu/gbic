@@ -276,7 +276,7 @@ include('directives/session.php');
 				if($siteBool)//if site has employees
 				{
 					//Check if overall attendance for a certain site is done
-					$attendanceChecker = "SELECT * FROM attendance WHERE date = '$date' $checkerBuilder";
+					$attendanceChecker = "SELECT DISTINCT empid, attendance  FROM attendance WHERE date = '$date' $checkerBuilder";
 					$attendanceQuery = mysql_query($attendanceChecker);
 					$attendanceNum = mysql_num_rows($attendanceQuery);// Number of attendance of employee
 					Print "<script>console.log('attendanceNum: ".$attendanceNum."')</script>";

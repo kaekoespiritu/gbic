@@ -87,8 +87,14 @@ else
 	$holidayDate = 0;
 }
 
+$filterQuery = ''; 
+if($_GET['filter'] != 'null')
+{
+	$filterQuery = "AND position = '".$_GET['filter']."'";
+}
 
-$site = "SELECT * FROM employee WHERE site = '$location'";
+
+$site = "SELECT * FROM employee WHERE site = '$location' AND employment_status = '1' $filterQuery ";
 
 $siteQuery = mysql_query($site);
 $empNum = mysql_num_rows($siteQuery);
@@ -96,12 +102,6 @@ $empNum = mysql_num_rows($siteQuery);
 $count = 0;
 
 $max = $empNum - 1;
-
-if($count == $empNum +1)
-{
-	Print "<script>alert('You have not inputted any values.');
-			window.location.assign('enterattendance.php?site=".$location."')</script>";
-}
 
 for($count; $count <= $empNum; $count++)
 {
@@ -113,12 +113,12 @@ for($count; $count <= $empNum; $count++)
 		break 1;
 	}
 }
-
-$filterQuery = ''; 
-if($_GET['filter'] != 'null')
+if($count == $empNum+1)
 {
-	$filterQuery = "AND position = '".$_GET['filter']."'";
+	Print "<script>alert('You have not inputted any values.');
+			window.location.assign('enterattendance.php?site=".$location."')</script>";
 }
+
 
 $employees = "SELECT * FROM employee WHERE site = '$location' AND employment_status = '1' $filterQuery";
 $empCheckerQuery = mysql_query($employees);
@@ -146,25 +146,19 @@ if($empNum != 0)
 	}
 	$checkerBuilder .= ")";
 }
+
+$dateRows = 0;
 if($siteBool)
 {
 	$dateChecker = "SELECT * FROM attendance WHERE date = '$date' $checkerBuilder";
 	$checkerQuery = mysql_query($dateChecker);
-	if($checkerQuery)
+	if(mysql_num_rows($checkerQuery) > 0)
 	{
 		$dateRows = mysql_num_rows($checkerQuery);
 	}
-	else 
-	{
-		$dateRows = 0;
-	}
-}
-else 
-{
-	$dateRows = 0;
 }
 
-if(!empty($dateRows))// Updating attendance
+if($dateRows != 0)// Updating attendance
 {
 	$initialQuery = "INSERT INTO attendance(	empid, 
 												position,
@@ -187,7 +181,6 @@ if(!empty($dateRows))// Updating attendance
 	$AttQuery = "";
 	for($counter = 0; $counter < $empNum; $counter++)
 	{
-
 		// if(((!empty($_POST['timein1'][$counter]) && !empty($_POST['timeout1'][$counter])) || (!empty($_POST['timein2'][$counter]) && !empty($_POST['timeout2'][$counter]))) || ((empty($_POST['timein2'][$counter]) && empty($_POST['timeout2'][$counter])) && $_POST['attendance'][$counter] == "PRESENT"))
 		if(((!empty($_POST['timein1'][$counter]) && !empty($_POST['timeout1'][$counter])) && $_POST['attendance'][$counter] == "PRESENT"))
 		{	
@@ -374,7 +367,6 @@ if(!empty($dateRows))// Updating attendance
 
 				$AttQuery = $initialQuery.$AttQuery; 
 			}
-			
 		}
 		else if($_POST['attendance'][$counter] == "ABSENT")// ABSENT
 		{
@@ -584,7 +576,6 @@ if(!empty($dateRows))// Updating attendance
 
 			}					  	
 		}
-
 		mysql_query($AttQuery);//query
 	}
 }
@@ -784,8 +775,6 @@ else// NEW attendance
 			$position = $employeeArr['position'];
 			
 			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate, $xAllowance);
-			
-			
 		}
 		else if($_POST['attendance'][$counter] == "ABSENT")// ABSENT
 		{
@@ -820,7 +809,6 @@ else// NEW attendance
 
 			if($AwolCounter >= 6)
 			{
-
 				//insert to AWOL PENDING
 				$AwolPending = "INSERT awol_employees(empid, start_date, end_date, status) 
 												VALUES(	'$empid',
@@ -955,7 +943,6 @@ else// NEW attendance
 			$attCheckerQuery = mysql_query($attChecker);
 
 			$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $AttQuery, $holidayDate, $xAllowance );
-			
 		}
 	}
 	$FinalQuery = $initialQuery . $AttQuery;

@@ -551,8 +551,8 @@ function getDay($day)
 				$holidayDate = $_POST['holidayDate'][0];
 
 				$dayBefore = date('F d, Y', strtotime('-1 day', strtotime($holidayDate)));
-				$dayBeforeChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayBefore'");
-				$sameDayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$date'");
+				$dayBeforeChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayBefore' LIMIT 1");
+				$sameDayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$date' LIMIT 1");
 				if(mysql_num_rows($dayBeforeChecker) == 1 && mysql_num_rows($sameDayChecker) == 0)
 				{
 					$dayBeforeArr = mysql_fetch_assoc($dayBeforeChecker);
@@ -563,7 +563,7 @@ function getDay($day)
 					}
 				}
 
-				$holidayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayDate'");
+				$holidayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayDate' LIMIT 1");
 				$holidayArr = mysql_fetch_assoc($holidayChecker);
 				if($holidayArr['attendance'] == 2)
 				{
@@ -591,9 +591,9 @@ function getDay($day)
 
 				$dayBefore = date('F d, Y', strtotime('-1 day', strtotime($holidayDate)));
 				$dayAfter = date('F d, Y', strtotime('1 day', strtotime($holidayDate)));
-				$dayBeforeChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayBefore'");
-				$dayAfterChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayAfter'");
-				$sameDayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$date'");
+				$dayBeforeChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayBefore' LIMIT 1");
+				$dayAfterChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayAfter' LIMIT 1");
+				$sameDayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$date' LIMIT 1");
 				if(mysql_num_rows($dayBeforeChecker) == 1 && mysql_num_rows($sameDayChecker) == 0)
 				{
 					$dayBeforeArr = mysql_fetch_assoc($dayBeforeChecker);
@@ -619,7 +619,7 @@ function getDay($day)
 				{
 					$holidayClass = $_POST['holidayType'][$count];
 					$holidayIndex = $_POST['holidayDate'][$count];
-					$holidayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayIndex'") or die (mysql_error());
+					$holidayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayIndex' LIMIT 1") or die (mysql_error());
 					$holdayArr = mysql_fetch_assoc($holidayChecker);
 					if($holdayArr['attendance'] == '2') // If employee went to work on holiday
 					{
@@ -655,9 +655,9 @@ function getDay($day)
 
 					$dayBefore = date('F d, Y', strtotime('-1 day', strtotime($holidayDate)));
 					$dayHoliday = date('F d, Y', strtotime('1 day', strtotime($holidayDate)));
-					$dayBeforeChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayBefore'");
-					$dayHolidayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayHoliday'");
-					$sameDayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$date'");
+					$dayBeforeChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayBefore' LIMIT 1");
+					$dayHolidayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayHoliday' LIMIT 1");
+					$sameDayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$date' LIMIT 1");
 					if(mysql_num_rows($dayBeforeChecker) == 1 && mysql_num_rows($sameDayChecker) == 0)
 					{
 						$dayBeforeArr = mysql_fetch_assoc($dayBeforeChecker);
@@ -676,7 +676,7 @@ function getDay($day)
 						}
 					}
 
-					$holidayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayDate'");
+					$holidayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$holidayDate' LIMIT 1");
 					$holidayArr = mysql_fetch_assoc($holidayChecker);
 					if($holidayArr['attendance'] == 2)
 					{

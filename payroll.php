@@ -77,7 +77,7 @@ function getDay($day)
 
 foreach($validateDays as $validate)
 {
-	$attCheck = "SELECT * FROM attendance WHERE empid = '$empid' AND date = '$validate' AND attendance != '2'";
+	$attCheck = "SELECT * FROM attendance WHERE empid = '$empid' AND date = '$validate' AND attendance != '2' LIMIT 1";
 	$attQuery = mysql_query($attCheck);
 	if(mysql_num_rows($attQuery) != 1)
 	{
@@ -461,7 +461,7 @@ if($holidayExist > 0)
 				<table class="table-bordered table-condensed" style="background-color:white;">
 					<?php
 				//Sample query for debugging purposes
-					$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 7";
+					$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
 					$payrollQuery = mysql_query($payrollDate);
 					//Boolean for the conditions not to repeat just incase the employee does't attend sundays
 					$monBool = true;
