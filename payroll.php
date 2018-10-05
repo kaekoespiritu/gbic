@@ -114,6 +114,9 @@ if($holidayExist > 0)
 	$holidayName = $holidayRow['holiday'];//Gets holiday name
 }
 //Sunday Checker
+
+$disableCompute = 0; // Incremental Value to check if employee has no attendance. this is for disabling the save and compute button
+$disableComputeAdj = 0; // Incremental Value to check if employee has no attendance. this is for disabling the save and compute button
 ?>
 <html>
 <head>
@@ -339,6 +342,8 @@ if($holidayExist > 0)
 											</table>";
 											$counter++;
 											$badgeCounter++;
+
+											$disableComputeAdj++;
 					          			}	
 					          		}
 					          	?>
@@ -352,7 +357,7 @@ if($holidayExist > 0)
 						<li><a href="payroll_table.php?position=<?php Print $position?>&site=<?php Print $site?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Table of Employees</a></li>
 						<li class="active"><?php Print "Payroll for site " .$site." on ".$date ?></li>
 
-						<button type="submit" class="btn btn-success pull-right" style="margin-right:5px" href="#" data-toggle="tooltip" data-placement="bottom" title="Note: Proceeding will prevent you from editing values entered. If you need to come back here and change anything, you will have to redo everything.">Save and compute</button>
+						<button type="submit" class="btn btn-success pull-right" id="saveCompute" style="margin-right:5px" href="#" data-toggle="tooltip" data-placement="bottom" title="Note: Proceeding will prevent you from editing values entered. If you need to come back here and change anything, you will have to redo everything.">Save and compute</button>
 
 						<!-- <input type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#attendanceAdjustment" value="Make attendance adjustment"> -->
 						<a class="btn btn-danger pull-right" data-toggle="modal" data-target="#attendanceAdjustment">Make attendance adjustment <span class="badge" id="badge"><?php Print $badgeCounter?></span></a>
@@ -549,6 +554,7 @@ if($holidayExist > 0)
 							$sunDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
+								$disableCompute++;
 								$hrsComp = explode('.', $dateRow['workhours']);//Get the total workhours
 								if(count($hrsComp) == 2)
 								{
@@ -635,6 +641,7 @@ if($holidayExist > 0)
 							$monDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
+								$disableCompute++;
 								$hrsComp = explode('.', $dateRow['workhours']);//Get the total workhours
 								if(count($hrsComp) == 2)
 								{
@@ -723,6 +730,7 @@ if($holidayExist > 0)
 							$tueDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
+								$disableCompute++; // Increment disableCompute 
 								$hrsComp = explode('.', $dateRow['workhours']);//Get the total workhours
 								if(count($hrsComp) == 2)
 								{
@@ -811,6 +819,7 @@ if($holidayExist > 0)
 							$wedDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
+								$disableCompute++; // Increment disableCompute 
 								$hrsComp = explode('.', $dateRow['workhours']);//Get the total workhours
 								if(count($hrsComp) == 2)
 								{
@@ -898,6 +907,7 @@ if($holidayExist > 0)
 							$thuDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
+								$disableCompute++; // Increment disableCompute 
 								$hrsComp = explode('.', $dateRow['workhours']);//Get the total workhours
 								if(count($hrsComp) == 2)
 								{
@@ -986,6 +996,7 @@ if($holidayExist > 0)
 							$friDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
+								$disableCompute++; // Increment disableCompute 
 								$hrsComp = explode('.', $dateRow['workhours']);//Get the total workhours
 								if(count($hrsComp) == 2)
 								{
@@ -1072,6 +1083,7 @@ if($holidayExist > 0)
 							$satDate = $dateRow['date'];//Get the day of the week
 							if($dateRow['attendance'] == 2)//Present
 							{
+								$disableCompute++; // Increment disableCompute 
 								$hrsComp = explode('.', $dateRow['workhours']);//Get the total workhours
 								if(count($hrsComp) == 2)
 								{
@@ -2241,6 +2253,10 @@ if($holidayExist > 0)
 <!-- Hidden inputs for disabled dates -->
 <input type="hidden" id="disabledDates" value="<?php Print $disabledDates?>">
 
+<!-- Hidden inputs for disabled dates -->
+<input type="hidden" id="disableCompute" value="<?php Print $disableCompute?>">
+<input type="hidden" id="disableComputeAdj" value="<?php Print $disableComputeAdj?>">
+
 
 <!-- DUMMY MODAL FOR REMARKS -->
 
@@ -2399,8 +2415,14 @@ if($holidayExist > 0)
 			adjustedDays[inputcounter] = day;
 			console.log("ADDING: "+adjustedDays[inputcounter]);
 			console.log(adjustedDays);
+
+			if(document.getElementById('saveCompute').classList.contains('disabletotally')) {
+				document.getElementById('saveCompute').classList.remove('disabletotally');
+			}
+
 		}
 		else {
+			
 			alert("You have already selected " + day);
 			return 0;
 		}
@@ -2452,6 +2474,16 @@ if($holidayExist > 0)
 		var count = badge.innerHTML;
 		count -= 1;
 		badge.innerHTML = count;
+		if(count == 0)
+		{
+			if(document.getElementById('disableCompute').value == 0)// Check if employee has no prior attendance
+				document.getElementById('saveCompute').classList.add('disabletotally');
+		}
+		else
+		{
+			document.getElementById('saveCompute').classList.remove('disabletotally');
+		}
+			
 	}
 
 	function nightshift_ChkBox(id) {

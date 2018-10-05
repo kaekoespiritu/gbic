@@ -5,6 +5,11 @@
     	if($('#outstandingPayable').val()){
     		$('#amountToPay').removeAttr("readonly");
     	}
+
+    	$('#saveCompute').addClass("disabletotally");
+    	if($('#disableCompute').val() != 0 || $('#disableComputeAdj').val() != 0){
+    		$('#saveCompute').removeClass("disabletotally");
+    	}
 	});
 
 	
