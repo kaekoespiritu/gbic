@@ -154,8 +154,8 @@ function removeInputsFromRow(row) {
 	mainRow.querySelector('.undertimeH').value = "";
 	mainRow.querySelector('.nightdiffH').value = "";
 
-	mainRow.querySelector('.timein2').readOnly = false; // unset the textbox to readonly
-	mainRow.querySelector('.timeout2').readOnly = false; // Unset the textbox to readonly
+	mainRow.querySelector('.timein2').disabled = false; // unset the textbox to readonly
+	mainRow.querySelector('.timeout2').disabled = false; // Unset the textbox to readonly
 	mainRow.querySelector('.nightshiftChk').checked = false;// Uncheck ND checkbox
 
 	mainRow.querySelector('.attendance').value = "NOWORK"; // Unset the attendance status to 
@@ -269,8 +269,8 @@ function halfDay(id){
 		mainRow.querySelector('.undertimeH').value = "";
 		mainRow.querySelector('.nightdiffH').value = "";
 
-		mainRow.querySelector('.timein2').readOnly = false; // unset the textbox to readonly
-		mainRow.querySelector('.timeout2').readOnly = false; // Unset the textbox to readonly
+		mainRow.querySelector('.timein2').disabled = false; // unset the textbox to readonly
+		mainRow.querySelector('.timeout2').disabled = false; // Unset the textbox to readonly
 		mainRow.querySelector('.nightshiftChk').checked = false;// Uncheck ND checkbox
 
 		mainRow.querySelector('.attendance').value = ""; // Unset the attendance status to 
@@ -308,13 +308,13 @@ function halfDay(id){
 		var timeoutmin2 = "HD";
 
 		//Disable afterbreak and nightshift
-		mainRow.querySelector('.timein2').readOnly = true; // Set the textbox to readonly
+		mainRow.querySelector('.timein2').disabled = true; // Set the textbox to readonly
 		mainRow.querySelector('.timein2').placeholder = "";
-		mainRow.querySelector('.timeout2').readOnly = true; // Set the textbox to readonly
+		mainRow.querySelector('.timeout2').disabled = true; // Set the textbox to readonly
 		mainRow.querySelector('.timeout2').placeholder = "";
-		mainRow.querySelector('.timein3').readOnly = true; // Set the textbox to readonly
+		mainRow.querySelector('.timein3').disabled = true; // Set the textbox to readonly
 		mainRow.querySelector('.timein3').placeholder = "";
-		mainRow.querySelector('.timeout3').readOnly = true; // Set the textbox to readonly
+		mainRow.querySelector('.timeout3').disabled = true; // Set the textbox to readonly
 		mainRow.querySelector('.timeout3').placeholder = "";
 		computeTime(mainRow, timeinhour1, timeinmin1, timeouthour1, timeoutmin1, timeinhour2, timeinmin2, timeouthour2, timeoutmin2);
 	}
@@ -3716,6 +3716,13 @@ function AutoTimeIn85(id) {
 	mainRow.querySelector('.workinghours').value = '8 hrs';
 	mainRow.querySelector('.workinghoursH').value = '8 hrs';
 
+	mainRow.querySelector('.timein2').disabled = false;
+	mainRow.querySelector('.timeout2').disabled = false;
+
+	mainRow.querySelector('.halfdayChk').checked = false;
+	mainRow.querySelector('.nightshiftChk').checked = false;
+
+	mainRow.querySelector('.halfdayChk').disabled = false;
 	mainRow.querySelector('.nightshiftChk').disabled = false;
 
 	mainRow.querySelector('.attendance').value = 'PRESENT'; 
@@ -3744,7 +3751,16 @@ function AutoTimeIn74(id) {
 	mainRow.querySelector('.workinghours').value = '8 hrs';
 	mainRow.querySelector('.workinghoursH').value = '8 hrs';
 
+	mainRow.querySelector('.timein2').disabled = false;
+	mainRow.querySelector('.timeout2').disabled = false;
+
+	// Uncheck checkboxes
+	mainRow.querySelector('.halfdayChk').checked = false;
+	mainRow.querySelector('.nightshiftChk').checked = false;
+	// Undisable checkboxes
+	mainRow.querySelector('.halfdayChk').disabled = false;
 	mainRow.querySelector('.nightshiftChk').disabled = false;
+
 	mainRow.querySelector('.attendance').value = 'PRESENT'; 
 	mainRow.classList.add('success');
 	if(mainRow.classList.contains('danger'))
