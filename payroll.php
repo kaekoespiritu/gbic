@@ -2042,16 +2042,16 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 						</div>
 						<label class="control-label col-md-5 col-lg-5" for="sssContribution">SSS</label>
 						<div class="col-md-7 col-lg-7">
-							<input type="text" id="sssContribution" name="sss" placeholder="No document" class="form-control input-sm" value="<?php Print $deductionSSS?>" onkeypress="validatenumber(event)" readonly>
+							<input type="text" id="sssContribution" name="sss" placeholder="No document" class="form-control input-sm" value="<?php Print $deductionSSS?>" onkeypress="validatenumber(event)" >
 
 						</div>
 						<label class="control-label col-md-5 col-lg-5" for="pagibigContribution" style="white-space: nowrap;">Pag-IBIG</label>
 						<div class="col-md-7 col-lg-7">
-							<input type="text" id="pagibigContribution" name="pagibig" class="form-control input-sm" value="<?php Print $deductionPagibig?>" placeholder="No document" readonly>
+							<input type="text" id="pagibigContribution" name="pagibig" class="form-control input-sm" value="<?php Print $deductionPagibig?>" placeholder="No document" >
 						</div>
 						<label class="control-label col-md-5 col-lg-5" for="philhealth">PhilHealth</label>
 						<div class="col-md-7 col-lg-7">
-							<input type="text" id="philhealth" name="philhealth" placeholder="No document" class="form-control input-sm" value="<?php Print $deductionPhilhealth?>" onkeypress="validatenumber(event)" readonly>
+							<input type="text" id="philhealth" name="philhealth" placeholder="No document" class="form-control input-sm" value="<?php Print $deductionPhilhealth?>" onkeypress="validatenumber(event)" >
 						</div>
 					</div>
 				</div>
