@@ -58,7 +58,7 @@ else
 						 <div class="form-group col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3" style="float:none">
 						 	<input name="txt_attendance" type="text" size="10" class="form-control" value = <?php
 							echo $date;
-							?> id="dtpkr_loan" placeholder="mm-dd-yyyy">
+							?> id="dtpkr_loan" placeholder="mm-dd-yyyy" readonly>
 						</div>
 					</div>
 				</div>

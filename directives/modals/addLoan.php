@@ -52,8 +52,8 @@
 								</div>
 							</div><br>
 
-							<h4 class="modal-title">New Loan Details for [<?php echo $_SESSION["loandate"] ?>]</h4><hr>
-							<input type="hidden" id="loandate" name="loandate" value="<?php echo $_SESSION["loandate"] ?>" >
+							<h4 class="modal-title">New Loan Details for [<?php echo (isset($_SESSION["loandate"]) ? $_SESSION["loandate"] : strftime("%B %d, %Y")) ?>]</h4><hr>
+							<input type="hidden" id="loandate" name="loandate" value="<?php echo (isset($_SESSION['loandate']) ? $_SESSION['loandate'] : strftime('%B %d, %Y'))?>" >
 
 							<div class="form-group" id="loanform">
 								<div class="row">
