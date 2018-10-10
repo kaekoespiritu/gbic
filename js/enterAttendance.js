@@ -2673,7 +2673,6 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			{
 				if(!isSunday)
 				{
-					//dito
 					console.log("1) timein1: "+timeinhour1+" / timeout1: "+timeouthour1+" | timein2: "+timeinhour2+" / timeout2: "+timeouthour2+" | timein3: "+timeinhour3+" / timeout3: "+timeouthour3);
 					if ((timeinhour1 <= 22 && timeouthour1 >= 22) ||// pos1 ~ 6
 						(timeinhour1 <= 22 && timeouthour1 <= 6) ||// pos7 ~ 8
@@ -2698,7 +2697,17 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 							(timeouthour1 == 22 && timeoutmin1 != 0)) && workingmins1 != 0)
 						{
 							console.log("1");
-							nightdiffMins = workingmins1;
+							if(	(timeinhour1 <= 22 && timeouthour1 >= 22 && timeoutmin1 >= 0) || 
+								(timeinhour1 <= 22 && timeouthour1 <= 6 && timeoutmin1 >= 0))
+							{
+								console.log("1.1");
+								nightdiffMins += timeoutmin1;
+							}
+							else
+							{
+								console.log("1.2");
+								nightdiffMins += workingmins1;
+							}
 							nightdiffBool = true;
 						}
 						if(((timeinhour2 <= 22 && timeouthour2 >= 22) ||
@@ -2707,7 +2716,17 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 								(timeinhour2 <= 6 && timeouthour2 >= 6)) && workingmins2 != 0)
 						{
 							console.log("2");
-							nightdiffMins += workingmins2;
+							if(	(timeinhour2 <= 22 && timeouthour2 >= 22 && timeoutmin2 >= 0) || 
+								(timeinhour2 <= 22 && timeouthour2 <= 6 && timeoutmin2 >= 0))
+							{
+								console.log("2.1");
+								nightdiffMins += timeoutmin2;
+							}
+							else
+							{
+								console.log("2.2");
+								nightdiffMins += workingmins2;
+							}
 							nightdiffBool = true;
 						}
 						if(((timeinhour3 <= 22 && timeouthour3 >= 22) ||
@@ -2715,8 +2734,19 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 								(timeouthour3 == 22 && timeoutmin3 != 0) ||
 								(timeinhour3 <= 6 && timeouthour3 >= 6)) && workingmins3 != 0)
 						{
-							console.log("3");
-							nightdiffMins += workingmins3;
+							console.log("3");//dow
+							console.log(timeoutmin3);//dow
+							if(	(timeinhour3 <= 22 && timeouthour3 >= 22 && timeoutmin3 >= 0) || 
+								(timeinhour3 <= 22 && timeouthour3 <= 6 && timeoutmin3 >= 0))
+							{
+								console.log("3.1");
+								nightdiffMins += timeoutmin3;
+							}
+							else
+							{
+								console.log("3.2");
+								nightdiffMins += workingmins3;
+							}
 							nightdiffBool = true;
 						}
 
@@ -3451,7 +3481,17 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 							(timeouthour1 == 10 && timeoutmin1 != 0 && workingmins1 != 0))
 						{
 							console.log("1");
-							nightdiffMins = workingmins1;
+							if(	(timeinhour1 <= 10 && timeouthour1 >= 10 && timeoutmin1 >= 0) || 
+								(timeinhour1 <= 10 && timeouthour1 >= 18 && timeoutmin1 >= 0))
+							{
+								console.log("1.1");
+								nightdiffMins += timeoutmin1;
+							}
+							else
+							{
+								console.log("1.2");
+								nightdiffMins += workingmins1;
+							}
 							nightdiffBool = true;
 						}
 						if(	(timeinhour2 <= 10 && timeouthour2 >= 10) ||
@@ -3465,7 +3505,17 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 							(timeinhour2 <= 18 && timeouthour2 >= 18 && workingmins2 != 0) )
 						{
 							console.log("2");
-							nightdiffMins += workingmins2;
+							if(	(timeinhour2 <= 10 && timeouthour2 >= 10 && timeoutmin2 >= 0) || 
+								(timeinhour2 <= 10 && timeouthour2 >= 18 && timeoutmin2 >= 0))
+							{
+								console.log("2.1");
+								nightdiffMins += timeoutmin2;
+							}
+							else
+							{
+								console.log("2.2");
+								nightdiffMins += workingmins2;
+							}
 							nightdiffBool = true;
 						}
 						if(	(timeinhour3 <= 10 && timeouthour3 >= 10) ||
@@ -3480,7 +3530,17 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 						{
 							console.log("3");
 							// nightdiff = timeouthour3 - 10;
-							nightdiffMins += workingmins3;
+							if(	(timeinhour3 <= 10 && timeouthour3 >= 10 && timeoutmin3 >= 0) || 
+								(timeinhour3 <= 10 && timeouthour3 >= 18 && timeoutmin3 >= 0))
+							{
+								console.log("3.1");
+								nightdiffMins += timeoutmin3;
+							}
+							else
+							{
+								console.log("3.3");
+								nightdiffMins += workingmins3;
+							}
 							nightdiffBool = true;
 						}
 
