@@ -3438,38 +3438,54 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 						(timeouthour2 == 10 && timeoutmin2 != 0) ||
 						(timeouthour3 == 10 && timeoutmin3 != 0))// pos 14
 					{
+						console.log('pasok ND');
 						var nightdiffBool = false;//boolean if ND is just minutes
 
 						// Nightdiff mins
-						if(((timeinhour1 <= 10 && timeouthour1 >= 10) ||
-							(timeinhour1 <= 10 && timeouthour1 <= 18) ||
-							(timeouthour1 == 10 && timeoutmin1 != 0)) && workingmins1 != 0)
+						if(	(timeinhour1 <= 10 && timeouthour1 >= 10) ||
+							(timeinhour1 <= 10 && timeouthour1 >= 18) ||
+							(timeouthour1 == 10 && timeoutmin1 != 0) || 
+
+							(timeinhour1 <= 10 && timeouthour1 >= 10 && workingmins1 != 0) ||
+							(timeinhour1 <= 10 && timeouthour1 >= 18 && workingmins1 != 0) ||
+							(timeouthour1 == 10 && timeoutmin1 != 0 && workingmins1 != 0))
 						{
 							console.log("1");
 							nightdiffMins = workingmins1;
 							nightdiffBool = true;
 						}
-						if(((timeinhour2 <= 10 && timeouthour2 >= 10) ||
-								(timeinhour2 <= 10 && timeouthour2 <= 18) ||
-								(timeouthour2 == 10 && timeoutmin2 != 0) ||
-								(timeinhour2 <= 18 && timeouthour2 >= 18)) && workingmins2 != 0)
+						if(	(timeinhour2 <= 10 && timeouthour2 >= 10) ||
+							(timeinhour2 <= 10 && timeouthour2 >= 18) ||
+							(timeouthour2 == 10 && timeoutmin2 != 0) ||
+							(timeinhour2 <= 18 && timeouthour2 >= 18) ||
+
+							(timeinhour2 <= 10 && timeouthour2 >= 10 && workingmins2 != 0) ||
+							(timeinhour2 <= 10 && timeouthour2 >= 18 && workingmins2 != 0) ||
+							(timeouthour2 == 10 && timeoutmin2 != 0 && workingmins2 != 0) ||
+							(timeinhour2 <= 18 && timeouthour2 >= 18 && workingmins2 != 0) )
 						{
 							console.log("2");
 							nightdiffMins += workingmins2;
 							nightdiffBool = true;
 						}
-						if(((timeinhour3 <= 10 && timeouthour3 >= 10) ||
-								(timeinhour3 <= 10 && timeouthour3 <= 18) ||
-								(timeouthour3 == 10 && timeoutmin3 != 0) ||
-								(timeinhour3 <= 18 && timeouthour3 >= 18)) && workingmins3 != 0)
+						if(	(timeinhour3 <= 10 && timeouthour3 >= 10) ||
+							(timeinhour3 <= 10 && timeouthour3 >= 18) ||
+							(timeouthour3 == 10 && timeoutmin3 != 0) ||
+							(timeinhour3 <= 18 && timeouthour3 >= 18) || 
+
+							(timeinhour3 <= 10 && timeouthour3 >= 10 && workingmins3 != 0) ||
+							(timeinhour3 <= 10 && timeouthour3 >= 18 && workingmins3 != 0) ||
+							(timeouthour3 == 10 && timeoutmin3 != 0 && workingmins3 != 0) ||
+							(timeinhour3 <= 18 && timeouthour3 >= 18 && workingmins3 != 0))
 						{
 							console.log("3");
+							// nightdiff = timeouthour3 - 10;
 							nightdiffMins += workingmins3;
 							nightdiffBool = true;
 						}
 
 
-						else if((timeinhour1 <= 10 && timeouthour1 >= 10) && timeouthour1 <= 12)// pos1 ~ 6
+						if((timeinhour1 <= 10 && timeouthour1 >= 10) && timeouthour1 <= 12)// pos1 ~ 6
 						{
 							if((timeinhour2 >= 12 && timeouthour2 <= 18) && (timeinhour3 >= 12 && timeouthour3 <= 18))// pos 1
 							{
@@ -3610,10 +3626,11 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					   	nightdiff = Math.abs(nightdiff);		
 					}
 
+					//problema
 					if(nightdiffMins >= 60)// Night diff mins is greater than 60mins then add 1hour to nightdiff
 					{
 						nightdiffMins -= 60;
-						nightdiffMins = abs(nightdiffMins);
+						nightdiffMins = Math.abs(nightdiffMins);
 						nightdiff += 1;
 					}
 
@@ -3622,15 +3639,15 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 
 					if(nightdiffBool && nightdiffMins != 0 && nightdiff == "")
 					{
-						row.querySelector('.nightdiff').value = originalMins + "mins";
-						row.querySelector('.nightdiffH').value = originalMins + "mins";
+						row.querySelector('.nightdiff').value = nightdiffMins + "mins";
+						row.querySelector('.nightdiffH').value = nightdiffMins + "mins";
 					}
 					else if(nightdiff != "")
 					{
-						if(originalMins != 0)
+						if(nightdiffMins != 0)
 						{
-							row.querySelector('.nightdiff').value = nightdiff + " hrs, " + originalMins + "mins";
-							row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + originalMins + "mins";
+							row.querySelector('.nightdiff').value = nightdiff + " hrs, " + nightdiffMins + "mins";
+							row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + nightdiffMins + "mins";
 						}
 						else
 						{
