@@ -3659,7 +3659,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 						}
 						else if(timeinhour3 <= 10 && timeouthour3 >= 10 && timeouthour3 <= 18)// pos 13
 						{
-							console.log("pos13");
+							console.log("pos13a");
 							time3 = timeouthour3 - 10;
 							nightdiff = Math.abs(time3);
 						}
