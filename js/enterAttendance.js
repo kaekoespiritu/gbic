@@ -3451,6 +3451,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			var time3 = 0;
 			if(compReq)// If Employee has complete requirements. Employees that have no requirements dont have nightdiff
 			{
+				console.log("Complete Req");
 				if(!isSunday)
 				{
 					console.log("2) timein1: "+timeinhour1+" / timeout1: "+timeouthour1+" | timein2: "+timeinhour2+" / timeout2: "+timeouthour2+" | timein3: "+timeinhour3+" / timeout3: "+timeouthour3);
@@ -3732,6 +3733,10 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 						row.querySelector('.nightdiffH').value = "";
 					}
 				}
+			}
+			else
+			{
+				console.log("No Req");
 			}
 
 			

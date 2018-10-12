@@ -490,7 +490,7 @@ include_once('directives/db.php');
 			var pagibigRowER = document.getElementById('pagibigER');
 			var philhealthRowEE = document.getElementById('philhealthEE');
 			var philhealthRowER = document.getElementById('philhealthER');
-			if(sssEE != ""){
+			if(sssEE != 0){
 				document.getElementById('sssCheckbox').checked = true;
 				sssRowEE.value = sssEE;
 				sssRowEE.placeholder = "";
@@ -506,7 +506,7 @@ include_once('directives/db.php');
 				sssRowER.readOnly = true;
 				sssRowER.value = "";
 			}
-			if(pagibigEE != ""){
+			if(pagibigEE != 0){
 				document.getElementById('pagibigCheckbox').checked = true;
 				pagibigRowEE.value = pagibigEE;
 				pagibigRowEE.placeholder = "";
@@ -521,7 +521,7 @@ include_once('directives/db.php');
 				pagibigRowER.readOnly = true;
 				pagibigRowER.value = "";
 			}
-			if(philhealthEE != ""){
+			if(philhealthEE != 0){
 				document.getElementById('philhealthCheckbox').checked = true;
 				philhealthRowEE.value = philhealthEE;
 				philhealthRowEE.placeholder = "";
