@@ -120,32 +120,54 @@ if($count == $empNum+1)
 }
 
 
-$employees = "SELECT * FROM employee WHERE site = '$location' AND employment_status = '1' $filterQuery";
-$empCheckerQuery = mysql_query($employees);
+// $employees = "SELECT * FROM employee WHERE site = '$location' AND employment_status = '1' $filterQuery";
+// $empCheckerQuery = mysql_query($employees);
+
+
 
 $siteBool = false;
 
 $empNum = count($_POST['empid']);
-// $empNum = mysql_num_rows($empCheckerQuery);// gets the number of employees in the query
-// Print "<script>alert('".$empNum."')</script>";
-$count = 1;// counter for number of loops
+
+// Make a new algorithm that would get the empid of the employees in the attendance and not in the database
 $checkerBuilder = "";
 if($empNum != 0)
 {
 	$siteBool = true;
 	$checkerBuilder = " AND (";
-	while($empArr = mysql_fetch_assoc($empCheckerQuery))
+	for($empCount = 0; $empCount < $empNum; $empCount++)
 	{
-		$employeeId = $empArr['empid'];
-		$checkerBuilder .= " empid = '".$employeeId."' ";
-
-		if($empNum != $count)
+		if($checkerBuilder != " AND (")
 			$checkerBuilder .= " OR ";
 
-		$count++;
+		$employeeId = $_POST['empid'][$empCount];
+		$checkerBuilder .= " empid = '".$employeeId."' ";
 	}
 	$checkerBuilder .= ")";
 }
+Print $checkerBuilder;
+//---
+
+// $empNum = mysql_num_rows($empCheckerQuery);// gets the number of employees in the query
+// Print "<script>alert('".$empNum."')</script>";
+// $count = 1;// counter for number of loops
+// $checkerBuilder = "";
+// if($empNum != 0)
+// {
+// 	$siteBool = true;
+// 	$checkerBuilder = " AND (";
+// 	while($empArr = mysql_fetch_assoc($empCheckerQuery))
+// 	{
+// 		$employeeId = $empArr['empid'];
+// 		$checkerBuilder .= " empid = '".$employeeId."' ";
+
+// 		if($empNum != $count)
+// 			$checkerBuilder .= " OR ";
+
+// 		$count++;
+// 	}
+// 	$checkerBuilder .= ")";
+// }
 
 $dateRows = 0;
 if($siteBool)
@@ -158,7 +180,7 @@ if($siteBool)
 	}
 }
 
-if($dateRows != 0)// Updating attendance
+if($dateRows > 0)// Updating attendance
 {
 	$initialQuery = "INSERT INTO attendance(	empid, 
 												position,
@@ -367,6 +389,7 @@ if($dateRows != 0)// Updating attendance
 
 				$AttQuery = $initialQuery.$AttQuery; 
 			}
+			mysql_query($AttQuery);//query
 		}
 		else if($_POST['attendance'][$counter] == "ABSENT")// ABSENT
 		{
@@ -482,6 +505,7 @@ if($dateRows != 0)// Updating attendance
 				$AttQuery = $initialQuery.$AttQuery;
 
 			}
+			mysql_query($AttQuery);//query
 		}
 		else if($_POST['attendance'][$counter] == "NOWORK")
 		{
@@ -527,7 +551,8 @@ if($dateRows != 0)// Updating attendance
 
 				$AttQuery = $initialQuery.$AttQuery; 
 
-			}					  	
+			}
+			mysql_query($AttQuery);//query					  	
 		}
 		else if(empty($_POST['attendance'][$counter]))// NO INPUT
 		{
@@ -574,9 +599,10 @@ if($dateRows != 0)// Updating attendance
 
 				$AttQuery = $initialQuery.$AttQuery; 
 
-			}					  	
+			}	
+			mysql_query($AttQuery);//query				  	
 		}
-		mysql_query($AttQuery);//query
+		
 	}
 }
 else// NEW attendance
