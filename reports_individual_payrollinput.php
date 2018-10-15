@@ -438,7 +438,7 @@
 									<table class="table-bordered table-condensed" style="background-color:white;">';
 										
 									//Sample query for debugging purposes
-										$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 7";
+										$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
 										$payrollQuery = mysql_query($payrollDate);										//Boolean for the conditions not to repeat just incase the employee does't attend sundays
 										$monBool = true;
 										$tueBool = true;
@@ -1168,7 +1168,6 @@
 										}
 										else if($holidayCounter == 1)//if holiday only lasted 1 day
 										{	
-											
 											if($holidayDay == "Monday")
 												$holMon = true; 
 											else if($holidayDay == "Tuesday")
