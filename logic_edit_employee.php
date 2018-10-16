@@ -47,9 +47,9 @@
 		mysql_query("UPDATE employee SET datehired = '$datehired' WHERE empid = '$empid'") or die (mysql_error());	
 		// Update all date of hire base on the random number
 		$explodeEmpid = explode('-', $empid);
-		$randomNum = $explodeEmpid[1];
+		$randomNum = $explodeEmpid[0];
 		$explodeDateHire = explode(' ', $datehired);
-		$year = $explodeEmpid[2];
+		$year = $explodeEmpid[1];
 		$newEmpid = $year."-".$randomNum;
 
 		// Query for loans
@@ -57,7 +57,7 @@
 		// Query for attendance
 		mysql_query("UPDATE attendance SET empid = '$newEmpid' WHERE empid LIKE '%$randomNum'") or die (mysql_error());	
 		// Query for awol employee
-		mysql_query("UPDATE awol_employee SET empid = '$newEmpid' WHERE empid LIKE '%$randomNum'") or die (mysql_error());
+		mysql_query("UPDATE awol_employees SET empid = '$newEmpid' WHERE empid LIKE '%$randomNum'") or die (mysql_error());
 		// Query for employee	
 		mysql_query("UPDATE employee SET empid = '$newEmpid' WHERE empid LIKE '%$randomNum'") or die (mysql_error());
 		// Query for payroll
