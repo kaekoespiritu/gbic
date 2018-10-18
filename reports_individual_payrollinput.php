@@ -489,7 +489,6 @@
 										$holidayCounter = 0;//count the days of holiday
 										$AttExtraAllowance = 0;// extra allowance that has accumulated through 
 										
-										Print "<script>alert('".mysql_num_rows($payrollQuery2)."')</script>";
 
 										while($dateRow = mysql_fetch_assoc($payrollQuery2))
 										{
