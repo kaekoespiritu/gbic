@@ -103,7 +103,7 @@
 				</button>
 				<table class="table table-bordered pull-down">
 				<tr>
-					<td colspan="2">
+					<td colspan="<?php Print ($period == "week" ? 3 : 2) ?>">
 						13th Month pay
 					</td>
 				</tr>	
@@ -114,6 +114,14 @@
 					<td>
 						Amount
 					</td>
+					<?php
+						if($period == "week")
+						{
+							Print '	<td>
+										Days Completed
+									</td>';
+						}
+					?>
 				</tr>
 				<?php
 					$oneThreeMonthBool = false;//for print button
@@ -177,41 +185,70 @@
 						}
 
 						//Evaluates the attendance and compute the 13th monthpay
+						$overallDaysAttended = 0; // counter for total days attended
 						while($payDateArr = mysql_fetch_assoc($payrollQuery))
 						{
 							if($thirteenthBool)
 							{
-
-								$pastToDateThirteenthPay = date('F d, Y', strtotime('-6 day', strtotime($payDateArr['date'])));
+								$pastToDateThirteenthPay = date('F d, Y', strtotime('-7 day', strtotime($payDateArr['date'])));
 								$thirteenthBool = false;
 							}
-							$endDate = $payDateArr['date'];
+							$endDate =date('F d, Y', strtotime('-1 day', strtotime($payDateArr['date']))); ;
 							$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
-							$attendance = "SELECT * FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
+							$attendance = "SELECT date, workhours, attendance FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
+							$attChecker = mysql_query($attendance);
 							$attQuery = mysql_query($attendance);
 
 							$daysAttended = 0;//counter for days attended
+							$daysCompleted = 0; // counter for days completed
+							
+							$arrayChecker = array();
+
+							// Adds attendance array to array checker
+							while($attArray = mysql_fetch_assoc($attChecker)) {
+								array_push($arrayChecker, $attArray);
+							}
+
+							// Removes duplicates from array checker
+							$secondArrayChecker = array_unique($arrayChecker, SORT_REGULAR);
+							
+							// print_r (array_keys($secondArrayChecker));
+
 							//Computes the 13th month
-							while($attArr = mysql_fetch_assoc($attQuery))
+							// $overallCounter = count($secondArrayChecker);
+							$overallCounter = 20;
+							// while($attArr = mysql_fetch_assoc($attQuery))
+							for($count = 0; $count < $overallCounter; $count++ )
 							{
-								$date = $attArr['date'];
-
-								$workHrs = $attArr['workhours'];
-
-								$holidayChecker = "SELECT * FROM holiday WHERE date = '$date'";
-								$holidayCheckQuery = mysql_query($holidayChecker) or die (mysql_error());
-
-								if(mysql_num_rows($holidayCheckQuery) == 0)
+								if(isset($secondArrayChecker[$count]['date']))
 								{
-									if($attArr['attendance'] == '2')//check if student is present
+									$date = $secondArrayChecker[$count]['date'];
+
+									$workHrs = $secondArrayChecker[$count]['workhours'];
+
+									$holidayChecker = "SELECT * FROM holiday WHERE date = '$date'";
+									$holidayCheckQuery = mysql_query($holidayChecker) or die (mysql_error());
+
+									if(mysql_num_rows($holidayCheckQuery) == 0)
 									{
-										if($attArr['workhours'] >= 8)//check if employee attended 8hours
+										// check if days are not duplicated
+										if(isset($secondArrayChecker[$count]['attendance']) && $secondArrayChecker[$count]['attendance'] == '2')//check if student is present
 										{
-											$daysAttended++;
+											// Print "<pre>"; print_r($secondArrayChecker); Print "</pre>";
+											if($secondArrayChecker[$count]['workhours'] >= 8)//check if employee attended 8hours
+											{
+												$daysAttended++;
+												$daysCompleted += 1;
+											}
+											else
+											{
+												$daysCompleted += ($secondArrayChecker[$count]['workhours'] / 8);
+											}
 										}
 									}
 								}
+								
 							}
 							$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
 
@@ -224,8 +261,12 @@
 										<td>
 											".numberExactFormat($thirteenthMonth, 2, '.', true)."
 										</td>
+										<td>
+											".numberExactFormat($daysCompleted, 2, '.', true)."
+										</td>
 									</tr>";
-
+							
+							$overallDaysAttended = $daysCompleted + $overallDaysAttended;
 							$overallPayment += $thirteenthMonth;
 						}
 					}
@@ -414,6 +455,15 @@
 					<td>
 						<?php Print numberExactFormat($overallPayment, 2, '.', true)?>
 					</td>
+					<?php
+					if($period == "week")
+					{
+						Print "	<td>
+									".numberExactFormat($overallDaysAttended, 2, '.', false)."
+								</td>";
+					}
+					?>
+					
 				</tr>
 				</table>
 			</div>
