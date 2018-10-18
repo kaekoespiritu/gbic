@@ -1,4 +1,5 @@
 	
+	if(!window.location.href.includes("payrollinput"))
 	document.getElementById("payroll").setAttribute("style", "background-color: #10621e;");
 
 	$( document ).ready(function() {
