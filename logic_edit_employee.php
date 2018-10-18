@@ -47,9 +47,9 @@
 		mysql_query("UPDATE employee SET datehired = '$datehired' WHERE empid = '$empid'") or die (mysql_error());	
 		// Update all date of hire base on the random number
 		$explodeEmpid = explode('-', $empid);
-		$randomNum = $explodeEmpid[0];
+		$randomNum = $explodeEmpid[1];
 		$explodeDateHire = explode(' ', $datehired);
-		$year = $explodeEmpid[1];
+		$year = $explodeEmpid[0];
 		$newEmpid = $year."-".$randomNum;
 
 		// Query for loans

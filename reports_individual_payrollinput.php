@@ -439,7 +439,7 @@
 										
 									//Sample query for debugging purposes
 										$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
-										$payrollQuery = mysql_query($payrollDate);										//Boolean for the conditions not to repeat just incase the employee does't attend sundays
+										$payrollQuery2 = mysql_query($payrollDate) or die(mysql_error());										//Boolean for the conditions not to repeat just incase the employee does't attend sundays
 										$monBool = true;
 										$tueBool = true;
 										$wedBool = true;
@@ -487,10 +487,13 @@
 										$holidayDate = '';
 										$holidayDay = '';
 										$holidayCounter = 0;//count the days of holiday
-										$AttExtraAllowance = 0;// extra allowance that has accumulated through the attendance
+										$AttExtraAllowance = 0;// extra allowance that has accumulated through 
+										
+										Print "<script>alert('".mysql_num_rows($payrollQuery2)."')</script>";
 
-										while($dateRow = mysql_fetch_assoc($payrollQuery))
+										while($dateRow = mysql_fetch_assoc($payrollQuery2))
 										{
+
 											$holDateChecker = $dateRow['date'];
 											//Holiday Checker
 											$holiday = "SELECT * FROM holiday WHERE date = '$holDateChecker' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
@@ -520,6 +523,7 @@
 												}
 											}
 											$day = date('l', strtotime($dateRow['date']));
+
 											if($day == "Sunday" && $sunBool)
 											{
 												$sunDate = $dateRow['date'];//Get the day of the week
