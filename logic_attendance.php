@@ -802,7 +802,7 @@ else// NEW attendance
 			
 			$attChecker8 = "SELECT * from attendance WHERE date = '$date' AND empid = '$empid' LIMIT 1";
 			$attCheckerQuery8 = mysql_query($attChecker8) or die (mysql_error());
-
+			// echo "<script>alert('1: ".mysql_num_rows($attCheckerQuery8)."')</script>";
 			if(mysql_num_rows($attCheckerQuery8) != 0)//update
 			{
 				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate, $xAllowance);
@@ -810,9 +810,10 @@ else// NEW attendance
 			else//new attendance
 			{
 				$AttQuery = newQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, "",$holidayDate, $xAllowance);
-
+				
 				$AttQuery = $initialQuery.$AttQuery; 
 			}
+			mysql_query($AttQuery) or die (mysql_error());
 		}
 		else if($_POST['attendance'][$counter] == "ABSENT")// ABSENT
 		{
@@ -909,7 +910,6 @@ else// NEW attendance
 
 			$attChecker5 = "SELECT * from attendance WHERE date = '$date' AND empid = '$empid' LIMIT 1";
 			$attCheckerQuery5 = mysql_query($attChecker5) or die (mysql_error());
-
 			if(mysql_num_rows($attCheckerQuery5) != 0)//update
 			{
 				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate, $xAllowance);
@@ -920,6 +920,7 @@ else// NEW attendance
 
 				$AttQuery = $initialQuery.$AttQuery; 
 			}
+				mysql_query($AttQuery) or die (mysql_error());
 			
 		}
 		else if($_POST['attendance'][$counter] == "NOWORK")
@@ -954,7 +955,6 @@ else// NEW attendance
 
 			$attChecker6 = "SELECT * from attendance WHERE date = '$date' AND empid = '$empid' LIMIT 1";
 			$attCheckerQuery6 = mysql_query($attChecker6) or die (mysql_error());
-
 			if(mysql_num_rows($attCheckerQuery6) != 0)//update
 			{
 				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate, $xAllowance);
@@ -965,6 +965,7 @@ else// NEW attendance
 
 				$AttQuery = $initialQuery.$AttQuery; 
 			}
+				mysql_query($AttQuery) or die (mysql_error());
 		}
 		else if(empty($_POST['attendance'][$counter]))// No input
 		{
@@ -998,7 +999,6 @@ else// NEW attendance
 
 			$attChecker7 = "SELECT * from attendance WHERE date = '$date' AND empid = '$empid' LIMIT 1";
 			$attCheckerQuery7 = mysql_query($attChecker7);
-
 			if(mysql_num_rows($attCheckerQuery7) != 0)//update
 			{
 				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate, $xAllowance);
@@ -1009,10 +1009,11 @@ else// NEW attendance
 
 				$AttQuery = $initialQuery.$AttQuery; 
 			}
+				mysql_query($AttQuery) or die (mysql_error());
 		}
 	}
-	$FinalQuery = $initialQuery . $AttQuery;
-	$queryAttendance = mysql_query($FinalQuery);
+	// $FinalQuery = $initialQuery . $AttQuery;
+	
 }
 
 //require "directives/attendance/attendance_query.php";

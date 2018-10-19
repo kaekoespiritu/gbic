@@ -128,7 +128,6 @@
 				<!-- ACTION BUTTONS FOR FILTERS -->
 				<!-- END OF ACTION BUTTONS FOR FILTERS-->
 			</div>
-
 			<div id="search_result" class="col-md-9 col-lg-9 search-results-table"></div>
 
 		</div>

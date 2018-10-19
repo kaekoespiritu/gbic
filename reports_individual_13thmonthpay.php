@@ -372,7 +372,6 @@
 									}	
 								}
 								$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
-								echo $daysAttended;
 								$printBool = true;//enable printable
 								Print "
 										<tr>
