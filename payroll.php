@@ -272,7 +272,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 											              <td colspan='2'>Actions</td>
 											    </tr>
 												<tr class='input-fields success' id='input-field-".$counter."'>
-
+													<span class='empName'></span>
 													<input type='hidden' class='driver' value='".$isDriver."' >";
 												if($isSunday)
 												    Print "<input type='hidden' id='isSunday'>";
@@ -2316,7 +2316,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 		              <td colspan="2">Actions</td>
 		    </tr>
 			<tr class="input-fields" id="input-field-${inputCounter}">
-
+				<span class='empName'></span>
 				<input type='hidden' class='driver' value='<?php $driverBool = ($empArr['position'] == 'Driver' ? true : false )?>' >
 				{{if sunday}}
 			      <input type="hidden" id="isSunday">
