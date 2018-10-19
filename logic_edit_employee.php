@@ -11,6 +11,12 @@
 	$adminName = $adminArr['firstname']." ".$adminArr['lastname'];
 
 	$empid = $_GET['empid'];
+
+	// Get the current employee information
+	$employeeInfo = "SELECT * FROM employee WHERE empid = '$empid'";
+	$empInfoQuery = mysql_query($employeeInfo);
+	$empArr = mysql_fetch_assoc($empInfoQuery);
+
 	if($_POST['lastname'] != null)
 	{
 		$lastname = mysql_real_escape_string($_POST['lastname']);
@@ -73,14 +79,14 @@
 		// Query for tools
 		mysql_query("UPDATE tools SET empid = '$newEmpid' WHERE empid LIKE '%$randomNum'") or die (mysql_error());		
 	}
-	if($_POST['position'] != null)
+	if($_POST['position'] != $empArr['position'])
 	{
 		$position = mysql_real_escape_string($_POST['position']);
 		mysql_query("UPDATE employee SET position = '$position' WHERE empid = '$empid'") or die (mysql_error());
 		//Set historical for this change
 		mysql_query("INSERT INTO position_history(empid, position, date, admin) VALUES('$empid', '$position', '$date', '$adminName')") or die (mysql_error());	
 	}
-	if($_POST['site'] != null)
+	if($_POST['site'] != $empArr['site'])
 	{
 		$site = mysql_real_escape_string($_POST['site']);
 		mysql_query("UPDATE employee SET site = '$site' WHERE empid = '$empid'") or die (mysql_error());	

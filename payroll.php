@@ -2167,7 +2167,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 														<input type="text" id="quantity" name="toolquantity[]" class="form-control input-sm" onchange="getTotal(this)" onblur="addDecimal(this)" value="'.$toolsArr['quantity'].'">
 													</div>
 												</div>	';
-											$overallToolCost += $toolsArr['cost'];
+											$overallToolCost += $toolsArr['cost'] * $toolsArr['quantity'];
 									}
 									else
 									{
@@ -2191,6 +2191,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 											</div>';
 										$toolsCounter++;
 										$overallToolCost += $toolsArr['cost'] * $toolsArr['quantity'];
+										Print "<script>alert('".$toolsArr['quantity']."')</script>";
 									}
 								}
 								

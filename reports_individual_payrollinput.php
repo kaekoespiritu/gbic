@@ -1731,13 +1731,13 @@
 											<table class="table table-bordered table-responsive">
 												<tr>
 													<td style="background-color: peachpuff">
-														<h4>Total hours rendered: '.$totalHours .'</h4>
+														<h4>Total hours rendered: '.numberExactFormat($totalHours, 2, '.', true) .'</h4>
 													</td>
 													<td style="background-color: lemonchiffon">
-														<h4>Total overtime: '.$totalOT .'</h4>
+														<h4>Total overtime: '.numberExactFormat($totalOT, 2, '.', true) .'</h4>
 													</td>
 													<td style="background-color: powderblue">
-														<h4>Total night differential: '.$totalNightDiff .'</h4>
+														<h4>Total night differential: '.numberExactFormat($totalNightDiff, 2, '.', true).'</h4>
 													</td>
 													<input type="hidden" name="totalOverTime" value="'.$totalOT.'">
 													<input type="hidden" name="totalNightDiff" value="'.$totalNightDiff.'">
