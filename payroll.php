@@ -371,6 +371,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 					$employeeQuery = mysql_query($employee);
 					$empArr = mysql_fetch_assoc($employeeQuery);
 			//For deduction section 4 for 4 weeks in a month
+
 					$deductionSSS = $empArr['sss']/4;
 					$deductionPagibig = $empArr['pagibig']/4;
 					$deductionPhilhealth = $empArr['philhealth']/4;
@@ -386,7 +387,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 					}
 					else
 					{
-						$deductionSSS = $deductionSSS." PHP";
+						$deductionSSS = $deductionSSS;
 					}
 					if($deductionPagibig == 0)
 					{
@@ -394,7 +395,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 					}
 					else
 					{
-						$deductionPagibig = $deductionPagibig." PHP";
+						$deductionPagibig = $deductionPagibig;
 					}
 					if($deductionPhilhealth == 0)
 					{
@@ -402,7 +403,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 					}
 					else
 					{
-						$deductionPhilhealth = $deductionPhilhealth." PHP";
+						$deductionPhilhealth = $deductionPhilhealth;
 					}
 					Print "
 					<h2 class='text-left'>". $empArr['lastname'] .", ". $empArr['firstname'] ."</h2>
