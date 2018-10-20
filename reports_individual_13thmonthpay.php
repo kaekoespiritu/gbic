@@ -573,60 +573,6 @@
 								$noRepeat = $year;
 							}
 						}
-						// 	if($thirteenthBool)
-						// 	{
-
-						// 		$pastToDateThirteenthPay = $attDate['date'];
-						// 		$thirteenthBool = false;
-						// 	}
-						// 	$dateExploded = explode(" ", $attDate['date']);
-						// 	$month = $dateExploded[0];
-						// 	$year = $dateExploded[2];
-
-						// 	if ($noRepeat != $year  || $noRepeat == null)
-						// 	{
-						// 		$attMonth = "SELECT * FROM attendance WHERE empid = '$empid' AND (date LIKE '$month%' AND date LIKE '%$year') $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
-
-						// 		$attMonthQuery = mysql_query($attMonth);
-						// 		//Computes 13th month per day of the month
-						// 		while($attArr = mysql_fetch_assoc($attMonthQuery))
-						// 		{
-						// 			$date = $attArr['date'];
-
-						// 			$workHrs = $attArr['workhours'];
-
-						// 			$holidayChecker = "SELECT * FROM holiday WHERE date = '$date'";
-						// 			$holidayCheckQuery = mysql_query($holidayChecker) or die (mysql_error());
-
-						// 			if(mysql_num_rows($holidayCheckQuery) == 0)
-						// 			{
-						// 				if($attArr['attendance'] == '2')//check if student is present
-						// 				{
-						// 					if($attArr['workhours'] >= 8)//check if employee attended 8hours
-						// 					{
-						// 						$daysAttended++;
-						// 					}
-						// 				}
-						// 			}
-						// 		}
-						// 		$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
-						// 		$printBool = true;//enable printable
-						// 		$yearBefore = $year - 1;
-						// 		Print "
-						// 				<tr>
-						// 					<td>
-						// 						".$yearBefore." - ".$year."
-						// 					</td>
-						// 					<td>
-						// 						".numberExactFormat($thirteenthMonth, 2, '.', true)."
-						// 					</td>
-						// 				</tr>";
-						// 		$overallPayment += $thirteenthMonth;
-						// 	}
-							
-						// 	$noRepeat = $year;
-						// }
-
 					}
 					
 
