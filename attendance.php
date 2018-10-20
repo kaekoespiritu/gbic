@@ -454,7 +454,7 @@ include('directives/session.php');
 			changeYear: true,
 			dateFormat: 'MM dd, yy',
 			showAnim: 'blind',
-			maxDate: new Date(),
+			//maxDate: new Date(),
 			//minDate: $("#datePickerMin").val(), 
 			beforeShow: function(){    
 				$(".ui-datepicker").css('font-size', 15) 

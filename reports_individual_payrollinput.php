@@ -1756,6 +1756,11 @@
 													
 													$getOldVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' AND STR_TO_DATE(date, '%M %e, %Y') <= STR_TO_DATE('$date', '%M %e, %Y') AND date != '$date' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1";
 													$getNewVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'newVale' AND STR_TO_DATE(date, '%M %e, %Y') <= STR_TO_DATE('$date', '%M %e, %Y') AND date != '$date' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1";
+
+													// Make a query to get previous payroll grandTotal amount
+													$payrollOutstanding = "SELECT total_salary FROM `payroll` WHERE empid = '$empid' AND total_salary < 0 AND date='$day7' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
+													$payrollOutstandingQuery = mysql_query($payrollOutstanding);
+													$payrollOutstandingArr = mysql_fetch_assoc($payrollOutstandingQuery);
 													
 															//Query
 													$sssQuery = mysql_query($getSSS);
@@ -1860,6 +1865,24 @@
 														</div>
 														<div class="col-md-1 col-lg-12">
 															<input type="text" class="form-control" id="pagibigDeduct" name="pagibigDeduct" placeholder="To deduct" value="'.($payrollArr['loan_pagibig'] != 0 ? $payrollArr['loan_pagibig'] : "").'" disabled>
+														</div>
+													</div>
+
+													<!-- OUTSTANDING PAYROLL -->
+													<div class="form-group row">
+														<label class="control-label col-md-3 col-lg-3" for="sss" >Outstanding Payroll</label>
+														<div class="col-md-9 col-lg-9">';
+															if(mysql_num_rows($payrollOutstandingQuery) > 0)
+															{
+																Print "<span class='pull-right' id='payrollOutstandingValue'>".numberExactFormat(abs($payrollOutstandingArr["total_salary"]), 2, '.', true)."</span>";
+															}
+															else
+															{
+																Print "--";
+															}
+														Print '</div>
+														<div class="col-md-1 col-lg-12">
+															<input type="number" class="form-control" id="outstandingPayrollDisplay" name="outstandingPayrollDisplay" value="'.((mysql_num_rows($payrollOutstandingQuery) > 0) ? $payrollOutstandingArr['total_salary'] : '--').'" placeholder="Excess from last payroll" readonly>
 														</div>
 													</div>
 												</div>
@@ -2615,8 +2638,26 @@
 							Print '
 							<h3>Loans</h3>
 							<table class="table">
-								<thead>
-									<tr>
+								<thead>';
+									if(mysql_num_rows($payrollOutstandingQuery) > 0)
+									{
+										Print "<tr>
+												<td>Outstanding Payroll</td>
+												<td>
+													".numberExactFormat(abs($payrollOutstandingArr['total_salary']), 2, '.', true)."
+												</td>
+										</tr>";
+									}
+									else
+									{
+										Print "<tr>
+												<td>Outstanding Payroll</td>
+												<td>
+													--
+												</td>
+										</tr>";
+									}
+									Print '<tr>
 										<td>New Vale</td>
 										<td>';
 											
@@ -2713,7 +2754,7 @@
 							    
 							    	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($payrollArr['tools_paid']);
 							    	
-							    	$grandTotal = abs($grandTotal);
+							    	$grandTotal = $grandTotal;
 							    Print '
 							    <div class="col-md-1 col-lg-12">
 							    	<h3><u>Grand total: '.numberExactFormat($grandTotal, 2, '.', true).'</u></h3>

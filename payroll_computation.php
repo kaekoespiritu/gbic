@@ -3,15 +3,9 @@
 include('directives/session.php');
 include('directives/db.php');
 
-// if(!isset($_POST['empid']))
-// {
-// 	Print "<script>window.location.assign('payroll.login')</script>";
-// }
-
 $empid = $_POST['empid'];
 $date = $_POST['date'];
 
-// Print "<script>alert('".$date."')</script>";
 $employee = "SELECT * FROM employee WHERE empid = '$empid'";
 $employeeQuery = mysql_query($employee);
 $empArr = mysql_fetch_assoc($employeeQuery);
@@ -29,8 +23,21 @@ $day4 = date('F d, Y', strtotime('-3 day', strtotime($date)));
 $day5 = date('F d, Y', strtotime('-4 day', strtotime($date)));
 $day6 = date('F d, Y', strtotime('-5 day', strtotime($date)));
 $day7 = date('F d, Y', strtotime('-6 day', strtotime($date)));
+$daySeven = date('F d, Y', strtotime('-7 day', strtotime($date)));
 
 $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
+
+$payrollOutstandingSql = "SELECT total_salary FROM payroll WHERE empid = '$empid' AND date != '$date' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
+$payrollOutstandingQuery = mysql_query($payrollOutstandingSql);
+
+$payrollOutstanding = 0;
+
+while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
+{
+	if($outStandingCheck['total_salary'] < 0.00)
+		$payrollOutstanding = $outStandingCheck['total_salary'] ;
+}
+
 
 ?>
 
@@ -91,23 +98,6 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 						$numDays = $payrollArr['num_days']." Day(s)";
 
 						$ratePerDaySub = 0;
-						// if(!empty($payrollArr['sunday_hrs']))
-						// {
-						// 	if($payrollArr['sunday_hrs'] >= 8)
-						// 	{
-						// 		$ratePerDaySub = $payrollArr['num_days'];
-						// 		$ratePerDaySub = abs($ratePerDaySub);
-						// 	}
-						// 	else
-						// 	{
-						// 		$ratePerDaySub = ($payrollArr['sunday_hrs']/8) - $payrollArr['num_days'];
-						// 		$ratePerDaySub = abs($ratePerDaySub);
-						// 	}
-						// 	$ratePerDayDisp = $ratePerDaySub." Day(s)";
-
-						// }
-						// else
-						// {
 							$ratePerDaySub = $payrollArr['num_days'];//for computation
 							$numDaysArr = explode('.', $ratePerDaySub);
 							if(count($numDaysArr) == 2)
@@ -130,7 +120,6 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 							$subTotalRatePerDay = numberExactFormat($subTotalRatePerDay, 2, '.', true);
 						if($numDays == 0)
 							$numDays = "--";
-						Print "<script>console.log('num_days: ".$payrollArr['num_days']."')</script>";
 					?>
 					<tr>
 						<td>Rate per day</td>
@@ -143,28 +132,10 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 					<?php
 
 						$allowDays =  $payrollArr['allow_days'];
-						// $allowExplode = explode('.', $payrollArr['allow_days']);
-						// if(count($allowExplode) == 2)
-						// {
-						// 	if($allowExplode[1] != 0)
-						// 		$allowDays = $allowExplode[0]+1;
-						// 	else
-						// 		$allowDays = $allowExplode[0];
-						// }
-						// else
-						// {
-						// 	$allowDays = $allowExplode[0];
-						// }
-						// if($payrollArr['sunday_hrs'] != 0)
-						// {
-						// 	Print "<script>console.log('sunday')</script>";
-						// 	$allowDays++;
-						// }
 
 						$subTotalAllowance = $empArr['allowance'] * $allowDays;
 						$totalAllowance = $subTotalAllowance;//for the Subtotal of Earnings
 
-						// Print "<script>alert('".$totalAllowance." | ".$payrollArr['x_allowance']."')</script>";
 						if($subTotalAllowance == 0)
 							$subTotalAllowance = "--";
 						else
@@ -600,11 +571,34 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 
 			<!-- Loans -->
 			<?php 
+			if(mysql_num_rows($payrollOutstandingQuery) > 0)
+				$totalLoans = $payrollArr['loan_pagibig'] + $payrollArr['loan_sss'] + $payrollArr['old_vale'] + $payrollArr['new_vale'] + abs($payrollOutstanding);
+			else
 				$totalLoans = $payrollArr['loan_pagibig'] + $payrollArr['loan_sss'] + $payrollArr['old_vale'] + $payrollArr['new_vale'];
 			?>
 			<h3>Loans</h3>
 			<table class="table">
 				<thead>
+					<?php
+					if(mysql_num_rows($payrollOutstandingQuery) > 0)
+					{
+						Print "<tr>
+								<td>Outstanding Payroll</td>
+								<td>
+									".( abs($payrollOutstanding) != 0 ? numberExactFormat(abs($payrollOutstanding), 2, '.', true) : '--' )."
+								</td>
+						</tr>";
+					}
+					else
+					{
+						Print "<tr>
+								<td>Outstanding Payroll</td>
+								<td>
+									--
+								</td>
+						</tr>";
+					}
+					?>
 					<tr>
 						<td>New Vale</td>
 						<td>
@@ -704,9 +698,9 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 			    </div>
 			    <?php
 			    		Print "<script>console.log('logic_payroll - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".abs($payrollArr['tools_paid'])."')</script>";
-			    	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($payrollArr['tools_paid']);
+			    	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($payrollArr['tools_paid']) - abs($payrollOutstanding);
 			    	
-			    	$grandTotal = abs($grandTotal);
+			    	$grandTotal = $grandTotal;
 			    ?>
 			    <div class="col-md-1 col-lg-12">
 			    	<h3><u>Grand total: <?php Print numberExactFormat($grandTotal, 2, '.', true) ?></u></h3>
@@ -720,7 +714,7 @@ $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 	document.getElementById("payroll").setAttribute("style", "background-color: #10621e;");
 
 	function EditPayroll(id){
-		var res = confirm("Editing the payroll will remove previously inputted data for this employee. Are you sure you want to proceed?");
+		var res = confirm("Editing the payroll will remove previously inputted data for this employee. Are you sure you want to proceed?")
 		if(res)
 			window.location.assign('logic_payroll_backPayroll.php?e='+id);
 	}
