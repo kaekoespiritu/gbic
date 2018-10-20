@@ -747,7 +747,7 @@ function getDay($day)
 		Print "<script>console.log('allowDays2: ".$daysAllowance."')</script>";
 	}
 
-	$compAllowance = (($daysAllowance * $dailyAllowance)  + $extraAllowance);
+	$compAllowance = ($daysAllowance * $dailyAllowance);
 	Print "<script>console.log('extraAllowanceDailyOverall: ".$extraAllowanceDailyOverall." | extraAllowanceWeekly: ".$extraAllowanceWeekly."')</script>";
 	$xAllowancesComp = $extraAllowanceDailyOverall + $extraAllowanceWeekly;
 //Loans deduction --------------------------------------------------------------------- Incomplete

@@ -10,23 +10,31 @@ $database = "GBIC";
 
 function numberExactFormat($number, $precision, $separator, $thousand)//For number format
 {
-    $numberParts = explode($separator, $number);
+    if(gettype($number) != 'integer' || gettype($number) != 'double' || gettype($number) != 'string')
+    {
+        $numberParts = explode($separator, $number);
 
-    if($thousand)
-        $response = number_format($numberParts[0]);
-    else
-        $response = $numberParts[0];
-    
-    if(count($numberParts) > 1){
-        $response .= $separator;
-        $response .= substr($numberParts[1], 0, $precision);
+        if($thousand)
+            $response = (($numberParts[0] != '' || $numberParts[0] != 0) ? number_format($numberParts[0]) : 0 );
+        else
+            $response = $numberParts[0];
+        
+        if(count($numberParts) > 1){
+            $response .= $separator;
+            $response .= substr($numberParts[1], 0, $precision);
+        }
+        else
+        {
+            $response .= $separator;
+            $response .= "00";
+        }
+        return $response;
     }
     else
     {
-    	$response .= $separator;
-    	$response .= "00";
+        return;
     }
-    return $response;
+        
 }
 
 ?>

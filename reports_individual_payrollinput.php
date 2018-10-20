@@ -342,14 +342,14 @@
 								<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">';
 									
 							//For deduction section 4 for 4 weeks in a month
-									$deductionSSS = $payrollArr['sss']/4;
-									$deductionPagibig = $payrollArr['pagibig']/4;
-									$deductionPhilhealth = $payrollArr['philhealth']/4;
+									$deductionSSS = ($payrollArr['sss'] > 0 ? numberExactFormat($payrollArr['sss'], 2, '.', true) : '');
+									$deductionPagibig = ($payrollArr['pagibig'] > 0 ? numberExactFormat($payrollArr['pagibig'], 2, '.', true) : '');
+									$deductionPhilhealth = ($payrollArr['philhealth'] > 0 ? numberExactFormat($payrollArr['philhealth'], 2, '.', true) : '');
 									
 							//2 decimal places
-									$deductionSSS =  numberExactFormat($deductionSSS, 2, '.', true);
-									$deductionPagibig = numberExactFormat($deductionPagibig, 2, '.', true);
-									$deductionPhilhealth = numberExactFormat($deductionPhilhealth, 2, '.', true);
+									// $deductionSSS =  numberExactFormat($payrollArr['sss'], 2, '.', true);
+									// $deductionPagibig = numberExactFormat($payrollArr['pagibig'], 2, '.', true);
+									// $deductionPhilhealth = numberExactFormat($payrollArr['philhealth'], 2, '.', true);
 							//Change to no value string if the employee has no document
 									if($deductionSSS == 0)
 									{
