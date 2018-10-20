@@ -11,6 +11,7 @@ if(!isset($_GET['site']) && !isset($_GET['position']))
 $site = $_GET['site'];
 $position = $_GET['position'];
 $empid = $_GET['empid'];
+
 $date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("%B %d, %Y")); // Gets the payroll date if admin didn't finish the payroll for the week
 // $date = "July 25, 2018";
 // $date = "September 5, 2018";
@@ -1801,58 +1802,18 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 				<div class="col-md-2 col-lg-2">
 					<h4>Loans</h4>
 					<?php
-					// 		//this is to check if employee has multiple new vales in a week
-					// $day1 = $date;
-					// $day2 = date('F d, Y', strtotime('-1 day', strtotime($date)));
-					// $day3 = date('F d, Y', strtotime('-2 day', strtotime($date)));
-					// $day4 = date('F d, Y', strtotime('-3 day', strtotime($date)));
-					// $day5 = date('F d, Y', strtotime('-4 day', strtotime($date)));
-					// $day6 = date('F d, Y', strtotime('-5 day', strtotime($date)));
-					// $day7 = date('F d, Y', strtotime('-6 day', strtotime($date)));
-					// $days = array("$day1","$day2","$day3","$day4","$day5","$day6","$day7");
-					// $newVale = 0;
-					// foreach($days as $checkDay)
-					// {
-								//Check if overall attendance for a certain site is done
-						// $loanChecker = "SELECT * FROM loans WHERE date = '$checkDay' AND type = 'newVale' AND empid = '$empid'";
-						// $loanCheckerQuery = mysql_query($loanChecker);
-						// if($loanCheckerQuery)
-						// {
-						// 	$newValeNum = mysql_num_rows($loanCheckerQuery);
-						// 	if($newValeNum != 0)
-						// 	{
-						// 		if($newValeNum > 1)
-						// 		{
-						// 			while($newValeArr = mysql_fetch_assoc($loanCheckerQuery))
-						// 			{
-						// 				if($newValeNum > 1)
-						// 				{
-						// 					while($newValeArr = mysql_fetch_assoc($loanCheckerQuery))
-						// 					{
-						// 						$newVale += $newValeArr['amount'];
-						// 					}
-						// 				}
-						// 				else
-						// 				{
-						// 					$newValeRow = mysql_fetch_assoc($loanCheckerQuery);
-						// 					$newVale += $newValeRow['amount'];
-						// 				}
-						// 			}
-						// 		}
-						// 		else
-						// 		{
-						// 			$newValeRow = mysql_fetch_assoc($loanCheckerQuery);
-						// 			$newVale += $newValeRow['amount'];
-						// 		}
-						// 	}
-						// }
-					// }
 					
 					$getSSS = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'SSS' AND STR_TO_DATE(date, '%M %e, %Y') <= STR_TO_DATE('$date', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1";
 					$getPAGIBIG = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'PagIBIG' AND STR_TO_DATE(date, '%M %e, %Y') <= STR_TO_DATE('$date', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1";
 					
 					$getOldVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' AND STR_TO_DATE(date, '%M %e, %Y') <= STR_TO_DATE('$date', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1";
 					$getNewVALE = "SELECT * FROM loans WHERE empid = '$empid' AND type = 'newVale' AND STR_TO_DATE(date, '%M %e, %Y') <= STR_TO_DATE('$date', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1";
+
+					// Make a query to get previous payroll grandTotal amount
+					$payrollOutstanding = "SELECT total_salary FROM `payroll` WHERE empid = '$empid' AND total_salary < 0 AND date='$day7' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
+					$payrollOutstandingQuery = mysql_query($payrollOutstanding);
+					$payrollOutstandingArr = mysql_fetch_assoc($payrollOutstandingQuery);
+
 							//Query
 					$sssQuery = mysql_query($getSSS);
 					$pagibigQuery = mysql_query($getPAGIBIG);
@@ -1956,6 +1917,25 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 						</div>
 						<div class="col-md-1 col-lg-12">
 							<input type="number" class="form-control" id="pagibigDeduct" name="pagibigDeduct" placeholder="To deduct" onblur="addDecimal(this)" value="<?php Print $pagibigDisplay?>" onchange="setpagibigLimit(this)">
+						</div>
+					</div>
+					<!-- OUTSTANDING PAYROLL -->
+					<div class="form-group row">
+						<label class="control-label col-md-3 col-lg-3" for="sss" >Outstanding Payroll</label>
+						<div class="col-md-9 col-lg-9">
+							<?php
+							if(mysql_num_rows($payrollOutstandingQuery) > 0)
+							{
+								Print "<span class='pull-right' id='payrollOutstandingValue'>".numberExactFormat(abs($payrollOutstandingArr["total_salary"]), 2, '.', true)."</span>";
+							}
+							else
+							{
+								Print "--";
+							}
+							?>
+						</div>
+						<div class="col-md-1 col-lg-12">
+							<input type="number" class="form-control" id="outstandingPayrollDisplay" name="outstandingPayrollDisplay" value="<?php if(mysql_num_rows($payrollOutstandingQuery) > 0) Print abs($payrollOutstandingArr['total_salary']); else Print '--'?>" placeholder="Excess from last payroll" readonly>
 						</div>
 					</div>
 				</div>

@@ -3,10 +3,24 @@
 	include('directives/db.php');
 	$time = strftime("%X");//TIME
 
-
 	$date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("%B %d, %Y")); // Gets the payroll date if admin didn't finish the payroll for the week
 	// $date = "July 25, 2018";
 	// $date = "July 11, 2018";
+
+	//Employee ID
+	$empid = $_POST['employeeID'];
+	
+	$daySeven = date('F d, Y', strtotime('-7 day', strtotime($date)));
+
+
+	$payrollOutstandingSql = "SELECT total_salary FROM payroll WHERE empid = '$empid' AND date != '$date' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
+	$payrollOutstandingQuery = mysql_query($payrollOutstandingSql);
+	$payrollOutstanding = 0;
+	while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
+	{
+		if($outStandingCheck['total_salary'] < 0.00)
+			$payrollOutstanding = $outStandingCheck['total_salary'] ;
+	}
 
 function GetExactRawTime($time) 
 {
@@ -43,8 +57,7 @@ function getDay($day)
 
 	return $output;
 }
-//Employee ID
-	$empid = $_POST['employeeID'];
+
 
 	$employee = "SELECT * FROM employee WHERE empid = '$empid'";
 	$empQuery = mysql_query($employee);
@@ -1031,10 +1044,20 @@ function getDay($day)
 
 	$contributions = $pagibig + $philhealth + $sss + $tax + $insurance;
 
-	$totalLoans = $loan_pagibig + $loan_sss + $loan_oldVale + $loan_newVale;
+	if(mysql_num_rows($payrollOutstandingQuery) > 0)
+		$totalLoans = $loan_pagibig + $loan_sss + $loan_oldVale + $loan_newVale + abs($payrollOutstanding);
+	else
+		$totalLoans = $loan_pagibig + $loan_sss + $loan_oldVale + $loan_newVale;
+
 	Print "<script>console.log('toDB - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".abs($tools_paid)."')</script>";
-	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($tools_paid);
-	$grandTotal = abs(numberExactFormat($grandTotal, 2, '.', false));
+
+	$totalEarnings = abs($totalEarnings); 
+	$contributions = abs($contributions); 
+	$totalLoans = abs($totalLoans); 
+	$tools_paid = abs($tools_paid); 
+
+	$grandTotal = $totalEarnings - $contributions - $totalLoans - $tools_paid;
+	$grandTotal = numberExactFormat($grandTotal, 2, '.', false);
 
 
 	// Absolute all computational variables
@@ -1068,7 +1091,7 @@ function getDay($day)
 	$philhealthER = abs($philhealthER);
 	$tools_paid = abs($tools_paid);
 	$outStandingBalance = abs($outStandingBalance);
-	$grandTotal = abs($grandTotal);
+	$grandTotal = $grandTotal; // Removing absolute function on grandTotal to detect negative values on payroll computation
 	$loan_sss = abs($loan_sss);
 	$loan_pagibig = abs($loan_pagibig);
 	$loan_newVale = abs($loan_newVale);
