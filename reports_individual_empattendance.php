@@ -126,7 +126,7 @@
 								}
 								else
 								{
-									$closePayroll = date('F d, Y', strtotime('-1 day', strtotime($_POST['date'])));
+									$closePayroll = $_POST['date'];
 									$openPayroll = date('F d, Y', strtotime('-6 day', strtotime($closePayroll)));
 								}
 							}
