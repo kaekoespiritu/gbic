@@ -151,6 +151,10 @@
 						$remainderBool = true;// displays the remainder
 
 					}
+					else
+					{
+						$pastThirteenthDate = "AND STR_TO_DATE(date, '%M %e, %Y ') >= STR_TO_DATE('".$empArr['datehired']."', '%M %e, %Y ')";
+					}
 
 					if($period == "week")
 					{
