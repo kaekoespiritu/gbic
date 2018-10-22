@@ -136,7 +136,7 @@
 					$pastThirteenthDate = "";
 					$thirteenthRemainder = 0;
 
-
+					$noRemainderBool = false;
 					if(mysql_num_rows($thirteenthCheckQuery) == 1)
 					{
 
@@ -154,6 +154,7 @@
 					else
 					{
 						$pastThirteenthDate = "AND STR_TO_DATE(date, '%M %e, %Y ') >= STR_TO_DATE('".$empArr['datehired']."', '%M %e, %Y ')";
+						$noRemainderBool = true;
 					}
 
 					if($period == "week")
@@ -200,7 +201,20 @@
 							$endDate =date('F d, Y', strtotime('-1 day', strtotime($payDateArr['date'])));
 							$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
-							$attendance = "SELECT date, workhours, attendance FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
+							if($noRemainderBool)
+							{
+								$attendance = "SELECT date, workhours, attendance FROM attendance WHERE  
+								empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('".$empArr['datehired']."', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
+								$noRemainderBool = false;
+							}
+							else
+							{
+								$attendance = "SELECT date, workhours, attendance FROM attendance WHERE  
+								empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
+							}
+								
+								
+
 							$attChecker = mysql_query($attendance);
 							$attQuery = mysql_query($attendance);
 
