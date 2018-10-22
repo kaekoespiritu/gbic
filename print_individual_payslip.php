@@ -143,10 +143,10 @@ $AllowSubTotal =  $payrollArr['allow'] * $daysAllowance;
 $activeSheet->setCellValue('D5', $AllowSubTotal);
 
 //Cola
-$activeSheet->setCellValue('B6', $payrollArr['cola']);
+$activeSheet->setCellValue('B6', ($payrollArr['cola']/$payrollArr['allow_days']));
 $activeSheet->setCellValue('C6', 'x '.decimalPlaces($daysAllowance));
 
-$colaSubTotal = $payrollArr['cola'] * $daysAllowance;
+$colaSubTotal = ($payrollArr['cola']/$payrollArr['allow_days']) * $daysAllowance;
 $activeSheet->setCellValue('D6', $colaSubTotal);
 
 //Sunday

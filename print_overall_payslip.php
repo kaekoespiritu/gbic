@@ -286,11 +286,11 @@ for($count = 0; $count <= $loopCount; $count++)
 
 				//Cola
 				if($payrollArr['cola'] != 0)
-					$activeSheet->setCellValue($cellB.$colaDataCounter, $payrollArr['cola']);
+					$activeSheet->setCellValue($cellB.$colaDataCounter, ($payrollArr['cola']/$payrollArr['allow_days']));
 				if($daysAllowance != 0)
 					$activeSheet->setCellValue($cellC.$colaDataCounter, 'x '.decimalPlaces($daysAllowance));
 
-				$colaSubTotal = $payrollArr['cola'] * $daysAllowance;
+				$colaSubTotal = ($payrollArr['cola']/$payrollArr['allow_days']) * $daysAllowance;
 				if($colaSubTotal != 0)
 					$activeSheet->setCellValue($cellD.$colaDataCounter, $colaSubTotal);
 

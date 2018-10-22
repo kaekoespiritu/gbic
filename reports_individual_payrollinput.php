@@ -1942,7 +1942,7 @@
 														
 														Print '
 														<h4>COLA</h4>
-														<input type="text" value="'.($payrollArr['cola'] != 0 ? $payrollArr['cola'] : "").'" name="cola" class="form-control" disabled>
+														<input type="text" value="'.($payrollArr['cola'] != 0 ? ($payrollArr['cola']/$payrollArr['allow_days']) : "").'" name="cola" class="form-control" disabled>
 														<h4>Insurance</h4>
 														<input type="text" value="'.($payrollArr['insurance'] != 0 ? $payrollArr['insurance'] : "").'" name="insurance"  class="form-control" disabled>
 													</div>

@@ -313,7 +313,7 @@
 													'.$payrollArr['allow'].'
 												</td>
 												<td><!-- COLA -->
-													'.$payrollArr['cola'].'
+													'.($payrollArr['cola']/$payrollArr['allow_days']).'
 												</td>
 												<td><!-- Sun -->
 													'.$payrollArr['sunday_rate'].'

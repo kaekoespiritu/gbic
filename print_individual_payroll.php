@@ -138,7 +138,7 @@ $rowCounter = 4; //start for the data in the row of excel
 	if(!$AllowBool)
 		$activeSheet->setCellValue('H'.$rowCounter, $payrollArr['allow']);//Allow.
 	if(!$colaBool)
-		$activeSheet->setCellValue('I'.$rowCounter, $payrollArr['cola']);//cola
+		$activeSheet->setCellValue('I'.$rowCounter, ($payrollArr['cola']/$payrollArr['allow_days']));//cola
 	$activeSheet->setCellValue('J'.$rowCounter, $payrollArr['sunday_rate']);//Sun
 	if($sundayBool)
 		$activeSheet->setCellValue('K'.$rowCounter, '1');//D

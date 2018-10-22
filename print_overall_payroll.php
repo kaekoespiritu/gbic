@@ -174,7 +174,7 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 		if(!$AllowBool)
 			$activeSheet->setCellValue('H'.$rowCounter, $payrollArr['allow']);//Allow.
 		if(!$colaBool)
-			$activeSheet->setCellValue('I'.$rowCounter, $payrollArr['cola']);//cola
+			$activeSheet->setCellValue('I'.$rowCounter, ($payrollArr['cola']/$payrollArr['allow_days']));//cola
 		//---
 		if($siteArr['complete_doc'] == '1')
 		{
