@@ -8,6 +8,7 @@ $database = "GBIC";
 	mysql_connect($server, $username,$password) or die(mysql_error()); //Connect to server
 	mysql_select_db($database) or die("Cannot connect to database"); //Connect to database
 
+
 function numberExactFormat($number, $precision, $separator, $thousand)//For number format
 {
     if(gettype($number) != 'integer' || gettype($number) != 'double' || gettype($number) != 'string')

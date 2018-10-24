@@ -7,6 +7,21 @@ if(!isset($_SESSION['user_logged_in']))
 {
 	Print "<script>window.location.assign('login.php')</script>";
 }
+
+// Lockdown protocol
+	$lockdownDate = 'November 1, 2018';
+	$checkDateToday = strftime("%B %d, %Y");
+
+	$unixLockdown = strtotime($lockdownDate);
+	$unixDateToday = strtotime($checkDateToday);
+
+	if($unixLockdown <= $unixDateToday)
+	{
+		Print "<script>
+			alert('Freetrial has ended. License is needed to proceed, Please contact the developers.');
+			window.location.assign('error404.php')</script>";
+	}
+
 function restrictions($page) 
 {
 	########################################
