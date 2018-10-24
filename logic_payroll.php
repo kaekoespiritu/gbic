@@ -3,8 +3,8 @@
 	include('directives/db.php');
 	$time = strftime("%X");//TIME
 
-	// $date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("%B %d, %Y")); // Gets the payroll date if admin didn't finish the payroll for the week
-	$date = "October 10, 2018";
+	$date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("%B %d, %Y")); // Gets the payroll date if admin didn't finish the payroll for the week
+	// $date = "October 10, 2018";
 	// $date = "July 11, 2018";
 
 	//Employee ID
