@@ -102,7 +102,6 @@ function getDay($day)
 	$sunday = 0;
 	if(isset($_POST['timein1']) && isset($_POST['timeout1']))
 	{
-		echo "<script>alert('yow pasok')</script>";
 		// Holiday check
 		$adjustmentCount = count($_POST['adjustmentDate']);
 		$adjustmentDates = "";// empty string for payroll_adjustment table reference of dates
@@ -143,10 +142,9 @@ function getDay($day)
 				//Check if sunday
 				
 				$sundayChecker = date('l', strtotime($adjustDate));// Gets the week name
-				echo "<script>alert('".$sundayChecker."')</script>";
+				
 				if($sundayChecker == "Sunday")
 				{
-					echo "<script>alert('yown')</script>";
 					$sunday = 1;
 					$adjSundayHrsExp = explode('.',$_POST['workinghrs'][$adCount]);
 					$adjSundayHrs = $adjSundayHrsExp[0];
@@ -257,7 +255,6 @@ function getDay($day)
 				{
 					$adjWorkingDays++;// Increment Working days
 				}
-				echo "<script>alert('".$adjWorkingDays."')</script>";
 			}
 		}
 		// Insert Query to payroll_adjustment table [empid, payroll_date, dates]
@@ -328,7 +325,6 @@ function getDay($day)
 	{
 		if($empArr['complete_doc'] == '1')// If employee has complete requirements
 		{
-			echo "<script>alert('sunday pasok')</script>";
 			$sundayBool = true;
 
 			$sunExplode = (isset($_POST['sunWorkHrs']) ? explode('.',$_POST['sunWorkHrs']) : 0);
