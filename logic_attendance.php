@@ -493,7 +493,7 @@ if($dateRows > 0)// Updating attendance
 			//require "directives/attendance/attendance_query.php";
 
 			$attChecker2 = "SELECT * from attendance WHERE date = '$date' AND empid = '$empid' LIMIT 1";
-			$attCheckerQuery2 = mysql_query($attChecker);
+			$attCheckerQuery2 = mysql_query($attChecker2);
 			if(mysql_num_rows($attCheckerQuery2) != 0)//update
 			{
 				$AttQuery = updateQuery($timein1, $timeout1, $timein2, $timeout2, $timein3, $timeout3, $day, $empid, $position, $workinghrs, $OtHrs, $undertime, $nightdiff, $remarks, $attendance, $date, $location, $sunday, $holidayDate, $xAllowance);

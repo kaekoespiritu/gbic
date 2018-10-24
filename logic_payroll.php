@@ -99,6 +99,7 @@ function getDay($day)
 	$adjOthrs = 0;
 	$adjNightdiff = 0;
 	$adjustmentBool = false; // Boolean for querying adjusted dates for updates
+	$sunday = 0;
 	if(isset($_POST['timein1']) && isset($_POST['timeout1']))
 	{
 		// Holiday check
@@ -134,16 +135,16 @@ function getDay($day)
 						$adjHolidaySpeNum++;// Increment holiday num
 					else
 						$adjHolidayRegNum++;// Increment holiday num
-					$holiday = '1';
+					$holiday = 1;
 					
 				}
 
 				//Check if sunday
-				$sunday = '0';
+				
 				$sundayChecker = date('l', strtotime($adjustDate));// Gets the week name
 				if($sundayChecker == "Sunday")
 				{
-					$sunday = '1';
+					$sunday = 1;
 					$adjSundayHrsExp = explode('.',$_POST['workinghrs'][$adCount]);
 					$adjSundayHrs = $adjSundayHrsExp[0];
 					if(count($adjSundayHrsExp) > 1)
