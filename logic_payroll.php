@@ -4,7 +4,7 @@
 	$time = strftime("%X");//TIME
 
 	$date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("%B %d, %Y")); // Gets the payroll date if admin didn't finish the payroll for the week
-	// $date = "July 25, 2018";
+	// $date = "October 10, 2018";
 	// $date = "July 11, 2018";
 
 	//Employee ID
@@ -102,6 +102,7 @@ function getDay($day)
 	$sunday = 0;
 	if(isset($_POST['timein1']) && isset($_POST['timeout1']))
 	{
+		echo "<script>alert('yow pasok')</script>";
 		// Holiday check
 		$adjustmentCount = count($_POST['adjustmentDate']);
 		$adjustmentDates = "";// empty string for payroll_adjustment table reference of dates
@@ -142,8 +143,10 @@ function getDay($day)
 				//Check if sunday
 				
 				$sundayChecker = date('l', strtotime($adjustDate));// Gets the week name
+				echo "<script>alert('".$sundayChecker."')</script>";
 				if($sundayChecker == "Sunday")
 				{
+					echo "<script>alert('yown')</script>";
 					$sunday = 1;
 					$adjSundayHrsExp = explode('.',$_POST['workinghrs'][$adCount]);
 					$adjSundayHrs = $adjSundayHrsExp[0];
@@ -251,7 +254,10 @@ function getDay($day)
 
 				$adjAllowDays++;
 				if($sundayChecker != "Sunday")
+				{
 					$adjWorkingDays++;// Increment Working days
+				}
+				echo "<script>alert('".$adjWorkingDays."')</script>";
 			}
 		}
 		// Insert Query to payroll_adjustment table [empid, payroll_date, dates]
@@ -318,13 +324,14 @@ function getDay($day)
 	$SundayRatePerHour = (($dailyRate + ($dailyRate * .30))/8);//Sunday Hourly Rate
 	$sunWorkHrs = 0;
 	$sundayBool = false;//Boolean to filter the sunday from the work days
-	if(!empty($_POST['sunWorkHrs']))
+	if(!empty($_POST['sunWorkHrs']) || !empty($adjSundayHrs))
 	{
 		if($empArr['complete_doc'] == '1')// If employee has complete requirements
 		{
-			Print "<script>console.log('sunday pasok')</script>";
+			echo "<script>alert('sunday pasok')</script>";
 			$sundayBool = true;
-			$sunExplode = explode('.',$_POST['sunWorkHrs']);
+
+			$sunExplode = (isset($_POST['sunWorkHrs']) ? explode('.',$_POST['sunWorkHrs']) : 0);
 			if(count($sunExplode) > 1)
 			{
 				$sunHrs = $sunExplode[0];
@@ -336,6 +343,10 @@ function getDay($day)
 				{
 					$sunWorkHrs += $adjSundayHrs;
 				}
+			}
+			else if($adjSundayHrs != 0 || $adjSundayHrs != 0.00)
+			{
+				$sunWorkHrs += $adjSundayHrs;
 			}
 			else
 			{

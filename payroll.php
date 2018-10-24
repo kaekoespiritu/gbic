@@ -13,7 +13,7 @@ $position = $_GET['position'];
 $empid = $_GET['empid'];
 
 $date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("%B %d, %Y")); // Gets the payroll date if admin didn't finish the payroll for the week
-// $date = "July 25, 2018";
+// $date = "October 10, 2018";
 // $date = "September 5, 2018";
 // $date = "July 11, 2018";
 
