@@ -1814,12 +1814,12 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					//If employee chooses halfday
 					if(timeinhour2 != "HD")
 					{
-
-						// console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
+						console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
 						if(	(timeinhour1 <= 10 && timeouthour1 <= 18) || 
 							(timeinhour2 <= 10 && timeouthour2 <= 18) || 
 							(timeouthour1 == 10 && timeoutmin1 != 0) ||
-							(timeouthour2 == 10 && timeoutmin2 != 0))//night diff needs reconfiguration
+							(timeouthour2 == 10 && timeoutmin2 != 0) ||//night diff needs reconfiguration
+							(timeinhour2 >= 10 && timeouthour2 <= 18))/// If timeinhour3  is 1am onwards but not greater than 6 
 						{
 							var NDin;
 							var NDout;
@@ -1900,6 +1900,11 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 									
 								}
 								
+							}
+							else if(timeinhour2 >= 10 && timeouthour2 <= 18)
+							{
+
+								nightdiff = timeinhour2 - timeouthour2;
 							}
 								
 							
@@ -2025,12 +2030,12 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 								nightdiff = timeinhour1 - timeouthour1;
 							}
 
-							if(originalMins != null)
-							{
-								// console.log("nightdiff mins");
-								nightdiffMins = originalMins;
-								nightdiffBool = true;
-							}
+							// if(originalMins != null)
+							// {
+							// 	// console.log("nightdiff mins");
+							// 	nightdiffMins = originalMins;
+							// 	nightdiffBool = true;
+							// }
 						}
 						if(Number.isInteger(nightdiff))
 						{
@@ -2053,6 +2058,27 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					// console.log("nightdiffBool: "+ nightdiffBool);
 					// if(nightdiffBool == false && nightdiff == "")
 					// 	nightdiffBool = true;
+					
+					//Nightdiff mins
+					if(	(timeinhour1 <= 10 && timeouthour1 <= 18 && timeoutmin1 >= 0) || 
+						(timeouthour1 == 10 && timeoutmin1 != 0 && timeoutmin1 >= 0))
+					{
+						nightdiffMins += timeoutmin1;
+						nightdiffBool = true;
+					}
+					if(	(timeinhour2 <= 10 && timeouthour2 <= 18 && timeoutmin2 >= 0) || 
+						(timeouthour2 == 10 && timeoutmin2 != 0 && timeoutmin2 >= 0) ||//night diff needs reconfiguration
+						(timeinhour2 >= 10 && timeouthour2 <= 18 && timeoutmin2 >= 0))
+					{
+						nightdiffMins += workingmins2;
+						nightdiffBool = true;
+					}
+
+					if(nightdiffMins >= 60)
+					{
+						nightdiff++; //increment nightdiff
+						nightdiffMins -= 60;
+					}
 
 					if(nightdiffBool && nightdiffMins != 0 && nightdiff == "")
 					{
