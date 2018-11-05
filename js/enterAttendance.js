@@ -2062,6 +2062,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					
 					//Nightdiff mins
 					nightdiffMins = 0;
+
 					if(	(timeinhour1 <= 10 && timeouthour1 <= 18 && timeoutmin1 >= 0) || 
 						(timeouthour1 == 10 && timeoutmin1 != 0 && timeoutmin1 >= 0))
 					{
@@ -2069,12 +2070,12 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 						nightdiffMins += timeoutmin1;
 						nightdiffBool = true;
 					}
-					else if(timeinhour1 >= timeouthour1 && timeoutmin1 >= 0)
+					else if(timeinhour1 == timeouthour1 && timeoutmin1 >= 0)
 					{
 						nightdiffMins += timeoutmin1;
 						nightdiffBool = true;
 					}
-					
+
 					if(	(timeinhour2 <= 10 && timeouthour2 <= 18 && timeoutmin2 >= 0) || 
 						(timeouthour2 == 10 && timeoutmin2 != 0 && timeoutmin2 >= 0) ||//night diff needs reconfiguration
 						(timeinhour2 >= 10 && timeouthour2 <= 18 && timeoutmin2 >= 0))
@@ -2099,7 +2100,6 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					{
 						if(nightdiffMins != 0)
 						{
-							
 							row.querySelector('.nightdiff').value = nightdiff + " hrs, " + nightdiffMins + "mins";
 							row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + nightdiffMins + "mins";
 						}
