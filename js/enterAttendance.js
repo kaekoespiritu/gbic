@@ -2061,6 +2061,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					// 	nightdiffBool = true;
 					
 					//Nightdiff mins
+					nightdiffMins = 0;
 					if(	(timeinhour1 <= 10 && timeouthour1 <= 18 && timeoutmin1 >= 0) || 
 						(timeouthour1 == 10 && timeoutmin1 != 0 && timeoutmin1 >= 0))
 					{
@@ -2092,6 +2093,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					{
 						if(nightdiffMins != 0)
 						{
+							
 							row.querySelector('.nightdiff').value = nightdiff + " hrs, " + nightdiffMins + "mins";
 							row.querySelector('.nightdiffH').value = nightdiff + " hrs, " + nightdiffMins + "mins";
 						}
