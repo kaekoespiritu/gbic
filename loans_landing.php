@@ -108,7 +108,6 @@ else
 					
 					if($type == 'empVale')//Employees with vale
 					{
-						Print "<script>console.log('".$empid."')</script>";
 						$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND (type = 'oldVale' OR type = 'newVale') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1") or die(mysql_error());
 					}
 					else if($type == 'newVale')//Employees with new vale
@@ -251,7 +250,6 @@ else
 			for(var a = 0; a < loanType.length; a++) { 
 				element = document.getElementsByName('loanType[]')[a];
 				loanTypeSelected[a] = element.options[element.selectedIndex].value;
-				console.log('Selected values: '+loanTypeSelected);
 			}
 
 			var sorted_arr = loanTypeSelected.slice().sort();
@@ -263,13 +261,12 @@ else
 			    }
 			}
 
-			console.log('Duplicate values: '+results);
 
 			if(loanType.length >= 1 && loanType.length < 4 && results.length === 0) {
-				console.log('You have just enough forms.');
+				// console.log('You have just enough forms.');
 				addMoreLoans.removeAttribute('disabled');
 			} if(loanType.length == 4) {
-				console.log('You have reached the maximum amount of loans to add for today.');
+				// console.log('You have reached the maximum amount of loans to add for today.');
 				addMoreLoans.setAttribute('disabled', '');
 			} if(results.length > 0 && results.every(function(element) {return !!element;})) {
 				alert('You have duplicate loan types: ' + results);
@@ -308,7 +305,7 @@ else
 			document.getElementById('rate').value = accounting.formatNumber(rate, 2, ",");
 			document.getElementById('loandate').value = "<?php echo $date; ?>";
 
-			console.log(loandate);
+			// console.log(loandate);
 
 			//done display if value is equal to Zero
 			if(sss != 0)
