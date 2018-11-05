@@ -2,7 +2,6 @@
 include_once('directives/db.php');
 include('directives/session.php');
 require_once("directives/modals/addLoan.php");
-
 if(isset($_SESSION['loandate']))
 {
 	$date = $_SESSION['loandate'];
@@ -94,7 +93,6 @@ else
 			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE loans.type = 'newVale' AND employee.employment_status = '1' ";
 			if($type == 'oldVale')//Employees with old vale
 			$empVale = "SELECT DISTINCT loans.empid FROM loans INNER JOIN employee ON loans.empid = employee.empid WHERE loans.type = 'oldVale' AND employee.employment_status = '1' ";
-
 			$empValeQuery = mysql_query($empVale)or die(mysql_error());
 			$ValeNum = mysql_num_rows($empValeQuery);
 			$counter = 0;//Counter for the employees with vale
@@ -108,7 +106,6 @@ else
 					
 					if($type == 'empVale')//Employees with vale
 					{
-						Print "<script>console.log('".$empid."')</script>";
 						$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND (type = 'oldVale' OR type = 'newVale') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1") or die(mysql_error());
 					}
 					else if($type == 'newVale')//Employees with new vale
@@ -119,12 +116,9 @@ else
 					{
 						$checkerQuery = mysql_query("SELECT * FROM loans WHERE empid = '$empid' AND type = 'oldVale' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC LIMIT 1")or die(mysql_error());
 					}
-
 					// Print "<script>console.log('checkerQuery: ".mysql_num_rows($checkerQuery)."')</script>";
-
 					if(mysql_num_rows($checkerQuery) != 0)
 					{
-
 						$checkRow = mysql_fetch_assoc($checkerQuery);
 						if($type == 'empVale' && $checkRow['balance'] != 0)//Employees with vale
 						{
@@ -153,7 +147,6 @@ else
 		$counter = loanDashboard("empVale");
 		$newValeComputation = loanDashboard("newVale");
 		$oldValeComputation = loanDashboard("oldVale");
-
 		//New vale loaned to employees
 		?>
 		<!-- Dashboard -->
@@ -190,7 +183,6 @@ else
 	<script>
 		// Setting active color of menu to Employees
 		document.getElementById("employees").setAttribute("style", "background-color: #10621e;");
-
 		$(document).ready(function(){
 		 function load_data(query)
 		 {
@@ -215,11 +207,9 @@ else
 		   load_data();
 		  }
 		 });
-
 		var currentDate = "<?php echo $date; ?>";
 		var dateToday = new Date();
 		var twoWeeksAgo = new Date(dateToday.getFullYear(), dateToday.getMonth(), dateToday.getDate() - 14);
-
 		/* DATE PICKER CONFIGURATIONS*/
 		$( "#dtpkr_loan" ).datepicker({
 			changeMonth: true,
@@ -232,44 +222,33 @@ else
 				$(".ui-datepicker").css('font-size', 15) 
 			}
 		});
-
 		$("#dtpkr_loan").datepicker("setDate", currentDate);
-
 		$("#dtpkr_loan").change(function(){
 			var date = $(this).val();
 			window.location.href = "date_loan.php?loandate="+date;
 		});
-
 		});
-
 		function validateLoanFields(row) {
 			var addMoreLoans = document.getElementById('add_more_loans');
 			var loanType = document.getElementsByName('loanType[]');
 			var element;
 			var loanTypeSelected = [];
-
 			for(var a = 0; a < loanType.length; a++) { 
 				element = document.getElementsByName('loanType[]')[a];
 				loanTypeSelected[a] = element.options[element.selectedIndex].value;
-				console.log('Selected values: '+loanTypeSelected);
 			}
-
 			var sorted_arr = loanTypeSelected.slice().sort();
-
 			var results = [];
 			for (var i = 0; i < sorted_arr.length - 1; i++) {
 			    if (sorted_arr[i + 1] == sorted_arr[i]) {
 			        results.push(sorted_arr[i]);
 			    }
 			}
-
-			console.log('Duplicate values: '+results);
-
 			if(loanType.length >= 1 && loanType.length < 4 && results.length === 0) {
-				console.log('You have just enough forms.');
+				// console.log('You have just enough forms.');
 				addMoreLoans.removeAttribute('disabled');
 			} if(loanType.length == 4) {
-				console.log('You have reached the maximum amount of loans to add for today.');
+				// console.log('You have reached the maximum amount of loans to add for today.');
 				addMoreLoans.setAttribute('disabled', '');
 			} if(results.length > 0 && results.every(function(element) {return !!element;})) {
 				alert('You have duplicate loan types: ' + results);
@@ -277,10 +256,8 @@ else
 				   	row.value = '';
 			}
 		}
-
 		function sendToModal(id){
 			var parent = document.getElementById(id);
-
 			// Getting values from the searched employee
 			var empid = parent.querySelector('#empid').value;
 			var firstname = parent.querySelector('#firstname').value;
@@ -295,7 +272,6 @@ else
 			var oldvale = parent.querySelector('#oldvale').value;
 			var newvale = parent.querySelector('#newvale').value;
 			var loandate = parent.querySelector('#loandate').value;
-
 			// Move values to modal
 			document.getElementById('empid').value = empid;
 			document.getElementById('fname').value = firstname;
@@ -307,9 +283,7 @@ else
 			document.getElementById('site').value = site;
 			document.getElementById('rate').value = accounting.formatNumber(rate, 2, ",");
 			document.getElementById('loandate').value = "<?php echo $date; ?>";
-
-			console.log(loandate);
-
+			// console.log(loandate);
 			//done display if value is equal to Zero
 			if(sss != 0)
 			document.getElementById('sss').value = accounting.formatNumber(sss, 2, ",");
@@ -319,18 +293,14 @@ else
 			document.getElementById('oldvale').value = accounting.formatNumber(oldvale, 2, ",");
 			if(newvale != 0)
 			document.getElementById('newvale').value = accounting.formatNumber(newvale, 2, ",");
-
 		}
-
 		function addRow() {
 			var loansLength = document.getElementsByName('loanAmount[]').length;
-
 			var ct = parseInt(loansLength);
 		
 			var div1 = document.createElement('div');
 			div1.id = ct;
 			div1.setAttribute('name','loansRow[]');
-
 			if(ct != 4) {// If added loans is not equal to 3 
 			
 			var delLink = '<div class="col-md-1 col-lg-1 nopadding">'+
@@ -338,7 +308,6 @@ else
 			'<span class="glyphicon glyphicon-minus"></span>'+
 			'</button>'+
 			'</div>';
-
 			var template = '<div class="row">'  +
 									'<div class="form-group col-md-4 col-lg-4">' +
 										"<select class='form-control check-input' name='loanType[]' required id='loanType' onchange='validateLoanFields(this)'>" +
@@ -365,28 +334,21 @@ else
 				alert("You have reached the limit for adding loans");
 			}
 		}
-
 		function deleteRow(eleId) {
 			var ele = document.getElementById(eleId);
 			var parentEle = document.getElementById('loanform');
 			parentEle.removeChild(ele);
-
 			var toolsLength = document.getElementsByName('loansRow[]').length;
 			if(toolsLength > 1)
 			{
 				for(var count = 0; count < toolsLength; count++)
 				{
-
 					document.getElementsByName('loansRow[]')[count].setAttribute('id',count+1);
 					document.getElementsByName('rowDelete[]')[count].setAttribute('onclick','deleteRow('+(count+1)+')');
 					document.getElementById('add_more_loans').removeAttribute('disabled');
 				}
 			}
 		}
-
 	</script>
 </body>
 </html>
-
-
-
