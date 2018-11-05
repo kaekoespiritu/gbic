@@ -1814,6 +1814,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					//If employee chooses halfday
 					if(timeinhour2 != "HD")
 					{
+						console.log("ywwww");
 						console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
 						if(	(timeinhour1 <= 10 && timeouthour1 <= 18) || 
 							(timeinhour2 <= 10 && timeouthour2 <= 18) || 
@@ -1824,7 +1825,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 							var NDin;
 							var NDout;
 							var workhrs;
-							var nightdiffMins = originalMins;
+							var nightdiffMins = 0;
 
 							var nightdiffBool = false;
 							// console.log("ND: timeinhour1: "+ timeinhour1+"// timeouthour1: "+ timeouthour1+"// timeinhour2: "+ timeinhour2+"// timeouthour2: "+ timeouthour2);
@@ -2063,6 +2064,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					if(	(timeinhour1 <= 10 && timeouthour1 <= 18 && timeoutmin1 >= 0) || 
 						(timeouthour1 == 10 && timeoutmin1 != 0 && timeoutmin1 >= 0))
 					{
+						console.log("tim1");
 						nightdiffMins += timeoutmin1;
 						nightdiffBool = true;
 					}
@@ -2070,6 +2072,7 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 						(timeouthour2 == 10 && timeoutmin2 != 0 && timeoutmin2 >= 0) ||//night diff needs reconfiguration
 						(timeinhour2 >= 10 && timeouthour2 <= 18 && timeoutmin2 >= 0))
 					{
+						console.log("tim2");
 						nightdiffMins += workingmins2;
 						nightdiffBool = true;
 					}
