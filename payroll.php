@@ -205,7 +205,9 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 
 					          				$workingHoursDisp = explode('.',$adjDate['workhours']);
 					          				if(Count($workingHoursDisp) > 1)
-					          					$workingHours = $workingHoursDisp[0]." hrs, ".$workingHoursDisp[1]."mins";
+					          				{
+					          					$workingHours = $workingHoursDisp[0]." hrs, ".$workingHoursDisp[1]." mins";
+					          				}
 					          				else
 					          				{
 					          					if($workingHoursDisp[0] != 0)
@@ -214,7 +216,16 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 
 					          				$overtimeDisp = explode('.',$adjDate['overtime']);
 					          				if(Count($overtimeDisp) > 1)
-					          					$overtimeHours = $overtimeDisp[0]." hrs, ".$overtimeDisp[1]."mins";
+					          				{
+					          					if($overtimeDisp[0] == 0)// only minutes
+					          					{
+					          						$overtimeHours = $overtimeDisp[1]." mins";
+					          					}
+					          					else
+					          					{
+					          						$overtimeHours = $overtimeDisp[0]." hrs, ".$overtimeDisp[1]." mins";
+					          					}
+					          				}
 					          				else
 					          				{
 					          					if($overtimeDisp[0] != 0)
@@ -223,7 +234,16 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 
 					          				$undertimeDisp = explode('.',$adjDate['undertime']);
 					          				if(Count($undertimeDisp) > 1)
-					          					$undertimeHours = $undertimeDisp[0]." hrs, ".$undertimeDisp[1]."mins";
+					          				{
+					          					if($overtimeDisp[0] == 0)// only minutes
+					          					{
+					          						$undertimeHours = $undertimeDisp[1]." mins";
+					          					}
+					          					else
+					          					{
+					          						$undertimeHours = $undertimeDisp[0]." hrs, ".$undertimeDisp[1]." mins";
+					          					}
+					          				}
 					          				else
 					          				{
 					          					if($undertimeDisp[0] != 0)
@@ -232,7 +252,16 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 
 					          				$nightdiffDisp = explode('.',$adjDate['nightdiff']);
 					          				if(Count($nightdiffDisp) > 1)
-					          					$nightdiffHours = $nightdiffDisp[0]." hrs, ".$nightdiffDisp[1]."mins";
+					          				{
+					          					if($overtimeDisp[0] == 0)// only minutes
+					          					{
+					          						$nightdiffHours = $nightdiffDisp[1]." mins";
+					          					}
+					          					else
+					          					{
+					          						$nightdiffHours = $nightdiffDisp[0]." hrs, ".$nightdiffDisp[1]." mins";
+					          					}
+					          				}
 					          				else
 					          				{
 					          					if($nightdiffDisp[0] != 0)
@@ -247,11 +276,13 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 					          					case 3: $attendanceStatus = "NOWORK"; break;
 					          					default: $attendanceStatus = "";
 					          				}
+
+
 					          				
 					          				Print "
 						          			<table class='table table-bordered table-responsive'>
 												<tr>
-													<td colspan='13'>
+													<td colspan='14'>
 														<input type='hidden' name='adjustmentDate[]' value='".$adjDate['date']."'>
 														<h2 class='dateheader text-center col-md-11 col-md-push-1'>".$adjDate['date']."</h2>
 														<input type='button' class='btn btn-danger col-md-1' value='Remove' onclick='removeAdjustment(this, \"".$adjDate['date']."\")'>
@@ -288,7 +319,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 													</td> 
 													<!-- Half Day Checkbox-->
 													<td>
-														<input type='checkbox' class='halfdayChk' name='halfday[]' onclick='halfDay('input-field-".$counter."')' disabled>
+														<input type='checkbox' class='halfdayChk' name='halfday[]' onclick='halfDay(\"input-field-".$counter."\")' disabled>
 													</td>
 													<!-- AFTER BREAK Time In -->
 													<td>
@@ -312,8 +343,8 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 													</td> 
 													<!-- Working Hours -->
 													<td>
-														<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='".($adjDate['workhours'])."' disabled>
-														<input type='hidden' value='".$adjDate['workhours']."' class='workinghoursH'  name='workinghrs[]' >
+														<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='".$workingHours."' disabled>
+														<input type='hidden' value='".$workingHours."' class='workinghoursH'  name='workinghrs[]' >
 													</td> 
 													<!-- Overtime -->
 													<td>
@@ -330,6 +361,10 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 														<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='".$nightdiffHours."' disabled>
 														<input type='hidden' class='nightdiffH' name='nightdiff[]' value='".$nightdiffHours."'>
 													</td>
+
+													<!-- Extra allowance Input --> 
+														<input type='hidden' name='xallow[".$counter."]' class='hiddenXAllow'>
+									
 													<!-- Remarks Input --> 
 														<input type='hidden' name='remarks[]' class='hiddenRemarks' value='".$adjDate['remarks']."'>
 
@@ -338,6 +373,10 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 													<!-- Remarks Button --> 
 													<td>
 														<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarksFunc(".$counter.")'>Remarks <span class='icon'></span></a>
+													</td>
+													<!-- Extra Allowance Button --> 
+													<td>
+														<a class='btn btn-sm btn-primary xallowance' data-toggle='modal' data-target='#XAllowanceModal' onclick='xAllowance(\"". $counter ."\")'>X Allow <span class='xall-icon'></span></a>
 													</td>
 												</tr>
 											</table>";
@@ -2273,6 +2312,26 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<!-- DUMMY MODAL FOR EXTRA ALLOWANCE -->
+<div class="modal fade" tabindex="-1" id="XAllowanceModal" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="AllowDisplay"></h4>
+			</div>
+			<div class="modal-body">
+				<center>
+					<input class="form-control" onkeypress="validatenumber(event)" style="width:50%;"id="xAllowanceInput"  maxlength="20">
+				</center>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal" id="saveXAllow">Save changes</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 <!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
@@ -2372,9 +2431,18 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 
 				<!-- Attendance Status -->
 					<input type='hidden' name='attendance[]' class='attendance'>
+
+				<!-- Extra allowance Input --> 
+					<input type='hidden' name='xallow[".$counter."]' class='hiddenXAllow'>
+
 				<!-- Remarks Button --> 
 				<td>
 					<a class='btn btn-sm btn-primary remarks' data-toggle='modal' data-target='#remarks' onclick='remarksFunc("${inputCounter}")'>Remarks <span class='icon'></span></a>
+				</td>
+
+				<!-- Extra Allowance Button --> 
+				<td>
+					<a class='btn btn-sm btn-primary xallowance' data-toggle='modal' data-target='#XAllowanceModal' onclick='xAllowance("${inputCounter}")'>X Allow <span class='xall-icon'></span></a>
 				</td>
 			</tr>
 		</table>

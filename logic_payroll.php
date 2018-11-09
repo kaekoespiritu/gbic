@@ -160,12 +160,91 @@ function getDay($day)
 
 				$timein1 = $_POST['timein1'][$adCount];
 				$timeout1 = $_POST['timeout1'][$adCount];
-				$timein2 = $_POST['timein2'][$adCount];
-				$timeout2 = $_POST['timeout2'][$adCount];
-				$timein3 = $_POST['timein3'][$adCount];
-				$timeout3 = $_POST['timeout3'][$adCount];
+				$timein2 = '';
+				$timeout2 = '';
+				$timein3 = '';
+				$timeout3 = '';
+				if(isset($_POST['timein2'][$adCount]))
+				{
+					$timein2 = $_POST['timein2'][$adCount];
+					$timeout2 = $_POST['timeout2'][$adCount];
+				}
+				if(isset($_POST['timein3'][$adCount]))
+				{
+					$timein3 = $_POST['timein3'][$adCount];
+					$timeout3 = $_POST['timeout3'][$adCount];
+				}
 
 				$workinghrs = $_POST['workinghrs'][$adCount];
+
+				// Function for getting the decimal time
+				function getExactDecimalTime($time)
+				{
+					if(!empty($time))
+					{
+						$timeHrsCheck = mysql_real_escape_string($time);
+						$hasMins = strpos($timeHrsCheck, ",");//Search the string if it has comma
+						if($hasMins == false)
+						{
+							$hasMinsCheck = strpos($timeHrsCheck, "mins");
+							if($hasMinsCheck == true)//Check if Hours only or minutes only
+							{
+								$timeHrs = "0.".$timeHrsCheck[0].$timeHrsCheck[1];//Gets the first 2 characters
+								$timeHrs = str_replace(' ', '', $timeHrs);//removes all the spaces
+							}
+							else
+							{
+								$timeHrs = $timeHrsCheck[0].$timeHrsCheck[1];//Gets the first 2 characters
+								$timeHrs = str_replace(' ', '', $timeHrs);//removes all the spaces
+							}
+							
+						}
+						else
+						{
+							$work = explode(",", $timeHrsCheck);//Separates the string
+							$hrs = $work[0];//gets the Hours
+							$mins = $work[1];//Gets the minutes
+							
+							$timeHrs = $hrs[0].$hrs[1].".".$mins[1].$mins[2];
+							
+							$timeHrs = str_replace(' ', '', $timeHrs);//removes all the spaces
+						}
+					}
+					else 
+					{
+						$timeHrs = "";
+					}
+
+					return $timeHrs;
+				}
+					
+
+
+				if(!empty($_POST['workinghrs'][$adCount]))
+				{
+					$workinghrsCheck = mysql_real_escape_string($_POST['workinghrs'][$adCount]);
+					$hasMins = strpos($workinghrsCheck, ",");//Search the string if it has comma
+					if($hasMins == false)
+					{
+						$workinghrs = $workinghrs[0].$workinghrs[1];//Gets the first 2 characters
+						$workinghrs = str_replace(' ', '', $workinghrs);//removes all the spaces
+					}
+					else
+					{
+						$work = explode(",", $workinghrsCheck);//Separates the string
+						$hrs = $work[0];//gets the Hours
+						$mins = $work[1];//Gets the minutes
+						
+						$workinghrs = $hrs[0].$hrs[1].".".$mins[1].$mins[2];
+						
+						$workinghrs = str_replace(' ', '', $workinghrs);//removes all the spaces
+					}
+				}
+				else 
+				{
+					$workinghrs = "";
+				}
+
 				if($sundayChecker == "Sunday")
 				{
 					$othrs = 0;
@@ -174,9 +253,10 @@ function getDay($day)
 				}
 				else
 				{
-					$othrs = $_POST['othrs'][$adCount];
-					$undertime = $_POST['undertime'][$adCount];
-					$nightdiff = $_POST['nightdiff'][$adCount];
+					$othrs = getExactDecimalTime($_POST['othrs'][$adCount]);
+					// echo "<script>alert('othrs: ".$othrs."')</script>";
+					$undertime = getExactDecimalTime($_POST['undertime'][$adCount]);
+					$nightdiff = getExactDecimalTime($_POST['nightdiff'][$adCount]);
 				}
 				
 				$remarks = $_POST['remarks'][$adCount];
