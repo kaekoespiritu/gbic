@@ -489,20 +489,18 @@
 										$holidayCounter = 0;//count the days of holiday
 										$AttExtraAllowance = 0;// extra allowance that has accumulated through 
 										
+										//Holiday Checker
+										$holiday = "SELECT * FROM holiday WHERE STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
+										// echo $holiday."<br>";
 
-										while($dateRow = mysql_fetch_assoc($payrollQuery2))
+										$holidayQuery = mysql_query($holiday);
+										$holidayExist = mysql_num_rows($holidayQuery);
+
+										
+										if($holidayExist > 0)//if holiday exist
 										{
-
-											$holDateChecker = $dateRow['date'];
-											//Holiday Checker
-											$holiday = "SELECT * FROM holiday WHERE date = '$holDateChecker' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
-											$holidayQuery = mysql_query($holiday);
-											$holidayExist = mysql_num_rows($holidayQuery);
-
-											
-											if($holidayExist > 0)//if holiday exist
+											while($holidayRow = mysql_fetch_assoc($holidayQuery))
 											{
-												$holidayRow = mysql_fetch_assoc($holidayQuery);
 												$holDay = date('l', strtotime($holidayRow['date']));
 												if($holidayCounter > 0)//if holiday lasted for more than 1day
 												{
@@ -521,6 +519,11 @@
 													$holidayDay = $holDay;
 												}
 											}
+												
+										}
+
+										while($dateRow = mysql_fetch_assoc($payrollQuery2))
+										{
 											$day = date('l', strtotime($dateRow['date']));
 
 											if($day == "Sunday" && $sunBool)

@@ -99,7 +99,7 @@ function getDay($day)
 	$adjOthrs = 0;
 	$adjNightdiff = 0;
 	$adjustmentBool = false; // Boolean for querying adjusted dates for updates
-	$sunday = 0;
+	$sundayCounter = 0;
 	if(isset($_POST['timein1']) && isset($_POST['timeout1']))
 	{
 		// Holiday check
@@ -145,7 +145,7 @@ function getDay($day)
 				
 				if($sundayChecker == "Sunday")
 				{
-					$sunday = 1;
+					$sundayCounter++;// increment Sunday
 					$adjSundayHrsExp = explode('.',$_POST['workinghrs'][$adCount]);
 					$adjSundayHrs = $adjSundayHrsExp[0];
 					if(count($adjSundayHrsExp) > 1)
@@ -207,7 +207,7 @@ function getDay($day)
 														nightdiff = '$nightdiff',
 														remarks = '$remarks',
 														attendance = '$attendance',
-														sunday = '$sunday',
+														sunday = '$sundayCounter',
 														holiday = '$holiday' WHERE empid = '$empid' AND date = '$adjustDate'";
 					$test = mysql_query($testing) or die();
 					
@@ -245,7 +245,7 @@ function getDay($day)
 																				'$remarks',
 																				'$attendance',
 																				'$adjustDate',
-																				'$sunday',
+																				'$sundayCounter',
 																				'$holiday')") or die(mysql_error());
 					// Print "<script>alert('adjNew1')</script>";
 				}
@@ -323,17 +323,31 @@ function getDay($day)
 	$sundayBool = false;//Boolean to filter the sunday from the work days
 	if(!empty($_POST['sunWorkHrs']) || !empty($adjSundayHrs))
 	{
+		// echo "<script>alert('1')</script>";
 		if($empArr['complete_doc'] == '1')// If employee has complete requirements
 		{
+			if(!empty($_POST['sunWorkHrs']))
+				$sundayCounter++; // increment sunday counter
+
 			$sundayBool = true;
 
 			$sunExplode = (isset($_POST['sunWorkHrs']) ? explode('.',$_POST['sunWorkHrs']) : 0);
-			if(count($sunExplode) > 1)
+			// echo "<script>alert('yo: ".count($sunExplode)."')</script>";
+			if(count($sunExplode) > 0)
 			{
-				$sunHrs = $sunExplode[0];
-				$sunMins = $sunExplode[1] / 60;
+				if(count($sunExplode) == 1)
+				{
+					$sunWorkHrs = $sunExplode[0];
+				}
+				else
+				{
+					$sunHrs = $sunExplode[0];
+					$sunMins = $sunExplode[1] / 60;
 
-				$sunWorkHrs = $sunHrs+$sunMins;
+					$sunWorkHrs = $sunHrs+$sunMins;
+				}
+				
+				// echo "<script>alert('sun: ".$sunWorkHrs."')</script>";
 
 				if($adjSundayHrs != 0 || $adjSundayHrs != 0.00)
 				{
@@ -408,7 +422,7 @@ function getDay($day)
 	$sunday_Att = 0;//Preset the sunday attendance to filter out the overal to the sunday
 	if($sundayBool)
 	{
-		$sunday_Att = 1;
+		$sunday_Att = $sundayCounter;
 		$sundayBool = false;
 	}
 
