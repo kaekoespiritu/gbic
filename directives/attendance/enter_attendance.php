@@ -684,7 +684,7 @@ function attendance ()
 						<input type="hidden" value="'. $empRow['xallow'] .'" name="xallow['.$counter.']" class="hiddenXAllow">';
 					Print "<!-- Extra Allowance Button --> 
 					<td>
-						<a class='btn btn-sm btn-primary xallowance' data-toggle='modal' data-target='#XAllowanceModal' onclick='xAllowance(\"". $row_employee['empid'] ."\")'>X Allow <span class='xall-icon glyphicon glyphicon-edit'></span></a>
+						<a class='btn btn-sm btn-primary xallowance' data-toggle='modal' data-target='#XAllowanceModal' onclick='xAllowance(\"". $row_employee['empid'] ."\")'>X Allow <span class='xall-icon badge'>".$empRow['xallow']."</span></a>
 					</td>";
 				}
 				else 

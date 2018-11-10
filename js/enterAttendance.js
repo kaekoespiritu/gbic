@@ -548,19 +548,22 @@ function saveXAllow(id) {
 	var xAllow = document.getElementById('xAllowanceInput').value.trim();
 	var hiddenXAllow = mainRow.querySelector('.hiddenXAllow').setAttribute('value', xAllow);
 
+	var paragraph = document.createElement('span');
+	paragraph.innerHTML = xAllow;
+	paragraph.id = 'xAllowValue';
+
 	if(xAllow !== null && xAllow !== "")
 	{
 		
-		mainRow.querySelector('.xall-icon').classList.add('glyphicon', 'glyphicon-edit');
-		
-		//alert("Time to add a badge here!");
-		//alert(remarks);
-			
+		mainRow.querySelector('.xall-icon').classList.add('badge');
+		if(mainRow.querySelector('#xAllowValue') !== null)
+			mainRow.querySelector('.xall-icon').removeChild(mainRow.querySelector('#xAllowValue'));
+		mainRow.querySelector('.xall-icon').appendChild(paragraph);
 	}
 	else
 	{
-		//alert("Nothing to do!");
-		mainRow.querySelector('.xall-icon').classList.remove('glyphicon', 'glyphicon-edit');
+		mainRow.querySelector('.xall-icon').classList.remove('badge');
+		mainRow.querySelector('.xall-icon').removeChild(mainRow.querySelector('#xAllowValue'));
 	}
 
 }
