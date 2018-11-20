@@ -101,9 +101,6 @@ foreach($validateDays as $validate)
 	}
 }
 
-
-
-
 //Holiday Checker
 $holiday = "SELECT * FROM holiday WHERE date = '$date'";
 $holidayQuery = mysql_query($holiday);
@@ -141,7 +138,6 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 			<!-- MODALS -->
 			<?php
 			require_once('directives/modals/addNewVale.php');
-			require_once('directives/modals/payrollAdjustment.php');
 			?>
 			
 			<!-- Breadcrumbs -->
@@ -187,6 +183,9 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 					          			// Gets the position of the employee being payrolled
 					          			$empPositionQuery = mysql_query("SELECT position FROM employee WHERE empid = '$empid'");
 					          			$empPosition = mysql_fetch_assoc($empPositionQuery);
+
+					          			$empNameQuery = mysql_query("SELECT firstname, lastname FROM employee WHERE empid = '$empid'");
+					          			$empName = mysql_fetch_assoc($empNameQuery);
 
 					          			$attendanceDate = "SELECT * FROM attendance WHERE empid = '$empid' AND ($attendanceAdjDates)";
 					          			$attendanceDateQuery = mysql_query($attendanceDate);
@@ -277,18 +276,30 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 					          					default: $attendanceStatus = "";
 					          				}
 
+					          				//extra allowance
+					          				$xallowBadge = 'badge';
+					          				$xallowBadgeNum = '';
+					          				if($adjDate['xallow'] == 0)
+					          				{
+					          					$xallowBadge = '';
+					          				}
+					          				else
+					          				{
+					          					$xallowBadgeNum = $adjDate['xallow'];
+					          				}
 
 					          				
 					          				Print "
 						          			<table class='table table-bordered table-responsive'>
 												<tr>
-													<td colspan='14'>
+													<td colspan='17'>
 														<input type='hidden' name='adjustmentDate[]' value='".$adjDate['date']."'>
 														<h2 class='dateheader text-center col-md-11 col-md-push-1'>".$adjDate['date']."</h2>
 														<input type='button' class='btn btn-danger col-md-1' value='Remove' onclick='removeAdjustment(this, \"".$adjDate['date']."\")'>
 													</td>
 												</tr>
 												<tr class='attendance-header'>
+														  <td colspan='2'>Auto</td>
 											              <td>Time In</td>
 											              <td>Time Out</td>
 											              <td>H.D. / Straight</td>
@@ -304,11 +315,18 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 											              <td colspan='2'>Actions</td>
 											    </tr>
 												<tr class='input-fields success' id='input-field-".$counter."'>
-													<span class='empName'></span>
+													
 													<input type='hidden' class='driver' value='".$isDriver."' >";
 												if($isSunday)
 												    Print "<input type='hidden' id='isSunday'>";
 													Print"
+													<!-- Auto -->
+													<td>
+														<input type='button' value='8-5' class='btn btn-primary auto' onclick='AutoTimeIn85(\"input-field-".$counter."\")'>
+													</td>
+													<td>
+														<input type='button' value='7-4' class='btn btn-primary auto' onclick='AutoTimeIn74(\"input-field-".$counter."\")'>
+													</td>
 													<!-- Time In -->
 													<td>
 														<input type='text' onblur='timeValidation(this)' class='timein1 timepicker form-control input-sm' value='".$adjDate['timein']."' name='timein1[]'>
@@ -363,7 +381,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 													</td>
 
 													<!-- Extra allowance Input --> 
-														<input type='hidden' name='xallow[".$counter."]' class='hiddenXAllow'>
+														<input type='hidden' name='xallow[]' class='hiddenXAllow' value='".$adjDate['xallow']."'>
 									
 													<!-- Remarks Input --> 
 														<input type='hidden' name='remarks[]' class='hiddenRemarks' value='".$adjDate['remarks']."'>
@@ -376,7 +394,8 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 													</td>
 													<!-- Extra Allowance Button --> 
 													<td>
-														<a class='btn btn-sm btn-primary xallowance' data-toggle='modal' data-target='#XAllowanceModal' onclick='xAllowance(\"". $counter ."\")'>X Allow <span class='xall-icon'></span></a>
+														<a class='btn btn-sm btn-primary xallowance' data-toggle='modal' data-target='#XAllowanceModal' onclick='xAllowanceFunc(\"input-field-".$counter."\")'>X Allow <span class='xall-icon ".$xallowBadge."' id='xAllowValue'>
+															$xallowBadgeNum</span></a>
 													</td>
 												</tr>
 											</table>";
@@ -2346,13 +2365,14 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 <script id="hidden-template" type="text/x-custom-template">	
 		<table class="table table-bordered table-responsive">
 			<tr>
-				<td colspan='13'>
+				<td colspan='16'>
 					<input type="hidden" name="adjustmentDate[]" value="${date}">
 					<h2 class="dateheader text-center col-md-11 col-md-push-1">${date}</h2>
 					<input type="button" class="btn btn-danger col-md-1" value="Remove" onclick="removeAdjustment(this, '${date}')">
 				</td>
 			</tr>
 			<tr class="attendance-header">
+					  <td colspan='2'>Auto</td>
 		              <td>Time In</td>
 		              <td>Time Out</td>
 		              <td>H.D. / Straight</td>
@@ -2368,12 +2388,19 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 		              <td colspan="2">Actions</td>
 		    </tr>
 			<tr class="input-fields" id="input-field-${inputCounter}">
-				<span class='empName'></span>
+				<span class='empName'><?php $empArr['firstname'].", ".$empArr['lastname']?></span>
 				<input type='hidden' class='driver' value='<?php $driverBool = ($empArr['position'] == 'Driver' ? true : false )?>' >
 				{{if sunday}}
 			      <input type="hidden" id="isSunday">
 			    {{else}}
 			    {{/if}}
+			    <!-- Automatic timein -->
+					<td>
+						<input type='button' value='8-5' class='btn btn-primary auto' onclick='AutoTimeIn85("input-field-${inputCounter}")'>
+					</td>
+					<td>
+						<input type='button' value='7-4' class='btn btn-primary auto' onclick='AutoTimeIn74("input-field-${inputCounter}")'>
+					</td>
 				<!-- Time In -->
 				<td>
 					<input type='text' onblur='timeValidation(this)' class='timein1 timepicker form-control input-sm' value='' name='timein1[]'>
@@ -2433,7 +2460,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 					<input type='hidden' name='attendance[]' class='attendance'>
 
 				<!-- Extra allowance Input --> 
-					<input type='hidden' name='xallow[".$counter."]' class='hiddenXAllow'>
+					<input type='hidden' name='xallow["${inputCounter}"]' class='hiddenXAllow'>
 
 				<!-- Remarks Button --> 
 				<td>
@@ -2442,20 +2469,20 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 
 				<!-- Extra Allowance Button --> 
 				<td>
-					<a class='btn btn-sm btn-primary xallowance' data-toggle='modal' data-target='#XAllowanceModal' onclick='xAllowance("${inputCounter}")'>X Allow <span class='xall-icon'></span></a>
+					<a class='btn btn-sm btn-primary xallowance' data-toggle='modal' data-target='#XAllowanceModal' onclick="xAllowanceFunc('input-field-${inputCounter}')">X Allow <span class='xall-icon'></span></a>
 				</td>
 			</tr>
 		</table>
 </script>
-<script >
+<script>
 
 	function remarksFunc(id) {
 		remarksPayroll("input-field-"+id);
 		remarksValidation("input-field-"+id);
 	}
 
-	localStorage.setItem("inputcounter", 0);
-	localStorage.setItem("tablecounter", 0);
+	localStorage.setItem("inputcounter", 1);
+	localStorage.setItem("tablecounter", 1);
 
 	//var adjustedDays = [];
 	var adjustedDays = [<?php Print $adjDateArr?>];
@@ -2597,7 +2624,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 
 	function remarksPayroll(id) {
 		// show modal here to input for remarks
-		console.log('in remarks: 123 '+id);
+		// console.log('in remarks: 123 '+id);
 		id = String(id);
 		var mainRow = document.getElementById(id);
 		if(mainRow.querySelector('.hiddenRemarks').value != null)
@@ -2633,6 +2660,51 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 
 	function cancelSubmit(e) {
 		e.preventDefault();
+	}
+
+	function xAllowanceFunc(id) {	
+		allowInputsFromRow(id);
+		// show modal here to input for remarks
+		var mainRow = document.getElementById(id);
+		if(mainRow.querySelector(".hiddenXAllow").value != null)
+		{
+			var input = mainRow.querySelector(".hiddenXAllow").value;
+			input = input.replace(/\\/g, '');
+			document.getElementById("xAllowanceInput").value = input;
+		}
+
+		document.getElementById("saveXAllow").setAttribute("onclick", "saveXAllowFunc('"+id+"')");
+		if(mainRow.querySelector(".empName") !== null) {
+			var empName = mainRow.querySelector(".empName").innerHTML.trim();
+			var modal = document.getElementById("AllowDisplay").innerHTML = "Extra allowance for " + empName;
+		}
+		
+	}
+	// Transfer content to hidden input field
+	function saveXAllowFunc(id) {
+		var mainRow = document.getElementById(id);
+		var xAllow = document.getElementById('xAllowanceInput').value.trim();
+		var hiddenXAllow = mainRow.querySelector('.hiddenXAllow').setAttribute('value', xAllow);
+
+		// var paragraph = document.createElement('span');
+		// paragraph.innerHTML = xAllow;
+		// paragraph.id = 'xAllowValue';
+
+		if(xAllow !== null && xAllow !== "")
+		{
+			mainRow.querySelector('.xall-icon').classList.add('badge');
+			mainRow.querySelector('#xAllowValue').innerHTML = xAllow;
+			// if(mainRow.querySelector('#xAllowValue') !== null)
+			// 	mainRow.querySelector('.xall-icon').removeChild(mainRow.querySelector('#xAllowValue'));
+			// mainRow.querySelector('.xall-icon').appendChild(paragraph);
+		}
+		else
+		{
+			mainRow.querySelector('.xall-icon').classList.remove('badge');
+			mainRow.querySelector('#xAllowValue').innerHTML = '';
+			// mainRow.querySelector('.xall-icon').removeChild(mainRow.querySelector('#xAllowValue'));
+		}
+
 	}
 
 </script>

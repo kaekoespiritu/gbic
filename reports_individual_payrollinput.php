@@ -20,7 +20,6 @@
 	$site = $empArr['site'];
 	// Modals				
 	require_once('directives/modals/addNewVale.php');
-	require_once('directives/modals/payrollAdjustment.php');
 
 
 ?>

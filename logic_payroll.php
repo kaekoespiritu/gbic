@@ -91,6 +91,45 @@ function getDay($day)
 	}
 
 // Payroll Adjustment algorithm
+	function getExactDecimalTime($time)
+	{
+		if(!empty($time))
+		{
+			$timeHrsCheck = mysql_real_escape_string($time);
+			$hasMins = strpos($timeHrsCheck, ",");//Search the string if it has comma
+			if($hasMins == false)
+			{
+				$hasMinsCheck = strpos($timeHrsCheck, "mins");
+				if($hasMinsCheck == true)//Check if Hours only or minutes only
+				{
+					$timeHrs = "0.".$timeHrsCheck[0].$timeHrsCheck[1];//Gets the first 2 characters
+					$timeHrs = str_replace(' ', '', $timeHrs);//removes all the spaces
+				}
+				else
+				{
+					$timeHrs = $timeHrsCheck[0].$timeHrsCheck[1];//Gets the first 2 characters
+					$timeHrs = str_replace(' ', '', $timeHrs);//removes all the spaces
+				}
+				
+			}
+			else
+			{
+				$work = explode(",", $timeHrsCheck);//Separates the string
+				$hrs = $work[0];//gets the Hours
+				$mins = $work[1];//Gets the minutes
+				
+				$timeHrs = $hrs[0].$hrs[1].".".$mins[1].$mins[2];
+				
+				$timeHrs = str_replace(' ', '', $timeHrs);//removes all the spaces
+			}
+		}
+		else 
+		{
+			$timeHrs = "";
+		}
+
+		return $timeHrs;
+	}
 	$adjHolidayRegNum = 0; // Variable for adjusting the current holiday number
 	$adjHolidaySpeNum = 0; // Variable for adjusting the current holiday number
 	$adjWorkingDays = 0;// Variable for adjusting the current Working days number
@@ -99,6 +138,7 @@ function getDay($day)
 	$adjOthrs = 0;
 	$adjNightdiff = 0;
 	$adjustmentBool = false; // Boolean for querying adjusted dates for updates
+	$adjXallowOverall = 0;
 	$sundayCounter = 0;
 	if(isset($_POST['timein1']) && isset($_POST['timeout1']))
 	{
@@ -178,45 +218,7 @@ function getDay($day)
 				$workinghrs = $_POST['workinghrs'][$adCount];
 
 				// Function for getting the decimal time
-				function getExactDecimalTime($time)
-				{
-					if(!empty($time))
-					{
-						$timeHrsCheck = mysql_real_escape_string($time);
-						$hasMins = strpos($timeHrsCheck, ",");//Search the string if it has comma
-						if($hasMins == false)
-						{
-							$hasMinsCheck = strpos($timeHrsCheck, "mins");
-							if($hasMinsCheck == true)//Check if Hours only or minutes only
-							{
-								$timeHrs = "0.".$timeHrsCheck[0].$timeHrsCheck[1];//Gets the first 2 characters
-								$timeHrs = str_replace(' ', '', $timeHrs);//removes all the spaces
-							}
-							else
-							{
-								$timeHrs = $timeHrsCheck[0].$timeHrsCheck[1];//Gets the first 2 characters
-								$timeHrs = str_replace(' ', '', $timeHrs);//removes all the spaces
-							}
-							
-						}
-						else
-						{
-							$work = explode(",", $timeHrsCheck);//Separates the string
-							$hrs = $work[0];//gets the Hours
-							$mins = $work[1];//Gets the minutes
-							
-							$timeHrs = $hrs[0].$hrs[1].".".$mins[1].$mins[2];
-							
-							$timeHrs = str_replace(' ', '', $timeHrs);//removes all the spaces
-						}
-					}
-					else 
-					{
-						$timeHrs = "";
-					}
-
-					return $timeHrs;
-				}
+				
 					
 
 
@@ -254,7 +256,7 @@ function getDay($day)
 				else
 				{
 					$othrs = getExactDecimalTime($_POST['othrs'][$adCount]);
-					// echo "<script>alert('othrs: ".$othrs."')</script>";
+					
 					$undertime = getExactDecimalTime($_POST['undertime'][$adCount]);
 					$nightdiff = getExactDecimalTime($_POST['nightdiff'][$adCount]);
 				}
@@ -271,8 +273,13 @@ function getDay($day)
 				$checkAdjAttendance = "SELECT * FROM attendance WHERE empid = '$empid' AND date = '$adjustDate'"; // Check if there's an existing date
 				$checkAdjAttendanceQuery = mysql_query($checkAdjAttendance);
 
-				
+				$adjXallow = $_POST['xallow'][$adCount];
 
+				$adjXallowOverall += $adjXallow;// gets the overall xallow
+
+
+
+				// echo "<script>alert('xallow: ".$_POST['xallow'][$adCount]."')</script>";
 				if(mysql_num_rows($checkAdjAttendanceQuery))
 				{
 					$testing = "UPDATE attendance SET 	timein = '$timein1',
@@ -288,7 +295,8 @@ function getDay($day)
 														remarks = '$remarks',
 														attendance = '$attendance',
 														sunday = '$sundayCounter',
-														holiday = '$holiday' WHERE empid = '$empid' AND date = '$adjustDate'";
+														holiday = '$holiday',
+														xallow = '$adjXallow' WHERE empid = '$empid' AND date = '$adjustDate'";
 					$test = mysql_query($testing) or die();
 					
 				}
@@ -310,7 +318,8 @@ function getDay($day)
 															attendance,
 															date,
 															sunday,
-															holiday) VALUES(	'$empid',
+															holiday,
+															xallow) VALUES(	'$empid',
 																				'$position',
 																				'$timein1',
 																				'$timeout1',
@@ -326,7 +335,8 @@ function getDay($day)
 																				'$attendance',
 																				'$adjustDate',
 																				'$sundayCounter',
-																				'$holiday')") or die(mysql_error());
+																				'$holiday',
+																				'$adjXallow')") or die(mysql_error());
 					// Print "<script>alert('adjNew1')</script>";
 				}
 
@@ -818,7 +828,7 @@ function getDay($day)
 //Computation for Allowance -----------------------------------------------------------
 
 	$dailyAllowance = 0;
-	$extraAllowance = 0;
+	$extraAllowance = (empty($adjXallowOverall) ? 0 : $adjXallowOverall);
 
 	$extraAllowanceDaily = 0;
 	$extraAllowanceDailyOverall = 0;

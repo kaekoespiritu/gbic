@@ -491,24 +491,49 @@ function remarks(id) {
 	
 }
 
+
+// Transfer content to hidden input field
+function saveXAllow(id) {
+	var mainRow = document.getElementById(id);
+	var xAllow = document.getElementById('xAllowanceInput').value.trim();
+	var hiddenXAllow = mainRow.querySelector('.hiddenXAllow').setAttribute('value', xAllow);
+
+	var paragraph = document.createElement('span');
+	paragraph.innerHTML = xAllow;
+	paragraph.id = 'xAllowValue';
+
+	if(xAllow !== null && xAllow !== "")
+	{
+		
+		mainRow.querySelector('.xall-icon').classList.add('badge');
+		if(mainRow.querySelector('#xAllowValue') !== null)
+			mainRow.querySelector('.xall-icon').removeChild(mainRow.querySelector('#xAllowValue'));
+		mainRow.querySelector('.xall-icon').appendChild(paragraph);
+	}
+	else
+	{
+		mainRow.querySelector('.xall-icon').classList.remove('badge');
+		mainRow.querySelector('.xall-icon').removeChild(mainRow.querySelector('#xAllowValue'));
+	}
+
+}
+
 function xAllowance(id) {	
 	allowInputsFromRow(id);
 	// show modal here to input for remarks
 	var mainRow = document.getElementById(id);
-	if(mainRow.querySelector('.hiddenXAllow').value != null)
+	if(mainRow.querySelector(".hiddenXAllow").value != null)
 	{
-
-		var input = mainRow.querySelector('.hiddenXAllow').value;
+		var input = mainRow.querySelector(".hiddenXAllow").value;
 		input = input.replace(/\\/g, '');
-		document.getElementById('xAllowanceInput').value = input;
+		document.getElementById("xAllowanceInput").value = input;
 	}
-	else
-	{
-		document.getElementById('xAllowanceInput').value = "";
+
+	document.getElementById("saveXAllow").setAttribute("onclick", "saveXAllow('"+id+"')");
+	if(mainRow.querySelector(".empName") !== null) {
+		var empName = mainRow.querySelector(".empName").innerHTML.trim();
+		var modal = document.getElementById("AllowDisplay").innerHTML = "Extra allowance for " + empName;
 	}
-	var empName = mainRow.querySelector('.empName').innerHTML.trim();
-	var modal = document.getElementById('AllowDisplay').innerHTML = "Extra allowance for " + empName;
-	document.getElementById('saveXAllow').setAttribute('onclick', "saveXAllow(\""+ id +"\")");
 	
 }
 	
@@ -538,32 +563,6 @@ function saveRemarks(id) {
 	{
 		//alert("Nothing to do!");
 		mainRow.querySelector('.remarks-icon').classList.remove('glyphicon', 'glyphicon-edit');
-	}
-
-}
-
-// Transfer content to hidden input field
-function saveXAllow(id) {
-	var mainRow = document.getElementById(id);
-	var xAllow = document.getElementById('xAllowanceInput').value.trim();
-	var hiddenXAllow = mainRow.querySelector('.hiddenXAllow').setAttribute('value', xAllow);
-
-	var paragraph = document.createElement('span');
-	paragraph.innerHTML = xAllow;
-	paragraph.id = 'xAllowValue';
-
-	if(xAllow !== null && xAllow !== "")
-	{
-		
-		mainRow.querySelector('.xall-icon').classList.add('badge');
-		if(mainRow.querySelector('#xAllowValue') !== null)
-			mainRow.querySelector('.xall-icon').removeChild(mainRow.querySelector('#xAllowValue'));
-		mainRow.querySelector('.xall-icon').appendChild(paragraph);
-	}
-	else
-	{
-		mainRow.querySelector('.xall-icon').classList.remove('badge');
-		mainRow.querySelector('.xall-icon').removeChild(mainRow.querySelector('#xAllowValue'));
 	}
 
 }
