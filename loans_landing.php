@@ -184,29 +184,31 @@ else
 		// Setting active color of menu to Employees
 		document.getElementById("employees").setAttribute("style", "background-color: #10621e;");
 		$(document).ready(function(){
-		 function load_data(query)
-		 {
-		  $.ajax({
-		   url:"livesearch_loans.php",
-		   method:"POST",
-		   data:{query:query},
-		   success:function(data)
-		   {
-		    $('#search_result_loans').html(data);
-		   }
-		  });
-		 }
-		 $('#search_text').keyup(function(){
-		  var search = $(this).val();
-		  if(search != '')
-		  {
-		   load_data(search);
-		  }
-		  else
-		  {
-		   load_data();
-		  }
-		 });
+		function load_data(query){
+		  	$.ajax({
+		   		url:"livesearch_loans.php",
+		   		method:"POST",
+		   		data:{
+		   			query : query
+		   		},
+		   		success:function(data)
+		   		{
+		    		$('#search_result_loans').html(data);
+		   		}
+		  	});
+		}
+		$('#search_text').keyup(function(){
+		  	var search = $(this).val();
+		  	if(search != '')
+		  	{
+		   		load_data(search);
+		  	}
+		  	else
+		  	{
+		   		load_data();
+		  	}
+		});
+
 		var currentDate = "<?php echo $date; ?>";
 		var dateToday = new Date();
 		var twoWeeksAgo = new Date(dateToday.getFullYear(), dateToday.getMonth(), dateToday.getDate() - 14);

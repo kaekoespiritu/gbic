@@ -11,8 +11,10 @@ $empid = $_POST['empid'];
 
 if(count($_POST['loanType']) == 1)
 {
-	
-	$loanType = $_POST['loanType'][0];
+	if(isset($_POST['inOrOut']))
+		$loanType = $_POST['loanType'];
+	else
+		$loanType = $_POST['loanType'][0];
 	$loanAmount = $_POST['loanAmount'][0];
 	$reason = mysql_real_escape_string($_POST['reason'][0]);
 	$time = strftime("%X");//TIME
