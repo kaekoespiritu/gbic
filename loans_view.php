@@ -49,7 +49,10 @@ else if($loanType == "newVale")
 							?> id="dtpkr_loan" placeholder="mm-dd-yyyy" readonly>
 							</div>
 							<div class="col-md-12 pull-down">
-								<input type="text" class="form-control pull-right input-sm" placeholder="Search Employee to add loan" >
+								<input type="text" class="form-control pull-right input-sm" placeholder="Search Employee to add loan" id="search_text">
+							</div>
+							<div class="row">
+								<div id="search_result_loans" style="right:220px; top: 231px;"></div>
 							</div>
 							<button class="btn btn-success pull-down" data-toggle="modal" data-target="#addLoan">Add loan</button>
 			          	</div>
@@ -75,14 +78,14 @@ else if($loanType == "newVale")
 							<div class="row">
 								<div class="col-md-6 col-lg-6">
 									<h4 class="modal-title">Personal Information</h4><hr>
-
+									<input type="hidden" name="inOrOut" value="insideLoans">
 									<div class="row">
 										<div class="col-md-3 col-lg-3">
 											<label for="fname">First name</label>
 										</div>
 										<div class="col-md-9 col-lg-9">
 											<input onkeypress="validateletter(event)" type="text" class="form-control" id="fname" name="firstname" readonly>
-											<input type="hidden" id="empid" name="empid">
+											<input type="hidden" id="empidModal" name="empid" value>
 										</div>
 									</div><br>
 
@@ -119,13 +122,7 @@ else if($loanType == "newVale")
 									<div class="form-group" id="loanform">
 										<div class="row">
 											<div class="form-group col-md-4 col-lg-4 col-md-push-1 col-lg-push-1">
-												<select class="form-control check-input" name="loanType[]" required id="loanType" onchange="validateLoanFields(this)">
-													<option disabled value="" selected>Loan type</option>
-													<option class="dd_sss sss1" value="SSS">SSS</option>
-													<option class="dd_pagibig pagibig1" value="PagIBIG">PagIBIG</option>
-													<option class="dd_oldvale oldvale1" value="oldVale">Old vale</option>
-													<option class="dd_newvale newvale1" value="newVale">New vale</option>
-												</select>
+												<input type="text" class="form-control" name="loanType" value="<?php echo $displayLoan ?>" readonly>
 											</div>
 											<div class="col-md-5 col-lg-5 col-md-push-1 col-lg-push-1">
 												<input type="text" class="form-control check-input" required name="loanAmount[]" id="loanAmount" placeholder="Amount of loan" onchange="validateLoanFields(this)" onblur="formcheck()">
@@ -154,44 +151,44 @@ else if($loanType == "newVale")
 
 									<div class="row">
 										<div class="col-md-5 col-lg-5">
-											<label for="rate">Rate Per Day</label>
+											<label for="rateModal">Rate Per Day</label>
 										</div>
 										<div class="col-md-5 col-lg-5">
-											<input name="rate" type="text" class="form-control" id="rate"  readonly>
+											<input name="rate" type="text" class="form-control" id="rateModal" readonly>
 										</div>
 									</div><br>
 
 									<h4 class="modal-title">Pending loans</h4><hr>
 									<div class="row">
 										<div class="col-md-5 col-lg-5">
-											<label for="rate">Old vale</label>
+											<label for="oldvaleModal">Old vale</label>
 										</div>
 										<div class="col-md-5 col-lg-5">
-											<input name="txt_oldVale"  type="text" class="form-control" id="oldvale" placeholder="--" readonly>
-										</div>
-									</div><br>
-									<div class="row">
-										<div class="col-md-5 col-lg-5">
-											<label for="rate">New vale</label>
-										</div>
-										<div class="col-md-5 col-lg-5">
-											<input name="txt_newVale"  type="text" class="form-control" id="newvale" placeholder="--" readonly>
+											<input name="txt_oldVale"  type="text" class="form-control" id="oldvaleModal" placeholder="--" readonly>
 										</div>
 									</div><br>
 									<div class="row">
 										<div class="col-md-5 col-lg-5">
-											<label for="rate">SSS</label>
+											<label for="newvaleModal">New vale</label>
 										</div>
 										<div class="col-md-5 col-lg-5">
-											<input name="txt_SSS"  type="text" class="form-control" id="sss" placeholder="--" readonly>
+											<input name="txt_newVale"  type="text" class="form-control" id="newvaleModal" placeholder="--" readonly>
 										</div>
 									</div><br>
 									<div class="row">
 										<div class="col-md-5 col-lg-5">
-											<label for="rate">PagIBIG</label>
+											<label for="sssModal">SSS</label>
 										</div>
 										<div class="col-md-5 col-lg-5">
-											<input name="txt_pagibig"  type="text" class="form-control" id="pagibig" placeholder="--" readonly>
+											<input name="txt_SSS"  type="text" class="form-control" id="sssModal" placeholder="--" readonly>
+										</div>
+									</div><br>
+									<div class="row">
+										<div class="col-md-5 col-lg-5">
+											<label for="pagibigModal">PagIBIG</label>
+										</div>
+										<div class="col-md-5 col-lg-5">
+											<input name="txt_pagibig"  type="text" class="form-control" id="pagibigModal" placeholder="--" readonly>
 										</div>
 									</div><br>
 							</div>
@@ -250,16 +247,15 @@ else if($loanType == "newVale")
 					</div>
 				</div>
 
-				<div class="col-md-3 col-md-offset-1 col-lg-3 text-left">
+				<div class="col-md-3 col-lg-3 text-left">
 					<h3>Overall Payable: <span id="overallPlacing"></span></h3>
 				</div>
 
-				<div class="col-md-1 col-lg-3 text-right">
-					Filter by:
-
+				<div class="col-md-4 col-lg-4 text-right">
+					<span class="col-md-2">Filter:</span>
 
 					<!-- Filter by POSITION -->
-					<div class="btn-group">
+					<div class="btn-group col-md-4">
 						<select class="form-control" id="position" onchange="position()">
 							<option hidden>Position</option>
 							<?php
@@ -284,7 +280,7 @@ else if($loanType == "newVale")
 
 
 					<!-- Filter by LOCATION -->
-					<div class="btn-group">
+					<div class="btn-group col-md-3">
 						<select class="form-control" id="site" onchange="site()">
 							<option hidden>Site</option>
 							<?php
@@ -307,7 +303,7 @@ else if($loanType == "newVale")
 					</div>
 
 					<!-- Clear Filters button -->
-					<button type="button" class="btn btn-danger" onclick="clearFilter()">Clear Filters</button>
+					<button type="button" class="btn btn-danger col-md-3" onclick="clearFilter()">Clear Filters</button>
 				</div>
 			</div>
 
@@ -503,8 +499,9 @@ else if($loanType == "newVale")
 <input type="hidden" id="overallPayable" value="<?php Print numberExactFormat($overallPayable, 2, '.', true) ?>">
 
 <!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
-
+<script rel="javascript" src="js/accounting.min.js"></script>
 <script rel="javascript" src="js/jquery-ui/external/jquery/jquery.js"></script>
+<script rel="javascript" src="js/jquery.min.js"></script>
 <script rel="javascript" src="js/jquery-ui/jquery-ui.js"></script>
 <script rel="javascript" src="js/bootstrap.min.js"></script>
 <script>
@@ -634,6 +631,46 @@ function endLoan(id, loan) {
 	if(a)
 		window.location.assign("logic_loans_end.php?id="+id+"&loan="+loan);
 }
+
+function sendToModal(id){
+			var parent = document.getElementById(id);
+			// Getting values from the searched employee
+			var empid = parent.querySelector('#empid').value;
+			var firstname = parent.querySelector('#firstname').value;
+			var lastname = parent.querySelector('#lastname').value;
+			var address = parent.querySelector('#address').value;
+			var contactnum = parent.querySelector('#contactnum').value;
+			var position = parent.querySelector('#position').value;
+			var site = parent.querySelector('#site').value;
+			var rate = parent.querySelector('#rate').value;
+			var sss = parent.querySelector('#sss').value;
+			var pagibig = parent.querySelector('#pagibig').value;
+			var oldvale = parent.querySelector('#oldvale').value;
+			var newvale = parent.querySelector('#newvale').value;
+			var loandate = parent.querySelector('#loandate').value;
+
+			// Move values to modal
+			document.getElementById('empidModal').value = empid;
+			document.getElementById('fname').value = firstname;
+			document.getElementById('lname').value = lastname;
+			document.getElementById('address').value = address;
+			document.getElementById('contact').value = contactnum;
+			document.getElementById('position&site').innerHTML = "<h5>"+position+" at "+ site;
+			document.getElementById('position').value = position;
+			document.getElementById('site').value = site;
+			document.getElementById('rateModal').value =  accounting.formatNumber(rate, 2, ",");
+			document.getElementById('loandate').value = "<?php echo $date; ?>";
+			// console.log(loandate);
+			//done display if value is equal to Zero
+			if(sss != 0)
+			document.getElementById('sssModal').value = accounting.formatNumber(sss, 2, ",");
+			if(pagibig != 0)
+			document.getElementById('pagibigModal').value = accounting.formatNumber(pagibig, 2, ",");
+			if(oldvale != 0)
+			document.getElementById('oldvaleModal').value = accounting.formatNumber(oldvale, 2, ",");
+			if(newvale != 0)
+			document.getElementById('newvaleModal').value = accounting.formatNumber(newvale, 2, ",");
+		}
 </script>
 </body>
 </html>
