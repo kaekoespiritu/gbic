@@ -28,9 +28,11 @@ if($type == "SSS" || $type == "PAGIBIG")
 							<td>Amount paid on payroll</td>
 							<td>Remarks</td>
 							<td>Date</td>
-							<td>Approved by</td>
-							<td>Options</td>
-						</tr>";
+							<td>Approved by</td>";
+							if(!($type == "SSS" || $type == "PAGIBIG"))
+							$output .= "<td>Options</td>";
+
+			$output .= 	"</tr>";
 }
 else
 {
@@ -45,9 +47,11 @@ else
 							<td>Action</td>
 							<td>Remarks</td>
 							<td>Date</td>
-							<td>Approved by</td>
-							<td>Options</td>
-						</tr>";
+							<td>Approved by</td>";
+						if(!($type == "SSS" || $type == "PAGIBIG"))
+							$output .= "<td>Options</td>";
+
+			$output .= 	"</tr>";
 }
 	
 if(mysql_num_rows($historyQuery) > 0)
@@ -71,10 +75,11 @@ if(mysql_num_rows($historyQuery) > 0)
 							<td>".$row['date']."</td>
 							<td>".$row['admin']."</td>";
 
-			if($numRows == $counter && $row['action'] == '1')
+			if($numRows == $counter && $row['action'] == '1' && !($type == 'SSS' || $type == 'PAGIBIG' ))
 				$output .= '<td><button type="button" class="btn btn-danger" onclick="deleteLoan('.$row['id'].',\''.$type.'\')">Remove</button></td>';
-			else
+			else if(!($type == 'SSS' || $type == 'PAGIBIG' ))
 				$output .= "<td></td>";
+			
 
 			$output .=	"</tr>";
 		}
@@ -100,9 +105,9 @@ if(mysql_num_rows($historyQuery) > 0)
 							<td>".$row['date']."</td>
 							<td>".$row['admin']."</td>";
 
-			if($numRows == $counter && $row['action'] == '1')
+			if($numRows == $counter && $row['action'] == '1' && ($type != 'SSS' || $type != 'PAGIBIG' ))
 				$output .= '<td><button type="button" class="btn btn-danger" onclick="deleteLoan('.$row['id'].',\''.$type.'\')">Remove</button></td>';
-			else
+			else if(!($type == 'SSS' || $type == 'PAGIBIG' ))
 				$output .= "<td></td>";
 
 			$output .=	"</tr>";

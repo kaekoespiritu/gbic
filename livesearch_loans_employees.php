@@ -21,20 +21,26 @@ Print "
 		."</td>
 		<td>Actions</td>
 	</tr>";
-		$appendQuery = '';
+		$appendQuery = (($loanType == 'SSS' || $loanType == 'PAGIBIG') ? '' : ' AND a.balance > 0');
 		if($site_page != "null")
-			$appendQuery .= " AND site = '$site_page' ";
+			$appendQuery .= " AND e.site = '$site_page' ";
 		if($position_page != "null")
-			$appendQuery .= " AND position = '$position_page' ";
+			$appendQuery .= " AND e.position = '$position_page' ";
+
 		if($search != '')// loans1 is for the table query and loans2 is for the pagination query
 		{
-			$loans1 = "loans l INNER JOIN employee e ON l.empid = e.empid WHERE type = '$loanType' AND e.employment_status = '1' $appendQuery AND (e.lastname LIKE '%$search%' OR e.firstname LIKE '%$search%') GROUP BY e.empid ORDER BY e.lastname ASC, STR_TO_DATE(l.date, '%M %e, %Y') ASC, l.id ASC ";
-			$loans2 = "loans l INNER JOIN employee e ON l.empid = e.empid WHERE type = '$loanType' AND e.employment_status = '1' $appendQuery AND (e.lastname LIKE '%$search%' OR e.firstname LIKE '%$search%') ORDER BY e.lastname ASC, STR_TO_DATE(l.date, '%M %e, %Y') ASC, l.id ASC ";
+
+			$loans = "loans a INNER JOIN (SELECT empid, max(id) AS other_id FROM loans WHERE type = '$loanType' GROUP BY empid) AS b ON a.empid = b.empid AND a.id = b.other_id INNER JOIN employee e on a.empid = e.empid WHERE e.employment_status = '1' $appendQuery AND (e.lastname LIKE '%$search%' OR e.firstname LIKE '%$search%')";
+
+			// $loans1 = "loans l INNER JOIN employee e ON l.empid = e.empid WHERE type = '$loanType' AND e.employment_status = '1' $appendQuery AND (e.lastname LIKE '%$search%' OR e.firstname LIKE '%$search%') GROUP BY e.empid ORDER BY e.lastname ASC, STR_TO_DATE(l.date, '%M %e, %Y') ASC, l.id ASC ";
+			// $loans2 = "loans l INNER JOIN employee e ON l.empid = e.empid WHERE type = '$loanType' AND e.employment_status = '1' $appendQuery AND (e.lastname LIKE '%$search%' OR e.firstname LIKE '%$search%') ORDER BY e.lastname ASC, STR_TO_DATE(l.date, '%M %e, %Y') ASC, l.id ASC ";
 		}
 		else
 		{
-			$loans1 = "loans l INNER JOIN employee e ON l.empid = e.empid WHERE type = '$loanType' AND e.employment_status = '1' $appendQuery GROUP BY e.empid ORDER BY e.lastname ASC, STR_TO_DATE(l.date, '%M %e, %Y') ASC, l.id ASC ";
-			$loans2 = "loans l INNER JOIN employee e ON l.empid = e.empid WHERE type = '$loanType' AND e.employment_status = '1' $appendQuery ORDER BY e.lastname ASC, STR_TO_DATE(l.date, '%M %e, %Y') ASC, l.id ASC ";
+			$loans = "loans a INNER JOIN (SELECT empid, max(id) AS other_id FROM loans WHERE type = '$loanType' GROUP BY empid) AS b ON a.empid = b.empid AND a.id = b.other_id INNER JOIN employee e ON a.empid = e.empid WHERE e.employment_status = '1' $appendQuery";
+
+			// $loans1 = "loans l INNER JOIN employee e ON l.empid = e.empid WHERE type = '$loanType' AND e.employment_status = '1' $appendQuery GROUP BY e.empid ORDER BY e.lastname ASC, STR_TO_DATE(l.date, '%M %e, %Y') ASC, l.id ASC ";
+			// $loans2 = "loans l INNER JOIN employee e ON l.empid = e.empid WHERE type = '$loanType' AND e.employment_status = '1' $appendQuery ORDER BY e.lastname ASC, STR_TO_DATE(l.date, '%M %e, %Y') ASC, l.id ASC ";
 		}
 
 		// echo $loans1."<br>";
@@ -49,10 +55,10 @@ Print "
 		$page = (int) (!isset($pageNum) ? 1 : $pageNum);
     	$limit = 40; //if you want to dispaly 10 records per page then you have to change here
     	$startpoint = ($page * $limit) - $limit;
-        $statement = $loans1;
-		$loansQuery = mysql_query("SELECT DISTINCT * FROM {$statement} LIMIT {$startpoint}, {$limit}") or die (mysql_error());
+        $statement = $loans;
+		$loansQuery = mysql_query("SELECT  a.*, e.lastname, e.firstname FROM {$statement} LIMIT {$startpoint}, {$limit}") or die (mysql_error());
 
-
+		$overallPayable = 0;
 		// $loansQuery = mysql_query($loans) or die (mysql_error());
 		$noLoanChecker = true;
 
@@ -60,9 +66,8 @@ Print "
 		{
 
 			// $noLoanChecker = true;
-			$overallPayable = 0;
 			$noRepeat = '';
-			$counting = 0;
+			
 			while($row = mysql_fetch_assoc($loansQuery))
 			{
 
@@ -76,10 +81,10 @@ Print "
 					// echo $empArr['lastname']."</br>";
 					//Print "<script>alert(".mysql_num_rows($employeeQuery).")</script>";
 					//Check if employee has already fully paid his/her loan
-					$checker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY id DESC LIMIT 1";
+					// $checker = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY id DESC LIMIT 1";
 			
-					$checkerQuery = mysql_query($checker);
-					$checkerArr = mysql_fetch_assoc($checkerQuery);
+					// $checkerQuery = mysql_query($checker);
+					// $checkerArr = mysql_fetch_assoc($checkerQuery);
 					// echo $checker."<br>";
 					// echo mysql_num_rows($checkerQuery)."</br>";
 					
@@ -88,9 +93,9 @@ Print "
 
 						if($loanType == 'SSS' || $loanType == 'PAGIBIG')
 						{
-							if($checkerArr['action'] == 1)
+							if($row['action'] == 1)
 							{
-									$overallPayable += $checkerArr['monthly'];// Accumulates the overall monthly
+									
 									Print "
 										<tr>
 											<input type='hidden' name='empid[]' value='". $empid ."'>
@@ -107,7 +112,7 @@ Print "
 												".$empArr['site']."
 											</td>
 											<td style='vertical-align: inherit'>
-												".numberExactFormat($checkerArr['monthly'], 2, '.', true)."
+												".numberExactFormat($row['monthly'], 2, '.', true)."
 											</td>
 											<td>";
 											if($loanType == 'SSS' || $loanType == 'PAGIBIG')
@@ -121,14 +126,12 @@ Print "
 										</tr>
 										";
 										$noLoanChecker = false;
+										$overallPayable += $row['monthly'];
 							}
 						}
 						else
 						{
-							if($checkerArr['balance'] > 0)
-							{
-
-									$overallPayable += $checkerArr['balance'];// Accumulates the overall monthly
+									
 									Print "
 										<tr>
 											<input type='hidden' name='empid[]' value='". $empid ."'>
@@ -145,22 +148,17 @@ Print "
 												".$empArr['site']."
 											</td>
 											<td style='vertical-align: inherit'>
-												".numberExactFormat($checkerArr['balance'], 2, '.', true)."
+												".numberExactFormat($row['balance'], 2, '.', true)."
 											</td>
-											<td>";
-											if($loanType == 'SSS' || $loanType == 'PAGIBIG')
-											{
-												Print	"<a class='btn btn-danger' onclick='endLoan(\"".$empid."\", \"".$loanType."\")'><span class='glyphicon glyphicon-minus-sign'></span> End Loan</a>";
-											}
-											Print	
-												"&nbsp<a class='btn btn-primary' data-toggle='modal' data-target='#viewLoanHistory' onclick='load_history(\"".$empid."\", \"".$loanType."\")'><span class='glyphicon glyphicon-list-alt'></span> History</a>
+											<td>
+												&nbsp<a class='btn btn-primary' data-toggle='modal' data-target='#viewLoanHistory' onclick='load_history(\"".$empid."\", \"".$loanType."\")'><span class='glyphicon glyphicon-list-alt'></span> History</a>
 											
 											</td>
 										</tr>
 										";
 									$noLoanChecker = false;
-									$counting++;
-							}
+									$overallPayable += $row['balance'];
+							
 						}
 					}
 				}
@@ -175,7 +173,7 @@ Print "
 		}
 		else
 		{
-			$loans2 = "";
+			$loans = "";
 			$limit = "";
 			$page = "";
 			Print 
@@ -185,10 +183,19 @@ Print "
 		}
 	
 Print "</table>";
-echo $counting;
+// echo $overallPayable ;
+Print "<input type='hidden' id='overallPayableUpdate' value='".numberExactFormat($overallPayable, 2, '.', true)."'>
+	<script>
+		var passValue = $('#overallPayableUpdate').val();
+		$('#overallPlacing').html(passValue);
+		$('#toTransfer').val(passValue);
+		transfer();
+		
+	
+	</script>";
 
 echo "<div id='pagingg' >";
-    if($loans2 && $limit && $page && $site_page && $position_page && $loanType)
-       	echo pagination($loans2,$limit,$page, $site_page, $position_page, $loanType);
+    if($loans && $limit && $page && $site_page && $position_page && $loanType)
+       	echo pagination($loans,$limit,$page, $site_page, $position_page, $loanType);
 echo "</div>";
 ?>

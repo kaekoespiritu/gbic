@@ -137,7 +137,8 @@ $dateNewLoan = (isset($_SESSION['loanviewdate']) ? $_SESSION['loanviewdate'] : $
 									<div class="form-group" id="loanform">
 										<div class="row">
 											<div class="form-group col-md-4 col-lg-4 col-md-push-1 col-lg-push-1">
-												<input type="text" class="form-control" name="loanType" value="<?php echo $displayLoan ?>" readonly>
+												<input type="text" class="form-control" value="<?php echo $displayLoan ?>" readonly>
+												<input type="hidden" class="form-control" name="loanType" value="<?php echo $loanType ?>" readonly>
 											</div>
 											<div class="col-md-5 col-lg-5 col-md-push-1 col-lg-push-1">
 												<input type="text" class="form-control check-input" required name="loanAmount[]" id="loanAmount" placeholder="Amount of loan" onchange="validateLoanFields(this)" onblur="formcheck()">
@@ -342,8 +343,7 @@ $dateNewLoan = (isset($_SESSION['loanviewdate']) ? $_SESSION['loanviewdate'] : $
 		</div>	
 	</div>
 </div>
-
-<input type="hidden" id="overallPayable" value="<?php Print numberExactFormat($overallPayable, 2, '.', true) ?>">
+<input type="hidden" id="toTransfer" value="0">
 <input type="hidden" id="siteFilter" value="<?php Print $siteFilter ?>">
 <input type="hidden" id="positionFilter" value="<?php Print $positionFilter ?>">
 <input type="hidden" id="loanTypeFilter" value="<?php Print $loanType ?>">
@@ -356,7 +356,17 @@ $dateNewLoan = (isset($_SESSION['loanviewdate']) ? $_SESSION['loanviewdate'] : $
 <script rel="javascript" src="js/jquery-ui/jquery-ui.js"></script>
 <script rel="javascript" src="js/bootstrap.min.js"></script>
 <script>
+function getOverallPayable() {
+	var overall = document.getElementById("overallPayable").value;
+	document.getElementById("overallPlacing").innerHTML = overall;
+}
+function transfer() {
+		var overall = $('#toTransfer').val();
+		$('#overallPlacing').val(overall);
+	}
+
 $(document).ready(function(){
+
 
 	//-------------------
 	var site = $('#siteFilter').val();
@@ -382,6 +392,7 @@ $(document).ready(function(){
 	    		$('#search_result').html(data);
 	   		}
 	  	});
+	  	// getOverallPayable();// get overall payable to display
 	}
 	$('#search_box').keyup(function(){
 		console.log($(this).val())
@@ -390,7 +401,8 @@ $(document).ready(function(){
 	  	
 	});
 	//-------------------
-
+	
+	
 	function load_data(query){
 	  	$.ajax({
 	   		url:"livesearch_loans.php",
@@ -400,6 +412,8 @@ $(document).ready(function(){
 	    		$('#search_result_loans').html(data);
 	   		}
 	  	});
+	  	// alert("yo");
+	  	
 	}
 	$('#search_text').keyup(function(){
 	  	var search = $(this).val();
@@ -452,8 +466,8 @@ function position(pos) {
 }
 // Setting active color of menu to Employees
 document.getElementById("employees").setAttribute("style", "background-color: #10621e;");
-var overall = document.getElementById("overallPayable").value;
-document.getElementById("overallPlacing").innerHTML = overall;//dito
+
+
 // Clearing filters
 function clearFilter() {
 	localStorage.clear();
