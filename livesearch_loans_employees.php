@@ -62,6 +62,7 @@ Print "
 			// $noLoanChecker = true;
 			$overallPayable = 0;
 			$noRepeat = '';
+			$counting = 0;
 			while($row = mysql_fetch_assoc($loansQuery))
 			{
 
@@ -158,6 +159,7 @@ Print "
 										</tr>
 										";
 									$noLoanChecker = false;
+									$counting++;
 							}
 						}
 					}
@@ -183,6 +185,7 @@ Print "
 		}
 	
 Print "</table>";
+echo $counting;
 
 echo "<div id='pagingg' >";
     if($loans2 && $limit && $page && $site_page && $position_page && $loanType)
