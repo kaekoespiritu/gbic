@@ -118,7 +118,16 @@ $employee = "SELECT * FROM employee WHERE empid = '$empid'";
 $empQuery = mysql_query($employee);
 $empArr = mysql_fetch_assoc($empQuery);
 Print "<script>alert('You have successfully processed ".$empArr['lastname'].", ".$empArr['firstname']." ".$loanDisplay." loan')</script>";
-Print "<script>window.location.assign('loans_landing.php')</script>";
+if(isset($_POST['loanShortcut']))
+{
+	$loanTypeRedirect = $_POST['loanShortcut'];
+	Print "<script>window.location.assign('loans_view.php?type=$loanTypeRedirect')</script>";
+}
+else
+{
+	Print "<script>window.location.assign('loans_landing.php')</script>";
+}
+
 
 ?>
 

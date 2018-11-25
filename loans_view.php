@@ -26,6 +26,8 @@ if(isset($_GET['position']))
 if(isset($_GET['page']))
 	$pageFilter = $_GET['page'];
 $overallPayable = 0;
+
+$dateNewLoan = (isset($_SESSION['loanviewdate']) ? $_SESSION['loanviewdate'] : $date);
 ?>
 <html>
 <head>
@@ -56,9 +58,9 @@ $overallPayable = 0;
 			      	<div class="modal-body">
 			        	<div class="row">
 							<div class="col-md-12">
-								<input name="txt_attendance" type="text" size="10" class="form-control" value = <?php
-							echo $date;
-							?> id="dtpkr_loan" placeholder="mm-dd-yyyy" readonly>
+								<input name="txt_attendance" type="text" size="10" class="form-control" value = "<?php
+							Print $dateNewLoan;
+							?>" id="dtpkr_loan" placeholder="mm-dd-yyyy" readonly>
 							</div>
 							<div class="col-md-12 pull-down">
 								<input type="text" class="form-control pull-right input-sm" placeholder="Search Employee to add loan" id="search_text">
@@ -128,8 +130,9 @@ $overallPayable = 0;
 										</div>
 									</div><br>
 
-									<h4 class="modal-title">New Loan Details for [<?php echo (isset($_SESSION["loandate"]) ? $_SESSION["loandate"] : strftime("%B %d, %Y")) ?>]</h4><hr>
+									<h4 class="modal-title">New Loan Details for [<?php echo (isset($_SESSION["loanviewdate"]) ? $_SESSION["loanviewdate"] : strftime("%B %d, %Y")) ?>]</h4><hr>
 									<input type="hidden" id="loandate" name="loandate" value="<?php echo (isset($_SESSION['loandate']) ? $_SESSION['loandate'] : strftime('%B %d, %Y'))?>" >
+									<input type="hidden" name="loanShortcut" value="<?php Print $loanType?>">
 
 									<div class="form-group" id="loanform">
 										<div class="row">
@@ -407,7 +410,7 @@ $(document).ready(function(){
 	   		load_data();
 	  	}
 	});
-	var currentDate = "<?php echo $date; ?>";
+	var currentDate = "<?php echo $dateNewLoan; ?>";
 	var dateToday = new Date();
 	var twoWeeksAgo = new Date(dateToday.getFullYear(), dateToday.getMonth(), dateToday.getDate() - 14);
 	/* DATE PICKER CONFIGURATIONS*/
@@ -425,7 +428,7 @@ $(document).ready(function(){
 	$("#dtpkr_loan").datepicker("setDate", currentDate);
 	$("#dtpkr_loan").change(function(){
 		var date = $(this).val();
-		window.location.href = "date_loan.php?loandate="+date;
+		window.location.href = "date_loan.php?loanviewdate="+date+"&type=<?php Print $loanType?>";
 	});
 	});
 // Regex for loan input fields

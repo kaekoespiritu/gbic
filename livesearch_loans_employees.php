@@ -23,7 +23,7 @@ Print "
 	</tr>";
 		$appendQuery = '';
 		if($site_page != "null")
-			$appendQuery .= " AND site = '$site' ";
+			$appendQuery .= " AND site = '$site_page' ";
 		if($position_page != "null")
 			$appendQuery .= " AND position = '$position_page' ";
 		if($search != '')// loans1 is for the table query and loans2 is for the pagination query
