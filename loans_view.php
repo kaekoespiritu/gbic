@@ -68,7 +68,6 @@ $dateNewLoan = (isset($_SESSION['loanviewdate']) ? $_SESSION['loanviewdate'] : $
 							<div class="row">
 								<div id="search_result_loans" style="right:220px; top: 231px;"></div>
 							</div>
-							<button class="btn btn-success pull-down" data-toggle="modal" data-target="#addLoan">Add loan</button>
 			          	</div>
 			        </div>
 			    </div>
