@@ -130,7 +130,7 @@ $dateNewLoan = (isset($_SESSION['loanviewdate']) ? $_SESSION['loanviewdate'] : $
 									</div><br>
 
 									<h4 class="modal-title">New Loan Details for [<?php echo (isset($_SESSION["loanviewdate"]) ? $_SESSION["loanviewdate"] : strftime("%B %d, %Y")) ?>]</h4><hr>
-									<input type="hidden" id="loandate" name="loandate" value="<?php echo (isset($_SESSION['loandate']) ? $_SESSION['loandate'] : strftime('%B %d, %Y'))?>" >
+									<input type="hidden" id="loandate" name="loandate" value="<?php echo (isset($_SESSION['loanviewdate']) ? $_SESSION['loanviewdate'] : strftime('%B %d, %Y'))?>" >
 									<input type="hidden" name="loanShortcut" value="<?php Print $loanType?>">
 
 									<div class="form-group" id="loanform">
