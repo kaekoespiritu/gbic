@@ -30,14 +30,14 @@ Print "
 		if($search != '')// loans1 is for the table query and loans2 is for the pagination query
 		{
 
-			$loans = "loans a INNER JOIN (SELECT empid, max(id) AS other_id FROM loans WHERE type = '$loanType' GROUP BY empid) AS b ON a.empid = b.empid AND a.id = b.other_id INNER JOIN employee e on a.empid = e.empid WHERE e.employment_status = '1' $appendQuery AND (e.lastname LIKE '%$search%' OR e.firstname LIKE '%$search%')";
+			$loans = "loans a INNER JOIN (SELECT empid, max(id) AS other_id FROM loans WHERE type = '$loanType' GROUP BY empid) AS b ON a.empid = b.empid AND a.id = b.other_id INNER JOIN employee e on a.empid = e.empid WHERE e.employment_status = '1' $appendQuery AND (e.lastname LIKE '%$search%' OR e.firstname LIKE '%$search%') ORDER BY e.lastname ASC, e.firstname ASC";
 
 			// $loans1 = "loans l INNER JOIN employee e ON l.empid = e.empid WHERE type = '$loanType' AND e.employment_status = '1' $appendQuery AND (e.lastname LIKE '%$search%' OR e.firstname LIKE '%$search%') GROUP BY e.empid ORDER BY e.lastname ASC, STR_TO_DATE(l.date, '%M %e, %Y') ASC, l.id ASC ";
 			// $loans2 = "loans l INNER JOIN employee e ON l.empid = e.empid WHERE type = '$loanType' AND e.employment_status = '1' $appendQuery AND (e.lastname LIKE '%$search%' OR e.firstname LIKE '%$search%') ORDER BY e.lastname ASC, STR_TO_DATE(l.date, '%M %e, %Y') ASC, l.id ASC ";
 		}
 		else
 		{
-			$loans = "loans a INNER JOIN (SELECT empid, max(id) AS other_id FROM loans WHERE type = '$loanType' GROUP BY empid) AS b ON a.empid = b.empid AND a.id = b.other_id INNER JOIN employee e ON a.empid = e.empid WHERE e.employment_status = '1' $appendQuery";
+			$loans = "loans a INNER JOIN (SELECT empid, max(id) AS other_id FROM loans WHERE type = '$loanType' GROUP BY empid) AS b ON a.empid = b.empid AND a.id = b.other_id INNER JOIN employee e ON a.empid = e.empid WHERE e.employment_status = '1' $appendQuery ORDER BY e.lastname ASC, e.firstname ASC";
 
 			// $loans1 = "loans l INNER JOIN employee e ON l.empid = e.empid WHERE type = '$loanType' AND e.employment_status = '1' $appendQuery GROUP BY e.empid ORDER BY e.lastname ASC, STR_TO_DATE(l.date, '%M %e, %Y') ASC, l.id ASC ";
 			// $loans2 = "loans l INNER JOIN employee e ON l.empid = e.empid WHERE type = '$loanType' AND e.employment_status = '1' $appendQuery ORDER BY e.lastname ASC, STR_TO_DATE(l.date, '%M %e, %Y') ASC, l.id ASC ";
