@@ -31,19 +31,39 @@ $sheet = new PHPExcel();
 $activeSheet = $sheet -> createSheet(0);
 
 //Merge cells
-$activeSheet->mergeCells('A1:F1');//Requirements field
+if($type == 'sss' || $type == 'pagibig')
+{
+	$activeSheet->mergeCells('A1:G1');//Requirements field
+}
+else
+{
+	$activeSheet->mergeCells('A1:F1');//Requirements field
+}
 
 //----------------- Header Contents ---------------------//
 //Title Contents
 $activeSheet->setCellValue('A1', $siteArr['lastname'].",".$siteArr['firstname']."'s ".$typeDisplay." Report");
 
 //Header Contents
-$activeSheet->setCellValue('A2', 'Date');
-$activeSheet->setCellValue('B2', 'Action');
-$activeSheet->setCellValue('C2', 'Amount');
-$activeSheet->setCellValue('D2', 'Balance');
-$activeSheet->setCellValue('E2', 'Remarks');
-$activeSheet->setCellValue('F2', 'Approved By');
+if($type == 'sss' || $type == 'pagibig')
+{
+	$activeSheet->setCellValue('A2', 'Date');
+	$activeSheet->setCellValue('B2', 'Action');
+	$activeSheet->setCellValue('C2', 'Amount');
+	$activeSheet->setCellValue('D2', 'Monthly Due');
+	$activeSheet->setCellValue('E2', 'Balance');
+	$activeSheet->setCellValue('F2', 'Remarks');
+	$activeSheet->setCellValue('G2', 'Approved By');
+}
+else
+{
+	$activeSheet->setCellValue('A2', 'Date');
+	$activeSheet->setCellValue('B2', 'Action');
+	$activeSheet->setCellValue('C2', 'Amount');
+	$activeSheet->setCellValue('D2', 'Balance');
+	$activeSheet->setCellValue('E2', 'Remarks');
+	$activeSheet->setCellValue('F2', 'Approved By');
+}
 
 
 //----------------- Body ---------------------//
@@ -70,10 +90,23 @@ if(mysql_num_rows($historyQuery) > 0)
 			$activeSheet->setCellValue('B'.$rowCounter, 'Paid');//Action
 			$activeSheet->setCellValue('C'.$rowCounter, '-'.numberExactFormat($row['amount'], 2, '.', true));//Amount
 		}
-		$activeSheet->setCellValue('D'.$rowCounter, numberExactFormat($row['balance'], 2, '.', true));//Balance
 
-		$activeSheet->setCellValue('E'.$rowCounter, $row['remarks']);//Remarks
-		$activeSheet->setCellValue('F'.$rowCounter, $row['admin']);//Admin responsible	
+		if($type == 'sss' | $type == 'pagibig' )
+		{
+			$activeSheet->setCellValue('D'.$rowCounter, numberExactFormat($row['monthly'], 2, '.', true));//Amount
+
+			$activeSheet->setCellValue('E'.$rowCounter, numberExactFormat($row['balance'], 2, '.', true));//Balance
+
+			$activeSheet->setCellValue('F'.$rowCounter, $row['remarks']);//Remarks
+			$activeSheet->setCellValue('G'.$rowCounter, $row['admin']);//Admin responsible	
+		}
+		else
+		{
+			$activeSheet->setCellValue('D'.$rowCounter, numberExactFormat($row['balance'], 2, '.', true));//Balance
+
+			$activeSheet->setCellValue('E'.$rowCounter, $row['remarks']);//Remarks
+			$activeSheet->setCellValue('F'.$rowCounter, $row['admin']);//Admin responsible	
+		}
 	}
 	
 }
@@ -84,8 +117,17 @@ else
 }
 
 //Style for the Spreadsheet
-$activeSheet->getStyle('A1:F2')->applyFromArray($border_all_medium);//Header 
-$activeSheet->getStyle('A3:F'.$rowCounter)->applyFromArray($border_all_thin);//Content
+if($type == 'sss' || $type == 'pagibig')
+{
+	$activeSheet->getStyle('A1:G2')->applyFromArray($border_all_medium);//Header 
+	$activeSheet->getStyle('A3:G'.$rowCounter)->applyFromArray($border_all_thin);//Content
+}
+else
+{
+	$activeSheet->getStyle('A1:F2')->applyFromArray($border_all_medium);//Header 
+	$activeSheet->getStyle('A3:F'.$rowCounter)->applyFromArray($border_all_thin);//Content
+}
+
 $activeSheet->getStyle('A1:F'.$rowCounter)->applyFromArray($align_center);//Centered header text
 $activeSheet->getStyle('A')->applyFromArray($align_center);//Centered period text
 $activeSheet->getColumnDimension('A')->setAutoSize(true);
