@@ -143,10 +143,16 @@ $grand_total_font = array(
                     'size' => 18
                   )
                 );
-$data_font = array(
+$employee_name_font = array(
                   'font' => array(
                     'name' => 'Calibri',
                     'size' => 15
+                  )
+                );
+$data_font = array(
+                  'font' => array(
+                    'name' => 'Calibri',
+                    'size' => 18
                   )
                 );
 $column_header_font = array(

@@ -108,6 +108,7 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 		if($positionSort != $siteArr['position'])
 		{
 			$positionSort = $siteArr['position'];// Change the position
+			$activeSheet->getRowDimension($rowCounter)->setRowHeight(32);
 			$rowCounter++;// Add one space
 			$counter = 1;
 		}
@@ -233,6 +234,7 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
                     getStartColor()->
                     setRGB($payrollArr['bank']);
 		}
+		$activeSheet->getRowDimension($rowCounter)->setRowHeight(32);
 		$rowCounter++; //Row counter
 	}
 }
@@ -245,8 +247,8 @@ $grandTotalRow = $rowCounter + 1;
 //Grandtotal Merge cell
 // $activeSheet->mergeCells('AA'.$grandTotalRow.':AB'.$grandTotalRow);
 $GrandTotal = numberExactFormat($GrandTotal, 2, '.', true);
-$activeSheet->setCellValue('AB'.$grandTotalRow, 'Grand Total:');
-$activeSheet->setCellValue('AC'.$grandTotalRow, $GrandTotal);
+$activeSheet->setCellValue('AC'.$grandTotalRow, 'Grand Total:');
+$activeSheet->setCellValue('AD'.$grandTotalRow, $GrandTotal);
 
 // Set the text color to RED
 $activeSheet->getStyle('E4:E'.$rowCounter)->applyFromArray($font_red); // # of days
@@ -260,7 +262,7 @@ $activeSheet->getStyle('R4:AB'.$rowCounter)->applyFromArray($font_red); // # Spe
 //Style for the Spreadsheet
 $activeSheet->getStyle('A3:AD3')->applyFromArray($border_all_medium);//Header 
 $activeSheet->getStyle('A4:AD'.$rowCounter)->applyFromArray($border_all_thin);//Content
-$activeSheet->getStyle('AB'.$grandTotalRow.':AC'.$grandTotalRow)->applyFromArray($border_all_medium);//Grand Total
+$activeSheet->getStyle('AC'.$grandTotalRow.':AD'.$grandTotalRow)->applyFromArray($border_all_medium);//Grand Total
 $activeSheet->getStyle('AD1:AD'.$rowCounter)->applyFromArray($signature);//Centered header text
 $activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($align_left); // Left align employee name
 $activeSheet->getStyle('AC4:AC'.$rowCounter)->applyFromArray($align_right); // right align employee name
@@ -274,40 +276,47 @@ $activeSheet->getStyle('A4:AD'.$rowCounter)->applyFromArray($data_font);
 $activeSheet->getStyle('A1:A2')->applyFromArray($grand_total_font);// ALL except employee name and PAYROLL header
 $activeSheet->getStyle('A4:AD'.$grandTotalRow)->applyFromArray($grand_total_font);// ALL except employee name and PAYROLL header
 $activeSheet->getStyle('G1')->applyFromArray($payroll_font);// Payroll
-$activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($data_font);// Employee name
+$activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($employee_name_font);// Employee name
+$activeSheet->getStyle('A4:A'.$rowCounter)->applyFromArray($data_font);// Column data font
+$activeSheet->getStyle('C4:AD'.$rowCounter)->applyFromArray($data_font);// Column data font
 $activeSheet->getStyle('AB'.$grandTotalRow.':AC'.$grandTotalRow)->applyFromArray($font_bold);// Make total value bold
 
 $activeSheet->getStyle('G1:AC2')->applyFromArray($align_center);//Centered header text
-$activeSheet->getColumnDimension('A')->setAutoSize(true);
-$activeSheet->getColumnDimension('B')->setAutoSize(true);
-$activeSheet->getColumnDimension('C')->setAutoSize(true);
-$activeSheet->getColumnDimension('D')->setAutoSize(true);
-$activeSheet->getColumnDimension('E')->setAutoSize(true);
-$activeSheet->getColumnDimension('F')->setAutoSize(true);
-$activeSheet->getColumnDimension('G')->setAutoSize(true);
-$activeSheet->getColumnDimension('H')->setAutoSize(true);
-$activeSheet->getColumnDimension('I')->setAutoSize(true);
-$activeSheet->getColumnDimension('J')->setAutoSize(true);
-$activeSheet->getColumnDimension('K')->setAutoSize(true);
-$activeSheet->getColumnDimension('L')->setAutoSize(true);
-$activeSheet->getColumnDimension('M')->setAutoSize(true);
-$activeSheet->getColumnDimension('N')->setAutoSize(true);
-$activeSheet->getColumnDimension('O')->setAutoSize(true);
-$activeSheet->getColumnDimension('P')->setAutoSize(true);
-$activeSheet->getColumnDimension('Q')->setAutoSize(true);
-$activeSheet->getColumnDimension('R')->setAutoSize(true);
-$activeSheet->getColumnDimension('S')->setAutoSize(true);
-$activeSheet->getColumnDimension('T')->setAutoSize(true);
-$activeSheet->getColumnDimension('U')->setAutoSize(true);
-$activeSheet->getColumnDimension('V')->setAutoSize(true);
-$activeSheet->getColumnDimension('W')->setAutoSize(true);
-$activeSheet->getColumnDimension('X')->setWidth(9);
-$activeSheet->getColumnDimension('Y')->setAutoSize(true);
-$activeSheet->getColumnDimension('Z')->setAutoSize(true);
-$activeSheet->getColumnDimension('AA')->setAutoSize(true);
-$activeSheet->getColumnDimension('AB')->setAutoSize(true);
-$activeSheet->getColumnDimension('AC')->setAutoSize(true);
-$activeSheet->getColumnDimension('AD')->setAutoSize(true);
+$activeSheet->getColumnDimension('A')->setWidth(2.83);
+$activeSheet->getColumnDimension('B')->setWidth(26.33);
+$activeSheet->getColumnDimension('C')->setWidth(18.33);
+$activeSheet->getColumnDimension('D')->setWidth(6.67);
+$activeSheet->getColumnDimension('E')->setWidth(8.5);
+$activeSheet->getColumnDimension('F')->setWidth(8.67);
+$activeSheet->getColumnDimension('G')->setWidth(7.33);
+$activeSheet->getColumnDimension('H')->setWidth(7.33);
+$activeSheet->getColumnDimension('I')->setWidth(5);
+$activeSheet->getColumnDimension('J')->setWidth(3.67);
+$activeSheet->getColumnDimension('K')->setWidth(1.5);
+$activeSheet->getColumnDimension('L')->setWidth(3.67);
+$activeSheet->getColumnDimension('M')->setWidth(3.67);
+$activeSheet->getColumnDimension('N')->setWidth(1.5);
+$activeSheet->getColumnDimension('O')->setWidth(8.5);
+$activeSheet->getColumnDimension('P')->setWidth(1.5);
+$activeSheet->getColumnDimension('Q')->setWidth(8.5);
+$activeSheet->getColumnDimension('R')->setWidth(1.5);
+$activeSheet->getColumnDimension('S')->setWidth(7.33);
+$activeSheet->getColumnDimension('T')->setWidth(3.67);
+$activeSheet->getColumnDimension('U')->setWidth(12);
+$activeSheet->getColumnDimension('V')->setWidth(8.5);
+$activeSheet->getColumnDimension('W')->setWidth(9.67);
+$activeSheet->getColumnDimension('X')->setWidth(8.17);
+$activeSheet->getColumnDimension('Y')->setWidth(9.67);
+$activeSheet->getColumnDimension('Z')->setWidth(13.17);
+$activeSheet->getColumnDimension('AA')->setWidth(5);
+$activeSheet->getColumnDimension('AB')->setWidth(4.33);
+$activeSheet->getColumnDimension('AC')->setWidth(18.33);
+$activeSheet->getColumnDimension('AD')->setWidth(21.33);
+
+// Setting row height
+$activeSheet->getRowDimension(1)->setRowHeight(24);
+$activeSheet->getRowDimension(2)->setRowHeight(24);
+$activeSheet->getRowDimension(3)->setRowHeight(15);
 
 header('Content-Type: application/vnd.ms-excel');
 header('Content-Disposition: attachment; filename="'.$filename.'"');

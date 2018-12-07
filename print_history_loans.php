@@ -23,56 +23,94 @@ $sheet = new PHPExcel();
 
 $activeSheet = $sheet -> createSheet(0);
 
-//Merge cells
-$activeSheet->mergeCells('A1:F1');//site name
+// Merge cells
+if($loanType == 'SSS' || $loanType == 'PagIBIG')
+{
+	$activeSheet->mergeCells('A1:G1');//Requirements field
+}
+else
+{
+	$activeSheet->mergeCells('A1:F1');//Requirements field
+}
 
 //----------------- Header Contents ---------------------//
 //Title Contents
 $activeSheet->setCellValue('A1', $employeeName."'s ".$loanType." history");
 
 //Header Contents
-$activeSheet->setCellValue('A2', 'Balance');
-$activeSheet->setCellValue('B2', 'Amount');
-$activeSheet->setCellValue('C2', 'Action');
-$activeSheet->setCellValue('D2', 'Remarks');
-$activeSheet->setCellValue('E2', 'Date');
-$activeSheet->setCellValue('F2', 'Approved by');
+if($loanType == 'SSS' || $loanType == 'PagIBIG')
+{
+	$activeSheet->setCellValue('A2', 'Date');
+	$activeSheet->setCellValue('B2', 'Action');
+	$activeSheet->setCellValue('C2', 'Amount');
+	$activeSheet->setCellValue('D2', 'Monthly Due');
+	$activeSheet->setCellValue('E2', 'Balance');
+	$activeSheet->setCellValue('F2', 'Remarks');
+	$activeSheet->setCellValue('G2', 'Approved By');
+}
+else
+{
+	$activeSheet->setCellValue('A2', 'Date');
+	$activeSheet->setCellValue('B2', 'Action');
+	$activeSheet->setCellValue('C2', 'Amount');
+	$activeSheet->setCellValue('D2', 'Balance');
+	$activeSheet->setCellValue('E2', 'Remarks');
+	$activeSheet->setCellValue('F2', 'Approved By');
+}
 
 
-$history = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC, id DESC";
+$history = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$loanType' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC, id ASC";
 $historyQuery = mysql_query($history);
 
 $rowCounter = 3;//this is where the row of data starts
 
 while($row = mysql_fetch_assoc($historyQuery))
 {
-	$activeSheet->setCellValue('A'.$rowCounter, number_format($row['balance'], 2, '.', ','));//Balance
+	$activeSheet->setCellValue('A'.$rowCounter, $row['date']);//date
 
 	if($row['action'] == '1')
 	{
-		$activeSheet->setCellValue('B'.$rowCounter, '+'.number_format($row['amount'], 2, '.', ','));//Amount
-		$activeSheet->setCellValue('C'.$rowCounter, 'Loaned');//Action
+		$activeSheet->setCellValue('B'.$rowCounter, 'Loaned');//Action
+		$activeSheet->setCellValue('C'.$rowCounter, '+'.number_format($row['amount'], 2, '.', ','));//Amount
 	}
 	else
 	{
-		$activeSheet->setCellValue('B'.$rowCounter, '-'.number_format($row['amount'], 2, '.', ','));//Amount
-		$activeSheet->setCellValue('C'.$rowCounter, 'Paid');//Action
+		$activeSheet->setCellValue('B'.$rowCounter, 'Paid');//Action
+		$activeSheet->setCellValue('C'.$rowCounter, '-'.number_format($row['amount'], 2, '.', ','));//Amount
 	}
-	$activeSheet->setCellValue('D'.$rowCounter, $row['remarks']);//Remarks
-	$activeSheet->setCellValue('E'.$rowCounter, $row['date']);//Date
-	$activeSheet->setCellValue('F'.$rowCounter, $row['admin']);//Admin
+
+	if($loanType == 'SSS' | $loanType == 'PagIBIG' )
+	{
+		$activeSheet->setCellValue('D'.$rowCounter, numberExactFormat($row['monthly'], 2, '.', true));//Amount
+
+		$activeSheet->setCellValue('E'.$rowCounter, numberExactFormat($row['balance'], 2, '.', true));//Balance
+
+		$activeSheet->setCellValue('F'.$rowCounter, $row['remarks']);//Remarks
+		$activeSheet->setCellValue('G'.$rowCounter, $row['admin']);//Admin responsible	
+	}
+	else
+	{
+		$activeSheet->setCellValue('D'.$rowCounter, numberExactFormat($row['balance'], 2, '.', true));//Balance
+
+		$activeSheet->setCellValue('E'.$rowCounter, $row['remarks']);//Remarks
+		$activeSheet->setCellValue('F'.$rowCounter, $row['admin']);//Admin responsible	
+	}
 
 	$rowCounter++;
 }
 	
-
 //Style for the Spreadsheet
-$activeSheet->getStyle('A2:F2')->applyFromArray($border_all_medium);//Header 
-$activeSheet->getStyle('A1')->applyFromArray($align_center);//Header 
-$activeSheet->getStyle('A2:F'.$rowCounter)->applyFromArray($border_all_thin);//Content
-
-
-
+if($loanType == 'SSS' || $loanType == 'PagIBIG')
+{
+	$activeSheet->getStyle('A1:G2')->applyFromArray($border_all_medium);//Header 
+	$activeSheet->getStyle('A3:G'.$rowCounter)->applyFromArray($border_all_thin);//Content
+}
+else
+{
+	$activeSheet->getStyle('A1:F2')->applyFromArray($border_all_medium);//Header 
+	$activeSheet->getStyle('A3:F'.$rowCounter)->applyFromArray($border_all_thin);//Content
+}
+$activeSheet->getStyle('A1')->applyFromArray($align_center);//Header
 
 header('Content-Type: application/vnd.ms-excel');
 header('Content-Disposition: attachment; filename="'.$filename.'"');

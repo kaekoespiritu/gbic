@@ -46,7 +46,6 @@ function decimalPlaces($val) //remove decimal places if 0
 		return $val;
 }
 
-// Last Name, First Name of Site (Date) - Payroll.xls
 function monthConvert($month)
 {
 	switch($month)
@@ -89,7 +88,6 @@ else
 //------ Counter for merged cells ------//
 $dateMergeCounter = 1;
 $nameMergeCounter = 2;
-$totalMergeCounter = 16;
 
 //------ Counter for header cells ------//
 $dateCoveredRowCounter = 1;
@@ -204,8 +202,7 @@ for($count = 0; $count <= $loopCount; $count++)
 				$activeSheet->mergeCells($cellA.$dateMergeCounter.':'.$cellD.$dateMergeCounter);// Date
 				$activeSheet->mergeCells($cellA.$nameMergeCounter.':'.$cellD.$nameMergeCounter);// Name
 
-				// $activeSheet->mergeCells($cellC.$totalMergeCounter.':'.$cellD.$totalMergeCounter);// Total
-
+				// Adding static text with name and date covered
 				$activeSheet->setCellValue($cellA.$dateCoveredRowCounter, 'Date Covered: '.$dateCovered);
 				$activeSheet->setCellValue($cellA.$nameRowCounter, $empRow['lastname'].", ".$empRow['firstname']);
 
@@ -245,9 +242,7 @@ for($count = 0; $count <= $loopCount; $count++)
 				$activeSheet->getStyle($cellA.$headerStyleCounter2)->applyFromArray($font_bold);
 				
 
-				//------------ Date for the Spreadsheet ------------//
-
-				
+				//------------ Data for the Spreadsheet ------------//
 
 				$payrollArr = mysql_fetch_assoc($payrollQuery);
 
@@ -374,14 +369,17 @@ for($count = 0; $count <= $loopCount; $count++)
 					$activeSheet->getStyle($cellC.$totalDataCounter)->applyFromArray($font_bold);
 
 				$counter++;//Increment counter for horizontal inputs
+
+				//Keep static row height
+				$activeSheet->getRowDimension($count)->setRowHeight(15); 
 			}
 		}
 
 		//------------ Increment Row Number ------------//
+
 		//------ Counter for merged cells ------//
 		$dateMergeCounter += $rowIncrement;
 		$nameMergeCounter += $rowIncrement;
-		$totalMergeCounter += $rowIncrement;
 
 		//------ Counter for header cells ------//
 		$dateCoveredRowCounter += $rowIncrement;
@@ -451,23 +449,31 @@ for($count = 0; $count <= $loopCount; $count++)
 
 	//----------------- Body Contents ---------------------//
 
-
-$activeSheet->getColumnDimension('A')->setAutoSize(true);
-$activeSheet->getColumnDimension('B')->setAutoSize(true);
-$activeSheet->getColumnDimension('C')->setAutoSize(true);
-$activeSheet->getColumnDimension('D')->setAutoSize(true);
-$activeSheet->getColumnDimension('F')->setAutoSize(true);
-$activeSheet->getColumnDimension('G')->setAutoSize(true);
-$activeSheet->getColumnDimension('H')->setAutoSize(true);
-$activeSheet->getColumnDimension('I')->setAutoSize(true);
-$activeSheet->getColumnDimension('K')->setAutoSize(true);
-$activeSheet->getColumnDimension('L')->setAutoSize(true);
-$activeSheet->getColumnDimension('M')->setAutoSize(true);
-$activeSheet->getColumnDimension('N')->setAutoSize(true);
-$activeSheet->getColumnDimension('P')->setAutoSize(true);
-$activeSheet->getColumnDimension('Q')->setAutoSize(true);
-$activeSheet->getColumnDimension('R')->setAutoSize(true);
-$activeSheet->getColumnDimension('S')->setAutoSize(true);
+// Changing column sizes
+$activeSheet->getColumnDimension('A')->setWidth(14.5);
+$activeSheet->getColumnDimension('B')->setWidth(6.17);
+$activeSheet->getColumnDimension('C')->setWidth(8.5);
+$activeSheet->getColumnDimension('D')->setWidth(7.33);
+$activeSheet->getColumnDimension('E')->setWidth(0.45);//spacer
+$activeSheet->getColumnDimension('F')->setWidth(14.5);
+$activeSheet->getColumnDimension('G')->setWidth(6.17);
+$activeSheet->getColumnDimension('H')->setWidth(8.5);
+$activeSheet->getColumnDimension('I')->setWidth(7.33);
+$activeSheet->getColumnDimension('J')->setWidth(0.45);//spacer
+$activeSheet->getColumnDimension('K')->setWidth(14.5);
+$activeSheet->getColumnDimension('L')->setWidth(6.17);
+$activeSheet->getColumnDimension('M')->setWidth(8.5);
+$activeSheet->getColumnDimension('N')->setWidth(7.33);
+$activeSheet->getColumnDimension('O')->setWidth(0.45);//spacer
+$activeSheet->getColumnDimension('P')->setWidth(14.5);
+$activeSheet->getColumnDimension('Q')->setWidth(6.17);
+$activeSheet->getColumnDimension('R')->setWidth(8.5);
+$activeSheet->getColumnDimension('S')->setWidth(7.33);
+$activeSheet->getColumnDimension('T')->setWidth(0.45);//spacer
+$activeSheet->getColumnDimension('U')->setWidth(14.5);
+$activeSheet->getColumnDimension('V')->setWidth(6.17);
+$activeSheet->getColumnDimension('W')->setWidth(8.5);
+$activeSheet->getColumnDimension('X')->setWidth(7.33);
 
 header('Content-Type: application/vnd.ms-excel');
 header('Content-Disposition: attachment; filename="'.$filename.'"');

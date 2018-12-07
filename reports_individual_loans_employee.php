@@ -85,29 +85,63 @@
 			<div class="col-md-1 col-lg-12">
 				<div class="pull-down">
 				<table class="table table-bordered pull-down">
-					<tr>
-						<td>
-							Date
-						</td>
-						<td>
-							Action
-						</td>
-						<td>
-							Amount
-						</td>
-						<td>
-							Balance
-						</td>
-						<td>
-							Remarks
-						</td>
-						<td>
-							Approved By
-						</td>
-					</tr>
 					<?php
 					$history = "SELECT * FROM loans WHERE empid = '$empid' AND type = '$type' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC, id ASC";
 					$historyQuery = mysql_query($history);
+					$row = mysql_fetch_assoc($historyQuery);
+
+					if(mysql_num_rows($historyQuery) > 0) 
+					{
+						if($row['type'] == 'SSS' | $row['type'] == 'PagIBIG')
+						{
+							Print "<tr>
+								<td>
+									Date
+								</td>
+								<td>
+									Action
+								</td>
+								<td>
+									Amount
+								</td>
+								<td>
+									Monthly Due
+								</td>
+								<td>
+									Balance
+								</td>
+								<td>
+									Remarks
+								</td>
+								<td>
+									Approved By
+								</td>
+							</tr>";
+						}
+						else
+						{
+							Print "<tr>
+							<td>
+								Date
+							</td>
+							<td>
+								Action
+							</td>
+							<td>
+								Amount
+							</td>
+							<td>
+								Balance
+							</td>
+							<td>
+								Remarks
+							</td>
+							<td>
+								Approved By
+							</td>
+						</tr>";
+						}
+					}
 
 					if(mysql_num_rows($historyQuery) > 0)
 					{
@@ -129,10 +163,13 @@
 											<td> -".numberExactFormat($row['amount'], 2, '.', true)."</td>
 											";
 							}
+							
+							if($row['type'] == 'SSS' | $row['type'] == 'PagIBIG' )
+								Print 	"	<td>".$row['monthly']."</td> ";
+
 							Print 		"<td>".numberExactFormat($row['balance'], 2, '.', true)."</td>";
-							
-							
-							Print 	"	<td>".$row['remarks']."</td>
+
+							Print	"		<td>".$row['remarks']."</td>
 										<td>".$row['admin']."</td>
 									</tr>
 									";
