@@ -279,8 +279,6 @@ function getDay($day)
 				$adjXallowOverall += $adjXallow;// gets the overall xallow
 
 
-
-				// echo "<script>alert('xallow: ".$_POST['xallow'][$adCount]."')</script>";
 				if(mysql_num_rows($checkAdjAttendanceQuery))
 				{
 					$testing = "UPDATE attendance SET 	timein = '$timein1',
@@ -431,7 +429,6 @@ function getDay($day)
 	$sundayBool = false;//Boolean to filter the sunday from the work days
 	if(!empty($_POST['sunWorkHrs']) || !empty($adjSundayHrs))
 	{
-		// echo "<script>alert('1')</script>";
 		if($empArr['complete_doc'] == '1')// If employee has complete requirements
 		{
 			if(!empty($_POST['sunWorkHrs']))
@@ -440,7 +437,6 @@ function getDay($day)
 			$sundayBool = true;
 
 			$sunExplode = (isset($_POST['sunWorkHrs']) ? explode('.',$_POST['sunWorkHrs']) : 0);
-			// echo "<script>alert('yo: ".count($sunExplode)."')</script>";
 			if(count($sunExplode) > 0)
 			{
 				if(count($sunExplode) == 1)
@@ -455,7 +451,6 @@ function getDay($day)
 					$sunWorkHrs = $sunHrs+$sunMins;
 				}
 				
-				// echo "<script>alert('sun: ".$sunWorkHrs."')</script>";
 
 				if($adjSundayHrs != 0 || $adjSundayHrs != 0.00)
 				{
@@ -654,18 +649,20 @@ function getDay($day)
 	$addHoliday = 0;//Preset Additional holiday value for the grand total
 	$regHolNum = $adjHolidayRegNum;//Preset number of regular holiday this payroll period
 	$speHolNum = $adjHolidaySpeNum;//Preset number of special holiday this payroll period
+	
 
 	if($empArr['complete_doc'] == 1) 
 	{
-
 		if(isset($_POST['holidayName']) && isset($_POST['holidayType']) && isset($_POST['holidayDate']))
 		{
+
 			$holidayNum = count($_POST['holidayDate']);//counts the number of holiday in that week
 			$holidaysTogether = false;
-
+			// echo "<script>alert('yes!!')</script>";
 			// Check if multiple holidays are beside each other
 			if($holidayNum > 1)
 			{
+				// echo "<script>alert('2')</script>";
 				for($count = 0; $count < $holidayNum; $count++)
 				{
 					if($count != $holidayNum - 1)
@@ -693,6 +690,8 @@ function getDay($day)
 				$holidayType = $_POST['holidayType'][0];
 				$holidayDate = $_POST['holidayDate'][0];
 
+				Print '<script>console.log("'.$holidayName.' | '.$holidayType.' | '.$holidayDate.'")</script>';
+
 				$dayBefore = date('F d, Y', strtotime('-1 day', strtotime($holidayDate)));
 				$dayBeforeChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$dayBefore' LIMIT 1");
 				$sameDayChecker = mysql_query("SELECT * FROM attendance WHERE empid = '$empid' AND date = '$date' LIMIT 1");
@@ -719,7 +718,7 @@ function getDay($day)
 					else//Regular Holiday
 					{
 						$addHoliday += $regHolidayInc; 
-						// $regHolNum++;
+						$regHolNum++;
 					}
 				}
 				// Print '<script>console.log("Total overall holidays: '.$regHolNum.'")</script>';
@@ -1375,8 +1374,7 @@ function getDay($day)
 			$( document ).ready(function(){
 				$('#logicPayrollForm').submit();
 			});
-			</script>
-			
+			</script>	
 			";
 
 	// $url = "http://localhost/gbic/payroll_computation.php";
