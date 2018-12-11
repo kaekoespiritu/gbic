@@ -273,7 +273,8 @@ $activeSheet->getStyle('A4:AD'.$rowCounter)->applyFromArray($data_font);
 
 //Font sizes
 
-$activeSheet->getStyle('A1:A2')->applyFromArray($grand_total_font);// ALL except employee name and PAYROLL header
+$activeSheet->getStyle('A1')->applyFromArray($grand_total_font);// ALL except employee name and PAYROLL header
+$activeSheet->getStyle('A2')->applyFromArray($employee_name_font); // Date covered to size 15
 $activeSheet->getStyle('A4:AD'.$grandTotalRow)->applyFromArray($grand_total_font);// ALL except employee name and PAYROLL header
 $activeSheet->getStyle('G1')->applyFromArray($payroll_font);// Payroll
 $activeSheet->getStyle('B4:B'.$rowCounter)->applyFromArray($employee_name_font);// Employee name
@@ -282,40 +283,40 @@ $activeSheet->getStyle('C4:AD'.$rowCounter)->applyFromArray($data_font);// Colum
 $activeSheet->getStyle('AB'.$grandTotalRow.':AC'.$grandTotalRow)->applyFromArray($font_bold);// Make total value bold
 
 $activeSheet->getStyle('G1:AC2')->applyFromArray($align_center);//Centered header text
-$activeSheet->getColumnDimension('A')->setWidth(2.83);
-$activeSheet->getColumnDimension('B')->setWidth(26.33);
-$activeSheet->getColumnDimension('C')->setWidth(18.33);
-$activeSheet->getColumnDimension('D')->setWidth(6.67);
-$activeSheet->getColumnDimension('E')->setWidth(8.5);
-$activeSheet->getColumnDimension('F')->setWidth(8.67);
-$activeSheet->getColumnDimension('G')->setWidth(7.33);
-$activeSheet->getColumnDimension('H')->setWidth(7.33);
-$activeSheet->getColumnDimension('I')->setWidth(5);
-$activeSheet->getColumnDimension('J')->setWidth(3.67);
-$activeSheet->getColumnDimension('K')->setWidth(1.5);
-$activeSheet->getColumnDimension('L')->setWidth(3.67);
-$activeSheet->getColumnDimension('M')->setWidth(3.67);
-$activeSheet->getColumnDimension('N')->setWidth(1.5);
-$activeSheet->getColumnDimension('O')->setWidth(8.5);
-$activeSheet->getColumnDimension('P')->setWidth(1.5);
-$activeSheet->getColumnDimension('Q')->setWidth(8.5);
-$activeSheet->getColumnDimension('R')->setWidth(1.5);
-$activeSheet->getColumnDimension('S')->setWidth(7.33);
-$activeSheet->getColumnDimension('T')->setWidth(3.67);
-$activeSheet->getColumnDimension('U')->setWidth(12);
-$activeSheet->getColumnDimension('V')->setWidth(8.5);
-$activeSheet->getColumnDimension('W')->setWidth(9.67);
-$activeSheet->getColumnDimension('X')->setWidth(8.17);
-$activeSheet->getColumnDimension('Y')->setWidth(9.67);
-$activeSheet->getColumnDimension('Z')->setWidth(13.17);
-$activeSheet->getColumnDimension('AA')->setWidth(5);
-$activeSheet->getColumnDimension('AB')->setWidth(4.33);
-$activeSheet->getColumnDimension('AC')->setWidth(18.33);
-$activeSheet->getColumnDimension('AD')->setWidth(21.33);
+$activeSheet->getColumnDimension('A')->setWidth(3.66);
+$activeSheet->getColumnDimension('B')->setWidth(35);
+$activeSheet->getColumnDimension('C')->setWidth(21);
+$activeSheet->getColumnDimension('D')->setWidth(7.5);
+$activeSheet->getColumnDimension('E')->setWidth(9.5); 
+$activeSheet->getColumnDimension('F')->setWidth(9.5);
+$activeSheet->getColumnDimension('G')->setWidth(9.5);
+$activeSheet->getColumnDimension('H')->setWidth(8.16);
+$activeSheet->getColumnDimension('I')->setWidth(5.83);
+$activeSheet->getColumnDimension('J')->setWidth(5.5);
+$activeSheet->getColumnDimension('K')->setWidth(3.66);
+$activeSheet->getColumnDimension('L')->setWidth(4.5);
+$activeSheet->getColumnDimension('M')->setWidth(4.5);
+$activeSheet->getColumnDimension('N')->setWidth(7.5);
+$activeSheet->getColumnDimension('O')->setWidth(9.33);
+$activeSheet->getColumnDimension('P')->setWidth(3.66);
+$activeSheet->getColumnDimension('Q')->setWidth(9.33);
+$activeSheet->getColumnDimension('R')->setWidth(2.33);
+$activeSheet->getColumnDimension('S')->setWidth(8.16);
+$activeSheet->getColumnDimension('T')->setWidth(11.5);
+$activeSheet->getColumnDimension('U')->setWidth(12.83);
+$activeSheet->getColumnDimension('V')->setWidth(9.33);
+$activeSheet->getColumnDimension('W')->setWidth(10.5);
+$activeSheet->getColumnDimension('X')->setWidth(9);
+$activeSheet->getColumnDimension('Y')->setWidth(13.33);
+$activeSheet->getColumnDimension('Z')->setWidth(14);
+$activeSheet->getColumnDimension('AA')->setWidth(5.83);
+$activeSheet->getColumnDimension('AB')->setWidth(25);
+$activeSheet->getColumnDimension('AC')->setWidth(19.16);
+$activeSheet->getColumnDimension('AD')->setWidth(22.16);
 
 // Setting row height
 $activeSheet->getRowDimension(1)->setRowHeight(24);
-$activeSheet->getRowDimension(2)->setRowHeight(24);
+$activeSheet->getRowDimension(2)->setRowHeight(20);
 $activeSheet->getRowDimension(3)->setRowHeight(15);
 
 header('Content-Type: application/vnd.ms-excel');
