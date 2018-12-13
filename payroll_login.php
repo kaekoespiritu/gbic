@@ -93,6 +93,32 @@
 	<?php
 	require_once("directives/nav.php");
 	?>
+
+	<!-- Modal -->
+	<div class="modal fade" tabindex="-1" id="earlyCutOff" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Please enter your password to access early cut-off for payroll.</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+					<form class="form-inline">
+						<div class="form-group col-md-12">
+							<span>Password: </span>
+							<input type="password" class="form-control" id="payrollpass" name="password" placeholder="Password">
+						</div>
+					</form>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<input type="submit" class="btn btn-primary" data-dismiss="modal" value="Submit">
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 	
 	<div class="row pull-down">
 		<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
@@ -100,7 +126,7 @@
 				<li>
 					<h5>Payroll</h5>
 				</li>
-				<!-- <button class="pull-right btn btn-primary">Early cut-off</button> -->
+				<a type="button" class="pull-right btn btn-primary" data-target='#earlyCutOff' data-toggle='modal'>Early cut-off</a>
 			</ol>
 		</div>
 		<div class="col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 pull-down text-center">
