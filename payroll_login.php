@@ -93,38 +93,44 @@
 	<?php
 	require_once("directives/nav.php");
 	?>
-
-	<div class="jumbotron pull-down">
+	
 	<div class="row pull-down">
-		<div class="col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 pull-down text-center">
-				<h2><?php Print $head?></h2>
-				</div>
-				<div class="col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4 pull-down">
-				<form action="" method="post">
-					<?php
-						//Checks if the current date is the closed payroll
-						// $day = date('l', strtotime($date));
-						// $payrollCheck = "SELECT * FROM payroll_day";
-						// $payrollDayQuery = mysql_query($payrollCheck) or die(mysql_error());
-						// $payrollArr = mysql_fetch_assoc($payrollDayQuery);
-
-						
-						if($payrollArr['open'] == $day || $payrollBool)
-							Print '
-								<input type="password" class="form-control" id="payrollpass" name="password" placeholder="Password">
-								<input type="submit" value="Submit" class="btn btn-primary pull-down" >
-								';
-						else
-							Print '
-								<input type="password" class="form-control" id="payrollpass" name="password" placeholder="Password" readonly>
-								<input type="submit" value="Submit" class="btn btn-primary pull-down" disabled>
-								';
-					?>
-					
-				</form>
-				</div>
-			</div>
+		<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
+			<ol class="breadcrumb text-left">
+				<li>
+					<h5>Payroll</h5>
+				</li>
+				<button class="pull-right btn btn-primary">Early cut-off</button>
+			</ol>
 		</div>
+		<div class="col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 pull-down text-center">
+			<h2><?php Print $head?></h2>
+		</div>
+		<div class="col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4 pull-down">
+			<form action="" method="post">
+				<?php
+					//Checks if the current date is the closed payroll
+					// $day = date('l', strtotime($date));
+					// $payrollCheck = "SELECT * FROM payroll_day";
+					// $payrollDayQuery = mysql_query($payrollCheck) or die(mysql_error());
+					// $payrollArr = mysql_fetch_assoc($payrollDayQuery);
+
+					
+					if($payrollArr['open'] == $day || $payrollBool)
+						Print '
+							<input type="password" class="form-control" id="payrollpass" name="password" placeholder="Password">
+							<input type="submit" value="Submit" class="btn btn-primary pull-down" >
+							';
+					else
+						Print '
+							<input type="password" class="form-control" id="payrollpass" name="password" placeholder="Password" readonly>
+							<input type="submit" value="Submit" class="btn btn-primary pull-down" disabled>
+							';
+				?>
+				
+			</form>
+		</div>
+	</div>
 
 		<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 		<script rel="javascript" src="js/jquery.min.js"></script>
