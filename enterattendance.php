@@ -196,12 +196,18 @@
 							<h4 class="modal-title" id="EditDisplay"></h4>
 						</div>
 						<div class="modal-body">
-							<center>
-								<span>Hour: </span>
-								<input class="form-control small" onkeypress="validatenumber(event)" style="width:50%;"id="editHours"  maxlength="2">
-								<span>Minutes: </span>
-								<input class="form-control small" onkeypress="validatenumber(event)" style="width:50%;"id="editMins"  maxlength="2">
-							</center>
+							<div class="row">
+							<form class="form-inline">
+								<div class="form-group">
+									<span>Hour: </span>
+									<input class="form-control small" onkeypress="validatenumber(event)" style="width:50%;" id="editHours"  maxlength="2">
+								</div>
+								<div class="form-group">
+									<span>Minutes: </span>
+									<input class="form-control small" onkeypress="validatenumber(event)" style="width:50%;"id="editMins"  maxlength="2">
+								</div>
+							</form>
+							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
