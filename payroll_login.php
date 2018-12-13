@@ -126,7 +126,7 @@
 				<li>
 					<h5>Payroll</h5>
 				</li>
-				<a type="button" class="pull-right btn btn-primary" data-target='#earlyCutOff' data-toggle='modal'>Early cut-off</a>
+				<!-- <a type="button" class="pull-right btn btn-primary" data-target='#earlyCutOff' data-toggle='modal'>Early cut-off</a> -->
 			</ol>
 		</div>
 		<div class="col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 pull-down text-center">
