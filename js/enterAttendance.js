@@ -96,6 +96,123 @@ $(document).ready(function(){
 
 });
 
+function editAttModal(val, id, type) {
+	console.log(val + " | " + id + " | " + type);
+	//Get hours and minutes
+	var hour = '';
+	var minutes = '';
+	var textDisplay;
+	
+	switch(type){
+		case 'WH': 
+			textDisplay = 'Working Hours';break;
+		case 'OT': 
+			textDisplay = 'Over Time';break;
+		case 'UT': 
+			textDisplay = 'Under Time';break;
+		case 'ND': 
+			textDisplay = 'Night Differential';break;
+	}
+	// get Employee information
+	var row = document.getElementById(id);
+	var employeeName = row.querySelector('.empName').innerHTML.trim();
+	document.getElementById('EditDisplay').innerHTML = employeeName + "'s " + textDisplay;
+	var separate = val.split(",");
+	if(val != '') {
+		if(separate.length > 1) { // Check if with minutes 
+			// with mins
+			var minutesSplit = separate[1].split("mins");
+			var hourSplit = separate[0].split("hrs");
+
+			minutes = minutesSplit[0].trim();
+			hour = hourSplit[0].trim();
+
+			console.log(hour + " | " + minutes);
+
+
+		}
+		else {
+			if(separate[0].includes('hrs')) { // Checks if the first index in the array has hours
+				var hourSplit = separate[0].split("hrs");
+				hour = hourSplit[0].trim();
+			}
+			else {// If it doesn't have hours then it's monutes
+				var minutesSplit = separate[0].split("mins");
+				minutes = minutesSplit[0].trim();
+			}
+		}
+	}
+	document.getElementById('editHours').value = hour;
+	document.getElementById('editMins').value = minutes;
+	
+	if(row.querySelector('.attendance').value != 'PRESENT')
+	{
+		document.getElementById('saveAttEdit').classList.add('disabletotally');
+	}
+	else
+	{
+		document.getElementById('saveAttEdit').classList.remove('disabletotally');
+	}
+	document.getElementById('saveAttEdit').setAttribute('onclick', 'saveAttEdit(\"'+id+'\",\"'+type+'\")');
+
+}
+
+function saveAttEdit(id, type) {
+	var row = document.getElementById(id);
+	// Gets the Hours and Minutes in the modal
+	var hour = document.getElementById('editHours').value;
+	var minutes = document.getElementById('editMins').value;
+
+	var textEdit;
+	var hiddenTextEdit;
+	switch(type){
+		case 'WH': 
+			textEdit = '.workinghours';
+			hiddenTextEdit = '.workinghoursH'
+				;break;
+		case 'OT': 
+			textEdit = '.overtime';
+			hiddenTextEdit = '.overtimeH'
+				;break;
+		case 'UT': 
+			textEdit = '.undertime';
+			hiddenTextEdit = '.undertimeH'
+				;break;
+		case 'ND': 
+			textEdit = '.nightdiff';
+			hiddenTextEdit = '.nightdiffH'
+				;break;
+	}
+
+	var toHours = '';
+	var toMins = '';
+	var hrsBool = false;
+	var minsBool = false;
+	var returnValue = '';
+
+	if(hour.length > 0) {// Checks if has hours
+		hrsBool = true;
+		toHours = hour+" hrs";
+	}
+	if(minutes.length > 0) {// Checks if has minutes
+		minsBool = true;
+		toMins = minutes+" mins";
+	}
+
+	if(hrsBool && minsBool) {// Check if they both have hours and minutes
+		returnValue = toHours+', '+toMins;
+	}
+	else {
+		if(hrsBool)
+			returnValue = toHours;
+		else
+			returnValue = toMins;
+	}
+
+	row.querySelector(textEdit).value = returnValue;
+	row.querySelector(hiddenTextEdit).value = returnValue;
+}
+
 function allowInputsFromRow(row) {
 	if(row.length <= 12 || row.length >= 7) // If it only has numbers add CSS selector
 		var id = 'input[id^=workstatus-'+row+']';
@@ -1189,6 +1306,15 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 						// if(nightdiffBool == false && nightdiff == "")
 						// 	nightdiffBool = true;
 
+						// Remove any minutes if night diff is already 8 hours
+						if(nightdiff == 8)
+						{
+							if(nightdiffMins > 0)
+							{
+								nightdiffMins = "";
+							}
+						}
+
 						if(nightdiffBool && nightdiffMins != 0 && nightdiff == "")
 						{
 							row.querySelector('.nightdiff').value = nightdiffMins + "mins";
@@ -1309,6 +1435,15 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 						}
 						// if(nightdiffBool == false && nightdiff == "")
 						// 	nightdiffBool = true;
+
+						// Remove any minutes if night diff is already 8 hours
+						if(nightdiff == 8)
+						{
+							if(nightdiffMins > 0)
+							{
+								nightdiffMins = "";
+							}
+						}
 
 						if(nightdiffBool && nightdiffMins != 0 && nightdiff == "")
 						{
@@ -2093,6 +2228,15 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 						nightdiffMins -= 60;
 					}
 
+					// Remove any minutes if night diff is already 8 hours
+					if(nightdiff == 8)
+					{
+						if(nightdiffMins > 0)
+						{
+							nightdiffMins = "";
+						}
+					}
+
 					if(nightdiffBool && nightdiffMins != 0 && nightdiff == "")
 					{
 							row.querySelector('.nightdiff').value = nightdiffMins + "mins";
@@ -2113,7 +2257,6 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					}
 					else
 					{
-						
 						row.querySelector('.nightdiff').value = "";
 						row.querySelector('.nightdiffH').value = "";
 					}
@@ -3002,6 +3145,15 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					// if(nightdiffBool == false && nightdiff == "")
 					// 	nightdiffBool = true;
 
+					// Remove any minutes if night diff is already 8 hours
+					if(nightdiff == 8)
+					{
+						if(nightdiffMins > 0)
+						{
+							nightdiffMins = "";
+						}
+					}
+
 					if(nightdiffBool && nightdiffMins != 0 && nightdiff == "")
 					{
 						row.querySelector('.nightdiff').value = nightdiffMins + "mins";
@@ -3808,6 +3960,15 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 
 					// if(nightdiffBool == false && nightdiff == 0)//if nightdiff is zero 
 					// 	nightdiffBool = true;
+
+					// Remove any minutes if night diff is already 8 hours
+					if(nightdiff == 8)
+					{
+						if(nightdiffMins > 0)
+						{
+							nightdiffMins = "";
+						}
+					}
 
 					if(nightdiffBool && nightdiffMins != 0 && nightdiff == "")
 					{

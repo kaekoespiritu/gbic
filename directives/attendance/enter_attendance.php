@@ -104,8 +104,6 @@ function attendance ()
 							Print '<input type="hidden" id="completeReq">';
 						}
 
-						Print '<script>console.log("'.$day.'")</script>';
-
 						Print		"
 								<!-- Work Status -->
 									<td class='status' align='left'>
@@ -162,22 +160,22 @@ function attendance ()
 								</td> 
 								<!-- Working Hours -->
 									<td>
-										<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' disabled>
+										<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"WH\")' readonly>
 										<input type='hidden' class='workinghoursH'  name='workinghrs[".$counter."]' >
 									</td>
 								<!-- Overtime -->
 									<td>
-										<input type='text' placeholder='--' class='form-control input-sm overtime' value=''  disabled>
+										<input type='text' placeholder='--' class='form-control input-sm overtime' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"OT\")' readonly>
 										<input type='hidden' class='overtimeH' name='othrs[".$counter."]' >
 									</td>
 								<!-- Undertime -->
 									<td>
-										<input type='text' placeholder='--' class='form-control input-sm undertime' value='' disabled>
+										<input type='text' placeholder='--' class='form-control input-sm undertime' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"UT\")' readonly>
 										<input type='hidden' class='undertimeH' name='undertime[".$counter."]' >
 									</td>
 								<!-- Night Differential --> 
 									<td>
-										<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' disabled>
+										<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"ND\")' readonly>
 										<input type='hidden' class='nightdiffH' name='nightdiff[".$counter."]' >
 									</td>
 								<!-- Attendance Status -->
@@ -195,8 +193,6 @@ function attendance ()
 						{
 							Print '<input type="hidden" id="completeReq">';
 						}
-
-						Print '<script>console.log("'.$day.'")</script>';
 
 						Print		"
 								<!-- Work Status -->
@@ -254,22 +250,22 @@ function attendance ()
 								</td> 
 								<!-- Working Hours -->
 									<td>
-										<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' disabled>
+										<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"WH\")' readonly>
 										<input type='hidden' class='workinghoursH'  name='workinghrs[".$counter."]' >
 									</td>
 								<!-- Overtime -->
 									<td>
-										<input type='text' placeholder='--' class='form-control input-sm overtime' value=''  disabled>
+										<input type='text' placeholder='--' class='form-control input-sm overtime' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"OT\")' readonly>
 										<input type='hidden' class='overtimeH' name='othrs[".$counter."]' >
 									</td>
 								<!-- Undertime -->
 									<td>
-										<input type='text' placeholder='--' class='form-control input-sm undertime' value='' disabled>
+										<input type='text' placeholder='--' class='form-control input-sm undertime' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"UT\")' readonly>
 										<input type='hidden' class='undertimeH' name='undertime[".$counter."]' >
 									</td>
 								<!-- Night Differential --> 
 									<td>
-										<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' disabled>
+										<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"ND\")' readonly>
 										<input type='hidden' class='nightdiffH' name='nightdiff[".$counter."]' >
 									</td>
 								<!-- Attendance Status -->
@@ -287,8 +283,6 @@ function attendance ()
 						{
 							Print '<input type="hidden" id="completeReq">';
 						}
-
-						Print '<script>console.log("'.$day.'")</script>';
 
 						Print	"
 								<!-- Work Status -->
@@ -403,8 +397,8 @@ function attendance ()
 							//Print "<script>alert('workinghrs')</script>";
 							Print "<!-- Working Hours -->
 							<td>
-								<input type='text' placeholder='--'' value='". $wHrs ." hrs, ".$wMin." mins' class='form-control input-sm workinghours' disabled>
-								<input type='hidden' class='workinghoursH' value='". $wHrs ." hrs, ".$wMin." mins/HALFDAY' name='workinghrs[".$counter."]' >
+								<input type='text' placeholder='--'' value='". $wHrs ." hrs, ".$wMin." mins' class='form-control input-sm workinghours' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"WH\")' readonly>
+								<input type='hidden' class='workinghoursH' value='". $wHrs ." hrs, ".$wMin." mins' name='workinghrs[".$counter."]' >
 							</td>";
 						}
 						else
@@ -413,7 +407,7 @@ function attendance ()
 							//Print "<script>alert('workinghrs1')</script>";
 							Print "<!-- Working Hours -->
 							<td>
-								<input type='text' placeholder='--'' value='". $wHrs ." hrs' class='form-control input-sm workinghours' disabled>
+								<input type='text' placeholder='--'' value='". $wHrs ." hrs' class='form-control input-sm workinghours' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"WH\")' readonly>
 								<input type='hidden' class='workinghoursH' value='". $wHrs ." hrs' name='workinghrs[".$counter."]' >
 							</td>";
 						}
@@ -434,7 +428,7 @@ function attendance ()
 							//Print "<script>alert('workinghrs12')</script>";
 							Print "<!-- Working Hours -->
 							<td>
-								<input type='text' placeholder='--'' value='". $wHrs ." hrs, ".$wMin." mins/HALFDAY' class='form-control input-sm workinghours' disabled>
+								<input type='text' placeholder='--'' value='". $wHrs ." hrs, ".$wMin." mins' class='form-control input-sm workinghours' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"WH\")' readonly>
 								<input type='hidden' class='workinghoursH' value='". $wHrs ." hrs, ".$wMin." mins' name='workinghrs[".$counter."]' >
 							</td>";
 						}
@@ -444,7 +438,7 @@ function attendance ()
 							$wHrs = $work[0];
 							Print "<!-- Working Hours -->
 							<td>
-								<input type='text' placeholder='--'' value='". $wHrs ." hrs' class='form-control input-sm workinghours' disabled>
+								<input type='text' placeholder='--'' value='". $wHrs ." hrs' class='form-control input-sm workinghours' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"WH\")' readonly>
 								<input type='hidden' class='workinghoursH' value='". $wHrs ." hrs' name='workinghrs[".$counter."]' >
 							</td>";
 						}
@@ -469,7 +463,7 @@ function attendance ()
 
 							Print "<!-- Overtime -->
 							<td>
-								<input type='text' placeholder='--' class='form-control input-sm overtime' value='".$otDisplay."'  disabled>
+								<input type='text' placeholder='--' class='form-control input-sm overtime' value='".$otDisplay."' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"OT\")' readonly>
 								<input type='hidden' class='overtimeH' value='".$otDisplay."' name='othrs[".$counter."]' >
 							</td>";
 						}
@@ -479,7 +473,7 @@ function attendance ()
 							//Print "<script>alert('YEAH')</script>";
 							Print "<!-- Overtime -->
 							<td>
-								<input type='text' placeholder='--' class='form-control input-sm overtime' value='". $othrs ." hrs'  disabled>
+								<input type='text' placeholder='--' class='form-control input-sm overtime' value='". $othrs ." hrs' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"OT\")' readonly>
 								<input type='hidden' class='overtimeH' value='". $othrs ." hrs' name='othrs[".$counter."]' >
 							</td>";
 						}
@@ -489,7 +483,7 @@ function attendance ()
 					{
 						Print "<!-- Overtime -->
 						<td>
-							<input type='text' placeholder='--' class='form-control input-sm overtime' value=''  disabled>
+							<input type='text' placeholder='--' class='form-control input-sm overtime' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"OT\")' readonly>
 							<input type='hidden' class='overtimeH' name='othrs[".$counter."]' >
 						</td>";
 					}
@@ -512,7 +506,7 @@ function attendance ()
 
 							Print "<!-- Undertime -->
 							<td>
-								<input type='text' placeholder='--' value='".$utDisplay."' class='form-control input-sm undertime'  disabled>
+								<input type='text' placeholder='--' value='".$utDisplay."' class='form-control input-sm undertime' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"UT\")' readonly>
 								<input type='hidden' class='undertimeH' value='".$utDisplay."' name='undertime[".$counter."]'>
 							</td>";
 						}
@@ -521,7 +515,7 @@ function attendance ()
 							$uHrs = $work[0];
 							Print "<!-- Undertime -->
 							<td>
-								<input type='text' placeholder='--' value='". $uHrs ." hrs' class='form-control input-sm undertime'  disabled>
+								<input type='text' placeholder='--' value='". $uHrs ." hrs' class='form-control input-sm undertime' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"UT\")' readonly>
 								<input type='hidden' class='undertimeH' value='". $uHrs ." hrs' name='undertime[".$counter."]'>
 							</td>";
 						}
@@ -531,7 +525,7 @@ function attendance ()
 					{
 						Print "<!-- Undertime -->
 							<td>
-								<input type='text' placeholder='--' class='form-control input-sm undertime' value='' disabled>
+								<input type='text' placeholder='--' class='form-control input-sm undertime' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"UT\")' readonly>
 								<input type='hidden' class='undertimeH' name='undertime[".$counter."]' >
 							</td>";
 					}
@@ -554,7 +548,7 @@ function attendance ()
 
 							Print "<!-- Night Differential -->
 							<td>
-								<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='".$ndDisplay."'  disabled>
+								<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='".$ndDisplay."' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"ND\")' readonly>
 								<input type='hidden' class='nightdiffH' value='".$ndDisplay."' name='nightdiff[".$counter."]' >
 							</td>";
 						}
@@ -563,7 +557,7 @@ function attendance ()
 							$ndHrs = $work[0];
 							Print "<!-- Night Differential -->
 							<td>
-								<input type='text' placeholder='--' value='". $ndHrs ." hrs' class='form-control input-sm nightdiff'  disabled>
+								<input type='text' placeholder='--' value='". $ndHrs ." hrs' class='form-control input-sm nightdiff' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"ND\")' readonly>
 								<input type='hidden' class='nightdiffH' value='". $ndHrs ." hrs' name='nightdiff[".$counter."]'>
 							</td>";
 						}
@@ -572,7 +566,7 @@ function attendance ()
 					{
 						Print "<!-- Night Differential --> 
 							<td>
-								<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' disabled>
+								<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"ND\")' readonly>
 								<input type='hidden' class='nightdiffH' name='nightdiff[".$counter."]' >
 							</td>";
 					}
@@ -594,8 +588,6 @@ function attendance ()
 						{
 							Print '<input type="hidden" id="completeReq">';
 						}
-
-						Print '<script>console.log("'.$day.'")</script>';
 
 						Print		"
 								<!-- Work Status -->
@@ -653,22 +645,22 @@ function attendance ()
 								</td> 
 								<!-- Working Hours -->
 									<td>
-										<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' disabled>
+										<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"WH\")' readonly>
 										<input type='hidden' class='workinghoursH'  name='workinghrs[".$counter."]' >
 									</td>
 								<!-- Overtime -->
 									<td>
-										<input type='text' placeholder='--' class='form-control input-sm overtime' value=''  disabled>
+										<input type='text' placeholder='--' class='form-control input-sm overtime' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"OT\")' readonly>
 										<input type='hidden' class='overtimeH' name='othrs[".$counter."]' >
 									</td>
 								<!-- Undertime -->
 									<td>
-										<input type='text' placeholder='--' class='form-control input-sm undertime' value='' disabled>
+										<input type='text' placeholder='--' class='form-control input-sm undertime' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"UT\")' readonly>
 										<input type='hidden' class='undertimeH' name='undertime[".$counter."]' >
 									</td>
 								<!-- Night Differential --> 
 									<td>
-										<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' disabled>
+										<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"ND\")' readonly>
 										<input type='hidden' class='nightdiffH' name='nightdiff[".$counter."]' >
 									</td>
 								<!-- Attendance Status -->
@@ -805,22 +797,22 @@ function attendance ()
 					</td> 
 					<!-- Working Hours -->
 					<td>
-						<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' disabled>
+						<input type='text' placeholder='--'' class='form-control input-sm workinghours' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"WH\")' readonly>
 						<input type='hidden' class='workinghoursH'  name='workinghrs[".$counter."]' >
 					</td> 
 					<!-- Overtime -->
 					<td>
-						<input type='text' placeholder='--' class='form-control input-sm overtime' value=''  disabled>
+						<input type='text' placeholder='--' class='form-control input-sm overtime' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"OT\")' readonly>
 						<input type='hidden' class='overtimeH' name='othrs[".$counter."]' >
 					</td> 
 					<!-- Undertime -->
 					<td>
-						<input type='text' placeholder='--' class='form-control input-sm undertime' value='' disabled>
+						<input type='text' placeholder='--' class='form-control input-sm undertime' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"UT\")' readonly>
 						<input type='hidden' class='undertimeH' name='undertime[".$counter."]' >
 					</td>
 					<!-- Night Differential --> 
 					<td>
-						<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' disabled>
+						<input type='text' placeholder='--' class='form-control input-sm nightdiff' value='' data-toggle='modal' data-target='#editAttendance' onclick='editAttModal(this.value, \"".$row_employee['empid']."\", \"ND\")' readonly>
 						<input type='hidden' class='nightdiffH' name='nightdiff[".$counter."]' >
 					</td>
 					<!-- Extra allowance Input --> 
