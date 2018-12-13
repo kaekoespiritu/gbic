@@ -100,7 +100,7 @@
 				<li>
 					<h5>Payroll</h5>
 				</li>
-				<!-- <button class="pull-right btn btn-primary">Early cut-off</button> -->
+				<button class="pull-right btn btn-primary">Early cut-off</button>
 			</ol>
 		</div>
 		<div class="col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 pull-down text-center">
