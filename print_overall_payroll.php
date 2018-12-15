@@ -310,7 +310,7 @@ $activeSheet->getColumnDimension('X')->setWidth(9);
 $activeSheet->getColumnDimension('Y')->setWidth(13.33);
 $activeSheet->getColumnDimension('Z')->setWidth(14);
 $activeSheet->getColumnDimension('AA')->setWidth(5.83);
-$activeSheet->getColumnDimension('AB')->setAutoSize(true)
+$activeSheet->getColumnDimension('AB')->setAutoSize(true);
 // $activeSheet->getColumnDimension('AB')->setWidth(25);
 $activeSheet->getColumnDimension('AC')->setWidth(19.16);
 $activeSheet->getColumnDimension('AD')->setWidth(22.16);
