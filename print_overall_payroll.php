@@ -283,7 +283,8 @@ $activeSheet->getStyle('C4:AD'.$rowCounter)->applyFromArray($data_font);// Colum
 $activeSheet->getStyle('AB'.$grandTotalRow.':AC'.$grandTotalRow)->applyFromArray($font_bold);// Make total value bold
 
 $activeSheet->getStyle('G1:AC2')->applyFromArray($align_center);//Centered header text
-$activeSheet->getColumnDimension('A')->setWidth(3.66);
+$activeSheet->getColumnDimension('A')->setAutoSize(true);
+// $activeSheet->getColumnDimension('A')->setWidth(3.66);
 $activeSheet->getColumnDimension('B')->setWidth(35);
 $activeSheet->getColumnDimension('C')->setWidth(21);
 $activeSheet->getColumnDimension('D')->setWidth(7.5);
@@ -298,9 +299,11 @@ $activeSheet->getColumnDimension('L')->setWidth(4.5);
 $activeSheet->getColumnDimension('M')->setWidth(4.5);
 $activeSheet->getColumnDimension('N')->setWidth(7.5);
 $activeSheet->getColumnDimension('O')->setWidth(9.33);
-$activeSheet->getColumnDimension('P')->setWidth(3.66);
+$activeSheet->getColumnDimension('P')->setAutoSize(true);
+// $activeSheet->getColumnDimension('P')->setWidth(3.66);
 $activeSheet->getColumnDimension('Q')->setWidth(9.33);
-$activeSheet->getColumnDimension('R')->setWidth(2.33);
+$activeSheet->getColumnDimension('R')->setAutoSize(true);
+// $activeSheet->getColumnDimension('R')->setWidth(2.33);
 $activeSheet->getColumnDimension('S')->setWidth(8.16);
 $activeSheet->getColumnDimension('T')->setWidth(11.5);
 $activeSheet->getColumnDimension('U')->setWidth(12.83);
