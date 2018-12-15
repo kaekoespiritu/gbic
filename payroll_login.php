@@ -147,11 +147,11 @@
 					<h5>Payroll</h5>
 				</li>
 				<?php
-				if($payrollArr['open'] != $day)
-				{
-					Print '
-					<a type="button" class="pull-right btn btn-primary" data-target="#earlyCutOff" data-toggle="modal">Early cut-off</a>';
-				}
+				// if($payrollArr['open'] != $day)
+				// {
+				// 	Print '
+				// 	<a type="button" class="pull-right btn btn-primary" data-target="#earlyCutOff" data-toggle="modal">Early cut-off</a>';
+				// }
 					
 				?>
 			</ol>
