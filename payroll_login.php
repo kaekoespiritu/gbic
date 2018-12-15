@@ -41,8 +41,10 @@
 			}
 		}
 	}
-	if(isset($_POST['password']))
+
+	if(isset($_POST['password']) || isset($_POST['early']))
 	{
+
 		if($payrollBool)//Pass Session variable to modify all the date involving the payroll
 			$_SESSION['payrollDate'] = $unfinishedPayrollDate;
 		else
@@ -52,14 +54,29 @@
 		}
 		
 
-		$password = mysql_real_escape_string($_POST['password']);
+		if(isset($_POST['early']))
+			$password = mysql_real_escape_string($_POST['earlyPayrollpass']);
+		else
+			$password = mysql_real_escape_string($_POST['password']);
+				
 		$username = $_SESSION['user_logged_in'];
 
 		$admin = "SELECT * FROM administrator WHERE username = '$username' AND password = '$password'";
 		$adminQuery = mysql_query($admin);
 
 		if(mysql_num_rows($adminQuery) != 0)
-			header("location: payroll_site.php");
+		{
+			if(isset($_POST['early']))// Check if they chose early payroll
+			{
+				if($payrollBool)//Pass Session variable to modify all the date involving the payroll
+				{
+					$earlyStartDate = $unfinishedPayrollDate;// Open payroll
+					$earlyEndDate = $date;// date today
+					echo "<script>alert('".$earlyStartDate." | ".$earlyEndDate."')</script>";
+				}
+			}
+			Print "<script>window.location.assign('payroll_site.php')</script>";
+		}
 		else
 			Print "<script>alert('You have entered a wrong password.')</script>";
 
@@ -102,20 +119,23 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title">Please enter your password to access early cut-off for payroll.</h4>
 				</div>
-				<div class="modal-body">
-					<div class="row">
-					<form class="form-inline">
-						<div class="form-group col-md-12">
-							<span>Password: </span>
-							<input type="password" class="form-control" id="payrollpass" name="password" placeholder="Password">
+				<form class="form-inline" action="" method="post">
+					<div class="modal-body">
+						<div class="row">
+						
+							<div class="form-group col-md-12">
+								<span>Password: </span>
+								<input type="password" class="form-control" id="earlyPayrollpass" name="earlyPayrollpass" placeholder="Password">
+								<input type="hidden" name="early" value="1">
+							</div>
+						
 						</div>
-					</form>
 					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<input type="submit" class="btn btn-primary" data-dismiss="modal" value="Submit">
-				</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<input type="submit" class="btn btn-primary" value="Submit">
+					</div>
+				</form>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
@@ -126,7 +146,14 @@
 				<li>
 					<h5>Payroll</h5>
 				</li>
-				<!-- <a type="button" class="pull-right btn btn-primary" data-target='#earlyCutOff' data-toggle='modal'>Early cut-off</a> -->
+				<?php
+				if($payrollArr['open'] != $day)
+				{
+					Print '
+					<a type="button" class="pull-right btn btn-primary" data-target="#earlyCutOff" data-toggle="modal">Early cut-off</a>';
+				}
+					
+				?>
 			</ol>
 		</div>
 		<div class="col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 pull-down text-center">
