@@ -256,13 +256,13 @@ $bank = $employee_info['bank'];
 									$location_query = mysql_query($site_query);
 									while($row = mysql_fetch_assoc($location_query))
 									{
-										if($site == $row['location'])
+										if($site == mysql_real_escape_string($row['location']))
 										{
-											Print '<option selected="selected" value="'.$row["location"].'">'.$row["location"].'</option>';
+											Print '<option selected="selected" value="'.mysql_real_escape_string($row['location']).'">'.mysql_real_escape_string($row['location']).'</option>';
 										}
 										else
 										{
-											Print '<option value="'.$row["location"].'">'.$row["location"].'</option>';
+											Print '<option value="'.mysql_real_escape_string($row['location']).'">'.mysql_real_escape_string($row['location']).'</option>';
 										}
 									}
 									?>

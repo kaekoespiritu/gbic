@@ -9,7 +9,7 @@
 				    <!-- form for adding SITES -->
 				    <form method="POST" action="logic_options_addBank.php">
 					    <div class="modal-body">
-				     		<input type="text" class="form-control" name="bank_name" placeholder="Name of new bank">
+				     		<input type="text" class="form-control" id="bankNameValidate" name="bank_name" placeholder="Name of new bank">
 				     		<div align="left">
 				     			<h3 align="left">Color:</h3>
 				     			<input type="radio" value="94D0EA" name="color[]"> <span class="swatch_1"></span> <span class="color_font">Light Cornflower Blue</span><br>

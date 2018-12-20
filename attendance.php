@@ -237,7 +237,7 @@ include('directives/session.php');
 			while($row = mysql_fetch_assoc($site_box_query))
 			{
 				$attendanceStatus = 0;
-				$site = $row['location'];
+				$site = mysql_real_escape_string($row['location']);
 				if($counter == 0)
 				{
 					Print '<div class="row">';
@@ -309,7 +309,7 @@ include('directives/session.php');
 					
 				
 
-				$site_num = $row['location'];
+				$site_num = mysql_real_escape_string($row['location']);
 				$num_employee = "SELECT * FROM employee WHERE site = '$site_num' AND employment_status = '1'";
 				$employee_query = mysql_query($num_employee);
 				$employee_num = 0;
@@ -319,13 +319,13 @@ include('directives/session.php');
 					$employee_num = mysql_num_rows($employee_query);
 				}
 				/* If location is long, font-size to smaller */
-				if(strlen($row['location'])>=16)
+				if(strlen(mysql_real_escape_string($row['location']))>=16)
 				{
 					if($employee_num != 0)
-						Print '	<a href="enterattendance.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
+						Print '	<a href="enterattendance.php?site='. mysql_real_escape_string($row['location']) .'" style="color: white !important; text-decoration: none !important;">
 									<div class="sitebox">
 										<span class="smalltext">'
-											. $row['location'] .
+											. mysql_real_escape_string($row['location']) .
 										'</span>
 										<br>
 										<span class="checkmark" name="site" value="'.$attendanceStatus.'"></span>
@@ -334,10 +334,10 @@ include('directives/session.php');
 									</div>
 								</a>';
 					else
-						Print '	<a href="enterattendance.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important; pointer-events:none; cursor:not-allowed;" disabled>
+						Print '	<a href="enterattendance.php?site='. mysql_real_escape_string($row['location']) .'" style="color: white !important; text-decoration: none !important; pointer-events:none; cursor:not-allowed;" disabled>
 									<div class="sitebox" style="background-color:grey !important; ">
 										<span class="smalltext">'
-											. $row['location'] .
+											. mysql_real_escape_string($row['location']) .
 										'</span>
 										<br>
 										<span class="glyphicon glyphicon-ban-circle"></span>
@@ -349,10 +349,10 @@ include('directives/session.php');
 				else
 				{
 					if($employee_num != 0)
-						Print '	<a href="enterattendance.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
+						Print '	<a href="enterattendance.php?site='. mysql_real_escape_string($row['location']) .'" style="color: white !important; text-decoration: none !important;">
 									<div class="sitebox">
 										<span class="autofit">'
-											. $row['location'] .
+											. mysql_real_escape_string($row['location']) .
 										'<br>
 										<span class="checkmark" name="site" value="'.$attendanceStatus.'"></span>
 										<br>Employees: '. $employee_num .'
@@ -360,10 +360,10 @@ include('directives/session.php');
 									</div>
 								</a>';
 					else
-						Print '	<a href="enterattendance.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important; pointer-events:none; cursor:not-allowed;">
+						Print '	<a href="enterattendance.php?site='. mysql_real_escape_string($row['location']) .'" style="color: white !important; text-decoration: none !important; pointer-events:none; cursor:not-allowed;">
 									<div class="sitebox" style="background-color:grey !important; ">
 										<span class="autofit">'
-											. $row['location'] .
+											. mysql_real_escape_string($row['location']) .
 										'<br>
 										<span class="glyphicon glyphicon-ban-circle"></span>
 										<br>Employees: '. $employee_num .'

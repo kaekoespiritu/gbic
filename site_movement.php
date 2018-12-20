@@ -3,7 +3,7 @@
 include('directives/session.php');
 include_once('directives/db.php');
 
-$location = $_GET['site'];
+$location = mysql_real_escape_string($_GET['site']);
 
 ?>
 <html>
@@ -130,7 +130,7 @@ $location = $_GET['site'];
 								{
 									$sites .= " OR site = ";
 								}
-								$sites .= "'".$pendingArr['location']."'";
+								$sites .= "'".mysql_real_escape_string($pendingArr['location'])."'";
 							}
 
 							if(isset($_GET['position']))

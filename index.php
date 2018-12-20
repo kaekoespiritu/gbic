@@ -423,7 +423,7 @@ while($row = mysql_fetch_assoc($site_query))
 
 	if($cycles == 0 || $cycles == 4)
 	{
-		$emp_location = $row['location'];
+		$emp_location = mysql_real_escape_string($row['location']);
 		$employee_find = "SELECT * FROM employee WHERE site = '$emp_location' AND employment_status = '1' ";
 		$employee_find_query = mysql_query($employee_find);
 		$employee_num = 0;
@@ -431,8 +431,8 @@ while($row = mysql_fetch_assoc($site_query))
 		{
 			$employee_num = mysql_num_rows($employee_find_query);
 		}
-		Print "<a data-toggle='modal' href='#shortcut' onclick='shortcut(\"".$row['location']."\")''><div class='col-md-2 col-lg-2 col-md-offset-1 col-lg-offset-1 card card-1'>
-				<h4 class='sitename' id='".$row['location']."'>".$row['location']."</h4>	
+		Print "<a data-toggle='modal' href='#shortcut' onclick='shortcut(\"".mysql_real_escape_string($row['location'])."\")''><div class='col-md-2 col-lg-2 col-md-offset-1 col-lg-offset-1 card card-1'>
+				<h4 class='sitename' id='".mysql_real_escape_string($row['location'])."'>".mysql_real_escape_string($row['location'])."</h4>	
 				Employees deployed: ".$employee_num."
 			   </div></a>";
 
@@ -447,7 +447,7 @@ while($row = mysql_fetch_assoc($site_query))
 }
 else
 {
-	$emp_location = $row['location'];
+	$emp_location = mysql_real_escape_string($row['location']);
 	$employee_find = "SELECT * FROM employee WHERE site = '$emp_location' AND employment_status = '1' ";
 	$employee_find_query = mysql_query($employee_find);
 	$employee_num = 0;
@@ -455,8 +455,8 @@ else
 	{
 		$employee_num = mysql_num_rows($employee_find_query);
 	}
-	Print "<a data-toggle='modal' href='#shortcut' onclick='shortcut(\"".$row['location']."\")''><div class='col-md-2 col-lg-2 card card-1'>
-			<h4 class='sitename' id='".$row['location']."'>".$row['location']."</h4>
+	Print "<a data-toggle='modal' href='#shortcut' onclick='shortcut(\"".mysql_real_escape_string($row['location'])."\")''><div class='col-md-2 col-lg-2 card card-1'>
+			<h4 class='sitename' id='".mysql_real_escape_string($row['location'])."'>".mysql_real_escape_string($row['location'])."</h4>
 			Employees deployed: ".$employee_num."	
 		   </div></a>";
 ++$cycles;

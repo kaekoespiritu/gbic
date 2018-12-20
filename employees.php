@@ -100,13 +100,13 @@ if(isset($_GET['search']))
 							while($row_site = mysql_fetch_assoc($site_query))
 							{
 								$siteReplaced = str_replace('/+/', ' ', $_GET['site']);
-								if($row_site['location'] == $siteReplaced)
+								if(mysql_real_escape_string($row_site['location']) == $siteReplaced)
 								{
-									Print '<option value="'. $row_site['location'] .'" selected="selected">'. $row_site['location'] .'</option>';
+									Print '<option value="'. mysql_real_escape_string($row_site['location']) .'" selected="selected">'. mysql_real_escape_string($row_site['location']) .'</option>';
 								}
 								else
 								{
-									Print '<option value="'. $row_site['location'] .'">'. $row_site['location'] .'</option>';
+									Print '<option value="'. mysql_real_escape_string($row_site['location']) .'">'. mysql_real_escape_string($row_site['location']) .'</option>';
 								}
 							}
 							?>

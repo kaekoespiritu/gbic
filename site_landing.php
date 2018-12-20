@@ -101,7 +101,7 @@ include('directives/session.php');
 			while($row = mysql_fetch_assoc($site_box_query))
 			{
 				$attendanceStatus = 0;
-				$site = $row['location'];
+				$site = mysql_real_escape_string($row['location']);
 				if($counter == 0)
 				{
 					Print '<div class="row">';
@@ -145,7 +145,8 @@ include('directives/session.php');
 					$employee_num = mysql_num_rows($employee_query);
 				}
 				/* If location is long, font-size to smaller */
-				if(strlen($row['location'])>=16)
+				echo "<script>console.log('".mysql_real_escape_string($row['location'])." | ".strlen(mysql_real_escape_string($row['location']))."')</script>";
+				if(strlen(mysql_real_escape_string($row['location'])) >= 16)
 				{
 					Print '	<a href="site_movement.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
 								<div class="sitebox">
@@ -161,6 +162,7 @@ include('directives/session.php');
 				}
 				else
 				{
+					echo "<script>console.log('yes')</script>";
 					Print '	<a href="site_movement.php?site='. $row['location'] .'" style="color: white !important; text-decoration: none !important;">
 								<div class="sitebox">
 									<span class="autofit">'

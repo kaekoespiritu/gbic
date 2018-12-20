@@ -45,7 +45,7 @@ include("pagination/reports_individual_function.php");//For pagination
 			while($row = mysql_fetch_assoc($site_box_query))
 			{
 				$attendanceStatus = 0;
-				$site = $row['location'];
+				$site = mysql_real_escape_string($row['location']);
 				if($counter == 0)
 				{
 					Print '<div class="row">';

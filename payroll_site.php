@@ -63,9 +63,30 @@ $date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("
 
 			$site_box = "SELECT location FROM site WHERE active = '1'";
 			$site_box_query = mysql_query($site_box);
+
+			//check for early cutoff
+			if(isset($_SESSION['earlyCutoff']))
+			{
+				echo "<script>console.log('".strtotime($_SESSION['earlyCutoff'])." - ".$_SESSION['earlyCutoff']."')</script>";// start
+				echo "<script>console.log('".strtotime($_SESSION['payrollDate'])." - ".$_SESSION['payrollDate'] ."')</script>";// end
+				$daysCount = strtotime($_SESSION['earlyCutoff']) - strtotime($_SESSION['payrollDate']);
+				$cutoffDays = abs($daysCount/(60 * 60 * 24));
+				
+				$cutoffArr = array();// Array for checking the attendance
+
+				$start = $_SESSION['earlyCutoff'];
+				$end = $_SESSION['payrollDate'];
+				for($cutoffCount = 0; $cutoffCount <= $cutoffDays; $cutoffCount++)
+				{
+					array_push($cutoffArr, date('F d, Y', strtotime('+'.$cutoffCount.' day', strtotime($start))));
+				}
+
+				
+			}
+
 			while($row = mysql_fetch_assoc($site_box_query))
 			{
-				$site = $row['location'];
+				$site = mysql_real_escape_string($row['location']);
 
 				$day1 = date('F d, Y', strtotime('-1 day', strtotime($date)));
 				$day2 = date('F d, Y', strtotime('-2 day', strtotime($date)));
@@ -75,7 +96,10 @@ $date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("
 				$day6 = date('F d, Y', strtotime('-6 day', strtotime($date)));
 				$day7 = date('F d, Y', strtotime('-7 day', strtotime($date)));
 
-				$days = array("$day1","$day2","$day3","$day4","$day5","$day6","$day7");
+				if(isset($_SESSION['earlyCutoff']))
+					$days = $cutoffArr;
+				else
+					$days = array("$day1","$day2","$day3","$day4","$day5","$day6","$day7");
 				
 				$attendanceStatus = 0;
 				foreach($days as $checkDay)
@@ -161,7 +185,12 @@ $date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("
 					}
 				}
 				$weekComplete = false; // boolean to check if attendance is complete for the whole week
-		
+			
+				if(isset($_SESSION['earlyCutoff']))//dito
+				{
+					if($attendanceStatus >= $cutoffDays)
+						$weekComplete = true;
+				}
 				if($attendanceStatus >= 7)
 				{
 					$weekComplete = true;
@@ -172,7 +201,7 @@ $date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("
 					Print '<div class="row">';
 				}
 
-				$site_num = $row['location'];
+				$site_num = mysql_real_escape_string($row['location']);
 				$num_employee = "SELECT * FROM employee WHERE site = '$site_num' AND employment_status = '1'";
 				$employee_query = mysql_query($num_employee);
 				$employee_num = 0;
@@ -265,7 +294,7 @@ $date = (isset($_SESSION['payrollDate']) ? $_SESSION['payrollDate'] : strftime("
 						
 					}
 					$counter++;
-					Print "<script>console.log('".mysql_num_rows($site_box_query)."')</script>";
+					// Print "<script>console.log('".mysql_num_rows($site_box_query)."')</script>";
 					if($counter == 5)
 					{
 						Print '</div>';	

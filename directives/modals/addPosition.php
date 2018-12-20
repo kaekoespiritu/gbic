@@ -9,7 +9,7 @@
 				    <!-- form for adding POSITIONS -->
 				    <form method="POST" action="logic_options_addPosition.php">
 					    <div class="modal-body">
-				     		<input type="text" name="position_name" class="form-control" placeholder="Name of new position">
+				     		<input type="text" id="positionNameValidate" name="position_name" class="form-control" placeholder="Name of new position">
 				     	</div>
 			     	
 			     		<div class="modal-footer">

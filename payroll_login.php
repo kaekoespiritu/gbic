@@ -4,7 +4,7 @@
 	include('directives/db.php');
 
 	$date = strftime("%B %d, %Y");//Current date
-	// $date = "July 12, 2018";//Current date
+	// $date = "December 17, 2018";//Current date
 // $date = "July 11, 2018";
 
 	
@@ -13,6 +13,19 @@
 	$payrollCheck = "SELECT * FROM payroll_day";
 	$payrollDayQuery = mysql_query($payrollCheck) or die(mysql_error());
 	$payrollArr = mysql_fetch_assoc($payrollDayQuery);
+
+	//Check if there's an early cutoff
+	$cutoffCheck = "SELECT * FROM early_payroll ORDER BY id DESC LIMIT 1";
+	$cutoffCheckQuery = mysql_query($cutoffCheck) or die(mysql_error());
+	$latestCutoff = '';
+	$cutoffBool = false;// Boolean for cutoff in login
+	if(mysql_num_rows($cutoffCheckQuery))
+	{
+		$cutoffArr = mysql_fetch_assoc($cutoffCheckQuery);
+		$latestCutoffStart = $cutoffArr['start'];
+		$latestCutoff = $cutoffArr['end'];
+		$latestCutoffDay = date('l', strtotime($latestCutoff));
+	}
 
 	$payrollBool = false;// Boolean for unfinished payroll for the week
 	//Check if they did not do payroll for the week
@@ -24,10 +37,20 @@
 	$day6 = date('F d, Y', strtotime('-6 day', strtotime($date)));
 
 	$checkDays = array($day1, $day2, $day3, $day4, $day5, $day6);
+	$checkDaysCutoff = array($date, $day1, $day2, $day3, $day4, $day5, $day6);
+
+	if($latestCutoff != '')
+	{
+		if(in_array($latestCutoff, $checkDaysCutoff))
+		{
+			$cutoffBool = true;
+		}
+	}
 
 	foreach($checkDays as $days)
 	{
 		$dayName = date('l', strtotime($days));
+
 		if($payrollArr['open'] == $dayName)
 		{
 			$payCheck = "SELECT * FROM payroll WHERE date = '$days' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
@@ -44,7 +67,6 @@
 
 	if(isset($_POST['password']) || isset($_POST['early']))
 	{
-
 		if($payrollBool)//Pass Session variable to modify all the date involving the payroll
 			$_SESSION['payrollDate'] = $unfinishedPayrollDate;
 		else
@@ -66,15 +88,34 @@
 
 		if(mysql_num_rows($adminQuery) != 0)
 		{
-			if(isset($_POST['early']))// Check if they chose early payroll
-			{
+			// if(isset($_POST['early']))// Check if they chose early payroll
+			// {
 				if($payrollBool)//Pass Session variable to modify all the date involving the payroll
 				{
-					$earlyStartDate = $unfinishedPayrollDate;// Open payroll
-					$earlyEndDate = $date;// date today
-					echo "<script>alert('".$earlyStartDate." | ".$earlyEndDate."')</script>";
+					if(!$cutoffBool && isset($_POST['early']))// Check if cutoff is already in the database
+					{
+						$earlyStartDate = $unfinishedPayrollDate;// Open payroll
+						$earlyEndDate = $date;// date today
+						$insertCutoff = "INSERT INTO early_payroll(start, end) VALUES('$earlyStartDate', '$earlyEndDate')";
+						$_SESSION['payrollDate'] = $date;// Cutoff
+						$_SESSION['earlyCutoff'] = $latestCutoffStart;
+						$cutoffQuery = mysql_query($insertCutoff) OR DIE (mysql_error());
+						// echo "<script>alert('1')</script>";
+					}	
+					else if($cutoffBool)
+					{
+						$_SESSION['payrollDate'] = $latestCutoff;
+						$_SESSION['earlyCutoff'] = $latestCutoffStart;
+						// echo "<script>alert('2')</script>";
+					}
+					else// Unset earlycutoff session variable
+					{
+						if(isset($_SESSION['earlyCutoff']))
+							unset($_SESSION['earlyCutoff']);
+					}
+					
 				}
-			}
+			// }
 			Print "<script>window.location.assign('payroll_site.php')</script>";
 		}
 		else
@@ -82,9 +123,9 @@
 
 	}
 
-
-	
-	if($payrollBool)
+	if($cutoffBool)
+		$head = "You haven't finished the early payroll cutoff, to access the early payroll cutoff from ".$payrollArr['open']." to ".$latestCutoffDay." please enter your password.";
+	else if($payrollBool)
 		$head = "You haven't finished the payroll for this week, to access the payroll for last ".$payrollArr['open']." please enter your password.";
 	else if($payrollArr['open'] == $day)
 		$head = "Enter password to access payroll";
@@ -150,7 +191,7 @@
 				// if($payrollArr['open'] != $day)
 				// {
 				// 	Print '
-				// 	<a type="button" class="pull-right btn btn-primary" data-target="#earlyCutOff" data-toggle="modal">Early cut-off</a>';
+				// 	<a type="button" class="pull-right btn btn-primary '.($cutoffBool ? "disabletotally":"").'" data-target="#earlyCutOff" data-toggle="modal">Early cut-off</a>';
 				// }
 					
 				?>

@@ -9,7 +9,7 @@
 				    <!-- form for adding SITES -->
 				    <form method="POST" action="logic_options_addSite.php">
 					    <div class="modal-body">
-				     		<input type="text" class="form-control" name="site_name" placeholder="Name of new site">
+				     		<input type="text" id="siteNameValidate" class="form-control" name="site_name" placeholder="Name of new site">
 				     	</div>
 				     	<div class="modal-footer">
 					        <button type="submit" class="btn btn-primary">Save changes</button>

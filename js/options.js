@@ -62,6 +62,31 @@
 
 			
 		// }
+
+		
+		$('#siteNameValidate').on('keypress', function (e) {
+		    if (/^[a-zA-Z0-9\.\b]+$/.test(String.fromCharCode(e.keyCode))) {
+		        return;
+		    } else {
+		        e.preventDefault();
+		    }
+		});
+		$('#positionNameValidate').on('keypress', function (e) {
+		    if (/^[a-zA-Z0-9\.\b]+$/.test(String.fromCharCode(e.keyCode))) {
+		        return;
+		    } else {
+		        e.preventDefault();
+		    }
+		});
+		$('#bankNameValidate').on('keypress', function (e) {
+		    if (/^[a-zA-Z0-9\.\b]+$/.test(String.fromCharCode(e.keyCode))) {
+		        return;
+		    } else {
+		        e.preventDefault();
+		    }
+		});
+			
+
 		function siteRemove(site) {
 			var a = confirm("Are you sure you want to end your contract with your client at "+site+"?");
 			if(a)
