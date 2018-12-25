@@ -3,8 +3,9 @@
 	include('directives/session.php');
 	include('directives/db.php');
 
-	$date = strftime("%B %d, %Y");//Current date
-	// $date = "December 17, 2018";//Current date
+	// $date = strftime("%B %d, %Y");//Current date
+	$date = "December 27, 2018";//Current date
+	// $date = "December 16, 2018";//Current date
 // $date = "July 11, 2018";
 
 	
@@ -19,12 +20,23 @@
 	$cutoffCheckQuery = mysql_query($cutoffCheck) or die(mysql_error());
 	$latestCutoff = '';
 	$cutoffBool = false;// Boolean for cutoff in login
+
 	if(mysql_num_rows($cutoffCheckQuery))
 	{
 		$cutoffArr = mysql_fetch_assoc($cutoffCheckQuery);
 		$latestCutoffStart = $cutoffArr['start'];
 		$latestCutoff = $cutoffArr['end'];
 		$latestCutoffDay = date('l', strtotime($latestCutoff));
+
+		// Check for the unfinished early cutoff
+		$undifinishedCutoffChecker = date('F d, Y', strtotime('+13 day', strtotime($latestCutoffStart)));
+		$startChecker = strtotime($latestCutoff);
+		$endChecker = strtotime($undifinishedCutoffChecker);// This is the Payroll weeks after the initial early payroll
+		if(strtotime($date) >= $startChecker && strtotime($date) <= $endChecker)// If the current date is inbetween the start checker and the end checker
+		{
+			$cutoffBool = true;
+		}
+		
 	}
 
 	$payrollBool = false;// Boolean for unfinished payroll for the week
@@ -68,7 +80,9 @@
 	if(isset($_POST['password']) || isset($_POST['early']))
 	{
 		if($payrollBool)//Pass Session variable to modify all the date involving the payroll
+		{
 			$_SESSION['payrollDate'] = $unfinishedPayrollDate;
+		}
 		else
 		{
 			if(isset($_SESSION['payrollDate']))
@@ -90,7 +104,7 @@
 		{
 			// if(isset($_POST['early']))// Check if they chose early payroll
 			// {
-				if($payrollBool)//Pass Session variable to modify all the date involving the payroll
+				if($payrollBool || $cutoffBool)//Pass Session variable to modify all the date involving the payroll
 				{
 					if(!$cutoffBool && isset($_POST['early']))// Check if cutoff is already in the database
 					{
@@ -110,12 +124,19 @@
 					}
 					else// Unset earlycutoff session variable
 					{
+						// echo "<script>alert('3')</script>";
 						if(isset($_SESSION['earlyCutoff']))
 							unset($_SESSION['earlyCutoff']);
 					}
 					
 				}
+				else
+				{
+					if(isset($_SESSION['earlyCutoff']))
+							unset($_SESSION['earlyCutoff']);
+				}
 			// }
+			// echo "<script>alert('4')</script>";
 			Print "<script>window.location.assign('payroll_site.php')</script>";
 		}
 		else
@@ -188,11 +209,11 @@
 					<h5>Payroll</h5>
 				</li>
 				<?php
-				// if($payrollArr['open'] != $day)
-				// {
-				// 	Print '
-				// 	<a type="button" class="pull-right btn btn-primary '.($cutoffBool ? "disabletotally":"").'" data-target="#earlyCutOff" data-toggle="modal">Early cut-off</a>';
-				// }
+				if($payrollArr['open'] != $day)
+				{
+					Print '
+					<a type="button" class="pull-right btn btn-primary '.($cutoffBool ? "disabletotally":"").'" data-target="#earlyCutOff" data-toggle="modal">Early cut-off</a>';
+				}
 					
 				?>
 			</ol>

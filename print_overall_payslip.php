@@ -24,6 +24,21 @@ switch($require)
 $payDay = $_GET['date'];
 $endDate = date('F d, Y', strtotime('-1 day', strtotime($payDay)));
 $weekBefore = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
+
+// Check for early cutoff 
+$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$payDay' LIMIT 1";
+$cutoffQuery = mysql_query($cutoffCheck);
+if($_GET['cutoff'] != '')// get the Start of cutoff
+{
+	$weekBefore = $_GET['cutoff'];
+	$weekBefore = str_replace("'","",$weekBefore);
+}
+else if(mysql_num_rows($cutoffQuery) > 0)
+{
+	$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+	$weekBefore = $cutoffArr['start'];
+}
+
 $filename =  $site." Payslip ".$weekBefore." - ".$endDate.".xls";
 
 $dateDisplay = $weekBefore." - ".$endDate;
@@ -77,6 +92,7 @@ $endDateDay = substr($endDateExplode[1], 0, -1);
 $endYear = $endDateExplode[2];
 
 $startDateExplode = explode(' ', $weekBefore);
+
 $startDateMonth = monthConvert($startDateExplode[0]);
 $startDateDay = substr($startDateExplode[1], 0, -1);
 

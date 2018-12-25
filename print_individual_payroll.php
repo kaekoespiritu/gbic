@@ -9,13 +9,24 @@ $payDay = $_GET['date'];
 $endDate = date('F d, Y', strtotime('-1 day', strtotime($payDay)));
 $startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
+// Check for early cutoff 
+$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$payDay' LIMIT 1";
+$cutoffQuery = mysql_query($cutoffCheck);
+if($_GET['cutoff'] != '')// get the Start of cutoff
+{
+	$startDate = $_GET['cutoff'];
+}
+else if(mysql_num_rows($cutoffQuery) > 0)
+{
+	$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+	$startDate = $cutoffArr['start'];
+}
+
 $employee = "SELECT * FROM employee WHERE empid = '$empid'";
 $empquery = mysql_query($employee);
 $siteArr = mysql_fetch_assoc($empquery);
 
 // Get requirements type (with or without)
-
-
 $filename = $siteArr['lastname']. ", " .$siteArr['firstname']." of ".$siteArr['site']." (".$endDate.") - Payroll.xls";
 // Last Name, First Name of Site (Date) - Payroll.xls
 

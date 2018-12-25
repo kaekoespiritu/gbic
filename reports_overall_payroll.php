@@ -72,16 +72,39 @@
 					<select onchange="payrollDates(this.value)" class="form-control" id="step2" disabled>
 						<option hidden>Select date</option>
 						<?php
-						$payrollDays = "SELECT DISTINCT date FROM Payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";//gets non repeatable dates
+						// $payrollDays = "SELECT DISTINCT date FROM Payroll WHERE site = '' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";//gets non repeatable dates
+						$payrollDays = "SELECT DISTINCT date FROM payroll p INNER JOIN employee e ON p.empid = e.empid WHERE e.site = '$location' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 						$payrollDaysQuery = mysql_query($payrollDays);
 
+						$earlyCuttoff = '';
 						if(mysql_num_rows($payrollDaysQuery))
 						{
+							$cutoffBool = false;// Boolean for the suceeding week after the initial cutoff
+							$cutoffClearPlaceholderBool = false;
+							$cutoffInitialDate = '';// Placeholder for the start of the suceeding date after the cutoff
 							while($PdaysOptions = mysql_fetch_assoc($payrollDaysQuery))
 							{
 								$payDay = $PdaysOptions['date'];
 								$endDate = date('F d, Y', strtotime('-1 day', strtotime($PdaysOptions['date'])));
 								$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
+
+								// Check for early cutoff 
+								$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$payDay' LIMIT 1";
+								$cutoffQuery = mysql_query($cutoffCheck);
+								if(mysql_num_rows($cutoffQuery) > 0)
+								{
+									$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+									$startDate = $cutoffArr['start'];
+
+									$cutoffInitialDate = $cutoffArr['end'];
+								}
+
+								if($cutoffBool == true)
+								{
+									$startDate = $cutoffInitialDate;
+									$cutoffClearPlaceholderBool = true;// This is to reset the placeholder
+									$cutoffBool = false;// Reset the cutoffBoolean
+								}
 
 								if(isset($_POST['payrollDate']))
 								{
@@ -97,6 +120,16 @@
 								else
 								{
 									Print "<option value='".$payDay."'>".$startDate." - ".$endDate."</option>";
+								}
+
+								// Early cutoff Reset
+								if($cutoffClearPlaceholderBool == true)
+								{
+									$cutoffInitialDate = '';
+								}
+								if(mysql_num_rows($cutoffQuery) > 0)
+								{
+									$cutoffBool = true;// set to true, to trigger the next payroll that it has an extended attendance
 								}
 							}
 						}
@@ -114,9 +147,37 @@
 			<?php 
 
 				if(isset($_POST['payrollDate'])) {
+					$date = $_POST['payrollDate'];
+					$endDate = date('F d, Y', strtotime('-1 day', strtotime($date)));
+					$startDate = date('F d, Y', strtotime('-7 day', strtotime($date)));
+					// Check for early cutoff 
+					$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$date' LIMIT 1";
+					$cutoffQuery = mysql_query($cutoffCheck);
+					if(mysql_num_rows($cutoffQuery) > 0)
+					{
+						$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+						$startDate = $cutoffArr['start'];
+					}
+					else
+					{
+						// Check the before payroll for early cutoff to alter the begining day of the payroll
+						$suceedingCutoffPayroll = date('F d, Y', strtotime('-14 day', strtotime($date)));
+
+						$suceedingCutoffCheck = "SELECT * FROM early_payroll WHERE start = '$suceedingCutoffPayroll' LIMIT 1";
+						$suceedingCutoffQuery = mysql_query($suceedingCutoffCheck);
+						if(mysql_num_rows($suceedingCutoffQuery) > 0)
+						{
+							$cutoffArr = mysql_fetch_assoc($suceedingCutoffQuery);
+							$startDate = $cutoffArr['end'];// Get the end payroll of the cutoff to get the start of the current payroll
+							$earlyCuttoff = $startDate;//Pass the start of payroll to the printables
+						}
+					}
+
+					
+
 					Print '<div class="row pull-down">
 					<div class="col-md-1 col-lg-12 pull-down">
-								<a class="btn btn-default" id="printPayroll" href="print_overall_payroll.php?site='.$location.'&date='.$_POST['payrollDate'].'&req='.$req.'">
+								<a class="btn btn-default" id="printPayroll" href="print_overall_payroll.php?site='.$location.'&date='.$_POST['payrollDate'].'&req='.$req.'&cutoff='.$earlyCuttoff.'">
 									Print Payroll
 								</a>
 								<a class="btn btn-default" id="printPayslip" onclick="printPayslips()">
@@ -236,7 +297,7 @@
 									</td>
 								</tr>';
 							
-							$date = $_POST['payrollDate'];
+							
 
 							if($req == 'all')
 							{
@@ -468,7 +529,7 @@
 			var req = document.getElementById('step1').value;
 			var date = document.getElementById('step2').value;
 
-			window.location.assign("print_overall_payslip.php?req="+req+"&date="+date+"&site=<?php Print $location?>");
+			window.location.assign("print_overall_payslip.php?req="+req+"&date="+date+"&site=<?php Print $location?>&cutoff=<?php Print $earlyCuttoff?>");
 		}
 	</script>
 </body>

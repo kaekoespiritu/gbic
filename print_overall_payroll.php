@@ -11,6 +11,19 @@ $req = $_GET['req'];
 $endDate = date('F d, Y', strtotime('-1 day', strtotime($payDay)));
 $startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
+// Check for early cutoff 
+$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$payDay' LIMIT 1";
+$cutoffQuery = mysql_query($cutoffCheck);
+if($_GET['cutoff'] != '')// get the Start of cutoff
+{
+	$startDate = $_GET['cutoff'];
+}
+else if(mysql_num_rows($cutoffQuery) > 0)
+{
+	$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+	$startDate = $cutoffArr['start'];
+}
+
 
 // TIMEZONE
 date_default_timezone_set('Asia/Hong_Kong');

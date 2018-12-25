@@ -62,11 +62,37 @@
 
 						if(mysql_num_rows($payrollDateQuery))//check if there's payroll
 						{
+							$cutoffBool = false;// Boolean for the suceeding week after the initial cutoff
+							$cutoffClearPlaceholderBool = false;
+							$cutoffInitialDate = '';// Placeholder for the start of the suceeding date after the cutoff
 							while($payrollDateArr = mysql_fetch_assoc($payrollDateQuery))
 							{
 								$payDay = $payrollDateArr['date'];
+								
 								$payrollEndDate = date('F d, Y', strtotime('-1 day', strtotime($payrollDateArr['date'])));
 								$payrollStartDate = date('F d, Y', strtotime('-6 day', strtotime($payrollEndDate)));
+								// Check for early cutoff 
+								$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$payDay' LIMIT 1";
+								$cutoffQuery = mysql_query($cutoffCheck);
+								if(mysql_num_rows($cutoffQuery) > 0)
+								{
+									$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+									$payrollStartDate = $cutoffArr['start'];
+
+									$cutoffInitialDate = $cutoffArr['end'];
+									echo "<script>console.log('yow: ".$cutoffInitialDate."')</script>";
+								}
+
+								if($cutoffBool == true)
+								{
+									echo "<script>console.log('2')</script>";
+									echo "<script>console.log('yow1: ".$cutoffInitialDate."')</script>";
+									$payrollStartDate = $cutoffInitialDate;
+									$cutoffClearPlaceholderBool = true;// This is to reset the placeholder
+									$cutoffBool = false;// Reset the cutoffBoolean
+								}
+
+								
 								if(isset($_POST['dateChange']))
 								{
 									if($_POST['dateChange'] == $payDay)
@@ -81,6 +107,16 @@
 								else
 								{
 									Print "<option value = '".$payDay."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
+								}
+
+								if($cutoffClearPlaceholderBool == true)
+								{
+									$cutoffInitialDate = '';
+								}
+								if(mysql_num_rows($cutoffQuery) > 0)
+								{
+									echo "<script>console.log('1')</script>";
+									$cutoffBool = true;// set to true, to trigger the next payroll that it has an extended attendance
 								}
 							}
 						}
@@ -97,7 +133,41 @@
 				<?php
 				if(isset($_POST['dateChange']))
 				{
-					$date = $_POST['dateChange'];
+
+					$date = $_POST['dateChange'];// Payroll end date
+					$payrollStart = date('F d, Y', strtotime('-7 day', strtotime($date)));// Payroll start date
+					// Check for early cutoff 
+					$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$date' LIMIT 1";
+					$cutoffQuery = mysql_query($cutoffCheck);
+
+					$cutoffBool = false; // cutoff Boolean for placeholder of absent, No work, and dayoff
+					if(mysql_num_rows($cutoffQuery) > 0)
+					{
+						$cutoffBool = true;// To display No Work in the succeeding dates after cutoff
+						$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+						$payrollStart = $cutoffArr['start'];
+
+						$displayDay1 = date('F d, Y', strtotime('+6 day', strtotime($payrollStart)));
+						$displayDay2 = date('F d, Y', strtotime('+5 day', strtotime($payrollStart)));
+						$displayDay3 = date('F d, Y', strtotime('+4 day', strtotime($payrollStart)));
+						$displayDay4 = date('F d, Y', strtotime('+3 day', strtotime($payrollStart)));
+						$displayDay5 = date('F d, Y', strtotime('+2 day', strtotime($payrollStart)));
+						$displayDay6 = date('F d, Y', strtotime('+1 day', strtotime($payrollStart)));
+						$displayDay7 = $payrollStart;
+						echo "<script>console.log('displayDay1: $displayDay1 | displayDay7: $displayDay7')</script>";
+					}
+					else
+					{
+						$displayDay1 = date('F d, Y', strtotime('-1 day', strtotime($date)));
+						$displayDay2 = date('F d, Y', strtotime('-2 day', strtotime($date)));
+						$displayDay3 = date('F d, Y', strtotime('-3 day', strtotime($date)));
+						$displayDay4 = date('F d, Y', strtotime('-4 day', strtotime($date)));
+						$displayDay5 = date('F d, Y', strtotime('-5 day', strtotime($date)));
+						$displayDay6 = date('F d, Y', strtotime('-6 day', strtotime($date)));
+						$displayDay7 = date('F d, Y', strtotime('-7 day', strtotime($date)));
+					}
+
+
 					$day1 = date('F d, Y', strtotime('-1 day', strtotime($date)));
 					$day2 = date('F d, Y', strtotime('-2 day', strtotime($date)));
 					$day3 = date('F d, Y', strtotime('-3 day', strtotime($date)));
@@ -105,13 +175,7 @@
 					$day5 = date('F d, Y', strtotime('-5 day', strtotime($date)));
 					$day6 = date('F d, Y', strtotime('-6 day', strtotime($date)));
 					$day7 = date('F d, Y', strtotime('-7 day', strtotime($date)));
-					$day8 = date('F d, Y', strtotime('-8 day', strtotime($date)));
-					$day9 = date('F d, Y', strtotime('-9 day', strtotime($date)));
-					$day10 = date('F d, Y', strtotime('-10 day', strtotime($date)));
-					$day11 = date('F d, Y', strtotime('-11 day', strtotime($date)));
-					$day12 = date('F d, Y', strtotime('-12 day', strtotime($date)));
-					$day13 = date('F d, Y', strtotime('-13 day', strtotime($date)));
-					$day14 = date('F d, Y', strtotime('-14 day', strtotime($date)));
+					
 
 					$payroll = "SELECT * FROM payroll WHERE date = '$date' AND empid = '$empid'";
 					$payrollQuery = mysql_query($payroll);
@@ -330,7 +394,7 @@
 								<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 									<div class="panel panel-primary">
 									  <div class="panel-heading">
-									    <h3>Payroll Inputs for <br>'.$day7.' - '.$day1.'</h3>
+									    <h3>Payroll Inputs for <br>'.$payrollStart.' - '.$day1.'</h3>
 									    <a class="btn btn-danger pull-right pull-up-more" data-toggle="modal" data-target="#attendanceAdjustment">View Attendance Adjustments &nbsp<span class="badge" id="badge">'.$badgeCounter.'</span></a>
 									  </div>
 									</div>
@@ -437,7 +501,7 @@
 									<table class="table-bordered table-condensed" style="background-color:white;">';
 										
 									//Sample query for debugging purposes
-										$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
+										$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$payrollStart', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
 										$payrollQuery2 = mysql_query($payrollDate) or die(mysql_error());										//Boolean for the conditions not to repeat just incase the employee does't attend sundays
 										$monBool = true;
 										$tueBool = true;
@@ -489,7 +553,7 @@
 										$AttExtraAllowance = 0;// extra allowance that has accumulated through 
 										
 										//Holiday Checker
-										$holiday = "SELECT * FROM holiday WHERE STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
+										$holiday = "SELECT * FROM holiday WHERE STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$payrollStart', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
 										// echo $holiday."<br>";
 
 										$holidayQuery = mysql_query($holiday);
@@ -1195,13 +1259,13 @@
 										
 										Print '
 										<tr style="white-space: nowrap">
-											<td colspan="2" class="navibar col-md-1 col-lg-1">'.$day7 .'</td>
-											<td colspan="2" class="navibar col-md-1 col-lg-1">'.$day6 .'</td>
-											<td colspan="2" class="navibar col-md-1 col-lg-1">'.$day5 .'</td>
-											<td colspan="2" class="navibar col-md-1 col-lg-1">'.$day4 .'</td>
-											<td colspan="2" class="navibar col-md-1 col-lg-1">'.$day3 .'</td>
-											<td colspan="2" class="navibar col-md-1 col-lg-1">'.$day2 .'</td>
-											<td colspan="2" class="navibar col-md-1 col-lg-1">'.$day1 .'</td>
+											<td colspan="2" class="navibar col-md-1 col-lg-1">'.$displayDay7 .'</td>
+											<td colspan="2" class="navibar col-md-1 col-lg-1">'.$displayDay6 .'</td>
+											<td colspan="2" class="navibar col-md-1 col-lg-1">'.$displayDay5 .'</td>
+											<td colspan="2" class="navibar col-md-1 col-lg-1">'.$displayDay4 .'</td>
+											<td colspan="2" class="navibar col-md-1 col-lg-1">'.$displayDay3 .'</td>
+											<td colspan="2" class="navibar col-md-1 col-lg-1">'.$displayDay2 .'</td>
+											<td colspan="2" class="navibar col-md-1 col-lg-1">'.$displayDay1 .'</td>
 										</tr>
 										<tr>
 											<td colspan="2">Wednesday</td>
@@ -1231,7 +1295,7 @@
 														Print "<input type='hidden' name='wedOTHrs' value='".$wedOTHrs."'>";
 													}
 												}
-												else if($wedNoWork)
+												else if($wedNoWork || $cutoffBool)
 												{
 													Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 												}
@@ -1239,6 +1303,10 @@
 												{
 													Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 												}
+											}
+											else if($cutoffBool)
+											{
+												Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 											}
 											else if($wedAbsent)
 											{
@@ -1260,7 +1328,7 @@
 														Print "<input type='hidden' name='thuOTHrs' value='".$thuOTHrs."'>";
 													}
 												}
-												else if($thuNoWork)
+												else if($thuNoWork || $cutoffBool)
 												{
 													Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 												}
@@ -1268,6 +1336,10 @@
 												{
 													Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 												}
+											}
+											else if($cutoffBool)
+											{
+												Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 											}
 											else if($thuAbsent)
 											{
@@ -1289,7 +1361,7 @@
 														Print "<input type='hidden' name='friOTHrs' value='".$friOTHrs."'>";
 													}
 												}
-												else if($friNoWork)
+												else if($friNoWork || $cutoffBool)
 												{
 													Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 												}
@@ -1297,6 +1369,10 @@
 												{
 													Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 												}
+											}
+											else if($cutoffBool)
+											{
+												Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 											}
 											else if($friAbsent)
 											{
@@ -1318,7 +1394,7 @@
 														Print "<input type='hidden' name='satOTHrs' value='".$satOTHrs."'>";
 													}
 												}
-												else if($satNoWork)
+												else if($satNoWork || $cutoffBool)
 												{
 													Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 												}
@@ -1326,6 +1402,10 @@
 												{
 													Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 												}
+											}
+											else if($cutoffBool)
+											{
+												Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 											}
 											else if($satAbsent)
 											{
@@ -1347,7 +1427,7 @@
 														Print "<input type='hidden' name='sunOTHrs' value='".$sunOTHrs."'>";
 													}
 												}
-												else if($sunNoWork)
+												else if($sunNoWork || $cutoffBool)
 												{
 													Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 												}
@@ -1355,6 +1435,10 @@
 												{
 													Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Day off </td>";
 												}
+											}
+											else if($cutoffBool)
+											{
+												Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 											}
 											else if($sunAbsent)
 											{
@@ -1376,7 +1460,7 @@
 														Print "<input type='hidden' name='monOTHrs' value='".$monOTHrs."'>";
 													}
 												}
-												else if($monNoWork)
+												else if($monNoWork || $cutoffBool)
 												{
 													Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 												}
@@ -1384,6 +1468,10 @@
 												{
 													Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 												}
+											}
+											else if($cutoffBool)
+											{
+												Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 											}
 											else if($monAbsent)
 											{
@@ -1405,7 +1493,7 @@
 														Print "<input type='hidden' name='tueOTHrs' value='".$tueOTHrs."'>";
 													}
 												}
-												else if($tueNoWork)
+												else if($tueNoWork || $cutoffBool)
 												{
 													Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 												}
@@ -1413,6 +1501,10 @@
 												{
 													Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 												}
+											}
+											else if($cutoffBool)
+											{
+												Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 											}
 											else if($tueAbsent)// Absent
 											{

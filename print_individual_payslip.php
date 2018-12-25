@@ -21,6 +21,20 @@ $endDay = date('F d, Y', strtotime('-1 day', strtotime($payDay)));
 $startDay = date('F d, Y', strtotime('-6 day', strtotime($endDay)));
 $filename =  $empArr['lastname'].", ".$empArr['firstname']." of ".$empArr['site']." Payslip ".$startDay." - ".$endDay.".xls";
 
+// Check for early cutoff 
+$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$payDay' LIMIT 1";
+$cutoffQuery = mysql_query($cutoffCheck);
+if($_GET['cutoff'] != '')// get the Start of cutoff
+{
+	$startDay = $_GET['cutoff'];
+	$startDay = str_replace("'","",$startDay);
+}
+else if(mysql_num_rows($cutoffQuery) > 0)
+{
+	$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+	$startDay = $cutoffArr['start'];
+}
+
 $dateDisplay = $startDay." - ".$endDay;
 
 function decimalPlaces($val) 

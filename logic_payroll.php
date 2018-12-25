@@ -377,12 +377,47 @@ function getDay($day)
 																dates) VALUES(	'$empid',
 																				'$date',
 																				'$adjustmentDates')";
-			$payrollAdjQuery = 	mysql_query($payrollAdjustment);												
+			$payrollAdjQuery = mysql_query($payrollAdjustment);												
 		}
-		
-
 	}
 
+	// Insert Query to payroll_adjustment table for early payroll adjacent dates
+	if(isset($_SESSION['earlyCutoff']))// Check if this payroll is early cutoff
+	{//dito
+		$nextOpenPayroll = date('F d, Y', strtotime('+7 day', strtotime($_SESSION['earlyCutoff'])));// Gets the next open payroll
+		$nextPayroll = date('F d, Y', strtotime('+7 day', strtotime($nextOpenPayroll)));// Gets the next close payroll
+		// echo "<script>alert('".$nextPayroll."')</script>";
+		$daysCount = strtotime($date) - strtotime($nextOpenPayroll);
+			$cutoffDays = abs($daysCount/(60 * 60 * 24));
+			$cutoffArr = array();// Array for the dates
+			for($cutoffCount = 0; $cutoffCount < $cutoffDays; $cutoffCount++)
+		{
+			array_push($cutoffArr, date('F d, Y', strtotime('+'.$cutoffCount.' day', strtotime($date))));
+		}
+		$cutoffDates = "";
+		foreach($cutoffArr as $coDate)
+		{
+			if($cutoffDates != "")// Adds a plus sign between each dates
+				$cutoffDates .= "+";
+			$cutoffDates .= $coDate;
+		}
+		//Check if there's an existing att adjustment for the next payroll
+		$checkNextAdjustment = "SELECT * FROM payroll_adjustment WHERE empid = '$empid' AND payroll_date = '$nextPayroll'";
+		$nextAdjustmentQuery = mysql_query($checkNextAdjustment);
+		if(mysql_num_rows($nextAdjustmentQuery) > 0)
+		{
+			// Remove the current payroll adjustment
+			mysql_query("DELETE FROM payroll_adjustment WHERE empid = '$empid' AND payroll_date = '$nextPayroll'");
+		}
+		// Add the new one
+		$nextAttAdjustment = "INSERT INTO payroll_adjustment(	empid, 
+															payroll_date, 
+															dates) VALUES(	'$empid',
+																			'$nextPayroll',
+																			'$cutoffDates')";
+		mysql_query($nextAttAdjustment);	
+	}
+		
 //Daily rate of employee
 	$dailyRate = $empArr['rate'];
 

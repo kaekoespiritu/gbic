@@ -7,6 +7,15 @@ if(!isset($_GET['site']) && !isset($_GET['position']))
 	header("location:payroll_login.php");
 }
 
+// Check if the payroll is early cutoff
+$earlyCutoff = false;
+if(isset($_SESSION['earlyCutoff']))
+{
+	// earlyCutoff = start
+	// payrollDate = end 
+	echo "<script>console.log('payrollDate: ".$_SESSION['payrollDate']." | earlyCutoff: ".$_SESSION['earlyCutoff']."')</script>";
+	$earlyCutoff = true;
+}
 
 $site = $_GET['site'];
 $position = $_GET['position'];
@@ -33,7 +42,34 @@ $day13 = date('F d, Y', strtotime('-13 day', strtotime($date)));
 $day14 = date('F d, Y', strtotime('-14 day', strtotime($date)));
 
 // Validate 14 days prior to the payroll day for adjustments
-$validateDays = array($day1, $day2, $day3, $day4, $day5, $day6, $day7, $day8, $day9, $day10, $day11, $day12, $day13, $day14);
+if($earlyCutoff)// early cutoff
+{
+	$validateDays = array($day1, $day2, $day3, $day4, $day5, $day6, $day7, $day8, $day9, $day10, $day11, $day12, $day13, $day14);
+
+	$endDateEarly = date('F d, Y', strtotime('+6 day', strtotime($_SESSION['earlyCutoff'])));
+	echo "<script>console.log('endDateEarly: ".$endDateEarly."')</script>"; 
+	
+	$displayDay1 = $endDateEarly;
+	$displayDay2 = date('F d, Y', strtotime('-1 day', strtotime($endDateEarly)));
+	$displayDay3 = date('F d, Y', strtotime('-2 day', strtotime($endDateEarly)));
+	$displayDay4 = date('F d, Y', strtotime('-3 day', strtotime($endDateEarly)));
+	$displayDay5 = date('F d, Y', strtotime('-4 day', strtotime($endDateEarly)));
+	$displayDay6 = date('F d, Y', strtotime('-5 day', strtotime($endDateEarly)));
+	$displayDay7 = date('F d, Y', strtotime('-6 day', strtotime($endDateEarly)));
+}
+else// normal payroll
+{
+	$validateDays = array($day1, $day2, $day3, $day4, $day5, $day6, $day7, $day8, $day9, $day10, $day11, $day12, $day13, $day14);
+	// for date display
+	$displayDay1 = $day1;
+	$displayDay2 = $day2;
+	$displayDay3 = $day3;
+	$displayDay4 = $day4;
+	$displayDay5 = $day5;
+	$displayDay6 = $day6;
+	$displayDay7 = $day7;
+}
+
 $disabledDates = "";
 
 function getMonth($month)
@@ -615,7 +651,6 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 
 					while($dateRow = mysql_fetch_assoc($payrollQuery))
 					{
-						
 						$day = date('l', strtotime($dateRow['date']));
 						if($day == "Sunday" && $sunBool)
 						{
@@ -1313,13 +1348,13 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 					
 					?>
 					<tr style="white-space: nowrap">
-						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $day7 ?></td>
-						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $day6 ?></td>
-						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $day5 ?></td>
-						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $day4 ?></td>
-						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $day3 ?></td>
-						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $day2 ?></td>
-						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $day1 ?></td>
+						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $displayDay7 ?></td>
+						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $displayDay6 ?></td>
+						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $displayDay5 ?></td>
+						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $displayDay4 ?></td>
+						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $displayDay3 ?></td>
+						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $displayDay2 ?></td>
+						<td colspan="2" class="navibar col-md-1 col-lg-1"><?php Print $displayDay1 ?></td>
 					</tr>
 					<tr>
 						<td colspan="2">Wednesday</td>
@@ -1349,7 +1384,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 									Print "<input type='hidden' name='wedOTHrs' value='".$wedOTHrs."'>";
 								}
 							}
-							else if($wedNoWork)
+							else if($wedNoWork || $earlyCutoff)
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 							}
@@ -1357,6 +1392,10 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
+						}
+						else if($earlyCutoff)
+						{
+							Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 						}
 						else if($wedAbsent)
 						{
@@ -1378,7 +1417,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 									Print "<input type='hidden' name='thuOTHrs' value='".$thuOTHrs."'>";
 								}
 							}
-							else if($thuNoWork)
+							else if($thuNoWork || $earlyCutoff)
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 							}
@@ -1386,6 +1425,10 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
+						}
+						else if($earlyCutoff)
+						{
+							Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 						}
 						else if($thuAbsent)
 						{
@@ -1407,7 +1450,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 									Print "<input type='hidden' name='friOTHrs' value='".$friOTHrs."'>";
 								}
 							}
-							else if($friNoWork)
+							else if($friNoWork || $earlyCutoff)
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 							}
@@ -1415,6 +1458,10 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
+						}
+						else if($earlyCutoff)
+						{
+							Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 						}
 						else if($friAbsent)
 						{
@@ -1436,7 +1483,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 									Print "<input type='hidden' name='satOTHrs' value='".$satOTHrs."'>";
 								}
 							}
-							else if($satNoWork)
+							else if($satNoWork || $earlyCutoff)
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 							}
@@ -1444,6 +1491,10 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
+						}
+						else if($earlyCutoff)
+						{
+							Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 						}
 						else if($satAbsent)
 						{
@@ -1465,7 +1516,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 									Print "<input type='hidden' name='sunOTHrs' value='".$sunOTHrs."'>";
 								}
 							}
-							else if($sunNoWork)
+							else if($sunNoWork || $earlyCutoff)
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 							}
@@ -1473,6 +1524,10 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Day off </td>";
 							}
+						}
+						else if($earlyCutoff)
+						{
+							Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 						}
 						else if($sunAbsent)
 						{
@@ -1494,7 +1549,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 									Print "<input type='hidden' name='monOTHrs' value='".$monOTHrs."'>";
 								}
 							}
-							else if($monNoWork)
+							else if($monNoWork || $earlyCutoff)
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 							}
@@ -1502,6 +1557,10 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
+						}
+						else if($earlyCutoff)
+						{
+							Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 						}
 						else if($monAbsent)
 						{
@@ -1523,7 +1582,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 									Print "<input type='hidden' name='tueOTHrs' value='".$tueOTHrs."'>";
 								}
 							}
-							else if($tueNoWork)
+							else if($tueNoWork || $earlyCutoff)
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 							}
@@ -1531,6 +1590,10 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 							{
 								Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> Holiday </td>";
 							}
+						}
+						else if($earlyCutoff)
+						{
+							Print 	"<td colspan='2' rowspan='".$payrollRow."' class='danger'> No Work </td>";
 						}
 						else if($tueAbsent)// Absent
 						{

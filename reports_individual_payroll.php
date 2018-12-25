@@ -56,13 +56,36 @@
 						$payrollDates = "SELECT date FROM payroll WHERE empid = '$empid'";
 						$payrollDateQuery = mysql_query($payrollDates);
 
+						$earlyCuttoff = '';// for printable
 						if(mysql_num_rows($payrollDateQuery))//check if there's payroll
 						{
+							$cutoffBool = false;// Boolean for the suceeding week after the initial cutoff
+							$cutoffClearPlaceholderBool = false;
+							$cutoffInitialDate = '';// Placeholder for the start of the suceeding date after the cutoff
 							while($payrollDateArr = mysql_fetch_assoc($payrollDateQuery))
 							{
 								$payDay = $payrollDateArr['date'];
 								$payrollEndDate = date('F d, Y', strtotime('-1 day', strtotime($payrollDateArr['date'])));
 								$payrollStartDate = date('F d, Y', strtotime('-6 day', strtotime($payrollEndDate)));
+
+								// Check for early cutoff 
+								$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$payDay' LIMIT 1";
+								$cutoffQuery = mysql_query($cutoffCheck);
+								if(mysql_num_rows($cutoffQuery) > 0)
+								{
+									$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+									$payrollStartDate = $cutoffArr['start'];
+
+									$cutoffInitialDate = $cutoffArr['end'];
+								}
+
+								if($cutoffBool == true)
+								{
+									$payrollStartDate = $cutoffInitialDate;
+									$cutoffClearPlaceholderBool = true;// This is to reset the placeholder
+									$cutoffBool = false;// Reset the cutoffBoolean
+								}
+
 								if(isset($_POST['dateChange']))
 								{
 									if($_POST['dateChange'] == $payDay)
@@ -77,6 +100,16 @@
 								else
 								{
 									Print "<option value = '".$payDay."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
+								}
+
+								// Early cutoff Reset
+								if($cutoffClearPlaceholderBool == true)
+								{
+									$cutoffInitialDate = '';
+								}
+								if(mysql_num_rows($cutoffQuery) > 0)
+								{
+									$cutoffBool = true;// set to true, to trigger the next payroll that it has an extended attendance
 								}
 							}
 						}
@@ -98,6 +131,8 @@
 				<?php
 				if(isset($_POST['dateChange']))//if admin chooses a date on the period dropdown
 				{
+
+
 					Print "
 						<table class='table table-bordered pull-down reports-table'>
 						<tr>
@@ -121,202 +156,225 @@
 					if(mysql_num_rows($payrollQuery))
 					{
 						$printBool = true;
-						while($payrollArr = mysql_fetch_assoc($payrollQuery))
+						$payrollArr = mysql_fetch_assoc($payrollQuery);
+						
+						$endDate = date('F d, Y', strtotime('-1 day', strtotime($payrollArr['date'])));
+						$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
+
+						// Check for early cutoff 
+						$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$chosenDate' LIMIT 1";
+						$cutoffQuery = mysql_query($cutoffCheck);
+						if(mysql_num_rows($cutoffQuery) > 0)
 						{
-							$endDate = date('F d, Y', strtotime('-1 day', strtotime($payrollArr['date'])));
-							$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
-
-							//Gets the actual holiday num
-							if($payrollArr['reg_holiday_num'] > 1)
-							{
-								$holidayRegChecker = "SELECT * FROM holiday AS h INNER JOIN attendance AS a ON h.date = a.date WHERE a.empid = '$empid' AND a.attendance = '2' AND h.type = 'regular'";
-								$holidayRegQuery = mysql_query($holidayRegChecker);
-								$regHolidayNum = mysql_num_rows($holidayRegQuery);
-							}
-							else if($payrollArr['reg_holiday_num'] == 1)
-							{
-								$regHolidayNum = 1;
-							}
-							else
-							{
-								$regHolidayNum = 0;
-							}
-
-							Print "
-								<input type='hidden' id='payrollDate' value='".$payrollArr['date']."'>
-								<tr>
-								<tr>
-									<td colspan='26' bgcolor='#AAB7B8'>
-										<strong>
-											Period: ".$startDate." - ".$endDate."
-										</strong>
-									</td>
-								</tr>
-								</tr>
-							<tr>
-								<td>
-									Rate
-								</td>
-								<td>
-									# of days
-								</td>
-								<td>
-									O.T.
-								</td>
-								<td>
-									# of hours
-								</td>
-								<td>
-									Allow.
-								</td>
-								<td>
-									COLA
-								</td>
-								<td>
-									Sun
-								</td>
-								<td>
-									D
-								</td>
-								<td>
-									hrs
-								</td>
-								<td>
-									N.D.
-								</td>
-								<td>
-									#
-								</td>
-								<td>
-									Reg. Hol
-								</td>
-								<td>
-									#
-								</td>
-								<td>
-									Spe. Hol
-								</td>
-								<td>
-									#
-								</td>
-								<td>
-									X All.
-								</td>
-								<td>
-									SSS
-								</td>
-								<td>
-									Philhealth
-								</td>
-								<td>
-									PagIBIG
-								</td>
-								<td>
-									Old vale
-								</td>
-								<td>
-									vale
-								</td>
-								<td>
-									SSS loan
-								</td>
-								<td>
-									P-ibig loan
-								</td>
-								<td>
-									Ins.
-								</td>
-								<td>
-									tools
-								</td>
-								<td colspan='2'>
-									Total Salary
-								</td>
-								
-							</tr>
-							<tr>
-								<td><!-- Rate -->
-									".$payrollArr['rate']."
-								</td>
-								<td><!-- # of days -->
-									".$payrollArr['num_days']."
-								</td>
-								<td><!-- OT -->
-									".$payrollArr['overtime']."
-								</td>
-								<td><!-- # of hours -->
-									".$payrollArr['ot_num']."
-								</td>
-								<td><!-- Allow -->
-									".$payrollArr['allow']."
-								</td>
-								<td><!-- COLA -->
-									".($payrollArr['cola']/$payrollArr['allow_days'])."
-								</td>
-								<td><!-- Sun -->
-									".$payrollArr['sunday_rate']."
-								</td>
-								<td><!-- D -->
-									".$payrollArr['sunday_att']."
-								</td>
-								<td><!-- hrs -->
-									".$payrollArr['sunday_hrs']."
-								</td>
-								<td><!-- ND -->
-									".$payrollArr['nightdiff_rate']."
-								</td>
-								<td><!-- # -->
-									".$payrollArr['nightdiff_num']."
-								</td>
-								<td><!-- Reg.hol -->
-									".$payrollArr['reg_holiday']."
-								</td>
-								<td><!-- # -->
-									".$regHolidayNum."
-								</td>
-								<td><!-- Spe. hol -->
-									".$payrollArr['spe_holiday']."
-								</td>
-								<td><!-- # -->
-									".$payrollArr['spe_holiday_num']."
-								</td>
-								<td><!-- X.All -->
-									".($payrollArr['x_allowance'] + $payrollArr['x_allow_weekly'] + ($payrollArr['x_allow_daily'] * $payrollArr['allow_days']))."
-								</td>
-								<td><!-- SSS -->
-									".$payrollArr['sss']."
-								</td>
-								<td><!-- Philhealth -->
-									".$payrollArr['philhealth']."
-								</td>
-								<td><!-- Pagibig -->
-									".$payrollArr['pagibig']."
-								</td>
-								<td><!-- Old vale -->
-									".$payrollArr['old_vale']."
-								</td>
-								<td><!-- vale -->
-									".$payrollArr['new_vale']."
-								</td>
-								<td><!-- sss loan -->
-									".$payrollArr['loan_sss']."
-								</td>
-								<td><!-- pagibig loan -->
-									".$payrollArr['loan_pagibig']."
-								</td>
-								<td><!-- insurance -->
-									".$payrollArr['insurance']."
-								</td>
-								<td><!-- tools -->
-									".$payrollArr['tools_paid']."
-								</td>
-								<td><!-- Total Salary -->
-									".numberExactFormat($payrollArr['total_salary'],2,".", true)."
-								</td>
-							</tr>
-							<br>
-							";
+							$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+							$startDate = $cutoffArr['start'];
 						}
+						else
+						{
+							// Check the before payroll for early cutoff to alter the begining day of the payroll
+							$suceedingCutoffPayroll = date('F d, Y', strtotime('-14 day', strtotime($chosenDate)));
+
+							$suceedingCutoffCheck = "SELECT * FROM early_payroll WHERE start = '$suceedingCutoffPayroll' LIMIT 1";
+							$suceedingCutoffQuery = mysql_query($suceedingCutoffCheck);
+							if(mysql_num_rows($suceedingCutoffQuery) > 0)
+							{
+								$cutoffArr = mysql_fetch_assoc($suceedingCutoffQuery);
+								$startDate = $cutoffArr['end'];// Get the end payroll of the cutoff to get the start of the current payroll
+								$earlyCuttoff = $startDate;//Pass the start of payroll to the printables
+							}
+						}
+
+						//Gets the actual holiday num
+						if($payrollArr['reg_holiday_num'] > 1)
+						{
+							$holidayRegChecker = "SELECT * FROM holiday AS h INNER JOIN attendance AS a ON h.date = a.date WHERE a.empid = '$empid' AND a.attendance = '2' AND h.type = 'regular'";
+							$holidayRegQuery = mysql_query($holidayRegChecker);
+							$regHolidayNum = mysql_num_rows($holidayRegQuery);
+						}
+						else if($payrollArr['reg_holiday_num'] == 1)
+						{
+							$regHolidayNum = 1;
+						}
+						else
+						{
+							$regHolidayNum = 0;
+						}
+
+						Print "
+							<input type='hidden' id='payrollDate' value='".$payrollArr['date']."'>
+							<tr>
+							<tr>
+								<td colspan='26' bgcolor='#AAB7B8'>
+									<strong>
+										Period: ".$startDate." - ".$endDate."
+									</strong>
+								</td>
+							</tr>
+							</tr>
+						<tr>
+							<td>
+								Rate
+							</td>
+							<td>
+								# of days
+							</td>
+							<td>
+								O.T.
+							</td>
+							<td>
+								# of hours
+							</td>
+							<td>
+								Allow.
+							</td>
+							<td>
+								COLA
+							</td>
+							<td>
+								Sun
+							</td>
+							<td>
+								D
+							</td>
+							<td>
+								hrs
+							</td>
+							<td>
+								N.D.
+							</td>
+							<td>
+								#
+							</td>
+							<td>
+								Reg. Hol
+							</td>
+							<td>
+								#
+							</td>
+							<td>
+								Spe. Hol
+							</td>
+							<td>
+								#
+							</td>
+							<td>
+								X All.
+							</td>
+							<td>
+								SSS
+							</td>
+							<td>
+								Philhealth
+							</td>
+							<td>
+								PagIBIG
+							</td>
+							<td>
+								Old vale
+							</td>
+							<td>
+								vale
+							</td>
+							<td>
+								SSS loan
+							</td>
+							<td>
+								P-ibig loan
+							</td>
+							<td>
+								Ins.
+							</td>
+							<td>
+								tools
+							</td>
+							<td colspan='2'>
+								Total Salary
+							</td>
+							
+						</tr>
+						<tr>
+							<td><!-- Rate -->
+								".$payrollArr['rate']."
+							</td>
+							<td><!-- # of days -->
+								".$payrollArr['num_days']."
+							</td>
+							<td><!-- OT -->
+								".$payrollArr['overtime']."
+							</td>
+							<td><!-- # of hours -->
+								".$payrollArr['ot_num']."
+							</td>
+							<td><!-- Allow -->
+								".$payrollArr['allow']."
+							</td>
+							<td><!-- COLA -->
+								".($payrollArr['cola']/$payrollArr['allow_days'])."
+							</td>
+							<td><!-- Sun -->
+								".$payrollArr['sunday_rate']."
+							</td>
+							<td><!-- D -->
+								".$payrollArr['sunday_att']."
+							</td>
+							<td><!-- hrs -->
+								".$payrollArr['sunday_hrs']."
+							</td>
+							<td><!-- ND -->
+								".$payrollArr['nightdiff_rate']."
+							</td>
+							<td><!-- # -->
+								".$payrollArr['nightdiff_num']."
+							</td>
+							<td><!-- Reg.hol -->
+								".$payrollArr['reg_holiday']."
+							</td>
+							<td><!-- # -->
+								".$regHolidayNum."
+							</td>
+							<td><!-- Spe. hol -->
+								".$payrollArr['spe_holiday']."
+							</td>
+							<td><!-- # -->
+								".$payrollArr['spe_holiday_num']."
+							</td>
+							<td><!-- X.All -->
+								".($payrollArr['x_allowance'] + $payrollArr['x_allow_weekly'] + ($payrollArr['x_allow_daily'] * $payrollArr['allow_days']))."
+							</td>
+							<td><!-- SSS -->
+								".$payrollArr['sss']."
+							</td>
+							<td><!-- Philhealth -->
+								".$payrollArr['philhealth']."
+							</td>
+							<td><!-- Pagibig -->
+								".$payrollArr['pagibig']."
+							</td>
+							<td><!-- Old vale -->
+								".$payrollArr['old_vale']."
+							</td>
+							<td><!-- vale -->
+								".$payrollArr['new_vale']."
+							</td>
+							<td><!-- sss loan -->
+								".$payrollArr['loan_sss']."
+							</td>
+							<td><!-- pagibig loan -->
+								".$payrollArr['loan_pagibig']."
+							</td>
+							<td><!-- insurance -->
+								".$payrollArr['insurance']."
+							</td>
+							<td><!-- tools -->
+								".$payrollArr['tools_paid']."
+							</td>
+							<td><!-- Total Salary -->
+								".numberExactFormat($payrollArr['total_salary'],2,".", true)."
+							</td>
+						</tr>
+						<br>
+						";
+						
 					}
 					else
 					{
@@ -359,12 +417,12 @@
 
 		function printPayroll() {
 			var payrollDate = document.getElementById('payrollDate').value;
-			window.location.assign("print_individual_payroll.php?empid=<?php Print $empid?>&date="+payrollDate);
+			window.location.assign("print_individual_payroll.php?empid=<?php Print $empid?>&date="+payrollDate+"&cutoff=<?php Print $earlyCuttoff?>");
 		}
 
 		function printPayslip() {
 			var payrollDate = document.getElementById('dd_payrollDate').value;
-			window.location.assign("print_individual_payslip.php?empid=<?php Print $empid?>&date="+payrollDate);
+			window.location.assign("print_individual_payslip.php?empid=<?php Print $empid?>&date="+payrollDate+"&cutoff=<?php Print $earlyCuttoff?>");
 		}
 
 		function payrollDateChange(date) {
