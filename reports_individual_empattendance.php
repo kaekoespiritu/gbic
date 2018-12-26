@@ -63,36 +63,71 @@
 					<?php
 						$payDateBool = true;//boolean for displaying the present date
 
-						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE STR_TO_DATE(date, '%M %e, %Y') > (SELECT datehired FROM employee WHERE empid = '$empid')ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
+						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE STR_TO_DATE(date, '%M %e, %Y') > (SELECT datehired FROM employee WHERE empid = '$empid')ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 						$payDateQuery = mysql_query($payrollDate);
 
+						
 						if(mysql_num_rows($payDateQuery) != 0)
 						{
+							$allPaydayNum = mysql_num_rows($payDateQuery);
+							$counter = 0;// counter
 							while($payDateArr = mysql_fetch_assoc($payDateQuery))
 							{
-								if($payDateBool)
+								$counter++;
+								$payDay = $payDateArr['date'];
+								$startDate = date('F d, Y', strtotime('-7 day', strtotime($payDateArr['date'])));
+								$endDate = date('F d, Y', strtotime('-1 day', strtotime($payDateArr['date'])));
+
+								// Check for early cutoff 
+								$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$payDay' LIMIT 1";
+								$cutoffQuery = mysql_query($cutoffCheck);
+								if(mysql_num_rows($cutoffQuery) == 0)
+								{
+									if(isset($_POST['date']))
+									{
+										if($_POST['date'] == $endDate)
+											Print "<option value='".$endDate."' selected>".$startDate." - ".$endDate."</option>";
+										else
+											Print "<option value='".$endDate."'>".$startDate." - ".$endDate."</option>";
+									}	
+									else
+									{
+										Print "<option value='".$endDate."'>".$startDate." - ".$endDate."</option>";	
+									}
+								}
+								else
+								{
+									$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+									$startDate = $cutoffArr['start'];
+									$endDate = date('F d, Y', strtotime('+6 day', strtotime($startDate)));
+
+									if(isset($_POST['date']))
+									{
+										if($_POST['date'] == $endDate)
+											Print "<option value='".$endDate."' selected>".$startDate." - ".$endDate."</option>";
+										else
+											Print "<option value='".$endDate."'>".$startDate." - ".$endDate."</option>";
+									}
+									else
+									{
+										Print "<option value='".$endDate."'>".$startDate." - ".$endDate."</option>";	
+									}
+									
+								}
+
+								if($counter == $allPaydayNum)// Get the latest attendance
 								{
 									$onProcessDate = $payDateArr['date'];
 									if(isset($_POST['date']))
+									{
 										if($_POST['date'] == "onProcess")
 											Print "<option value='onProcess' selected>".$onProcessDate." - Present</option>";
 										else
 											Print "<option value='onProcess'>".$onProcessDate." - Present</option>";
+									}
 									else
-										Print "<option value='onProcess'>".$onProcessDate." - Present</option>";
-									$payDateBool = false;
+										Print "<option value='onProcess' selected>".$onProcessDate." - Present</option>";
 								}
-								$startDate = date('F d, Y', strtotime('-7 day', strtotime($payDateArr['date'])));
-								$endDate = date('F d, Y', strtotime('-1 day', strtotime($payDateArr['date'])));
-
-								if(isset($_POST['date']))
-									if($_POST['date'] == $endDate)
-										Print "<option value='".$endDate."' selected>".$startDate." - ".$endDate."</option>";
-									else
-										Print "<option value='".$endDate."'>".$startDate." - ".$endDate."</option>";
-								else
-									Print "<option value='".$endDate."'>".$startDate." - ".$endDate."</option>";	
-
 							}
 						}
 

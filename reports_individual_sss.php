@@ -76,7 +76,7 @@
 							<option hidden>Choose a <?php Print $period?></option>
 
 							<?php
-							$payrollDates = "SELECT date FROM payroll WHERE empid = '$empid'";
+							$payrollDates = "SELECT date FROM payroll WHERE empid = '$empid' AND sss != 0";
 							$payrollDQuery = mysql_query($payrollDates) or die(mysql_error());
 							if(isset($_POST['date']))
 							{
@@ -88,10 +88,15 @@
 							else
 									Print "<option value='all'>All</option>";
 
+							$earlyCuttoff = '';// for printable
 							if(mysql_num_rows($payrollDQuery) > 0)//check if there's payroll
 							{
 								$monthNoRep = "";
 								$yearNoRep = "";
+
+								$cutoffBool = false;// Boolean for the suceeding week after the initial cutoff
+								$cutoffClearPlaceholderBool = false;
+								$cutoffInitialDate = '';// Placeholder for the start of the suceeding date after the cutoff
 								while($payrollDateArr = mysql_fetch_assoc($payrollDQuery))
 								{
 									
@@ -100,9 +105,27 @@
 										$payDay = $payrollDateArr['date'];
 										$payrollEndDate = date('F d, Y', strtotime('-1 day', strtotime($payrollDateArr['date'])));
 										$payrollStartDate = date('F d, Y', strtotime('-6 day', strtotime($payrollEndDate)));
+
+										// Check for early cutoff 
+										$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$payDay' LIMIT 1";
+										$cutoffQuery = mysql_query($cutoffCheck);
+										if(mysql_num_rows($cutoffQuery) > 0)
+										{
+											$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+											$payrollStartDate = $cutoffArr['start'];
+
+											$cutoffInitialDate = $cutoffArr['end'];
+										}
+
+										if($cutoffBool == true)
+										{
+											$payrollStartDate = $cutoffInitialDate;
+											$cutoffClearPlaceholderBool = true;// This is to reset the placeholder
+											$cutoffBool = false;// Reset the cutoffBoolean
+										}
+
 										if(isset($_POST['date']))
 										{
-											Print "<script>console.log('YOOOW')</script>";
 											if($_POST['date'] == $payDay)
 											{
 												Print "<option value = '".$payDay."' selected>".$payrollStartDate." - ".$payrollEndDate."</option>";
@@ -171,6 +194,16 @@
 										$yearNoRep = $payrollYear;
 									}
 									
+									// Early cutoff Reset
+									if($cutoffClearPlaceholderBool == true)
+									{
+										$cutoffInitialDate = '';
+									}
+									if(mysql_num_rows($cutoffQuery) > 0)
+									{
+										$cutoffBool = true;// set to true, to trigger the next payroll that it has an extended attendance
+									}
+
 								}
 							}
 							
@@ -215,13 +248,13 @@
 							if($_POST['date'] != 'all')
 							{
 								$changedPeriod = $_POST['date'];
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND date= '$changedPeriod' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND date = '$changedPeriod' AND sss != 0 ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							}
 							else
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND sss != 0 ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 						}
 						else
-							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+							$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND sss != 0 ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 
 						$payrollDateQuery = mysql_query($payrollDate);
 
@@ -238,6 +271,38 @@
 							$endDate = date('F d, Y', strtotime('-1 day', strtotime($payDateArr['date'])));
 							$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
+							// Check for early cutoff 
+							$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$payDay' LIMIT 1";
+							$cutoffQuery = mysql_query($cutoffCheck);
+							if(mysql_num_rows($cutoffQuery) > 0)
+							{
+								$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+								$startDate = $cutoffArr['start'];
+							}
+							else
+							{
+								// Check the before payroll for early cutoff to alter the begining day of the payroll
+								$suceedingCutoffPayroll = date('F d, Y', strtotime('-14 day', strtotime($payDay)));
+
+								$suceedingCutoffCheck = "SELECT * FROM early_payroll WHERE start = '$suceedingCutoffPayroll' LIMIT 1";
+								$suceedingCutoffQuery = mysql_query($suceedingCutoffCheck);
+								if(mysql_num_rows($suceedingCutoffQuery) > 0)
+								{
+									$cutoffArr = mysql_fetch_assoc($suceedingCutoffQuery);
+									$startDate = $cutoffArr['end'];// Get the end payroll of the cutoff to get the start of the current payroll
+
+									// Pass the date if only there is a chosen date
+									if(isset($_POST['date']))
+									{
+										if($_POST['date'] != 'all')
+										{
+											echo "<script>console.log('".$_POST['date']."')</script>";
+											$earlyCuttoff = $startDate;//Pass the start of payroll to the printables
+										}
+									}
+								}
+							}
+							
 							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$payDay' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							$payrollQuery = mysql_query($payroll);
 							if(mysql_num_rows($payrollQuery) > 0)
@@ -272,8 +337,6 @@
 								}
 								
 							}
-
-
 						}
 						if($sssBool)
 						{
@@ -310,18 +373,18 @@
 								$changedPeriod = explode(' ',$_POST['date']);
 								$monthPeriod = $changedPeriod[0];
 								$yearPeriod = $changedPeriod[1];
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') AND sss != 0  ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							}
 							// If a specific duration was selected
 							else
 							{
-								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+								$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND sss != 0  ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							}
 
 						}
 						// If no duration was selected...
 						else
-						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND sss != 0  ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 
 						$payrollDateQuery = mysql_query($payrollDate);
 
@@ -335,13 +398,14 @@
 						//Evaluates the attendance and compute the sss contribution
 						while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 						{
+							// echo "<script>console.log('yow')</script>";
 							$dateExploded = explode(" ", $payDateArr['date']);
 							$month = $dateExploded[0];//gets the month
 							$year = $dateExploded[2];// gets the year
 
 							$payrollDay = $payDateArr['date'];
 
-							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+							$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date LIKE '$month%' AND date LIKE '%$year' AND sss != 0 ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 							$payrollQuery = mysql_query($payroll);
 
 							if(mysql_num_rows($payrollQuery) > 0)
@@ -612,7 +676,7 @@
 		function printSSSContribution(){
 			var period = document.getElementById('period').value;
 			var date = document.getElementById('postDate').value;
-			window.location.assign("print_individual_contribution.php?empid=<?php Print $empid ?>&period="+period+"&date="+date+"&contribution=SSS");
+			window.location.assign("print_individual_contribution.php?empid=<?php Print $empid ?>&period="+period+"&date="+date+"&contribution=SSS&cutoff=<?php Print $earlyCuttoff ?>");
 		}
 		
 		function PhilhealthShortcut(){

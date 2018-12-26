@@ -112,13 +112,17 @@
 							
 
 								
-								$payrollDates = "SELECT DISTINCT date FROM payroll";
+								$payrollDates = "SELECT DISTINCT date FROM payroll p INNER JOIN employee e ON p.empid = e.empid WHERE e.site = '$site'";
 								$payrollDQuery = mysql_query($payrollDates) or die(mysql_error());
 								
 								if(mysql_num_rows($payrollDQuery) > 0)//check if there's payroll
 								{
 									$monthNoRep = "";
 									$yearNoRep = "";
+
+									$cutoffBool = false;// Boolean for the suceeding week after the initial cutoff
+									$cutoffClearPlaceholderBool = false;
+									$cutoffInitialDate = '';// Placeholder for the start of the suceeding date after the cutoff
 									while($payrollDateArr = mysql_fetch_assoc($payrollDQuery))
 									{
 										
@@ -128,6 +132,24 @@
 											$payrollEndDate = date('F d, Y', strtotime('-1 day', strtotime($payrollDateArr['date'])));
 											$payrollStartDate = date('F d, Y', strtotime('-6 day', strtotime($payrollEndDate)));
 											
+											// Check for early cutoff 
+											$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$payDay' LIMIT 1";
+											$cutoffQuery = mysql_query($cutoffCheck);
+											if(mysql_num_rows($cutoffQuery) > 0)
+											{
+												$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+												$payrollStartDate = $cutoffArr['start'];
+
+												$cutoffInitialDate = $cutoffArr['end'];
+											}
+
+											if($cutoffBool == true)
+											{
+												$payrollStartDate = $cutoffInitialDate;
+												$cutoffClearPlaceholderBool = true;// This is to reset the placeholder
+												$cutoffBool = false;// Reset the cutoffBoolean
+											}
+
 											if(isset($_POST['date']))
 											{
 												if($_POST['date'] == $payDay)
@@ -197,7 +219,16 @@
 											}
 											$yearNoRep = $payrollYear;
 										}
-										
+										// Early cutoff Reset
+										if($cutoffClearPlaceholderBool == true)
+										{
+											$cutoffInitialDate = '';
+										}
+										if(mysql_num_rows($cutoffQuery) > 0)
+										{
+											$cutoffBool = true;// set to true, to trigger the next payroll that it has an extended attendance
+										}
+
 									}
 								}
 						
@@ -330,10 +361,14 @@
 
 			//filters
 			$filter = "";
-			if($require != "withReq")
+			if($require == "withReq")
+			{
 				$filter .= "AND complete_doc = '1' ";
-			else if($require != "withOReq")
+			}
+			else if($require == "withOReq")
+			{
 				$filter .= "AND complete_doc = '0' ";
+			}
 			if($position != "all")
 			{
 				if($filter != "")
@@ -403,7 +438,7 @@
 							
 							//contributions
 
-							$subTotalSalary = $payrollArr['total_salary'] - $payrollArr['sss'] - $payrollArr['philhealth'] - $payrollArr['pagibig'];
+							$subTotalSalary = $payrollArr['total_salary'] + $payrollArr['sss'] + $payrollArr['philhealth'] + $payrollArr['pagibig'];
 							$subTotalSalary = abs($subTotalSalary);
 
 							$totalSalary += $subTotalSalary;
@@ -507,10 +542,9 @@
 			{
 				Print "
 					<tr>
-						<td colspan ='10'>
-							Grand Total:
+						<td colspan ='9'>
 						</td>
-						<td>
+						<td colspan ='2'>
 							Grand Total:
 						</td>
 						<td>

@@ -113,7 +113,7 @@ if($contributionType == 'all') //Overall
 	if($period == "week")
 	{
 		$employee = "SELECT * FROM employee WHERE site = '$site'";
-		$empQuery = mysql_query($employee) or die (mysql_error());
+		$empQuery = mysql_query($employee);
 		$contBool = false;//if employee dont have sss contribution
 		if(mysql_num_rows($empQuery))//there's employee in the site
 		{
@@ -124,10 +124,10 @@ if($contributionType == 'all') //Overall
 				
 				$changedPeriod = $date;
 				if($changedPeriod == 'all'){
-					$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+					$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND (sss != 0 OR pagibig != 0 OR philhealth != 0) ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 				}
 				else {
-					$payrollDate = "SELECT DISTINCT date FROM payroll WHERE date= '$changedPeriod' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+					$payrollDate = "SELECT DISTINCT date FROM payroll WHERE date = '$changedPeriod' AND empid = '$empid' AND (sss != 0 OR pagibig != 0 OR philhealth != 0)  ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 				}
 			
 				$payrollDateQuery = mysql_query($payrollDate);
@@ -139,6 +139,28 @@ if($contributionType == 'all') //Overall
 					$payDay = $payDateArr['date'];
 					$endDate = date('F d, Y', strtotime('-1 day', strtotime($payDateArr['date'])));
 					$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
+
+					// Check for early cutoff 
+					$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$payDay' LIMIT 1";
+					$cutoffQuery = mysql_query($cutoffCheck);
+					if(mysql_num_rows($cutoffQuery) > 0)
+					{
+						$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+						$startDate = $cutoffArr['start'];
+					}
+					else
+					{
+						// Check the before payroll for early cutoff to alter the begining day of the payroll
+						$suceedingCutoffPayroll = date('F d, Y', strtotime('-14 day', strtotime($payDay)));
+
+						$suceedingCutoffCheck = "SELECT * FROM early_payroll WHERE start = '$suceedingCutoffPayroll' LIMIT 1";
+						$suceedingCutoffQuery = mysql_query($suceedingCutoffCheck);
+						if(mysql_num_rows($suceedingCutoffQuery) > 0)
+						{
+							$cutoffArr = mysql_fetch_assoc($suceedingCutoffQuery);
+							$startDate = $cutoffArr['end'];// Get the end payroll of the cutoff to get the start of the current payroll
+						}
+					}
 
 					$payroll = "SELECT * FROM payroll WHERE date = '$payDay' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 					$payrollQuery = mysql_query($payroll);
@@ -261,7 +283,7 @@ if($contributionType == 'all') //Overall
 	else if($period == "month")
 	{
 		$employee = "SELECT * FROM employee WHERE site = '$site'";
-		$empQuery = mysql_query($employee) or die (mysql_error());
+		$empQuery = mysql_query($employee);
 		$contBool = false;//if employee dont have sss contribution
 		$overallSSS = 0;
 		if(mysql_num_rows($empQuery))//there's employee in the site
@@ -274,11 +296,11 @@ if($contributionType == 'all') //Overall
 				$changedPeriod = explode(' ',$date);
 				$monthPeriod = $changedPeriod[0];
 				$yearPeriod = $changedPeriod[1];
-				$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+				$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') AND (sss != 0 OR pagibig != 0 OR philhealth != 0) ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 			}
 			else
 			{
-				$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+				$payrollDate = "SELECT DISTINCT date FROM payroll WHERE sss != 0 OR pagibig != 0 OR philhealth != 0 ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 			}
 					
 			
@@ -324,7 +346,7 @@ if($contributionType == 'all') //Overall
 					$payrollDay = $payDateArr['date'];
 
 
-					$payroll = "SELECT * FROM payroll WHERE (date LIKE '$month%' AND date LIKE '%$year') AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+					$payroll = "SELECT * FROM payroll WHERE (date LIKE '$month%' AND date LIKE '%$year') AND empid = '$empid' AND (sss != 0 OR pagibig != 0 OR philhealth != 0) ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 					$payrollQuery = mysql_query($payroll);
 					if(mysql_num_rows($payrollQuery) > 0)
 					{
@@ -390,7 +412,6 @@ if($contributionType == 'all') //Overall
 							if($monthNoRepeat != $month.$year)
 							{
 								$subTotalContribution += $philhealthContribution + $pagibigContribution + $sssContribution;
-								$totalContribution += $subTotalContribution;
 
 								$activeSheet->setCellValue('A'.$rowCounter, $month." ".$year);
 								$activeSheet->setCellValue('B'.$rowCounter, $empArr['lastname'].", ".$empArr['firstname']);
@@ -466,10 +487,10 @@ if($contributionType == 'all') //Overall
 
 
 	}
-	else if($period = "year")//dito
+	else if($period = "year")
 	{
 		$employee = "SELECT * FROM employee WHERE site = '$site'";
-		$empQuery = mysql_query($employee) or die (mysql_error());
+		$empQuery = mysql_query($employee);
 		$contBool = false;//if employee dont have sss contribution
 		$overallSSS = 0;
 		if(mysql_num_rows($empQuery))//there's employee in the site
@@ -480,11 +501,11 @@ if($contributionType == 'all') //Overall
 			if($date != "all")
 			{
 				$yearPeriod = $date;
-				$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+				$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '%$yearPeriod') AND (sss != 0 OR pagibig != 0 OR philhealth != 0) ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 			}
 			else
 			{
-				$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+				$payrollDate = "SELECT DISTINCT date FROM payroll WHERE sss != 0 OR pagibig != 0 OR philhealth != 0 ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 			}
 			
 			while($empArr = mysql_fetch_assoc($empQuery))
@@ -586,8 +607,6 @@ if($contributionType == 'all') //Overall
 							{
 								$subTotalContribution += $philhealthContribution + $pagibigContribution + $sssContribution;
 
-								$totalContribution += $subTotalContribution;
-
 								$yearBefore = $year - 1;
 
 								$activeSheet->setCellValue('A'.$rowCounter, $yearBefore." - ".$year);
@@ -665,7 +684,7 @@ $activeSheet->getStyle('A4:J'.$rowCounter)->applyFromArray($border_all_thin);
 
 
 }
-else {
+else {//dito
 	// * ======= Data Feeding ======= * //
 		// Get contribution details for selected site
 
@@ -698,8 +717,9 @@ else {
 
 
 		if($period === 'week') {
+
 			$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'";
-			$empQuery = mysql_query($employee) or die (mysql_error());
+			$empQuery = mysql_query($employee);
 			$contributionBool = false;//if employee dont have sss contribution
 			if(mysql_num_rows($empQuery))//there's employee in the site
 			{
@@ -710,16 +730,16 @@ else {
 					
 					$changedPeriod = $date;
 
-					if($changedPeriod == 'all'){
-						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' $appendQuery ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+					if($changedPeriod == 'all') {
+						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' AND $contributionType != 0 $appendQuery ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 					}
 					else {
-						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE date = '$changedPeriod' AND empid = '$empid' $appendQuery ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE date = '$changedPeriod' AND empid = '$empid' $appendQuery AND $contributionType != 0 ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 					}
 						
 					
 
-					$payrollDateQuery = mysql_query($payrollDate) or die(mysql_error());
+					$payrollDateQuery = mysql_query($payrollDate);
 					
 					while($payDateArr = mysql_fetch_assoc($payrollDateQuery))
 					{
@@ -728,6 +748,28 @@ else {
 						$payDay = $payDateArr['date'];
 						$endDate = date('F d, Y', strtotime('-1 day', strtotime($payDateArr['date'])));
 						$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
+
+						// Check for early cutoff 
+						$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$payDay' LIMIT 1";
+						$cutoffQuery = mysql_query($cutoffCheck);
+						if(mysql_num_rows($cutoffQuery) > 0)
+						{
+							$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+							$startDate = $cutoffArr['start'];
+						}
+						else
+						{
+							// Check the before payroll for early cutoff to alter the begining day of the payroll
+							$suceedingCutoffPayroll = date('F d, Y', strtotime('-14 day', strtotime($payDay)));
+
+							$suceedingCutoffCheck = "SELECT * FROM early_payroll WHERE start = '$suceedingCutoffPayroll' LIMIT 1";
+							$suceedingCutoffQuery = mysql_query($suceedingCutoffCheck);
+							if(mysql_num_rows($suceedingCutoffQuery) > 0)
+							{
+								$cutoffArr = mysql_fetch_assoc($suceedingCutoffQuery);
+								$startDate = $cutoffArr['end'];// Get the end payroll of the cutoff to get the start of the current payroll
+							}
+						}
 
 						$payroll = "SELECT * FROM payroll WHERE date = '$payDay' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 						$payrollQuery = mysql_query($payroll);
@@ -762,7 +804,7 @@ else {
 		else if($period === 'month') {
 
 			$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'";
-			$empQuery = mysql_query($employee) or die (mysql_error());
+			$empQuery = mysql_query($employee);
 			$contributionBool = false;//if employee dont have Philhealth contribution
 			$GrandTotalContribution = 0;
 			if(mysql_num_rows($empQuery))//there's employee in the site
@@ -771,14 +813,14 @@ else {
 				$contributionBool = false;//if employee dont have Philhealth contribution
 				if($date == 'all')
 				{
-					$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+					$payrollDate = "SELECT DISTINCT date FROM payroll WHERE $contributionType != 0 ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 				}
 				else 
 				{
 					$changedPeriod = explode(' ',$date);
 					$monthPeriod = $changedPeriod[0];
 					$yearPeriod = $changedPeriod[1];
-					$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+					$payrollDate = "SELECT DISTINCT date FROM payroll WHERE (date LIKE '$monthPeriod%' AND date LIKE '%$yearPeriod') AND $contributionType != 0 ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 				}
 				
 				while($empArr = mysql_fetch_assoc($empQuery))
@@ -857,7 +899,7 @@ else {
 		else if($period === 'year') {
 
 			$employee = "SELECT * FROM employee WHERE employment_status = '1' AND site = '$site'";
-			$empQuery = mysql_query($employee) or die (mysql_error());
+			$empQuery = mysql_query($employee);
 			$contributionBool = false;//if employee dont have Philhealth contribution
 			$GrandTotalContribution = 0;
 			if(mysql_num_rows($empQuery))//there's employee in the site
@@ -866,13 +908,13 @@ else {
 				$contributionBool = false;//if employee dont have Philhealth contribution
 				if($date == 'all')
 				{
-					$payrollDate = "SELECT DISTINCT date FROM payroll ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+					$payrollDate = "SELECT DISTINCT date FROM payroll WHERE $contributionType != 0 ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 				}
 				else 
 				{
 					$changedPeriod = explode(' ',$date);
 					$yearPeriod = $changedPeriod[0];
-					$payrollDate = "SELECT DISTINCT date FROM payroll WHERE date LIKE '%$yearPeriod' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+					$payrollDate = "SELECT DISTINCT date FROM payroll WHERE date LIKE '%$yearPeriod' AND $contributionType != 0 ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 				}
 				
 				while($empArr = mysql_fetch_assoc($empQuery))

@@ -42,6 +42,9 @@
 						<button class='btn btn-danger pull-right' onclick="SSSshortcut()">
 							SSS
 						</button>
+						<button class='btn btn-danger pull-right disabletotally'>
+							Pagibig
+						</button>
 						<button class='btn btn-danger pull-right' onclick="PhilhealthShortcut()">
 							Philhealth
 						</button>
@@ -89,13 +92,18 @@
 							else
 									Print "<option value = 'all'>All</option>";
 
-							$payrollDates = "SELECT DISTINCT date FROM payroll";
+							$payrollDates = "SELECT DISTINCT date FROM payroll p INNER JOIN employee e ON e.empid = p.empid WHERE e.site = '$site' AND p.pagibig != 0";
 							$payrollDQuery = mysql_query($payrollDates) or die(mysql_error());
 
+							$earlyCuttoff = '';// for printable
 							if(mysql_num_rows($payrollDQuery) > 0)//check if there's payroll
 							{
 								$monthNoRep = "";
 								$yearNoRep = "";
+
+								$cutoffBool = false;// Boolean for the suceeding week after the initial cutoff
+								$cutoffClearPlaceholderBool = false;
+								$cutoffInitialDate = '';// Placeh
 								while($payrollDateArr = mysql_fetch_assoc($payrollDQuery))
 								{
 									
@@ -105,6 +113,24 @@
 										$payrollEndDate = date('F d, Y', strtotime('-1 day', strtotime($payrollDateArr['date'])));
 										$payrollStartDate = date('F d, Y', strtotime('-6 day', strtotime($payrollEndDate)));
 										
+										// Check for early cutoff 
+										$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$payDay' LIMIT 1";
+										$cutoffQuery = mysql_query($cutoffCheck);
+										if(mysql_num_rows($cutoffQuery) > 0)
+										{
+											$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+											$payrollStartDate = $cutoffArr['start'];
+
+											$cutoffInitialDate = $cutoffArr['end'];
+										}
+
+										if($cutoffBool == true)
+										{
+											$payrollStartDate = $cutoffInitialDate;
+											$cutoffClearPlaceholderBool = true;// This is to reset the placeholder
+											$cutoffBool = false;// Reset the cutoffBoolean
+										}
+
 										if(isset($_POST['date']))
 										{
 											if($_POST['date'] == $payDay)
@@ -174,7 +200,15 @@
 										}
 										$yearNoRep = $payrollYear;
 									}
-									
+									// Early cutoff Reset
+									if($cutoffClearPlaceholderBool == true)
+									{
+										$cutoffInitialDate = '';
+									}
+									if(mysql_num_rows($cutoffQuery) > 0)
+									{
+										$cutoffBool = true;// set to true, to trigger the next payroll that it has an extended attendance
+									}
 								}
 							}
 							?>
@@ -253,6 +287,37 @@
 									$endDate = date('F d, Y', strtotime('-1 day', strtotime($payDateArr['date'])));
 									$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
+									// Check for early cutoff 
+									$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$payDay' LIMIT 1";
+									$cutoffQuery = mysql_query($cutoffCheck);
+									if(mysql_num_rows($cutoffQuery) > 0)
+									{
+										$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+										$startDate = $cutoffArr['start'];
+									}
+									else
+									{
+										// Check the before payroll for early cutoff to alter the begining day of the payroll
+										$suceedingCutoffPayroll = date('F d, Y', strtotime('-14 day', strtotime($payDay)));
+
+										$suceedingCutoffCheck = "SELECT * FROM early_payroll WHERE start = '$suceedingCutoffPayroll' LIMIT 1";
+										$suceedingCutoffQuery = mysql_query($suceedingCutoffCheck);
+										if(mysql_num_rows($suceedingCutoffQuery) > 0)
+										{
+											$cutoffArr = mysql_fetch_assoc($suceedingCutoffQuery);
+											$startDate = $cutoffArr['end'];// Get the end payroll of the cutoff to get the start of the current payroll
+
+											// Pass the date if only there is a chosen date
+											if(isset($_POST['date']))
+											{
+												if($_POST['date'] != 'all')
+												{
+													echo "<script>console.log('".$_POST['date']."')</script>";
+													$earlyCuttoff = $startDate;//Pass the start of payroll to the printables
+												}
+											}
+										}
+									}
 
 									$payroll = "SELECT * FROM payroll WHERE date = '$payDay' AND empid = '$empid' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
 									$payrollQuery = mysql_query($payroll);

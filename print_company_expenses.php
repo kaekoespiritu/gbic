@@ -13,6 +13,25 @@ $date = $_GET['date'];
 $endDate = date('F d, Y', strtotime('-1 day', strtotime($date)));
 $startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
+// Check for early cutoff 
+$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$date' LIMIT 1";
+$cutoffQuery = mysql_query($cutoffCheck);
+if(mysql_num_rows($cutoffQuery) > 0)
+{
+	$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+	$startDate = $cutoffArr['start'];
+}
+// Check the before payroll for early cutoff to alter the begining day of the payroll
+$suceedingCutoffPayroll = date('F d, Y', strtotime('-14 day', strtotime($date)));
+
+$suceedingCutoffCheck = "SELECT * FROM early_payroll WHERE start = '$suceedingCutoffPayroll' LIMIT 1";
+$suceedingCutoffQuery = mysql_query($suceedingCutoffCheck);
+if(mysql_num_rows($suceedingCutoffQuery) > 0)
+{
+	$cutoffArr = mysql_fetch_assoc($suceedingCutoffQuery);
+	$startDate = $cutoffArr['end'];// Get the end payroll of the cutoff to get the start of the current payroll
+}
+
 //Checks if site in HTTP is altered by user manually
 $siteChecker = "SELECT * FROM site WHERE location = '$site'";
 //Checks if position in HTTP is altered by user manually 
@@ -53,7 +72,7 @@ if($period == "week")
 else if($period == "month" || $period == "year")
 {
 	$filename =  $site." Expense Report ".$date.".xls";
-	$dateDisplay = $date;
+	$dateDisplay = ($period == "month" ? $date : ($date - 1)." - ".$date);
 	$periodDisplay = ($period == "month" ? "Monthly" : "Yearly");
 }
 else
@@ -187,7 +206,7 @@ if(mysql_num_rows($empQuery) != 0)
 				
 				//contributions
 
-				$subTotalSalary = $payrollArr['total_salary'] - $payrollArr['sss'] - $payrollArr['philhealth'] - $payrollArr['pagibig'];
+				$subTotalSalary = $payrollArr['total_salary'] + $payrollArr['sss'] + $payrollArr['philhealth'] + $payrollArr['pagibig'];
 				$subTotalSalary = abs($subTotalSalary);
 
 				$totalSalary += $subTotalSalary;
