@@ -714,13 +714,15 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 	</div>
 <script rel="javascript" src="js/jquery-ui/external/jquery/jquery.js"></script>
 <script>
-	$('.numberVerify').on('keypress', function (e) {
-	    if (/^[0-9\.\b]+$/.test(String.fromCharCode(e.keyCode))) {
-	        return;
+	
+	function numberVerify(e) {
+	    if (/^[\d\.]+$/.test(String.fromCharCode(e.keyCode))) {
+	        return true;
 	    } else {
 	        e.preventDefault();
+	        return false;
 	    }
-	});
+	}
 
 	document.getElementById("payroll").setAttribute("style", "background-color: #10621e;");
 
@@ -762,13 +764,13 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 		var speHolVal = getValue(speHolDays.innerHTML);
 		var allowVal = getValue(allowDays.innerHTML);
 
-		rateDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+rateVal+"' > Day(s)";
-		otDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+otVal+"'> Hour(s)";
-		ndDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+ndVal+"'> Hour(s)";
-		sunDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+sunVal+"'> Hour(s)";
-		regHolDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+regHolVal+"'> Day(s)";
-		speHolDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+speHolVal+"'> Day(s)";
-		allowDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+allowVal+"'> Day(s)";
+		rateDays.innerHTML = "<input type='text' onkeypress='return numberVerify(event)' maxlength='5' size='5' value='"+rateVal+"' > Day(s)";
+		otDays.innerHTML = "<input type='text' onkeypress='return numberVerify(event)' maxlength='5' size='5' value='"+otVal+"'> Hour(s)";
+		ndDays.innerHTML = "<input type='text' onkeypress='return numberVerify(event)' maxlength='5' size='5' value='"+ndVal+"'> Hour(s)";
+		sunDays.innerHTML = "<input type='text' onkeypress='return numberVerify(event)' maxlength='5' size='5' value='"+sunVal+"'> Hour(s)";
+		regHolDays.innerHTML = "<input type='text' onkeypress='return numberVerify(event)' maxlength='5' size='5' value='"+regHolVal+"'> Day(s)";
+		speHolDays.innerHTML = "<input type='text' onkeypress='return numberVerify(event)' maxlength='5' size='5' value='"+speHolVal+"'> Day(s)";
+		allowDays.innerHTML = "<input type='text' onkeypress='return numberVerify(event)' maxlength='5' size='5' value='"+allowVal+"'> Day(s)";
 
 		// console.log(rateVal);
 		// console.log(otDays);
