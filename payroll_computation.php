@@ -113,7 +113,7 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 
 							$ratePerDayDisp = $ratePerDaySub." Day(s)";// for display
 						// }
-						$subTotalRatePerDay = $ratePerDaySub * numberExactFormat($empArr['rate'],2,'.', true);
+						$subTotalRatePerDay = $ratePerDaySub * $empArr['rate'];
 						Print "<script>console.log('ratePerDaySub: ". $ratePerDaySub." | dailyRate: ".numberExactFormat($empArr['rate'],2,'.', true)."')</script>";//dito
 						$totalRatePerDay = $subTotalRatePerDay;//for the Subtotal of Earnings
 
@@ -712,6 +712,8 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 			</div>
 		</div>
 	</div>
+	<div id="tempDiv">
+	</div>
 <script rel="javascript" src="js/jquery-ui/external/jquery/jquery.js"></script>
 <script>
 	$('.numberVerify').on('keypress', function (e) {
@@ -724,7 +726,47 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 
 	document.getElementById("payroll").setAttribute("style", "background-color: #10621e;");
 
-	
+	function saveEarnings() {
+		//Gets the value inside the earnings
+		var rateDays = document.getElementById('rateDays').querySelector('.numberVerify');
+		var otDays = document.getElementById('otDays').querySelector('.numberVerify');
+		var ndDays = document.getElementById('ndDays').querySelector('.numberVerify');
+		var sunDays = document.getElementById('sunDays').querySelector('.numberVerify');
+		var regHolDays = document.getElementById('regHolDays').querySelector('.numberVerify');
+		var speHolDays = document.getElementById('speHolDays').querySelector('.numberVerify');
+		var allowDays = document.getElementById('allowDays').querySelector('.numberVerify');
+
+		var form = document.createElement('form');
+		form.setAttribute('action', 'logic_payroll_update_earnings.php?date=<?php Print $date?>&empid=<?php Print $empid?>');
+		form.setAttribute('method', 'post');
+		form.setAttribute('id', 'tempForm');
+
+		form.appendChild(rateDays);
+		form.appendChild(otDays);
+		form.appendChild(ndDays);
+		form.appendChild(sunDays);
+		form.appendChild(regHolDays);
+		form.appendChild(speHolDays);
+		form.appendChild(allowDays);
+		console.log(form);
+
+		document.getElementById('tempDiv').appendChild(form);
+
+		var con = confirm("Are you sure you want to Save this alteration?");
+		if(con) {
+			console.log("yay");
+			document.getElementById('tempForm').submit();
+		}
+
+		
+		// 
+		// console.log(ndDays);
+		// console.log(sunDays);
+		// console.log(regHolDays);
+		// console.log(speHolDays);
+		// console.log(allowDays);
+
+	}
 
 	function editEarnings() {
 		function getValue(val) {
@@ -738,6 +780,7 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 		}
 		var editButton = document.getElementById('editEarnings');
 		editButton.innerHTML = "Save Earnings";
+		editButton.setAttribute('onclick', 'saveEarnings()');
 		editButton.classList.remove("btn-warning");
 		editButton.classList.add("btn-info");
 
@@ -750,9 +793,7 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 		var speHolDays = document.getElementById('speHolDays');
 		var allowDays = document.getElementById('allowDays');
 
-		var textbox = document.createElement('input');
-		textbox.setAttribute('type', 'text');
-		textbox.setAttribute('class', 'form-control');
+		
 
 		var rateVal = getValue(rateDays.innerHTML);
 		var otVal = getValue(otDays.innerHTML);
@@ -762,26 +803,17 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 		var speHolVal = getValue(speHolDays.innerHTML);
 		var allowVal = getValue(allowDays.innerHTML);
 
-		rateDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+rateVal+"' > Day(s)";
-		otDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+otVal+"'> Hour(s)";
-		ndDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+ndVal+"'> Hour(s)";
-		sunDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+sunVal+"'> Hour(s)";
-		regHolDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+regHolVal+"'> Day(s)";
-		speHolDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+speHolVal+"'> Day(s)";
-		allowDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+allowVal+"'> Day(s)";
-
-		// console.log(rateVal);
-		// console.log(otDays);
-		// console.log(ndDays);
-		// console.log(sunDays);
-		// console.log(regHolDays);
-		// console.log(speHolDays);
-		// console.log(allowDays);
-
+		rateDays.innerHTML = "<input type='text' name='rateDays' class='numberVerify' maxlength='5' size='5' value='"+rateVal+"' > Day(s)";
+		otDays.innerHTML = "<input type='text' name='otDays' class='numberVerify' maxlength='5' size='5' value='"+otVal+"'> Hour(s)";
+		ndDays.innerHTML = "<input type='text' name='ndDays' class='numberVerify' maxlength='5' size='5' value='"+ndVal+"'> Hour(s)";
+		sunDays.innerHTML = "<input type='text' name='sunDays' class='numberVerify' maxlength='5' size='5' value='"+sunVal+"'> Hour(s)";
+		regHolDays.innerHTML = "<input type='text' name='regHolDays' class='numberVerify' maxlength='5' size='5' value='"+regHolVal+"'> Day(s)";
+		speHolDays.innerHTML = "<input type='text' name='speHolDays' class='numberVerify' maxlength='5' size='5' value='"+speHolVal+"'> Day(s)";
+		allowDays.innerHTML = "<input type='text' name='allowDays' class='numberVerify' maxlength='5' size='5' value='"+allowVal+"'> Day(s)";
 	}
 
 	function EditPayroll(id){
-		var res = confirm("Editing the payroll will remove previously inputted data for this employee. Are you sure you want to proceed?")
+		var res = confirm("Editing the payroll will remove previously inputted data for this employee. Are you sure you want to proceed?");
 		if(res)
 			window.location.assign('logic_payroll_backPayroll.php?e='+id);
 	}
