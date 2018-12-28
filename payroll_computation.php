@@ -716,13 +716,15 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 	</div>
 <script rel="javascript" src="js/jquery-ui/external/jquery/jquery.js"></script>
 <script>
-	$('.numberVerify').on('keypress', function (e) {
-	    if (/^[0-9\.\b]+$/.test(String.fromCharCode(e.keyCode))) {
-	        return;
+	
+	function numberVerify(e) {
+	    if (/^[\d\.]+$/.test(String.fromCharCode(e.keyCode))) {
+	        return true;
 	    } else {
 	        e.preventDefault();
+	        return false;
 	    }
-	});
+	}
 
 	document.getElementById("payroll").setAttribute("style", "background-color: #10621e;");
 
@@ -803,13 +805,14 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 		var speHolVal = getValue(speHolDays.innerHTML);
 		var allowVal = getValue(allowDays.innerHTML);
 
-		rateDays.innerHTML = "<input type='text' name='rateDays' class='numberVerify' maxlength='5' size='5' value='"+rateVal+"' > Day(s)";
-		otDays.innerHTML = "<input type='text' name='otDays' class='numberVerify' maxlength='5' size='5' value='"+otVal+"'> Hour(s)";
-		ndDays.innerHTML = "<input type='text' name='ndDays' class='numberVerify' maxlength='5' size='5' value='"+ndVal+"'> Hour(s)";
-		sunDays.innerHTML = "<input type='text' name='sunDays' class='numberVerify' maxlength='5' size='5' value='"+sunVal+"'> Hour(s)";
-		regHolDays.innerHTML = "<input type='text' name='regHolDays' class='numberVerify' maxlength='5' size='5' value='"+regHolVal+"'> Day(s)";
-		speHolDays.innerHTML = "<input type='text' name='speHolDays' class='numberVerify' maxlength='5' size='5' value='"+speHolVal+"'> Day(s)";
-		allowDays.innerHTML = "<input type='text' name='allowDays' class='numberVerify' maxlength='5' size='5' value='"+allowVal+"'> Day(s)";
+		rateDays.innerHTML = "<input type='text' name='rateDays' onkeypress='return numberVerify(event)' class='numberVerify' maxlength='5' size='5' value='"+rateVal+"' > Day(s)";
+		otDays.innerHTML = "<input type='text' name='otDays' onkeypress='return numberVerify(event)' class='numberVerify' maxlength='5' size='5' value='"+otVal+"'> Hour(s)";
+		ndDays.innerHTML = "<input type='text' name='ndDays' onkeypress='return numberVerify(event)' class='numberVerify' maxlength='5' size='5' value='"+ndVal+"'> Hour(s)";
+		sunDays.innerHTML = "<input type='text' name='sunDays' onkeypress='return numberVerify(event)' class='numberVerify' maxlength='5' size='5' value='"+sunVal+"'> Hour(s)";
+		regHolDays.innerHTML = "<input type='text' name='regHolDays' onkeypress='return numberVerify(event)' class='numberVerify' maxlength='5' size='5' value='"+regHolVal+"'> Day(s)";
+		speHolDays.innerHTML = "<input type='text' name='speHolDays' onkeypress='return numberVerify(event)' class='numberVerify' maxlength='5' size='5' value='"+speHolVal+"'> Day(s)";
+		allowDays.innerHTML = "<input type='text' name='allowDays' onkeypress='return numberVerify(event)' class='numberVerify' maxlength='5' size='5' value='"+allowVal+"'> Day(s)";
+
 	}
 
 	function EditPayroll(id){
