@@ -3,8 +3,8 @@
 	include('directives/session.php');
 	include('directives/db.php');
 
-	// $date = strftime("%B %d, %Y");//Current date
-	$date = "December 27, 2018";//Current date
+	$date = strftime("%B %d, %Y");//Current date
+	// $date = "December 27, 2018";//Current date
 	// $date = "December 16, 2018";//Current date
 // $date = "July 11, 2018";
 
@@ -209,11 +209,11 @@
 					<h5>Payroll</h5>
 				</li>
 				<?php
-				if($payrollArr['open'] != $day)
-				{
-					Print '
-					<a type="button" class="pull-right btn btn-primary '.($cutoffBool ? "disabletotally":"").'" data-target="#earlyCutOff" data-toggle="modal">Early cut-off</a>';
-				}
+				// if($payrollArr['open'] != $day)
+				// {
+				// 	Print '
+				// 	<a type="button" class="pull-right btn btn-primary '.($cutoffBool ? "disabletotally":"").'" data-target="#earlyCutOff" data-toggle="modal">Early cut-off</a>';
+				// }
 					
 				?>
 			</ol>
