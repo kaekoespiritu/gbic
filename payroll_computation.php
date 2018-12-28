@@ -81,7 +81,10 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 
 		<!-- Earnings -->
 		<div class="col-md-6 col-lg-6 text-left">
-			<h3>Earnings</h3>
+			<div>
+				<h3>Earnings<a class="btn btn-warning pull-right" onclick="editEarnings()" id="editEarnings">Edit Earnings</a></h3>
+				
+			</div>
 			<table class="table">
 				<thead>
 					<tr>
@@ -124,7 +127,7 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 					<tr>
 						<td>Rate per day</td>
 						<td><?php Print $empArr['rate']?></td>
-						<td><?php Print $ratePerDayDisp?></td>
+						<td id="rateDays"><?php Print $ratePerDayDisp?></td>
 						<td><?php Print $subTotalRatePerDay?></td>
 					</tr>
 
@@ -150,7 +153,7 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 					<tr>
 						<td>Allowance</td>
 						<td><?php Print $empArr['allowance']?></td>
-						<td><?php Print $allowDays?></td>
+						<td id="allowDays"><?php Print $allowDays?></td>
 						<td><?php Print $subTotalAllowance?></td>
 					</tr>
 
@@ -224,7 +227,7 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 					<tr>
 						<td>Overtime</td>
 						<td><?php Print $payrollArr['overtime']?></td>
-						<td><?php Print $ot_num?></td>
+						<td id="otDays"><?php Print $ot_num?></td>
 						<td><?php Print $subTotalOvertime?></td>
 					</tr>
 					<!-- Night Differential -->
@@ -242,7 +245,7 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 					<tr>
 						<td>Night Differential</td>
 						<td><?php Print $payrollArr['nightdiff_rate']?></td>
-						<td><?php Print $nightdiffNum?></td>
+						<td id="ndDays"><?php Print $nightdiffNum?></td>
 						<td><?php Print $subTotalNightDifferential?></td>
 					</tr>
 					<!-- Sunday Rate -->
@@ -288,7 +291,7 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 					<tr>
 						<td>Sunday Rate</td>
 						<td><?php Print $payrollArr['sunday_rate']?></td>
-						<td><?php Print $sundayHrs?></td>
+						<td id="sunDays"><?php Print $sundayHrs?></td>
 						<td><?php Print $subTotalSundayRate?></td>
 					</tr>
 					<!-- Regular Holiday Rate -->
@@ -324,7 +327,7 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 					<tr>
 						<td>Regular Holiday</td>
 						<td><?php Print numberExactFormat($payrollArr['reg_holiday'], 2, '.', true) ?></td>
-						<td><?php Print $regHolNum?></td>
+						<td id="regHolDays"><?php Print $regHolNum?></td>
 						<td><?php Print $subTotalRegularHolidayRate?></td>
 					</tr>
 					<!-- Special Holiday Rate -->
@@ -346,7 +349,7 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 					<tr>
 						<td>Special Holiday</td>
 						<td><?php Print numberExactFormat($payrollArr['spe_holiday'], 2, '.', true)?></td>
-						<td><?php Print $speHolNum?></td>
+						<td id="speHolDays"><?php Print $speHolNum?></td>
 						<td><?php Print $subTotalSpecialHolidayRate?></td>
 					</tr>
 					<!-- COLA -->
@@ -709,15 +712,80 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 			</div>
 		</div>
 	</div>
-
+<script rel="javascript" src="js/jquery-ui/external/jquery/jquery.js"></script>
 <script>
+	$('.numberVerify').on('keypress', function (e) {
+	    if (/^[0-9\.\b]+$/.test(String.fromCharCode(e.keyCode))) {
+	        return;
+	    } else {
+	        e.preventDefault();
+	    }
+	});
+
 	document.getElementById("payroll").setAttribute("style", "background-color: #10621e;");
+
+	
+
+	function editEarnings() {
+		function getValue(val) {
+			if(val == "--" || val == "") {// If has no value
+				return 0;
+			}
+			else {// if it has hours / days
+				var splitValue = val.split(" ");
+				return splitValue[0];
+			}
+		}
+		var editButton = document.getElementById('editEarnings');
+		editButton.innerHTML = "Save Earnings";
+		editButton.classList.remove("btn-warning");
+		editButton.classList.add("btn-info");
+
+		//Gets the value inside the earnings
+		var rateDays = document.getElementById('rateDays');
+		var otDays = document.getElementById('otDays');
+		var ndDays = document.getElementById('ndDays');
+		var sunDays = document.getElementById('sunDays');
+		var regHolDays = document.getElementById('regHolDays');
+		var speHolDays = document.getElementById('speHolDays');
+		var allowDays = document.getElementById('allowDays');
+
+		var textbox = document.createElement('input');
+		textbox.setAttribute('type', 'text');
+		textbox.setAttribute('class', 'form-control');
+
+		var rateVal = getValue(rateDays.innerHTML);
+		var otVal = getValue(otDays.innerHTML);
+		var ndVal = getValue(ndDays.innerHTML);
+		var sunVal = getValue(sunDays.innerHTML);
+		var regHolVal = getValue(regHolDays.innerHTML);
+		var speHolVal = getValue(speHolDays.innerHTML);
+		var allowVal = getValue(allowDays.innerHTML);
+
+		rateDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+rateVal+"' > Day(s)";
+		otDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+otVal+"'> Hour(s)";
+		ndDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+ndVal+"'> Hour(s)";
+		sunDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+sunVal+"'> Hour(s)";
+		regHolDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+regHolVal+"'> Day(s)";
+		speHolDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+speHolVal+"'> Day(s)";
+		allowDays.innerHTML = "<input type='text' class='numberVerify' maxlength='5' size='5' value='"+allowVal+"'> Day(s)";
+
+		// console.log(rateVal);
+		// console.log(otDays);
+		// console.log(ndDays);
+		// console.log(sunDays);
+		// console.log(regHolDays);
+		// console.log(speHolDays);
+		// console.log(allowDays);
+
+	}
 
 	function EditPayroll(id){
 		var res = confirm("Editing the payroll will remove previously inputted data for this employee. Are you sure you want to proceed?")
 		if(res)
 			window.location.assign('logic_payroll_backPayroll.php?e='+id);
 	}
+
 </script>
 <script rel="javascript" src="js/jquery.min.js"></script>
 </body>
