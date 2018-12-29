@@ -386,13 +386,15 @@ function getDay($day)
 	{//dito
 		$nextOpenPayroll = date('F d, Y', strtotime('+7 day', strtotime($_SESSION['earlyCutoff'])));// Gets the next open payroll
 		$nextPayroll = date('F d, Y', strtotime('+7 day', strtotime($nextOpenPayroll)));// Gets the next close payroll
+		$excessDateStart = date('F d, Y', strtotime('+1 day', strtotime($date)));// gets the day after the cutoff
 		// echo "<script>alert('".$nextPayroll."')</script>";
-		$daysCount = strtotime($date) - strtotime($nextOpenPayroll);
-			$cutoffDays = abs($daysCount/(60 * 60 * 24));
-			$cutoffArr = array();// Array for the dates
-			for($cutoffCount = 0; $cutoffCount < $cutoffDays; $cutoffCount++)
+		$daysCount = intval(strtotime($excessDateStart) - strtotime($nextOpenPayroll));// Minus one to exclude the current day
+		$cutoffDays = abs($daysCount/(60 * 60 * 24));
+		$cutoffArr = array();// Array for the dates
+
+		for($cutoffCount = 0; $cutoffCount < $cutoffDays; $cutoffCount++)
 		{
-			array_push($cutoffArr, date('F d, Y', strtotime('+'.$cutoffCount.' day', strtotime($date))));
+			array_push($cutoffArr, date('F d, Y', strtotime('+'.$cutoffCount.' day', strtotime($excessDateStart))));
 		}
 		$cutoffDates = "";
 		foreach($cutoffArr as $coDate)
@@ -401,6 +403,7 @@ function getDay($day)
 				$cutoffDates .= "+";
 			$cutoffDates .= $coDate;
 		}
+
 		//Check if there's an existing att adjustment for the next payroll
 		$checkNextAdjustment = "SELECT * FROM payroll_adjustment WHERE empid = '$empid' AND payroll_date = '$nextPayroll'";
 		$nextAdjustmentQuery = mysql_query($checkNextAdjustment);

@@ -3,8 +3,8 @@
 	include('directives/session.php');
 	include('directives/db.php');
 
-	$date = strftime("%B %d, %Y");//Current date
-	// $date = "December 27, 2018";//Current date
+	// $date = strftime("%B %d, %Y");//Current date
+	$date = "January 17, 2019";//Current date
 	// $date = "December 16, 2018";//Current date
 // $date = "July 11, 2018";
 
@@ -112,19 +112,19 @@
 						$earlyEndDate = $date;// date today
 						$insertCutoff = "INSERT INTO early_payroll(start, end) VALUES('$earlyStartDate', '$earlyEndDate')";
 						$_SESSION['payrollDate'] = $date;// Cutoff
-						$_SESSION['earlyCutoff'] = $latestCutoffStart;
+						$_SESSION['earlyCutoff'] = $earlyStartDate;
 						$cutoffQuery = mysql_query($insertCutoff) OR DIE (mysql_error());
-						// echo "<script>alert('1')</script>";
+						echo "<script>alert('1')</script>";
 					}	
 					else if($cutoffBool)
 					{
 						$_SESSION['payrollDate'] = $latestCutoff;
 						$_SESSION['earlyCutoff'] = $latestCutoffStart;
-						// echo "<script>alert('2')</script>";
+						echo "<script>alert('2')</script>";
 					}
 					else// Unset earlycutoff session variable
 					{
-						// echo "<script>alert('3')</script>";
+						echo "<script>alert('3')</script>";
 						if(isset($_SESSION['earlyCutoff']))
 							unset($_SESSION['earlyCutoff']);
 					}
@@ -209,11 +209,11 @@
 					<h5>Payroll</h5>
 				</li>
 				<?php
-				// if($payrollArr['open'] != $day)
-				// {
-				// 	Print '
-				// 	<a type="button" class="pull-right btn btn-primary '.($cutoffBool ? "disabletotally":"").'" data-target="#earlyCutOff" data-toggle="modal">Early cut-off</a>';
-				// }
+				if($payrollArr['open'] != $day)
+				{
+					Print '
+					<a type="button" class="pull-right btn btn-primary '.($cutoffBool ? "disabletotally":"").'" data-target="#earlyCutOff" data-toggle="modal">Early cut-off</a>';
+				}
 					
 				?>
 			</ol>

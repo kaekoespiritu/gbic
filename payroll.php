@@ -44,6 +44,9 @@ $day14 = date('F d, Y', strtotime('-14 day', strtotime($date)));
 // Validate 14 days prior to the payroll day for adjustments
 if($earlyCutoff)// early cutoff
 {
+	echo "<script>console.log('cutoff')</script>";
+	echo "<script>console.log('".$_SESSION['earlyCutoff']."')</script>";
+	echo "<script>console.log('".$_SESSION['payrollDate']."')</script>";
 	$validateDays = array($day1, $day2, $day3, $day4, $day5, $day6, $day7, $day8, $day9, $day10, $day11, $day12, $day13, $day14);
 
 	$endDateEarly = date('F d, Y', strtotime('+6 day', strtotime($_SESSION['earlyCutoff'])));
@@ -59,6 +62,7 @@ if($earlyCutoff)// early cutoff
 }
 else// normal payroll
 {
+	echo "<script>console.log('normal')</script>";
 	$validateDays = array($day1, $day2, $day3, $day4, $day5, $day6, $day7, $day8, $day9, $day10, $day11, $day12, $day13, $day14);
 	// for date display
 	$displayDay1 = $day1;
@@ -221,7 +225,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 					          			$empNameQuery = mysql_query("SELECT firstname, lastname FROM employee WHERE empid = '$empid'");
 					          			$empName = mysql_fetch_assoc($empNameQuery);
 
-					          			$attendanceDate = "SELECT * FROM attendance WHERE empid = '$empid' AND ($attendanceAdjDates)";
+					          			$attendanceDate = "SELECT * FROM attendance WHERE empid = '$empid' AND ($attendanceAdjDates) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 					          			$attendanceDateQuery = mysql_query($attendanceDate);
 					          			while($adjDate = mysql_fetch_assoc($attendanceDateQuery))
 					          			{
@@ -560,7 +564,17 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 				<table class="table-bordered table-condensed" style="background-color:white;">
 					<?php
 				//Sample query for debugging purposes
-					$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
+					if(isset($_SESSION['earlyCutoff']))
+					{
+						$startEarlyCheck = $_SESSION['earlyCutoff'];// Start of cutoff
+						$endEarlyCheck = $date;// End of cutoff
+						$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startEarlyCheck', '%M %e, %Y') AND STR_TO_DATE('$endEarlyCheck', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
+						
+					}
+					else // for early cutoff
+					{
+						$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
+					}
 					$payrollQuery = mysql_query($payrollDate);
 					//Boolean for the conditions not to repeat just incase the employee does't attend sundays
 					$monBool = true;
