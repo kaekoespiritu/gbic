@@ -159,8 +159,6 @@
 					$earlyCuttoff = '';// for printable
 					if($period == "week")
 					{
-						
-
 						$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 						$payrollQuery = mysql_query($payrollDate) or die (mysql_error());
 						$dateLength = mysql_num_rows($payrollQuery);
@@ -274,8 +272,8 @@
 							// print_r (array_keys($secondArrayChecker));
 
 							//Computes the 13th month
-							$overallCounter = count($secondArrayChecker);
-							// $overallCounter = 20;
+							// $overallCounter = count($secondArrayChecker);
+							$overallCounter = 20;
 							// while($attArr = mysql_fetch_assoc($attQuery))
 							for($count = 0; $count < $overallCounter; $count++ )
 							{
