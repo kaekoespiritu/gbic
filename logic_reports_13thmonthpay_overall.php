@@ -31,13 +31,17 @@
 
 	if($bool)
 	{
-		Print "<script>alert('You did not enter any amount.')</script>";
-		Print "<script>window.location.assign('reports_overall_13thmonthpay_deduction.php?site=".$site."&period=week&position=all')</script>";
+		Print "	<form method='post' action='reports_overall_13thmonthpay.php?site=".$site."&position=all&req=all' id='tempForm'></form>";
+		Print "<script>alert('You did not enter any amount.');
+						document.getElementById('tempForm').submit()</script>";
+		// Print "<script>window.location.assign('reports_overall_13thmonthpay_deduction.php?site=".$site."&period=week&position=all')</script>";
 	}
 	$query = $initialQuery.$secondaryQuery;
 	mysql_query($query);
 
-	Print "<script>alert('You have successfully given the 13th Month pay for ".$site."')</script>";
-	Print "<script>window.location.assign('reports_overall_13thmonthpay_deduction.php?site=".$site."&period=week&position=all')</script>";
+	Print "	<form method='post' action='reports_overall_13thmonthpay.php?site=".$site."&position=all&req=all' id='tempForm1'></form>";
+	Print "<script>	alert('You have successfully given the 13th Month pay for ".$site."')
+					document.getElementById('tempForm1').submit()</script>";
+	// Print "<script>window.location.assign('reports_overall_13thmonthpay_deduction.php?site=".$site."&period=week&position=all')</script>";
 	
 ?>
