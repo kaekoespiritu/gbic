@@ -139,8 +139,9 @@
 											{
 												$cutoffArr = mysql_fetch_assoc($cutoffQuery);
 												$payrollStartDate = $cutoffArr['start'];
+												$payrollEndDate = $cutoffArr['end'];
 
-												$cutoffInitialDate = $cutoffArr['end'];
+												$cutoffInitialDate = date('F d, Y', strtotime('+1 day', strtotime($cutoffArr['end'])));
 											}
 
 											if($cutoffBool == true)
@@ -223,6 +224,7 @@
 										if($cutoffClearPlaceholderBool == true)
 										{
 											$cutoffInitialDate = '';
+											$cutoffClearPlaceholderBool = false;
 										}
 										if(mysql_num_rows($cutoffQuery) > 0)
 										{

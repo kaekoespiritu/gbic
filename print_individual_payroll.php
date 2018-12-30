@@ -20,6 +20,7 @@ else if(mysql_num_rows($cutoffQuery) > 0)
 {
 	$cutoffArr = mysql_fetch_assoc($cutoffQuery);
 	$startDate = $cutoffArr['start'];
+	$endDate = $cutoffArr['end'];
 }
 
 $employee = "SELECT * FROM employee WHERE empid = '$empid'";

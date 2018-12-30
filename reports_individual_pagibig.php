@@ -42,6 +42,9 @@
 						<button class='btn btn-danger pull-right' onclick="SSSshortcut()">
 							SSS
 						</button>
+						<button class='btn btn-danger pull-right disabletotally' >
+							Pagibig
+						</button>
 						<button class='btn btn-danger pull-right' onclick="PhilhealthShortcut()">
 							Philhealth
 						</button>
@@ -113,8 +116,9 @@
 										{
 											$cutoffArr = mysql_fetch_assoc($cutoffQuery);
 											$payrollStartDate = $cutoffArr['start'];
+											$payrollEndDate = $cutoffArr['end'];
 
-											$cutoffInitialDate = $cutoffArr['end'];
+											$cutoffInitialDate = date('F d, Y', strtotime('+1 day', strtotime($cutoffArr['end'])));
 										}
 
 										if($cutoffBool == true)
@@ -197,6 +201,7 @@
 									if($cutoffClearPlaceholderBool == true)
 									{
 										$cutoffInitialDate = '';
+										$cutoffClearPlaceholderBool = false;
 									}
 									if(mysql_num_rows($cutoffQuery) > 0)
 									{
@@ -276,6 +281,7 @@
 							{
 								$cutoffArr = mysql_fetch_assoc($cutoffQuery);
 								$startDate = $cutoffArr['start'];
+								$endDate = $cutoffArr['end'];
 							}
 							else
 							{
@@ -287,8 +293,16 @@
 								if(mysql_num_rows($suceedingCutoffQuery) > 0)
 								{
 									$cutoffArr = mysql_fetch_assoc($suceedingCutoffQuery);
-									$startDate = $cutoffArr['end'];// Get the end payroll of the cutoff to get the start of the current payroll
-									$earlyCuttoff = $startDate;//Pass the start of payroll to the printables
+									$startDate = date('F d, Y', strtotime('+1 day', strtotime($cutoffArr['end'])));;// Get the end payroll of the cutoff to get the start of the current payroll
+
+									// Pass the date if only there is a chosen date
+									if(isset($_POST['date']))
+									{
+										if($_POST['date'] != 'all')
+										{
+											$earlyCuttoff = $startDate;//Pass the start of payroll to the printables
+										}
+									}
 								}
 							}
 

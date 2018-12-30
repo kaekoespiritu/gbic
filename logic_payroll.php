@@ -1265,6 +1265,10 @@ function getDay($day)
 	$loan_oldVale = abs($loan_oldVale);
 	$insurance = abs($insurance);
 
+	// if(isset($_SESSION['earlyCutoff']))
+	// {
+	// 	$date = date('F d, Y', strtotime('+1 day', strtotime($date)));
+	// }
 	$query = "INSERT INTO payroll(	empid,
 									rate,
 									num_days,

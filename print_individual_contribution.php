@@ -94,6 +94,7 @@ $ERContribution = $EEContribution = $totalSSSContribution = $overallSSS = 0;
 			{
 				$cutoffArr = mysql_fetch_assoc($cutoffQuery);
 				$startDate = $cutoffArr['start'];
+				$endDate = $cutoffArr['end'];
 			}
 			else
 			{
@@ -105,7 +106,7 @@ $ERContribution = $EEContribution = $totalSSSContribution = $overallSSS = 0;
 				if(mysql_num_rows($suceedingCutoffQuery) > 0)
 				{
 					$cutoffArr = mysql_fetch_assoc($suceedingCutoffQuery);
-					$startDate = $cutoffArr['end'];// Get the end payroll of the cutoff to get the start of the current payroll
+					$startDate = date('F d, Y', strtotime('+1 day', strtotime($cutoffArr['end'])));// Get the end payroll of the cutoff to get the start of the current payroll
 				}
 			}
 

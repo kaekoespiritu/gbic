@@ -33,6 +33,7 @@ else if(mysql_num_rows($cutoffQuery) > 0)
 {
 	$cutoffArr = mysql_fetch_assoc($cutoffQuery);
 	$startDay = $cutoffArr['start'];
+	$endDay = $cutoffArr['end'];
 }
 
 $dateDisplay = $startDay." - ".$endDay;

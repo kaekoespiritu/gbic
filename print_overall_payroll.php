@@ -22,6 +22,7 @@ else if(mysql_num_rows($cutoffQuery) > 0)
 {
 	$cutoffArr = mysql_fetch_assoc($cutoffQuery);
 	$startDate = $cutoffArr['start'];
+	$endDate = $cutoffArr['end'];
 }
 
 

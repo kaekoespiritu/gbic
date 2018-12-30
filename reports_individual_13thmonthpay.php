@@ -156,7 +156,7 @@
 						$pastThirteenthDate = "AND STR_TO_DATE(date, '%M %e, %Y ') >= STR_TO_DATE('".$empArr['datehired']."', '%M %e, %Y ')";
 						$noRemainderBool = true;
 					}
-
+					$earlyCuttoff = '';// for printable
 					if($period == "week")
 					{
 						
@@ -188,7 +188,12 @@
 							}
 							
 						}
+						$monthNoRep = "";
+						$yearNoRep = "";
 
+						$cutoffBool = false;// Boolean for the suceeding week after the initial cutoff
+						$cutoffClearPlaceholderBool = false;
+						$cutoffInitialDate = '';// Placeholder for the start of the suceeding date after the cutoff
 						//Evaluates the attendance and compute the 13th monthpay
 						$overallDaysAttended = 0; // counter for total days attended
 						while($payDateArr = mysql_fetch_assoc($payrollQuery))
@@ -198,8 +203,28 @@
 								$pastToDateThirteenthPay = date('F d, Y', strtotime('-7 day', strtotime($payDateArr['date'])));
 								$thirteenthBool = false;
 							}
+							$payDay = $payDateArr['date'];
 							$endDate =date('F d, Y', strtotime('-1 day', strtotime($payDateArr['date'])));
 							$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
+
+							// Check for early cutoff 
+							$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$payDay' LIMIT 1";
+							$cutoffQuery = mysql_query($cutoffCheck);
+							if(mysql_num_rows($cutoffQuery) > 0)
+							{
+								$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+								$startDate = $cutoffArr['start'];
+								$endDate = $cutoffArr['end'];
+
+								$cutoffInitialDate = date('F d, Y', strtotime('+1 day', strtotime($cutoffArr['end'])));
+							}
+
+							if($cutoffBool == true)
+							{
+								$startDate = $cutoffInitialDate;
+								$cutoffClearPlaceholderBool = true;// This is to reset the placeholder
+								$cutoffBool = false;// Reset the cutoffBoolean
+							}
 
 							if($noRemainderBool)
 							{
@@ -299,6 +324,17 @@
 							
 							$overallDaysAttended = $daysCompleted + $overallDaysAttended;
 							$overallPayment += $thirteenthMonth;
+
+							// Early cutoff Reset
+							if($cutoffClearPlaceholderBool == true)
+							{
+								$cutoffInitialDate = '';
+								$cutoffClearPlaceholderBool = false;
+							}
+							if(mysql_num_rows($cutoffQuery) > 0)
+							{
+								$cutoffBool = true;// set to true, to trigger the next payroll that it has an extended attendance
+							}
 						}
 
 						//################

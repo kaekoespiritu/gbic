@@ -112,8 +112,34 @@ $activeSheet->mergeCells('A1:'.$columnLet.'1');// Employee name 13thmonth pay
 				$pastToDateThirteenthPay = date('F d, Y', strtotime('-7 day', strtotime($payDateArr['date'])));
 				$thirteenthBool = false;
 			}
+			$payDay = $payDateArr['date'];
 			$endDate =date('F d, Y', strtotime('-1 day', strtotime($payDateArr['date'])));
 			$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
+
+			// Check for early cutoff 
+			$cutoffCheck = "SELECT * FROM early_payroll WHERE end = '$payDay' LIMIT 1";
+			$cutoffQuery = mysql_query($cutoffCheck);
+			if(mysql_num_rows($cutoffQuery) > 0)
+			{
+				$cutoffArr = mysql_fetch_assoc($cutoffQuery);
+				$startDate = $cutoffArr['start'];
+				$endDate = $cutoffArr['end'];
+			}
+			else
+			{
+				// Check the before payroll for early cutoff to alter the begining day of the payroll
+				$suceedingCutoffPayroll = date('F d, Y', strtotime('-14 day', strtotime($payDay)));
+
+				$suceedingCutoffCheck = "SELECT * FROM early_payroll WHERE start = '$suceedingCutoffPayroll' LIMIT 1";
+				$suceedingCutoffQuery = mysql_query($suceedingCutoffCheck);
+				if(mysql_num_rows($suceedingCutoffQuery) > 0)
+				{
+					$cutoffArr = mysql_fetch_assoc($suceedingCutoffQuery);
+					$startDate = date('F d, Y', strtotime('+1 day', strtotime($cutoffArr['end'])));// Get the end payroll of the cutoff to get the start of the current payroll
+				}
+			}
+			
+			// echo "<script>console.log('".$startDate." - ".$endDate."')</script>";
 
 			$attendance = "SELECT date, workhours, attendance FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 			$attChecker = mysql_query($attendance);

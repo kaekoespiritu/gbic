@@ -5,8 +5,9 @@
 
 	// $date = strftime("%B %d, %Y");//Current date
 	$date = "January 17, 2019";//Current date
-	// $date = "December 16, 2018";//Current date
+	// $date = "December 27, 2018";//Current date
 // $date = "July 11, 2018";
+	echo "<script>console.log('".$date."')</script>";
 
 	
 	//Checks if the current date is the closed payroll
@@ -28,13 +29,22 @@
 		$latestCutoff = $cutoffArr['end'];
 		$latestCutoffDay = date('l', strtotime($latestCutoff));
 
+
 		// Check for the unfinished early cutoff
 		$undifinishedCutoffChecker = date('F d, Y', strtotime('+13 day', strtotime($latestCutoffStart)));
 		$startChecker = strtotime($latestCutoff);
 		$endChecker = strtotime($undifinishedCutoffChecker);// This is the Payroll weeks after the initial early payroll
+
+		echo "<script>console.log('$latestCutoffStart')</script>";
+		echo "<script>console.log('$undifinishedCutoffChecker')</script>";
+
 		if(strtotime($date) >= $startChecker && strtotime($date) <= $endChecker)// If the current date is inbetween the start checker and the end checker
 		{
 			$cutoffBool = true;
+		}
+		else
+		{
+			echo "<script>console.log('no')</script>";
 		}
 		
 	}
@@ -114,17 +124,17 @@
 						$_SESSION['payrollDate'] = $date;// Cutoff
 						$_SESSION['earlyCutoff'] = $earlyStartDate;
 						$cutoffQuery = mysql_query($insertCutoff) OR DIE (mysql_error());
-						echo "<script>alert('1')</script>";
+						// echo "<script>alert('1')</script>";
 					}	
 					else if($cutoffBool)
 					{
 						$_SESSION['payrollDate'] = $latestCutoff;
 						$_SESSION['earlyCutoff'] = $latestCutoffStart;
-						echo "<script>alert('2')</script>";
+						// echo "<script>alert('2')</script>";
 					}
 					else// Unset earlycutoff session variable
 					{
-						echo "<script>alert('3')</script>";
+						// echo "<script>alert('3')</script>";
 						if(isset($_SESSION['earlyCutoff']))
 							unset($_SESSION['earlyCutoff']);
 					}

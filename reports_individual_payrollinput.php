@@ -78,15 +78,14 @@
 								{
 									$cutoffArr = mysql_fetch_assoc($cutoffQuery);
 									$payrollStartDate = $cutoffArr['start'];
+									$payrollEndDate = $cutoffArr['end'];
 
-									$cutoffInitialDate = $cutoffArr['end'];
-									echo "<script>console.log('yow: ".$cutoffInitialDate."')</script>";
+									$cutoffInitialDate = date('F d, Y', strtotime('+1 day', strtotime($cutoffArr['end'])));
+									// echo "<script>console.log('yow: ".$cutoffInitialDate."')</script>";
 								}
 
 								if($cutoffBool == true)
 								{
-									echo "<script>console.log('2')</script>";
-									echo "<script>console.log('yow1: ".$cutoffInitialDate."')</script>";
 									$payrollStartDate = $cutoffInitialDate;
 									$cutoffClearPlaceholderBool = true;// This is to reset the placeholder
 									$cutoffBool = false;// Reset the cutoffBoolean
@@ -112,10 +111,10 @@
 								if($cutoffClearPlaceholderBool == true)
 								{
 									$cutoffInitialDate = '';
+									$cutoffClearPlaceholderBool = false;
 								}
 								if(mysql_num_rows($cutoffQuery) > 0)
 								{
-									echo "<script>console.log('1')</script>";
 									$cutoffBool = true;// set to true, to trigger the next payroll that it has an extended attendance
 								}
 							}
@@ -146,6 +145,7 @@
 						$cutoffBool = true;// To display No Work in the succeeding dates after cutoff
 						$cutoffArr = mysql_fetch_assoc($cutoffQuery);
 						$payrollStart = $cutoffArr['start'];
+						$payrollEndEarly = $cutoffArr['end'];
 
 						$displayDay1 = date('F d, Y', strtotime('+6 day', strtotime($payrollStart)));
 						$displayDay2 = date('F d, Y', strtotime('+5 day', strtotime($payrollStart)));
@@ -154,10 +154,23 @@
 						$displayDay5 = date('F d, Y', strtotime('+2 day', strtotime($payrollStart)));
 						$displayDay6 = date('F d, Y', strtotime('+1 day', strtotime($payrollStart)));
 						$displayDay7 = $payrollStart;
-						echo "<script>console.log('displayDay1: $displayDay1 | displayDay7: $displayDay7')</script>";
+						
 					}
 					else
 					{
+						
+						// Check if this payroll is the suceeding payroll after an early cutoff
+						$previousPayroll = date('F d, Y', strtotime('-14 day', strtotime($date)));
+						$checkPreviousEarlyPayroll = "SELECT * FROM early_payroll WHERE start = '$previousPayroll' LIMIT 1";
+						$previousEarlyPayrollQuery = mysql_query($checkPreviousEarlyPayroll);
+						if(mysql_num_rows($previousEarlyPayrollQuery) > 0)
+						{
+							$prevPayrollArr = mysql_fetch_assoc($previousEarlyPayrollQuery);
+							$payrollStartDisplay = date('F d, Y', strtotime('+1 day', strtotime($prevPayrollArr['end']))); 
+							echo "<script>console.log('".$payrollStartDisplay."')</script>";
+
+						}
+
 						$displayDay1 = date('F d, Y', strtotime('-1 day', strtotime($date)));
 						$displayDay2 = date('F d, Y', strtotime('-2 day', strtotime($date)));
 						$displayDay3 = date('F d, Y', strtotime('-3 day', strtotime($date)));
@@ -229,7 +242,7 @@
 	          			$empPositionQuery = mysql_query("SELECT position FROM employee WHERE empid = '$empid'");
 	          			$empPosition = mysql_fetch_assoc($empPositionQuery);
 
-	          			$attendanceDate = "SELECT * FROM attendance WHERE empid = '$empid' AND ($attendanceAdjDates)";
+	          			$attendanceDate = "SELECT * FROM attendance WHERE empid = '$empid' AND ($attendanceAdjDates) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 	          			$attendanceDateQuery = mysql_query($attendanceDate);
 	          			while($adjDate = mysql_fetch_assoc($attendanceDateQuery))
 	          			{
@@ -394,7 +407,7 @@
 								<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 									<div class="panel panel-primary">
 									  <div class="panel-heading">
-									    <h3>Payroll Inputs for <br>'.$payrollStart.' - '.$day1.'</h3>
+									    <h3>Payroll Inputs for <br>'.(isset($payrollStartDisplay) ? $payrollStartDisplay : $payrollStart).' - '.(isset($payrollEndEarly) ? $payrollEndEarly : $day1).'</h3>
 									    <a class="btn btn-danger pull-right pull-up-more" data-toggle="modal" data-target="#attendanceAdjustment">View Attendance Adjustments &nbsp<span class="badge" id="badge">'.$badgeCounter.'</span></a>
 									  </div>
 									</div>
@@ -501,7 +514,16 @@
 									<table class="table-bordered table-condensed" style="background-color:white;">';
 										
 									//Sample query for debugging purposes
+									if(isset($payrollEndEarly))// Early cutoff
+									{
+										$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$payrollStart', '%M %e, %Y') AND STR_TO_DATE('$payrollEndEarly', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
+									}
+									else
+									{
 										$payrollDate = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$payrollStart', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
+									}
+										
+
 										$payrollQuery2 = mysql_query($payrollDate) or die(mysql_error());										//Boolean for the conditions not to repeat just incase the employee does't attend sundays
 										$monBool = true;
 										$tueBool = true;
@@ -2267,7 +2289,7 @@
 						
 						<div class='panel panel-success'>
 						  <div class='panel-heading'>
-						    <h3>Payroll Computation for <br>$day7 - $day1</h3>
+						    <h3>Payroll Computation for <br>".(isset($payrollStartDisplay) ? $payrollStartDisplay : $payrollStart)." - ".(isset($payrollEndEarly) ? $payrollEndEarly : $day1)."</h3>
 						  </div>
 						</div>";
 

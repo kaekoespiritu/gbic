@@ -20,6 +20,7 @@ if(mysql_num_rows($cutoffQuery) > 0)
 {
 	$cutoffArr = mysql_fetch_assoc($cutoffQuery);
 	$startDate = $cutoffArr['start'];
+	$endDate = $cutoffArr['end'];
 }
 // Check the before payroll for early cutoff to alter the begining day of the payroll
 $suceedingCutoffPayroll = date('F d, Y', strtotime('-14 day', strtotime($date)));
@@ -29,7 +30,7 @@ $suceedingCutoffQuery = mysql_query($suceedingCutoffCheck);
 if(mysql_num_rows($suceedingCutoffQuery) > 0)
 {
 	$cutoffArr = mysql_fetch_assoc($suceedingCutoffQuery);
-	$startDate = $cutoffArr['end'];// Get the end payroll of the cutoff to get the start of the current payroll
+	$startDate = date('F d, Y', strtotime('+1 day', strtotime($cutoffArr['end'])));// Get the end payroll of the cutoff to get the start of the current payroll
 }
 
 //Checks if site in HTTP is altered by user manually

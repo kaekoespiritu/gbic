@@ -37,6 +37,7 @@ else if(mysql_num_rows($cutoffQuery) > 0)
 {
 	$cutoffArr = mysql_fetch_assoc($cutoffQuery);
 	$weekBefore = $cutoffArr['start'];
+	$endDate = $cutoffArr['end'];
 }
 
 $filename =  $site." Payslip ".$weekBefore." - ".$endDate.".xls";
