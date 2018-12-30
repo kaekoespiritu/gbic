@@ -103,7 +103,7 @@
 				/* If location is long, font-size to smaller */
 				if(strlen($row['location'])>=16)
 				{
-					Print '	<a href="reports_overall_empattendance.php?site='.$row['location'].'" style="color: white !important; text-decoration: none !important; cursor: pointer;">
+					Print '	<a href="reports_overall_empattendance.php?site='.$row['location'].'&position=null&req=null" style="color: white !important; text-decoration: none !important; cursor: pointer;">
 								<div class="sitebox">
 									<span class="smalltext">'
 										. $row['location'] .

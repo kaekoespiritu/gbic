@@ -5,7 +5,7 @@
 
 	if(isset($_GET['site']))
 	{
-		$site = $_GET['site'];
+		$site = mysql_real_escape_string($_GET['site']);
 		$siteChecker = "SELECT * FROM site WHERE location = '$site'";
 		$siteCheckQuery = mysql_query($siteChecker);
 
