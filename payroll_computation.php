@@ -299,7 +299,7 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 
 						if($payrollArr['reg_holiday_num'] > 1)
 						{
-							$holidayRegChecker = "SELECT * FROM holiday AS h INNER JOIN attendance AS a ON h.date = a.date WHERE a.empid = '$empid' AND a.attendance = '2' AND h.type = 'regular'";
+							$holidayRegChecker = "SELECT DISTINCT h.date AS Holiday_Date, h.holiday AS Holiday_name FROM holiday AS h, attendance AS a WHERE STR_TO_DATE(a.date, '%M %e, %Y') BETWEEN DATE_SUB(STR_TO_DATE('$date', '%M %e, %Y'), INTERVAL 7 DAY) AND STR_TO_DATE('$date', '%M %e, %Y') AND DATEDIFF(STR_TO_DATE(h.date, '%M %e, %Y'), STR_TO_DATE(a.date, '%M %e, %Y')) >= 1 AND a.empid = '$empid' AND a.attendance = '2' AND h.type = 'regular'";
 							$holidayRegQuery = mysql_query($holidayRegChecker);
 							$regHolidayNum = mysql_num_rows($holidayRegQuery);
 						}
@@ -750,13 +750,12 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 		form.appendChild(regHolDays);
 		form.appendChild(speHolDays);
 		form.appendChild(allowDays);
-		console.log(form);
+		console.dir(form);
 
 		document.getElementById('tempDiv').appendChild(form);
 
-		var con = confirm("Are you sure you want to Save this alteration?");
+		var con = confirm("Are you sure you want to save this alteration?");
 		if(con) {
-			console.log("yay");
 			document.getElementById('tempForm').submit();
 		}
 
@@ -764,7 +763,6 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 		// 
 		// console.log(ndDays);
 		// console.log(sunDays);
-		// console.log(regHolDays);
 		// console.log(speHolDays);
 		// console.log(allowDays);
 
@@ -794,8 +792,6 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 		var regHolDays = document.getElementById('regHolDays');
 		var speHolDays = document.getElementById('speHolDays');
 		var allowDays = document.getElementById('allowDays');
-
-		
 
 		var rateVal = getValue(rateDays.innerHTML);
 		var otVal = getValue(otDays.innerHTML);

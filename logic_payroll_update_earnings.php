@@ -58,7 +58,9 @@
 	//Regular holiday
 	if($payrollArr['reg_holiday_num'] > 1)
 	{
-		$holidayRegChecker = "SELECT * FROM holiday AS h INNER JOIN attendance AS a ON h.date = a.date WHERE a.empid = '$empid' AND a.attendance = '2' AND h.type = 'regular'";
+		// $holidayRegChecker = "SELECT * FROM holiday AS h INNER JOIN attendance AS a ON h.date = a.date WHERE a.empid = '$empid' AND a.attendance = '2' AND h.type = 'regular'";
+
+		$holidayRegChecker = "SELECT DISTINCT h.date AS Holiday_Date, h.holiday AS Holiday_name FROM holiday AS h, attendance AS a WHERE STR_TO_DATE(a.date, '%M %e, %Y') BETWEEN DATE_SUB(STR_TO_DATE('$date', '%M %e, %Y'), INTERVAL 7 DAY) AND STR_TO_DATE('$date', '%M %e, %Y') AND DATEDIFF(STR_TO_DATE(h.date, '%M %e, %Y'), STR_TO_DATE(a.date, '%M %e, %Y')) >= 1 AND a.empid = '$empid' AND a.attendance = '2' AND h.type = 'regular'";
 		$holidayRegQuery = mysql_query($holidayRegChecker);
 		$regHolidayNum = mysql_num_rows($holidayRegQuery);
 	}
