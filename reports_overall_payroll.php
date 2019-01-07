@@ -336,9 +336,10 @@
 									//Gets the actual holiday num
 									if($payrollArr['reg_holiday_num'] > 1)
 									{
-										$holidayRegChecker = "SELECT * FROM holiday AS h INNER JOIN attendance AS a ON h.date = a.date WHERE a.empid = '$emplid' AND a.attendance = '2' AND h.type = 'regular'";
-										$holidayRegQuery = mysql_query($holidayRegChecker);
-										$regHolidayNum = mysql_num_rows($holidayRegQuery);
+										// $holidayRegChecker = "SELECT * FROM holiday AS h INNER JOIN attendance AS a ON h.date = a.date WHERE a.empid = '$emplid' AND a.attendance = '2' AND h.type = 'regular'";
+										// $holidayRegQuery = mysql_query($holidayRegChecker);
+										// $regHolidayNum = mysql_num_rows($holidayRegQuery);
+										$regHolidayNum = $payrollArr['reg_holiday_num'];
 									}
 									else if($payrollArr['reg_holiday_num'] == 1)
 									{
