@@ -36,7 +36,7 @@ if(count($_POST['loanType']) == 1)
 
 
 	$loanAmount = numberExactFormat($loanAmount, 2, '.', false);//for 2 decimal places
-	if($loanType == 'SSS' || $loanType == 'PagIBIG')
+	if($loanType == 'SSS' || $loanType == 'PagIBIG' ||  $loanType == 'PAGIBIG')
 	{
 		$query = "INSERT INTO loans(empid, type, monthly, balance, amount, remarks, date, time,action, admin) VALUES('$empid', 
 							'$loanType',

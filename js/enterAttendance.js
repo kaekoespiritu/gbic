@@ -2955,7 +2955,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 							else
 							{
 								console.log("3.2");
-								nightdiffMins += workingmins3;
+								nightdiffMins += timeoutmin3;
 							}
 							nightdiffBool = true;
 						}

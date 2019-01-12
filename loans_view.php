@@ -137,7 +137,7 @@ $dateNewLoan = (isset($_SESSION['loanviewdate']) ? $_SESSION['loanviewdate'] : $
 										<div class="row">
 											<div class="form-group col-md-4 col-lg-4 col-md-push-1 col-lg-push-1">
 												<input type="text" class="form-control" value="<?php echo $displayLoan ?>" readonly>
-												<input type="hidden" class="form-control" name="loanType" value="<?php echo $loanType ?>" readonly>
+												<input type="hidden" class="form-control" name="loanType" value="<?php echo $loanType ?>">
 											</div>
 											<div class="col-md-5 col-lg-5 col-md-push-1 col-lg-push-1">
 												<input type="text" class="form-control check-input" required name="loanAmount[]" id="loanAmount" placeholder="Amount of loan" onchange="validateLoanFields(this)" onblur="formcheck()">
