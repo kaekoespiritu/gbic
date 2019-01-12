@@ -41,6 +41,10 @@ else
 						<a href="employees.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Employees</a>
 					</li>
 					<li class="active">Loan Applications</li>
+					<div class="pull-right">
+						Toggle Dashboard: 
+						<a href="logic_loans_dashboard.php" class="btn btn-primary"></span><?php (isset($_SESSION['dashboard']) ? Print 'ON' : Print 'OFF')?></a>
+					</div>
 				</ol>
 			</div>
 		</div>
@@ -143,36 +147,41 @@ else
 				$output = $oldValeComputation;
 			return $output;
 		}
-		
-		$counter = loanDashboard("empVale");
-		$newValeComputation = loanDashboard("newVale");
-		$oldValeComputation = loanDashboard("oldVale");
-		//New vale loaned to employees
-		?>
-		<!-- Dashboard -->
-		<div class="row col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
-				<table class="table table-bordered table-responsive" style="color: white; font-family:Quicksand">
-					<tr>
-						<td style="background-color:chocolate">
-							<h3 class="text-center">Employees with VALE</h3>
-							<h2 class="text-center"><br>
-								<?php  Print $counter ?>
-							</h2>
+		if(isset($_SESSION['dashboard']))
+		{
+			$counter = loanDashboard("empVale");
+			$newValeComputation = loanDashboard("newVale");
+			$oldValeComputation = loanDashboard("oldVale");
+			//New vale loaned to employees
+			
+			Print '
+			<!-- Dashboard -->
+			<div class="row col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
+					<table class="table table-bordered table-responsive" style="color: white; font-family:Quicksand">
+						<tr>
+							<td style="background-color:chocolate">
+								<h3 class="text-center">Employees with VALE</h3>
+								<h2 class="text-center"><br>
+									'.$counter.'
+								</h2>
+							</td>
+							<td style="background-color: darkgray">
+								<h3 class="text-center">OLD VALE loaned to Employees</h3>
+								<br><br>
+								<h2 class="text-center">'. number_format($oldValeComputation, 2, '.', ',').'</h2><br>
+							</div>
 						</td>
-						<td style="background-color: darkgray">
-							<h3 class="text-center">OLD VALE loaned to Employees</h3>
+						<td style="background-color: cornflowerblue">
+							<h3 class="text-center">NEW VALE loaned to Employees</h3>
 							<br><br>
-							<h2 class="text-center"><?php Print "₱" . number_format($oldValeComputation, 2, '.', ','); ?></h2><br>
-						</div>
-					</td>
-					<td style="background-color: cornflowerblue">
-						<h3 class="text-center">NEW VALE loaned to Employees</h3>
-						<br><br>
-						<h2 class="text-center"><?php Print "₱" . number_format($newValeComputation, 2, '.', ','); ?></h2><br>
-					</td>
-				</tr>
-			</table>
-	</div>
+							<h2 class="text-center">'. number_format($newValeComputation, 2, '.', ',').'</h2><br>
+						</td>
+					</tr>
+				</table>
+			</div>';
+		}
+			
+		?>
 
 </div>
 	<script rel="javascript" src="js/jquery.min.js"></script>
