@@ -221,8 +221,8 @@
 				<?php
 				if($payrollArr['open'] != $day)
 				{
-					// Print '
-					// <a type="button" class="pull-right btn btn-primary '.($cutoffBool ? "disabletotally":"").'" data-target="#earlyCutOff" data-toggle="modal">Early cut-off</a>';
+					Print '
+					<a type="button" class="pull-right btn btn-primary '.($cutoffBool ? "disabletotally":"").'" data-target="#earlyCutOff" data-toggle="modal">Early cut-off</a>';
 				}
 					
 				?>
