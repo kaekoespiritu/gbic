@@ -508,22 +508,26 @@ function getDay($day)
 		else// Incomplete requirements
 		{
 			// $overallWorkDays++;
-			if($_POST['sunWorkHrs'] >= 8)
+			if(isset($_POST['sunWorkHrs']))
 			{
-				$sunOT = $_POST['sunWorkHrs'] - 8;
-				$sunExplode = explode('.',$sunOT);
-				if(count($sunExplode) > 1)
+				if($_POST['sunWorkHrs'] >= 8)
 				{
-					$sunHrs = $sunExplode[0];
-					$sunMins = $sunExplode[1] / 60;
+					$sunOT = $_POST['sunWorkHrs'] - 8;
+					$sunExplode = explode('.',$sunOT);
+					if(count($sunExplode) > 1)
+					{
+						$sunHrs = $sunExplode[0];
+						$sunMins = $sunExplode[1] / 60;
 
-					$adjOthrs += $sunHrs + $sunMins;
-				}
-				else
-				{
-					$adjOthrs += $sunExplode[0];
+						$adjOthrs += $sunHrs + $sunMins;
+					}
+					else
+					{
+						$adjOthrs += $sunExplode[0];
+					}
 				}
 			}
+			
 			if($adjSundayHrs != 0 || $adjSundayHrs != 0.00)
 			{
 				$overallWorkDays++;
