@@ -507,7 +507,7 @@ function getDay($day)
 		}
 		else// Incomplete requirements
 		{
-			$overallWorkDays++;
+			// $overallWorkDays++;
 			if($_POST['sunWorkHrs'] >= 8)
 			{
 				$sunOT = $_POST['sunWorkHrs'] - 8;
