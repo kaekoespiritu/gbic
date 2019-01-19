@@ -508,23 +508,46 @@ function getDay($day)
 		else// Incomplete requirements
 		{
 			// $overallWorkDays++;
-			if(isset($_POST['sunWorkHrs']))
+			if(isset($_POST['sunWorkHrs'])) // employee worked on sunday
 			{
-				if($_POST['sunWorkHrs'] >= 8)
+				if($_POST['sunWorkHrs'] >= 8) // there is sunday OT
 				{
-					$sunOT = $_POST['sunWorkHrs'] - 8;
+					$sunOT = $_POST['sunWorkHrs'] - 8; // get OT only
+					$sunOT = number_format($sunOT, 2);
 					$sunExplode = explode('.',$sunOT);
-					if(count($sunExplode) > 1)
+					if(count($sunExplode) > 1) // if there are mins in work hours
 					{
 						$sunHrs = $sunExplode[0];
 						$sunMins = $sunExplode[1] / 60;
 
-						$adjOthrs += $sunHrs + $sunMins;
+						$adjOthrs += $sunHrs + $sunMins; // adding sunday OT hour + min
 					}
 					else
 					{
-						$adjOthrs += $sunExplode[0];
+						$adjOthrs += $sunExplode[0]; // adding sunday OT hours
 					}
+
+					$overallWorkDays++; // add regular work day
+				}
+				else 
+				{
+					$sunOT = $_POST['sunWorkHrs']; // get OT only
+					$sunOT = number_format($sunOT, 2);
+					$sunExplode = explode('.',$sunOT);
+					if(count($sunExplode) > 1) // if there are mins in work hours
+					{
+						$sunHrs = $sunExplode[0];
+						$sunMins = $sunExplode[1] / 60;
+
+						$adjOthrs += $sunHrs + $sunMins; // adding sunday OT hour + min
+
+					}
+					else
+					{
+						$adjOthrs += $sunExplode[0]; // adding sunday OT hours
+					}
+
+					$overallWorkDays += $adjOthrs; // add hr/min less than 8
 				}
 			}
 			
@@ -534,16 +557,16 @@ function getDay($day)
 			}
 		}	
 	}
-	else if($adjSundayHrs != 0)// If no employee did not attend sunday initially
-	{
-		$overallWorkDays++;// Increment workdays for no requirements employee
-		if($adjSundayHrs >= 8)
-		{
-			$sunOT = $adjSundayHrs - 8;
-			$adjOthrs += $sunOT;
+	// else if($adjSundayHrs != 0)// If no employee did not attend sunday initially
+	// {
+	// 	$overallWorkDays++;// Increment workdays for no requirements employee
+	// 	if($adjSundayHrs >= 8)
+	// 	{
+	// 		$sunOT = $adjSundayHrs - 8;
+	// 		$adjOthrs += $sunOT;
 			
-		}
-	}
+	// 	}
+	// }
 
 	if(!empty($_POST['monWorkHrs']))
 	{
@@ -619,13 +642,14 @@ function getDay($day)
 	{
 		$totalOT = $_POST['totalOverTime'] + $adjOthrs;//Total Overtime by employee
 
-		Print "<script>console.log('totalOT: ".$totalOT."')</script>";
+		Print "<script>console.log('totalOT: ".$totalOT." adjOthrs: ".$adjOthrs."')</script>";
 		$compOT = $totalOT * $OtRatePerHour;//Computed Overtime
 	}
 	else if($adjOthrs != 0)
 	{
 		$totalOT = $adjOthrs;
 		$compOT = $totalOT * $OtRatePerHour;//Computed Overtime
+		Print "<script>console.log('totalOT: ".$totalOT." adjOthrs: ".$adjOthrs."')</script>";
 	}
 
 //Computation for Night Differential --------------------------------------------------
