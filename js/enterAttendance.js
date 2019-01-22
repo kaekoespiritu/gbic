@@ -3974,10 +3974,14 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 						{
 							nightdiff--;
 						}
-						if(timeinmin3 > timeoutmin3)
+						// if(timeinmin3 > timeoutmin3)
+						// {
+						// 	nightdiff--;
+						// }
+						if(timeinmin3 == timeoutmin3)
 						{
-							nightdiff--;
-						}
+							nightdiffMins = timeoutmin3;
+						} // new
 					}
 
 					//problema
