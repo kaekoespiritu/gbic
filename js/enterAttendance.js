@@ -2901,7 +2901,8 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 						console.log("Nightdiff3");
 						var nightdiffBool = false;
 
-						// Nightdiff mins
+						// NIGHT DIFF MINUTES
+						// Night diff mins on time in 1
 						if(((timeinhour1 <= 22 && timeouthour1 >= 22) ||
 							(timeinhour1 <= 22 && timeouthour1 <= 6) ||
 							(timeouthour1 == 22 && timeoutmin1 != 0)) && workingmins1 != 0)
@@ -2920,6 +2921,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 							}
 							nightdiffBool = true;
 						}
+						// Night diff mins on time in 2
 						if(((timeinhour2 <= 22 && timeouthour2 >= 22) ||
 								(timeinhour2 <= 22 && timeouthour2 <= 6) ||
 								(timeouthour2 == 22 && timeoutmin2 != 0) ||
@@ -2939,6 +2941,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 							}
 							nightdiffBool = true;
 						}
+						// Night diff mins on time in 3
 						if(((timeinhour3 <= 22 && timeouthour3 >= 22) ||
 								(timeinhour3 <= 22 && timeouthour3 <= 6) ||
 								(timeouthour3 == 22 && timeoutmin3 != 0) ||
@@ -2960,9 +2963,11 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 							nightdiffBool = true;
 						}
 
-
+						// NIGHT DIFF HOURS
+						// Night diff at TIMEIN1
 						if(timeinhour1 <= 22 && timeouthour1 >= 22)// pos1 ~ 6
 						{
+							// If time is between 1am and 6am
 							if((timeinhour2 >= 1 && timeouthour2 <= 6) && (timeinhour3 >= 1 && timeouthour3 <= 6))// pos 1
 							{
 								console.log("4");
@@ -2971,6 +2976,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 								time3 = timeinhour3 - timeouthour3;
 								nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
 							}
+							// If time is between 1am and past 6am
 							else if((timeinhour2 >= 1 && timeouthour2 <= 6) && (timeinhour3 <= 6 && timeouthour3 >= 6))// pos 2
 							{
 								console.log("5");
@@ -2979,6 +2985,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 								time3 = timeinhour3 - 6;
 								nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
 							}
+							// If time is between 10pm and 6am 
 							else if((timeinhour2 >= 22 && timeouthour2 <= 6) && (timeinhour3 >= 1 && timeouthour3 <= 6))// pos 3
 							{
 								console.log("6");
@@ -2990,6 +2997,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 								time3 = timeinhour3 - timeouthour3;
 								nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
 							}
+							// If time is between 10pm and past 6am
 							else if((timeinhour2 >= 22 && timeouthour2 <= 6) && (timeinhour3 <= 6 && timeouthour3 >= 6))// pos 4
 							{
 								console.log("7");
@@ -3001,6 +3009,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 								time3 = timeinhour3 - 6;
 								nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
 							}
+							// If time is between 1am and past 6am
 							else if((timeinhour2 >= 1 && timeouthour2 <= 6) && timeinhour3 >= 6)// pos 5
 							{
 								console.log("8");
@@ -3016,6 +3025,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 							}
 
 						}
+						// Night diff at TIMEIN1
 						else if(timeinhour1 <= 22 && timeouthour1 <= 6)// pos7 ~ 8
 						{
 							if((timeinhour2 >= 1 && timeouthour2 <= 6) && timeinhour3 > 6)// pos 7
@@ -3038,6 +3048,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 								nightdiff = Math.abs(time1) + Math.abs(time2) + Math.abs(time3);
 							}
 						}
+						// Night diff at TIMEIN2
 						else if(timeinhour2 <= 22 && timeouthour2 >= 22)// pos9 ~ 10
 						{
 							if(timeinhour3 >= 1 && timeouthour3 <= 6) // pos 9
@@ -3054,6 +3065,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 								nightdiff = Math.abs(time2);
 							}
 						}
+						// Night diff at TIMEIN2
 						else if(timeinhour2 <= 22 && timeouthour2 <= 6)// pos 11 ~ 12
 						{
 							if(timeinhour3 <= 6 && timeouthour3 >= 6)// pos 11
@@ -3075,27 +3087,39 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 								nightdiff = Math.abs(time2) + Math.abs(time3);
 							}
 						}
+						// Night diff at TIMEIN2
 						else if(timeinhour2 <= 6 && timeouthour2 >= 6)// If timeinhour3  is 1am onwards but not greater than 6 
 						{
 							console.log("16");
 							nightdiff = timeinhour2 - 6;
 						}
+						// Night diff at TIMEIN3
+						// If time is between 6am onward
 						else if(timeinhour3 <= 6 && timeouthour3 >= 6)// If timeinhour3  is 1am onwards but not greater than 6 
 						{
 							console.log("17");
 							nightdiff = timeinhour3 - 6;
+							nightdiffBool = true;
 						}
+						// Night diff at TIMEIN3
+						// If time is between 10pm onward
 						else if(timeinhour3 <= 22 && timeouthour3 >= 22)// pos 13
 						{
 							console.log("18");
 							time3 = timeouthour3 - 22;
 							nightdiff = Math.abs(time3);
+							nightdiffBool = true;
 						}
+						// Night diff at TIMEIN3
+						// If time is before 6am
 						else if(timeinhour3 <= 6 && timeouthour3 <= 6)
 						{
 							nightdiff = timeinhour3 - timeouthour3;
 							nightdiff = Math.abs(nightdiff);
+							nightdiffBool = true;
 						}
+						// Night diff at TIMEIN3
+						// If time is between 10pm and 6am
 						else if(timeinhour3 <= 22 && timeouthour3 <= 6)// pos 14
 						{
 							console.log("19");
@@ -3103,6 +3127,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 							time3 = Math.abs(time3n1) + timeouthour3;
 
 							nightdiff = Math.abs(time3);
+							nightdiffBool = true;
 						}
 						else
 						{
@@ -3120,7 +3145,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					}
 
 					// deduct nightdiff if timeout minutes is greater than timein minutes
-					if(nightdiff != "")
+					if(nightdiff != "" || nightdiff == 0)
 					{
 						if(timeinmin1 > timeoutmin1)
 						{
@@ -3130,10 +3155,15 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 						{
 							nightdiff--;
 						}
-						if(timeinmin3 > timeoutmin3)
+						// if(timeinmin3 > timeoutmin3)
+						// {
+						// 	// nightdiff--;
+						// }
+						// if timein/timeout 3 is the same
+						if(timeinmin3 == timeoutmin3)
 						{
-							nightdiff--;
-						}
+							nightdiffMins += timeoutmin3;
+						} // new
 					}
 
 					if(nightdiffMins >= 60)// Night diff mins is greater than 60mins then add 1hour to nightdiff
