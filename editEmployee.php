@@ -183,12 +183,20 @@ $bank = $employee_info['bank'];
 						</div>
 						<div class="col-md-3 col-lg-3">
 							<select class="form-control" name="bank">
-								<option value='' hidden>N/A</option>
 								<?php
 									$banks = "SELECT * FROM banks ORDER BY name ASC";
 									$bankQuery = mysql_query($banks);
+									$bankBool = true;
 									while($banksArray = mysql_fetch_assoc($bankQuery))
 									{
+										if($bankBool)
+										{
+											if($bank == '')
+												Print "<option value='' selected='selected'>N/A</option>";
+											else
+												Print "<option value=''>N/A</option>";
+											$bankBool = false;
+										}
 										if($banksArray['name'] == $bank)
 											Print "<option value='".$banksArray['name']."' selected='selected'>".$banksArray['name']."</option>";
 										else

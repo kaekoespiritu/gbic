@@ -124,11 +124,11 @@
 		$insurance = mysql_real_escape_string($_POST['insurance']);
 		mysql_query("UPDATE employee SET insurance = '$insurance' WHERE empid = '$empid'") or die (mysql_error());	
 	}
-	if($_POST['bank'] != null)
-	{
+	// if($_POST['bank'] != null)
+	// {
 		$bank = mysql_real_escape_string($_POST['bank']);
 		mysql_query("UPDATE employee SET bank = '$bank' WHERE empid = '$empid'") or die (mysql_error());	
-	}
+	// }
 
 
 	$sssEE = mysql_real_escape_string($_POST['sssEE']);

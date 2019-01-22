@@ -116,7 +116,7 @@
 								</div>
 								<div class="col-md-3 col-lg-3">
 									<select class="form-control" name="bank">
-										<option value='' hidden>N/A</option>
+										<option value=''>N/A</option>
 									<?php
 										$bank = "SELECT * FROM banks ORDER BY name ASC";
 										$bankQuery = mysql_query($bank);
