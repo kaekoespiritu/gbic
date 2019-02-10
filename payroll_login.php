@@ -4,7 +4,7 @@
 	include('directives/db.php');
 
 	$date = strftime("%B %d, %Y");//Current date
-	// $date = "January 31, 2019";//Current date
+	// $date = "February 14, 2019";//Current date
 	// $date = "December 27, 2018";//Current date
 // $date = "July 11, 2018";
 	echo "<script>console.log('".$date."')</script>";

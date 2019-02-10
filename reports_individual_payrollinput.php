@@ -2874,7 +2874,12 @@
 							    	$grandTotal = $grandTotal;
 							    Print '
 							    <div class="col-md-1 col-lg-12">
-							    	<h3><u>Grand total: '.numberExactFormat($grandTotal, 2, '.', true).'</u></h3>
+							    	<h3><u>Grand total: ';							    	
+							    	if($grandTotal <= 0)
+							    		Print "0 (".abs($grandTotal).")";
+							    	else
+							    		Print numberExactFormat($grandTotal, 2, '.', true);
+							    Print '</u></h3>
 								</div>
 							  </div>
 							</div>

@@ -214,7 +214,15 @@ $activeSheet->setCellValue('B18', $payrollArr['tools_paid']);
 
 //Total
 $activeSheet->mergeCells('C19:D19');
-$activeSheet->setCellValue('C19', $payrollArr['total_salary']);
+if($payrollArr['total_salary'] > 0)
+{
+	$activeSheet->setCellValue('C19', $payrollArr['total_salary']);	
+}
+else
+{
+	$activeSheet->setCellValue('C19', '0');
+}
+
 $activeSheet->getStyle('C19')->applyFromArray($font_bold);
 
 //------------ Style for the Spreadsheet ------------

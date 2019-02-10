@@ -152,7 +152,7 @@
 							</tr>";
 							
 					$chosenDate = $_POST['dateChange'];
-					$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$chosenDate' ORDER BY STR_TO_DATE(date, '%M %e, %Y')  ASC";
+					$payroll = "SELECT * FROM payroll WHERE empid = '$empid' AND date = '$chosenDate' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 					$payrollQuery = mysql_query($payroll);
 					$printBool = false;//disable print button if there's no data retrieved
 					if(mysql_num_rows($payrollQuery))
@@ -373,7 +373,17 @@
 								".$payrollArr['tools_paid']."
 							</td>
 							<td><!-- Total Salary -->
-								".numberExactFormat($payrollArr['total_salary'],2,".", true)."
+								";
+								
+								if($payrollArr['total_salary'] > 0)
+								{
+									numberExactFormat($payrollArr['total_salary'],2,".", true);
+								}
+								else
+								{
+									Print "0";
+								}
+								Print "
 							</td>
 						</tr>
 						<br>

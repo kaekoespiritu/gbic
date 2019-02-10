@@ -186,8 +186,15 @@ $rowCounter = 4; //start for the data in the row of excel
 	if(!$ToolsBool)
 		$activeSheet->setCellValue('AB'.$rowCounter, $payrollArr['tools_paid']);//tools
 
-	$totalSalary = numberExactFormat($payrollArr['total_salary'], 2, '.', true);
-	$activeSheet->setCellValue('AC'.$rowCounter, $totalSalary);//Total Salary
+	if($payrollArr['total_salary'] > 0)
+	{
+		$totalSalary = numberExactFormat($payrollArr['total_salary'], 2, '.', true);
+		$activeSheet->setCellValue('AC'.$rowCounter, $totalSalary);//Total Salary
+	}
+	else
+	{
+		$activeSheet->setCellValue('AC'.$rowCounter, '0');//Total Salary
+	}
 
 	$activeSheet->setCellValue('AD'.$rowCounter, '1');//Total Salary
 	if($payrollArr['bank'] != '')

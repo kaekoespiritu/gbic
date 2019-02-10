@@ -28,6 +28,8 @@ $daySeven = date('F d, Y', strtotime('-7 day', strtotime($date)));
 $weekArr = array($day1, $day2, $day3, $day4, $day5, $day6, $day7);
 
 $payrollOutstandingSql = "SELECT total_salary FROM payroll WHERE empid = '$empid' AND date != '$date' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
+// Query gets the previously accomplished payroll to be added as an extra deductions under Loans tab
+Print "<script>console.log('Payroll Outstanding Query: ".$payrollOutstandingSql."')</script>";
 $payrollOutstandingQuery = mysql_query($payrollOutstandingSql);
 
 $payrollOutstanding = 0;
@@ -701,13 +703,21 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 			    	</h4>
 			    </div>
 			    <?php
-			    		Print "<script>console.log('logic_payroll - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".abs($payrollArr['tools_paid'])."')</script>";
+			    	Print "<script>console.log('logic_payroll - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".abs($payrollArr['tools_paid'])."')</script>";
 			    	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($payrollArr['tools_paid']) - abs($payrollOutstanding);
+
+			    	Print "<script>console.log('GRAND TOTAL: ".$grandTotal."')</script>";
+
 			    	
 			    	$grandTotal = $grandTotal;
 			    ?>
 			    <div class="col-md-1 col-lg-12">
-			    	<h3><u>Grand total: <?php Print numberExactFormat($grandTotal, 2, '.', true) ?></u></h3>
+			    	<h3><u>Grand total: <?php
+			    	if($grandTotal <= 0)
+			    		Print "0 (".abs($grandTotal).")";
+			    	else
+			    		Print numberExactFormat($grandTotal, 2, '.', true)
+			    	 ?></u></h3>
 				</div>
 			  </div>
 			</div>

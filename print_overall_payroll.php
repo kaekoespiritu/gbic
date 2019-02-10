@@ -233,8 +233,15 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 		if(!$ToolsBool)
 			$activeSheet->setCellValue('AB'.$rowCounter, $payrollArr['tools_paid']);//tools
 
-		$totalSalary = numberExactFormat($payrollArr['total_salary'], 2, '.', true);
-		$activeSheet->setCellValue('AC'.$rowCounter, $totalSalary);//Total Salary
+		if($payrollArr['total_salary'] > 0)
+		{
+			$totalSalary = numberExactFormat($payrollArr['total_salary'], 2, '.', true);
+			$activeSheet->setCellValue('AC'.$rowCounter, $totalSalary);//Total Salary
+		}
+		else
+		{
+			$activeSheet->setCellValue('AC'.$rowCounter, '0');//Total Salary
+		}
 
 		$activeSheet->setCellValue('AD'.$rowCounter, $counter);//tools
 

@@ -438,7 +438,16 @@
 													'.$payrollArr['tools_paid'].'
 												</td>
 												<td><!-- Total Salary -->
-													'.numberExactFormat($payrollArr['total_salary'],2,".", true).'
+													';
+													if($payrollArr['total_salary'] > 0)
+													{
+														Print numberExactFormat($payrollArr['total_salary'],2,".", true);
+													}
+													else
+													{
+														Print '0';
+													}
+																Print '
 												</td>
 											</tr>';
 										

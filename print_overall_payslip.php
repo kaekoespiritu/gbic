@@ -381,9 +381,16 @@ for($count = 0; $count <= $loopCount; $count++)
 				//Total
 				$activeSheet->mergeCells($cellC.$totalDataCounter.":".$cellD.$totalDataCounter);// Date
 
-				if($payrollArr['total_salary'] != 0)
+				if($payrollArr['total_salary'] > 0)
+				{
 					$activeSheet->setCellValue($cellC.$totalDataCounter, $payrollArr['total_salary']);
 					$activeSheet->getStyle($cellC.$totalDataCounter)->applyFromArray($font_bold);
+				}
+				else
+				{
+					$activeSheet->setCellValue($cellC.$totalDataCounter, '0');
+					$activeSheet->getStyle($cellC.$totalDataCounter)->applyFromArray($font_bold);
+				}
 
 				$counter++;//Increment counter for horizontal inputs
 
