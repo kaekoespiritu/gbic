@@ -529,6 +529,7 @@
 								<div class="col-md-1 col-lg-10 col-md-offset-1 col-lg-offset-1">
 									<table class="table-bordered table-condensed" style="background-color:white;">';
 										
+									echo $payrollStart." - ".$day1;
 									//Sample query for debugging purposes
 									if(isset($payrollEndEarly))// Early cutoff
 									{
@@ -1657,16 +1658,24 @@
 											
 											if($payrollRow != '2')// if employee has nightshift
 											{
+												echo "<script>console.log('1')</script>";
 												Print "<tr>";
 												if(!$wedAbsent)
 												{
+													echo "<script>console.log('2')</script>";
 													//if there's nightshift
 													if(!empty($NSwedTimeIn) && !empty($NSwedTimeOut))
 													{
+														echo "<script>console.log('4')</script>";
 														Print 	"	<td>Time In:<br>". trim($NSwedTimeIn) ."</td>
 														<td>Time Out:<br>". trim($NSwedTimeOut) ."</td>";
 													}
 													else if($payrollRow == '3' && !$holWed && !$wedAbsent && !$wedNoWork)
+													{
+														echo "<script>console.log('3')</script>";
+														Print 	"	<td colspan='2'></td>";
+													}
+													else if($holWed && isset($wedTimeIn) && isset($wedTimeOut))
 													{
 														Print 	"	<td colspan='2'></td>";
 													}
@@ -1684,6 +1693,10 @@
 													{
 														Print 	"	<td colspan='2'></td>";
 													}
+													else if($holThu && isset($thuTimeIn) && isset($thuTimeOut))
+													{
+														Print 	"	<td colspan='2'></td>";
+													}
 												}
 												if(!$friAbsent)
 												{
@@ -1697,6 +1710,10 @@
 													{
 														Print 	"	<td colspan='2'></td>";
 													}
+													else if($holFri && isset($friTimeIn) && isset($friTimeOut))
+													{
+														Print 	"	<td colspan='2'></td>";
+													}
 												}
 												if(!$satAbsent)
 												{
@@ -1707,6 +1724,10 @@
 														<td>Time Out:<br>". trim($NSsatTimeOut) ."</td>";
 													}
 													else if($payrollRow == '3' && !$holSat && !$satAbsent && !$satNoWork)
+													{
+														Print 	"	<td colspan='2'></td>";
+													}
+													else if($holSat && isset($satTimeIn) && isset($satTimeOut))
 													{
 														Print 	"	<td colspan='2'></td>";
 													}
@@ -1726,6 +1747,10 @@
 														{
 															Print 	"	<td colspan='2'></td>";
 														}
+														else if($holSun && isset($sunTimeIn) && isset($sunTimeOut))
+													{
+														Print 	"	<td colspan='2'></td>";
+													}
 
 													}
 												}
@@ -1741,6 +1766,10 @@
 													{
 														Print 	"	<td colspan='2'></td>";
 													}
+													else if($holMon && isset($monTimeIn) && isset($monTimeOut))
+													{
+														Print 	"	<td colspan='2'></td>";
+													}
 												}
 												if(!$tueAbsent)
 												{
@@ -1751,6 +1780,10 @@
 														<td>Time Out:<br>". trim($NStueTimeOut) ."</td>";
 													}
 													else if($payrollRow == '3' && !$holTue && !$tueAbsent && !$tueNoWork)
+													{
+														Print 	"	<td colspan='2'></td>";
+													}
+													else if($holTue && isset($tueTimeIn) && isset($tueTimeOut))
 													{
 														Print 	"	<td colspan='2'></td>";
 													}
