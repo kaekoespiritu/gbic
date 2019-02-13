@@ -1735,6 +1735,10 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 								{
 									Print 	"	<td colspan='2'></td>";
 								}
+								else if($holWed && isset($wedTimeIn) && isset($wedTimeOut))
+								{
+									Print 	"	<td colspan='2'></td>";
+								}
 							}
 							if(!$thuAbsent)
 							{
@@ -1746,6 +1750,10 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 									<td>Time Out:<br>". trim($NSthuTimeOut) ."</td>";
 								}
 								else if($payrollRow == '3' && !$holThu && !$thuAbsent && !$thuNoWork)
+								{
+									Print 	"	<td colspan='2'></td>";
+								}
+								else if($holThu && isset($thuTimeIn) && isset($thuTimeOut))
 								{
 									Print 	"	<td colspan='2'></td>";
 								}
@@ -1762,6 +1770,10 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 								{
 									Print 	"	<td colspan='2'></td>";
 								}
+								else if($holFri && isset($friTimeIn) && isset($friTimeOut))
+								{
+									Print 	"	<td colspan='2'></td>";
+								}
 							}
 							if(!$satAbsent)
 							{
@@ -1772,6 +1784,10 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 									<td>Time Out:<br>". trim($NSsatTimeOut) ."</td>";
 								}
 								else if($payrollRow == '3' && !$holSat && !$satAbsent && !$satNoWork)
+								{
+									Print 	"	<td colspan='2'></td>";
+								}
+								else if($holSat && isset($satTimeIn) && isset($satTimeOut))
 								{
 									Print 	"	<td colspan='2'></td>";
 								}
@@ -1791,6 +1807,10 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 									{
 										Print 	"	<td colspan='2'></td>";
 									}
+									else if($holSun && isset($sunTimeIn) && isset($sunTimeOut))
+									{
+										Print 	"	<td colspan='2'></td>";
+									}
 
 								}
 							}
@@ -1806,6 +1826,10 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 								{
 									Print 	"	<td colspan='2'></td>";
 								}
+								else if($holMon && isset($monTimeIn) && isset($monTimeOut))
+								{
+									Print 	"	<td colspan='2'></td>";
+								}
 							}
 							if(!$tueAbsent)
 							{
@@ -1816,6 +1840,10 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 									<td>Time Out:<br>". trim($NStueTimeOut) ."</td>";
 								}
 								else if($payrollRow == '3' && !$holTue && !$tueAbsent && !$tueNoWork)
+								{
+									Print 	"	<td colspan='2'></td>";
+								}
+								else if($holTue && isset($tueTimeIn) && isset($tueTimeOut))
 								{
 									Print 	"	<td colspan='2'></td>";
 								}
