@@ -100,6 +100,10 @@
 								$cutoffBool = false;// Boolean for the suceeding week after the initial cutoff
 								$cutoffClearPlaceholderBool = false;
 								$cutoffInitialDate = '';// Placeholder for the start of the suceeding date after the cutoff
+
+								$selectionArrWeek = array();
+								$selectionArrMonth = array();
+								$selectionArrYear = array();
 								while($payrollDateArr = mysql_fetch_assoc($payrollDQuery))
 								{
 									
@@ -132,16 +136,16 @@
 										{
 											if($_POST['date'] == $payDay)
 											{
-												Print "<option value = '".$payDay."' selected>".$payrollStartDate." - ".$payrollEndDate."</option>";
+												array_push($selectionArrWeek, $payDay."-".$payrollStartDate."-".$payrollEndDate."-selected");
 											}
 											else
 											{
-												Print "<option value = '".$payDay."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
+												array_push($selectionArrWeek, $payDay."-".$payrollStartDate."-".$payrollEndDate);
 											}
 										}
 										else
 										{
-											Print "<option value = '".$payDay."'>".$payrollStartDate." - ".$payrollEndDate."</option>";
+											array_push($selectionArrWeek, $payDay."-".$payrollStartDate."-".$payrollEndDate);
 										}
 									}
 									else if($_GET['period'] == 'month')
@@ -156,16 +160,16 @@
 											{
 												if($_POST['date'] == $payrollMonth." ".$payrollYear)
 												{
-													Print "<option value = '".$payrollMonth." ".$payrollYear."' selected>".$payrollMonth." ".$payrollYear."</option>";
+													array_push($selectionArrMonth, $payrollMonth."-".$payrollYear."-selected");
 												}
 												else
 												{
-													Print "<option value = '".$payrollMonth." ".$payrollYear."'>".$payrollMonth." ".$payrollYear."</option>";
+													array_push($selectionArrMonth, $payrollMonth."-".$payrollYear);
 												}
 											}
 											else
 											{
-												Print "<option value = '".$payrollMonth." ".$payrollYear."'>".$payrollMonth." ".$payrollYear."</option>";
+												array_push($selectionArrMonth, $payrollMonth."-".$payrollYear);
 											}
 										}
 										$monthNoRep = $payrollMonth." ".$payrollYear;
@@ -182,16 +186,16 @@
 											{
 												if($_POST['date'] == $payrollYear)
 												{
-													Print "<option value = '".$payrollYear."' selected>".$yearBef." - ".$payrollYear."</option>";
+													array_push($selectionArrYear, $payrollYear."-".$yearBef."-selected");
 												}
 												else
 												{
-													Print "<option value = '".$payrollYear."'>".$yearBef." - ".$payrollYear."</option>";
+													array_push($selectionArrYear, $payrollYear."-".$yearBef);
 												}
 											}
 											else
 											{
-												Print "<option value = '".$payrollYear."'>".$yearBef." - ".$payrollYear."</option>";
+												array_push($selectionArrYear, $payrollYear."-".$yearBef);
 											}
 											
 										}
@@ -206,6 +210,62 @@
 									if(mysql_num_rows($cutoffQuery) > 0)
 									{
 										$cutoffBool = true;// set to true, to trigger the next payroll that it has an extended attendance
+									}
+								}
+
+								// week
+								$revSelectionArrWeek = array_reverse($selectionArrWeek);
+								// month
+								$revSelectionArrMonth = array_reverse($selectionArrMonth);
+								// year
+								$revSelectionArrYear = array_reverse($selectionArrYear);
+
+								// week
+								if($_GET['period'] == 'week')
+								{
+									foreach($revSelectionArrWeek as $selection)
+									{
+										$selectExp = explode("-", $selection);
+										if(count($selectExp) == 4)
+										{
+											Print "<option value = '".$selectExp[0]."' selected>".$selectExp[1]." - ".$selectExp[2]."</option>";
+										}
+										else
+										{
+											Print "<option value = '".$selectExp[0]."'>".$selectExp[1]." - ".$selectExp[2]."</option>";
+										}
+									}
+								}
+								// month
+								else if($_GET['period'] == 'month')
+								{
+									foreach($revSelectionArrMonth as $selection)
+									{
+										$selectExp = explode("-", $selection);
+										if(count($selectExp) == 3)
+										{
+											Print "<option value = '".$selectExp[0]." ".$selectExp[1]."' selected>".$selectExp[0]." ".$selectExp[1]."</option>";
+										}
+										else
+										{
+											Print "<option value = '".$selectExp[0]." ".$selectExp[1]."'>".$selectExp[0]." ".$selectExp[1]."</option>";
+										}
+									}
+								}
+								// year
+								else if($_GET['period'] == 'year')
+								{
+									foreach($revSelectionArrYear as $selection)
+									{
+										$selectExp = explode("-", $selection);
+										if(count($selectExp) == 3)
+										{
+											Print "<option value = '".$selectExp[0]."' selected>".$selectExp[1]." - ".$selectExp[0]."</option>";
+										}
+										else
+										{
+											Print "<option value = '".$selectExp[0]."'>".$selectExp[1]." - ".$selectExp[0]."</option>";
+										}
 									}
 								}
 							}
