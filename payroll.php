@@ -2345,7 +2345,7 @@ $disableComputeAdj = 0; // Incremental Value to check if employee has no attenda
 											</div>';
 										$toolsCounter++;
 										$overallToolCost += $toolsArr['cost'] * $toolsArr['quantity'];
-										Print "<script>alert('".$toolsArr['quantity']."')</script>";
+										// Print "<script>alert('".$toolsArr['quantity']."')</script>";
 									}
 								}
 								
