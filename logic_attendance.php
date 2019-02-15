@@ -396,7 +396,7 @@ if($dateRows > 0)// Updating attendance
 			$empid = $_POST['empid'][$counter];
 
 			//Make Algorithm that will check if this employee is AWOL
-			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC LIMIT $isSunday";
+			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT $isSunday";
 
 			// $Awol = "SELECT * FROM attendance WHERE empid = '$empid' and date != '$date' ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC LIMIT 7";
 			$AwolQuery = mysql_query($Awol);
@@ -417,9 +417,14 @@ if($dateRows > 0)// Updating attendance
 					}
 				}
 				if($loopCounter == 0)
+				{
+
 					$end = $AwolChecker['date'];
-				if($loopCounter == 6)
+				}
+				if($AwolCounter == 6)
+				{
 					$start = $AwolChecker['date'];
+				}
 
 				$loopCounter++;
 			}
@@ -821,7 +826,8 @@ else// NEW attendance
 			$empid = $_POST['empid'][$counter];
 
 			//Make Algorithm that will check if this employee is AWOL
-			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC LIMIT $isSunday";
+			$Awol = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$day7', '%M %e, %Y') AND STR_TO_DATE('$day1', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT $isSunday";
+			// echo "<script>alert('".$Awol."')</script>";//dito
 
 			$AwolQuery = mysql_query($Awol);
 			$AwolCounter = 0;
@@ -843,7 +849,10 @@ else// NEW attendance
 				}
 					
 				if($AwolCounter >= 6)
+				{
+					// echo "<script>alert('".$AwolCounter." - ".$AwolChecker['date']."')</script>";
 					$start = $AwolChecker['date'];
+				}
 			}
 
 			if($AwolCounter >= 6)
