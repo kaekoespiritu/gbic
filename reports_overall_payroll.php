@@ -82,6 +82,7 @@
 							$cutoffBool = false;// Boolean for the suceeding week after the initial cutoff
 							$cutoffClearPlaceholderBool = false;
 							$cutoffInitialDate = '';// Placeholder for the start of the suceeding date after the cutoff
+							$selectionArr = array();
 							while($PdaysOptions = mysql_fetch_assoc($payrollDaysQuery))
 							{
 								$payDay = $PdaysOptions['date'];
@@ -111,16 +112,16 @@
 								{
 									if($_POST['payrollDate'] == $payDay)
 									{
-										Print "<option value='".$payDay."' selected>".$startDate." - ".$endDate."</option>";
+										array_push($selectionArr, $payDay."-".$startDate."-".$endDate."-selected");
 									}
 									else
 									{
-										Print "<option value='".$payDay."'>".$startDate." - ".$endDate."</option>";
+										array_push($selectionArr, $payDay."-".$startDate."-".$endDate);
 									}
 								}
 								else
 								{
-									Print "<option value='".$payDay."'>".$startDate." - ".$endDate."</option>";
+									array_push($selectionArr, $payDay."-".$startDate."-".$endDate);
 								}
 
 								// Early cutoff Reset
@@ -132,6 +133,19 @@
 								if(mysql_num_rows($cutoffQuery) > 0)
 								{
 									$cutoffBool = true;// set to true, to trigger the next payroll that it has an extended attendance
+								}
+							}
+							$revSelectionArr = array_reverse($selectionArr);// Reverse array
+							foreach($revSelectionArr as $selection)
+							{
+								$selectExp = explode("-", $selection);
+								if(count($selectExp) == 4)
+								{
+									Print "<option value = '".$selectExp[0]."' selected>".$selectExp[1]." - ".$selectExp[2]."</option>";
+								}
+								else
+								{
+									Print "<option value = '".$selectExp[0]."'>".$selectExp[1]." - ".$selectExp[2]."</option>";
 								}
 							}
 						}

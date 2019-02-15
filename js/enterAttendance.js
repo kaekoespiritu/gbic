@@ -1424,14 +1424,14 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 						// deduct nightdiff if timeout minutes is greater than timein minutes
 						if(nightdiff != "")
 						{
-							if(timeinmin1 > timeoutmin1)
-							{
-								nightdiff--;
-							}
-							if(timeinmin2 > timeoutmin2)
-							{
-								nightdiff--;
-							}
+							// if(timeinmin1 > timeoutmin1)
+							// {
+							// 	nightdiff--;
+							// }
+							// if(timeinmin2 > timeoutmin2)
+							// {
+							// 	nightdiff--;
+							// }
 						}
 						// if(nightdiffBool == false && nightdiff == "")
 						// 	nightdiffBool = true;
@@ -2184,14 +2184,14 @@ function computeTime(row, timeinhour1,timeinmin1,timeouthour1,timeoutmin1,timein
 					// deduct nightdiff if timeout minutes is greater than timein minutes
 					if(nightdiff != "")
 					{
-						if(timeinmin1 > timeoutmin1)
-						{
-							nightdiff--;
-						}
-						if(timeinmin2 > timeoutmin2)
-						{
-							nightdiff--;
-						}
+						// if(timeinmin1 > timeoutmin1)
+						// {
+						// 	nightdiff--;
+						// }
+						// if(timeinmin2 > timeoutmin2)
+						// {
+						// 	nightdiff--;
+						// }
 					}
 					// console.log("nightdiffBool: "+ nightdiffBool);
 					// if(nightdiffBool == false && nightdiff == "")
@@ -2883,7 +2883,7 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 			{
 				if(!isSunday)
 				{
-					console.log("1) timein1: "+timeinhour1+" / timeout1: "+timeouthour1+" | timein2: "+timeinhour2+" / timeout2: "+timeouthour2+" | timein3: "+timeinhour3+" / timeout3: "+timeouthour3);
+					console.log("ND 1) timein1: "+timeinhour1+" / timeout1: "+timeouthour1+" | timein2: "+timeinhour2+" / timeout2: "+timeouthour2+" | timein3: "+timeinhour3+" / timeout3: "+timeouthour3);
 					if ((timeinhour1 <= 22 && timeouthour1 >= 22) ||// pos1 ~ 6
 						(timeinhour1 <= 22 && timeouthour1 <= 6) ||// pos7 ~ 8
 						(timeinhour2 <= 22 && timeouthour2 >= 22) ||// pos9 ~ 10
@@ -3147,14 +3147,14 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					// deduct nightdiff if timeout minutes is greater than timein minutes
 					if(nightdiff != "" || nightdiff == 0)
 					{
-						if(timeinmin1 > timeoutmin1)
-						{
-							nightdiff--;
-						}
-						if(timeinmin2 > timeoutmin2)
-						{
-							nightdiff--;
-						}
+						// if(timeinmin1 > timeoutmin1)
+						// {
+						// 	nightdiff--;
+						// }
+						// if(timeinmin2 > timeoutmin2)
+						// {
+						// 	nightdiff--;
+						// }
 						// if(timeinmin3 > timeoutmin3)
 						// {
 						// 	// nightdiff--;
@@ -3966,14 +3966,14 @@ function computeTimeNightshift( row, timeinhour1, timeinmin1, timeouthour1, time
 					// deduct nightdiff if timeout minutes is greater than timein minutes
 					if(nightdiff != "")
 					{
-						if(timeinmin1 > timeoutmin1)
-						{
-							nightdiff--;
-						}
-						if(timeinmin2 > timeoutmin2)
-						{
-							nightdiff--;
-						}
+						// if(timeinmin1 > timeoutmin1)
+						// {
+						// 	nightdiff--;
+						// }
+						// if(timeinmin2 > timeoutmin2)
+						// {
+						// 	nightdiff--;
+						// }
 						// if(timeinmin3 > timeoutmin3)
 						// {
 						// 	nightdiff--;
