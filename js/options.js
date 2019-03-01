@@ -65,21 +65,21 @@
 
 		
 		$('#siteNameValidate').on('keypress', function (e) {
-		    if (/^[a-zA-Z0-9\.\b]+$/.test(String.fromCharCode(e.keyCode))) {
+		    if (/^[a-zA-Z0-9 \.\b]+$/.test(String.fromCharCode(e.keyCode))) {
 		        return;
 		    } else {
 		        e.preventDefault();
 		    }
 		});
 		$('#positionNameValidate').on('keypress', function (e) {
-		    if (/^[a-zA-Z0-9\.\b]+$/.test(String.fromCharCode(e.keyCode))) {
+		    if (/^[a-zA-Z0-9 \.\b]+$/.test(String.fromCharCode(e.keyCode))) {
 		        return;
 		    } else {
 		        e.preventDefault();
 		    }
 		});
 		$('#bankNameValidate').on('keypress', function (e) {
-		    if (/^[a-zA-Z0-9\.\b]+$/.test(String.fromCharCode(e.keyCode))) {
+		    if (/^[a-zA-Z0-9 \.\b]+$/.test(String.fromCharCode(e.keyCode))) {
 		        return;
 		    } else {
 		        e.preventDefault();
