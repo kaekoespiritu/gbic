@@ -427,6 +427,7 @@ function getDay($day)
 //Days attended
 	$daysAttended = $_POST['daysAttended'] + $adjWorkingDays;
 	$overallWorkDays = $adjWorkingDays;
+	echo "first ".$overallWorkDays."<br>";
 //Daily Workhours ----------------------------------------------------------------------
 //if employee is absent on these days Post value will not be available
 	$WorkHrsArr = "";//This is to array all these values
@@ -528,6 +529,7 @@ function getDay($day)
 					}
 
 					$overallWorkDays++; // add regular work day
+					echo "second ".$overallWorkDays."<br>";
 				}
 				else 
 				{
@@ -547,13 +549,15 @@ function getDay($day)
 						$adjOthrs += $sunExplode[0]; // adding sunday OT hours
 					}
 
-					$overallWorkDays += $adjOthrs; // add hr/min less than 8
+					$overallWorkDays += ($adjOthrs/8); // add hr/min less than 8
+					echo "third ".$overallWorkDays."<br>";
 				}
 			}
 			
 			if($adjSundayHrs != 0 || $adjSundayHrs != 0.00)
 			{
 				$overallWorkDays++;
+				echo "fourth ".$overallWorkDays."<br>";
 			}
 		}	
 	}
@@ -617,6 +621,7 @@ function getDay($day)
 			Print "<script>console.log('under: ".$hrsCheck."')</script>";
 			$overallWorkDays = ($hrsCheck / 8) + $overallWorkDays;
 			$overallWorkDays = numberExactFormat($overallWorkDays,2,'.', false);
+			echo "fifth ".$overallWorkDays."<br>";
 			// $overallWorkDays++;
 			$overallAllowance = ($hrsCheck / 8) + $overallAllowance;
 			$overallAllowance = numberExactFormat($overallAllowance,2,'.', false);
@@ -625,6 +630,7 @@ function getDay($day)
 		{
 			$overallWorkDays++;
 			$overallAllowance++;
+			echo "sixth ".$overallWorkDays."<br>";
 		}
 	}
 
