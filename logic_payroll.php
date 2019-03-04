@@ -541,15 +541,15 @@ function getDay($day)
 						$sunHrs = $sunExplode[0];
 						$sunMins = $sunExplode[1] / 60;
 
-						$adjOthrs += $sunHrs + $sunMins; // adding sunday OT hour + min
+						$sunTime = $sunHrs + $sunMins; // adding sunday OT hour + min
 
 					}
 					else
 					{
-						$adjOthrs += $sunExplode[0]; // adding sunday OT hours
+						$sunTime = $sunExplode[0]; // adding sunday OT hours
 					}
 
-					$overallWorkDays += ($adjOthrs/8); // add hr/min less than 8
+					$overallWorkDays += ($sunTime/8); // add hr/min less than 8
 					echo "third ".$overallWorkDays."<br>";
 				}
 			}
@@ -647,13 +647,16 @@ function getDay($day)
 	if(!empty($_POST['totalOverTime']))
 	{
 		$totalOT = $_POST['totalOverTime'] + $adjOthrs;//Total Overtime by employee
-
+		echo "1.1: ".$_POST['totalOverTime']."<br>";
+		echo "1.2: ".$adjOthrs."<br>";
+		echo "1: ".$totalOT."<br>";
 		Print "<script>console.log('totalOT: ".$totalOT." adjOthrs: ".$adjOthrs."')</script>";
 		$compOT = $totalOT * $OtRatePerHour;//Computed Overtime
 	}
 	else if($adjOthrs != 0)
 	{
 		$totalOT = $adjOthrs;
+		echo "2: ".$totalOT."<br>";
 		$compOT = $totalOT * $OtRatePerHour;//Computed Overtime
 		Print "<script>console.log('totalOT: ".$totalOT." adjOthrs: ".$adjOthrs."')</script>";
 	}
