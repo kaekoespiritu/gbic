@@ -2919,6 +2919,11 @@
 							    </div>';
 							    
 							    	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($payrollArr['tools_paid']);
+
+							    	if(mysql_num_rows($payrollOutstandingQuery) > 0)
+									{
+										$grandTotal -= abs($payrollOutstandingArr['total_salary']);
+									}
 							    	
 							    	$grandTotal = $grandTotal;
 							    Print '
@@ -2928,6 +2933,8 @@
 							    		Print "0 (".abs($grandTotal).")";
 							    	else
 							    		Print numberExactFormat($grandTotal, 2, '.', true);
+
+							    	// print " | logic_payroll: ".$payrollArr['total_salary'];
 							    Print '</u></h3>
 								</div>
 							  </div>

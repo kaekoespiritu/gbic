@@ -437,7 +437,28 @@
 													'.$payrollArr['old_vale'].'
 												</td>
 												<td><!-- vale -->
-													'.$payrollArr['new_vale'].'
+													';
+
+													$payrollDay = date('F d, Y', strtotime('+1 day', strtotime($endDate)));
+						
+													$payrollOutstandingSql = "SELECT total_salary FROM payroll WHERE total_salary < 0 AND empid = '$emplid' AND date = '$payrollDay' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
+
+													$payrollOutstandingQuery = mysql_query($payrollOutstandingSql);
+													$payrollOutstanding = 0;
+													while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
+													{
+														if($outStandingCheck['total_salary'] < 0.00){
+															$payrollOutstanding = abs($outStandingCheck['total_salary']);
+															$payrollOutstanding += $payrollArr['new_vale'];
+															Print $payrollOutstanding;
+														}
+														else {
+															$payrollOutstanding = $payrollArr['new_vale'];
+															Print $payrollOutstanding;
+														}
+													}
+
+													Print '
 												</td>
 												<td><!-- sss loan -->
 													'.$payrollArr['loan_sss'].'
