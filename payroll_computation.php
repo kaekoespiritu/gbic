@@ -703,8 +703,8 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 			    	</h4>
 			    </div>
 			    <?php
-			    	Print "<script>console.log('logic_payroll - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".abs($payrollArr['tools_paid'])."')</script>";
-			    	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($payrollArr['tools_paid']) - abs($payrollOutstanding);
+			    	Print "<script>console.log('logic_payroll - totalEarnings: ".abs($totalEarnings)." | contributions: ".abs($contributions)." | totalLoans: ".abs($totalLoans)." | tools_paid: ".abs($payrollArr['tools_paid'])." | payroll_outstanding: ".abs($payrollOutstanding)."')</script>";
+			    	$grandTotal = abs($totalEarnings) - abs($contributions) - abs($totalLoans) - abs($payrollArr['tools_paid']);
 
 			    	Print "<script>console.log('GRAND TOTAL: ".$grandTotal."')</script>";
 

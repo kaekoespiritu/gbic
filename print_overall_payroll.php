@@ -222,8 +222,27 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 			$activeSheet->setCellValue('V'.$rowCounter, $payrollArr['pagibig']);//Pagibig
 		if(!$OldValeBool)
 			$activeSheet->setCellValue('W'.$rowCounter, $payrollArr['old_vale']);//old vale
-		if(!$NewValeBool)
-			$activeSheet->setCellValue('X'.$rowCounter, $payrollArr['new_vale']);//vale
+
+		$payrollDay = date('F d, Y', strtotime('+1 day', strtotime($endDate)));
+						
+		$payrollOutstandingSql = "SELECT total_salary FROM payroll WHERE total_salary < 0 AND empid = '$empid' AND date = '$payrollDay' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
+
+		$payrollOutstandingQuery = mysql_query($payrollOutstandingSql);
+		$payrollOutstanding = 0.00;
+		while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
+		{
+			if($outStandingCheck['total_salary'] < 0.00){
+				$payrollOutstanding = abs($outStandingCheck['total_salary']);
+				$payrollOutstanding += $payrollArr['new_vale'];
+			}
+			else {
+				$payrollOutstanding = $payrollArr['new_vale'];
+			}
+		}
+		
+		$activeSheet->setCellValue('X'.$rowCounter, $payrollOutstanding);//vale
+		
+
 		if(!$LoanSSSBool)
 			$activeSheet->setCellValue('Y'.$rowCounter, $payrollArr['loan_sss']);//SSS loan
 		if(!$LoanPagibigBool)

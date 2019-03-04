@@ -529,7 +529,6 @@ function getDay($day)
 					}
 
 					$overallWorkDays++; // add regular work day
-					echo "second ".$overallWorkDays."<br>";
 				}
 				else 
 				{
@@ -557,7 +556,6 @@ function getDay($day)
 			if($adjSundayHrs != 0 || $adjSundayHrs != 0.00)
 			{
 				$overallWorkDays++;
-				echo "fourth ".$overallWorkDays."<br>";
 			}
 		}	
 	}
@@ -621,7 +619,6 @@ function getDay($day)
 			Print "<script>console.log('under: ".$hrsCheck."')</script>";
 			$overallWorkDays = ($hrsCheck / 8) + $overallWorkDays;
 			$overallWorkDays = numberExactFormat($overallWorkDays,2,'.', false);
-			echo "fifth ".$overallWorkDays."<br>";
 			// $overallWorkDays++;
 			$overallAllowance = ($hrsCheck / 8) + $overallAllowance;
 			$overallAllowance = numberExactFormat($overallAllowance,2,'.', false);
@@ -630,7 +627,6 @@ function getDay($day)
 		{
 			$overallWorkDays++;
 			$overallAllowance++;
-			echo "sixth ".$overallWorkDays."<br>";
 		}
 	}
 
@@ -733,11 +729,9 @@ function getDay($day)
 
 			$holidayNum = count($_POST['holidayDate']);//counts the number of holiday in that week
 			$holidaysTogether = false;
-			// echo "<script>alert('yes!!')</script>";
 			// Check if multiple holidays are beside each other
 			if($holidayNum > 1)
 			{
-				// echo "<script>alert('2')</script>";
 				for($count = 0; $count < $holidayNum; $count++)
 				{
 					if($count != $holidayNum - 1)
