@@ -193,6 +193,9 @@ $rowCounter = 4; //start for the data in the row of excel
 		}
 	}
 
+	if($outStandingCheck == 'FALSE')
+		$payrollOutstanding = $payrollArr['new_vale'];
+
 	$activeSheet->setCellValue('X'.$rowCounter, $payrollOutstanding);//vale
 
 	if(!$LoanSSSBool)

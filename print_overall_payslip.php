@@ -379,6 +379,9 @@ for($count = 0; $count <= $loopCount; $count++)
 					}
 				}
 
+				if($outStandingCheck == 'FALSE')
+					$payrollOutstanding = $payrollArr['new_vale'];
+
 				$activeSheet->setCellValue($cellB.$newValeDataCounter, $payrollOutstanding);
 
 				//Loans

@@ -218,6 +218,9 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 	}
 }
 
+if($outStandingCheck == 'FALSE')
+	$payrollOutstanding = $payrollArr['new_vale'];
+
 $activeSheet->setCellValue('B15', $payrollOutstanding);
 
 //Loans

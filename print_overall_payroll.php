@@ -239,6 +239,9 @@ while($siteArr = mysql_fetch_assoc($siteQuery))
 				$payrollOutstanding = $payrollArr['new_vale'];
 			}
 		}
+
+		if($outStandingCheck == 'FALSE')
+			$payrollOutstanding = $payrollArr['new_vale'];
 		
 		$activeSheet->setCellValue('X'.$rowCounter, $payrollOutstanding);//vale
 		
