@@ -193,8 +193,12 @@ $rowCounter = 4; //start for the data in the row of excel
 		}
 	}
 
-	if($outStandingCheck == 'FALSE')
-		$payrollOutstanding = $payrollArr['new_vale'];
+	if($outStandingCheck == 'FALSE' || !$outStandingCheck) {
+		if($payrollArr['new_vale'] > 0)
+				$payrollOutstanding = $payrollArr['new_vale'];
+			else
+				$payrollOutstanding = '';
+	}
 
 	$activeSheet->setCellValue('X'.$rowCounter, $payrollOutstanding);//vale
 

@@ -379,8 +379,12 @@ for($count = 0; $count <= $loopCount; $count++)
 					}
 				}
 
-				if($outStandingCheck == 'FALSE')
-					$payrollOutstanding = $payrollArr['new_vale'];
+				if($outStandingCheck == 'FALSE' || !$outStandingCheck) {
+					if($payrollArr['new_vale'] > 0)
+						$payrollOutstanding = $payrollArr['new_vale'];
+					else
+						$payrollOutstanding = '';
+				}
 
 				$activeSheet->setCellValue($cellB.$newValeDataCounter, $payrollOutstanding);
 

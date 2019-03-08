@@ -378,7 +378,7 @@
 								$payrollOutstandingSql = "SELECT total_salary FROM payroll WHERE total_salary < 0 AND empid = '$empid' AND date = '$payrollDay' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
 
 								$payrollOutstandingQuery = mysql_query($payrollOutstandingSql);
-								$payrollOutstanding = 0;
+								$payrollOutstanding = 0.00;
 								while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 								{
 									if($outStandingCheck['total_salary'] < 0.00){
@@ -387,6 +387,15 @@
 									}
 									else {
 										$payrollOutstanding = $payrollArr['new_vale'];
+									}
+								}
+
+								if($outStandingCheck == 'FALSE' || !$outStandingCheck) {
+									if($payrollArr['new_vale'] > 0) {
+										$payrollOutstanding = $payrollArr['new_vale'];
+									}
+									else {
+										$payrollOutstanding = '0.00';
 									}
 								}
 
