@@ -295,7 +295,9 @@
 
 							//Computes the 13th month
 							// $overallCounter = count($secondArrayChecker);
-							$overallCounter = 20;
+							// $overallCounter = 20;
+							$overallCounter = count(array_filter($secondArrayChecker));
+							echo "  |". $overallCounter."|  ";
 							// while($attArr = mysql_fetch_assoc($attQuery))
 							for($count = 0; $count < $overallCounter; $count++ )
 							{
@@ -376,13 +378,14 @@
 							// INCLUDE THE ATTENDANCE FROM THE LAST PAYROLL TO THE CURRENT DAY
 							//###################
 							//Gets the start payroll of the next payroll
-							if(!$remainderDateBool)
+							if(!$remainderDateBool || isset($endDate))
+							{
 								$dateToPresent = date('F d, Y', strtotime('+1 day', strtotime($endDate)));
+							}
 							else
 							{
 								$dateToPresent = $pastToDateThirteenthPay;
 							}
-
 
 							if($dateToPresent != $dateToday)
 							{
@@ -449,7 +452,7 @@
 									Print "
 										<tr>
 											<td>
-												".$startDate." - Present
+												".$dateToPresent." - Present
 											</td>
 											<td>
 												".numberExactFormat($thirteenthMonth, 2, '.', true)."
@@ -932,7 +935,7 @@
 			changeYear: true,
 			dateFormat: 'MM dd, yy',
 			showAnim: 'blind',
-			maxDate: new Date(),
+			// maxDate: new Date(),
 			//minDate: $("#datePickerMin").val(), 
 			beforeShow: function(){    
 				$(".ui-datepicker").css('font-size', 15) 
@@ -948,7 +951,7 @@
 			changeYear: true,
 			dateFormat: 'MM dd, yy',
 			showAnim: 'blind',
-			maxDate: new Date(),
+			// maxDate: new Date(),
 			//minDate: $("#datePickerMin").val(), 
 			beforeShow: function(){    
 				$(".ui-datepicker").css('font-size', 15) 
@@ -1016,7 +1019,7 @@
 		function load_data(fromDate, toDate, empid)
 		{
 			$.ajax({
-		   	url:"13thmonthpay_table.php",
+		   	url:"fetch_13thmonthpay_table.php",
 		   	method:"POST",
 		   	data:{
 		   		fromDate: fromDate,

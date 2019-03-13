@@ -60,10 +60,9 @@ $activeSheet->mergeCells('A1:'.$columnLet.'1');// Employee name 13thmonth pay
 	$pastThirteenthDate = "";
 	$thirteenthRemainder = 0;
 
-
+	$noRemainderBool = false;
 	if(mysql_num_rows($thirteenthCheckQuery) == 1)
 	{
-
 		$thirteenthCheckArr = mysql_fetch_assoc($thirteenthCheckQuery);
 		$pastThirteenthDate = "AND STR_TO_DATE(date, '%M %e, %Y ') >= STR_TO_DATE('".$thirteenthCheckArr['to_date']."', '%M %e, %Y ')";
 		$thirteenthRemainder = $thirteenthCheckArr['amount'] - $thirteenthCheckArr['received'];
@@ -78,10 +77,13 @@ $activeSheet->mergeCells('A1:'.$columnLet.'1');// Employee name 13thmonth pay
 	else
 	{
 		$pastThirteenthDate = "AND STR_TO_DATE(date, '%M %e, %Y ') >= STR_TO_DATE('".$empArr['datehired']."', '%M %e, %Y ')";
+		$noRemainderBool = true;
 	}
+
 	$rowCounter = 3;// start of displaying of data
+
 	if($period == "week")
-	{
+	{	
 		$payrollDate = "SELECT DISTINCT date FROM payroll WHERE empid = '$empid' $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 		$payrollQuery = mysql_query($payrollDate) or die (mysql_error());
 		$dateLength = mysql_num_rows($payrollQuery);
@@ -89,6 +91,7 @@ $activeSheet->mergeCells('A1:'.$columnLet.'1');// Employee name 13thmonth pay
 		//adds the 13th month pay remainder if there is
 		$overallPayment = ($thirteenthRemainder != 0 ? $thirteenthRemainder : 0);
 
+		$remainderDateBool = false;
 		if($remainderBool)
 		{
 			if($thirteenthRemainder != 0)
@@ -98,10 +101,17 @@ $activeSheet->mergeCells('A1:'.$columnLet.'1');// Employee name 13thmonth pay
 				$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthRemainder, 2, '.', true));
 
 				$remainderBool = false;
+				$remainderDateBool = true;
 
 			}
 			
 		}
+		$monthNoRep = "";
+		$yearNoRep = "";
+
+		$cutoffBool = false;// Boolean for the suceeding week after the initial cutoff
+		$cutoffClearPlaceholderBool = false;
+		$cutoffInitialDate = '';// Placeholder for the start of the suceeding date after the cutoff
 
 		//Evaluates the attendance and compute the 13th monthpay
 		$overallDaysAttended = 0; // counter for total days attended
@@ -113,7 +123,7 @@ $activeSheet->mergeCells('A1:'.$columnLet.'1');// Employee name 13thmonth pay
 				$thirteenthBool = false;
 			}
 			$payDay = $payDateArr['date'];
-			$endDate =date('F d, Y', strtotime('-1 day', strtotime($payDateArr['date'])));
+			$endDate = date('F d, Y', strtotime('-1 day', strtotime($payDateArr['date'])));
 			$startDate = date('F d, Y', strtotime('-6 day', strtotime($endDate)));
 
 			// Check for early cutoff 
@@ -124,24 +134,33 @@ $activeSheet->mergeCells('A1:'.$columnLet.'1');// Employee name 13thmonth pay
 				$cutoffArr = mysql_fetch_assoc($cutoffQuery);
 				$startDate = $cutoffArr['start'];
 				$endDate = $cutoffArr['end'];
+
+				$cutoffInitialDate = date('F d, Y', strtotime('+1 day', strtotime($cutoffArr['end'])));
+			}
+
+			if($cutoffBool == true)
+			{
+				$startDate = $cutoffInitialDate;
+				$cutoffClearPlaceholderBool = true;// This is to reset the placeholder
+				$cutoffBool = false;// Reset the cutoffBoolean
+			}
+
+			if($noRemainderBool)
+			{
+				$attendance = "SELECT date, workhours, attendance FROM attendance WHERE  
+				empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('".$empArr['datehired']."', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
+
+				
+				$noRemainderBool = false;
 			}
 			else
 			{
-				// Check the before payroll for early cutoff to alter the begining day of the payroll
-				$suceedingCutoffPayroll = date('F d, Y', strtotime('-14 day', strtotime($payDay)));
-
-				$suceedingCutoffCheck = "SELECT * FROM early_payroll WHERE start = '$suceedingCutoffPayroll' LIMIT 1";
-				$suceedingCutoffQuery = mysql_query($suceedingCutoffCheck);
-				if(mysql_num_rows($suceedingCutoffQuery) > 0)
-				{
-					$cutoffArr = mysql_fetch_assoc($suceedingCutoffQuery);
-					$startDate = date('F d, Y', strtotime('+1 day', strtotime($cutoffArr['end'])));// Get the end payroll of the cutoff to get the start of the current payroll
-				}
+				$attendance = "SELECT date, workhours, attendance FROM attendance WHERE  
+				empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 			}
-			
-			// echo "<script>console.log('".$startDate." - ".$endDate."')</script>";
+				
+				
 
-			$attendance = "SELECT date, workhours, attendance FROM attendance WHERE  empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$startDate', '%M %e, %Y') AND STR_TO_DATE('$endDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 			$attChecker = mysql_query($attendance);
 			$attQuery = mysql_query($attendance);
 
@@ -151,26 +170,37 @@ $activeSheet->mergeCells('A1:'.$columnLet.'1');// Employee name 13thmonth pay
 			$arrayChecker = array();
 
 			// Adds attendance array to array checker
-			while($attArray = mysql_fetch_assoc($attChecker)) {
+			while($attArray = mysql_fetch_assoc($attChecker))
+			{
 				//exclude Holidays and Sundays
 
 				//Check if holiday
 				$holidayDateCheck = $attArray['date'];
-				$holidayChecker = "SELECT * FROM holiday WHERE date = '$holidayDateCheck'";
+				$holidayChecker = "SELECT * FROM holiday WHERE date = '$holidayDateCheck' LIMIT 1";
 				$holidayCheckQuery = mysql_query($holidayChecker) or die (mysql_error());
 				
 				//Check if Sunday
 				$date = $attArray['date'];
 				$day = date('l', strtotime($date));// check what day of the week
 
-				if(mysql_num_rows($holidayCheckQuery) == 0 && $day != "Sunday")
+				
+				if(mysql_num_rows($holidayCheckQuery) > 0)
+				{
+					$checkHoliday = mysql_fetch_assoc($holidayCheckQuery);
+					$regHolidayCheckBool = ($checkHoliday['type'] != "special" ? true : false);
+				}
+				else
+				{
+					$regHolidayCheckBool = true;
+				}
+
+				
+				if($regHolidayCheckBool && $day != "Sunday")
 					array_push($arrayChecker, $attArray);
 			}
 
 			// Removes duplicates from array checker
 			$secondArrayChecker = array_unique($arrayChecker, SORT_REGULAR);
-			
-			// print_r (array_keys($secondArrayChecker));
 
 			//Computes the 13th month
 			// $overallCounter = count($secondArrayChecker);
@@ -184,16 +214,27 @@ $activeSheet->mergeCells('A1:'.$columnLet.'1');// Employee name 13thmonth pay
 
 					$workHrs = $secondArrayChecker[$count]['workhours'];
 
-					$holidayChecker = "SELECT * FROM holiday WHERE date = '$date'";
+					$holidayChecker = "SELECT * FROM holiday WHERE date = '$date' LIMIT 1";
 					$holidayCheckQuery = mysql_query($holidayChecker) or die (mysql_error());
 
-					if(mysql_num_rows($holidayCheckQuery) == 0)
+					if(mysql_num_rows($holidayCheckQuery) > 0)
+					{
+						$checkHoliday = mysql_fetch_assoc($holidayCheckQuery);
+						$regHolidayCheckBool = ($checkHoliday['type'] != "special" ? true : false);
+						$attendedHoliday = ($checkHoliday['type'] == "regular" ? true : false);
+					}
+					else
+					{
+						$attendedHoliday = false;
+						$regHolidayCheckBool = true;
+					}
+
+					if($regHolidayCheckBool)// Include regular holidays. dont proceed if special holiday
 					{
 						// check if days are not duplicated
-						if(isset($secondArrayChecker[$count]['attendance']) && $secondArrayChecker[$count]['attendance'] == '2')//check if student is present
+						if(isset($secondArrayChecker[$count]['attendance']) && $secondArrayChecker[$count]['attendance'] == '2')//check if employee is present
 						{
-							// Print "<pre>"; print_r($secondArrayChecker); Print "</pre>";
-							if($secondArrayChecker[$count]['workhours'] >= 8)//check if employee attended 8hours
+							if($secondArrayChecker[$count]['workhours'] >= 8 || $attendedHoliday)//check if employee attended 8hours || regardless how many hours the employee rendered for that regular holiday
 							{
 								$daysAttended++;
 								$daysCompleted += 1;
@@ -205,80 +246,127 @@ $activeSheet->mergeCells('A1:'.$columnLet.'1');// Employee name 13thmonth pay
 						}
 					}
 				}
-				
 			}
 
 			$thirteenthMonth = ($daysCompleted * $empArr['rate']) / 12; 
 
 			$printBool = true;//enable printable
+
 			$activeSheet->setCellValue('A'.$rowCounter, $startDate." - ".$endDate);
 			$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthMonth, 2, '.', true));
 			$activeSheet->setCellValue('C'.$rowCounter, numberExactFormat($daysCompleted, 2, '.', true));
 			
+			$rowCounter++;// increment row
+			
 			$overallDaysAttended = $daysCompleted + $overallDaysAttended;
 			$overallPayment += $thirteenthMonth;
-			$rowCounter++;// increment row
+
+			// Early cutoff Reset
+			if($cutoffClearPlaceholderBool == true)
+			{
+				$cutoffInitialDate = '';
+				$cutoffClearPlaceholderBool = false;
+			}
+			if(mysql_num_rows($cutoffQuery) > 0)
+			{
+				$cutoffBool = true;// set to true, to trigger the next payroll that it has an extended attendance
+			}
 		}
 
-		//################
-		// INCLUDE THE ATTENDANCE FROM THE LAST PAYROLL TO THE CURRENT DAY
-		//###################
-		//Gets the start payroll of the next payroll
-		$dateToPresent = date('F d, Y', strtotime('+1 day', strtotime($endDate)));
-
-		if($dateToPresent != $dateToday)
+		if($printBool)
 		{
-			$checkLatestAtt = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') >= STR_TO_DATE('$dateToPresent', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
-			$checkLatestQuery = mysql_query($checkLatestAtt);
-			if(mysql_num_rows($checkLatestQuery) > 0)
+			//################
+			// INCLUDE THE ATTENDANCE FROM THE LAST PAYROLL TO THE CURRENT DAY
+			//###################
+			//Gets the start payroll of the next payroll
+			if(!$remainderDateBool || isset($endDate))
 			{
-				$arrayChecker = array(); // Set array to check if there is duplicate dates
-				$daysCompleted = 0;
-				while($latestAttendanceArr = mysql_fetch_assoc($checkLatestQuery))
+				$dateToPresent = date('F d, Y', strtotime('+1 day', strtotime($endDate)));
+			}
+			else
+			{
+				$dateToPresent = $pastToDateThirteenthPay;
+			}
+
+			if($dateToPresent != $dateToday)
+			{
+				$checkLatestAtt = "SELECT * FROM attendance WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') >= STR_TO_DATE('$dateToPresent', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC";
+				$checkLatestQuery = mysql_query($checkLatestAtt);
+				if(mysql_num_rows($checkLatestQuery) > 0)
 				{
-					// Checks if date is already in the array. if it is then skip the computation for this date
-					if(!in_array($latestAttendanceArr['date'], $arrayChecker))
+					$arrayChecker = array(); // Set array to check if there is duplicate dates
+					$daysCompleted = 0;
+					while($latestAttendanceArr = mysql_fetch_assoc($checkLatestQuery))
 					{
-						array_push($arrayChecker, $latestAttendanceArr['date']);// Push date inside 
-						$date = $latestAttendanceArr['date'];
-						$day = date('l', strtotime($date));// check what day of the week
-
-						$holidayChecker = "SELECT * FROM holiday WHERE date = '$date'";
-						$holidayCheckQuery = mysql_query($holidayChecker) or die (mysql_error());
-
-						if(mysql_num_rows($holidayCheckQuery) == 0 && $day != "Sunday")
+						// Checks if date is already in the array. if it is then skip the computation for this date
+						if(!in_array($latestAttendanceArr['date'], $arrayChecker))
 						{
-							if($latestAttendanceArr['attendance'] == '2')//check if student is present
+							array_push($arrayChecker, $latestAttendanceArr['date']);// Push date inside 
+							$date = $latestAttendanceArr['date'];
+							$day = date('l', strtotime($date));// check what day of the week
+
+							$holidayChecker = "SELECT * FROM holiday WHERE date = '$date'";
+							$holidayCheckQuery = mysql_query($holidayChecker) or die (mysql_error());
+
+							if(mysql_num_rows($holidayCheckQuery) > 0)
 							{
-								if($latestAttendanceArr['workhours'] < 8)//check if employee attended 8hours
+								$checkHoliday = mysql_fetch_assoc($holidayCheckQuery);
+								$regHolidayCheckBool = ($checkHoliday['type'] != "special" ? true : false);
+							}
+							else
+							{
+								$regHolidayCheckBool = true;
+							}
+
+							if($regHolidayCheckBool && $day != "Sunday")
+								array_push($arrayChecker, $attArray);
+
+							if(mysql_num_rows($holidayCheckQuery) > 0)
+							{
+								$checkHoliday = mysql_fetch_assoc($holidayCheckQuery);
+								$regHolidayCheckBool = ($checkHoliday['type'] != "special" ? true : false);
+								$attendedHoliday = ($checkHoliday['type'] == "regular" ? true : false);
+							}
+							else
+							{
+								$attendedHoliday = false;
+								$regHolidayCheckBool = true;
+							}
+
+							if($regHolidayCheckBool)// Include regular holidays. dont proceed if special holiday
+							{
+								if($latestAttendanceArr['attendance'] == '2')//check if student is present
 								{
-									$daysCompleted += ($latestAttendanceArr['workhours']/8);
-								}
-								else
-								{
-									$daysCompleted++;
+									if($latestAttendanceArr['workhours'] < 8)//check if employee attended 8hours
+									{
+										$daysCompleted += ($latestAttendanceArr['workhours']/8);
+									}
+									else if($latestAttendanceArr['workhours'] >= 8 || $attendedHoliday)
+									{
+										$daysCompleted++;
+									}
 								}
 							}
 						}
 					}
-				}
-				$thirteenthMonth = ($daysCompleted * $empArr['rate']) / 12;
-				$activeSheet->setCellValue('A'.$rowCounter, $startDate." - Present");
-				$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthMonth, 2, '.', true));
-				$activeSheet->setCellValue('C'.$rowCounter, numberExactFormat($daysCompleted, 2, '.', true));
+					$thirteenthMonth = ($daysCompleted * $empArr['rate']) / 12;
 
-				$overallDaysAttended = $daysCompleted + $overallDaysAttended;
-				$overallPayment += $thirteenthMonth;
-				$rowCounter++;// increment row
+					$activeSheet->setCellValue('A'.$rowCounter, $dateToPresent." - Present");
+					$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthMonth, 2, '.', true));
+					$activeSheet->setCellValue('C'.$rowCounter, numberExactFormat($daysCompleted, 2, '.', true));
+
+					$overallDaysAttended = $daysCompleted + $overallDaysAttended;
+					$overallPayment += $thirteenthMonth;
+					$rowCounter++;// increment row
+				}
 			}
-			
 		}
 	}
 	else if($period == "month")
 	{
 		$attendance = "SELECT DISTINCT date FROM attendance WHERE empid = '$empid' $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 		$attQuery = mysql_query($attendance);
-
+		
 		$daysAttended = 0;//counter for days attended
 		$noRepeat = null;
 		//adds the 13th month pay remainder if there is
@@ -300,12 +388,13 @@ $activeSheet->mergeCells('A1:'.$columnLet.'1');// Employee name 13thmonth pay
 		//Computes 13th monthpay per month
 		while($attDate = mysql_fetch_assoc($attQuery))
 		{
+			
 			if($thirteenthBool)
 			{
-
 				$pastToDateThirteenthPay = $attDate['date'];
 				$thirteenthBool = false;
 			}
+
 			$dateExploded = explode(" ", $attDate['date']);
 			$month = $dateExploded[0];
 			$year = $dateExploded[2];
@@ -315,15 +404,20 @@ $activeSheet->mergeCells('A1:'.$columnLet.'1');// Employee name 13thmonth pay
 				$attMonth = "SELECT * FROM attendance WHERE empid = '$empid' AND (date LIKE '$month%' AND date LIKE '%$year') $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 				$attMonthQuery = mysql_query($attMonth);
 
-
 				$thirteenthMonth = 0;
 				$daysAttended = 0;
-
+				$daysCompleted = 0;
+				$checkBool = true;
+				$checkCounter = 0;
+				$checkCount = mysql_num_rows($attMonthQuery);
 				//Computes 13th month per day of the month
 				while($attArr = mysql_fetch_assoc($attMonthQuery))
 				{ 
 					// Checks if date is already in the array. if it is then skip the computation for this date
-					if(!in_array($attArr['date'], $arrayChecker))
+					$sundayCheck = date('l', strtotime($attArr['date']));
+					$isSundayCheck = ($sundayCheck == "Sunday" ? false : true);
+
+					if(!in_array($attArr['date'], $arrayChecker) && $isSundayCheck)
 					{
 						array_push($arrayChecker, $attArr['date']);// Push date inside the array 
 						$date = $attArr['date'];
@@ -334,24 +428,38 @@ $activeSheet->mergeCells('A1:'.$columnLet.'1');// Employee name 13thmonth pay
 						$holidayChecker = "SELECT * FROM holiday WHERE date = '$date'";
 						$holidayCheckQuery = mysql_query($holidayChecker) or die (mysql_error());
 
-						if(mysql_num_rows($holidayCheckQuery) == 0 && $day != "Sunday")
+						if(mysql_num_rows($holidayCheckQuery) > 0)
+						{
+							$checkHoliday = mysql_fetch_assoc($holidayCheckQuery);
+							$regHolidayCheckBool = ($checkHoliday['type'] != "special" ? true : false);
+							$attendedHoliday = ($checkHoliday['type'] == "regular" ? true : false);
+						}
+						else
+						{
+							$attendedHoliday = false;
+							$regHolidayCheckBool = true;
+						}
+
+						if($regHolidayCheckBool)// Include regular holidays. dont proceed if special holiday
 						{
 							if($attArr['attendance'] == '2')//check if student is present
 							{
-								if($attArr['workhours'] < 8)//check if employee attended 8hours
+								if($attArr['workhours'] >= 8 || $attendedHoliday)
 								{
-									$daysAttended += ($attArr['workhours']/8);
+									$daysCompleted++;
 								}
-								else
+								else if($attArr['workhours'] < 8)//check if employee attended 8hours
 								{
-									$daysAttended++;
+									$daysCompleted += ($attArr['workhours']/8);
 								}
 							}
 						}
 					}	
 				}
-				$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
+				// echo "<script>console.log('".$daysCompleted."')</script>";
+				$thirteenthMonth = ($daysCompleted * $empArr['rate']) / 12; 
 				$printBool = true;//enable printable
+
 				$activeSheet->setCellValue('A'.$rowCounter, $month." ".$year);
 				$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthMonth, 2, '.', true));
 				$rowCounter++;// increment row
@@ -384,30 +492,11 @@ $activeSheet->mergeCells('A1:'.$columnLet.'1');// Employee name 13thmonth pay
 			}
 			
 		}
+		$arrayChecker = array(); // Set array to check if there is duplicate dates
 		//Computes 13th monthpay per month
 		while($attDate = mysql_fetch_assoc($attQuery))
 		{
-			$attendance = "SELECT DISTINCT date FROM attendance WHERE empid = '$empid' $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
-			$attQuery = mysql_query($attendance);
-
-			$daysAttended = 0;//counter for days attended
-			$noRepeat = null;
-			//adds the 13th month pay remainder if there is
-			$overallPayment = ($thirteenthRemainder != 0 ? $thirteenthRemainder : 0);
-
-			if($remainderBool)
-			{
-				if($thirteenthRemainder != 0)
-				{
-					$printBool = true;//enable printable
-					$activeSheet->setCellValue('A'.$rowCounter, '13th Month Pay remaining balance');
-					$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthRemainder, 2, '.', true));
-
-					$remainderBool = false;
-				}
-			}
-
-			$arrayChecker = array(); // Set array to check if there is duplicate dates
+			
 			//Computes 13th monthpay per month
 			while($attDate = mysql_fetch_assoc($attQuery))
 			{
@@ -427,12 +516,16 @@ $activeSheet->mergeCells('A1:'.$columnLet.'1');// Employee name 13thmonth pay
 
 					$thirteenthMonth = 0;
 					$daysAttended = 0;
+					$daysCompleted = 0;
 
 					//Computes 13th month per day of the month
 					while($attArr = mysql_fetch_assoc($attMonthQuery))
 					{ 
 						// Checks if date is already in the array. if it is then skip the computation for this date
-						if(!in_array($attArr['date'], $arrayChecker))
+						$sundayCheck = date('l', strtotime($attArr['date']));
+						$isSundayCheck = ($sundayCheck == "Sunday" ? false : true);
+
+						if(!in_array($attArr['date'], $arrayChecker) && $isSundayCheck)
 						{
 							array_push($arrayChecker, $attArr['date']);// Push date inside the array 
 							$date = $attArr['date'];
@@ -443,36 +536,161 @@ $activeSheet->mergeCells('A1:'.$columnLet.'1');// Employee name 13thmonth pay
 							$holidayChecker = "SELECT * FROM holiday WHERE date = '$date'";
 							$holidayCheckQuery = mysql_query($holidayChecker) or die (mysql_error());
 
-							if(mysql_num_rows($holidayCheckQuery) == 0 && $day != "Sunday")
+							if(mysql_num_rows($holidayCheckQuery) > 0)
+							{
+								$checkHoliday = mysql_fetch_assoc($holidayCheckQuery);
+								$regHolidayCheckBool = ($checkHoliday['type'] != "special" ? true : false);
+								$attendedHoliday = ($checkHoliday['type'] == "regular" ? true : false);
+							}
+							else
+							{
+								$attendedHoliday = false;
+								$regHolidayCheckBool = true;
+							}
+
+							if($regHolidayCheckBool)// Include regular holidays. dont proceed if special holiday
 							{
 								if($attArr['attendance'] == '2')//check if student is present
 								{
-									if($attArr['workhours'] < 8)//check if employee attended 8hours
+									if($attArr['workhours'] >= 8 || $attendedHoliday)
 									{
-										$daysAttended += ($attArr['workhours']/8);
+										$daysCompleted++;
 									}
-									else
+									else if($attArr['workhours'] < 8)//check if employee attended 8hours
 									{
-										$daysAttended++;
+										$daysCompleted += ($attArr['workhours']/8);
 									}
 								}
 							}
 						}	
 					}
-					$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
+					$thirteenthMonth = ($daysCompleted * $empArr['rate']) / 12; 
 					$printBool = true;//enable printable
 					$activeSheet->setCellValue('A'.$rowCounter, 'Total');
 					$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($overallPayment, 2, '.', true));
 
 					$activeSheet->setCellValue('A'.$rowCounter, $year);
 					$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthMonth, 2, '.', true));
-					$overallPayment += $thirteenthMonth;
+
 					$rowCounter++;// increment row
+					$overallPayment += $thirteenthMonth;
 				}
 				
 				$noRepeat = $year;
 			}
 		}
+		//------------------------------------------------------------
+
+		// $attendance = "SELECT DISTINCT date FROM attendance WHERE empid = '$empid' $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
+		// $attQuery = mysql_query($attendance);
+
+		// $daysAttended = 0;//counter for days attended
+		// $noRepeat = null;
+		// //adds the 13th month pay remainder if there is
+		// $overallPayment = ($thirteenthRemainder != 0 ? $thirteenthRemainder : 0);
+
+		// if($remainderBool)
+		// {
+		// 	if($thirteenthRemainder != 0)
+		// 	{
+		// 		$printBool = true;//enable printable
+		// 		// $activeSheet->setCellValue('A'.$rowCounter, '13th Month Pay remaining balance');
+		// 		// $activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthRemainder, 2, '.', true));
+
+		// 		$remainderBool = false;
+
+		// 	}
+			
+		// }
+		// //Computes 13th monthpay per month
+		// while($attDate = mysql_fetch_assoc($attQuery))
+		// {
+		// 	$attendance = "SELECT DISTINCT date FROM attendance WHERE empid = '$empid' $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
+		// 	$attQuery = mysql_query($attendance);
+
+		// 	$daysAttended = 0;//counter for days attended
+		// 	$noRepeat = null;
+		// 	//adds the 13th month pay remainder if there is
+		// 	$overallPayment = ($thirteenthRemainder != 0 ? $thirteenthRemainder : 0);
+
+		// 	if($remainderBool)
+		// 	{
+		// 		if($thirteenthRemainder != 0)
+		// 		{
+		// 			$printBool = true;//enable printable
+		// 			$activeSheet->setCellValue('A'.$rowCounter, '13th Month Pay remaining balance');
+		// 			$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthRemainder, 2, '.', true));
+
+		// 			$remainderBool = false;
+		// 		}
+		// 	}
+
+		// 	$arrayChecker = array(); // Set array to check if there is duplicate dates
+		// 	//Computes 13th monthpay per month
+		// 	while($attDate = mysql_fetch_assoc($attQuery))
+		// 	{
+		// 		if($thirteenthBool)
+		// 		{
+
+		// 			$pastToDateThirteenthPay = $attDate['date'];
+		// 			$thirteenthBool = false;
+		// 		}
+		// 		$dateExploded = explode(" ", $attDate['date']);
+		// 		$year = $dateExploded[2];
+
+		// 		if ($noRepeat != $year  || $noRepeat == null)
+		// 		{
+		// 			$attYear = "SELECT * FROM attendance WHERE empid = '$empid' AND date LIKE '%$year' $pastThirteenthDate ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
+		// 			$attMonthQuery = mysql_query($attYear);
+
+		// 			$thirteenthMonth = 0;
+		// 			$daysAttended = 0;
+
+		// 			//Computes 13th month per day of the month
+		// 			while($attArr = mysql_fetch_assoc($attMonthQuery))
+		// 			{ 
+		// 				// Checks if date is already in the array. if it is then skip the computation for this date
+		// 				if(!in_array($attArr['date'], $arrayChecker))
+		// 				{
+		// 					array_push($arrayChecker, $attArr['date']);// Push date inside the array 
+		// 					$date = $attArr['date'];
+		// 					$day = date('l', strtotime($date));// check what day of the week
+
+		// 					$workHrs = $attArr['workhours'];
+
+		// 					$holidayChecker = "SELECT * FROM holiday WHERE date = '$date'";
+		// 					$holidayCheckQuery = mysql_query($holidayChecker) or die (mysql_error());
+
+		// 					if(mysql_num_rows($holidayCheckQuery) == 0 && $day != "Sunday")
+		// 					{
+		// 						if($attArr['attendance'] == '2')//check if student is present
+		// 						{
+		// 							if($attArr['workhours'] < 8)//check if employee attended 8hours
+		// 							{
+		// 								$daysAttended += ($attArr['workhours']/8);
+		// 							}
+		// 							else
+		// 							{
+		// 								$daysAttended++;
+		// 							}
+		// 						}
+		// 					}
+		// 				}	
+		// 			}
+		// 			$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
+		// 			$printBool = true;//enable printable
+		// 			$activeSheet->setCellValue('A'.$rowCounter, 'Total');
+		// 			$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($overallPayment, 2, '.', true));
+
+		// 			$activeSheet->setCellValue('A'.$rowCounter, $year);
+		// 			$activeSheet->setCellValue('B'.$rowCounter, numberExactFormat($thirteenthMonth, 2, '.', true));
+		// 			$overallPayment += $thirteenthMonth;
+		// 			$rowCounter++;// increment row
+		// 		}
+				
+		// 		$noRepeat = $year;
+		// 	}
+		// }
 	}
 					
 

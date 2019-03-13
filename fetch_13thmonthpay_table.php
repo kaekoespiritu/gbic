@@ -8,11 +8,26 @@ $empid = $_POST['empid'];
 
 if(isset($_POST["fromDate"]) && isset($_POST["toDate"]))
 {
-     $employeeChecker = "SELECT * FROM employee WHERE empid = '$empid'";
-     $employeeCheckerQuery = mysql_query($employeeChecker);
+      // Check for 13th pay remaining balance
+      $remainder13th = "SELECT * FROM thirteenth_pay WHERE empid = '$empid' ORDER BY STR_TO_DATE(to_date, '%M %e, %Y') DESC LIMIT 1";
 
-     if(mysql_num_rows($employeeCheckerQuery))
-          $empArr = mysql_fetch_assoc($employeeCheckerQuery);
+      $remainderBool = false; // boolean if employee has remainder
+      $remainderQuery = mysql_query($remainder13th);
+      if(mysql_num_rows($remainderQuery))
+      {
+         $remainederArr = mysql_fetch_assoc($remainderQuery);
+         if($remainederArr['amount'] != $remainederArr['received'])
+         {
+            $remainderAmount = abs($remainederArr['amount'] - $remainederArr['received']);
+            $remainderBool = true;
+         }
+      }
+
+      $employeeChecker = "SELECT * FROM employee WHERE empid = '$empid'";
+      $employeeCheckerQuery = mysql_query($employeeChecker);
+
+      if(mysql_num_rows($employeeCheckerQuery))
+         $empArr = mysql_fetch_assoc($employeeCheckerQuery);
 
      $attendance = "SELECT date, workhours, attendance FROM attendance WHERE  
             empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$fromDate', '%M %e, %Y') AND STR_TO_DATE('$toDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
@@ -57,16 +72,15 @@ if(isset($_POST["fromDate"]) && isset($_POST["toDate"]))
                array_push($arrayChecker, $attArray);
      }
 
-     // Removes duplicates from array checker
-     $secondArrayChecker = array_unique($arrayChecker, SORT_REGULAR);
-
-     //Computes the 13th month
-     $overallCounter = 100;
-     // $overallCounter = count(array_filter($secondArrayChecker));
-
-     for($count = 0; $count < $overallCounter; $count++ )
-     {
-
+    // Removes duplicates from array checker
+    $secondArrayChecker = array_unique($arrayChecker, SORT_REGULAR);
+    // echo print_r($secondArrayChecker);
+    //Computes the 13th month
+    // $overallCounter = 200;
+    $overallCounter = count(array_filter($secondArrayChecker));
+    echo "  |". $overallCounter."|  ";
+    for($count = 0; $count < $overallCounter; $count++ )
+    {
           if(!empty($secondArrayChecker[$count]['date']))
           {
                $date = $secondArrayChecker[$count]['date'];
@@ -107,7 +121,7 @@ if(isset($_POST["fromDate"]) && isset($_POST["toDate"]))
      }
      $thirteenthMonth = ($daysCompleted * $empArr['rate']) / 12; 
      
-     $overallDaysAttended = $daysCompleted;
+     $overallDaysAttended = numberExactFormat($daysCompleted, 2, '.', false);
      $overallPayment = $thirteenthMonth;     
 
     $output = '
@@ -122,22 +136,55 @@ if(isset($_POST["fromDate"]) && isset($_POST["toDate"]))
             <td>
               Days Completed
             </td>
-          </tr>';
-
-          $output .='
+         </tr>';
+         if($remainderBool)// if employee has an outstanding 13th month pay payable
+         {
+            $output .='
+                    <tr>
+                      <td>13th Month Pay remaining balance
+                      </td>
+                      <td>
+                        '.numberExactFormat($remainderAmount, 2, '.', true).'
+                      </td>
+                      <td>
+                        --
+                      </td>
+                    </tr>
+              ';
+         }
+         $output .='
                     <tr>
                       <td>'.$fromDate." - ".$toDate.'
                       </td>
                       <td>
                         '.numberExactFormat($overallPayment, 2, '.', true).'
-                      <input type="hidden" id="custompayment" value="'.numberExactFormat($overallPayment, 2, '.', false).'">
+                      
                       </td>
                       <td>
-                        '.$daysCompleted.'
+                        '.numberExactFormat($daysCompleted, 2, '.', false).'
                       </td>
-                    </tr>
-                  </table>
+                    </tr>';
+         if($remainderBool)// if employee has an outstanding 13th month pay payable
+         {
+            $overallPayment += $remainderAmount;// get the total
+            $output .='
+                    <tr>
+                        <td>
+                           Total
+                        </td>
+                        <td>
+                           '.numberExactFormat($overallPayment, 2, '.', true).'
+                        </td>
+                        <td>
+                           '.numberExactFormat($daysCompleted, 2, '.', false).'
+                        </td>
+                     </tr>
               ';
+         }
+         $output .='
+               <input type="hidden" id="custompayment" value="'.numberExactFormat($overallPayment, 2, '.', false).'">
+            </table>
+         ';
 
           // if() {
           //       $output .'
