@@ -4,6 +4,7 @@
 	include('directives/db.php');
 
 	$dateToday = strftime("%B %d, %Y");
+	// $dateToday = "March 20, 2019";
 
 	$empid = $_GET['empid'];
 	$period = $_GET['per'];
@@ -34,11 +35,13 @@
 	<title>Payroll</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
-
+	<link rel="stylesheet" href="css/jquery-ui.css">
 	<!-- For pagination -->
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 	<link href="pagination/css/pagination.css" rel="stylesheet" type="text/css" />
 	<link href="pagination/css/A_green.css" rel="stylesheet" type="text/css" />
+
+
 </head>
 <body style="font-family: Quicksand;">
 
@@ -101,6 +104,8 @@
 				<button class="btn btn-primary" id="printButton" onclick="Print13thMonth()">
 					Print <?php Print $printButton?>
 				</button>
+				
+
 				<table class="table table-bordered pull-down">
 				<tr>
 					<td colspan="<?php Print ($period == "week" ? 3 : 2) ?>">
@@ -156,6 +161,7 @@
 						$pastThirteenthDate = "AND STR_TO_DATE(date, '%M %e, %Y ') >= STR_TO_DATE('".$empArr['datehired']."', '%M %e, %Y ')";
 						$noRemainderBool = true;
 					}
+
 					$earlyCuttoff = '';// for printable
 					if($period == "week")
 					{
@@ -166,6 +172,7 @@
 						//adds the 13th month pay remainder if there is
 						$overallPayment = ($thirteenthRemainder != 0 ? $thirteenthRemainder : 0);
 
+						$remainderDateBool = false;
 						if($remainderBool)
 						{
 							if($thirteenthRemainder != 0)
@@ -179,9 +186,13 @@
 									<td>
 										".numberExactFormat($thirteenthRemainder, 2, '.', true)."
 									</td>
+									<td>
+										--
+									</td>
 								</tr>";
 
 								$remainderBool = false;
+								$remainderDateBool = true;
 
 							}
 							
@@ -250,26 +261,37 @@
 							$arrayChecker = array();
 
 							// Adds attendance array to array checker
-							while($attArray = mysql_fetch_assoc($attChecker)) {
+							while($attArray = mysql_fetch_assoc($attChecker))
+							{
 								//exclude Holidays and Sundays
 
 								//Check if holiday
 								$holidayDateCheck = $attArray['date'];
-								$holidayChecker = "SELECT * FROM holiday WHERE date = '$holidayDateCheck'";
+								$holidayChecker = "SELECT * FROM holiday WHERE date = '$holidayDateCheck' LIMIT 1";
 								$holidayCheckQuery = mysql_query($holidayChecker) or die (mysql_error());
 								
 								//Check if Sunday
 								$date = $attArray['date'];
 								$day = date('l', strtotime($date));// check what day of the week
 
-								if(mysql_num_rows($holidayCheckQuery) == 0 && $day != "Sunday")
+								
+								if(mysql_num_rows($holidayCheckQuery) > 0)
+								{
+									$checkHoliday = mysql_fetch_assoc($holidayCheckQuery);
+									$regHolidayCheckBool = ($checkHoliday['type'] != "special" ? true : false);
+								}
+								else
+								{
+									$regHolidayCheckBool = true;
+								}
+
+								
+								if($regHolidayCheckBool && $day != "Sunday")
 									array_push($arrayChecker, $attArray);
 							}
 
 							// Removes duplicates from array checker
 							$secondArrayChecker = array_unique($arrayChecker, SORT_REGULAR);
-							
-							// print_r (array_keys($secondArrayChecker));
 
 							//Computes the 13th month
 							// $overallCounter = count($secondArrayChecker);
@@ -283,15 +305,27 @@
 
 									$workHrs = $secondArrayChecker[$count]['workhours'];
 
-									$holidayChecker = "SELECT * FROM holiday WHERE date = '$date'";
+									$holidayChecker = "SELECT * FROM holiday WHERE date = '$date' LIMIT 1";
 									$holidayCheckQuery = mysql_query($holidayChecker) or die (mysql_error());
 
-									if(mysql_num_rows($holidayCheckQuery) == 0)
+									if(mysql_num_rows($holidayCheckQuery) > 0)
+									{
+										$checkHoliday = mysql_fetch_assoc($holidayCheckQuery);
+										$regHolidayCheckBool = ($checkHoliday['type'] != "special" ? true : false);
+										$attendedHoliday = ($checkHoliday['type'] == "regular" ? true : false);
+									}
+									else
+									{
+										$attendedHoliday = false;
+										$regHolidayCheckBool = true;
+									}
+
+									if($regHolidayCheckBool)// Include regular holidays. dont proceed if special holiday
 									{
 										// check if days are not duplicated
 										if(isset($secondArrayChecker[$count]['attendance']) && $secondArrayChecker[$count]['attendance'] == '2')//check if employee is present
 										{
-											if($secondArrayChecker[$count]['workhours'] >= 8)//check if employee attended 8hours
+											if($secondArrayChecker[$count]['workhours'] >= 8 || $attendedHoliday)//check if employee attended 8hours || regardless how many hours the employee rendered for that regular holiday
 											{
 												$daysAttended++;
 												$daysCompleted += 1;
@@ -303,7 +337,6 @@
 										}
 									}
 								}
-								
 							}
 
 							$thirteenthMonth = ($daysCompleted * $empArr['rate']) / 12; 
@@ -343,7 +376,13 @@
 							// INCLUDE THE ATTENDANCE FROM THE LAST PAYROLL TO THE CURRENT DAY
 							//###################
 							//Gets the start payroll of the next payroll
-							$dateToPresent = date('F d, Y', strtotime('+1 day', strtotime($endDate)));
+							if(!$remainderDateBool)
+								$dateToPresent = date('F d, Y', strtotime('+1 day', strtotime($endDate)));
+							else
+							{
+								$dateToPresent = $pastToDateThirteenthPay;
+							}
+
 
 							if($dateToPresent != $dateToday)
 							{
@@ -365,7 +404,32 @@
 											$holidayChecker = "SELECT * FROM holiday WHERE date = '$date'";
 											$holidayCheckQuery = mysql_query($holidayChecker) or die (mysql_error());
 
-											if(mysql_num_rows($holidayCheckQuery) == 0 && $day != "Sunday")
+											if(mysql_num_rows($holidayCheckQuery) > 0)
+											{
+												$checkHoliday = mysql_fetch_assoc($holidayCheckQuery);
+												$regHolidayCheckBool = ($checkHoliday['type'] != "special" ? true : false);
+											}
+											else
+											{
+												$regHolidayCheckBool = true;
+											}
+
+											if($regHolidayCheckBool && $day != "Sunday")
+												array_push($arrayChecker, $attArray);
+
+											if(mysql_num_rows($holidayCheckQuery) > 0)
+											{
+												$checkHoliday = mysql_fetch_assoc($holidayCheckQuery);
+												$regHolidayCheckBool = ($checkHoliday['type'] != "special" ? true : false);
+												$attendedHoliday = ($checkHoliday['type'] == "regular" ? true : false);
+											}
+											else
+											{
+												$attendedHoliday = false;
+												$regHolidayCheckBool = true;
+											}
+
+											if($regHolidayCheckBool)// Include regular holidays. dont proceed if special holiday
 											{
 												if($latestAttendanceArr['attendance'] == '2')//check if student is present
 												{
@@ -373,7 +437,7 @@
 													{
 														$daysCompleted += ($latestAttendanceArr['workhours']/8);
 													}
-													else
+													else if($latestAttendanceArr['workhours'] >= 8 || $attendedHoliday)
 													{
 														$daysCompleted++;
 													}
@@ -397,10 +461,8 @@
 									$overallDaysAttended = $daysCompleted + $overallDaysAttended;
 									$overallPayment += $thirteenthMonth;
 								}
-								
 							}
 						}
-						
 					}
 					else if($period == "month")
 					{
@@ -442,9 +504,6 @@
 								$thirteenthBool = false;
 							}
 
-							// January 
-							// 1, 
-							// 2019
 							$dateExploded = explode(" ", $attDate['date']);
 							$month = $dateExploded[0];
 							$year = $dateExploded[2];
@@ -456,23 +515,18 @@
 
 								$thirteenthMonth = 0;
 								$daysAttended = 0;
-
+								$daysCompleted = 0;
 								$checkBool = true;
 								$checkCounter = 0;
 								$checkCount = mysql_num_rows($attMonthQuery);
 								//Computes 13th month per day of the month
 								while($attArr = mysql_fetch_assoc($attMonthQuery))
 								{ 
-									// $checkCounter++;
-									// if($checkBool)
-									// {
-									// 	// echo "<script>console.log('".$attArr['date']."')</script>";
-									// 	$checkBool = false;
-									// }
-									// if($checkCount == $checkCounter)
-									// 	echo "<script>console.log('".$attArr['date']."')</script>";
 									// Checks if date is already in the array. if it is then skip the computation for this date
-									if(!in_array($attArr['date'], $arrayChecker))
+									$sundayCheck = date('l', strtotime($attArr['date']));
+									$isSundayCheck = ($sundayCheck == "Sunday" ? false : true);
+
+									if(!in_array($attArr['date'], $arrayChecker) && $isSundayCheck)
 									{
 										array_push($arrayChecker, $attArr['date']);// Push date inside the array 
 										$date = $attArr['date'];
@@ -483,26 +537,36 @@
 										$holidayChecker = "SELECT * FROM holiday WHERE date = '$date'";
 										$holidayCheckQuery = mysql_query($holidayChecker) or die (mysql_error());
 
-										if(mysql_num_rows($holidayCheckQuery) == 0 && $day != "Sunday")
+										if(mysql_num_rows($holidayCheckQuery) > 0)
+										{
+											$checkHoliday = mysql_fetch_assoc($holidayCheckQuery);
+											$regHolidayCheckBool = ($checkHoliday['type'] != "special" ? true : false);
+											$attendedHoliday = ($checkHoliday['type'] == "regular" ? true : false);
+										}
+										else
+										{
+											$attendedHoliday = false;
+											$regHolidayCheckBool = true;
+										}
+
+										if($regHolidayCheckBool)// Include regular holidays. dont proceed if special holiday
 										{
 											if($attArr['attendance'] == '2')//check if student is present
 											{
-												if($attArr['workhours'] >= 8)//check if employee attended 8hours
+												if($attArr['workhours'] >= 8 || $attendedHoliday)
 												{
-													echo "<script>console.log('".$attArr['date']."')</script>";
-													$daysAttended++;
+													$daysCompleted++;
 												}
-												else
+												else if($attArr['workhours'] < 8)//check if employee attended 8hours
 												{
-													echo "<script>console.log('".$attArr['date']." - ".($attArr['workhours']/8)."')</script>";
-													$daysAttended += ($attArr['workhours']/8);
+													$daysCompleted += ($attArr['workhours']/8);
 												}
 											}
 										}
 									}	
 								}
-								echo "<script>console.log('".$daysAttended."')</script>";
-								$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
+								// echo "<script>console.log('".$daysCompleted."')</script>";
+								$thirteenthMonth = ($daysCompleted * $empArr['rate']) / 12; 
 								$printBool = true;//enable printable
 								Print "
 										<tr>
@@ -599,12 +663,16 @@
 
 									$thirteenthMonth = 0;
 									$daysAttended = 0;
+									$daysCompleted = 0;
 
 									//Computes 13th month per day of the month
 									while($attArr = mysql_fetch_assoc($attMonthQuery))
 									{ 
 										// Checks if date is already in the array. if it is then skip the computation for this date
-										if(!in_array($attArr['date'], $arrayChecker))
+										$sundayCheck = date('l', strtotime($attArr['date']));
+										$isSundayCheck = ($sundayCheck == "Sunday" ? false : true);
+
+										if(!in_array($attArr['date'], $arrayChecker) && $isSundayCheck)
 										{
 											array_push($arrayChecker, $attArr['date']);// Push date inside the array 
 											$date = $attArr['date'];
@@ -615,23 +683,35 @@
 											$holidayChecker = "SELECT * FROM holiday WHERE date = '$date'";
 											$holidayCheckQuery = mysql_query($holidayChecker) or die (mysql_error());
 
-											if(mysql_num_rows($holidayCheckQuery) == 0 && $day != "Sunday")
+											if(mysql_num_rows($holidayCheckQuery) > 0)
+											{
+												$checkHoliday = mysql_fetch_assoc($holidayCheckQuery);
+												$regHolidayCheckBool = ($checkHoliday['type'] != "special" ? true : false);
+												$attendedHoliday = ($checkHoliday['type'] == "regular" ? true : false);
+											}
+											else
+											{
+												$attendedHoliday = false;
+												$regHolidayCheckBool = true;
+											}
+
+											if($regHolidayCheckBool)// Include regular holidays. dont proceed if special holiday
 											{
 												if($attArr['attendance'] == '2')//check if student is present
 												{
-													if($attArr['workhours'] < 8)//check if employee attended 8hours
+													if($attArr['workhours'] >= 8 || $attendedHoliday)
 													{
-														$daysAttended += ($attArr['workhours']/8);
+														$daysCompleted++;
 													}
-													else
+													else if($attArr['workhours'] < 8)//check if employee attended 8hours
 													{
-														$daysAttended++;
+														$daysCompleted += ($attArr['workhours']/8);
 													}
 												}
 											}
 										}	
 									}
-									$thirteenthMonth = ($daysAttended * $empArr['rate']) / 12; 
+									$thirteenthMonth = ($daysCompleted * $empArr['rate']) / 12; 
 									$printBool = true;//enable printable
 									Print "
 											<tr>
@@ -687,24 +767,20 @@
 	        <h4 class="modal-title" id="myModalLabel" align='left'><?php Print $empArr['lastname'].", ".$empArr['firstname']?>'s 13th Month Pay</h4>
 	      </div>
 	      <div class="modal-body">
-	        <table class='table table-bordered'>
-	        	<tr>
-	        		<td>
-	        			From - To Date
-	        		</td>
-	        		<td>
-	        			Amount
-	        		</td>
-	        	</tr>
-	        	<tr>
-	        		<td>
-	        			<?php Print $pastToDateThirteenthPay." - ".$dateToday?>
-	        		</td>
-	        		<td>
-	        			<?php Print numberExactFormat($overallPayment, 2, '.', true)?>
-	        		</td>
-	        	</tr>
-	        </table>
+
+			<div class="row">
+				<div class="col-md-4 col-lg-4 col-md-offset-1">
+					<input name="txt_13_from" type="text" size="10" class="form-control" id="dtpkr_13thmonthpay_from" placeholder="mm-dd-yyyy" required readonly>
+				</div>
+				<span class="col-md-2 col-lg-2">to</span>
+				<div class="col-md-4 col-lg-4">
+					<input name="txt_13_to" type="text" size="10" class="form-control" id="dtpkr_13thmonthpay_to" placeholder="mm-dd-yyyy" required readonly>
+				</div>
+			</div>
+
+			<!-- DISPLAY TABLE HERE -->
+			<div id="13thmonthpay_table">
+			</div>
 
 	      </div>
 	      <div class="modal-footer">
@@ -724,11 +800,11 @@
 	      	<div class="row">
 		      	<div class="col-md-6 col-lg-6">
 		      		<h4>13th Month Pay Amount:</h4>
-		      			<b><?php Print numberExactFormat($overallPayment, 2, '.', true)?></b>
+		      			<b id="displayDesired13th"></b>
 		      	</div>
 		      	<div class="col-md-6 col-lg-6">
-		      		<h4>Amount to Give:</h4> <input type="number" id="amountToGive"><br>
-		        	<input type="checkbox" onclick="copyAmount(<?php Print numberExactFormat($overallPayment, 2, '.', false)?>)"> Copy overall amount
+		      		<h4>Amount to Give:</h4> <input type="text" id="amountToGive"><br>
+		        	<input type="checkbox" id="cb_amountToGive"> Copy overall amount
 		      	</div>
 	      	</div>
 	      </div>
@@ -819,11 +895,14 @@
 	<input type="hidden" id="HistoricalPrint" value="<?php Print $histBool?>">
 	<input type="hidden" id="Print" value="<?php Print $printBool?>">
 
+	<input type="hidden" id="empid" value="<?php Print $empid?>">
 	<input type="hidden" id="overallPayment" value="<?php Print $overallPayment?>">
 	<input type="hidden" id="fromDate" value="<?php Print $pastToDateThirteenthPay?>">
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 	<script rel="javascript" src="js/jquery.min.js"></script>
+	<script rel="javascript" src="js/jquery-ui.min.js"></script>
 	<script rel="javascript" src="js/bootstrap.min.js"></script>
+	<script rel="javascript" src="js/timepicker/jquery.timepicker.js"></script>
 	<script>
 
 		$( document ).ready(function() {
@@ -842,8 +921,127 @@
 		   	else
 		   		$('#printButton').addClass('disabletotally');
 
-
+		   	if($( "#dtpkr_13thmonthpay_from").val() == "")
+		   		$( "#dtpkr_13thmonthpay_to" ).datepicker( "option", "disabled", true);
 		});
+
+
+		/* DATE PICKER CONFIGURATIONS*/
+		$( "#dtpkr_13thmonthpay_from").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: 'MM dd, yy',
+			showAnim: 'blind',
+			maxDate: new Date(),
+			//minDate: $("#datePickerMin").val(), 
+			beforeShow: function(){    
+				$(".ui-datepicker").css('font-size', 15) 
+			},
+			onClose: function(selectedDate){
+				if(selectedDate !== "")
+					$( "#dtpkr_13thmonthpay_to" ).datepicker( "option", "disabled", false);
+			}
+		});
+
+		$( "#dtpkr_13thmonthpay_to" ).datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: 'MM dd, yy',
+			showAnim: 'blind',
+			maxDate: new Date(),
+			//minDate: $("#datePickerMin").val(), 
+			beforeShow: function(){    
+				$(".ui-datepicker").css('font-size', 15) 
+			}
+		});
+
+		$( "#dtpkr_13thmonthpay_to" ).change(function(){
+			var to_date = $("#dtpkr_13thmonthpay_to").val();
+			var from_date = $("#dtpkr_13thmonthpay_from").val();
+			var empid = $("#empid").val();
+
+			if(to_date !== "")
+				var UNIXto = parseInt((new Date(to_date).getTime() / 1000).toFixed(0));
+			if(from_date !== "")
+				var UNIXfrom = parseInt((new Date(from_date).getTime() / 1000).toFixed(0));
+
+			var notMore = true;
+
+			if(UNIXfrom >= UNIXto)
+			{
+				$("#dtpkr_13thmonthpay_from").datepicker("setDate", null);
+				$("#dtpkr_13thmonthpay_to").datepicker("setDate", null);
+				alert("Invalid date range, please try again.");
+				notMore = false;
+			}
+
+			if((from_date !== "" && to_date !== "") && notMore) {
+				load_data(from_date, to_date, empid);
+			}
+			else
+			{
+				$('#13thmonthpay_table').html("");
+			}
+		});
+
+		$( "#dtpkr_13thmonthpay_from" ).change(function(){
+			var from_date = $("#dtpkr_13thmonthpay_from").val();
+			var to_date = $("#dtpkr_13thmonthpay_to").val();
+			var empid = $("#empid").val();
+			if(to_date !== "")
+				var UNIXto = parseInt((new Date(to_date).getTime() / 1000).toFixed(0));
+			if(from_date !== "")
+				var UNIXfrom = parseInt((new Date(from_date).getTime() / 1000).toFixed(0));
+
+			var notMore = true;
+
+			if(UNIXto <= UNIXfrom)
+			{
+				$("#dtpkr_13thmonthpay_from").datepicker("setDate", null);
+				$("#dtpkr_13thmonthpay_to").datepicker("setDate", null);
+				alert("Invalid date range, please try again.");
+				notMore = false;
+			}
+
+			if((from_date !== "" && to_date !== "") && notMore) {
+				load_data(from_date, to_date, empid);
+			}
+			else
+			{
+				$('#13thmonthpay_table').html("");
+			}
+			
+		});
+
+		function load_data(fromDate, toDate, empid)
+		{
+			$.ajax({
+		   	url:"13thmonthpay_table.php",
+		   	method:"POST",
+		   	data:{
+		   		fromDate: fromDate,
+		   		toDate: toDate,
+		   		empid: empid
+		   	},
+		   	success:function(table)
+		   	{
+		    		$('#13thmonthpay_table').html(table);
+		   	}
+		  	});
+		}
+
+		$('#enter13thmonthpay').on('show.bs.modal', function (event) {
+		  var modal = $(this);
+		  var overallPayment = $("#custompayment").val();
+		  modal.find('#displayDesired13th').html(overallPayment);
+		  modal.find('#cb_amountToGive').attr("onclick", "copyAmount("+overallPayment+")");
+		})
+
+		$('#enter13thmonthpay').on('hide.bs.modal', function (event) {
+		  var modal = $(this);
+		  modal.find('#cb_amountToGive').prop('checked', false);
+		  modal.find('#amountToGive').val("");
+		})
 
 		document.getElementById("reports").setAttribute("style", "background-color: #10621e;");
 
@@ -854,9 +1052,11 @@
 		}
 
 		function give13thPay() {
+			console.log(document.getElementById("amountToGive").value);
 			var amount = document.getElementById("amountToGive").value;
-			var thirteenth = document.getElementById("overallPayment").value;
-			var fromDate = document.getElementById("fromDate").value;
+			var thirteenth = document.getElementById("displayDesired13th").innerHTML;
+			var fromDate = document.getElementById("dtpkr_13thmonthpay_from").value;
+			var toDate = document.getElementById("dtpkr_13thmonthpay_to").value;
 			var splitThirteenth = thirteenth.split('.');
 			if(splitThirteenth.length != 1)
 				thirteenth = splitThirteenth[0]+"."+splitThirteenth[1].substring(0,2);
@@ -867,7 +1067,7 @@
 					alert("Please input proper amount.");
 				else
 				{
-					window.location.assign("logic_reports_individual_13thmonth.php?empid=<?php Print $empid?>&amount="+amount+"&pay="+thirteenth+"&fromDate="+fromDate);
+					window.location.assign("logic_reports_individual_13thmonth.php?empid=<?php Print $empid?>&amount="+amount+"&pay="+thirteenth+"&fromDate="+fromDate+"&toDate="+toDate);
 				}
 			}
 		}

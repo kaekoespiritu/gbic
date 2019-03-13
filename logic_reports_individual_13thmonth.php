@@ -5,9 +5,8 @@
 	$empid = $_GET['empid'];
 	$amount = $_GET['amount'];
 	$pay = $_GET['pay'];
-
 	$fromDate = $_GET['fromDate'];
-	$toDate = strftime("%B %d, %Y");
+	$toDate = $_GET['toDate'];
 
 	$query = "INSERT INTO thirteenth_pay(	empid, 
 											amount, 
