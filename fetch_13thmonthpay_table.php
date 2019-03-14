@@ -29,7 +29,7 @@ if(isset($_POST["fromDate"]) && isset($_POST["toDate"]))
       if(mysql_num_rows($employeeCheckerQuery))
          $empArr = mysql_fetch_assoc($employeeCheckerQuery);
 
-     $attendance = "SELECT date, workhours, attendance FROM attendance WHERE  
+     $attendance = "SELECT DISTINCT date, workhours, attendance FROM attendance WHERE  
             empid = '$empid' AND (STR_TO_DATE(date, '%M %e, %Y') BETWEEN STR_TO_DATE('$fromDate', '%M %e, %Y') AND STR_TO_DATE('$toDate', '%M %e, %Y')) ORDER BY STR_TO_DATE(date, '%M %e, %Y') ASC";
 
      $attChecker = mysql_query($attendance);
