@@ -97,10 +97,16 @@ if(isset($_GET['search']))
 				{
 					$employee_num = mysql_num_rows($employee_query);
 				}
+
+				if(mysql_num_rows($employee_query) > 0)
+				{
+					$empArr = mysql_fetch_assoc($employee_query);
+				}
+
 				/* If location is long, font-size to smaller */
 				if(strlen($row['location'])>=16)
 				{
-					Print '	<a data-toggle="modal" data-target="#optionModal" onclick="dataModalTransfer(\''.$row['location'].'\')" style="color: white !important; text-decoration: none !important; cursor: pointer;">
+					Print '	<a href="reports_overall_payroll.php?req=null&site='.$empArr['site'].'" style="color: white !important; text-decoration: none !important; cursor: pointer;">
 								<div class="sitebox">
 									<span class="smalltext">'
 										. $row['location'] .
@@ -114,7 +120,7 @@ if(isset($_GET['search']))
 				}
 				else
 				{
-					Print '	<a data-toggle="modal" data-target="#optionModal" onclick="dataModalTransfer(\''.$row['location'].'\')" style="color: white !important; text-decoration: none !important; cursor: pointer;">
+					Print '	<a href="reports_overall_payroll.php?req=null&site='.$empArr['site'].'" style="color: white !important; text-decoration: none !important; cursor: pointer;">
 								<div class="sitebox">
 									<span class="autofit">'
 										. $row['location'] .
@@ -162,7 +168,7 @@ if(isset($_GET['search']))
 		</div>
 	</div>
 
-	<div class="modal fade" id="optionModal">
+	<!-- <div class="modal fade" id="optionModal">
  		<div class="modal-dialog">
     		<div class="modal-content">
       			<div class="modal-body">
@@ -176,10 +182,10 @@ if(isset($_GET['search']))
       				</a>
       				<h4 class="text-center pull-down">Click on the options above to view payroll options for SITE.</h4>
       				<!-- TODO: Change site to sitename when selected -->
-      			</div>
+      			<!--</div>
       		</div>
       	</div>
-	</div>
+	</div> -->
 
 	<!-- SCRIPTS TO RENDER AFTER PAGE HAS LOADED -->
 	<script rel="javascript" src="js/jquery.min.js"></script>
