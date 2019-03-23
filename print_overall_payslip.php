@@ -385,7 +385,7 @@ for($count = 0; $count <= $loopCount; $count++)
 					$payrollOutstanding = $payrollArr['new_vale'];
 				}
 
-				$activeSheet->setCellValue($cellB.$newValeDataCounter, $payrollOutstanding);
+				$activeSheet->setCellValue($cellB.$newValeDataCounter, ($payrollOutstanding == 0 ? "" : $payrollOutstanding));
 
 				//Loans
 				if($payrollArr['loan_sss'] != 0)

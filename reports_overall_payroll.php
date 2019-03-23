@@ -441,7 +441,7 @@
 
 													$payrollDay = date('F d, Y', strtotime('+1 day', strtotime($endDate)));
 													
-													$payrollOutstandingSql = "SELECT total_salary FROM payroll WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') < STR_TO_DATE('$payrollDay', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
+													$payrollOutstandingSql = "SELECT total_salary FROM payroll WHERE empid = '$emplid' AND STR_TO_DATE(date, '%M %e, %Y') < STR_TO_DATE('$payrollDay', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
 
 													$payrollOutstandingQuery = mysql_query($payrollOutstandingSql);
 													$payrollOutstanding = 0.00;

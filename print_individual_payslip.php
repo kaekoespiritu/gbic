@@ -226,7 +226,7 @@ else
 	$payrollOutstanding = $payrollArr['new_vale'];
 }
 
-$activeSheet->setCellValue('B15', $payrollOutstanding);
+$activeSheet->setCellValue('B15', ($payrollOutstanding == 0 ? "" : $payrollOutstanding));
 
 //Loans
 $activeSheet->setCellValue('B16', $payrollArr['loan_sss']);

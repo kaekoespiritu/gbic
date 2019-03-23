@@ -200,7 +200,7 @@ $rowCounter = 4; //start for the data in the row of excel
 		$payrollOutstanding = $payrollArr['new_vale'];
 	}
 
-	$activeSheet->setCellValue('X'.$rowCounter, $payrollOutstanding);//vale
+	$activeSheet->setCellValue('X'.$rowCounter, ($payrollOutstanding == 0 ? "" : $payrollOutstanding));//vale
 
 	if(!$LoanSSSBool)
 		$activeSheet->setCellValue('Y'.$rowCounter, $payrollArr['loan_sss']);//SSS loan
