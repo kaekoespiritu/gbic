@@ -204,11 +204,15 @@ $activeSheet->setCellValue('D11', ($payrollArr['x_allowance'] + $payrollArr['x_a
 //Vale
 $activeSheet->setCellValue('B14', $payrollArr['old_vale']);
 $payrollDay = date('F d, Y', strtotime('+1 day', strtotime($endDay)));
-$payrollOutstandingSql = "SELECT total_salary FROM payroll WHERE total_salary < 0 AND empid = '$empid' AND date = '$payrollDay' ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
+
+$payrollOutstandingSql = "SELECT total_salary FROM payroll WHERE empid = '$empid' AND STR_TO_DATE(date, '%M %e, %Y') < STR_TO_DATE('$payrollDay', '%M %e, %Y') ORDER BY STR_TO_DATE(date, '%M %e, %Y') DESC LIMIT 1";
+
 $payrollOutstandingQuery = mysql_query($payrollOutstandingSql);
 $payrollOutstanding = 0.00;
-while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
+
+if(mysql_num_rows($payrollOutstandingQuery))
 {
+	$outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery);
 	if($outStandingCheck['total_salary'] < 0.00){
 		$payrollOutstanding = abs($outStandingCheck['total_salary']);
 		$payrollOutstanding += $payrollArr['new_vale'];
@@ -217,12 +221,9 @@ while($outStandingCheck = mysql_fetch_assoc($payrollOutstandingQuery))
 		$payrollOutstanding = $payrollArr['new_vale'];
 	}
 }
-
-if($outStandingCheck == 'FALSE' || !$outStandingCheck) {
-	if($payrollArr['new_vale'] > 0)
-		$payrollOutstanding = $payrollArr['new_vale'];
-	else
-		$payrollOutstanding = '';
+else
+{
+	$payrollOutstanding = $payrollArr['new_vale'];
 }
 
 $activeSheet->setCellValue('B15', $payrollOutstanding);
